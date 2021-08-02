@@ -2,7 +2,12 @@
 ;;; Commentary:
 ;;; Code:
 
+;; Visual Popup User Interface
+(use-package popup)
+
 (use-package google-translate
+  :after popup
+
   :bind
   (("C-c t" . 'google-translate-at-point)
    ("C-c T" . 'google-translate-query-translate))
