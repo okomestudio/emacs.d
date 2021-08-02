@@ -8,7 +8,7 @@
 ;;; Code:
 
 ;; Set to t when debugging startup issues:
-(setq debug-on-error t)
+(setq debug-on-error nil)
 
 ;; Uncomment for profiling (also see the end of file)
 ;; (require 'profiler)
