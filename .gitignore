@@ -9,3 +9,17 @@
 
 # Undo-tree save-files
 *.~undo-tree
+
+# Ignore in emacs.d
+.cache
+.last-package-update-day
+.lsp-session-*
+auto-save-list
+bookmarks
+custom.el
+elpa
+history
+projectile-bookmarks.eld
+site-lisp
+snippets
+transient
