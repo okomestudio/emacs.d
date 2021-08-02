@@ -11,6 +11,7 @@
 *.~undo-tree
 
 # Ignore in emacs.d
+**/site-lisp/*.el
 .cache
 .last-package-update-day
 .lsp-session-*
@@ -20,6 +21,5 @@ custom.el
 elpa
 history
 projectile-bookmarks.eld
-site-lisp
 snippets
 transient
