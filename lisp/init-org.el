@@ -5,9 +5,6 @@
 (use-package ob-typescript)
 
 (use-package org-plus-contrib
-  :after
-  (plantuml-mode)
-
   :bind
   (("C-c l" . 'org-store-link))
 
@@ -32,16 +29,16 @@
    (org-file-apps '(("\\.mp4\\'" . "vlc --repeat %s")))
    (org-image-actual-width nil)
    (org-list-allow-alphabetical t)
-   (org-plantuml-jar-path ts/path-plantuml)
+   ;; (org-plantuml-jar-path ts/path-plantuml)
    (org-preview-latex-image-directory ".ltximg/")
    (org-startup-folded t)
+   (org-startup-indented t)
    (org-support-shift-select t)
    (org-todo-keywords '((sequence "TODO" "|" "DONE" "SKIP"))))
 
   :hook
   ((org-mode . (lambda () (org-superstar-mode 1)))
-   (org-mode . auto-fill-mode)
-   (org-mode . org-indent-mode))
+   (org-mode . auto-fill-mode))
 
   :init
   (defun org-agenda-gather-files ()
