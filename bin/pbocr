@@ -1,0 +1,45 @@
+#!/usr/bin/env bash
+
+set -e
+
+readonly scriptname="${0##*/}"
+
+
+function usage() {
+  cat <<USAGE >&2
+Usage: $scriptname
+
+Run OCR on the content of clipboard and send text to STDOUT.
+
+Required packages: xclip, tesseract
+
+USAGE
+  exit "${1:-1}"
+}
+
+
+function error() {
+  >&2 echo "$scriptname: $1"
+  >&2 echo "Try '$scriptname -h' for more information."
+  exit "${2:-1}"
+}
+
+
+function main() {
+  xclip -selection clipboard -t image/png -o \
+    | tesseract stdin stdout
+}
+
+
+if [ "$0" = "${BASH_SOURCE[0]}" ]; then
+  while getopts "h" opt; do
+    case $opt in
+      h|\?)
+        if [ "$opt" = "h" ]; then usage 0; else usage; fi
+        ;;
+    esac
+  done
+  shift $((OPTIND - 1))
+
+  main "$@"
+fi
