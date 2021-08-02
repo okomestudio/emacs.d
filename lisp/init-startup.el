@@ -42,7 +42,13 @@
 
   (if (daemonp)
       (add-hook 'after-make-frame-functions 'ts/setup-frame)
-    (ts/setup-frame (selected-frame))))
+    (ts/setup-frame (selected-frame)))
+
+  :bind
+  (("C-x C-y" . (lambda ()
+                  (interactive)
+                  (insert (shell-command-to-string
+                           (expand-file-name "bin/pbocr" user-emacs-directory)))))))
 
 ;; A RPC stack for the Emacs Lisp
 (use-package epc
@@ -95,9 +101,6 @@
   (("<f5>" . 'ts/revert-buffer-no-confirm)
    ("C-S-o" . 'ts/newline-above)
    ("C-c C-x *" . 'ts/insert-zero-width-space)
-   ("C-x C-y" . (lambda ()
-                  (interactive)
-                  (insert (shell-command-to-string "pbocr"))))
    ("C-o" . 'ts/newline-below)
    ("M-Q" . 'ts/unfill-paragraph))
 
