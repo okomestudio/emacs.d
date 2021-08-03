@@ -8,6 +8,9 @@
   (byte-compile-warnigns '(cl-functions)))
 
 (use-package emacs
+  :custom
+  (vc-follow-symlinks t)
+
   :init
   (defun ts/setup-frame (frame)
     (progn
