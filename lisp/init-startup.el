@@ -9,6 +9,7 @@
 
 (use-package emacs
   :custom
+  (async-shell-command-buffer "new-buffer")
   (vc-follow-symlinks t)
 
   :init
