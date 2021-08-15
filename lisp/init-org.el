@@ -4,7 +4,9 @@
 
 (use-package ob-typescript)
 
-(use-package org-plus-contrib
+(use-package org
+  :ensure org-plus-contrib
+
   :bind
   (("C-c l" . 'org-store-link))
 
