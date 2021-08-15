@@ -109,5 +109,10 @@
 (use-package treemacs-projectile
   :after (treemacs projectile))
 
+;; Display available keybindings in popup (github.com/justbur/emacs-which-key)
+(use-package which-key
+  :config
+  (which-key-mode))
+
 (provide 'init-themes)
 ;;; init-themes.el ends here
