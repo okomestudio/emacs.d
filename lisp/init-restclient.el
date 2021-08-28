@@ -1,4 +1,4 @@
-;;; init-rest.el --- Rest  -*- lexical-binding: t -*-
+;;; init-restclient.el --- restclient.el  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;; Code:
 
@@ -7,5 +7,5 @@
   :init
   (ensure-file-from-github "pashky/restclient.el/master/restclient-jq.el"))
 
-(provide 'init-rest)
-;;; init-rest.el ends here
+(provide 'init-restclient)
+;;; init-restclient.el ends here

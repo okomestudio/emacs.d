@@ -110,7 +110,7 @@
 (require 'init-prog)
 (require 'init-projectile)
 (require 'init-python)
-(require 'init-rest)
+(require 'init-restclient)
 (require 'init-rst)
 (require 'init-rust)
 (require 'init-scala)
