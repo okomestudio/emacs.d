@@ -25,7 +25,7 @@
 
   :ensure-system-package
   (
-   (lsp-pylsp-server-command . "$(pyenv which pip3) install python-lsp-server[all] python-lsp-black pyls-isort")
+   ("~/.pyenv/versions/3.8.2/bin/pylsp" . "$(pyenv which pip3) install python-lsp-server[all] python-lsp-black pyls-isort")
    (sqls . "go get github.com/lighttiger2505/sqls")
    (unified-language-server . "sudo npm i -g unified-language-server"))
 
