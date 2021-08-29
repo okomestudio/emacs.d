@@ -48,7 +48,7 @@
 
   (defun ts/pyenv-abspath (command)
     (let ((version (car (split-string (shell-command-to-string "pyenv global")))))
-      (concat "~/.pyenv/versions/" version "/bin/" command)))
+      (expand-file-name (concat "~/.pyenv/versions/" version "/bin/" command))))
 
   (setq lsp-pylsp-server-command (ts/pyenv-abspath "pylsp")))
 
