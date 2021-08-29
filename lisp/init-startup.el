@@ -82,11 +82,6 @@
   :init
   (global-set-key [remap dabbrev-expand] 'hippie-expand))
 
-(use-package icomplete
-  :ensure nil
-  :init
-  (fido-mode 1))
-
 (use-package imenu
   :ensure nil
   :init

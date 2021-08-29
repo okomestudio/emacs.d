@@ -41,6 +41,7 @@
   ;; '(uniquify-buffer-name-style (quote post-forward) nil (uniquify))
   (uniquify-buffer-name-style 'forward))
 
+;; https://github.com/minad/vertico
 (use-package vertico
   :custom
   (vertico-count 20)

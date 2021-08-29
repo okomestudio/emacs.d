@@ -98,7 +98,6 @@
 (require 'init-google-translate)
 (require 'init-graphviz)
 (require 'init-helm)
-(require 'init-ido)
 (require 'init-ini)
 (require 'init-json)
 (require 'init-lsp)
