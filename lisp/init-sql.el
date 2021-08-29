@@ -10,26 +10,29 @@
   :after (sql)
 
   :bind
-  (:map sql-mode-map
-   ("C-M-b" . 'ts/sqlformat))
+  (:map sql-mode-map ("C-c b" . ts/beautify-sql))
 
+  ;; The sqlfluff version:
   :custom
   (sqlformat-command 'sqlfluff)
-  ;(sqlformat-command 'pgformatter)
-  ;(sqlformat-args '("-f2" "-g" "-s4" "-U2"
-  ;                  "-M" "-p" "\n[ ]*-- sqlfmt: off\n(?:.*)?-- sqlfmt: on\n"))
 
   :ensure-system-package
-  ;(pg_format . "sudo apt install pgformatter")
   ("~/.pyenv/shims/sqlfluff" . "~/.pyenv/shims/pip3 install sqlfluff")
 
-  ;:hook
-  ;((sql-mode . sqlformat-on-save-mode))
+  ;; The pgformatter version:
+  ;; :custom
+  ;; (sqlformat-command 'pgformatter)
+  ;; (sqlformat-args '("-f2" "-g" "-s4" "-U2"
+  ;;                   "-M" "-p" "\n[ ]*-- sqlfmt: off\n(?:.*)?-- sqlfmt: on\n"))
+
+  ;; :ensure-system-package
+  ;; (pg_format . "sudo apt install pgformatter")
 
   :init
   (require 'sqlformat)
 
-  (defun ts/sqlformat ()
+  :config
+  (defun ts/beautify-sql ()
     (interactive)
     (save-excursion
       (sqlformat (point-min) (point-max))
@@ -37,7 +40,6 @@
 
 (use-package sql-upcase
   :disabled t
-
   :ensure nil
 
   :init

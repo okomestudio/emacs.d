@@ -14,39 +14,43 @@
 
   :custom
   (lsp-pylsp-configuration-sources ["flake8"])
-  ;(lsp-pylsp-disable-warning t)
+  ;; (lsp-pylsp-disable-warning t)
   (lsp-pylsp-plugins-flake8-enabled t)
-  ;(lsp-pylsp-plugins-flake8-max-line-length 150)
+  ;; (lsp-pylsp-plugins-flake8-max-line-length 150)
+  ;; (lsp-pylsp-plugins-jedi-use-pyenv-environment t)
   (lsp-pylsp-plugins-pycodestyle-enabled nil)
   (lsp-pylsp-plugins-pydocstyle-add-ignore '("D100" "D103"))
   (lsp-pylsp-plugins-pydocstyle-convention "google")
   (lsp-pylsp-plugins-pydocstyle-enabled t)
-  (lsp-pylsp-server-command "~/.pyenv/shims/pylsp")
 
   :ensure-system-package
-  ((isort-with-pyenv . "~/.pyenv/versions/$(pyenv global)/bin/pip3 install isort[pyproject]")
-   (pylsp-with-pyenv . "~/.pyenv/versions/$(pyenv global)/bin/pip3 install python-lsp-server[all] pyls-black pyls-isort")
-   (bash-language-server . "sudo npm i -g bash-language-server")
-   (javascript-typescript-langserver . "sudo npm i -g javascript-typescript-langserver")
+  (
+   (lsp-pylsp-server-command . "$(pyenv which pip3) install python-lsp-server[all] python-lsp-black pyls-isort")
    (sqls . "go get github.com/lighttiger2505/sqls")
-   (unified-language-server . "sudo npm i -g unified-language-server")
-   (vscode-json-languageserver . "sudo npm i -g vscode-json-languageserver"))
+   (unified-language-server . "sudo npm i -g unified-language-server"))
 
   :hook
-  ((dockerfile-mode . lsp)
-   (json-mode . lsp)
+  ((dockerfile-mode . (lambda () (ts/lsp-mode-hook 'dockerfile-ls)))
+   ;; (html-mode . lsp)
+   (js-mode . (lambda () (ts/lsp-mode-hook 'jsts-ls)))
+   (json-mode . (lambda () (ts/lsp-mode-hook 'json-ls)))
    (markdown-mode . lsp)
    (python-mode . lsp)
-   (sh-mode . lsp)
+   (sh-mode . (lambda () (ts/lsp-mode-hook 'bash-ls)))
    (sql-mode . lsp)
-   (yaml-mode . lsp))
+   (web-mode . (lambda () (ts/lsp-mode-hook 'html-ls)))
+   (yaml-mode . (lambda () (ts/lsp-mode-hook 'yamlls))))
 
   :init
-  (defun ts/get-global-pypath (exe)
-    (let ((ver (car (split-string (shell-command-to-string "pyenv global")))))
-      (concat "~/.pyenv/versions/" ver "/bin/" exe)))
-  (setq pylsp-with-pyenv (ts/get-global-pypath "pylsp"))
-  (setq isort-with-pyenv (ts/get-global-pypath "isort")))
+  (defun ts/lsp-mode-hook (server)
+    (lsp-ensure-server server)
+    (lsp))
+
+  (defun ts/pyenv-abspath (command)
+    (let ((version (car (split-string (shell-command-to-string "pyenv global")))))
+      (concat "~/.pyenv/versions/" version "/bin/" command)))
+
+  (setq lsp-pylsp-server-command (ts/pyenv-abspath "pylsp")))
 
 (use-package lsp-ui
   :custom
