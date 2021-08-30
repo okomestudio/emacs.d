@@ -183,9 +183,8 @@
   :ensure nil
 
   :bind
-  (("C-x o" . (lambda () (interactive) (other-window-or-frame 1)))
-   ("C-x p" . (lambda () (interactive) (other-window-or-frame -1)))
-   ("M-o" . 'other-window-or-frame))
+  (("M-o" . 'other-window-or-frame)
+   ("M-O" . (lambda () (interactive) (other-window-or-frame -1))))
 
   :init
   (ensure-file-from-url
