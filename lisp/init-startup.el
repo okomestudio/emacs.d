@@ -8,8 +8,15 @@
   (byte-compile-warnigns '(cl-functions)))
 
 (use-package emacs
+  :bind
+  (("C-x C-y" . (lambda ()
+                  (interactive)
+                  (insert (shell-command-to-string
+                           (expand-file-name "bin/pbocr" user-emacs-directory))))))
+
   :custom
   (async-shell-command-buffer "new-buffer")
+  (compilation-scroll-output t) ;  'first-error)
   (vc-follow-symlinks t)
 
   :init
@@ -41,18 +48,12 @@
                           'append)
         (add-to-list 'default-frame-alist '(font . "fontset-hackandjp")))))
 
-  (when window-system
-    (setq select-enable-clipboard t))
-
   (if (daemonp)
       (add-hook 'after-make-frame-functions 'ts/setup-frame)
     (ts/setup-frame (selected-frame)))
 
-  :bind
-  (("C-x C-y" . (lambda ()
-                  (interactive)
-                  (insert (shell-command-to-string
-                           (expand-file-name "bin/pbocr" user-emacs-directory)))))))
+  (when window-system
+    (setq select-enable-clipboard t)))
 
 ;; A RPC stack for the Emacs Lisp
 (use-package epc
