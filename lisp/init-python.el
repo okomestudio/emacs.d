@@ -30,6 +30,7 @@
 (use-package cython-mode
   :after python)
 
+;; https://github.com/paetzke/py-isort.el
 (use-package py-isort
   :ensure nil                           ; Use patched version till PR #21 gets merged
 
