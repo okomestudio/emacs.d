@@ -3,6 +3,9 @@
 ;;; Code:
 
 (use-package projectile
+  :custom
+  (projectile-project-search-path '(("~/github.com/" . 2)))
+
   :config
   (projectile-mode +1)
   (define-key projectile-mode-map (kbd "s-p") 'projectile-command-map)
