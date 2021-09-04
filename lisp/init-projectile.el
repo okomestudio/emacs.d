@@ -6,6 +6,10 @@
   :custom
   (projectile-project-search-path '(("~/github.com/" . 2)))
 
+  :ensure-system-package
+  ((fdfind . "sudo apt install fd-find")
+   (ag . "sudo apt-get install silversearcher-ag"))
+
   :config
   (projectile-mode +1)
   (define-key projectile-mode-map (kbd "s-p") 'projectile-command-map)
