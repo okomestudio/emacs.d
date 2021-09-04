@@ -35,9 +35,11 @@
   (set-face-foreground 'highlight-indent-guides-top-character-face "gray"))
 
 ;; A minor-mode menu for the mode line
+;; -----------------------------------
+;; https://github.com/tarsius/minions
 (use-package minions
-  :commands minions-mode
-  :init (minions-mode 1))
+  :custom (minions-direct '(projectile-mode))
+  :config (minions-mode 1))
 
 ;; Make certain buffers grossly incandescent
 (use-package solaire-mode

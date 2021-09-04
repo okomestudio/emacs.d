@@ -5,6 +5,7 @@
 (use-package projectile
   :custom
   (projectile-project-search-path '(("~/github.com/" . 2)))
+  (projectile-mode-line-function '(lambda () (format " [%s]" (projectile-project-name))))
 
   :ensure-system-package
   ((fdfind . "sudo apt install fd-find")
@@ -23,6 +24,8 @@
   (put 'projectile-project-package-cmd 'safe-local-variable #'stringp)
   (put 'projectile-project-run-cmd 'safe-local-variable #'stringp)
   (put 'projectile-project-test-cmd 'safe-local-variable #'stringp))
+
+(use-package ag)
 
 (provide 'init-projectile)
 ;;; init-projectile.el ends here
