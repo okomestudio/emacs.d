@@ -9,28 +9,30 @@
 
 (use-package emacs
   :bind
-  (("C-x C-y" . (lambda ()
-                  (interactive)
-                  (insert (shell-command-to-string
-                           (expand-file-name "bin/pbocr" user-emacs-directory))))))
+  (("C-x C-y" . ts/pbocr))
 
   :custom
   (async-shell-command-buffer "new-buffer")
-  (compilation-scroll-output t) ;  'first-error)
+  (compilation-scroll-output t)
   (vc-follow-symlinks t)
 
   :init
-  (defun ts/setup-frame (frame)
-    (progn
-      (when (display-graphic-p)
-        (setq x-select-request-type '(UTF8_STRING COMPOUND_TEXT TEXT STRING)))
+  (defun ts/pbocr ()
+    "Run OCR on the image in clipboard and paste the text."
+    (interactive)
+    (insert (shell-command-to-string
+             (expand-file-name "bin/pbocr" user-emacs-directory))))
 
+  (defun ts/setup-frame (frame)
+    (when (display-graphic-p)
+      (setq x-select-request-type '(UTF8_STRING COMPOUND_TEXT TEXT STRING)))
+
+    (when window-system
       ;; Fonts
       (defun ts/get-display-width ()
         "Get the pixel with per display."
-        (when window-system
-          (let ((monn (length (display-monitor-attributes-list))))
-            (/ (display-pixel-width) monn))))
+        (let ((monn (length (display-monitor-attributes-list))))
+          (/ (display-pixel-width) monn)))
 
       (defvar ts/display-width (ts/get-display-width))
       (defvar ts/font-size (if (and ts/display-width

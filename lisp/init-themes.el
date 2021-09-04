@@ -47,7 +47,7 @@
 (use-package pos-tip
   :init
   (setq pos-tip-background-color "white")
-  (if ts/font-size
+  (if (and (boundp 'ts/font-size) ts/font-size)
       (setq pos-tip-internal-border-width
             (truncate (* ts/font-size 1.5)))))
 
