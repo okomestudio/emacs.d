@@ -2,24 +2,11 @@
 ;;; Commentary:
 ;;; Code:
 
-(use-package ob-typescript)
-
 (use-package org
   :ensure org-plus-contrib
 
   :bind
   (("C-c l" . 'org-store-link))
-
-  :config
-  (plist-put org-format-latex-options :scale 1.5)
-
-  ;; Add a few characters usable for bounding emphasis markup
-  (setcar org-emphasis-regexp-components "-—[:space:]('\"{\x200B")
-  (setcar (nthcdr 1 org-emphasis-regexp-components) "-—[:space:].,:!?;'\")}\\[\x200B")
-  (org-set-emph-re 'org-emphasis-regexp-components org-emphasis-regexp-components)
-
-  (add-to-list
-   'org-src-lang-modes '("plantuml" . plantuml))
 
   :custom
   ((fill-column 80)
@@ -41,6 +28,19 @@
   :hook
   ((org-mode . (lambda () (org-superstar-mode 1)))
    (org-mode . auto-fill-mode))
+
+  :config
+  (plist-put org-format-latex-options :scale 1.5)
+
+  ;; Add a few characters usable for bounding emphasis markup
+  (setcar org-emphasis-regexp-components "-—[:space:]('\"{\x200B")
+  (setcar (nthcdr 1 org-emphasis-regexp-components) "-—[:space:].,:!?;'\")}\\[\x200B")
+  (org-set-emph-re 'org-emphasis-regexp-components org-emphasis-regexp-components)
+
+  ;; org-confluence-export-as-confluence for Confluence export
+  (require 'ox-confluence)
+
+  (add-to-list 'org-src-lang-modes '("plantuml" . plantuml))
 
   :init
   (defun org-agenda-gather-files ()
@@ -69,8 +69,9 @@
   (after-init-hook . org-roam-mode))
 
 (use-package org-superstar
-  :custom
-  (org-superstar-headline-bullets-list '("◉" "🞛" "○" "▷")))
+  :custom (org-superstar-headline-bullets-list '("◉" "🞛" "○" "▷")))
+
+(use-package ob-typescript)
 
 (provide 'init-org)
 ;;; init-org.el ends here
