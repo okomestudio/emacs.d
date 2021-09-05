@@ -2,13 +2,21 @@
 ;;; Commentary:
 ;;; Code:
 
-(use-package professional-theme
-  :disabled t
-  :config (load-theme 'professional t))
+(defun ts/configure-theme (theme)
+  "Configure and load THEME."
+  (if (daemonp)
+      (add-hook 'after-make-frame-functions
+                (lambda (frame)
+                  (with-selected-frame frame
+                    (load-theme theme t))))
+    (load-theme theme t)))
+
+;; (use-package professional-theme
+;;   :init (ts/configure-theme 'professional))
 
 (use-package spacemacs-common
   :ensure spacemacs-theme
-  :config (load-theme 'spacemacs-light t))
+  :init (ts/configure-theme 'spacemacs-light))
 
 (use-package all-the-icons
   :init
