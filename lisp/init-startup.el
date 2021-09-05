@@ -51,7 +51,10 @@
         (add-to-list 'default-frame-alist '(font . "fontset-hackandjp")))))
 
   (if (daemonp)
-      (add-hook 'after-make-frame-functions 'ts/setup-frame)
+      (add-hook 'after-make-frame-functions
+                (lambda (frame)
+                  (with-selected-frame frame
+                    (ts/setup-frame frame))))
     (ts/setup-frame (selected-frame)))
 
   (when window-system
