@@ -60,6 +60,33 @@
   (when window-system
     (setq select-enable-clipboard t))
 
+  ;; hack-dir-local-variables
+  ;; ------------------------
+  ;; Add an advice so that .dir-locals.el are looked for upward in the directory hierarchy.
+  (defvar walk-dir-locals-upward t
+    "Look for .dir-locals.el up in directory hierarchy.
+
+If non-nil, evaluate .dir-locals.el files starting in the current
+directory and going up. Otherwise they will be evaluated from the
+top down to the current directory.")
+
+  (defun hack-dir-local-variables-advice (func)
+    (if walk-dir-locals-upward
+        (let ((dir-locals-file ".dir-locals.el")
+              (original-buffer-file-name (buffer-file-name))
+              (nesting (ts/locate-dominating-files
+                        (or (buffer-file-name) default-directory) dir-locals-file)))
+          (unwind-protect
+              (dolist (name nesting)
+                ;; make it look like a file higher up in the hierarchy is visited
+                (setq buffer-file-name (concat name dir-locals-file))
+                (funcall func))
+            (setq buffer-file-name original-buffer-file-name)))
+      (funcall func)))
+
+  (advice-add 'hack-dir-local-variables :around #'hack-dir-local-variables-advice)
+
+
   ;; apropos
   ;; -------
 
