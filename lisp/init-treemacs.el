@@ -26,7 +26,7 @@
   :config
   (when window-system
     (setq treemacs-indentation 2
-          treemacs-is-never-other-window t
+          treemacs-is-never-other-window nil
           treemacs-space-between-root-nodes nil
           treemacs-width 45))
 
