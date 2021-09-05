@@ -60,8 +60,9 @@
   (when window-system
     (setq select-enable-clipboard t))
 
-  ;; Custom apropos key bindings
-  ;; ---------------------------
+  ;; apropos
+  ;; -------
+
   ;; http://www.masteringemacs.org/articles/2011/08/04/full-text-searching-info-mode-apropos/#comment-1409
   (global-set-key (kbd "C-h a") 'ts/apropos-prefix)
   (define-prefix-command 'ts/apropos-prefix nil "Apropos (a,d,f,i,l,v,C-v)")
@@ -72,7 +73,8 @@
   (define-key ts/apropos-prefix (kbd "i") 'info-apropos)
   (define-key ts/apropos-prefix (kbd "l") 'apropos-library)
   (define-key ts/apropos-prefix (kbd "v") 'apropos-variable)
-  (define-key ts/apropos-prefix (kbd "C-v") 'apropos-value))
+  (define-key ts/apropos-prefix (kbd "C-v") 'apropos-value)
+  (setq apropos-sort-by-scores t))
 
 ;; A RPC stack for the Emacs Lisp
 (use-package epc
@@ -165,7 +167,6 @@
 
   (setq-default indent-tabs-mode nil)
 
-  (setq apropos-sort-by-scores t)
   (setq case-fold-search t)             ; in C source code
   (setq sentence-end-double-space nil)  ; in paragraphs.el
   (setq tab-always-indent t)            ; in indent.el
