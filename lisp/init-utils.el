@@ -36,6 +36,17 @@ detail."
    (concat "https://raw.githubusercontent.com/" src) dest))
 
 
+(defun parent-directory (path)
+  "Get the parent directory of PATH.
+
+This function effectively removes the last component from PATH,
+regardless of it being a file or a directory. The returned parent
+directory always ends with a '/' character. The function returns
+nil if no parent directory exists (i.e., PATH points to root)."
+  (unless (equal "/" path)
+    (file-name-directory (directory-file-name path))))
+
+
 (defun remove-trailing-whitespaces-on-save ()
   "Remove trailing whitespaces on save.
 
