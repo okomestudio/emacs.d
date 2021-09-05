@@ -67,5 +67,20 @@ nil if no parent directory exists (i.e., PATH points to root)."
   (find-font (font-spec :name font-name)))
 
 
+(defun ts/locate-dominating-files (file name)
+  "Look upward in directory hierarchy from FILE to locate ones containing NAME.
+
+This is an extended version `locate-dominating-file`, which does
+not stop at the first occurrence of NAME and continues looking
+upward."
+  (let* ((dir-locals-file (locate-dominating-file file name))
+         (dir-locals-files '()))
+    (while dir-locals-file
+      (progn
+        (add-to-list 'dir-locals-files dir-locals-file)
+        (setq dir-locals-file (locate-dominating-file
+                               (parent-directory dir-locals-file) name))))
+    dir-locals-files))
+
 (provide 'init-utils)
 ;;; init-utils.el ends here
