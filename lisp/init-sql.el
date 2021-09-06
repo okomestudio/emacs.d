@@ -4,7 +4,10 @@
 
 (use-package sql
   :config
-  (sql-set-product 'postgres))
+  (sql-set-product 'postgres)
+
+  (put 'sql-connection-alist 'safe-local-variable #'listp)
+  (put 'sql-postgres-program 'safe-local-variable #'stringp))
 
 (use-package sqlformat
   :after (sql)
