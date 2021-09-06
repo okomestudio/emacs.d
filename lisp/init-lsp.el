@@ -51,18 +51,24 @@
 
   (setq lsp-pylsp-server-command (ts/pyenv-abspath "pylsp")))
 
-(use-package keytar
-  :ensure-system-package
-  (keytar-cli . "sudo npm install -g @emacs-grammarly/keytar-cli"))
-
+;; https://github.com/emacs-grammarly/lsp-grammarly
 (use-package lsp-grammarly
   :after (keytar)
+  :disabled t
+
+  :custom
+  (lsp-grammarly-auto-activate nil)
 
   :ensure-system-package
   (unofficial-grammarly-language-server . "sudo npm i -g @emacs-grammarly/unofficial-grammarly-language-server")
 
   :hook
-  (text-mode . (lambda () (require 'lsp-grammarly) (lsp))))
+  (text-mode . (lambda () (require 'lsp-grammarly) (lsp)))
+
+  :init
+  (use-package keytar
+    :ensure-system-package
+    (keytar . "sudo npm install -g @emacs-grammarly/keytar-cli")))
 
 (use-package lsp-ui
   :custom
