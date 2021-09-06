@@ -68,6 +68,9 @@
   :hook
   (after-init-hook . org-roam-mode))
 
+(use-package org-sticky-header
+  :init (org-sticky-header-mode +1))
+
 (use-package org-superstar
   :custom (org-superstar-headline-bullets-list '("◉" "🞛" "○" "▷")))
 
