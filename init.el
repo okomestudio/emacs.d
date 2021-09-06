@@ -77,6 +77,11 @@
         auto-package-update-interval 7)
   (auto-package-update-maybe))
 
+;; quelpa - https://github.com/quelpa/quelpa
+(unless (package-installed-p 'quelpa-use-package)
+  (package-install 'quelpa-use-package))
+(require 'quelpa-use-package)
+
 
 ;; LOAD MODULES UNDER LISP DIRECTORY
 (require 'init-startup)
