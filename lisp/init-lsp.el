@@ -24,8 +24,7 @@
   (lsp-pylsp-plugins-pydocstyle-enabled t)
 
   :ensure-system-package
-  (
-   ("~/.pyenv/versions/3.8.2/bin/pylsp" . "$(pyenv which pip3) install python-lsp-server[all] python-lsp-black pyls-isort")
+  (("~/.pyenv/versions/3.8.2/bin/pylsp" . "$(pyenv which pip3) install python-lsp-server[all] python-lsp-black pyls-isort")
    (sqls . "go get github.com/lighttiger2505/sqls")
    (unified-language-server . "sudo npm i -g unified-language-server"))
 
@@ -51,6 +50,19 @@
       (expand-file-name (concat "~/.pyenv/versions/" version "/bin/" command))))
 
   (setq lsp-pylsp-server-command (ts/pyenv-abspath "pylsp")))
+
+(use-package keytar
+  :ensure-system-package
+  (keytar-cli . "sudo npm install -g @emacs-grammarly/keytar-cli"))
+
+(use-package lsp-grammarly
+  :after (keytar)
+
+  :ensure-system-package
+  (unofficial-grammarly-language-server . "sudo npm i -g @emacs-grammarly/unofficial-grammarly-language-server")
+
+  :hook
+  (text-mode . (lambda () (require 'lsp-grammarly) (lsp))))
 
 (use-package lsp-ui
   :custom
