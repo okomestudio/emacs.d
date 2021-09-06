@@ -19,7 +19,10 @@ auto-save-list
 bookmarks
 custom.el
 elpa
+eshell
 history
 projectile-bookmarks.eld
+projectile.cache
 snippets
 transient
+url
