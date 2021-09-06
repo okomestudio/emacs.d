@@ -103,6 +103,13 @@ top down to the current directory.")
   (define-key ts/apropos-prefix (kbd "C-v") 'apropos-value)
   (setq apropos-sort-by-scores t))
 
+;; topsy.el - Simple sticky header showing definition beyond top of window
+;; -----------------------------------------------------------------------
+;; https://github.com/alphapapa/topsy.el
+(use-package topsy
+  :quelpa (topsy :fetcher github :repo "alphapapa/topsy.el")
+  :hook (prog-mode . topsy-mode))
+
 ;; A RPC stack for the Emacs Lisp
 (use-package epc
   :ensure t)
