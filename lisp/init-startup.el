@@ -107,6 +107,7 @@ top down to the current directory.")
 ;; -----------------------------------------------------------------------
 ;; https://github.com/alphapapa/topsy.el
 (use-package topsy
+  :disabled t
   :quelpa (topsy :fetcher github :repo "alphapapa/topsy.el")
   :hook (prog-mode . topsy-mode))
 
