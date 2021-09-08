@@ -23,32 +23,39 @@
     (insert (shell-command-to-string
              (expand-file-name "bin/pbocr" user-emacs-directory))))
 
+  (defun ts/create-cjk-hybrid-fontset (size name)
+    "Create a CJK hybrid fontset of SIZE named fontset-NAME
+
+See https://knowledge.sakura.ad.jp/8494/"
+    (let* ((font-spec (format "Hack:weight=normal:slant=normal:size=%d" size))
+           (fontset-name (format "fontset-%s" name)))
+      (create-fontset-from-ascii-font font-spec
+                                      nil
+                                      name)
+      (set-fontset-font fontset-name
+                        'unicode
+                        (font-spec :family "Noto Sans Mono CJK JP")
+                        nil
+                        'append)
+      fontset-name))
+
   (defun ts/setup-frame (frame)
     (when (display-graphic-p)
       (setq x-select-request-type '(UTF8_STRING COMPOUND_TEXT TEXT STRING)))
 
     (when window-system
-      ;; Fonts
       (defun ts/get-display-width ()
         "Get the pixel with per display."
         (let ((monn (length (display-monitor-attributes-list))))
           (/ (display-pixel-width) monn)))
 
       (defvar ts/display-width (ts/get-display-width))
-      (defvar ts/font-size (if (and ts/display-width
-                                    (> ts/display-width 2550))
+      (defvar ts/font-size (if (and ts/display-width (> ts/display-width 2550))
                                18 12))
 
-      (when ts/font-size
-        (create-fontset-from-ascii-font
-         (format "Hack:weight=normal:slant=normal:size=%d" ts/font-size)
-         nil "hackandjp")
-        (set-fontset-font "fontset-hackandjp"
-                          'unicode
-                          (font-spec :family "Noto Sans Mono CJK JP")
-                          nil
-                          'append)
-        (add-to-list 'default-frame-alist '(font . "fontset-hackandjp")))))
+      (let ((fontset-name (ts/create-cjk-hybrid-fontset ts/font-size "hackandjp")))
+        (add-to-list 'default-frame-alist `(font . ,fontset-name))
+        (set-frame-font fontset-name nil t))))
 
   (if (daemonp)
       (add-hook 'after-make-frame-functions
