@@ -13,6 +13,14 @@
   ;;                   :server-id 'pylsp-remote))
 
   :custom
+
+  ;; TODO: Start the service on start.
+  ;;
+  ;; Run: docker container run --name explainshell --restart always \
+  ;;          -p 5023:5000 -d spaceinvaderone/explainshell
+  (lsp-bash-explainshell-endpoint "http://localhost:5023")
+  (lsp-bash-highlight-parsing-errors t)
+
   (lsp-pylsp-configuration-sources ["flake8"])
   ;; (lsp-pylsp-disable-warning t)
   (lsp-pylsp-plugins-flake8-enabled t)
