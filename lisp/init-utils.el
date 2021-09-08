@@ -3,6 +3,11 @@
 ;;; Code:
 
 
+(defun debug-message (text)
+  "Print a debug message TEXT with timestamp."
+  (message "%s: %s" (format-time-string "%FT%H:%M:%S.%3N" (current-time)) text))
+
+
 (defun ensure-directory-exists (path)
   "Ensure the directory exists at PATH."
   (if (not (file-directory-p path))
