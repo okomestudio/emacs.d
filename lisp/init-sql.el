@@ -3,6 +3,9 @@
 ;;; Code:
 
 (use-package sql
+  :hook
+  (sql-interactive-mode . (lambda () (setq truncate-lines t)))
+
   :config
   (sql-set-product 'postgres)
 
