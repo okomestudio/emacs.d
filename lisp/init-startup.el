@@ -2,11 +2,6 @@
 ;;; Commentary:
 ;;; Code:
 
-(use-package bytecomp
-  :ensure nil
-  :custom
-  (byte-compile-warnigns '(cl-functions)))
-
 (use-package emacs
   :bind
   (("C-x C-y" . ts/pbocr))
@@ -15,8 +10,21 @@
   (async-shell-command-buffer "new-buffer")
   (compilation-scroll-output t)
   (vc-follow-symlinks t)
+  (x-select-request-type '(UTF8_STRING COMPOUND_TEXT TEXT STRING))
 
   :init
+  (defun ts/apply-if-gui (&rest action)
+    "Apply ACTION if we are in a GUI."
+    (if (daemonp)
+        (add-hook 'server-after-make-frame-hook
+                  (lambda ()
+                    (let ((frame (selected-frame)))
+                      (select-frame frame)
+                      (if (display-graphic-p frame)
+                          (apply action)))))
+      (if (display-graphic-p)
+          (apply action))))
+
   (defun ts/pbocr ()
     "Run OCR on the image in clipboard and paste the text."
     (interactive)
@@ -27,42 +35,32 @@
     "Create a CJK hybrid fontset of SIZE named fontset-NAME
 
 See https://knowledge.sakura.ad.jp/8494/"
-    (let* ((font-spec (format "Hack:weight=normal:slant=normal:size=%d" size))
-           (fontset-name (format "fontset-%s" name)))
-      (create-fontset-from-ascii-font font-spec
-                                      nil
-                                      name)
+    (let ((font-spec (format "Hack:weight=normal:slant=normal:size=%d" size))
+          (fontset-name (format "fontset-%s" name)))
+      (create-fontset-from-ascii-font font-spec nil name)
+      (ts/set-fallback-cfk-font fontset-name)
+      fontset-name))
+
+  (defun ts/set-fallback-cjk-font (fontset-name)
       (set-fontset-font fontset-name
                         'unicode
                         (font-spec :family "Noto Sans Mono CJK JP")
                         nil
-                        'append)
-      fontset-name))
+                        'append))
 
-  (defun ts/setup-frame (frame)
-    (when (display-graphic-p)
-      (setq x-select-request-type '(UTF8_STRING COMPOUND_TEXT TEXT STRING)))
+  (defun ts/get-display-width ()
+    "Get the pixel with per display."
+    (let ((monn (length (display-monitor-attributes-list))))
+      (/ (display-pixel-width) monn)))
 
-    (when window-system
-      (defun ts/get-display-width ()
-        "Get the pixel with per display."
-        (let ((monn (length (display-monitor-attributes-list))))
-          (/ (display-pixel-width) monn)))
+  (defun ts/setup-frame ()
+    (defvar ts/display-width (ts/get-display-width))
+    (defvar ts/font-size (if (and ts/display-width (> ts/display-width 2550)) 18 11))
+    (defvar ts/default-font (format "Hack %d" ts/font-size))
+    (set-frame-font ts/default-font)
+    (ts/set-fallback-cjk-font t))
 
-      (defvar ts/display-width (ts/get-display-width))
-      (defvar ts/font-size (if (and ts/display-width (> ts/display-width 2550))
-                               18 12))
-
-      (let ((fontset-name (ts/create-cjk-hybrid-fontset ts/font-size "hackandjp")))
-        (add-to-list 'default-frame-alist `(font . ,fontset-name))
-        (set-frame-font fontset-name nil t))))
-
-  (if (daemonp)
-      (add-hook 'after-make-frame-functions
-                (lambda (frame)
-                  (with-selected-frame frame
-                    (ts/setup-frame frame))))
-    (ts/setup-frame (selected-frame)))
+  (ts/apply-if-gui 'ts/setup-frame)
 
   (when window-system
     (setq select-enable-clipboard t))
@@ -114,9 +112,14 @@ top down to the current directory.")
 ;; -----------------------------------------------------------------------
 ;; https://github.com/alphapapa/topsy.el
 (use-package topsy
-  :disabled t
+  :disabled t                           ; Because of conflict with lsp
   :quelpa (topsy :fetcher github :repo "alphapapa/topsy.el")
   :hook (prog-mode . topsy-mode))
+
+(use-package bytecomp
+  :ensure nil
+  :custom
+  (byte-compile-warnigns '(cl-functions)))
 
 ;; A RPC stack for the Emacs Lisp
 (use-package epc
