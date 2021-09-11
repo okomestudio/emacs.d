@@ -2,7 +2,11 @@
 ;;; Commentary:
 ;;; Code:
 
-(use-package dockerfile-mode)
+(use-package docker
+  :defer t)
+
+(use-package dockerfile-mode
+  :defer t)
 
 (provide 'init-docker)
 ;;; init-docker.el ends here
