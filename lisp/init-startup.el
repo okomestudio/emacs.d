@@ -213,6 +213,9 @@ top down to the current directory.")
   :custom (show-paren-delay 0)
   :config (show-paren-mode +1))
 
+(use-package restart-emacs
+  :defer t)
+
 ;; so-long.el --- Say farewell to performance problems with minified code.
 (use-package so-long
   :ensure nil
