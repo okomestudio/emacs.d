@@ -23,32 +23,6 @@
   (if (not (file-exists-p "~/.local/share/fonts/all-the-icons.ttf"))
       (all-the-icons-install-fonts +1)))
 
-(use-package highlight-indent-guides
-  :disabled t
-
-  :hook
-  ((emacs-lisp-mode python-mode sh-mode) . highlight-indent-guides-mode)
-
-  :config
-  ;; (setq highlight-indent-guides-auto-enabled nil)
-  ;; (set-face-foreground 'highlight-indent-guides-character-face "dimgray")
-  (setq highlight-indent-guides-method 'character
-        highlight-indent-guides-character ?\┆
-        highlight-indent-guides-responsive 'top
-        highlight-indent-guides-delay 0
-        highlight-indent-guides-auto-enabled nil)
-  (set-face-background 'highlight-indent-guides-character-face "light yellow")
-  (set-face-foreground 'highlight-indent-guides-character-face "light yellow")
-  (set-face-background 'highlight-indent-guides-top-character-face "light yellow")
-  (set-face-foreground 'highlight-indent-guides-top-character-face "gray"))
-
-;; A minor-mode menu for the mode line
-;; -----------------------------------
-;; https://github.com/tarsius/minions
-(use-package minions
-  :custom (minions-direct '(projectile-mode))
-  :config (minions-mode 1))
-
 ;; Make certain buffers grossly incandescent
 (use-package solaire-mode
   :init (solaire-global-mode +1))
@@ -65,6 +39,52 @@
 ;; their depth (github.com/Fanael/rainbow-delimiters)
 (use-package rainbow-delimiters
   :hook (prog-mode . rainbow-delimiters-mode))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; MODE-LINE
+
+;; A fancy and fast mode-line inspired by minimalism design
+;; (github.com/seagle0128/doom-modeline)
+(use-package doom-modeline
+  :demand t
+
+  :custom
+  (doom-modeline-buffer-file-name-style 'truncate-upto-project)
+  (doom-modeline-height 1)
+  (doom-modeline-minor-modes t)
+  (doom-modeline-vcs-max-length 50)
+
+  :preface
+  (defun my-doom-modeline-setup ()
+    (doom-modeline-mode +1))
+
+  :init
+  (my-doom-modeline-setup))
+
+;; A minor-mode menu for the mode line (github.com/tarsius/minions)
+(use-package minions
+  :custom (minions-direct '(projectile-mode))
+  :config (minions-mode 1))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; MISC.
+
+(use-package highlight-indent-guides
+  :disabled t
+  :hook ((prog-mode) . highlight-indent-guides-mode)
+
+  :config
+  ;; (setq highlight-indent-guides-auto-enabled nil)
+  ;; (set-face-foreground 'highlight-indent-guides-character-face "dimgray")
+  (setq highlight-indent-guides-method 'character
+        highlight-indent-guides-character ?\┆
+        highlight-indent-guides-responsive 'top
+        highlight-indent-guides-delay 0
+        highlight-indent-guides-auto-enabled nil)
+  (set-face-background 'highlight-indent-guides-character-face "light yellow")
+  (set-face-foreground 'highlight-indent-guides-character-face "light yellow")
+  (set-face-background 'highlight-indent-guides-top-character-face "light yellow")
+  (set-face-foreground 'highlight-indent-guides-top-character-face "gray"))
 
 (provide 'init-themes)
 ;;; init-themes.el ends here
