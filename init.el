@@ -89,6 +89,7 @@
 (require 'init-helm)
 (require 'init-ini)
 (require 'init-json)
+(require 'init-keychain)
 (require 'init-lsp)
 (require 'init-markdown)
 (require 'init-minibuffer)
