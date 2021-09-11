@@ -6,6 +6,10 @@
   :ensure nil
   :hook ((emacs-lisp-mode . eldoc-mode)))
 
+(use-package lispy
+  :defer t
+  :hook ((emacs-lisp-mode . lispy-mode)))
+
 (use-package paredit
   :defer t
   :hook ((emacs-lisp-mode . my/paredit-hook))
