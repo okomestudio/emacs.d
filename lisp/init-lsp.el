@@ -41,6 +41,7 @@
    ;; (html-mode . lsp)
    (js-mode . (lambda () (ts/lsp-mode-hook 'jsts-ls)))
    (json-mode . (lambda () (ts/lsp-mode-hook 'json-ls)))
+   (lsp-mode . lsp-enable-which-key-integration)
    (markdown-mode . lsp)
    (python-mode . lsp)
    (sh-mode . (lambda () (ts/lsp-mode-hook 'bash-ls)))
