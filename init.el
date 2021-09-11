@@ -82,6 +82,7 @@
 (require 'init-edit-server)
 (require 'init-editing-utils)
 (require 'init-elisp)
+(require 'init-faces)
 (require 'init-flycheck)
 (require 'init-git)
 (require 'init-google-translate)
