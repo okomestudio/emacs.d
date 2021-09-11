@@ -7,27 +7,12 @@
 ;;
 ;;; Code:
 
-;; Set to t when debugging startup issues:
-(setq debug-on-error t)
-
 ;; Uncomment for profiling (also see the end of file)
 ;; (require 'profiler)
 ;; (profiler-start 'cpu)
 
-(let ((minver "27.1"))
-  (when (version< emacs-version minver)
-    (error "The minimum Emacs version for init.el is Version %s" minver)))
 
-
-;; Reduce GC usage while initialization
-(let ((default-gc-cons-threshold 800000) ; 800 kb is the Emacs default (2021-08-01)
-      (init-gc-cons-threshold most-positive-fixnum))
-  (setq gc-cons-threshold init-gc-cons-threshold)
-  (add-hook 'emacs-startup-hook
-            (lambda () (setq gc-cons-threshold default-gc-cons-threshold))))
-
-
-;; custom.el is for variables configured interactively
+;; custom.el is for variables configured interactively.
 (setq custom-file (concat user-emacs-directory "custom.el"))
 (unless (file-exists-p custom-file)
   (write-region "" nil custom-file))
@@ -51,10 +36,9 @@
 (require 'package)
 
 (defvar package-archives)
-(setq package-archives
-      '(("gnu" . "https://elpa.gnu.org/packages/")
-        ("melpa" . "https://melpa.org/packages/")
-        ("org" . "https://orgmode.org/elpa/")))
+(setq package-archives '(("gnu" . "https://elpa.gnu.org/packages/")
+                         ("melpa" . "https://melpa.org/packages/")
+                         ("org" . "https://orgmode.org/elpa/")))
 
 (unless (bound-and-true-p package--initialized)
   (package-initialize))
