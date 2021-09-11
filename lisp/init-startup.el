@@ -8,7 +8,14 @@
 
   :custom
   (async-shell-command-buffer "new-buffer")
+  (case-fold-search t)
   (compilation-scroll-output t)
+  (inhibit-splash-screen nil)
+  (inhibit-startup-screen nil)
+  (load-prefer-newer t)
+  (read-process-output-max (* 1 1024 1024)) ; 1 mb
+  (ring-bell-function 'ignore)              ; Disable beeping (in C source code)
+  (tab-width 2)
   (vc-follow-symlinks t)
   (x-select-request-type '(UTF8_STRING COMPOUND_TEXT TEXT STRING))
 
@@ -65,6 +72,8 @@ See https://knowledge.sakura.ad.jp/8494/"
   (when window-system
     (setq select-enable-clipboard t))
 
+  (setq-default scroll-bar-width 6)
+
   ;; hack-dir-local-variables
   ;; ------------------------
   ;; Add an advice so that .dir-locals.el are looked for upward in the directory hierarchy.
@@ -108,58 +117,7 @@ top down to the current directory.")
   (define-key ts/apropos-prefix (kbd "C-v") 'apropos-value)
   (setq apropos-sort-by-scores t))
 
-;; topsy.el - Simple sticky header showing definition beyond top of window
-;; -----------------------------------------------------------------------
-;; https://github.com/alphapapa/topsy.el
-(use-package topsy
-  :disabled t                           ; Because of conflict with lsp
-  :quelpa (topsy :fetcher github :repo "alphapapa/topsy.el")
-  :hook (prog-mode . topsy-mode))
-
-(use-package bytecomp
-  :ensure nil
-  :custom
-  (byte-compile-warnigns '(cl-functions)))
-
-;; A RPC stack for the Emacs Lisp
-(use-package epc
-  :ensure t)
-
-(use-package files
-  :ensure nil
-
-  :custom
-  (make-backup-files nil)
-  (backup-by-copying t)
-  (create-lockfiles nil)
-  (backup-directory-alist '(("." . ts/backup-cache-dir)))
-  ;(auto-save-file-name-transforms '((".*" ts/backup-cache-dir t)))
-
-  :init
-  (defconst ts/backup-cache-dir (expand-file-name "~/.cache/emacs-backups-2"))
-  (ensure-directory-exists ts/backup-cache-dir))
-
-(use-package fringe
-  :ensure nil
-  :init
-  (fringe-mode 0))
-
-(use-package hippie-exp
-  :ensure nil
-  :init
-  (global-set-key [remap dabbrev-expand] 'hippie-expand))
-
-(use-package imenu
-  :ensure nil
-  :init
-  (global-set-key (kbd "M-i") 'imenu))
-
-(use-package mwheel
-  :ensure nil
-  :custom
-  (mouse-wheel-progressive-speed t)
-  (mouse-wheel-scroll-amount '(3 ((shift) . 1))))
-
+;; simple.el --- basic editing commands for Emacs
 (use-package simple
   :ensure nil
 
@@ -169,6 +127,12 @@ top down to the current directory.")
    ("C-c C-x *" . 'ts/insert-zero-width-space)
    ("C-o" . 'ts/newline-below)
    ("M-Q" . 'ts/unfill-paragraph))
+
+  :custom
+  (save-interprogram-paste-before-kill t)
+  (sentence-end-double-space nil)       ; in paragraphs.el
+  (size-indication-mode t)
+  (tab-always-indent t)                 ; in indent.el
 
   :hook
   (before-save . delete-trailing-whitespace)
@@ -210,28 +174,100 @@ top down to the current directory.")
           (emacs-lisp-docstring-fill-column t))
       (fill-paragraph nil region)))
 
-  (setq-default indent-tabs-mode nil)
-
-  (setq case-fold-search t)             ; in C source code
-  (setq sentence-end-double-space nil)  ; in paragraphs.el
-  (setq tab-always-indent t)            ; in indent.el
-  (setq tab-width 2)                    ; in C source code
-  )
-
-(use-package startup
-  :ensure nil
-  :no-require t
-  :custom
   (column-number-mode t)
-  (inhibit-splash-screen nil)
-  (inhibit-startup-screen nil)
-  (size-indication-mode t)
+  (setq-default indent-tabs-mode nil))
+
+(use-package files
+  :ensure nil
+
+  :custom
+  (auto-save-default nil)
+  ;; (auto-save-file-name-transforms '((".*" ts/backup-cache-dir t)))
+  (backup-by-copying t)
+  (backup-directory-alist '(("." . ts/backup-cache-dir)))
+  (create-lockfiles nil)
+  (make-backup-files nil)
+  (require-final-newline nil)
 
   :init
-  (setq-default scroll-bar-width 6)
-  (setq ring-bell-function 'ignore)     ; Disable beeping (in C source code)
+  (defconst ts/backup-cache-dir (expand-file-name "~/.cache/emacs-backups"))
+  (ensure-directory-exists ts/backup-cache-dir))
+
+;; imenu.el --- framework for mode-specific buffer indexes
+(use-package imenu
+  :ensure nil
+  :init (global-set-key (kbd "M-i") 'imenu))
+
+;; mule.el --- basic commands for multilingual environment
+(use-package mule
+  :ensure nil
+
+  :config
   (prefer-coding-system 'utf-8)         ; Use UTF-8 when possible
-)
+  (set-default-coding-systems 'utf-8)
+  (set-language-environment "UTF-8"))
+
+;; paren.el --- highlight matching paren
+(use-package paren
+  :ensure nil
+  :custom (show-paren-delay 0)
+  :config (show-paren-mode +1))
+
+;; so-long.el --- Say farewell to performance problems with minified code.
+(use-package so-long
+  :ensure nil
+  :config (global-so-long-mode +1))
+
+;; Displays available keybindings in popup (github.com/justbur/emacs-which-key)
+(use-package which-key
+  :custom
+  (which-key-popup-type 'side-window)
+  (which-key-side-window-location '(right bottom))
+
+  :config
+  (which-key-mode +1))
+
+
+
+
+;; topsy.el - Simple sticky header showing definition beyond top of window
+;; -----------------------------------------------------------------------
+;; https://github.com/alphapapa/topsy.el
+(use-package topsy
+  :disabled t                           ; Because of conflict with lsp
+  :quelpa (topsy :fetcher github :repo "alphapapa/topsy.el")
+  :hook (prog-mode . topsy-mode))
+
+(use-package bytecomp
+  :ensure nil
+  :custom
+  (byte-compile-warnigns '(cl-functions)))
+
+;; A RPC stack for the Emacs Lisp
+(use-package epc
+  :ensure t)
+
+(use-package fringe
+  :ensure nil
+  :init
+  (fringe-mode 0))
+
+(use-package hippie-exp
+  :ensure nil
+  :init
+  (global-set-key [remap dabbrev-expand] 'hippie-expand))
+
+(use-package mwheel
+  :ensure nil
+  :custom
+  (mouse-wheel-progressive-speed t)
+  (mouse-wheel-scroll-amount '(3 ((shift) . 1))))
+
+;; (use-package startup
+;;   :ensure nil
+;;   :no-require t
+;;   :init
+;;   (setq-default scroll-bar-width 6))
 
 (use-package tooltip
   :ensure nil
@@ -280,10 +316,11 @@ top down to the current directory.")
 ;; Smart garbage collection
 (use-package gcmh
   :defer nil
+  :hook (after-init . gcmh-mode)
+
   :custom
-  (gcmh-mode 1)
-  (gcmh-idle-delay 5)
-  (gcmh-high-cons-threshold (* 16 1024 1024)))
+  (gcmh-high-cons-threshold (* 16 1024 1024))
+  (gcmh-idle-delay 5))
 
 (provide 'init-startup)
 ;;; init-startup.el ends here

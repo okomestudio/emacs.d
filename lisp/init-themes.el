@@ -61,9 +61,5 @@
       (setq pos-tip-internal-border-width
             (truncate (* ts/font-size 1.5)))))
 
-;; Display available keybindings in popup (github.com/justbur/emacs-which-key)
-(use-package which-key
-  :config (which-key-mode))
-
 (provide 'init-themes)
 ;;; init-themes.el ends here
