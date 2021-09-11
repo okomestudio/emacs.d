@@ -61,5 +61,10 @@
       (setq pos-tip-internal-border-width
             (truncate (* ts/font-size 1.5)))))
 
+;; Highlights delimiters such as parentheses, brackets or braces according to
+;; their depth (github.com/Fanael/rainbow-delimiters)
+(use-package rainbow-delimiters
+  :hook (prog-mode . rainbow-delimiters-mode))
+
 (provide 'init-themes)
 ;;; init-themes.el ends here
