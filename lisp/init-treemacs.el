@@ -13,7 +13,7 @@
   :custom
   (treemacs-collapse-dirs 0)
   (treemacs-file-event-delay 500)
-  (treemacs-follow-after-init t)
+  (treemacs-follow-after-init nil)
   (treemacs-missing-project-action 'keep)
   (treemacs-no-png-images nil)
   (treemacs-recenter-after-project-expand 'on-visibility)
