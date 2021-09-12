@@ -8,7 +8,11 @@
 
 (use-package lispy
   :defer t
-  :hook ((emacs-lisp-mode . lispy-mode)))
+  :hook ((emacs-lisp-mode . lispy-mode))
+
+  :config
+  (unbind-key "M-o" lispy-mode-map)
+  (unbind-key "M-S-o" lispy-mode-map))
 
 (use-package paredit
   :defer t
