@@ -49,7 +49,7 @@
   :demand t
 
   :custom
-  (doom-modeline-buffer-file-name-style 'truncate-upto-project)
+  (doom-modeline-buffer-file-name-style 'buffer-name)
   (doom-modeline-height 1)
   (doom-modeline-minor-modes t)
   (doom-modeline-vcs-max-length 50)
