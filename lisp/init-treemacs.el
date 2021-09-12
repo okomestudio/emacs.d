@@ -22,8 +22,8 @@
   (treemacs-recenter-after-project-jump nil)
   (treemacs-show-cursor t)
   (treemacs-show-hidden-files nil)
-  (treemacs-width 45)
-  (treemacs-width-is-initially-locked t)
+  (treemacs-width 35)
+  (treemacs-width-is-initially-locked nil)
 
   :config
   (defun ts/treemacs-resize ()
@@ -38,7 +38,7 @@
   (when window-system
     (setq treemacs-indentation 2
           treemacs-space-between-root-nodes nil
-          treemacs-width 45))
+          treemacs-width 35))
 
   ;; Add any files to be ignored
   (with-eval-after-load 'treemacs
