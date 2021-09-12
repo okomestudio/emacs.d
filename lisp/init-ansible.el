@@ -3,18 +3,16 @@
 ;;; Code:
 
 (use-package ansible
-  :after (yaml-mode)
-
-  :custom
-  (ansible-vault-password-file nil)
-
-  :hook (((yaml-mode) . my-ansible-mode-hook)
-         ((ansible) . ansible-auto-decrypt-encrypt))
+  :hook
+  (((text-mode fundamental-mode) . ts/ansible-mode-hook)
+   (ansible-hook . 'ansible-auto-decrypt-encrypt))
 
   :config
-  (defun my-ansible-mode-hook ()
-    (if (locate-dominating-file default-directory "ansible.cfg")
-        (progn (ansible 1)))))
+  (defun ts/ansible-mode-hook ()
+    (let ((root-path (ansible-find-root-path)))
+      (when root-path
+        (ansible 1)
+        (setq ansible-vault-password-file (concat root-path "/.vault-password"))))))
 
 (provide 'init-ansible)
 ;;; init-ansible.el ends here
