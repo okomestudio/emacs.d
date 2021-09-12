@@ -12,8 +12,10 @@
 
   :custom
   (treemacs-collapse-dirs 0)
-  (treemacs-file-event-delay 500)
+  (treemacs-file-event-delay 100)
+  (treemacs-file-follow-delay 0.1)
   (treemacs-follow-after-init nil)
+  (treemacs-is-never-other-window nil)
   (treemacs-missing-project-action 'keep)
   (treemacs-no-png-images nil)
   (treemacs-recenter-after-project-expand 'on-visibility)
@@ -24,9 +26,17 @@
   (treemacs-width-is-initially-locked t)
 
   :config
+  (defun ts/treemacs-resize ()
+    "TBD"
+    (interactive)
+    (treemacs-select-window)
+    (enlarge-window-horizontally 10)
+    (message "%d" treemacs-width)
+    (message "w %d" (window-size) )
+    (treemacs-select-window))
+
   (when window-system
     (setq treemacs-indentation 2
-          treemacs-is-never-other-window nil
           treemacs-space-between-root-nodes nil
           treemacs-width 45))
 
