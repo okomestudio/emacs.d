@@ -141,14 +141,17 @@ top down to the current directory.")
   (auto-save-default nil)
   ;; (auto-save-file-name-transforms '((".*" ts/backup-cache-dir t)))
   (backup-by-copying t)
-  (backup-directory-alist '(("." . ts/backup-cache-dir)))
+  ;; (backup-directory-alist '(("." . ts/backup-cache-dir)))
+  (backup-directory-alist `((".*" . ,ts/backup-cache-dir)))
   (create-lockfiles nil)
   (make-backup-files nil)
   (require-final-newline nil)
 
   :init
-  (defconst ts/backup-cache-dir (expand-file-name "~/.cache/emacs-backups"))
-  (ensure-directory-exists ts/backup-cache-dir))
+  (ensure-directory-exists ts/backup-cache-dir)
+
+  :preface
+  (defconst ts/backup-cache-dir (expand-file-name "~/.cache/emacs-backups")))
 
 ;; imenu.el --- framework for mode-specific buffer indexes
 (use-package imenu

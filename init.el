@@ -47,6 +47,11 @@
   (package-refresh-contents)
   (package-install 'use-package))
 
+;; quelpa - https://github.com/quelpa/quelpa
+(unless (package-installed-p 'quelpa-use-package)
+  (package-install 'quelpa-use-package))
+(require 'quelpa-use-package)
+
 (eval-and-compile
   (setq use-package-always-ensure t))
 
@@ -60,11 +65,6 @@
   (setq auto-package-update-delete-old-versions t
         auto-package-update-interval 7)
   (auto-package-update-maybe))
-
-;; quelpa - https://github.com/quelpa/quelpa
-(unless (package-installed-p 'quelpa-use-package)
-  (package-install 'quelpa-use-package))
-(require 'quelpa-use-package)
 
 
 ;; LOAD MODULES UNDER LISP DIRECTORY
