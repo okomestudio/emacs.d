@@ -85,6 +85,7 @@
 (require 'init-faces)
 (require 'init-flycheck)
 (require 'init-git)
+(require 'init-gnus)
 (require 'init-google-translate)
 (require 'init-graphviz)
 (require 'init-helm)
