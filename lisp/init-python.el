@@ -19,16 +19,12 @@
     (py-isort-buffer)))
 
 (use-package blacken
-  :if (not (version< emacs-version "25.2"))
-
-  :ensure-system-package
-  (black . "pip install black")
+  :ensure-system-package (black . "pip install black")
 
   :init
   (put 'blacken-line-length 'safe-local-variable #'integerp))
 
-(use-package cython-mode
-  :after python)
+(use-package cython-mode)
 
 ;; https://github.com/paetzke/py-isort.el
 (use-package py-isort
@@ -38,17 +34,32 @@
   (ensure-file-from-github
    "okomestudio/py-isort.el/ts/provide-default-settings-path/py-isort.el"))
 
-(use-package pyenv-mode
-  :disabled t
+(use-package pyenv
+  :after (switch-buffer-functions)
+  :ensure nil
+  :hook (switch-buffer-functions . ts/pyenv-update-on-buffer-switch)
+
+  :init
+  (ensure-file-from-github "aiguofer/pyenv.el/master/pyenv.el")
 
   :config
-  (pyenv-mode 1))
+  (defun ts/pyenv-update-on-buffer-switch (prev curr)
+    (if (string-equal "Python" (format-mode-line mode-name nil nil curr))
+        (pyenv-use-corresponding)))
+
+  (require 'pyenv)
+  (setq pyenv-show-active-python-in-modeline nil)
+  (setq pyenv-use-alias nil)
+  (setq pyenv-set-path nil)
+  (global-pyenv-mode))
+
+;; Hook run just after switching buffer
+;; (github.com/10sr/switch-buffer-functions-el)
+(use-package switch-buffer-functions)
 
 (use-package python-pytest
   :after (direnv)
-
-  :bind
-  (:map python-mode-map ("C-c t" . python-pytest-dispatch)))
+  :bind (:map python-mode-map ("C-c t" . python-pytest-dispatch)))
 
 (provide 'init-python)
 ;;; init-python.el ends here
