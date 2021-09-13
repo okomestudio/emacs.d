@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+if ! $(pyenv prefix)/bin/pylsp ; then
+    pip install python-lsp-server[all] python-lsp-black pyls-isort
+fi
+
+exec pylsp $@

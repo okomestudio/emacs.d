@@ -5,22 +5,14 @@
 (use-package lsp-mode
   :commands lsp
 
-  ;; :config
-  ;; (lsp-register-client
-  ;;  (make-lsp-client :new-connection (lsp-tramp-connection "~/.pyenv/shims/pylsp")
-  ;;                   :major-modes '(python-mode)
-  ;;                   :remote? t
-  ;;                   :server-id 'pylsp-remote))
-
   :custom
-
   ;; TODO: Start the service on start.
   ;;
   ;; Run: docker container run --name explainshell --restart always \
   ;;          -p 5023:5000 -d spaceinvaderone/explainshell
   (lsp-bash-explainshell-endpoint "http://localhost:5023")
-  (lsp-bash-highlight-parsing-errors t)
 
+  (lsp-bash-highlight-parsing-errors t)
   (lsp-pylsp-configuration-sources ["flake8"])
   ;; (lsp-pylsp-disable-warning t)
   (lsp-pylsp-plugins-flake8-enabled t)
@@ -30,10 +22,10 @@
   (lsp-pylsp-plugins-pydocstyle-add-ignore '("D100" "D103"))
   (lsp-pylsp-plugins-pydocstyle-convention "google")
   (lsp-pylsp-plugins-pydocstyle-enabled t)
+  (lsp-pylsp-server-command '("~/.config/emacs/bin/pylsp"))
 
   :ensure-system-package
-  (("~/.pyenv/versions/3.8.2/bin/pylsp" . "$(pyenv which pip3) install python-lsp-server[all] python-lsp-black pyls-isort")
-   (sqls . "go get github.com/lighttiger2505/sqls")
+  ((sqls . "go get github.com/lighttiger2505/sqls")
    (unified-language-server . "sudo npm i -g unified-language-server"))
 
   :hook
@@ -43,7 +35,7 @@
    (json-mode . (lambda () (ts/lsp-mode-hook 'json-ls)))
    (lsp-mode . lsp-enable-which-key-integration)
    (markdown-mode . lsp)
-   (python-mode . lsp)
+   (python-mode . (lambda () (ts/lsp-mode-hook 'pylsp)))
    (sh-mode . (lambda () (ts/lsp-mode-hook 'bash-ls)))
    (sql-mode . lsp)
    (web-mode . (lambda () (ts/lsp-mode-hook 'html-ls)))
@@ -52,13 +44,7 @@
   :init
   (defun ts/lsp-mode-hook (server)
     (lsp-ensure-server server)
-    (lsp))
-
-  (defun ts/pyenv-abspath (command)
-    (let ((version (car (split-string (shell-command-to-string "pyenv global")))))
-      (expand-file-name (concat "~/.pyenv/versions/" version "/bin/" command))))
-
-  (setq lsp-pylsp-server-command (ts/pyenv-abspath "pylsp")))
+    (lsp)) )
 
 ;; https://github.com/emacs-grammarly/lsp-grammarly
 (use-package lsp-grammarly
@@ -80,12 +66,12 @@
     (keytar . "sudo npm install -g @emacs-grammarly/keytar-cli")))
 
 (use-package lsp-ui
+  :commands lsp-ui-mode
+
   :custom
   ((lsp-ui-doc-delay 0.5)
    (lsp-ui-doc-position 'at-point)
-   (lsp-ui-doc-use-webkit nil))
-
-  :commands lsp-ui-mode)
+   (lsp-ui-doc-use-webkit nil)) )
 
 (use-package lsp-treemacs
   :bind ([f7] . lsp-treemacs-symbols)
