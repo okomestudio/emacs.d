@@ -3,6 +3,7 @@
 ;;; Code:
 
 (use-package org
+  :after (ob-typescript)
   :ensure org-plus-contrib
 
   :bind
@@ -42,12 +43,6 @@
 
   (add-to-list 'org-src-lang-modes '("plantuml" . plantuml))
 
-  :init
-  (defun org-agenda-gather-files ()
-    "Gather org agenda files."
-    (interactive)
-    (setq org-agenda-files (directory-files-recursively default-directory "\\.org$")))
-
   (org-babel-do-load-languages
    'org-babel-load-languages
    '((C . t)
@@ -58,7 +53,13 @@
      (python . t)
      (shell . t)
      (sql . t)
-     (typescript . t))))
+     (typescript . t)))
+
+  :init
+  (defun org-agenda-gather-files ()
+    "Gather org agenda files."
+    (interactive)
+    (setq org-agenda-files (directory-files-recursively default-directory "\\.org$"))))
 
 (use-package org-roam
   :custom
