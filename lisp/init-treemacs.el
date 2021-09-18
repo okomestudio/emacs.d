@@ -53,7 +53,8 @@
   (treemacs-load-theme "all-the-icons"))
 
 (use-package treemacs-all-the-icons
-  :after (all-the-icons))
+  :after (all-the-icons)
+  :custom (all-the-icons-scale-factor 1.0))
 
 (use-package treemacs-icons-dired
   :after (treemacs dired)
