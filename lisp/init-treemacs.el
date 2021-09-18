@@ -48,7 +48,7 @@
 
   (treemacs-filewatch-mode t)
   (treemacs-project-follow-mode t)
-  (treemacs-follow-mode t)
+  (treemacs-follow-mode nil)
   (treemacs-hide-gitignored-files-mode t)
   (treemacs-load-theme "all-the-icons"))
 
