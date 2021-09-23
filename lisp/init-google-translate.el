@@ -6,19 +6,18 @@
 ;; -----------------------------------
 ;; https://github.com/atykhonov/google-translate
 (use-package google-translate
-  :after popup
-
   :bind
   (("C-c t" . 'google-translate-smooth-translate))
 
-  :custom
-  (google-translate-backend-method 'curl)
-  (google-translate-output-destination nil)
-  (google-translate-translation-directions-alist '(("ja" . "en") ("en" . "ja")))
-
   :config
+  (require 'google-translate)
   (require 'google-translate-smooth-ui)
-  (defun google-translate--search-tkk () "Search TKK." (list 430675 2721866130)))
+
+  (defun google-translate--search-tkk () "Search TKK." (list 430675 2721866130))
+
+  (setq google-translate-backend-method 'curl
+        google-translate-output-destination nil
+        google-translate-translation-directions-alist '(("ja" . "en") ("en" . "ja")) ))
 
 (use-package popup)
 
