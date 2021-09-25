@@ -3,16 +3,21 @@
 ;;; Code:
 
 (use-package ansible
-  :hook
-  (((text-mode fundamental-mode) . ts/ansible-mode-hook)
-   (ansible-hook . 'ansible-auto-decrypt-encrypt))
+  :mode ("\\.ya?ml\\'")
+
+  :custom
+  (ansible-dir-search-limit 20)
 
   :config
+  (add-hook 'ansible-hook 'ts/ansible-mode-hook)
+
   (defun ts/ansible-mode-hook ()
     (let ((root-path (ansible-find-root-path)))
       (when root-path
-        (ansible 1)
-        (setq ansible-vault-password-file (concat root-path "/.vault-password"))))))
+        (setq ansible-vault-password-file (concat root-path "/.vault-password"))
+        (ansible-auto-decrypt-encrypt) )
+      ))
+  )
 
 (provide 'init-ansible)
 ;;; init-ansible.el ends here
