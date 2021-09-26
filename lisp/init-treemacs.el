@@ -12,9 +12,10 @@
 
   :custom
   (treemacs-collapse-dirs 0)
+  (treemacs-expand-after-init t)
   (treemacs-file-event-delay 100)
   (treemacs-file-follow-delay 0.1)
-  (treemacs-follow-after-init nil)
+  (treemacs-follow-after-init t)
   (treemacs-is-never-other-window nil)
   (treemacs-missing-project-action 'keep)
   (treemacs-no-png-images nil)
