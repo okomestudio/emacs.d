@@ -33,7 +33,7 @@ See https://knowledge.sakura.ad.jp/8494/"
   (defun ts/set-fallback-cjk-font (fontset-name)
     (set-fontset-font fontset-name
                       'unicode
-                      (font-spec :family "Noto Sans Mono CJK JP")
+                      (font-spec :family "VL Gothic") ; or "Noto Sans Mono CJK JP"
                       nil
                       'append))
 
