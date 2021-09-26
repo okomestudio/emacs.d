@@ -28,6 +28,7 @@
 
   :hook
   ((org-mode . (lambda () (org-superstar-mode 1)))
+   (org-mode . (lambda () (text-scale-set 1)))
    (org-mode . auto-fill-mode))
 
   :config
