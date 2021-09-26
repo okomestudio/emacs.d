@@ -6,6 +6,8 @@
 ;; -----------------------------------
 ;; https://github.com/atykhonov/google-translate
 (use-package google-translate
+  :after popup
+
   :bind
   (("C-c t" . 'google-translate-smooth-translate))
 
