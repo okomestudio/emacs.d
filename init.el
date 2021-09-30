@@ -38,7 +38,7 @@
 (defvar package-archives)
 (setq package-archives '(("gnu" . "https://elpa.gnu.org/packages/")
                          ("melpa" . "https://melpa.org/packages/")
-                         ("org" . "https://orgmode.org/elpa/")))
+                         ("nongnu" . "https://elpa.nongnu.org/nongnu/")))
 
 (unless (bound-and-true-p package--initialized)
   (package-initialize))

@@ -4,7 +4,7 @@
 
 (use-package org
   :after (ob-typescript)
-  :ensure org-plus-contrib
+  :ensure org-contrib
 
   :bind
   (("C-c l" . 'org-store-link))
