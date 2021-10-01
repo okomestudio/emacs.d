@@ -95,6 +95,7 @@
 (require 'init-lsp)
 (require 'init-markdown)
 (require 'init-minibuffer)
+(require 'init-multiple-cursors)
 (require 'init-openwith)
 (require 'init-org)
 (require 'init-plantuml)
