@@ -74,6 +74,7 @@
 (require 'init-ace)
 (require 'init-anki)
 (require 'init-ansible)
+(require 'init-bookmark-plus)
 (require 'init-c)
 (require 'init-company)
 (require 'init-dash)
