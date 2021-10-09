@@ -112,6 +112,7 @@
 (require 'init-tern)
 (require 'init-tramp)
 (require 'init-treemacs)
+(require 'init-vterm)
 (require 'init-webdev)
 (require 'init-yaml)
 (require 'init-yascroll)
