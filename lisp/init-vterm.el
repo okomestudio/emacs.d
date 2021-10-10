@@ -33,7 +33,8 @@
     (buffer-face-mode t))
   )
 
-(use-package multi-vterm :ensure t)
+(use-package multi-vterm
+  :after vterm)
 
 (provide 'init-vterm)
 ;;; init-vterm.el ends here
