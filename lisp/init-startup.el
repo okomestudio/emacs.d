@@ -29,8 +29,11 @@
   (when window-system
     (setq select-enable-clipboard t))
 
-  (setq-default frame-title-format '((:eval (list (abbreviate-file-name (expand-file-name buffer-file-name))))
-                                     " - Emacs"))
+  (setq-default frame-title-format
+                '((:eval (list (if (buffer-file-name)
+                                   (abbreviate-file-name (expand-file-name buffer-file-name))
+                                 (buffer-name) )))
+                  " - Emacs"))
   (setq-default scroll-bar-width 6)
 
   ;; hack-dir-local-variables
