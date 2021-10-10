@@ -6,7 +6,7 @@
   :after (web-beautify)
 
   :bind
-  (:map json-mode-map ("C-c b" . ts/beautify-json))
+  (:map json-mode-map ("C-c b" . ts/beautify-json-via-python))
 
   :custom
   (js-indent-level 4)
@@ -30,6 +30,7 @@
     (save-excursion
       (let ((web-beautify-args '("-f" "-"
                                  "--end-with-newline"
+                                 "--keep-array-indentation"
                                  "--no-preserve-newlines"
                                  "--jslint-happy"
                                  "--wrap-line-length" "88")))
