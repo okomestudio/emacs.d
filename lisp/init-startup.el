@@ -29,6 +29,8 @@
   (when window-system
     (setq select-enable-clipboard t))
 
+  (setq-default frame-title-format '((:eval (list (abbreviate-file-name (expand-file-name buffer-file-name))))
+                                     " - Emacs"))
   (setq-default scroll-bar-width 6)
 
   ;; hack-dir-local-variables
@@ -190,7 +192,17 @@ top down to the current directory.")
   :config
   (which-key-mode +1))
 
+;; frame-fns and frame-cmds - Frame functions and commands
+(use-package frame-cmds
+  :ensure nil
 
+  :bind
+  (("M-o" . 'other-window-or-frame)
+   ("M-O" . (lambda () (interactive) (other-window-or-frame -1))))
+
+  :init
+  (ensure-file-from-url "https://www.emacswiki.org/emacs/download/frame-fns.el")
+  (ensure-file-from-url "https://www.emacswiki.org/emacs/download/frame-cmds.el"))
 
 
 ;; topsy.el - Simple sticky header showing definition beyond top of window
@@ -242,22 +254,6 @@ top down to the current directory.")
   :ensure nil
   :init
   (winner-mode 1))
-
-;; frame-comds is used to add C-x o and C-x p to go back and forth between windows.
-(use-package frame-cmds
-  :ensure nil
-
-  :bind
-  (("M-o" . 'other-window-or-frame)
-   ("M-O" . (lambda () (interactive) (other-window-or-frame -1))))
-
-  :init
-  (ensure-file-from-url
-   "https://www.emacswiki.org/emacs/download/frame-fns.el")
-  (ensure-file-from-url
-   "https://www.emacswiki.org/emacs/download/frame-cmds.el")
-
-  (setq-default frame-title-format '("" "%f - Emacs")))
 
 ;; Add node_modules to your exec-path
 (use-package add-node-modules-path)
