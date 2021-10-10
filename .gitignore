@@ -15,6 +15,7 @@
 .cache
 .last-package-update-day
 .lsp-session-*
+.mc-lists.el
 auto-save-list
 bookmarks
 custom.el
