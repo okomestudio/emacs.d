@@ -41,7 +41,11 @@ vterm_cmd() {
 # This is to change the title of the buffer based on information provided by the
 # shell. See, http://tldp.org/HOWTO/Xterm-Title-4.html, for the meaning of the
 # various symbols.
+<<<<<<< HEAD
 PROMPT_COMMAND="${PROMPT_COMMAND:+$PROMPT_COMMAND; }"'echo -ne "\033]0;$([[ -n $SSH_TTY ]] && echo $HOSTNAME:)${PWD/#$HOME/\~}\007"'
+=======
+PROMPT_COMMAND="${PROMPT_COMMAND:+$PROMPT_COMMAND; }"'echo -ne "\033]0;$([[ -n $XAUTHORITY ]] && echo $HOSTNAME:)${PWD/#$HOME/\~}\007"'
+>>>>>>> f7882f4f2f960469937d27291ec22163d914572b
 
 # Sync directory and host in the shell with Emacs's current directory.
 # You may need to manually specify the hostname instead of $(hostname) in case
