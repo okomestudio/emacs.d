@@ -7,7 +7,7 @@
   :defer t
 
   :bind
-  (([f8] . treemacs)
+  (([f8] . ts/treemacs)
    ([mouse-1] . treemacs-single-click-expand-action))
 
   :custom
@@ -29,6 +29,11 @@
   (treemacs-width-is-initially-locked nil)
 
   :config
+  (defun ts/treemacs ()
+    (interactive)
+      (treemacs)
+      (other-window-or-frame -1))
+
   (defun ts/treemacs-resize ()
     "TBD"
     (interactive)
