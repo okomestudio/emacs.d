@@ -200,12 +200,20 @@ top down to the current directory.")
   :ensure nil
 
   :bind
-  (("M-o" . 'other-window-or-frame)
-   ("M-O" . (lambda () (interactive) (other-window-or-frame -1))))
+  (("M-o" . 'other-window-or-frame))
 
   :init
   (ensure-file-from-url "https://www.emacswiki.org/emacs/download/frame-fns.el")
   (ensure-file-from-url "https://www.emacswiki.org/emacs/download/frame-cmds.el"))
+
+;; ace-window - Quickly switch windows in Emacs
+;; https://github.com/abo-abo/ace-window
+(use-package ace-window
+  :bind
+  (("M-O" . 'ace-window))
+
+  :custom
+  (aw-dispatch-always t))
 
 
 ;; topsy.el - Simple sticky header showing definition beyond top of window
