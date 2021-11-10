@@ -31,8 +31,9 @@
   :config
   (defun ts/treemacs ()
     (interactive)
-      (treemacs)
-      (other-window-or-frame -1))
+    (push-mark)
+    (treemacs)
+    (pop-global-mark))
 
   (defun ts/treemacs-resize ()
     "TBD"
