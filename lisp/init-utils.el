@@ -87,5 +87,11 @@ upward."
                                (parent-directory dir-locals-file) name))))
     dir-locals-files))
 
+(defun ts/reload-dir-locals-for-current-buffer ()
+  "Reload dir locals for the current buffer."
+  (interactive)
+  (let ((enable-local-variables :all))
+    (hack-dir-local-variables)))
+
 (provide 'init-utils)
 ;;; init-utils.el ends here
