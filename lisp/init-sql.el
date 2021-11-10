@@ -39,10 +39,12 @@
   (require 'sqlformat)
 
   :config
-  (defun ts/beautify-sql ()
-    (interactive)
+  (defun ts/beautify-sql (beg end)
+    (interactive (if (use-region-p)
+                     (list (region-beginning) (region-end))
+                   (list (point-min) (point-max))))
     (save-excursion
-      (sqlformat (point-min) (point-max))
+      (sqlformat beg end)
       (delete-trailing-whitespace))))
 
 (use-package sql-upcase
