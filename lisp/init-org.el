@@ -7,7 +7,8 @@
   :ensure org-contrib
 
   :bind
-  (("C-c l" . 'org-store-link))
+  (("C-c l" . 'org-store-link)
+   ("M-S q" . 'org-unfill-paragraph))
 
   :custom
   ((fill-column 80)
@@ -29,9 +30,18 @@
   :hook
   ((org-mode . (lambda () (org-superstar-mode 1)))
    (org-mode . (lambda () (text-scale-set 1)))
+   (org-mode . (lambda () (toggle-truncate-lines -1)))
    (org-mode . auto-fill-mode))
 
   :config
+  (defun org-unfill-paragraph (&optional region)
+    "Takes a multi-line paragraph and makes it into a single line of text."
+    (interactive (progn (barf-if-buffer-read-only) '(t)))
+    (let ((fill-column (point-max))
+          ;; This would override 'fill-column' if it's an integer.
+          (emacs-lisp-docstring-fill-column t))
+      (org-fill-paragraph nil region)))
+
   (plist-put org-format-latex-options :scale 1.5)
 
   ;; Add a few characters usable for bounding emphasis markup
