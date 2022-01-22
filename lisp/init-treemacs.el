@@ -11,8 +11,8 @@
    ([mouse-1] . treemacs-single-click-expand-action))
 
   :custom
-  (treemacs--project-follow-delay 0.5)
-  (treemacs--project-follow-time nil)
+  (treemacs--project-follow-delay 0.0)
+  (treemacs--project-follow-timer nil)
   (treemacs-collapse-dirs 0)
   (treemacs-expand-after-init t)
   (treemacs-file-event-delay 100)
