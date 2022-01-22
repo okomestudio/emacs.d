@@ -11,6 +11,11 @@
 ;; Convert buffer text and decorations to HTML
 (use-package htmlize)
 
+;; Titlecase things in Emacs
+;;
+;; https://github.com/duckwork/titlecase.el
+(use-package titlecase)
+
 ;; Typographical utility (e.g., smart quotation)
 (use-package typo
   :hook ((text-mode . typo-mode)))
