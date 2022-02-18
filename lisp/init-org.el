@@ -30,8 +30,8 @@
   :hook
   ((org-mode . (lambda () (org-superstar-mode 1)))
    (org-mode . (lambda () (text-scale-set 1)))
-   (org-mode . (lambda () (toggle-truncate-lines 1)))
-   (org-mode . auto-fill-mode))
+   (org-mode . turn-on-visual-line-mode) ; trying instead of (toggle-truncate-lines 1) and auto-fill-mode
+   )
 
   :config
   (defun org-unfill-paragraph (&optional region)
