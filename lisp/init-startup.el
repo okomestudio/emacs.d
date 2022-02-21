@@ -4,7 +4,8 @@
 
 (use-package emacs
   :bind
-  (("C-x C-y" . ts/pbocr))
+  (("C-x C-y" . ts/pbocr)
+   ("C-x M-f" . rgrep))
 
   :custom
   (async-shell-command-buffer "new-buffer")
