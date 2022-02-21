@@ -14,7 +14,9 @@
 ;; Titlecase things in Emacs
 ;;
 ;; https://github.com/duckwork/titlecase.el
-(use-package titlecase)
+(use-package titlecase
+  :bind
+  (("M-c" . titlecase-dwim)))
 
 ;; Typographical utility (e.g., smart quotation)
 (use-package typo
