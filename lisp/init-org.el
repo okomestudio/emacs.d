@@ -49,8 +49,9 @@
   (setcar (nthcdr 1 org-emphasis-regexp-components) "-—[:space:].,:!?;'\")}\\[\x200B")
   (org-set-emph-re 'org-emphasis-regexp-components org-emphasis-regexp-components)
 
-  ;; org-confluence-export-as-confluence for Confluence export
-  (require 'ox-confluence)
+  ;; For document export
+  (require 'ox-confluence)              ; Confluence
+  (require 'ox-md)                      ; Markdown
 
   (add-to-list 'org-src-lang-modes '("plantuml" . plantuml))
 
