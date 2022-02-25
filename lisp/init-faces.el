@@ -20,6 +20,10 @@
             (select-frame (selected-frame))
             (apply action)))))
 
+  (defun ts/font-exists-p (font)
+    "Check if font exists."
+    (if (null (x-list-fonts font)) nil t))
+
   (defun ts/create-cjk-hybrid-fontset (size name)
     "Create a CJK hybrid fontset of SIZE named fontset-NAME
 
@@ -31,11 +35,14 @@ See https://knowledge.sakura.ad.jp/8494/"
       fontset-name))
 
   (defun ts/set-fallback-cjk-font (fontset-name)
-    (set-fontset-font fontset-name
-                      'unicode
-                      (font-spec :family "VL Gothic") ; or "Noto Sans Mono CJK JP"
-                      nil
-                      'append))
+    (let ((font-family (seq-find #'ts/font-exists-p '("HackGen"
+                                                      "VL Gothic"
+                                                      "Noto Sans Mono CJK JP"))))
+      (set-fontset-font fontset-name
+                        'unicode
+                        (font-spec :family font-family)
+                        nil
+                        'append)))
 
   (defun ts/get-display-width ()
     "Get the pixel with per display."
