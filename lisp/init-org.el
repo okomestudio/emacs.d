@@ -17,6 +17,7 @@
     (when (> (length (directory-files default-directory t "\\.org$")) 0)
       (directory-files-recursively default-directory "\\.org$")))
    (org-babel-python-command "~/.pyenv/shims/python")
+   (org-blank-before-new-entry ((heading . auto) (plain-list-item . auto)))
    (org-file-apps '(("\\.mp4\\'" . "vlc --repeat %s")))
    (org-image-actual-width nil)
    (org-list-allow-alphabetical t)
