@@ -15,8 +15,20 @@
 ;;
 ;; https://github.com/duckwork/titlecase.el
 (use-package titlecase
+  :ensure nil
+
   :bind
-  (("M-c" . titlecase-dwim)))
+  (("M-c" . titlecase-dwim))
+
+  :custom
+  ((titlecase-skip-words-regexps
+    '("\\b[[:upper:]]+\\b"
+     "\\b\\(\\(www\\.\\|\\(s?https?\\|ftp\\|file\\|gopher\\|nntp\\|news\\|telnet\\|wais\\|mailto\\|info\\):\\)\\(//[-a-z0-9_.]+:[0-9]*\\)?\\(?:[-a-z0-9_=#$@~%&*+\\/[:word:]!?:;.,]+([-a-z0-9_=#$@~%&*+\\/[:word:]!?:;.,]+[-a-z0-9_=#$@~%&*+\\/[:word:]]*)\\(?:[-a-z0-9_=#$@~%&*+\\/[:word:]!?:;.,]+[-a-z0-9_=#$@~%&*+\\/[:word:]]\\)?\\|[-a-z0-9_=#$@~%&*+\\/[:word:]!?:;.,]+[-a-z0-9_=#$@~%&*+\\/[:word:]]\\)\\)"
+     )))
+
+  :init
+  (ensure-file-from-github "okomestudio/titlecase.el/ts/add-closing-single-quote-as-apostrophe/titlecase.el")
+  (ensure-file-from-github "okomestudio/titlecase.el/ts/add-closing-single-quote-as-apostrophe/titlecase-data.el"))
 
 ;; Typographical utility (e.g., smart quotation)
 (use-package typo
