@@ -35,7 +35,10 @@
   ((ispell-dictionary "en_US")
    (ispell-local-dictionary-alist
     '(("en_US" "[[:alpha:]]" "[^[:alpha:]]" "['’]" t ("-d" "en_US") nil utf-8)
-      ("en_GB" "[[:alpha:]]" "[^[:alpha:]]" "['’]" t ("-d" "en_GB") nil utf-8)))))
+      ("en_GB" "[[:alpha:]]" "[^[:alpha:]]" "['’]" t ("-d" "en_GB") nil utf-8))))
+
+  :config
+  (put 'ispell-dictionary 'safe-local-variable #'stringp))
 
 (provide 'init-flycheck)
 ;;; init-flycheck.el ends here
