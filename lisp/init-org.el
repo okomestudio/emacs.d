@@ -3,7 +3,7 @@
 ;;; Code:
 
 (use-package org
-  :after (ob-typescript)
+  :after (ob-typescript ox-gfm)
   :ensure org-contrib
 
   :bind
@@ -53,6 +53,7 @@
   ;; For document export
   (require 'ox-confluence)              ; Confluence
   (require 'ox-md)                      ; Markdown
+  (require 'ox-gfm)                     ; GitHub-flavored Markdown
 
   (add-to-list 'org-src-lang-modes '("plantuml" . plantuml))
 
@@ -89,6 +90,7 @@
   :custom (org-superstar-headline-bullets-list '("◉" "🞛" "○" "▷")))
 
 (use-package ob-typescript)
+(use-package ox-gfm)
 
 (provide 'init-org)
 ;;; init-org.el ends here
