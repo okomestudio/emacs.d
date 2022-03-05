@@ -23,6 +23,7 @@
   (lsp-pylsp-plugins-pydocstyle-convention "google")
   (lsp-pylsp-plugins-pydocstyle-enabled t)
   (lsp-pylsp-server-command '("~/.config/emacs/bin/pylsp"))
+  (lsp-sqls-workspace-config-path "root")
 
   :ensure-system-package
   ((sqls . "go get github.com/lighttiger2505/sqls")
@@ -37,7 +38,7 @@
    (markdown-mode . lsp)
    (python-mode . (lambda () (ts/lsp-mode-hook 'pylsp)))
    (sh-mode . (lambda () (ts/lsp-mode-hook 'bash-ls)))
-   (sql-mode . lsp)
+   (sql-mode . (lambda () (ts/lsp-mode-hook 'sqls)))
    (web-mode . (lambda () (ts/lsp-mode-hook 'html-ls)))
    (yaml-mode . (lambda () (ts/lsp-mode-hook 'yamlls))))
 
