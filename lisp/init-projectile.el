@@ -4,7 +4,7 @@
 
 (use-package projectile
   :custom
-  (projectile-project-search-path '(("~/github.com/" . 2)))
+  (projectile-project-search-path '(("~/github.com/" . 5)))
   (projectile-mode-line-function '(lambda () (format " [%s]" (projectile-project-name))))
 
   :ensure-system-package
