@@ -26,7 +26,7 @@
 
 (use-package flyspell
   :bind
-  (([f12] . flyspell-auto-correct-previous-word))
+  (("M-s M-s" . flyspell-auto-correct-previous-word))
 
   :hook
   ((prog-mode . flyspell-prog-mode)
