@@ -25,6 +25,9 @@
   (add-to-list 'interpreter-mode-alist '("bats" . sh-mode)))
 
 (use-package flyspell
+  :bind
+  (([f12] . flyspell-auto-correct-previous-word))
+
   :hook
   ((prog-mode . flyspell-prog-mode)
    (shell-script-mode . flyspell-prog-mode)
