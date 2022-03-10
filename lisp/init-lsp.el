@@ -23,7 +23,9 @@
   (lsp-pylsp-plugins-pydocstyle-convention "google")
   (lsp-pylsp-plugins-pydocstyle-enabled t)
   (lsp-pylsp-server-command '("~/.config/emacs/bin/pylsp"))
+  (lsp-response-timeout 30)
   (lsp-sqls-workspace-config-path "root")
+  (lsp-sqls-timeout 30)
 
   :ensure-system-package
   ((sqls . "go get github.com/lighttiger2505/sqls")
