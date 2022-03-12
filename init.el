@@ -7,9 +7,16 @@
 ;;
 ;;; Code:
 
-;; Uncomment for profiling (also see the end of file)
-;; (require 'profiler)
-;; (profiler-start 'cpu)
+;; INIT.EL PROFILING
+(defconst ts/profile-init t "Set to t to profile init.el.")
+
+(when ts/profile-init
+  (require 'profiler)
+  (profiler-start 'cpu)
+  (defun ts/tear-down-profiler ()
+    (profiler-report)
+    (profiler-stop))
+  (add-hook 'after-init-hook #'ts/tear-down-profiler))
 
 
 ;; custom.el is for variables configured interactively.
@@ -123,10 +130,6 @@
 (require 'init-yaml)
 (require 'init-yascroll)
 (require 'init-yasnippet)
-
-;; Uncomment for profiling
-;; (profiler-report)
-;; (profiler-stop)
 
 (provide 'init)
 ;;; init.el ends here
