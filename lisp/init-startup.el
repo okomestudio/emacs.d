@@ -137,6 +137,7 @@ top down to the current directory.")
       (fill-paragraph nil region)))
 
   (column-number-mode t)
+  (subword-mode)
   (setq-default indent-tabs-mode nil))
 
 (use-package files
