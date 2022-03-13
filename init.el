@@ -102,7 +102,6 @@
 (require 'init-gnus)
 (require 'init-google-translate)
 (require 'init-graphviz)
-(require 'init-helm)
 (require 'init-ini)
 (require 'init-json)
 (require 'init-keychain)

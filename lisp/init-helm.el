@@ -3,7 +3,8 @@
 ;;; Code:
 
 ;; Efficiently hopping squeezed lines powered by helm interface
-(use-package helm-swoop)
+(use-package helm-swoop
+  :disabled t)
 
 (provide 'init-helm)
 ;;; init-helm.el ends here
