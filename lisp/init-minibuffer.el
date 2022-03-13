@@ -15,33 +15,42 @@
 ;; consult.el - Consulting completing-read
 ;; https://github.com/minad/consult
 (use-package consult
-  :hook
-  (completion-list-mode . consult-preview-at-point-mode)
+  :config
+  (consult-customize consult-theme
+                     :preview-key '(:debounce 0.2 any))
 
   :init
-  (global-set-key (kbd "M-g M-g") 'consult-goto-line)
   (global-set-key (kbd "M-g b") 'consult-bookmark)
-  (global-set-key (kbd "M-g g") 'consult-grep)
+  (global-set-key (kbd "M-g f") 'consult-find)
+  (global-set-key (kbd "M-g F") 'consult-locate)
+  (global-set-key (kbd "M-g g") 'consult-git-grep)
+  (global-set-key (kbd "M-g G") 'consult-grep)
   (global-set-key (kbd "M-g i") 'consult-imenu)
+  (global-set-key (kbd "M-g I") 'consult-imenu-multi)
   (global-set-key (kbd "M-g l") 'consult-line)
-  (global-set-key [remap switch-to-buffer-other-window] 'consult-buffer-other-window)
-  (global-set-key [remap switch-to-buffer] 'consult-buffer))
+  (global-set-key (kbd "M-g L") 'consult-line-multi)
+  (global-set-key (kbd "M-g m") 'consult-mark)
+  (global-set-key (kbd "M-g M") 'consult-gloabl-mark)
+  (global-set-key (kbd "M-g M-g") 'consult-goto-line)
+  (global-set-key [remap apropos] #'consult-apropos)
+  (global-set-key [remap switch-to-buffer-other-window] #'consult-buffer-other-window)
+  (global-set-key [remap switch-to-buffer] #'consult-buffer))
 
 ;; https://github.com/mohkale/consult-company
 (use-package consult-company
-  :disabled t
+  :disabled
   :after (consult company)
   :init (define-key company-mode-map [remap completion-at-point] #'consult-company))
 
 ;; https://github.com/minad/consult-flycheck
 (use-package consult-flycheck
   :after (consult flycheck)
-  :init (global-set-key (kbd "M-g c") 'consult-flycheck))
+  :bind ("M-g c" . consult-flycheck))
 
 ;; https://gitlab.com/OlMon/consult-flyspell
 (use-package consult-flyspell
   :after (consult flyspell)
-  :init (global-set-key (kbd "M-g s") 'consult-flyspell))
+  :bind ("M-g s" . consult-flyspell))
 
 ;; https://github.com/gagbo/consult-lsp
 (use-package consult-lsp
@@ -50,7 +59,9 @@
 ;; https://gitlab.com/OlMon/consult-projectile/
 (use-package consult-projectile
   :after (consult projectile)
-  :init (global-set-key (kbd "M-g p") 'consult-projectile))
+  :bind (([remap projectile-switch-project] . consult-projectile)
+         ([remap projectile-find-file] . consult-projectile-find-file)
+         ([remap projectile-find-dir] . consult-projectile-find-dir)))
 
 
 ;; embark.el - Emacs Mini-Buffer Actions Rooted in Key maps
