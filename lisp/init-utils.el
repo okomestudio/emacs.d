@@ -41,6 +41,16 @@ detail."
    (concat "https://raw.githubusercontent.com/" src) dest))
 
 
+(defun is-linux ()
+  "Return true if system is Linux-based."
+  (string-equal system-type "darwin"))
+
+
+(defun is-macos ()
+  "Return true if system is Mac OS X-based."
+  (string-equal system-type "darwin"))
+
+
 (defun parent-directory (path)
   "Get the parent directory of PATH.
 

@@ -8,7 +8,7 @@
 ;;; Code:
 
 ;; INIT.EL PROFILING
-(defconst ts/profile-init t "Set to t to profile init.el.")
+(defconst ts/profile-init nil "Set to t to profile init.el.")
 
 (when ts/profile-init
   (require 'profiler)
