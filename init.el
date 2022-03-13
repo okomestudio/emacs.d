@@ -131,5 +131,12 @@
 (require 'init-yascroll)
 (require 'init-yasnippet)
 
+
+;; If other init files exist, load them all.
+(when (file-exists-p (concat user-emacs-directory "init.d/"))
+  (mapc (lambda (f) (load f))
+        (directory-files (concat user-emacs-directory "init.d/") t ".el$")))
+
+
 (provide 'init)
 ;;; init.el ends here

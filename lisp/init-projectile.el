@@ -4,7 +4,14 @@
 
 (use-package projectile
   :custom
-  (projectile-project-search-path '(("~/github.com/" . 5)))
+  (projectile-auto-discover t)
+  (projectile-enable-caching nil)
+  (projectile-indexing-method 'alien)
+  (projectile-project-root-functions '(projectile-root-top-down-recurring
+                                       projectile-root-top-down
+                                       projectile-root-bottom-up
+                                       projectile-root-local))
+  (projectile-project-search-path '("~/.config/emacs/" ("~/github.com/" . 2)))
   (projectile-mode-line-function '(lambda () (format " [%s]" (projectile-project-name))))
 
   :ensure-system-package
@@ -13,7 +20,7 @@
 
   :config
   (projectile-mode +1)
-  (define-key projectile-mode-map (kbd "s-p") 'projectile-command-map)
+  (define-key projectile-mode-map (kbd "s-p") 'projectile-command-map) ; "s-" is "super"
   (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
 
   :init
