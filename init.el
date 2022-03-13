@@ -127,6 +127,7 @@
 (require 'init-treemacs)
 (require 'init-vterm)
 (require 'init-webdev)
+(require 'init-windows)
 (require 'init-yaml)
 (require 'init-yascroll)
 (require 'init-yasnippet)
