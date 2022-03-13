@@ -4,13 +4,13 @@
 
 (use-package emacs
   :bind
-  (("C-x C-y" . ts/pbocr)
-   ("C-x M-f" . rgrep))
+  (("C-x C-y" . ts/pbocr))
 
   :custom
   (async-shell-command-buffer "new-buffer")
   (case-fold-search t)
   (compilation-scroll-output t)
+  (enable-recursive-minibuffers t)
   (inhibit-splash-screen nil)
   (inhibit-startup-screen nil)
   (load-prefer-newer t)
