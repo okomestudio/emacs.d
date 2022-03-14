@@ -19,6 +19,9 @@
   (consult-customize consult-theme
                      :preview-key '(:debounce 0.2 any))
 
+  :ensure-system-package
+  (("locate" . "sudo apt install -y locate"))
+
   :init
   (global-set-key (kbd "M-g b") 'consult-bookmark)
   (global-set-key (kbd "M-g f") 'consult-find)
