@@ -20,7 +20,7 @@
                      :preview-key '(:debounce 0.2 any))
 
   :ensure-system-package
-  (("locate" . "sudo apt install -y locate"))
+  ((locate . "sudo apt install -y locate"))
 
   :init
   (global-set-key (kbd "M-g b") 'consult-bookmark)
@@ -36,6 +36,7 @@
   (global-set-key (kbd "M-g M") 'consult-gloabl-mark)
   (global-set-key (kbd "M-g M-g") 'consult-goto-line)
   (global-set-key [remap apropos] #'consult-apropos)
+  (global-set-key [remap electric-apropos] #'consult-apropos)
   (global-set-key [remap switch-to-buffer-other-window] #'consult-buffer-other-window)
   (global-set-key [remap switch-to-buffer] #'consult-buffer))
 
