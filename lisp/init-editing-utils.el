@@ -41,5 +41,33 @@
 ;; Operate on current line if region undefined
 (use-package whole-line-or-region)
 
+;;;
+;;; Dictionary
+;;;
+
+(use-package define-word
+  :bind (("M-w" . define-word-at-point))
+  :custom (define-word-default-service 'wordnik))
+
+
+;;;
+;;; Thesaurus
+;;;
+
+;; powerthesaurus.el - Powerthesaurus integration for Emacs
+;; https://github.com/SavchenkoValeriy/emacs-powerthesaurus
+(use-package powerthesaurus
+  :bind (("M-s M-S" . powerthesaurus-lookup-dwim)))
+
+;; synosaurus.el - An extensible thesaurus mode for emacs
+;; https://github.com/hpdeifel/synosaurus
+(use-package synosaurus
+  :disable
+  :custom
+  (synosaurus-choose-method 'default)
+
+  :ensure-system-package
+  (wn . "sudo apt install -y wordnet"))
+
 (provide 'init-editing-utils)
 ;;; init-editing-utils.el ends here
