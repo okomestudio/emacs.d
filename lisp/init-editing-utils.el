@@ -46,7 +46,7 @@
 ;;;
 
 (use-package define-word
-  :bind (("M-w" . define-word-at-point))
+  :bind (("M-W" . define-word-at-point))
   :custom (define-word-default-service 'wordnik))
 
 
