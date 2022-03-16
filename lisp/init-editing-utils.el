@@ -62,7 +62,7 @@
 ;; synosaurus.el - An extensible thesaurus mode for emacs
 ;; https://github.com/hpdeifel/synosaurus
 (use-package synosaurus
-  :disable
+  :disabled
   :custom
   (synosaurus-choose-method 'default)
 
