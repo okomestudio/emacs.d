@@ -36,6 +36,7 @@
 
 ;; Treat undo history as a tree
 (use-package undo-tree
+  :custom  (undo-tree-auto-save-history nil)
   :init (global-undo-tree-mode))
 
 ;; Operate on current line if region undefined
