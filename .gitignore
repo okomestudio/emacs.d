@@ -17,6 +17,7 @@ init.d
 .last-package-update-day
 .lsp-session-*
 .mc-lists.el
+.quelpa
 auto-save-list
 bookmarks
 custom.el
@@ -25,7 +26,6 @@ eshell
 history
 projectile-bookmarks.eld
 projectile.cache
-quelpa
 request
 snippets
 transient

@@ -54,17 +54,6 @@
   (package-refresh-contents)
   (package-install 'use-package))
 
-;; quelpa - https://github.com/quelpa/quelpa
-(use-package quelpa-use-package
-  :demand t
-  :init
-  (setq quelpa-use-package-inhibit-loading-quelpa t)
-  (unless (package-installed-p 'quelpa-use-package)
-    (quelpa
-     '(quelpa-use-package
-       :fetcher git
-       :url "https://github.com/quelpa/quelpa-use-package.git"))))
-
 (eval-and-compile
   (setq use-package-always-ensure t))
 
@@ -72,6 +61,22 @@
   (require 'use-package))
 
 (use-package use-package-ensure-system-package)
+
+;; quelpa - Build and install your Emacs Lisp packages on-the-fly directly from source.
+;; https://github.com/quelpa/quelpa
+(unless (package-installed-p 'quelpa)
+  (package-install 'quelpa))
+
+(use-package quelpa-use-package
+  :demand t
+  :init
+  (setq quelpa-dir (expand-file-name ".quelpa" user-emacs-directory)
+        quelpa-use-package-inhibit-loading-quelpa t)
+  (unless (package-installed-p 'quelpa-use-package)
+    (quelpa
+     '(quelpa-use-package
+       :fetcher git
+       :url "https://github.com/quelpa/quelpa-use-package.git"))))
 
 (use-package auto-package-update
   :config
