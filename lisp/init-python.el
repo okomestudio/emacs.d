@@ -4,13 +4,13 @@
 
 (use-package python
   :after (blacken py-isort)
-
-  :bind
-  (:map python-mode-map ("C-c b" . ts/beautify-python))
+  :bind (:map python-mode-map ("C-c b" . ts/beautify-python))
 
   :custom
   ((python-indent-guess-indent-offset-verbose nil)
-   (python-indent-offset 4))
+   (python-indent-offset 4)
+   (python-shell-interpreter "~/.pyenv/versions/3.9.7/bin/ipython")
+   (python-shell-interpreter-args "-i --simple-prompt --InteractiveShell.display_page=True"))
 
   :config
   (defun ts/beautify-python ()
