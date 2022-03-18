@@ -100,6 +100,7 @@
 (require 'init-docker)
 (require 'init-edit-server)
 (require 'init-editing-utils)
+(require 'init-elfeed)
 (require 'init-elisp)
 (require 'init-faces)
 (require 'init-flycheck)
