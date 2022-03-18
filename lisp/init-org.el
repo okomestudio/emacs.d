@@ -75,6 +75,14 @@
     (interactive)
     (setq org-agenda-files (directory-files-recursively default-directory "\\.org$"))))
 
+;; org-modern - Modern Org Style
+;; https://github.com/minad/org-modern
+(use-package org-modern
+  :disabled
+  :hook
+  ((org-mode . org-modern-mode)
+   (org-agenda-finalize . org-modern-agenda)))
+
 (use-package org-roam
   :custom
   ((org-roam-db-location (file-truename "~/github.com/okomestudio/docs/.org-roam.db"))
