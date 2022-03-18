@@ -42,12 +42,12 @@ detail."
 
 
 (defun is-linux ()
-  "Return true if system is Linux-based."
+  "Return non-nil if system is Linux-based."
   (string-equal system-type "darwin"))
 
 
 (defun is-macos ()
-  "Return true if system is Mac OS X-based."
+  "Return non-nil if system is Mac OS X-based."
   (string-equal system-type "darwin"))
 
 
@@ -89,12 +89,15 @@ This is an extended version `locate-dominating-file`, which does
 not stop at the first occurrence of NAME and continues looking
 upward."
   (let* ((dir-locals-file (locate-dominating-file file name))
-         (dir-locals-files '()))
+         (dir-locals-files '())
+         (parent-directory nil))
     (while dir-locals-file
       (progn
         (add-to-list 'dir-locals-files dir-locals-file)
-        (setq dir-locals-file (locate-dominating-file
-                               (parent-directory dir-locals-file) name))))
+        (setq parent-directory (parent-directory (expand-file-name dir-locals-file)))
+        (if parent-directory
+            (setq dir-locals-file (locate-dominating-file parent-directory name))
+          (setq dir-locals-file nil))))
     dir-locals-files))
 
 (defun ts/reload-dir-locals-for-current-buffer ()
