@@ -216,6 +216,12 @@ top down to the current directory.")
   :custom
   (aw-dispatch-always t))
 
+(use-package mwheel
+  :ensure nil
+  :custom
+  (mouse-wheel-progressive-speed t)
+  (mouse-wheel-scroll-amount '(3 ((shift) . 1))))
+
 
 ;; topsy.el - Simple sticky header showing definition beyond top of window
 ;; -----------------------------------------------------------------------
@@ -234,21 +240,10 @@ top down to the current directory.")
 (use-package epc
   :ensure t)
 
-(use-package fringe
-  :ensure nil
-  :init
-  (fringe-mode 0))
-
 (use-package hippie-exp
   :ensure nil
   :init
   (global-set-key [remap dabbrev-expand] 'hippie-expand))
-
-(use-package mwheel
-  :ensure nil
-  :custom
-  (mouse-wheel-progressive-speed t)
-  (mouse-wheel-scroll-amount '(3 ((shift) . 1))))
 
 ;; (use-package startup
 ;;   :ensure nil

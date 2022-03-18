@@ -2,6 +2,8 @@
 ;;; Commentary:
 ;;; Code:
 
+;;; LOAD THEME
+
 (defun ts/configure-theme (theme)
   "Configure and load THEME."
   (if (daemonp)
@@ -14,9 +16,15 @@
 ;; (use-package professional-theme
 ;;   :init (ts/configure-theme 'professional))
 
+;; (use-package modus-themes
+;;   :ensure modus-themes
+;;   :init (ts/configure-theme 'modus-operandi))
+
 (use-package spacemacs-common
   :ensure spacemacs-theme
   :init (ts/configure-theme 'spacemacs-light))
+
+;;; THEME MISC.
 
 (use-package all-the-icons
   :init
@@ -76,7 +84,7 @@
   :init (global-hl-line-mode +1))
 
 (use-package highlight-indent-guides
-  :disabled t
+  :disabled
   :hook ((prog-mode) . highlight-indent-guides-mode)
 
   :config
@@ -91,6 +99,10 @@
   (set-face-foreground 'highlight-indent-guides-character-face "light yellow")
   (set-face-background 'highlight-indent-guides-top-character-face "light yellow")
   (set-face-foreground 'highlight-indent-guides-top-character-face "gray"))
+
+(use-package fringe
+  :ensure nil
+  :init (fringe-mode '(8 . 4)))
 
 (provide 'init-themes)
 ;;; init-themes.el ends here
