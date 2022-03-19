@@ -6,10 +6,16 @@
 ;; https://github.com/tam17aki/ace-isearch
 (use-package ace-isearch
   :after (ace-jump-mode)
-  :config (global-ace-isearch-mode 1)
+
+  :config
+  (global-ace-isearch-mode 1)
+
+  :init
+  (defun ts/ace-isearch-function-from-isearch ()
+    (consult-line isearch-string))
 
   :custom
-  (ace-isearch-function-from-isearch 'consult-line)
+  (ace-isearch-function-from-isearch 'ts/ace-isearch-function-from-isearch)
   (ace-isearch-input-length 6)
   (ace-isearch-jump-delay 0.75))
 
