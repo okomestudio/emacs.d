@@ -55,11 +55,12 @@ detail."
   "Get the parent directory of PATH.
 
 This function effectively removes the last component from PATH,
-regardless of it being a file or a directory. The returned parent
-directory always ends with a '/' character. The function returns
-nil if no parent directory exists (i.e., PATH points to root)."
+regardless of the path pointing to a file or a directory. The
+returned directory always ends with a '/' character. The function
+returns nil if no parent directory exists (i.e., PATH points to
+root)."
   (unless (equal "/" path)
-    (file-name-directory (directory-file-name path))))
+    (file-name-directory (directory-file-name (expand-file-name path)))))
 
 
 (defun remove-trailing-whitespaces-on-save ()
@@ -85,19 +86,20 @@ nil if no parent directory exists (i.e., PATH points to root)."
 (defun ts/locate-dominating-files (file name)
   "Look upward in directory hierarchy from FILE to locate ones containing NAME.
 
-This is an extended version `locate-dominating-file`, which does
-not stop at the first occurrence of NAME and continues looking
-upward."
+This extends the `locate-dominating-file` function to not stop at
+the first occurrence of NAME and continues looking upward in the
+directory tree."
   (let* ((dir-locals-file (locate-dominating-file file name))
          (dir-locals-files '())
          (parent-directory nil))
     (while dir-locals-file
       (progn
-        (add-to-list 'dir-locals-files dir-locals-file)
-        (setq parent-directory (parent-directory (expand-file-name dir-locals-file)))
-        (if parent-directory
-            (setq dir-locals-file (locate-dominating-file parent-directory name))
-          (setq dir-locals-file nil))))
+        (push dir-locals-file dir-locals-files)
+        (setq parent-directory (parent-directory dir-locals-file))
+        (setq dir-locals-file
+              (cond ((not (eq parent-directory nil)) (locate-dominating-file parent-directory name))
+                    (t nil)))
+        ))
     dir-locals-files))
 
 (defun ts/reload-dir-locals-for-current-buffer ()
