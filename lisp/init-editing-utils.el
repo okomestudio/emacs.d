@@ -43,6 +43,15 @@
 (use-package whole-line-or-region)
 
 ;;;
+;;; Characters
+;;;
+
+;; list-unicode-display - Search for and list unicode characters
+;; https://github.com/purcell/list-unicode-display
+(use-package list-unicode-display)
+
+
+;;;
 ;;; Dictionary
 ;;;
 
