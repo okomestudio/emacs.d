@@ -19,6 +19,7 @@
    (org-babel-python-command "~/.pyenv/shims/python")
    (org-blank-before-new-entry '((heading . auto) (plain-list-item . auto)))
    (org-file-apps '(("\\.mp4\\'" . "vlc --repeat %s")))
+   (org-hide-emphasis-markers t)
    (org-image-actual-width nil)
    (org-list-allow-alphabetical t)
    ;; (org-plantuml-jar-path ts/path-plantuml)
@@ -81,7 +82,11 @@
 (use-package org-modern
   :custom
   (org-modern-block nil)
-  (org-modern-keyword t)
+  (org-modern-checkbox '((?X . #("▢𐄂" 0 2 (composition ((2)))))
+                         (?- . #("▢–" 0 2 (composition ((2)))))
+                         (?\s . #("▢" 0 1 (composition ((1)))))))
+  (org-modern-hide-stars 'nil)
+  (org-modern-keyword "‣ ")
   (org-modern-priority t)
   (org-modern-star nil)
   (org-modern-statistics t)
@@ -89,7 +94,7 @@
   (org-modern-tag t)
   (org-modern-timestamp t)
   (org-modern-todo t)
-  (org-modern-variable-pitch nil)
+  (org-modern-variable-pitch t)
 
   :hook
   ((org-mode . org-modern-mode)
