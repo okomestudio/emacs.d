@@ -22,7 +22,12 @@
 
 (use-package spacemacs-common
   :ensure spacemacs-theme
-  :init (ts/configure-theme 'spacemacs-light))
+
+  :init
+  (custom-set-variables '(spacemacs-theme-custom-colors
+                          '((base . "#322938") ; #655370 for light, true-color
+                            )))
+  (ts/configure-theme 'spacemacs-light))
 
 ;;; THEME MISC.
 
