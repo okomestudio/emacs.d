@@ -10,32 +10,6 @@
   (("C-c l" . 'org-store-link)
    ("M-S q" . 'org-unfill-paragraph))
 
-  :custom
-  ((fill-column 80)
-   (org-adapt-indentation nil)
-   (org-agenda-files
-    (when (> (length (directory-files default-directory t "\\.org$")) 0)
-      (directory-files-recursively default-directory "\\.org$")))
-   (org-babel-python-command "~/.pyenv/shims/python")
-   (org-blank-before-new-entry '((heading . auto) (plain-list-item . auto)))
-   (org-file-apps '(("\\.mp4\\'" . "vlc --repeat %s")))
-   (org-hide-emphasis-markers t)
-   (org-image-actual-width nil)
-   (org-list-allow-alphabetical t)
-   ;; (org-plantuml-jar-path ts/path-plantuml)
-   (org-preview-latex-image-directory ".ltximg/")
-   (org-startup-folded t)
-   (org-startup-indented t)
-   (org-support-shift-select t)
-   (org-tags-column 0)
-   (org-todo-keywords '((sequence "TODO" "|" "DONE" "SKIP"))))
-
-  :hook
-  ((org-mode . (lambda () (org-superstar-mode 1)))
-   (org-mode . (lambda () (text-scale-set 1)))
-   (org-mode . turn-on-visual-line-mode) ; trying instead of (toggle-truncate-lines 1) and auto-fill-mode
-   )
-
   :config
   (defun org-unfill-paragraph (&optional region)
     "Takes a multi-line paragraph and makes it into a single line of text."
@@ -45,6 +19,7 @@
           (emacs-lisp-docstring-fill-column t))
       (org-fill-paragraph nil region)))
 
+  (setq org-agenda-files (ts/org--init-org-agenda-files "~/.org-agenda-files"))
   (plist-put org-format-latex-options :scale 1.5)
 
   ;; Add a few characters usable for bounding emphasis markup
@@ -71,11 +46,48 @@
      (sql . t)
      (typescript . t)))
 
+  :custom
+  ((fill-column 80)
+   (org-adapt-indentation nil)
+   (org-babel-python-command "~/.pyenv/shims/python")
+   (org-blank-before-new-entry '((heading . auto) (plain-list-item . auto)))
+   (org-default-notes-file "~/.notes.org")
+   (org-file-apps '(("\\.mp4\\'" . "vlc --repeat %s")))
+   (org-hide-emphasis-markers t)
+   (org-image-actual-width nil)
+   (org-list-allow-alphabetical t)
+   ;; (org-plantuml-jar-path ts/path-plantuml)
+   (org-preview-latex-image-directory ".ltximg/")
+   (org-startup-folded t)
+   (org-startup-indented t)
+   (org-support-shift-select t)
+   (org-tags-column 0)
+   (org-todo-keywords '((sequence "TODO" "|" "DONE" "SKIP"))))
+
+  :hook
+  ((org-mode . (lambda () (org-superstar-mode 1)))
+   (org-mode . (lambda () (text-scale-set 1)))
+   (org-mode . turn-on-visual-line-mode) ; trying instead of (toggle-truncate-lines 1) and auto-fill-mode
+   )
+
   :init
-  (defun org-agenda-gather-files ()
-    "Gather org agenda files."
-    (interactive)
-    (setq org-agenda-files (directory-files-recursively default-directory "\\.org$"))))
+  (defun ts/org--init-org-agenda-files (pathlist)
+    "Gather agenda files recursively with directories defined in PATHLIST."
+    (with-temp-buffer
+      (insert-file-contents pathlist)
+      (let* (gathered-files '())
+        (while (not (eobp))
+          (let* ((path (buffer-substring-no-properties
+                        (line-beginning-position) (line-end-position))))
+            (if (f-directory-p path)
+                (setq gathered-files
+                      (append gathered-files
+                              (directory-files-recursively path "\\.org$" ))))
+            (if (f-file-p path)
+                (push path gathered-files)))
+          (forward-line 1))
+        gathered-files))))
+
 
 ;; org-modern - Modern Org Style
 ;; https://github.com/minad/org-modern
@@ -97,9 +109,11 @@
   (org-modern-variable-pitch t)
 
   :hook
-  ((org-mode . org-modern-mode)
-   ;; (org-agenda-finalize . org-modern-agenda)
-   ))
+  ((org-mode . org-modern-mode))
+
+  :init
+  (add-hook 'org-agenda-finalize-hook #'org-modern-agenda))
+
 
 (use-package org-roam
   :custom
