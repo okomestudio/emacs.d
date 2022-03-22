@@ -50,6 +50,7 @@
   ((fill-column 80)
    (org-adapt-indentation nil)
    (org-agenda-include-diary t)
+   (org-agenda-start-on-weekday 1)
    (org-babel-python-command "~/.pyenv/shims/python")
    (org-blank-before-new-entry '((heading . auto) (plain-list-item . auto)))
    (org-default-notes-file "~/.notes.org")
