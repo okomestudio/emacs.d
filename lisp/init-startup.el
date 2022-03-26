@@ -302,5 +302,12 @@ top down to the current directory.")
   (gcmh-high-cons-threshold (* 16 1024 1024))
   (gcmh-idle-delay 5))
 
+;; prog-mode.el - Built-in major mode for programming
+(use-package prog-mode
+  :ensure nil
+  :hook
+  ((prog-mode . remove-trailing-whitespaces-on-save)
+   (prog-mode . show-paren-mode)))
+
 (provide 'init-startup)
 ;;; init-startup.el ends here
