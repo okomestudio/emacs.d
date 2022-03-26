@@ -21,7 +21,12 @@
 
 ;; ace-jump-mode - A quick cursor jump mode
 ;; https://github.com/winterTTr/ace-jump-mode
-(use-package ace-jump-mode)
+(use-package ace-jump-mode
+  :after (help-swoop))
+
+;; Install this just as ace-jump-mode dependency
+(use-package helm-swoop)
+
 
 (provide 'init-ace)
 ;;; init-ace.el ends here
