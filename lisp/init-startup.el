@@ -254,7 +254,7 @@ top down to the current directory.")
   :config (direnv-mode)
   :ensure-system-package ((direnv . "sudo apt install direnv")))
 
-;;  exec-path-from-shell.el - Make Emacs use the PATH set up by the user's shell
+;; exec-path-from-shell.el - Make Emacs use the PATH set up by the user's shell
 ;;
 ;; Ensure environment variables look the same in the user's shell
 ;;
@@ -262,6 +262,14 @@ top down to the current directory.")
 (use-package exec-path-from-shell
   :if (or (memq window-system '(mac ns x)) (daemonp))
   :config (exec-path-from-shell-initialize))
+
+;; keychain-environment - Loads keychain environment variables into emacs
+(use-package keychain-environment
+  :ensure nil
+  :init
+  (ensure-file-from-github "tarsius/keychain-environment/master/keychain-environment.el")
+  (require 'keychain-environment)
+  (keychain-refresh-environment))
 
 
 ;; OPTIMIZATIONS
