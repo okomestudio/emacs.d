@@ -212,6 +212,22 @@ top down to the current directory.")
   :quelpa (topsy :fetcher github :repo "alphapapa/topsy.el")
   :hook (prog-mode . topsy-mode))
 
+;; yascroll.el -- Yet Another Scroll Bar Mode
+;; https://github.com/emacsorphanage/yascroll
+(use-package yascroll
+  :init
+  (ensure-file-from-github "emacsorphanage/yascroll/master/yascroll.el")
+
+  ;; Enable only if no GUI:
+  (if (not window-system)
+      (if (daemonp)
+          (add-hook 'after-make-frame-functions
+                    (lambda (frame)
+                      (with-selected-frame frame
+                        (when (not window-system)
+                          (global-yascroll-bar-mode +1)))))
+        (global-yascroll-bar-mode +1))))
+
 
 ;; INPUT DEVICES
 
