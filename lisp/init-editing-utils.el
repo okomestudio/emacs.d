@@ -8,6 +8,15 @@
   (("C-a" . 'mwim-beginning)
    ("C-e" . 'mwim-end)))
 
+;; multiple-cursors.el - Multiple cursors
+;; https://github.com/magnars/multiple-cursors.el
+(use-package multiple-cursors
+  :init
+  (global-set-key (kbd "C-S-c C-S-c") 'mc/edit-lines)
+  (global-set-key (kbd "C->") 'mc/mark-next-like-this)
+  (global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
+  (global-set-key (kbd "C-S-c C-<") 'mc/mark-all-like-this))
+
 ;; Convert buffer text and decorations to HTML
 (use-package htmlize)
 
