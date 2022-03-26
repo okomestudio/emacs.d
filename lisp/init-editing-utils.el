@@ -2,6 +2,7 @@
 ;;; Commentary:
 ;;; Code:
 
+
 ;; hippie-expand -- Expand the word before the point in various ways
 (use-package hippie-exp
   :ensure nil
@@ -57,27 +58,52 @@
 ;; Operate on current line if region undefined
 (use-package whole-line-or-region)
 
-;;;
-;;; Characters
-;;;
+
+;;; SYNTAX CHECKING
+
+(use-package flycheck
+  :init (global-flycheck-mode))
+
+(use-package flycheck-pos-tip
+  :custom (flycheck-pos-tip-timeout 60)
+  :init (with-eval-after-load 'flycheck (flycheck-pos-tip-mode)))
+
+
+;;; SPELLING
+
+(use-package flyspell
+  :bind (("M-s M-s" . flyspell-auto-correct-previous-word))
+  :hook
+  ((prog-mode . flyspell-prog-mode)
+   (shell-script-mode . flyspell-prog-mode)
+   (text-mode . flyspell-mode)))
+
+(use-package ispell
+  :custom
+  ((ispell-dictionary "en_US")
+   (ispell-local-dictionary-alist
+    '(("en_US" "[[:alpha:]]" "[^[:alpha:]]" "['’]" t ("-d" "en_US") nil utf-8)
+      ("en_GB" "[[:alpha:]]" "[^[:alpha:]]" "['’]" t ("-d" "en_GB") nil utf-8))))
+
+  :config
+  (put 'ispell-dictionary 'safe-local-variable #'stringp))
+
+
+;;; CHARACTERS
 
 ;; list-unicode-display - Search for and list unicode characters
 ;; https://github.com/purcell/list-unicode-display
 (use-package list-unicode-display)
 
 
-;;;
-;;; Dictionary
-;;;
+;;; DICTIONARY
 
 (use-package define-word
   :bind (("M-W" . define-word-at-point))
   :custom (define-word-default-service 'wordnik))
 
 
-;;;
-;;; Thesaurus
-;;;
+;;; THESAURUS
 
 ;; powerthesaurus.el - Powerthesaurus integration for Emacs
 ;; https://github.com/SavchenkoValeriy/emacs-powerthesaurus

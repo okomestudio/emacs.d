@@ -25,5 +25,17 @@
     (when (eq major-mode 'compilation-mode)
       (ansi-color-apply-on-region compilation-filter-start (point-max)))))
 
+(use-package flymake-shellcheck
+  :disabled
+  :ensure-system-package (shellcheck . "sudo apt install shellcheck")
+  :if (executable-find "shellcheck")
+  :commands flymake-shellcheck-load
+  :hook ((sh-mode) . flymake-shellcheck-load)
+  :init
+  (setq sh-basic-offset 4
+        sh-indentation 4)
+  (add-to-list 'auto-mode-alist '("\\.bats\\'" . sh-mode))
+  (add-to-list 'interpreter-mode-alist '("bats" . sh-mode)))
+
 (provide 'init-shell)
 ;;; init-shell.el ends here
