@@ -15,7 +15,7 @@
   (inhibit-startup-screen nil)
   (load-prefer-newer t)
   (read-process-output-max (* 1 1024 1024)) ; 1 mb
-  (ring-bell-function 'ignore)              ; Disable beeping (in C source code)
+  (ring-bell-function 'ignore)    ; Disable beeping (in C source code)
   (tab-width 2)
   (vc-follow-symlinks t)
   (x-select-request-type '(UTF8_STRING COMPOUND_TEXT TEXT STRING))
@@ -47,7 +47,7 @@ If non-nil, evaluate .dir-locals.el files starting in the current
 directory and going up. Otherwise they will be evaluated from the
 top down to the current directory.")
 
-  (defun hack-dir-local-variables-advice (func)
+  (defun ts/hack-dir-local-variables-advice (func)
     (if walk-dir-locals-upward
         (let ((dir-locals-file ".dir-locals.el")
               (original-buffer-file-name (buffer-file-name))
@@ -61,13 +61,12 @@ top down to the current directory.")
             (setq buffer-file-name original-buffer-file-name)))
       (funcall func)))
 
-  (advice-add 'hack-dir-local-variables :around #'hack-dir-local-variables-advice)
+  (advice-add 'hack-dir-local-variables :around #'ts/hack-dir-local-variables-advice)
 
 
   ;; apropos
   ;; -------
-
-  ;; http://www.masteringemacs.org/articles/2011/08/04/full-text-searching-info-mode-apropos/#comment-1409
+  ;; Bind `C-h a` to apropos for ease of access.
   (global-set-key (kbd "C-h a") 'ts/apropos-prefix)
   (define-prefix-command 'ts/apropos-prefix nil "Apropos (a,d,f,i,l,v,C-v)")
   (define-key ts/apropos-prefix (kbd "a") 'apropos)
@@ -93,11 +92,9 @@ top down to the current directory.")
   :custom
   (save-interprogram-paste-before-kill t)
   (sentence-end-double-space nil)       ; in paragraphs.el
+  (show-paren-delay 0)
   (size-indication-mode t)
   (tab-always-indent t)                 ; in indent.el
-
-  :hook
-  (before-save . delete-trailing-whitespace)
 
   :init
   (defun ts/insert-zero-width-space ()
@@ -137,8 +134,25 @@ top down to the current directory.")
       (fill-paragraph nil region)))
 
   (column-number-mode t)
+  (global-so-long-mode +1)    ; mitigate perf on files with long lines
+  (show-paren-mode +1)        ; highlight matching parens
   (subword-mode)
-  (setq-default indent-tabs-mode nil))
+  (tooltip-mode 1)
+  (setq-default indent-tabs-mode nil)
+
+  ;; winner-mode
+  ;; -----------
+  ;; Built-in global minor mode for undo/redo changes in window
+  ;; configuration. C-c <left> undoes, C-c <right> redoes.
+  (winner-mode 1)
+
+  ;; mule.el
+  ;; -------
+  ;; Basic commands for multilingual environment.
+  (prefer-coding-system 'utf-8)       ; Use UTF-8 when possible
+  (set-default-coding-systems 'utf-8)
+  (set-language-environment "UTF-8")
+  )
 
 (use-package files
   :ensure nil
@@ -159,33 +173,108 @@ top down to the current directory.")
   :preface
   (defconst ts/backup-cache-dir (expand-file-name "~/.cache/emacs-backups")))
 
-;; imenu.el --- framework for mode-specific buffer indexes
-(use-package imenu
+
+;; WINDOWS AND FRAMES
+
+;; ace-window - Quickly switch windows in Emacs
+;; https://github.com/abo-abo/ace-window
+(use-package ace-window
+  :bind (("M-O" . 'ace-window))
+  :custom (aw-dispatch-always t))
+
+;; frame-fns.el/frame-cmds.el - Frame functions and commands
+(use-package frame-cmds
   :ensure nil
-  :init (global-set-key (kbd "M-i") 'imenu))
+  :bind (("M-o" . 'other-window-or-frame))
 
-;; mule.el --- basic commands for multilingual environment
-(use-package mule
+  :init
+  (ensure-file-from-url "https://www.emacswiki.org/emacs/download/frame-fns.el")
+  (ensure-file-from-url "https://www.emacswiki.org/emacs/download/frame-cmds.el"))
+
+;; shackle.el - Enforce rules for popup windows.
+;; https://depp.brause.cc/shackle/
+(use-package shackle
+  :config (shackle-mode 1)
+
+  :custom
+  (shackle-default-alignment 'below)
+  (shackle-default-size 0.4)
+  ;; (shackle-rules '(("*Warnings*"
+  ;;                   :select nil :size 0.25)
+  ;;                  (magit-status-mode
+  ;;                   :align right :size 0.5 :inhibit-window-quit t :other t)))
+  )
+
+;; topsy.el - Simple sticky header showing definition beyond top of window.
+;; https://github.com/alphapapa/topsy.el
+(use-package topsy
+  :disabled                             ; Because of conflict with lsp
+  :quelpa (topsy :fetcher github :repo "alphapapa/topsy.el")
+  :hook (prog-mode . topsy-mode))
+
+
+;; INPUT DEVICES
+
+(use-package mwheel
   :ensure nil
+  :custom
+  (mouse-wheel-progressive-speed t)
+  (mouse-wheel-scroll-amount '(3 ((shift) . 1))))
 
-  :config
-  (prefer-coding-system 'utf-8)         ; Use UTF-8 when possible
-  (set-default-coding-systems 'utf-8)
-  (set-language-environment "UTF-8"))
 
-;; paren.el --- highlight matching paren
-(use-package paren
+;; SHELL
+
+;; add-node-modules-path.el - Add node_modules/.bin to exec-path
+;; https://github.com/codesuki/add-node-modules-path
+(use-package add-node-modules-path)
+
+;; direnv.el - direnv integration
+;;
+;; Invoke direnv to obtain the environment for the current file, then
+;; update the emacs variables process-environment and exec-path.
+;;
+;; https://github.com/wbolster/emacs-direnv
+(use-package direnv
+  :config (direnv-mode)
+  :ensure-system-package ((direnv . "sudo apt install direnv")))
+
+;;  exec-path-from-shell.el - Make Emacs use the PATH set up by the user's shell
+;;
+;; Ensure environment variables look the same in the user's shell
+;;
+;; https://github.com/purcell/exec-path-from-shell
+(use-package exec-path-from-shell
+  :if (or (memq window-system '(mac ns x)) (daemonp))
+  :config (exec-path-from-shell-initialize))
+
+
+;; OPTIMIZATIONS
+
+(use-package bytecomp
   :ensure nil
-  :custom (show-paren-delay 0)
-  :config (show-paren-mode +1))
+  :custom (byte-compile-warnigns '(cl-functions)))
 
+;; A RPC stack for the Emacs Lisp
+;; (use-package epc
+;;   :ensure t)
+
+;; gcmh.el - The Garbage Collector Magic Hack
+;; https://github.com/emacsmirror/gcmh
+(use-package gcmh
+  :defer nil
+  :hook (after-init . gcmh-mode)
+
+  :custom
+  (gcmh-high-cons-threshold (* 16 1024 1024))
+  (gcmh-idle-delay 5))
+
+
+;; MISC.
+
+;; restart-emacs.el - Restart emacs from within emacs
+;; https://github.com/iqbalansari/restart-emacs
 (use-package restart-emacs
   :defer t)
-
-;; so-long.el --- Say farewell to performance problems with minified code.
-(use-package so-long
-  :ensure nil
-  :config (global-so-long-mode +1))
 
 ;; Displays available keybindings in popup (github.com/justbur/emacs-which-key)
 (use-package which-key
@@ -196,113 +285,9 @@ top down to the current directory.")
   :config
   (which-key-mode +1))
 
-;; frame-fns and frame-cmds - Frame functions and commands
-(use-package frame-cmds
-  :ensure nil
 
-  :bind
-  (("M-o" . 'other-window-or-frame))
+;; STANDARD BUILT-IN MAJOR MODES
 
-  :init
-  (ensure-file-from-url "https://www.emacswiki.org/emacs/download/frame-fns.el")
-  (ensure-file-from-url "https://www.emacswiki.org/emacs/download/frame-cmds.el"))
-
-;; ace-window - Quickly switch windows in Emacs
-;; https://github.com/abo-abo/ace-window
-(use-package ace-window
-  :bind
-  (("M-O" . 'ace-window))
-
-  :custom
-  (aw-dispatch-always t))
-
-;; shackle - Enforce rules for popup windows
-;; https://depp.brause.cc/shackle/
-(use-package shackle
-  :custom
-  (shackle-default-alignment 'below)
-  (shackle-default-size 0.4)
-  ;; (shackle-rules '(("*Warnings*"
-  ;;                   :select nil :size 0.25)
-  ;;                  (magit-status-mode
-  ;;                   :align right :size 0.5 :inhibit-window-quit t :other t)))
-
-  :config
-  (shackle-mode 1))
-
-(use-package mwheel
-  :ensure nil
-  :custom
-  (mouse-wheel-progressive-speed t)
-  (mouse-wheel-scroll-amount '(3 ((shift) . 1))))
-
-
-;; topsy.el - Simple sticky header showing definition beyond top of window
-;; -----------------------------------------------------------------------
-;; https://github.com/alphapapa/topsy.el
-(use-package topsy
-  :disabled t                           ; Because of conflict with lsp
-  :quelpa (topsy :fetcher github :repo "alphapapa/topsy.el")
-  :hook (prog-mode . topsy-mode))
-
-(use-package bytecomp
-  :ensure nil
-  :custom
-  (byte-compile-warnigns '(cl-functions)))
-
-;; A RPC stack for the Emacs Lisp
-(use-package epc
-  :ensure t)
-
-(use-package hippie-exp
-  :ensure nil
-  :init
-  (global-set-key [remap dabbrev-expand] 'hippie-expand))
-
-;; (use-package startup
-;;   :ensure nil
-;;   :no-require t
-;;   :init
-;;   (setq-default scroll-bar-width 6))
-
-(use-package tooltip
-  :ensure nil
-  :init
-  (tooltip-mode 1))
-
-;; C-c <left> undoes, C-c <right> redoes
-(use-package winner
-  :ensure nil
-  :init
-  (winner-mode 1))
-
-;; Add node_modules to your exec-path
-(use-package add-node-modules-path)
-
-;; Invoke direnv to obtain the environment for the current file, then update the
-;; emacs variables process-environment and exec-path.
-(use-package direnv
-  :config
-  (direnv-mode)
-  :ensure-system-package
-  ((direnv . "sudo apt install direnv")))
-
-;; https://github.com/purcell/exec-path-from-shell
-(use-package exec-path-from-shell
-  :if (or (memq window-system '(mac ns x)) (daemonp))
-  :config
-  (exec-path-from-shell-initialize))
-
-;; Smart garbage collection
-(use-package gcmh
-  :defer nil
-  :hook (after-init . gcmh-mode)
-
-  :custom
-  (gcmh-high-cons-threshold (* 16 1024 1024))
-  (gcmh-idle-delay 5))
-
-;; prog-mode.el - Built-in major mode for programming
 (use-package prog-mode
   :ensure nil
   :hook
