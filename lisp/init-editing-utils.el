@@ -2,6 +2,12 @@
 ;;; Commentary:
 ;;; Code:
 
+;; hippie-expand -- Expand the word before the point in various ways
+(use-package hippie-exp
+  :ensure nil
+  :init
+  (global-set-key [remap dabbrev-expand] 'hippie-expand))
+
 ;; Switch between the beginning/end of line or codeLine positioning
 (use-package mwim
   :bind
