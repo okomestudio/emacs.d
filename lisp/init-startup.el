@@ -304,6 +304,10 @@ top down to the current directory.")
 (use-package restart-emacs
   :defer t)
 
+(use-package tramp
+  :custom (tramp-default-method "ssh")
+  :defer t)
+
 ;; Displays available keybindings in popup (github.com/justbur/emacs-which-key)
 (use-package which-key
   :custom
