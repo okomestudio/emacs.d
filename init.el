@@ -106,7 +106,6 @@
 (require 'init-google-translate)
 (require 'init-lsp)
 (require 'init-openwith)
-(require 'init-org)
 (require 'init-projectile)
 (require 'init-vterm)
 ;; (require 'init-anki)
@@ -133,6 +132,9 @@
 (require 'init-graphviz)
 (require 'init-plantuml)
 (require 'init-restclient)
+
+;; org
+(require 'init-org)
 
 
 ;; LOAD CUSTOM INIT.EL
