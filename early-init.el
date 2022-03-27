@@ -7,7 +7,7 @@
 ;;; Code:
 
 ;; Set to t when debugging startup issues:
-(setq debug-on-error t)
+(setq debug-on-error nil)
 
 
 (let ((minver "27.2"))
