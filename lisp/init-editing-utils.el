@@ -89,6 +89,30 @@
   (put 'ispell-dictionary 'safe-local-variable #'stringp))
 
 
+;;; SEARCH AND MOVEMENT
+
+;; ace-isearch - A seamless bridge between isearch, ace-jump-mode, avy, and swoop.
+;; https://github.com/tam17aki/ace-isearch
+(use-package ace-isearch
+  :custom
+  (ace-isearch-input-length 6)
+  (ace-isearch-jump-delay 0.75)
+
+  :init
+  (defun ts/ace-isearch-function-from-isearch ()
+    (consult-line isearch-string))
+
+  (defun ts/init-ace-isearch ()
+    (global-ace-isearch-mode +1)
+    ;; This needs to be set after mode activation to override auto-detection:
+    (setq ace-isearch-function-from-isearch
+          'ts/ace-isearch-function-from-isearch))
+
+  (use-package ace-jump-mode)
+
+  (add-hook 'after-init-hook 'ts/init-ace-isearch))
+
+
 ;;; CHARACTERS
 
 ;; list-unicode-display - Search for and list unicode characters
