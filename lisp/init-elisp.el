@@ -9,7 +9,6 @@
 (use-package lispy
   :defer t
   :hook ((emacs-lisp-mode . lispy-mode))
-
   :config
   (unbind-key "M-o" lispy-mode-map)
   (unbind-key "M-S-o" lispy-mode-map))
@@ -17,7 +16,6 @@
 (use-package paredit
   :defer t
   :hook ((emacs-lisp-mode . my/paredit-hook))
-
   :config
   (defun my/paredit-hook ()
     (electric-pair-mode -1)
