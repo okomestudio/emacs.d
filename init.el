@@ -121,6 +121,7 @@
 ;; programming languages and dev frameworks
 (require 'init-c)
 (require 'init-elisp)
+(require 'init-kotlin)
 (require 'init-python)
 (require 'init-rust)
 (require 'init-scala)
