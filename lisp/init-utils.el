@@ -1,6 +1,10 @@
-;;; init-utils.el --- Utility functions  -*- lexical-binding: t -*-
+;;; init-utils.el --- Common utilities  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;; Code:
+
+;; dash - A modern list library for Emacs
+;; https://github.com/magnars/dash.el
+(use-package dash)
 
 
 (defun debug-message (text)
