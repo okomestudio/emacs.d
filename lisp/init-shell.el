@@ -17,9 +17,7 @@
 (use-package bats-mode)
 
 (use-package ansi-color
-  :hook
-  (compilation-filter . ts/colorize-buffer)
-
+  :hook (compilation-filter . ts/colorize-buffer)
   :config
   (defun ts/colorize-buffer ()
     (when (eq major-mode 'compilation-mode)

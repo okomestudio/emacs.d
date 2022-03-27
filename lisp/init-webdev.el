@@ -1,20 +1,12 @@
-;;; init-webdev.el --- Webdev  -*- lexical-binding: t -*-
+;;; init-webdev.el --- Web development environment  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;; Code:
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; web-mode for JavaScript, HTML, and CSS
-;;
+;; web-mode - For JavaScript, HTML, and CSS
 ;; https://github.com/fxbois/web-mode
 (use-package web-mode
-  ;; :after
-  ;; (company-css
-  ;;  company-tern
-  ;;  prettier-js
-  ;;  add-node-modules-path)
-
-  :bind
-  (:map web-mode-map ("C-c b" . web-beautify-html)) ; format code
+  ;; :after (company-css company-tern prettier-js add-node-modules-path)
+  :bind (:map web-mode-map ("C-c b" . web-beautify-html)) ; format code
 
   :custom
   (web-mode-code-indent-offset 2)
@@ -31,8 +23,7 @@
   ;;  (eslint . "npm install --save-dev eslint babel-eslint eslint-plugin-react")
   ;;  (tidy . "sudo apt install tidy"))
 
-  ;; :hook
-  ;; (web-mode . ts/web-mode-hook)
+  ;; :hook (web-mode . ts/web-mode-hook)
 
   :mode
   ("\\.css\\'"
@@ -125,16 +116,13 @@
 
 (use-package typescript-mode)
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Code formatting utility
+
+;; CODE FORMATTING UTILITY
 
 ;; https://prettier.io/
 (use-package prettier-js
-  :disabled t
-
-  :ensure-system-package
-  (prettier . "sudo npm install -g prettier")
-
+  :disabled
+  :ensure-system-package (prettier . "sudo npm install -g prettier")
   :config
   (setq prettier-js-args
         '("--arrow-parens" "always"
@@ -144,8 +132,7 @@
 
 ;; https://github.com/yasuyk/web-beautify
 (use-package web-beautify
-  :ensure-system-package
-  ((js-beautify . "sudo npm install -g js-beautify")))
+  :ensure-system-package ((js-beautify . "sudo npm install -g js-beautify")))
 
 (provide 'init-webdev)
 ;;; init-webdev.el ends here

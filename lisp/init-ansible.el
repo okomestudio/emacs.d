@@ -4,10 +4,7 @@
 
 (use-package ansible
   :mode ("\\.ya?ml\\'")
-
-  :custom
-  (ansible-dir-search-limit 20)
-
+  :custom (ansible-dir-search-limit 20)
   :config
   (add-hook 'ansible-hook 'ts/ansible-mode-hook)
 
