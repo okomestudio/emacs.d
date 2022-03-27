@@ -80,69 +80,66 @@
 
 (use-package auto-package-update
   :config
-  (setq auto-package-update-delete-old-versions t
-        auto-package-update-interval 7)
-  (auto-package-update-maybe))
+  (auto-package-update-maybe)
+
+  :custom
+  (auto-package-update-delete-old-versions t)
+  (auto-package-update-interval 7))
 
 
 ;; LOAD MODULES UNDER LISP DIRECTORY
-(require 'init-startup)
-(require 'init-themes)
 
-(require 'init-ace)
-(require 'init-anki)
-(require 'init-ansible)
-(require 'init-bookmark-plus)
-(require 'init-c)
-(require 'init-company)
-(require 'init-dash)
-(require 'init-dired)
-(require 'init-docker)
-(require 'init-edit-server)
-(require 'init-editing-utils)
-(require 'init-elfeed)
-(require 'init-elisp)
+;; essentials
+(require 'init-startup)
 (require 'init-faces)
-(require 'init-flycheck)
-(require 'init-git)
-(require 'init-gnus)
-(require 'init-google-translate)
-(require 'init-graphviz)
-(require 'init-ini)
-(require 'init-json)
-(require 'init-keychain)
-(require 'init-lsp)
-(require 'init-markdown)
+(require 'init-themes)
 (require 'init-minibuffer)
-(require 'init-multiple-cursors)
+(require 'init-treemacs)
+
+(require 'init-editing-utils)
+
+(require 'init-bookmark-plus)
+(require 'init-company)
+(require 'init-edit-server)
+(require 'init-elfeed)
+(require 'init-git)
+(require 'init-google-translate)
+(require 'init-lsp)
 (require 'init-openwith)
 (require 'init-org)
-(require 'init-plantuml)
-(require 'init-prog)
 (require 'init-projectile)
+(require 'init-vterm)
+;; (require 'init-anki)
+;; (require 'init-dired)
+;; (require 'init-docker)
+;; (require 'init-gnus)
+;; (require 'init-tern)
+;; (require 'init-yasnippet)
+
+;; file formats
+(require 'init-file-type-modes)
+
+;; programming languages and dev frameworks
+(require 'init-c)
+(require 'init-elisp)
 (require 'init-python)
-(require 'init-restclient)
-(require 'init-rst)
 (require 'init-rust)
 (require 'init-scala)
 (require 'init-shell)
 (require 'init-sql)
-(require 'init-tern)
-(require 'init-tramp)
-(require 'init-treemacs)
-(require 'init-vterm)
 (require 'init-webdev)
-(require 'init-windows)
-(require 'init-yaml)
-(require 'init-yascroll)
-(require 'init-yasnippet)
+
+(require 'init-ansible)
+(require 'init-graphviz)
+(require 'init-plantuml)
+(require 'init-restclient)
 
 
-;; If other init files exist, load them all.
-(when (file-exists-p (concat user-emacs-directory "init.d/"))
-  (mapc (lambda (f) (load f))
-        (directory-files (concat user-emacs-directory "init.d/") t ".el$")))
-
+;; LOAD CUSTOM INIT.EL
+(let ((custom-init-directory (concat user-emacs-directory "init.d/")))
+  (when (file-exists-p custom-init-directory)
+    (mapc (lambda (f) (load f))
+          (directory-files custom-init-directory t ".el$"))))
 
 (provide 'init)
 ;;; init.el ends here
