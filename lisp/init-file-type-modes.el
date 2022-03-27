@@ -2,12 +2,12 @@
 ;;; Commentary:
 ;;; Code:
 
-;; INIT
+;; INI
 
 (use-package any-ini-mode
   :ensure nil
   :init (ensure-file-from-url "https://www.emacswiki.org/emacs/download/any-ini-mode.el")
-  :mode "\\.ini\\'" "\\.conf\\'" "\\.service\\'")
+  :mode "\\.ini\\'" "\\.conf\\'")
 
 
 ;; JSON
@@ -60,6 +60,13 @@
   :ensure nil
   :ensure-system-package ((sphinx-quickstart . "pip install sphinx"))
   :mode "\\.rst\\'")
+
+
+;; SYSTEMD
+
+(use-package systemd
+  :mode
+  ("\\.\\(service|timer\\)\\'" . systemd-mode))
 
 
 ;; YAML
