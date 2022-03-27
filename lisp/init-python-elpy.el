@@ -6,17 +6,8 @@
 
 (use-package elpy
   :defer t
-  :disabled t
-
-  :custom
-  (elpy-folding-fringe-indicator t)
-  (elpy-rpc-backend "jedi")
-  (elpy-rpc-virtualenv-path (or (getenv "VIRTUAL_ENV")
-                                "~/.pyenv/versions/3.8.2"
-                                (concat user-emacs-directory "elpy/rpc-venv")))
-
-  :hook
-  (elpy-mode . ts/elpy-hooks)
+  :disabled
+  :hook (elpy-mode . ts/elpy-hooks)
 
   :config
   (when (load "flycheck" t t)
@@ -24,6 +15,13 @@
 
   (defun ts/elpy-hooks ()
     (hs-minor-mode))
+
+  :custom
+  (elpy-folding-fringe-indicator t)
+  (elpy-rpc-backend "jedi")
+  (elpy-rpc-virtualenv-path (or (getenv "VIRTUAL_ENV")
+                                "~/.pyenv/versions/3.8.2"
+                                (concat user-emacs-directory "elpy/rpc-venv")))
 
   :init
   (advice-add 'python-mode :before 'elpy-enable)
@@ -33,11 +31,8 @@
 ;;
 ;;   M-x jedi:install-server RET
 (use-package jedi-core
-  :disabled t
-
-  :hook
-  ((elpy-mode) . jedi:setup)
-
+  :disabled
+  :hook ((elpy-mode) . jedi:setup)
   :config
   (setq jedi:complete-on-dot nil
         jedi:get-in-function-call-delay 500
