@@ -295,6 +295,10 @@ top down to the current directory.")
 
 ;; MISC.
 
+;; dash - A modern list library for Emacs
+;; https://github.com/magnars/dash.el
+(use-package dash)
+
 ;; restart-emacs.el - Restart emacs from within emacs
 ;; https://github.com/iqbalansari/restart-emacs
 (use-package restart-emacs

@@ -2,11 +2,6 @@
 ;;; Commentary:
 ;;; Code:
 
-;; dash - A modern list library for Emacs
-;; https://github.com/magnars/dash.el
-(use-package dash)
-
-
 (defun debug-message (text)
   "Print a debug message TEXT with timestamp."
   (message "%s: %s" (format-time-string "%FT%H:%M:%S.%3N" (current-time)) text))
