@@ -60,12 +60,14 @@
 (use-package consult-lsp
   :after (consult lsp))
 
-;; https://gitlab.com/OlMon/consult-projectile/
+;; https://gitlab.com/OlMon/consult-projectile
 (use-package consult-projectile
   :after (consult projectile)
-  :bind (([remap projectile-switch-project] . consult-projectile)
-         ([remap projectile-find-file] . consult-projectile-find-file)
-         ([remap projectile-find-dir] . consult-projectile-find-dir)))
+  :bind
+  (("C-c p A" . consult-projectile)
+   ([remap projectile-find-dir] . consult-projectile-find-dir)
+   ([remap projectile-find-file] . consult-projectile-find-file)
+   ([remap projectile-switch-project] . consult-projectile-switch-project)))
 
 
 ;; embark.el - Emacs Mini-Buffer Actions Rooted in Key maps
