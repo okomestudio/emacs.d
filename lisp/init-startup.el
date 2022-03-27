@@ -323,8 +323,13 @@ top down to the current directory.")
 (use-package prog-mode
   :ensure nil
   :hook
-  ((prog-mode . remove-trailing-whitespaces-on-save)
-   (prog-mode . show-paren-mode)))
+  ((prog-mode . (lambda ()
+                  (remove-trailing-whitespaces-on-save)
+                  (show-paren-mode)))))
+
+(use-package text-mode
+  :ensure nil
+  :hook ((text-mode . remove-trailing-whitespaces-on-save)))
 
 (provide 'init-startup)
 ;;; init-startup.el ends here

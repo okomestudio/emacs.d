@@ -7,7 +7,7 @@
 (use-package any-ini-mode
   :ensure nil
   :init (ensure-file-from-url "https://www.emacswiki.org/emacs/download/any-ini-mode.el")
-  :mode ".*\\.ini$" ".*\\.conf$" ".*\\.service$")
+  :mode "\\.ini\\'" "\\.conf\\'" "\\.service\\'")
 
 
 ;; JSON
@@ -16,7 +16,7 @@
   :after (web-beautify)
   :bind (:map json-mode-map ("C-c b" . ts/beautify-json-via-python))
   :custom (js-indent-level 4)
-  :mode ("\\.json\\'" "\\.json.j2\\'")
+  :mode "\\.json\\(\\.j2\\)?\\'"
   :config
   (defun ts/beautify-json-via-python ()
     "See, e.g., https://emacs.stackexchange.com/a/12152/599"
@@ -47,7 +47,6 @@
 (use-package markdown-mode
   :commands (markdown-mode gfm-mode)
   :ensure-system-package ((pandoc . "sudo apt install pandoc"))
-  :hook ((markdown-mode) . remove-trailing-whitespaces-on-save)
   :init (setq markdown-command "pandoc")
   :mode (("README\\.md\\'" . gfm-mode)
          ("\\.md\\'" . markdown-mode)
@@ -59,17 +58,16 @@
 
 (use-package rst-mode
   :ensure nil
-  :hook ((rst-mode . remove-trailing-whitespaces-on-save)))
+  :ensure-system-package ((sphinx-quickstart . "pip install sphinx"))
+  :mode "\\.rst\\'")
 
 
 ;; YAML
 
 (use-package yaml-mode
-  :hook
-  ((yaml-mode . (lambda () (typo-mode -1)))
-   (yaml-mode . remove-trailing-whitespaces-on-save))
+  :hook (yaml-mode . (lambda () (typo-mode -1)))
+  :mode ("\\.ya?ml\\(\\.j2\\)?\\'" . yaml-mode))
 
-  :mode "\\.ya?ml\\'" "\\.ya?ml.j2\\'")
 
 (provide 'init-file-type-modes)
 ;;; init-file-type-modes.el ends here

@@ -3,6 +3,7 @@
 ;;; Code:
 
 (use-package ansible
+  :disabled
   :mode ("\\.ya?ml\\'")
   :custom (ansible-dir-search-limit 20)
   :config
