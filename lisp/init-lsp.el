@@ -14,10 +14,7 @@
 
   (lsp-bash-highlight-parsing-errors t)
   (lsp-pylsp-configuration-sources ["flake8"])
-  ;; (lsp-pylsp-disable-warning t)
   (lsp-pylsp-plugins-flake8-enabled t)
-  ;; (lsp-pylsp-plugins-flake8-max-line-length 150)
-  ;; (lsp-pylsp-plugins-jedi-use-pyenv-environment t)
   (lsp-pylsp-plugins-pycodestyle-enabled nil)
   (lsp-pylsp-plugins-pydocstyle-add-ignore '("D100" "D103"))
   (lsp-pylsp-plugins-pydocstyle-convention "google")
@@ -49,40 +46,18 @@
     (lsp-ensure-server server)
     (lsp)) )
 
+;; lsp-grammerly - lsp-mode and grammarly
 ;; https://github.com/emacs-grammarly/lsp-grammarly
 (use-package lsp-grammarly
   :bind ("C-c g" . ts/check-grammar)
-
-  :custom
-  (lsp-grammarly-auto-activate nil)
+  :custom (lsp-grammarly-auto-activate nil)
 
   :ensure-system-package
   (unofficial-grammarly-language-server . "sudo npm i -g @emacs-grammarly/unofficial-grammarly-language-server")
 
   :init
   (use-package keytar
-    :ensure-system-package
-    (keytar . "sudo npm install -g @emacs-grammarly/keytar-cli"))
-
-  (defun ts/grammarly--clean-up-tmp-file (tmp-filename)
-    (if (file-exists-p tmp-filename)
-        (delete-file tmp-filename)))
-
-  (defun ts/grammarly--clean-up-tmp-buffer (buffer)
-    (when (get-buffer buffer)
-      (set-buffer buffer)
-      (save-buffer buffer)
-      (kill-buffer-and-window)))
-
-  (defun ts/grammarly--finalize (buffer parent-buffer start end)
-    (set-buffer parent-buffer)
-    (kill-region start end)
-    (insert-buffer-substring buffer)
-    (let* ((new-end (- (+ start (buffer-size buffer)) 1)))
-      (ts/grammarly--clean-up-tmp-buffer buffer)
-      (ts/grammarly--clean-up-tmp-file (buffer-file-name buffer))
-      (set-buffer parent-buffer)
-      (goto-char new-end)))
+    :ensure-system-package (keytar . "sudo npm install -g @emacs-grammarly/keytar-cli"))
 
   (defun ts/grammarly--check-grammar (start end)
     (if (use-region-p)
@@ -107,9 +82,28 @@
                   (lsp-grammarly-check-grammar))
               (progn
                 (add-hook 'kill-emacs-hook (lambda () (ts/grammarly--clean-up-tmp-file tmp-filename))))
-              )
-            ) )
+              ) ))
       (message "No region marked to check for grammar")))
+
+  (defun ts/grammarly--clean-up-tmp-buffer (buffer)
+    (when (get-buffer buffer)
+      (set-buffer buffer)
+      (save-buffer buffer)
+      (kill-buffer-and-window)))
+
+  (defun ts/grammarly--clean-up-tmp-file (tmp-filename)
+    (if (file-exists-p tmp-filename)
+        (delete-file tmp-filename)))
+
+  (defun ts/grammarly--finalize (buffer parent-buffer start end)
+    (set-buffer parent-buffer)
+    (kill-region start end)
+    (insert-buffer-substring buffer)
+    (let* ((new-end (- (+ start (buffer-size buffer)) 1)))
+      (ts/grammarly--clean-up-tmp-buffer buffer)
+      (ts/grammarly--clean-up-tmp-file (buffer-file-name buffer))
+      (set-buffer parent-buffer)
+      (goto-char new-end)))
 
   (defun ts/check-grammar (start end)
     (interactive "r")
@@ -121,14 +115,17 @@
   )
 
 
+;; lsp-ui - UI integration for lsp-mode
+;; https://github.com/emacs-lsp/lsp-ui
 (use-package lsp-ui
   :commands lsp-ui-mode
-
   :custom
   ((lsp-ui-doc-delay 0.5)
    (lsp-ui-doc-position 'at-point)
    (lsp-ui-doc-use-webkit nil)) )
 
+;; lsp-treemacs - lsp-mode and treemacs
+;; https://github.com/emacs-lsp/lsp-treemacs
 (use-package lsp-treemacs
   :bind ([f7] . lsp-treemacs-symbols)
   :commands lsp-treemacs-errors-list)
