@@ -19,7 +19,6 @@
           (emacs-lisp-docstring-fill-column t))
       (org-fill-paragraph nil region)))
 
-  (setq org-agenda-files (ts/org--init-org-agenda-files "~/.org-agenda-files"))
   (plist-put org-format-latex-options :scale 1.5)
 
   ;; Add a few characters usable for bounding emphasis markup
@@ -49,8 +48,6 @@
   :custom
   ((fill-column 80)
    (org-adapt-indentation nil)
-   (org-agenda-include-diary t)
-   (org-agenda-start-on-weekday 1)
    (org-babel-python-command "~/.pyenv/shims/python")
    (org-blank-before-new-entry '((heading . auto) (plain-list-item . auto)))
    (org-default-notes-file "~/.notes.org")
@@ -70,7 +67,29 @@
   ((org-mode . (lambda ()
                  (org-superstar-mode 1)
                  (text-scale-set 1)
-                 (turn-on-visual-line-mode))))
+                 (turn-on-visual-line-mode)))))
+
+(use-package org-agenda
+  :after (org)
+  :ensure nil
+
+  :config
+  (if (daemonp)
+      (add-hook 'emacs-startup-hook
+                '(lambda ()
+                   ;; First, empty agenda files to successfully create an Org Agenda buffer:
+                   (setq org-agenda-files ())
+                   (org-agenda nil "a")
+                   ;; then, load the full list of agenda files and refresh the buffer:
+                   (setq org-agenda-files (ts/org--init-org-agenda-files "~/.org-agenda-files"))
+                   (org-agenda nil "n")
+                   ;; This is to avoid "No Org agenda currently displayed" error.
+                   ))
+    (setq org-agenda-files (ts/org--init-org-agenda-files "~/.org-agenda-files")))
+
+  :custom
+  (org-agenda-include-diary t)
+  (org-agenda-start-on-weekday 0)
 
   :init
   (defun ts/org--init-org-agenda-files (pathlist)
@@ -89,7 +108,6 @@
                 (push path gathered-files)))
           (forward-line 1))
         gathered-files))))
-
 
 ;; org-modern - Modern Org Style
 ;; https://github.com/minad/org-modern
