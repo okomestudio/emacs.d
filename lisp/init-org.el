@@ -67,10 +67,10 @@
    (org-todo-keywords '((sequence "TODO" "|" "DONE" "SKIP"))))
 
   :hook
-  ((org-mode . (lambda () (org-superstar-mode 1)))
-   (org-mode . (lambda () (text-scale-set 1)))
-   (org-mode . turn-on-visual-line-mode) ; trying instead of (toggle-truncate-lines 1) and auto-fill-mode
-   )
+  ((org-mode . (lambda ()
+                 (org-superstar-mode 1)
+                 (text-scale-set 1)
+                 (turn-on-visual-line-mode))))
 
   :init
   (defun ts/org--init-org-agenda-files (pathlist)
@@ -115,7 +115,6 @@
 
   :init
   (add-hook 'org-agenda-finalize-hook #'org-modern-agenda))
-
 
 (use-package org-roam
   :custom
