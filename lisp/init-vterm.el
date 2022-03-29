@@ -10,6 +10,7 @@
   (vterm-buffer-name-string "vterm %s")
   (vterm-install t)
   (vterm-max-scrollback 5000)
+  (vterm-timer-delay 0.02)
 
   :ensure-system-package
   (cmake . "sudo apt install -y cmake libtool-bin libvterm-dev")
