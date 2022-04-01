@@ -61,7 +61,7 @@
    (org-startup-indented t)
    (org-support-shift-select t)
    (org-tags-column 0)
-   (org-todo-keywords '((sequence "TODO" "|" "DONE" "SKIP"))))
+   (org-todo-keywords '((sequence "TODO" "WIP" "|" "SKIP" "DONE"))))
 
   :hook
   ((org-mode . (lambda ()
