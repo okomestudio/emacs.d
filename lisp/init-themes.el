@@ -85,7 +85,7 @@
 ;; hl-line.el - Highlight the current line.
 (use-package hl-line
   :ensure nil
-  :config (set-face-attribute 'hl-line nil :inherit nil :background "LemonChiffon2")
+  :config (set-face-attribute 'hl-line nil :inherit nil :background "pale goldenrod")
   :init (global-hl-line-mode +1))
 
 (use-package highlight-indent-guides
