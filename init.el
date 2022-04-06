@@ -100,6 +100,7 @@
 
 (require 'init-bookmark-plus)
 (require 'init-company)
+(require 'init-docker)
 (require 'init-edit-server)
 (require 'init-elfeed)
 (require 'init-git)
@@ -110,7 +111,6 @@
 (require 'init-vterm)
 ;; (require 'init-anki)
 ;; (require 'init-dired)
-;; (require 'init-docker)
 ;; (require 'init-gnus)
 ;; (require 'init-tern)
 ;; (require 'init-yasnippet)
