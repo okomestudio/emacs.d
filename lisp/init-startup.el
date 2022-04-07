@@ -14,9 +14,11 @@
   (inhibit-splash-screen nil)
   (inhibit-startup-screen nil)
   (load-prefer-newer t)
+  (next-error-message-highlight t)
   (read-process-output-max (* 1 1024 1024)) ; 1 mb
-  (ring-bell-function 'ignore)    ; Disable beeping (in C source code)
+  (ring-bell-function 'ignore)              ; Disable beeping (in C source code)
   (tab-width 2)
+  (use-short-anserts t)
   (vc-follow-symlinks t)
   (x-select-request-type '(UTF8_STRING COMPOUND_TEXT TEXT STRING))
 
