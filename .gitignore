@@ -21,6 +21,7 @@ init.d
 auto-save-list
 bookmarks
 custom.el
+eln-cache
 elpa
 eshell
 history

@@ -35,6 +35,8 @@
 
 (setq frame-inhibit-implied-resize t)
 
+(setq native-comp-deferred-compilation t)
+
 (provide 'early-init)
 
 ;;; early-init ends here
