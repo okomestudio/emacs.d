@@ -7,6 +7,7 @@
   (company-minimum-prefix-length 2)
   (company-selection-wrap-around t)
   (company-show-numbers 'left)
+  (company-tooltip-align-annotations t)
   (company-tooltip-limit 20)
 
   :init
@@ -29,10 +30,8 @@
   (setq company-auto-complete-chars nil))
 
 (use-package company-box
-  :after company
-
+  :disabled
   :hook (company-mode . company-box-mode)
-
   :custom
   (company-box-backends-colors
    '((company-capf . (:candidate
@@ -50,10 +49,14 @@
    "ppareit/graphviz-dot-mode/master/company-graphviz-dot.el"))
 
 (use-package company-jedi
-  :disabled t
+  :disabled
   :after company
   :config
   (add-to-list 'company-backends 'company-jedi))
+
+(use-package company-posframe
+  :custom (company-posframe-font (font-spec :size (/ (* (face-attribute 'default :height) 1.5) 10)))
+  :hook (company-mode . (lambda () (company-posframe-mode 1))))
 
 (use-package company-restclient
   :after (company restclient)
