@@ -26,7 +26,9 @@
   (add-hook 'after-init-hook 'global-company-mode))
 
 (use-package company-posframe
-  :custom (company-posframe-font (font-spec :size (/ (* (face-attribute 'default :height) 1.5) 10)))
+  :custom (company-posframe-font (font-spec
+                                  :size (max ts/default-font-size
+                                             (/ (* (face-attribute 'default :height) 1.5) 10))))
   :hook (company-mode . (lambda () (company-posframe-mode 1))))
 
 ;; Backends

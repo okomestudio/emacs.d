@@ -2,6 +2,22 @@
 ;;; Commentary:
 ;;; Code:
 
+
+(defun ts/display-width ()
+    "Get the pixel with per display."
+    (let ((monn (length (display-monitor-attributes-list))))
+      (/ (display-pixel-width) monn)))
+
+
+(defcustom ts/default-font-size
+  (let ((display-width (ts/display-width)))
+      (if (and display-width (> display-width 2550))
+          18.0 10.8))
+  "Default font size."
+  :type '(float)
+  :group 'ts)
+
+
 (use-package faces
   :ensure nil
 
@@ -44,15 +60,8 @@ See https://knowledge.sakura.ad.jp/8494/"
                         nil
                         'append)))
 
-  (defun ts/get-display-width ()
-    "Get the pixel with per display."
-    (let ((monn (length (display-monitor-attributes-list))))
-      (/ (display-pixel-width) monn)))
-
   (defun ts/setup-frame ()
-    (defvar ts/display-width (ts/get-display-width))
-    (defvar ts/font-size (if (and ts/display-width (> ts/display-width 2550)) 18 10.8))
-    (defvar ts/default-font (font-spec :family "Hack" :size ts/font-size))
+    (defvar ts/default-font (font-spec :family "Hack" :size ts/default-font-size))
     (set-frame-font ts/default-font)
     (ts/set-fallback-cjk-font nil))
 
