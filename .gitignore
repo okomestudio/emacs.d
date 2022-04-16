@@ -13,18 +13,19 @@
 # Ignore in emacs.d
 **/site-lisp/*.el
 .cache
-init.d
 .last-package-update-day
 .lsp-session-*
 .mc-lists.el
 .quelpa
 auto-save-list
 bookmarks
+conf.d
 custom.el
 eln-cache
 elpa
 eshell
 history
+init.d
 projectile-bookmarks.eld
 projectile.cache
 request
