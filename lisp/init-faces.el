@@ -51,7 +51,7 @@ See https://knowledge.sakura.ad.jp/8494/"
       fontset-name))
 
   (defun ts/set-fallback-cjk-font (fontset-name)
-    (let ((font-family (seq-find #'ts/font-exists-p '("HackGen"
+    (let ((font-family (seq-find #'ts/font-exists-p '(;; "HackGen"
                                                       "VL Gothic"
                                                       "Noto Sans Mono CJK JP"))))
       (set-fontset-font fontset-name
