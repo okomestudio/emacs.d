@@ -36,9 +36,16 @@
   (if (not (file-exists-p "~/.local/share/fonts/all-the-icons.ttf"))
       (all-the-icons-install-fonts +1)))
 
-;; Make certain buffers grossly incandescent
+;; solaire-mode.el - Distinguish "real" buffers from "unreal" buffers
+;; https://github.com/hlissner/emacs-solaire-mode
 (use-package solaire-mode
-  :init (solaire-global-mode +1))
+  :custom (solaire-mode-real-buffer-fn 'ts/solaire-mode-real-buffer-p)
+  :init
+  (defun ts/solaire-mode-real-buffer-p ()
+    (if (string-prefix-p "*elfeed" (buffer-name))
+        't (solaire-mode-real-buffer-p)))
+
+  (solaire-global-mode +1))
 
 ;; Show tooltip at point
 (use-package pos-tip
