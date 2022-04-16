@@ -67,5 +67,12 @@ See https://knowledge.sakura.ad.jp/8494/"
 
   (ts/apply-if-gui 'ts/setup-frame))
 
+;; eaw.el - East Asian Ambiguous Width問題と絵文字の横幅問題の修正ロケール
+;; https://github.com/hamano/locale-eaw
+(use-package eaw
+  :ensure nil
+  :config (eaw-fullwidth)
+  :init (ensure-file-from-github "hamano/locale-eaw/master/eaw.el"))
+
 (provide 'init-faces)
 ;;; init-faces.el ends here
