@@ -2,8 +2,18 @@
 ;;; Commentary:
 ;;; Code:
 
+(defcustom ts/org-agenda-files "~/.org-agenda-files"
+  "Default org-agenda-files."
+  :type '(string)
+  :group 'ts)
+
 (defcustom ts/org-books-file "~/.books.org"
-  "Default org-books file."
+  "Default org-books-file."
+  :type '(string)
+  :group 'ts)
+
+(defcustom ts/org-default-notes-file "~/.notes.org"
+  "Default org-default-notes-file."
   :type '(string)
   :group 'ts)
 
@@ -61,7 +71,8 @@
                                       (when details (apply #'org-books-format 1 details)))")
                             ("t" "Task" entry (file+headline "" "Tasks")
 		                         "* TODO %?\n  %u\n  %a") ))
-   (org-default-notes-file "~/.notes.org")
+   (org-default-notes-file ts/org-default-notes-file)
+   (org-ellipsis "⮷")
    (org-file-apps '(("\\.mp4\\'" . "vlc --repeat %s")))
    (org-hide-emphasis-markers t)
    (org-image-actual-width nil)
@@ -92,11 +103,11 @@
                    (setq org-agenda-files ())
                    (org-agenda nil "a")
                    ;; then, load the full list of agenda files and refresh the buffer:
-                   (setq org-agenda-files (ts/org--init-org-agenda-files "~/.org-agenda-files"))
+                   (setq org-agenda-files (ts/org--init-org-agenda-files ts/org-agenda-files))
                    (org-agenda nil "n")
                    ;; This is to avoid "No Org agenda currently displayed" error.
                    ))
-    (setq org-agenda-files (ts/org--init-org-agenda-files "~/.org-agenda-files")))
+    (setq org-agenda-files (ts/org--init-org-agenda-files ts/org-agenda-files)))
 
   :custom
   (org-agenda-include-diary t)
@@ -151,12 +162,11 @@
   (add-hook 'org-agenda-finalize-hook #'org-modern-agenda))
 
 (use-package org-roam
+  :disabled
+  :hook (after-init-hook . org-roam-mode)
   :custom
   ((org-roam-db-location (file-truename "~/github.com/okomestudio/docs/.org-roam.db"))
-   (org-roam-directory (file-truename "~/github.com/okomestudio/docs/")))
-
-  :hook
-  (after-init-hook . org-roam-mode))
+   (org-roam-directory (file-truename "~/github.com/okomestudio/docs/"))))
 
 (use-package org-sticky-header
   :init (org-sticky-header-mode +1))
