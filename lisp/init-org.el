@@ -2,6 +2,11 @@
 ;;; Commentary:
 ;;; Code:
 
+(defcustom ts/org-books-file "~/.books.org"
+  "Default org-books file."
+  :type '(string)
+  :group 'ts)
+
 (use-package org
   :after (ob-typescript ox-gfm)
   :ensure org-contrib
@@ -50,6 +55,12 @@
    (org-adapt-indentation nil)
    (org-babel-python-command "~/.pyenv/shims/python")
    (org-blank-before-new-entry '((heading . auto) (plain-list-item . auto)))
+   (org-capture-templates '(("b" "Book" entry (file ts/org-books-file)
+                             "%(let* ((url (substring-no-properties (current-kill 0)))
+                                      (details (org-books-get-details url)))
+                                      (when details (apply #'org-books-format 1 details)))")
+                            ("t" "Task" entry (file+headline "" "Tasks")
+		                         "* TODO %?\n  %u\n  %a") ))
    (org-default-notes-file "~/.notes.org")
    (org-file-apps '(("\\.mp4\\'" . "vlc --repeat %s")))
    (org-hide-emphasis-markers t)
@@ -57,6 +68,7 @@
    (org-list-allow-alphabetical t)
    ;; (org-plantuml-jar-path ts/path-plantuml)
    (org-preview-latex-image-directory ".ltximg/")
+   (org-return-follows-link t)
    (org-startup-folded t)
    (org-startup-indented t)
    (org-support-shift-select t)
@@ -72,7 +84,6 @@
 (use-package org-agenda
   :after (org)
   :ensure nil
-
   :config
   (if (daemonp)
       (add-hook 'emacs-startup-hook
@@ -108,6 +119,11 @@
                 (push path gathered-files)))
           (forward-line 1))
         gathered-files))))
+
+;; org-books - Reading list management with org mode
+;; https://github.com/lepisma/org-books
+(use-package org-books
+  :custom (org-books-file ts/org-books-file))
 
 ;; org-modern - Modern Org Style
 ;; https://github.com/minad/org-modern
