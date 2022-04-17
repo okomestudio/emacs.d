@@ -18,9 +18,10 @@
   (read-process-output-max (* 1 1024 1024)) ; 1 mb
   (ring-bell-function 'ignore)              ; Disable beeping (in C source code)
   (tab-width 2)
-  (use-short-anserts t)
+  (use-short-answers t)
   (vc-follow-symlinks t)
   (x-select-request-type '(UTF8_STRING COMPOUND_TEXT TEXT STRING))
+  (word-wrap-by-category t)
 
   :init
   (defun ts/pbocr ()
