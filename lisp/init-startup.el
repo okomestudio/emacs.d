@@ -88,7 +88,7 @@ top down to the current directory.")
   :bind
   (("<f5>" . 'ts/revert-buffer-no-confirm)
    ("C-S-o" . 'ts/newline-above)
-   ("C-c C-x *" . 'ts/insert-zero-width-space)
+   ("C-c C-x SPC" . 'ts/insert-zero-width-space)
    ("C-o" . 'ts/newline-below)
    ("M-Q" . 'ts/unfill-paragraph))
 
