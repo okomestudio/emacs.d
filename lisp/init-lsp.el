@@ -16,7 +16,7 @@
   (lsp-pylsp-configuration-sources ["flake8"])
   (lsp-pylsp-plugins-flake8-enabled t)
   (lsp-pylsp-plugins-pycodestyle-enabled nil)
-  (lsp-pylsp-plugins-pydocstyle-add-ignore '("D100" "D103"))
+  (lsp-pylsp-plugins-pydocstyle-add-ignore ["D100", "D103"])
   (lsp-pylsp-plugins-pydocstyle-convention "google")
   (lsp-pylsp-plugins-pydocstyle-enabled t)
   (lsp-pylsp-server-command '("~/.config/emacs/bin/pylsp"))
@@ -44,7 +44,7 @@
   :init
   (defun ts/lsp-mode-hook (server)
     (lsp-ensure-server server)
-    (lsp)) )
+    (lsp)))
 
 ;; lsp-grammerly - lsp-mode and grammarly
 ;; https://github.com/emacs-grammarly/lsp-grammarly
