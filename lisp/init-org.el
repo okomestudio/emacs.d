@@ -42,7 +42,6 @@
   (org-set-emph-re 'org-emphasis-regexp-components org-emphasis-regexp-components)
 
   ;; For document export
-  (require 'ox-confluence)              ; Confluence
   (require 'ox-md)                      ; Markdown
   (require 'ox-gfm)                     ; GitHub-flavored Markdown
 
