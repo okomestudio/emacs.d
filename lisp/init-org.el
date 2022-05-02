@@ -109,6 +109,7 @@
     (setq org-agenda-files (ts/org--init-org-agenda-files ts/org-agenda-files)))
 
   :custom
+  (org-agenda-current-time-string "⭠ NOW ────────────────────")
   (org-agenda-include-diary t)
   (org-agenda-start-on-weekday 0)
 
@@ -154,11 +155,12 @@
   (org-modern-todo t)
   (org-modern-variable-pitch t)
 
-  :hook
-  ((org-mode . org-modern-mode))
+  ;; :hook
+  ;; ((org-mode . org-modern-mode))
 
   :init
-  (add-hook 'org-agenda-finalize-hook #'org-modern-agenda))
+  ;; (add-hook 'org-agenda-finalize-hook #'org-modern-agenda)
+  (global-org-modern-mode))
 
 (use-package org-roam
   :disabled
