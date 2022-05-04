@@ -91,8 +91,8 @@
 
 ;; essentials
 (require 'init-startup)
-(require 'init-faces)
 (require 'init-themes)
+(require 'init-faces)
 (require 'init-minibuffer)
 (require 'init-treemacs)
 
