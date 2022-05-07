@@ -86,7 +86,7 @@
   (ts/apply-if-gui 'ts/setup-font-for-frame))
 
 (use-package mixed-pitch
-  :hook (text-mode . mixed-pitch-mode)
+  :hook (org-mode . mixed-pitch-mode)
   :custom
   (mixed-pitch-set-height t)
   (mixed-pitch-variable-pitch-cursor nil))
