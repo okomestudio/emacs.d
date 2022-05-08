@@ -3,12 +3,13 @@
 ;;; Code:
 
 (use-package elfeed
+  :custom (elfeed-search-filter "@3-month-ago ")
   :hook (elfeed-show-mode . ts/elfeed-show-mode-hook)
   :init
   (defun ts/elfeed-show-mode-hook ()
     (setq-local shr-width nil
-                shr-max-width nil)
-    (text-scale-set 2.0)
+                shr-max-width nil
+                shr-use-fonts t)
     (toggle-truncate-lines +1)))
 
 (use-package elfeed-org

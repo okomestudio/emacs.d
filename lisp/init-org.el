@@ -88,7 +88,6 @@
   :hook
   ((org-mode . (lambda ()
                  (org-superstar-mode 1)
-                 (text-scale-set 1)
                  (turn-on-visual-line-mode)))))
 
 (use-package org-agenda

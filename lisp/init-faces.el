@@ -19,7 +19,7 @@
 (defcustom ts/default-font-height
   (let ((display-width (ts/display-width)))
     (if (and display-width (> display-width 2550))
-        130 130))
+        130 110))
   "Default font height."
   :type '(integer)
   :group 'ts)
@@ -42,6 +42,13 @@
 (use-package faces
   :ensure nil
 
+  :hook
+  (elfeed-search-mode . (lambda () (text-scale-set 2)))
+  (elfeed-show-mode . (lambda () (text-scale-set 2)))
+  (org-mode . (lambda () (text-scale-set 2)))
+  (prog-mode . (lambda () (text-scale-set 1)))
+  (text-mode . (lambda () (text-scale-set 1)))
+
   :init
   (defun ts/apply-if-gui (&rest action)
     "Apply ACTION if we are in a GUI."
@@ -57,39 +64,37 @@
             (select-frame (selected-frame))
             (apply action)))))
 
-;;   (defun ts/create-cjk-hybrid-fontset (size name)
-;;     "Create a CJK hybrid fontset of SIZE named fontset-NAME
+  ;;   (defun ts/create-cjk-hybrid-fontset (size name)
+  ;;     "Create a CJK hybrid fontset of SIZE named fontset-NAME
 
-;; See https://knowledge.sakura.ad.jp/8494/"
-;;     (let ((font-spec (format "Hack:weight=normal:slant=normal:size=%d" size))
-;;           (fontset-name (format "fontset-%s" name)))
-;;       (create-fontset-from-ascii-font font-spec nil name)
-;;       (ts/set-fallback-cfk-font fontset-name)
-;;       fontset-name))
+  ;; See https://knowledge.sakura.ad.jp/8494/"
+  ;;     (let ((font-spec (format "Hack:weight=normal:slant=normal:size=%d" size))
+  ;;           (fontset-name (format "fontset-%s" name)))
+  ;;       (create-fontset-from-ascii-font font-spec nil name)
+  ;;       (ts/set-fallback-cfk-font fontset-name)
+  ;;       fontset-name))
 
-;;   (defun ts/setup-frame ()
-;;     (defvar ts/default-font (font-spec :family "Hack" :size ts/default-font-size))
-;;     (set-frame-font ts/default-font)
-;;     (ts/set-fallback-cjk-font nil))
+  ;;   (defun ts/setup-frame ()
+  ;;     (defvar ts/default-font (font-spec :family "Hack" :size ts/default-font-size))
+  ;;     (set-frame-font ts/default-font)
+  ;;     (ts/set-fallback-cjk-font nil))
 
   (defun ts/setup-font-for-frame ()
-    (set-face-attribute 'default nil :font "Hack" :height ts/default-font-height)
-    (set-face-attribute 'fixed-pitch nil :font "Hack")
-    (set-face-attribute 'variable-pitch nil :font "EB Garamond")
+    (set-face-attribute 'default nil :family "Hack")
+    (set-face-attribute 'fixed-pitch nil :family "Hack")
+    (set-face-attribute 'variable-pitch nil :family "EB Garamond")
     (ts/set-fallback-cjk-font nil))
 
   (dolist (element '(("Hack" . 1.0)
                      ("VL Gothic" . 1.0)
-                     ("EB Garamond". 1.1)))
+                     ("EB Garamond". 1.4)))
     (add-to-list 'face-font-rescale-alist element))
 
   (ts/apply-if-gui 'ts/setup-font-for-frame))
 
 (use-package mixed-pitch
   :hook (org-mode . mixed-pitch-mode)
-  :custom
-  (mixed-pitch-set-height t)
-  (mixed-pitch-variable-pitch-cursor nil))
+  :custom (mixed-pitch-variable-pitch-cursor nil))
 
 ;; eaw.el - East Asian Ambiguous Width問題と絵文字の横幅問題の修正ロケール
 ;; https://github.com/hamano/locale-eaw
