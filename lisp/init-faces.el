@@ -43,8 +43,8 @@
   :ensure nil
 
   :hook
-  (elfeed-search-mode . (lambda () (text-scale-set 2)))
-  (elfeed-show-mode . (lambda () (text-scale-set 2)))
+  (elfeed-search-mode . (lambda () (text-scale-set 1.5)))
+  (elfeed-show-mode . (lambda () (text-scale-set 1.5)))
   (org-mode . (lambda () (text-scale-set 2)))
   (prog-mode . (lambda () (text-scale-set 1)))
   (text-mode . (lambda () (text-scale-set 1)))
@@ -86,7 +86,7 @@
     (ts/set-fallback-cjk-font nil))
 
   (dolist (element '(("Hack" . 1.0)
-                     ("VL Gothic" . 1.0)
+                     ("VL Gothic" . 1.2)
                      ("EB Garamond". 1.4)))
     (add-to-list 'face-font-rescale-alist element))
 
