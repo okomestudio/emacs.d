@@ -302,6 +302,14 @@ top down to the current directory.")
 ;; https://github.com/magnars/dash.el
 (use-package dash)
 
+;; help-shortdoc-example - Display shortdoc examples to *Help* buffer
+;; https://github.com/buzztaiki/help-shortdoc-example.el
+(use-package help-shortdoc-example
+  :ensure nil
+  :config (help-shortdoc-example-mode 1)
+  :init
+  (ensure-file-from-github "buzztaiki/help-shortdoc-example.el/main/help-shortdoc-example.el"))
+
 ;; restart-emacs.el - Restart emacs from within emacs
 ;; https://github.com/iqbalansari/restart-emacs
 (use-package restart-emacs
