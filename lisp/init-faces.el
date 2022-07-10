@@ -92,6 +92,8 @@
 
   (ts/apply-if-gui 'ts/setup-font-for-frame))
 
+;; mixed-pitch -Enable mixing fixed-pitch and variable-pitch
+;; https://gitlab.com/jabranham/mixed-pitch
 (use-package mixed-pitch
   :hook (org-mode . mixed-pitch-mode)
   :custom (mixed-pitch-variable-pitch-cursor nil))
