@@ -42,12 +42,13 @@
 (use-package faces
   :ensure nil
 
+  ;; Change text scale within some modes
   :hook
   (elfeed-search-mode . (lambda () (text-scale-set 1.5)))
   (elfeed-show-mode . (lambda () (text-scale-set 1.5)))
-  (org-mode . (lambda () (text-scale-set 2)))
-  (prog-mode . (lambda () (text-scale-set 1)))
-  (text-mode . (lambda () (text-scale-set 1)))
+  (org-mode . (lambda () (text-scale-set 1.5)))
+  (prog-mode . (lambda () (text-scale-set 0.5)))
+  (text-mode . (lambda () (text-scale-set 0.5)))
 
   :init
   (defun ts/apply-if-gui (&rest action)
@@ -85,6 +86,7 @@
     (set-face-attribute 'variable-pitch nil :family "EB Garamond")
     (ts/set-fallback-cjk-font nil))
 
+  ;; Set relative scales for font faces here:
   (dolist (element '(("Hack" . 1.0)
                      ("VL Gothic" . 1.2)
                      ("EB Garamond". 1.4)))
