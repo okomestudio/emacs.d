@@ -164,11 +164,22 @@
   (global-org-modern-mode))
 
 (use-package org-roam
-  :disabled
-  :hook (after-init-hook . org-roam-mode)
+  ;; :hook (after-init-hook . org-roam-mode)
+  :bind
+  (("C-c n l" . org-roam-buffer-toggle)
+   ("C-c n f" . org-roam-node-find)
+   ("C-c n i" . org-roam-node-insert))
+
+  :config
+  (org-roam-db-autosync-enable)
+
   :custom
-  ((org-roam-db-location (file-truename "~/github.com/okomestudio/docs/.org-roam.db"))
-   (org-roam-directory (file-truename "~/github.com/okomestudio/docs/"))))
+  (org-roam-directory "~/.roam")
+
+  :init
+  (put 'org-roam-directory 'safe-local-variable #'stringp)
+  (put 'org-roam-db-location 'safe-local-variable #'stringp)
+  (put 'org-roam-capture-templates 'safe-local-variable #'listp))
 
 (use-package org-sticky-header
   :init (org-sticky-header-mode +1))
