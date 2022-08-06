@@ -144,5 +144,7 @@
     (mapc (lambda (f) (load f))
           (directory-files custom-init-directory t ".el$"))))
 
+(put 'eval 'safe-local-variable #'listp)
+
 (provide 'init)
 ;;; init.el ends here
