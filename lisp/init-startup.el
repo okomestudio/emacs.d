@@ -66,6 +66,31 @@ top down to the current directory.")
 
   (advice-add 'hack-dir-local-variables :around #'ts/hack-dir-local-variables-advice)
 
+  ;; Reload .dir-locals.el. See https://emacs.stackexchange.com/a/13096/599
+  (defun ts/reload-dir-locals-for-current-buffer ()
+    "Reload dir locals for the current buffer."
+    (interactive)
+    (let ((enable-local-variables :all))
+      (hack-dir-local-variables-non-file-buffer)))
+
+  (defun ts/reload-dir-locals-for-all-buffer-in-this-directory ()
+    "For every buffer with the same `default-directory` as the
+current buffer's, reload dir-locals."
+    (interactive)
+    (let ((dir default-directory))
+      (dolist (buffer (buffer-list))
+        (with-current-buffer buffer
+          (when (equal default-directory dir)
+            (ts/reload-dir-locals-for-current-buffer))))))
+
+  (add-hook 'emacs-lisp-mode-hook
+            (defun enable-autoreload-for-dir-locals ()
+              (when (and (buffer-file-name)
+                         (equal dir-locals-file
+                                (file-name-nondirectory (buffer-file-name))))
+                (add-hook 'after-save-hook
+                          'ts/reload-dir-locals-for-all-buffer-in-this-directory
+                          nil t))))
 
   ;; apropos
   ;; -------
