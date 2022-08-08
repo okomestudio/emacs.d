@@ -169,7 +169,9 @@
   :bind
   (("C-c n l" . org-roam-buffer-toggle)
    ("C-c n f" . org-roam-node-find)
-   ("C-c n i" . org-roam-node-insert))
+   ("C-c n i" . org-roam-node-insert)
+   :map org-mode-map
+   ("C-M-i" . completion-at-point))
 
   :config
   (cl-defmethod org-roam-node-slug ((node org-roam-node))
@@ -214,12 +216,27 @@
   (org-roam-db-autosync-enable)
 
   :custom
-  (org-roam-directory "~/.roam")
+  (org-roam-completion-everywhere t)
+  (org-roam-directory "~/github.com/okomestudio/docs/roam")
+  (org-roam-db-location "~/github.com/okomestudio/docs/roam/.roam.db")
+  (org-roam-node-display-template "${title} ${tags}")
 
   :init
   (put 'org-roam-directory 'safe-local-variable #'stringp)
   (put 'org-roam-db-location 'safe-local-variable #'stringp)
   (put 'org-roam-capture-templates 'safe-local-variable #'listp))
+
+(use-package org-roam-ui
+  ;; :straight
+  ;; (:host github :repo "org-roam/org-roam-ui" :branch "main" :files ("*.el" "out"))
+  :after org-roam
+
+  ;; :custom
+  ;; (org-roam-ui-sync-theme t)
+  ;; (org-roam-ui-follow t)
+  ;; (org-roam-ui-update-on-save t)
+  ;; (org-roam-ui-open-on-start t)
+  )
 
 (use-package org-sticky-header
   :init (org-sticky-header-mode +1))
