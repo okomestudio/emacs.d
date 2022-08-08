@@ -49,10 +49,16 @@
           treemacs-space-between-root-nodes nil
           treemacs-width 35))
 
-  ;; Add any files to be ignored
   (with-eval-after-load 'treemacs
     (defun ts/treemacs-ignore (filename absolute-path)
-      (or (string-match-p "\\.vwxyz$" filename)))
+      "Define a predicate function for files to be ignored from view in Treemacs."
+      (or
+       ;; probably just for testing
+       (string-match-p "\\.vwxyz$" filename)
+       ;; all org-roam node files except templates
+       (and (string-match-p ".*/roam/.*" absolute-path)
+            (not (string-match-p ".*/roam/template/?.*" absolute-path)))))
+
     (add-to-list 'treemacs-ignored-file-predicates #'ts/treemacs-ignore))
 
   (treemacs-filewatch-mode t)
