@@ -164,14 +164,15 @@
   (global-org-modern-mode))
 
 (use-package org-roam
-  :hook (after-init . org-roam-mode)
-
   :bind
   (("C-c n l" . org-roam-buffer-toggle)
    ("C-c n f" . org-roam-node-find)
    ("C-c n i" . org-roam-node-insert)
    :map org-mode-map
    ("C-M-i" . completion-at-point))
+
+  :bind-keymap
+  ("C-c n d" . org-roam-dailies-map)
 
   :config
   (cl-defmethod org-roam-node-slug ((node org-roam-node))
@@ -213,7 +214,8 @@
                (slug (-reduce-from #'cl-replace (strip-nonspacing-marks title) pairs)))
           (downcase slug)))))
 
-  (org-roam-db-autosync-enable)
+  (require 'org-roam-dailies)
+  (org-roam-db-autosync-mode)
 
   :custom
   (org-roam-completion-everywhere t)
@@ -222,6 +224,7 @@
   (org-roam-node-display-template "${title} ${tags}")
 
   :init
+  (put 'org-roam-ui-port 'safe-local-variable #'integerp)
   (put 'org-roam-directory 'safe-local-variable #'stringp)
   (put 'org-roam-db-location 'safe-local-variable #'stringp)
   (put 'org-roam-capture-templates 'safe-local-variable #'listp))
@@ -231,10 +234,10 @@
   ;; (:host github :repo "org-roam/org-roam-ui" :branch "main" :files ("*.el" "out"))
   :after org-roam
 
-  ;; :custom
+  :custom
+  (org-roam-ui-update-on-save t)
   ;; (org-roam-ui-sync-theme t)
   ;; (org-roam-ui-follow t)
-  ;; (org-roam-ui-update-on-save t)
   ;; (org-roam-ui-open-on-start t)
   )
 
