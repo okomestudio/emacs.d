@@ -86,9 +86,11 @@
     (set-face-attribute 'variable-pitch nil :family "EB Garamond")
     (ts/set-fallback-cjk-font nil))
 
-  ;; Set relative scales for font faces here:
+  ;; Set relative scales for font faces here. For best alignment, try with fixed
+  ;; pitch font so that two ASCII characters have the same width with a CJK
+  ;; character.
   (dolist (element '(("Hack" . 1.0)
-                     ("VL Gothic" . 1.2)
+                     ("VL Gothic" . 1.225)
                      ("EB Garamond". 1.4)))
     (add-to-list 'face-font-rescale-alist element))
 
