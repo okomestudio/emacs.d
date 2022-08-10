@@ -219,8 +219,14 @@
 
   :custom
   (org-roam-completion-everywhere t)
-  (org-roam-directory "~/github.com/okomestudio/docs/roam")
+  (org-roam-dailies-directory "journal/")
+  (org-roam-dailies-capture-templates
+   '(("d" "default" entry
+      "* %?\n<%<%Y-%m-%d %a %H:%M>>"
+      :target (file+head "%<%Y-%m-%d>.org"
+                         "#+title: %<%Y-%m-%d>\n"))))
   (org-roam-db-location "~/github.com/okomestudio/docs/roam/.roam.db")
+  (org-roam-directory "~/github.com/okomestudio/docs/roam")
   (org-roam-node-display-template "${title} ${tags}")
 
   :init
