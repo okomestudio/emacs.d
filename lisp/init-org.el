@@ -230,10 +230,11 @@
   (org-roam-node-display-template "${title} ${tags}")
 
   :init
-  (put 'org-roam-ui-port 'safe-local-variable #'integerp)
-  (put 'org-roam-directory 'safe-local-variable #'stringp)
+  (put 'org-roam-capture-templates 'safe-local-variable #'listp)
+  (put 'org-roam-dailies-capture-templates 'safe-local-variable #'listp)
   (put 'org-roam-db-location 'safe-local-variable #'stringp)
-  (put 'org-roam-capture-templates 'safe-local-variable #'listp))
+  (put 'org-roam-directory 'safe-local-variable #'stringp)
+  (put 'org-roam-ui-port 'safe-local-variable #'integerp))
 
 (use-package org-roam-ui
   ;; :straight
