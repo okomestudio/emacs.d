@@ -112,7 +112,9 @@
   :custom
   (org-agenda-current-time-string "⭠ NOW ────────────────────")
   (org-agenda-include-diary t)
+  (org-agenda-inhibit-startup t)
   (org-agenda-start-on-weekday 0)
+  ;; (org-agenda-use-tag-inheritance nil)
 
   :init
   (defun ts/org--init-org-agenda-files (pathlist)
