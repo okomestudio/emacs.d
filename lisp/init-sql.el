@@ -8,6 +8,7 @@
   (sql-set-product 'postgres)
 
   (put 'sql-connection-alist 'safe-local-variable #'listp)
+  (put 'sql-postgres-login-params 'safe-local-variable #'listp)
   (put 'sql-postgres-options 'safe-local-variable #'listp)
   (put 'sql-postgres-program 'safe-local-variable #'stringp))
 
