@@ -2,10 +2,10 @@
 ;;; Commentary:
 ;;; Code:
 
-(defcustom ts/org-agenda-files "~/.org-agenda-files"
-  "Default org-agenda-files."
-  :type '(string)
-  :group 'ts)
+;; (defcustom ts/org-agenda-files "~/.org-agenda-files"
+;;   "Default org-agenda-files."
+;;   :type '(string)
+;;   :group 'ts)
 
 (defcustom ts/org-books-file "~/.books.org"
   "Default org-books-file."
@@ -95,19 +95,19 @@
 (use-package org-agenda
   :after (org)
   :ensure nil
-  :config
-  (if (daemonp)
-      (add-hook 'emacs-startup-hook
-                '(lambda ()
-                   ;; First, empty agenda files to successfully create an Org Agenda buffer:
-                   (setq org-agenda-files ())
-                   (org-agenda nil "a")
-                   ;; then, load the full list of agenda files and refresh the buffer:
-                   (setq org-agenda-files (ts/org--init-org-agenda-files ts/org-agenda-files))
-                   (org-agenda nil "n")
-                   ;; This is to avoid "No Org agenda currently displayed" error.
-                   ))
-    (setq org-agenda-files (ts/org--init-org-agenda-files ts/org-agenda-files)))
+  ;; :config
+  ;; (if (daemonp)
+  ;;     (add-hook 'emacs-startup-hook
+  ;;               '(lambda ()
+  ;;                  ;; First, empty agenda files to successfully create an Org Agenda buffer:
+  ;;                  (setq org-agenda-files ())
+  ;;                  (org-agenda nil "a")
+  ;;                  ;; then, load the full list of agenda files and refresh the buffer:
+  ;;                  (setq org-agenda-files (ts/org--init-org-agenda-files ts/org-agenda-files))
+  ;;                  (org-agenda nil "n")
+  ;;                  ;; This is to avoid "No Org agenda currently displayed" error.
+  ;;                  ))
+  ;;   (setq org-agenda-files (ts/org--init-org-agenda-files ts/org-agenda-files)))
 
   :custom
   (org-agenda-current-time-string "⭠ NOW ────────────────────")
@@ -117,22 +117,24 @@
   ;; (org-agenda-use-tag-inheritance nil)
 
   :init
-  (defun ts/org--init-org-agenda-files (pathlist)
-    "Gather agenda files recursively with directories defined in PATHLIST."
-    (with-temp-buffer
-      (insert-file-contents pathlist)
-      (let* (gathered-files '())
-        (while (not (eobp))
-          (let* ((path (buffer-substring-no-properties
-                        (line-beginning-position) (line-end-position))))
-            (if (f-directory-p path)
-                (setq gathered-files
-                      (append gathered-files
-                              (directory-files-recursively path "\\.org$" ))))
-            (if (f-file-p path)
-                (push path gathered-files)))
-          (forward-line 1))
-        gathered-files))))
+  ;; (defun ts/org--init-org-agenda-files (pathlist)
+  ;;   "Gather agenda files recursively with directories defined in PATHLIST."
+  ;;   (with-temp-buffer
+  ;;     (insert-file-contents pathlist)
+  ;;     (let* (gathered-files '())
+  ;;       (while (not (eobp))
+  ;;         (let* ((path (buffer-substring-no-properties
+  ;;                       (line-beginning-position) (line-end-position))))
+  ;;           (if (f-directory-p path)
+  ;;               (setq gathered-files
+  ;;                     (append gathered-files
+  ;;                             (directory-files-recursively path "\\.org$" ))))
+  ;;           (if (f-file-p path)
+  ;;               (push path gathered-files)))
+  ;;         (forward-line 1))
+  ;;       gathered-files)))
+
+  (put 'org-agenda-custom-commands 'safe-local-variable #'listp))
 
 ;; org-books - Reading list management with org mode
 ;; https://github.com/lepisma/org-books
