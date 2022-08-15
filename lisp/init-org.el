@@ -2,11 +2,6 @@
 ;;; Commentary:
 ;;; Code:
 
-;; (defcustom ts/org-agenda-files "~/.org-agenda-files"
-;;   "Default org-agenda-files."
-;;   :type '(string)
-;;   :group 'ts)
-
 (defcustom ts/org-books-file "~/.books.org"
   "Default org-books-file."
   :type '(string)
@@ -95,45 +90,14 @@
 (use-package org-agenda
   :after (org)
   :ensure nil
-  ;; :config
-  ;; (if (daemonp)
-  ;;     (add-hook 'emacs-startup-hook
-  ;;               '(lambda ()
-  ;;                  ;; First, empty agenda files to successfully create an Org Agenda buffer:
-  ;;                  (setq org-agenda-files ())
-  ;;                  (org-agenda nil "a")
-  ;;                  ;; then, load the full list of agenda files and refresh the buffer:
-  ;;                  (setq org-agenda-files (ts/org--init-org-agenda-files ts/org-agenda-files))
-  ;;                  (org-agenda nil "n")
-  ;;                  ;; This is to avoid "No Org agenda currently displayed" error.
-  ;;                  ))
-  ;;   (setq org-agenda-files (ts/org--init-org-agenda-files ts/org-agenda-files)))
-
   :custom
   (org-agenda-current-time-string "⭠ NOW ────────────────────")
   (org-agenda-include-diary t)
   (org-agenda-inhibit-startup t)
   (org-agenda-start-on-weekday 0)
-  ;; (org-agenda-use-tag-inheritance nil)
+  (org-agenda-use-tag-inheritance t)    ; set nil to speed up parsing
 
   :init
-  ;; (defun ts/org--init-org-agenda-files (pathlist)
-  ;;   "Gather agenda files recursively with directories defined in PATHLIST."
-  ;;   (with-temp-buffer
-  ;;     (insert-file-contents pathlist)
-  ;;     (let* (gathered-files '())
-  ;;       (while (not (eobp))
-  ;;         (let* ((path (buffer-substring-no-properties
-  ;;                       (line-beginning-position) (line-end-position))))
-  ;;           (if (f-directory-p path)
-  ;;               (setq gathered-files
-  ;;                     (append gathered-files
-  ;;                             (directory-files-recursively path "\\.org$" ))))
-  ;;           (if (f-file-p path)
-  ;;               (push path gathered-files)))
-  ;;         (forward-line 1))
-  ;;       gathered-files)))
-
   (put 'org-agenda-custom-commands 'safe-local-variable #'listp))
 
 ;; org-books - Reading list management with org mode
@@ -144,6 +108,7 @@
 ;; org-modern - Modern Org Style
 ;; https://github.com/minad/org-modern
 (use-package org-modern
+  :init (global-org-modern-mode)
   :custom
   (org-modern-block nil)
   (org-modern-checkbox '((?X . #("▢𐄂" 0 2 (composition ((2)))))
@@ -158,16 +123,12 @@
   (org-modern-tag t)
   (org-modern-timestamp t)
   (org-modern-todo t)
-  (org-modern-variable-pitch t)
+  (org-modern-variable-pitch t))
 
-  ;; :hook
-  ;; ((org-mode . org-modern-mode))
-
-  :init
-  ;; (add-hook 'org-agenda-finalize-hook #'org-modern-agenda)
-  (global-org-modern-mode))
-
+;; org-roam - Rudimentary Roam replica with org-mode
+;; https://github.com/org-roam/org-roam
 (use-package org-roam
+  :after org
   :bind
   (("C-c n l" . org-roam-buffer-toggle)
    ("C-c n f" . org-roam-node-find)
@@ -183,15 +144,13 @@
   (org-roam-db-autosync-mode)
 
   :custom
+  (org-roam-directory (file-truename "~/.config/emacs/roam"))
+  (org-roam-db-location (file-truename "~/config/emacs/roam/.roam.db"))
   (org-roam-completion-everywhere t)
-  (org-roam-dailies-directory "journal/")
   (org-roam-dailies-capture-templates
-   '(("d" "default" entry
-      "* %?\n<%<%Y-%m-%d %a %H:%M>>"
-      :target (file+head "%<%Y-%m-%d>.org"
-                         "#+title: %<%Y-%m-%d>\n"))))
-  (org-roam-db-location "~/github.com/okomestudio/docs/roam/.roam.db")
-  (org-roam-directory "~/github.com/okomestudio/docs/roam")
+   '(("d" "default" entry "* %?\n<%<%Y-%m-%d %a %H:%M>>"
+      :target (file+head "%<%Y-%m-%d>.org" "#+title: %<%Y-%m-%d>\n"))))
+  (org-roam-dailies-directory "journal/")
   (org-roam-node-display-template "${title} ${tags}")
 
   :init
@@ -243,16 +202,10 @@
   (put 'org-roam-ui-port 'safe-local-variable #'integerp))
 
 (use-package org-roam-ui
-  ;; :straight
-  ;; (:host github :repo "org-roam/org-roam-ui" :branch "main" :files ("*.el" "out"))
   :after org-roam
-
   :custom
   (org-roam-ui-update-on-save t)
-  ;; (org-roam-ui-sync-theme t)
-  ;; (org-roam-ui-follow t)
-  ;; (org-roam-ui-open-on-start t)
-  )
+  (org-roam-ui-sync-theme nil))
 
 (use-package org-sticky-header
   :init (org-sticky-header-mode +1))
