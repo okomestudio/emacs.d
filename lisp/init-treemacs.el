@@ -11,24 +11,22 @@
    ([mouse-1] . treemacs-single-click-expand-action))
 
   :custom
-  (treemacs--project-follow-delay 0.0)
-  (treemacs--project-follow-timer nil)
-  (treemacs-collapse-dirs 0)
-  (treemacs-display-current-project-exclusively t)
-  (treemacs-expand-after-init t)
-  (treemacs-file-event-delay 100)
-  (treemacs-file-follow-delay 0.1)
-  (treemacs-follow-after-init t)
-  (treemacs-is-never-other-window nil)
-  (treemacs-missing-project-action 'keep)
-  (treemacs-no-png-images nil)
+  ;; (treemacs-collapse-dirs 0)
+  ;; (treemacs-display-current-project-exclusively t)
+  ;; (treemacs-expand-after-init t)
+  ;; (treemacs-file-event-delay 500)
+  ;; (treemacs-file-follow-delay 1.01)
+  ;; (treemacs-follow-after-init t)
+  ;; (treemacs-is-never-other-window nil)
+  ;; (treemacs-missing-project-action 'keep)
+  ;; (treemacs-no-png-images nil)
   (treemacs-persist-file "~/.config/emacs/.cache/treemacs-persist")
-  (treemacs-recenter-after-project-expand 'on-visibility)
-  (treemacs-recenter-after-project-jump nil)
+  ;; (treemacs-recenter-after-project-expand 'on-visibility)
+  ;; (treemacs-recenter-after-project-jump nil)
   (treemacs-show-cursor t)
-  (treemacs-show-hidden-files nil)
+  ;; (treemacs-show-hidden-files nil)
   (treemacs-width 35)
-  (treemacs-width-is-initially-locked nil)
+  ;; (treemacs-width-is-initially-locked nil)
 
   :config
   (defun ts/treemacs ()
@@ -64,10 +62,17 @@
     (add-to-list 'treemacs-ignored-file-predicates #'ts/treemacs-ignore))
 
   (treemacs-filewatch-mode t)
+  (treemacs-follow-mode t)
+  (treemacs-hide-gitignored-files-mode nil)
+  (treemacs-load-theme "all-the-icons")
   (treemacs-project-follow-mode t)
-  (treemacs-follow-mode nil)
-  (treemacs-hide-gitignored-files-mode t)
-  (treemacs-load-theme "all-the-icons"))
+  (setq treemacs--project-follow-delay 1.5
+        treemacs--project-follow-timer nil)
+
+  ;; (setq  (treemacs--project-follow-delay 1.0)
+  ;;        (treemacs--project-follow-timer nil)
+  ;;        )
+  )
 
 (use-package treemacs-all-the-icons
   :after (all-the-icons)
