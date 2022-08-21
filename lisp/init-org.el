@@ -151,6 +151,9 @@
    '(("d" "default" entry "* %?\n<%<%Y-%m-%d %a %H:%M>>"
       :target (file+head "%<%Y-%m-%d>.org" "#+title: %<%Y-%m-%d>\n"))))
   (org-roam-dailies-directory "journal/")
+  (org-roam-mode-sections (list #'org-roam-backlinks-section
+                                #'org-roam-reflinks-section
+                                #'org-roam-unlinked-references-section))
   (org-roam-node-display-template "${title} ${tags}")
 
   :init
@@ -199,6 +202,7 @@
   (put 'org-roam-dailies-capture-templates 'safe-local-variable #'listp)
   (put 'org-roam-db-location 'safe-local-variable #'stringp)
   (put 'org-roam-directory 'safe-local-variable #'stringp)
+  (put 'org-roam-mode-sections 'safe-local-variable #'listp)
   (put 'org-roam-ui-port 'safe-local-variable #'integerp))
 
 (use-package org-roam-ui
