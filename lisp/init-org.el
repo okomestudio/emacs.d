@@ -125,6 +125,11 @@
   (org-modern-todo t)
   (org-modern-variable-pitch t))
 
+;; org-ref - for citations, cross-references, bibliographies
+;; https://github.com/jkitchin/org-ref
+(use-package org-ref
+  :init (put 'bibtex-completion-bibliography 'safe-local-variable #'listp))
+
 ;; org-roam - Rudimentary Roam replica with org-mode
 ;; https://github.com/org-roam/org-roam
 (use-package org-roam
@@ -204,6 +209,11 @@
   (put 'org-roam-directory 'safe-local-variable #'stringp)
   (put 'org-roam-mode-sections 'safe-local-variable #'listp)
   (put 'org-roam-ui-port 'safe-local-variable #'integerp))
+
+(use-package org-roam-bibtex
+  :after org-roam
+  :config (require 'org-ref)        ; optional: if using Org-ref v2 or v3 citation links
+  :custom (orb-roam-ref-format 'org-ref-v3))
 
 (use-package org-roam-ui
   :after org-roam
