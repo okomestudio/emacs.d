@@ -212,8 +212,10 @@
 
 (use-package org-roam-bibtex
   :after org-roam
-  :config (require 'org-ref)        ; optional: if using Org-ref v2 or v3 citation links
-  :custom (orb-roam-ref-format 'org-ref-v3))
+  :config (require 'org-ref) ; optional: if using Org-ref v2 or v3 citation links
+  :custom
+  (orb-insert-link-description "${author-abbrev} ${date}")
+  (orb-roam-ref-format 'org-ref-v3))
 
 (use-package org-roam-ui
   :after org-roam
