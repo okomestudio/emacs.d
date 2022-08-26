@@ -203,6 +203,7 @@
                   (slug (-reduce-from #'cl-replace (strip-nonspacing-marks title) pairs)))
              (downcase slug))))))
 
+  (put 'orb-preformat-keywords 'safe-local-variable #'listp)
   (put 'org-roam-capture-templates 'safe-local-variable #'listp)
   (put 'org-roam-dailies-capture-templates 'safe-local-variable #'listp)
   (put 'org-roam-db-location 'safe-local-variable #'stringp)
