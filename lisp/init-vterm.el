@@ -10,6 +10,7 @@
   (vterm-buffer-name-string "vterm %s")
   (vterm-install t)
   (vterm-max-scrollback 5000)
+  (vterm-module-cmake-args "-DUSE_SYSTEM_LIBVTERM=no")
   (vterm-timer-delay 0.02)
 
   :ensure-system-package
