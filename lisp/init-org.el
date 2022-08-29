@@ -128,8 +128,7 @@
 ;; org-ref - for citations, cross-references, bibliographies
 ;; https://github.com/jkitchin/org-ref
 (use-package org-ref
-  :custom
-  (bibtex-completion-library-path "~/Dropbox/bibtex")
+  :custom (bibtex-completion-pdf-field "file")
   :init (put 'bibtex-completion-bibliography 'safe-local-variable #'listp))
 
 ;; org-roam - Rudimentary Roam replica with org-mode
