@@ -67,6 +67,7 @@
 		                         "* TODO %?\n  %u\n  %a") ))
    (org-default-notes-file ts/org-default-notes-file)
    (org-ellipsis "⮷")
+   (org-export-with-section-numbers nil)
    (org-file-apps '(("\\.mp4\\'" . "vlc --repeat %s")))
    (org-hide-emphasis-markers t)
    (org-image-actual-width nil)
