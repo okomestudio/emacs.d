@@ -77,7 +77,7 @@
    ;; (org-plantuml-jar-path ts/path-plantuml)
    (org-preview-latex-image-directory ".ltximg/")
    (org-return-follows-link t)
-   (org-startup-folded t)
+   (org-startup-folded nil)
    (org-startup-indented t)
    (org-support-shift-select t)
    (org-tags-column 0)
@@ -151,13 +151,14 @@
   (org-roam-db-autosync-mode)
 
   :custom
-  (org-roam-directory (file-truename "~/.config/emacs/roam"))
-  (org-roam-db-location (file-truename "~/config/emacs/roam/.roam.db"))
   (org-roam-completion-everywhere t)
   (org-roam-dailies-capture-templates
    '(("d" "default" entry "* %?\n<%<%Y-%m-%d %a %H:%M>>"
       :target (file+head "%<%Y-%m-%d>.org" "#+title: %<%Y-%m-%d>\n"))))
   (org-roam-dailies-directory "journal/")
+  (org-roam-db-location (file-truename "~/config/emacs/roam/.roam.db"))
+  (org-roam-directory (file-truename "~/.config/emacs/roam"))
+  (org-roam-extract-new-file-path "topic/${id}/${slug}.org")
   (org-roam-mode-sections (list #'org-roam-backlinks-section
                                 #'org-roam-reflinks-section
                                 #'org-roam-unlinked-references-section))
