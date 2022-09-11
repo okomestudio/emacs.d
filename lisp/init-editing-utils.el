@@ -120,14 +120,11 @@
 (use-package list-unicode-display)
 
 
-;;; DICTIONARY
+;;; DICTIONARY AND LOOKING UP
 
 (use-package define-word
   :bind (("M-W" . define-word-at-point))
   :custom (define-word-default-service 'wordnik))
-
-
-;;; THESAURUS
 
 ;; powerthesaurus.el - Powerthesaurus integration for Emacs
 ;; https://github.com/SavchenkoValeriy/emacs-powerthesaurus
@@ -138,11 +135,60 @@
 ;; https://github.com/hpdeifel/synosaurus
 (use-package synosaurus
   :disabled
-  :custom
-  (synosaurus-choose-method 'default)
+  :custom (synosaurus-choose-method 'default)
+  :ensure-system-package (wn . "sudo apt install -y wordnet"))
 
-  :ensure-system-package
-  (wn . "sudo apt install -y wordnet"))
+;; Wrap eww to enable quicker look up in some sites
+(use-package eww
+  :config
+
+  ;; See http://emacs.rubikitch.com/eww-weblio/ for reference.
+  (defun ts/eww-set-start-at (url-regexp search-regexp)
+    "When site matches URL-REGEXP, start displaying from line matching SEARCH-REGEXP."
+    (when (string-match url-regexp (plist-get eww-data :url))
+      (goto-char (point-min))
+      (when (re-search-forward search-regexp nil t)
+        (recenter 0))))
+
+  (defun ts/eww-render--after (&rest _)
+    (ts/eww-set-start-at "amazon.co.jp" "^結果")
+    (ts/eww-set-start-at "amazon.com" "^RESULTS")
+    (ts/eww-set-start-at "en.m.wikipedia.org" "^ *Search")
+    (ts/eww-set-start-at "ja.m.wikipedia.org" "^ *検索")
+    (ts/eww-set-start-at "www.weblio.jp" "^ *Weblio 辞書"))
+  (add-hook 'eww-after-render-hook 'ts/eww-render--after)
+
+  (defun ts/region-or-read-string (prompt &optional initial history default inherit)
+    "When region is specified, use it as string; otherwise, get it interactively."
+    (if (not (region-active-p))
+        (read-string prompt initial history default inherit)
+      (prog1
+          (buffer-substring-no-properties (region-beginning) (region-end))
+        (deactivate-mark)
+        (message ""))))
+
+  (defun ts/make-query (site-url str)
+    (eww-browse-url (format site-url (url-hexify-string str))))
+
+  (defun search-amazon (str)
+    (interactive (list (ts/region-or-read-string "Amazon (US): ")))
+    (ts/make-query "https://amazon.com/s?k=%s" str))
+
+  (defun search-amazon-ja (str)
+    (interactive (list (ts/region-or-read-string "Amazon (JP): ")))
+    (ts/make-query "https://amazon.co.jp/s?k=%s" str))
+
+  (defun search-weblio (str)
+    (interactive (list (ts/region-or-read-string "Weblio: ")))
+    (ts/make-query "https://www.weblio.jp/content/%s" (upcase str)))
+
+  (defun search-wikipedia (str)
+    (interactive (list (ts/region-or-read-string "Wikipedia (en): ")))
+    (ts/make-query "https://en.m.wikipedia.org/wiki/%s" str))
+
+  (defun search-wikipedia-ja (str)
+    (interactive (list (ts/region-or-read-string "Wikipedia (ja): ")))
+    (ts/make-query "https://ja.m.wikipedia.org/wiki/%s" str)))
 
 (provide 'init-editing-utils)
 ;;; init-editing-utils.el ends here

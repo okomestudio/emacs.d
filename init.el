@@ -98,6 +98,7 @@
 
 (require 'init-editing-utils)
 
+(require 'init-anki)
 (require 'init-bookmark-plus)
 (require 'init-company)
 (require 'init-docker)
@@ -109,7 +110,6 @@
 (require 'init-openwith)
 (require 'init-projectile)
 (require 'init-vterm)
-(require 'init-anki)
 ;; (require 'init-dired)
 ;; (require 'init-gnus)
 ;; (require 'init-tern)
