@@ -16,6 +16,7 @@
 .last-package-update-day
 .lsp-session-*
 .mc-lists.el
+.org-id-locations
 .quelpa
 auto-save-list
 bookmarks
@@ -26,6 +27,7 @@ elpa
 eshell
 history
 init.d
+persist
 projectile-bookmarks.eld
 projectile.cache
 request
