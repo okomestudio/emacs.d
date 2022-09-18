@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+npm install -g textlint
+npm install -g textlint-rule-preset-ja-spacing
+npm install -g textlint-rule-preset-ja-technical-writing
+npm install -g textlint-plugin-org
+npm install -g traverse
+npm install -g @textlint/ast-node-types
