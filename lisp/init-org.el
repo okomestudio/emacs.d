@@ -67,6 +67,7 @@
 		                         "* TODO %?\n  %u\n  %a") ))
    (org-default-notes-file ts/org-default-notes-file)
    (org-ellipsis "⮷")
+   (org-export-with-broken-links t)
    (org-export-with-section-numbers nil)
    (org-file-apps '(("\\.mp4\\'" . "vlc --repeat %s")))
    (org-hide-emphasis-markers t)
@@ -233,8 +234,9 @@
 (use-package org-roam-ui
   :after org-roam
   :custom
-  (org-roam-ui-update-on-save t)
-  (org-roam-ui-sync-theme nil))
+  (org-roam-ui-follow t)
+  (org-roam-ui-sync-theme t)
+  (org-roam-ui-update-on-save t))
 
 (use-package org-sticky-header
   :init (org-sticky-header-mode +1))
