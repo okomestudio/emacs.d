@@ -63,7 +63,7 @@
 
   (treemacs-filewatch-mode t)
   (treemacs-follow-mode t)
-  (treemacs-hide-gitignored-files-mode nil)
+  (treemacs-hide-gitignored-files-mode t)
   (treemacs-load-theme "all-the-icons")
   (treemacs-project-follow-mode t)
   (setq treemacs--project-follow-delay 1.5
