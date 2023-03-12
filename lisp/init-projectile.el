@@ -19,6 +19,10 @@
                                        projectile-root-top-down-recurring))
   (projectile-project-search-path '("~/.config/emacs/" ("~/github.com/" . 2)))
 
+  ;; Remove --strip-cwd-prefix till `fd` version 8.3.0+ is available:
+  (projectile-generic-command "fd . -0 --type f --color=never")
+  (projectile-git-fd-args "-H -0 -E .git -tf")
+
   :ensure-system-package
   ((ag . "sudo apt-get install silversearcher-ag")
    (fdfind . "sudo apt install fd-find"))
