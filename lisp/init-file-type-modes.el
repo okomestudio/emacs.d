@@ -37,8 +37,14 @@
                                  "--wrap-line-length" "88")))
         (web-beautify-js)))))
 
+;; https://github.com/ljos/jq-mode
+;;
+;; TODO: Enable jq-mode with jq in JSON but yq in YAML.
+;;
 (use-package jq-mode
-  :ensure-system-package (jq . "sudo apt install jq"))
+  :ensure-system-package
+  ((jq . "sudo apt install jq")
+   (yq . "pip install yq")))
 
 
 ;; MARKDOWN
