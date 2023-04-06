@@ -7,7 +7,7 @@
 ;;
 ;;; Code:
 
-;; INIT.EL PROFILING
+;; Profiling init.el.
 (defconst ts/profile-init nil "Set to t to profile init.el.")
 
 (when ts/profile-init
@@ -27,7 +27,7 @@
   (load custom-file))
 
 
-;; UTILITY VARIABLES AND FUNCTIONS
+;; Set up load-paths for local modules.
 (defconst ts/lisp-dir (expand-file-name "lisp" user-emacs-directory)
   "Path to the Lisp file directory.")
 (defconst ts/site-lisp-dir (expand-file-name "site-lisp" ts/lisp-dir)
@@ -36,58 +36,21 @@
 (add-to-list 'load-path ts/lisp-dir)
 (add-to-list 'load-path ts/site-lisp-dir)
 
+
+;; Load personal helper functions.
 (require 'init-utils)
 
 
-;; PACKAGE CONFIGURATION
-(require 'package)
+;; Configure package managing around straight and use-package.
 
-(defvar package-archives)
-(setq package-archives '(("gnu" . "https://elpa.gnu.org/packages/")
-                         ("melpa" . "https://melpa.org/packages/")
-                         ("nongnu" . "https://elpa.nongnu.org/nongnu/")))
-
-(unless (bound-and-true-p package--initialized)
-  (package-initialize))
-
-(unless (package-installed-p 'use-package)
-  (package-refresh-contents)
-  (package-install 'use-package))
-
-(eval-and-compile
-  (setq use-package-always-ensure t))
-
-(eval-when-compile
-  (require 'use-package))
-
-(use-package use-package-ensure-system-package)
-
-;; quelpa - Build and install your Emacs Lisp packages on-the-fly directly from source.
-;; https://github.com/quelpa/quelpa
-(unless (package-installed-p 'quelpa)
-  (package-install 'quelpa))
-
-(use-package quelpa-use-package
-  :demand t
-  :init
-  (setq quelpa-dir (expand-file-name ".quelpa" user-emacs-directory)
-        quelpa-use-package-inhibit-loading-quelpa t)
-  (unless (package-installed-p 'quelpa-use-package)
-    (quelpa
-     '(quelpa-use-package
-       :fetcher git
-       :url "https://github.com/quelpa/quelpa-use-package.git"))))
-
-(use-package auto-package-update
-  :config
-  (auto-package-update-maybe)
-
-  :custom
-  (auto-package-update-delete-old-versions t)
-  (auto-package-update-interval 7))
+;; (require 'init-package)
+(require 'init-straight)
 
 
-;; LOAD MODULES UNDER LISP DIRECTORY
+;; Configure modules.
+
+;; org
+(require 'init-org)
 
 ;; essentials
 (require 'init-startup)
@@ -135,11 +98,8 @@
 (require 'init-plantuml)
 (require 'init-restclient)
 
-;; org
-(require 'init-org)
 
-
-;; LOAD CUSTOM INIT.EL
+;; Load custom per-site init.el files stored under the init.d directory.
 (let ((custom-init-directory (concat user-emacs-directory "init.d/")))
   (when (file-exists-p custom-init-directory)
     (mapc (lambda (f) (load f))

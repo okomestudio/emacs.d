@@ -12,6 +12,8 @@
   :type '(string)
   :group 'ts)
 
+(straight-use-package 'org)
+
 (use-package org
   :after (ob-typescript ox-gfm)
   :ensure org-contrib
@@ -91,7 +93,7 @@
 
 (use-package org-agenda
   :after (org)
-  :ensure nil
+  :straight nil
   :custom
   (org-agenda-current-time-string "⭠ NOW ────────────────────")
   (org-agenda-include-diary t)
@@ -126,6 +128,14 @@
   (org-modern-timestamp t)
   (org-modern-todo t)
   (org-modern-variable-pitch t))
+
+(use-package org-modern-indent
+  :straight
+  (org-modern-indent :type git
+                     :host github
+                     :repo "jdtsmith/org-modern-indent")
+
+  :config (add-hook 'org-mode-hook #'org-modern-indent-mode 90))
 
 ;; org-ref - for citations, cross-references, bibliographies
 ;; https://github.com/jkitchin/org-ref

@@ -115,7 +115,7 @@
 
 ;; Make unique buffer names more readable
 (use-package uniquify
-  :ensure nil
+  :straight nil
   :custom (uniquify-buffer-name-style 'forward))
 
 (provide 'init-minibuffer)

@@ -3,7 +3,7 @@
 ;;; Code:
 
 (use-package sh-mode
-  :ensure nil
+  :straight nil
 
   :custom
   ((sh-basic-offset 4)

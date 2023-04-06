@@ -20,14 +20,14 @@
 ;;   :ensure modus-themes
 ;;   :init (ts/configure-theme 'modus-operandi))
 
-(use-package spacemacs-common
-  :ensure spacemacs-theme
-
+(use-package spacemacs-theme
+  :defer t
   :init
   (custom-set-variables '(spacemacs-theme-custom-colors
                           '((base . "#322938") ; #655370 for light, true-color
                             )))
   (ts/configure-theme 'spacemacs-light))
+
 
 ;;; THEME MISC.
 
@@ -113,7 +113,7 @@
   (set-face-foreground 'highlight-indent-guides-top-character-face "gray"))
 
 (use-package fringe
-  :ensure nil
+  :straight nil
   :init (fringe-mode '(8 . 4)))
 
 (provide 'init-themes)

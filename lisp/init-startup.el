@@ -108,7 +108,7 @@ current buffer's, reload dir-locals."
 
 ;; simple.el --- basic editing commands for Emacs
 (use-package simple
-  :ensure nil
+  :straight nil
 
   :bind
   (("<f5>" . 'ts/revert-buffer-no-confirm)
@@ -177,13 +177,13 @@ current buffer's, reload dir-locals."
   ;; mule.el
   ;; -------
   ;; Basic commands for multilingual environment.
-  (prefer-coding-system 'utf-8)       ; Use UTF-8 when possible
+  (prefer-coding-system 'utf-8)         ; Use UTF-8 when possible
   (set-default-coding-systems 'utf-8)
   (set-language-environment "UTF-8")
   )
 
 (use-package files
-  :ensure nil
+  :straight nil
 
   :custom
   (auto-save-default nil)
@@ -260,7 +260,7 @@ current buffer's, reload dir-locals."
 ;; INPUT DEVICES
 
 (use-package mwheel
-  :ensure nil
+  :straight nil
   :custom
   (mouse-wheel-progressive-speed t)
   (mouse-wheel-scroll-amount '(3 ((shift) . 1))))
@@ -303,7 +303,7 @@ current buffer's, reload dir-locals."
 ;; OPTIMIZATIONS
 
 (use-package bytecomp
-  :ensure nil
+  :straight nil
   :custom (byte-compile-warnigns '(cl-functions)))
 
 ;; A RPC stack for the Emacs Lisp
@@ -330,7 +330,7 @@ current buffer's, reload dir-locals."
 ;; help-shortdoc-example - Display shortdoc examples to *Help* buffer
 ;; https://github.com/buzztaiki/help-shortdoc-example.el
 (use-package help-shortdoc-example
-  :ensure nil
+  :straight nil
   :config (help-shortdoc-example-mode 1)
   :init
   (ensure-file-from-github "buzztaiki/help-shortdoc-example.el/main/help-shortdoc-example.el"))
@@ -357,14 +357,14 @@ current buffer's, reload dir-locals."
 ;; STANDARD BUILT-IN MAJOR MODES
 
 (use-package prog-mode
-  :ensure nil
+  :straight nil
   :hook
   ((prog-mode . (lambda ()
                   (remove-trailing-whitespaces-on-save)
                   (show-paren-mode)))))
 
 (use-package text-mode
-  :ensure nil
+  :straight nil
   :hook ((text-mode . remove-trailing-whitespaces-on-save)))
 
 (provide 'init-startup)

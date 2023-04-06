@@ -5,7 +5,7 @@
 ;; INI
 
 (use-package any-ini-mode
-  :ensure nil
+  :straight nil
   :init (ensure-file-from-url "https://www.emacswiki.org/emacs/download/any-ini-mode.el")
   :mode "\\.ini\\'" "\\.conf\\'")
 
@@ -63,7 +63,7 @@
 ;; RST
 
 (use-package rst-mode
-  :ensure nil
+  :straight nil
   :ensure-system-package ((sphinx-quickstart . "pip install sphinx"))
   :mode "\\.rst\\'")
 

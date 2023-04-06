@@ -40,7 +40,7 @@
 
 
 (use-package faces
-  :ensure nil
+  :straight nil
 
   ;; Change text scale within some modes
   :hook
@@ -105,7 +105,7 @@
 ;; eaw.el - East Asian Ambiguous Width問題と絵文字の横幅問題の修正ロケール
 ;; https://github.com/hamano/locale-eaw
 (use-package eaw
-  :ensure nil
+  :straight nil
   :config (eaw-fullwidth)
   :init (ensure-file-from-github "hamano/locale-eaw/master/eaw.el"))
 

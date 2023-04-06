@@ -3,7 +3,7 @@
 ;;; Code:
 
 (use-package emacs-lisp-mode
-  :ensure nil
+  :straight nil
   :hook ((emacs-lisp-mode . eldoc-mode)))
 
 (use-package lispy

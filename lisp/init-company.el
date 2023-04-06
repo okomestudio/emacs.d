@@ -35,7 +35,7 @@
 
 (use-package company-graphviz-dot
   :after (graphviz-dot-mode)
-  :ensure nil
+  :straight nil
   :init
   (ensure-file-from-github
    "ppareit/graphviz-dot-mode/master/company-graphviz-dot.el"))
@@ -55,7 +55,7 @@
 
 (use-package company-tern
   :after (company dash dash-functional tern)
-  :ensure nil
+  :straight nil
   :init
   (ensure-file-from-url
    (concat "https://gist.githubusercontent.com/"

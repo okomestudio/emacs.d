@@ -31,8 +31,6 @@
 (tool-bar-mode -1)
 (scroll-bar-mode t)
 
-;; (setq package-quickstart t)
-
 (setq frame-inhibit-implied-resize t)
 
 (setq native-comp-deferred-compilation t)
