@@ -61,6 +61,7 @@
 (require 'init-treemacs)
 
 (require 'init-editing-utils)
+(require 'init-editing-lookup)
 
 (require 'init-anki)
 (require 'init-bookmark-plus)
@@ -70,7 +71,6 @@
 (require 'init-editing-jp)
 (require 'init-elfeed)
 (require 'init-git)
-(require 'init-google-translate)
 (require 'init-lsp)
 (require 'init-openwith)
 (require 'init-projectile)
