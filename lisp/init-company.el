@@ -25,15 +25,23 @@
   :init
   (add-hook 'after-init-hook 'global-company-mode))
 
+;; Frontends
+
+(use-package company-box
+  :hook (company-mode . company-box-mode))
+
 (use-package company-posframe
-  :custom (company-posframe-font (font-spec
-                                  :size (max ts/default-font-size
-                                             (/ (* (face-attribute 'default :height) 1.5) 10))))
+  :disabled
+  :custom (company-posframe-font
+           (font-spec
+            :size (max ts/default-font-size
+                       (/ (* (face-attribute 'default :height) 1.5) 10))))
   :hook (company-mode . (lambda () (company-posframe-mode 1))))
 
 ;; Backends
 
 (use-package company-graphviz-dot
+  :disabled
   :after (graphviz-dot-mode)
   :straight nil
   :init
@@ -46,14 +54,17 @@
   :config (add-to-list 'company-backends 'company-jedi))
 
 (use-package company-restclient
+  :disabled
   :after (company restclient)
   :config (add-to-list 'company-backends 'company-restclient))
 
 (use-package company-shell
+  :disabled
   :after company
   :config (add-to-list 'company-backends '(company-shell company-shell-env)))
 
 (use-package company-tern
+  :disabled
   :after (company dash dash-functional tern)
   :straight nil
   :init
@@ -64,6 +75,7 @@
   (add-to-list 'company-backends 'company-tern))
 
 (use-package company-web
+  :disabled
   :after company
   :init (add-to-list 'company-backends 'company-web-html))
 
