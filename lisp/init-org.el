@@ -56,6 +56,17 @@
      (sql . t)
      (typescript . t)))
 
+  (custom-set-faces
+   '(org-block-begin-line
+     ((t (:foreground "#999999" :background "#f1ede5" :extend t))))
+   '(org-block
+     ((t (:background "#fbf6ed" :extend t))))
+   '(org-block-end-line
+     ((t (:foreground "#999999" :background "#f1ede5" :extend t))))
+   '(org-modern-bracket-line
+     ((t (:foreground "#999999" :background "#f1ede5" :extend t))))
+   )
+
   :custom
   ((fill-column 80)
    (org-adapt-indentation nil)
