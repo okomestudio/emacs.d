@@ -42,6 +42,12 @@
 (use-package faces
   :straight nil
 
+  :ensure-system-package
+  ("/usr/share/fonts/opentype/ebgaramond/EBGaramond08-Regular.otf" . fonts-ebgaramond)
+  ("/usr/share/fonts/opentype/noto/NotoSansCJK-Regular.ttc" . fonts-noto-cjk)
+  ("/usr/share/fonts/truetype/hack/Hack-Regular.ttf" . fonts-hack)
+  ("/usr/share/fonts/truetype/vlgothic/VL-Gothic-Regular.ttf" . fonts-vlgothic)
+
   ;; Change text scale within some modes
   :hook
   (elfeed-search-mode . (lambda () (text-scale-set 1.5)))
