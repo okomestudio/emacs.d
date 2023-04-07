@@ -75,16 +75,15 @@
 ;;
 ;; Offers a hook to add relevant actions on a target determined by context.
 ;;
-(use-package embark)
+(use-package embark
+  :after embark-consult)
 
 (use-package embark-consult
-  :after (embark consult)
   ;:demand t ; only necessary if you have the hook below
   ;; if you want to have consult previews as you move around an
   ;; auto-updating embark collect buffer
-  ;:hook
-  ;(embark-collect-mode . consult-preview-at-point-mode)
-  )
+  :hook
+  (embark-collect-mode . consult-preview-at-point-mode))
 
 ;; marginalia.el - Marginalia in the minibuffer
 ;; https://github.com/minad/marginalia

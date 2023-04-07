@@ -67,7 +67,7 @@ root)."
 
   Use this function with a mode hook."
   (add-hook 'local-write-file-hooks
-            '(lambda () (save-excursion (delete-trailing-whitespace)))))
+            #'(lambda () (save-excursion (delete-trailing-whitespace)))))
 
 
 (defun sort-lines-ci ()
