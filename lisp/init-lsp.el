@@ -29,7 +29,8 @@
 
   :ensure-system-package
   ((sqls . "go get github.com/lighttiger2505/sqls")
-   (unified-language-server . "sudo npm i -g unified-language-server"))
+   ;; (unified-language-server . "sudo npm i -g unified-language-server")
+   )
 
   :hook
   ((dockerfile-mode . (lambda () (ts/lsp-mode-hook 'dockerfile-ls)))
