@@ -10,17 +10,19 @@
   :straight nil
   :after (define-word powerthesaurus eww google-translate)
   :bind
-  (:prefix-map text-mode-map
-               :prefix "M-L"
-               :prefix-docstring "Keymap for editing lookup"
-               ("d w" . define-word-at-point)
-               ("d p" . powerthesaurus-lookup-dwim)
-               ("t g" . google-translate-smooth-translate)
-               ("w a e" . search-amazon)
-               ("w a j" . search-amazon-jp)
-               ("w w e" . search-wikipedia)
-               ("w w j" . search-wikipedia-jp)
-               ("w d" . search-weblio))
+  (
+   :prefix "M-L"
+   :prefix-map text-map
+   :prefix-docstring "Keymap for editing lookup"
+   ("d w" . define-word-at-point)
+   ("d p" . powerthesaurus-lookup-dwim)
+   ("t g" . google-translate-smooth-translate)
+   ("w a e" . search-amazon)
+   ("w a j" . search-amazon-jp)
+   ("w w e" . search-wikipedia)
+   ("w w j" . search-wikipedia-jp)
+   ("w d" . search-weblio)
+   )
   )
 
 
