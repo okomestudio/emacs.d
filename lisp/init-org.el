@@ -31,6 +31,14 @@
           (emacs-lisp-docstring-fill-column t))
       (org-fill-paragraph nil region)))
 
+  (defun org-ensure-all-headings-with-ids ()
+    "Ensure all headings have IDs."
+    (interactive)
+    (save-excursion
+      (goto-char (point-max))
+      (while (outline-previous-heading)
+        (org-id-get-create))))
+
   (plist-put org-format-latex-options :scale 1.5)
 
   ;; Add a few characters usable for bounding emphasis markup
@@ -115,14 +123,12 @@
   :init
   (put 'org-agenda-custom-commands 'safe-local-variable #'listp))
 
-;; org-books - Reading list management with org mode
-;; https://github.com/lepisma/org-books
 (use-package org-books
+  ;;Reading list management with org mode.
   :custom (org-books-file ts/org-books-file))
 
-;; org-modern - Modern Org Style
-;; https://github.com/minad/org-modern
 (use-package org-modern
+  ;; Modern Org Style.
   :init (global-org-modern-mode)
   :custom
   (org-modern-block nil)
@@ -148,15 +154,13 @@
 
   :config (add-hook 'org-mode-hook #'org-modern-indent-mode 90))
 
-;; org-ref - for citations, cross-references, bibliographies
-;; https://github.com/jkitchin/org-ref
 (use-package org-ref
+  ;; For citations, cross-references, bibliographies.
   :custom (bibtex-completion-pdf-field "file")
   :init (put 'bibtex-completion-bibliography 'safe-local-variable #'listp))
 
-;; org-roam - Rudimentary Roam replica with org-mode
-;; https://github.com/org-roam/org-roam
 (use-package org-roam
+  ;; Rudimentary Roam replica with org-mode.
   :after org
   :bind
   (("C-c n l" . org-roam-buffer-toggle)
@@ -187,55 +191,65 @@
   (org-roam-node-annotation-function
    (lambda (node) (concat " " (marginalia--time (org-roam-node-file-mtime node)))))
   (org-roam-node-display-template
-   (concat "${my-node-entry}" (propertize " ${tags}" 'face 'org-tag)))
+   (concat "${my-node-entry} ${my-node-parent-title} " (propertize "${tags}" 'face 'org-tag)))
 
   :init
   ;; Override some functions here:
   (eval-after-load 'org-roam-node
     '(cl-defmethod org-roam-node-my-node-entry ((node org-roam-node))
-      (concat (org-roam-node-title node)
+       (org-roam-node-title node)))
+
+  (eval-after-load 'org-roam-node
+    '(cl-defmethod org-roam-node-my-node-parent-title ((node org-roam-node))
        (if (string= (org-roam-node-title node) (org-roam-node-file-title node))
-           "" (concat " [" (org-roam-node-file-title node) "]") ) )))
+           ""
+         (concat
+          (propertize "< "
+                      'face '(:foreground "dim gray"))
+          (propertize (org-roam-node-file-title node)
+                      'face '(:slant italic :foreground "dim gray" :height 1.0 :underline t)))
+         )
+       ))
 
   (eval-after-load 'org-roam-node
     '(cl-defmethod org-roam-node-slug ((node org-roam-node))
-      "Return the slug of NODE. Overridden to use hyphens instead of underscores."
-      (let ((title (org-roam-node-title node))
-            (slug-trim-chars '(;; Combining Diacritical Marks https://www.unicode.org/charts/PDF/U0300.pdf
-                               768    ; U+0300 COMBINING GRAVE ACCENT
-                               769    ; U+0301 COMBINING ACUTE ACCENT
-                               770    ; U+0302 COMBINING CIRCUMFLEX ACCENT
-                               771    ; U+0303 COMBINING TILDE
-                               772    ; U+0304 COMBINING MACRON
-                               774    ; U+0306 COMBINING BREVE
-                               775    ; U+0307 COMBINING DOT ABOVE
-                               776    ; U+0308 COMBINING DIAERESIS
-                               777    ; U+0309 COMBINING HOOK ABOVE
-                               778    ; U+030A COMBINING RING ABOVE
-                               779    ; U+030B COMBINING DOUBLE ACUTE ACCENT
-                               780    ; U+030C COMBINING CARON
-                               795    ; U+031B COMBINING HORN
-                               803    ; U+0323 COMBINING DOT BELOW
-                               804    ; U+0324 COMBINING DIAERESIS BELOW
-                               805    ; U+0325 COMBINING RING BELOW
-                               807    ; U+0327 COMBINING CEDILLA
-                               813    ; U+032D COMBINING CIRCUMFLEX ACCENT BELOW
-                               814    ; U+032E COMBINING BREVE BELOW
-                               816    ; U+0330 COMBINING TILDE BELOW
-                               817    ; U+0331 COMBINING MACRON BELOW
-                               )))
-        (cl-flet* ((nonspacing-mark-p (char) (memq char slug-trim-chars))
-                   (strip-nonspacing-marks (s) (string-glyph-compose
-                                                (apply #'string
-                                                       (seq-remove #'nonspacing-mark-p
-                                                                   (string-glyph-decompose s)))))
-                   (cl-replace (title pair) (replace-regexp-in-string (car pair) (cdr pair) title)))
-          (let* ((pairs `(("[^[:alnum:][:digit:]]" . "-") ;; convert anything not alphanumeric
-                          ("--*" . "-") ;; remove sequential underscores
-                          ("^-" . "")   ;; remove starting underscore
-                          ("-$" . ""))) ;; remove ending underscore
-                 (slug (-reduce-from #'cl-replace (strip-nonspacing-marks title) pairs)))
-            (downcase slug))))) )
+       "Return the slug of NODE. Overridden to use hyphens instead of underscores."
+       (let ((title (org-roam-node-title node))
+             (slug-trim-chars '(;; Combining Diacritical Marks https://www.unicode.org/charts/PDF/U0300.pdf
+                                768   ; U+0300 COMBINING GRAVE ACCENT
+                                769   ; U+0301 COMBINING ACUTE ACCENT
+                                770   ; U+0302 COMBINING CIRCUMFLEX ACCENT
+                                771   ; U+0303 COMBINING TILDE
+                                772   ; U+0304 COMBINING MACRON
+                                774   ; U+0306 COMBINING BREVE
+                                775   ; U+0307 COMBINING DOT ABOVE
+                                776   ; U+0308 COMBINING DIAERESIS
+                                777   ; U+0309 COMBINING HOOK ABOVE
+                                778   ; U+030A COMBINING RING ABOVE
+                                779   ; U+030B COMBINING DOUBLE ACUTE ACCENT
+                                780   ; U+030C COMBINING CARON
+                                795   ; U+031B COMBINING HORN
+                                803   ; U+0323 COMBINING DOT BELOW
+                                804   ; U+0324 COMBINING DIAERESIS BELOW
+                                805   ; U+0325 COMBINING RING BELOW
+                                807   ; U+0327 COMBINING CEDILLA
+                                813   ; U+032D COMBINING CIRCUMFLEX ACCENT BELOW
+                                814   ; U+032E COMBINING BREVE BELOW
+                                816   ; U+0330 COMBINING TILDE BELOW
+                                817   ; U+0331 COMBINING MACRON BELOW
+                                )))
+         (cl-flet* ((nonspacing-mark-p (char) (memq char slug-trim-chars))
+                    (strip-nonspacing-marks (s) (string-glyph-compose
+                                                 (apply #'string
+                                                        (seq-remove #'nonspacing-mark-p
+                                                                    (string-glyph-decompose s)))))
+                    (cl-replace (title pair) (replace-regexp-in-string (car pair) (cdr pair) title)))
+           (let* ((pairs `(("[^[:alnum:][:digit:]]" . "-") ;; convert anything not alphanumeric
+                           ("--*" . "-") ;; remove sequential underscores
+                           ("^-" . "")   ;; remove starting underscore
+                           ("-$" . ""))) ;; remove ending underscore
+                  (slug (-reduce-from #'cl-replace (strip-nonspacing-marks title) pairs)))
+             (downcase slug))))) )
 
   (put 'orb-preformat-keywords 'safe-local-variable #'listp)
   (put 'org-roam-capture-templates 'safe-local-variable #'listp)
