@@ -73,6 +73,12 @@
      ((t (:foreground "#999999" :background "#f1ede5" :extend t))))
    '(org-modern-bracket-line
      ((t (:foreground "#999999" :background "#f1ede5" :extend t))))
+   '(org-drawer
+     ((t (:foreground "#999999" :height 1.0 :inherit 'fixed-pitch))))
+   '(org-special-keyword
+     ((t (:foreground "#999999" :height 1.0 :inherit 'fixed-pitch))))
+   '(org-property-value
+     ((t (:foreground "#999999" :height 1.0 :inherit 'fixed-pitch))))
    )
 
   :custom
