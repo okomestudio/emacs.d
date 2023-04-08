@@ -53,6 +53,7 @@
 ;; lsp-grammerly - lsp-mode and grammarly
 ;; https://github.com/emacs-grammarly/lsp-grammarly
 (use-package lsp-grammarly
+  :disabled
   :bind ("C-c g" . ts/check-grammar)
   :custom (lsp-grammarly-auto-activate nil)
 
