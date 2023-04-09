@@ -41,9 +41,9 @@
 
   (plist-put org-format-latex-options :scale 1.5)
 
-  ;; Add a few characters usable for bounding emphasis markup
-  (setcar org-emphasis-regexp-components "-—[:space:]('\"{\x200B")
-  (setcar (nthcdr 1 org-emphasis-regexp-components) "-—[:space:].,:!?;'\")}\\[\x200B")
+  ;; Add characters allowed to bound emphasis markup.
+  (setcar org-emphasis-regexp-components "-—[:space:]('\"{\x200B|│")
+  (setcar (nthcdr 1 org-emphasis-regexp-components) "-—[:space:].,:!?;'\")}\\[\x200B|│")
   (org-set-emph-re 'org-emphasis-regexp-components org-emphasis-regexp-components)
 
   ;; For document export
@@ -65,6 +65,7 @@
      (typescript . t)))
 
   (custom-set-faces
+   ;; Code block
    '(org-block-begin-line
      ((t (:foreground "#999999" :background "#f1ede5" :extend t))))
    '(org-block
@@ -73,12 +74,18 @@
      ((t (:foreground "#999999" :background "#f1ede5" :extend t))))
    '(org-modern-bracket-line
      ((t (:foreground "#999999" :background "#f1ede5" :extend t))))
+
+   ;; Drawer
    '(org-drawer
      ((t (:foreground "#999999" :height 1.0 :inherit 'fixed-pitch))))
    '(org-special-keyword
      ((t (:foreground "#999999" :height 1.0 :inherit 'fixed-pitch))))
    '(org-property-value
      ((t (:foreground "#999999" :height 1.0 :inherit 'fixed-pitch))))
+
+   ;; Table
+   '(org-table
+     ((t (:inherit 'variable-pitch))))
    )
 
   :custom
@@ -288,11 +295,19 @@
 (use-package ob-typescript)
 (use-package ox-gfm)
 
+
 (use-package valign
+  ;; Pixel-perfect visual alignment for Org and Markdown tables.
+  :config
+  (use-package ftable)
+
   :custom
-  ((valign-max-table-size 4000)
+  ((valign-fancy-bar t)
+   (valign-max-table-size 4000)
    (valign-signal-parse-error t))
-  :hook (org-mode . valign-mode))
+
+  :hook (org-mode . valign-mode)
+  )
 
 (provide 'init-org)
 ;;; init-org.el ends here
