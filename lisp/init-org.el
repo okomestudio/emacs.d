@@ -288,5 +288,11 @@
 (use-package ob-typescript)
 (use-package ox-gfm)
 
+(use-package valign
+  :custom
+  ((valign-max-table-size 4000)
+   (valign-signal-parse-error t))
+  :hook (org-mode . valign-mode))
+
 (provide 'init-org)
 ;;; init-org.el ends here
