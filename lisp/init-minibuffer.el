@@ -6,15 +6,13 @@
 ;; vertico/consult
 ;;
 
-;; vertico.el - VERTical Interactive COmpletion
-;; https://github.com/minad/vertico
 (use-package vertico
+  ;; VERTical Interactive COmpletion.
   :custom (vertico-count 20)
   :init (vertico-mode))
 
-;; consult.el - Consulting completing-read
-;; https://github.com/minad/consult
 (use-package consult
+  ;; Consulting completing-read.
   :config
   (consult-customize consult-theme
                      :preview-key '(:debounce 0.2 any))
@@ -40,27 +38,22 @@
   (global-set-key [remap switch-to-buffer-other-window] #'consult-buffer-other-window)
   (global-set-key [remap switch-to-buffer] #'consult-buffer))
 
-;; https://github.com/mohkale/consult-company
 (use-package consult-company
   :disabled
   :after (consult company)
   :init (define-key company-mode-map [remap completion-at-point] #'consult-company))
 
-;; https://github.com/minad/consult-flycheck
 (use-package consult-flycheck
   :after (consult flycheck)
   :bind ("M-g c" . consult-flycheck))
 
-;; https://gitlab.com/OlMon/consult-flyspell
 (use-package consult-flyspell
   :after (consult flyspell)
   :bind ("M-g s" . consult-flyspell))
 
-;; https://github.com/gagbo/consult-lsp
 (use-package consult-lsp
   :after (consult lsp))
 
-;; https://gitlab.com/OlMon/consult-projectile
 (use-package consult-projectile
   :after (consult projectile)
   :bind
@@ -69,13 +62,11 @@
    ([remap projectile-find-file] . consult-projectile-find-file)
    ([remap projectile-switch-project] . consult-projectile-switch-project)))
 
-
-;; embark.el - Emacs Mini-Buffer Actions Rooted in Key maps
-;; https://github.com/oantolin/embark/
-;;
-;; Offers a hook to add relevant actions on a target determined by context.
-;;
 (use-package embark
+  ;; Emacs Mini-Buffer Actions Rooted in Key maps.
+  ;;
+  ;; Offers a hook to add relevant actions on a target determined by context.
+  ;;
   :after embark-consult)
 
 (use-package embark-consult
@@ -85,35 +76,32 @@
   :hook
   (embark-collect-mode . consult-preview-at-point-mode))
 
-;; marginalia.el - Marginalia in the minibuffer
-;; https://github.com/minad/marginalia
 (use-package marginalia
+  ;; Marginalia in the minibuffer.
   :init (marginalia-mode))
 
 ;;
 ;; Misc.
 ;;
 
-;; https://github.com/iyefrat/all-the-icons-completion
 (use-package all-the-icons-completion
   :after (all-the-icons)
   :hook (marginalia-mode . all-the-icons-completion-mode))
 
-;;Incremental minibuffer completion
 (use-package icomplete
+  ;; Incremental minibuffer completion
   :ensure nil)
 
-;; orderless.el - Emacs completion style that matches multiple regexps in any order
-;; https://github.com/oantolin/orderless
 (use-package orderless
+  ;; Emacs completion style that matches multiple regexps in any order.
   :custom (completion-styles '(orderless)))
 
-;; Save minibuffer history
 (use-package savehist
+  ;; Save minibuffer history.
   :init (savehist-mode))
 
-;; Make unique buffer names more readable
 (use-package uniquify
+  ;; Make unique buffer names more readable.
   :straight nil
   :custom (uniquify-buffer-name-style 'forward))
 
