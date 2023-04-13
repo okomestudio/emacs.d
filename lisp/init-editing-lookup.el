@@ -113,5 +113,19 @@
         google-translate-translation-directions-alist '(("en" . "ja") ("ja" . "en")) )
   )
 
+
+(use-package go-translate
+  :custom
+  (gts-translate-list '(("en" "ja") ("ja" "en")))
+  (gts-default-translator
+   (gts-translator
+    :picker (gts-prompt-picker)
+    :engines (list
+              (gts-google-engine
+               :parser (gts-google-summary-parser)))
+    :render (gts-buffer-render))
+   )
+  )
+
 (provide 'init-editing-lookup)
 ;;; init-editing-lookup.el ends here
