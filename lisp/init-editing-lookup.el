@@ -8,7 +8,7 @@
 
 (use-package init-editing-lookup
   :straight nil
-  :after (define-word powerthesaurus eww google-translate)
+  :after (define-word powerthesaurus eww go-translate)
   :bind
   (
    :prefix "M-L"
@@ -16,12 +16,12 @@
    :prefix-docstring "Keymap for editing lookup"
    ("d w" . define-word-at-point)
    ("d p" . powerthesaurus-lookup-dwim)
-   ("t g" . google-translate-smooth-translate)
-   ("w a e" . search-amazon)
-   ("w a j" . search-amazon-jp)
-   ("w w e" . search-wikipedia)
-   ("w w j" . search-wikipedia-jp)
-   ("w d" . search-weblio)
+   ("s a e" . search-amazon)
+   ("s a j" . search-amazon-jp)
+   ("s w e" . search-wikipedia)
+   ("s w j" . search-wikipedia-jp)
+   ("s d" . search-weblio)
+   ("t" . gts-do-translate)
    )
   )
 
@@ -97,35 +97,33 @@
     (ts/make-query "https://ja.m.wikipedia.org/wiki/%s" str)))
 
 
-(use-package google-translate
-  ;; Emacs interface to Google Translate.
+(use-package go-translate
+  ;; A translation framework.
+
+  :custom (gts-translate-list '(("en" "ja") ("ja" "en")))
 
   :config
-  (require 'google-translate)
-  (require 'google-translate-smooth-ui)
+  ;; Get DeepL auth key from authinfo:
+  (setq deepl-auth (car (auth-source-search :host "deepl.com"
+                                            :requires '(:authkey))))
+  (setq deepl-authkey (plist-get deepl-auth :authkey))
 
-  ;; (defun google-translate--search-tkk ()
-  ;;   "Search TKK."
-  ;;   (list 430675 2721866130))
+  ;; Define default engines:
+  (setq gts-custom-engines (list
+                            (gts-google-engine :parser (gts-google-summary-parser))
+                            (gts-google-rpc-engine :parser (gts-google-rpc-parser))
+                            (gts-bing-engine) ))
 
-  (setq google-translate-backend-method 'curl
-        google-translate-output-destination nil
-        google-translate-translation-directions-alist '(("en" . "ja") ("ja" . "en")) )
+  ;; If the auth key exists, add DeepL engine:
+  (if (not (null deepl-authkey))
+      (push (gts-deepl-engine :auth-key deepl-authkey :pro nil) gts-custom-engines))
+
+  (setq gts-default-translator (gts-translator
+                                :picker (gts-prompt-picker)
+                                :engines gts-custom-engines
+                                :render (gts-buffer-render)) )
   )
 
-
-(use-package go-translate
-  :custom
-  (gts-translate-list '(("en" "ja") ("ja" "en")))
-  (gts-default-translator
-   (gts-translator
-    :picker (gts-prompt-picker)
-    :engines (list
-              (gts-google-engine
-               :parser (gts-google-summary-parser)))
-    :render (gts-buffer-render))
-   )
-  )
 
 (provide 'init-editing-lookup)
 ;;; init-editing-lookup.el ends here
