@@ -62,6 +62,7 @@
 
 (require 'init-editing-utils)
 (require 'init-editing-lookup)
+(require 'init-ime)
 
 (require 'init-anki)
 (require 'init-bookmark-plus)
