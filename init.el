@@ -69,7 +69,6 @@
 (require 'init-company)
 (require 'init-docker)
 (require 'init-edit-server)
-(require 'init-editing-jp)
 (require 'init-elfeed)
 (require 'init-git)
 (require 'init-lsp)
