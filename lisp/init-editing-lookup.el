@@ -100,7 +100,9 @@
 (use-package go-translate
   ;; A translation framework.
 
-  :custom (gts-translate-list '(("en" "ja") ("ja" "en")))
+  :custom
+  (gts-split-width-threshold 120)       ; if buffer width is less than this, then split vertically
+  (gts-translate-list '(("en" "ja") ("ja" "en")))
 
   :config
   ;; Get DeepL auth key from authinfo:
