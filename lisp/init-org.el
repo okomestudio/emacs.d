@@ -296,17 +296,31 @@
 (use-package ox-gfm)
 
 
+(defcustom ts/max-buffer-size 100000
+  "Default max-buffer-size over which valign-mode will not activate."
+  :type '(integer)
+  :group 'ts)
+
 (use-package valign
   ;; Pixel-perfect visual alignment for Org and Markdown tables.
-  :config
-  (use-package ftable)
 
   :custom
-  ((valign-fancy-bar t)
-   (valign-max-table-size 4000)
-   (valign-signal-parse-error t))
+  (valign-fancy-bar t)
+  (valign-max-table-size 4000)
+  (valign-signal-parse-error t)
 
-  :hook (org-mode . valign-mode)
+  :init
+  ;; Add logic to avoid loading valign-mode for large buffers.
+  (add-hook 'org-mode-hook
+            (lambda ()
+              (when (not (> (buffer-size) ts/max-buffer-size))
+                (valign-mode)
+                )
+              )
+            )
+
+  :config
+  (use-package ftable)
   )
 
 (provide 'init-org)
