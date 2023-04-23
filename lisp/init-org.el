@@ -86,6 +86,10 @@
    ;; Table
    '(org-table
      ((t (:inherit 'variable-pitch))))
+
+   ;; Code-like comments
+   '(font-lock-comment-face
+     ((t (:inherit 'fixed-pitch))))
    )
 
   :custom
