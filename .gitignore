@@ -33,6 +33,7 @@ projectile-bookmarks.eld
 projectile.cache
 request
 snippets
-straight
+straight/*
+!straight/versions/
 transient
 url
