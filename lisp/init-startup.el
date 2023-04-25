@@ -106,8 +106,8 @@ current buffer's, reload dir-locals."
   (define-key ts/apropos-prefix (kbd "C-v") 'apropos-value)
   (setq apropos-sort-by-scores t))
 
-;; simple.el --- basic editing commands for Emacs
 (use-package simple
+  ;; Basic editing commands for Emacs.
   :straight nil
 
   :bind
@@ -162,8 +162,8 @@ current buffer's, reload dir-locals."
       (fill-paragraph nil region)))
 
   (column-number-mode t)
-  (global-so-long-mode +1)    ; mitigate perf on files with long lines
-  (show-paren-mode +1)        ; highlight matching parens
+  (global-so-long-mode +1)              ; mitigate perf on files with long lines
+  (show-paren-mode +1)                  ; highlight matching parens
   (subword-mode)
   (tooltip-mode 1)
   (setq-default indent-tabs-mode nil)
@@ -204,14 +204,13 @@ current buffer's, reload dir-locals."
 
 ;; WINDOWS AND FRAMES
 
-;; ace-window - Quickly switch windows in Emacs
-;; https://github.com/abo-abo/ace-window
 (use-package ace-window
+  ;; Quickly switch windows in Emacs.
   :bind (("M-O" . 'ace-window))
   :custom (aw-dispatch-always t))
 
-;; frame-fns.el/frame-cmds.el - Frame functions and commands
 (use-package frame-cmds
+  ;; Frame functions and commands.
   :ensure nil
   :bind (("M-o" . 'other-window-or-frame))
 
@@ -219,9 +218,10 @@ current buffer's, reload dir-locals."
   (ensure-file-from-url "https://www.emacswiki.org/emacs/download/frame-fns.el")
   (ensure-file-from-url "https://www.emacswiki.org/emacs/download/frame-cmds.el"))
 
-;; shackle.el - Enforce rules for popup windows.
-;; https://depp.brause.cc/shackle/
 (use-package shackle
+  ;; Enforce rules for popup windows.
+  :disabled
+
   :config (shackle-mode 1)
 
   :custom
@@ -233,16 +233,14 @@ current buffer's, reload dir-locals."
   ;;                   :align right :size 0.5 :inhibit-window-quit t :other t)))
   )
 
-;; topsy.el - Simple sticky header showing definition beyond top of window.
-;; https://github.com/alphapapa/topsy.el
 (use-package topsy
+  ;; Simple sticky header showing definition beyond top of window.
   :disabled                             ; Because of conflict with lsp
   :quelpa (topsy :fetcher github :repo "alphapapa/topsy.el")
   :hook (prog-mode . topsy-mode))
 
-;; yascroll.el -- Yet Another Scroll Bar Mode
-;; https://github.com/emacsorphanage/yascroll
 (use-package yascroll
+  ;; Yet Another Scroll Bar Mode.
   :init
   (ensure-file-from-github "emacsorphanage/yascroll/master/yascroll.el")
 
@@ -268,31 +266,29 @@ current buffer's, reload dir-locals."
 
 ;; SHELL
 
-;; add-node-modules-path.el - Add node_modules/.bin to exec-path
-;; https://github.com/codesuki/add-node-modules-path
-(use-package add-node-modules-path)
+(use-package add-node-modules-path
+  ;; Add node_modules/.bin to exec-path.
+  )
 
-;; direnv.el - direnv integration
-;;
-;; Invoke direnv to obtain the environment for the current file, then
-;; update the emacs variables process-environment and exec-path.
-;;
-;; https://github.com/wbolster/emacs-direnv
 (use-package direnv
+  ;; direnv integration.
+  ;;
+  ;; Invoke direnv to obtain the environment for the current file, then update
+  ;; the emacs variables process-environment and exec-path.
+  ;;
   :config (direnv-mode)
   :ensure-system-package ((direnv . "sudo apt install direnv")))
 
-;; exec-path-from-shell.el - Make Emacs use the PATH set up by the user's shell
-;;
-;; Ensure environment variables look the same in the user's shell
-;;
-;; https://github.com/purcell/exec-path-from-shell
 (use-package exec-path-from-shell
+  ;; Make Emacs use the PATH set up by the user's shell.
+  ;;
+  ;; Ensure environment variables look the same in the user's shell.
+  ;;
   :if (or (memq window-system '(mac ns x)) (daemonp))
   :config (exec-path-from-shell-initialize))
 
-;; keychain-environment - Loads keychain environment variables into emacs
 (use-package keychain-environment
+  ;; Loads keychain environment variables into emacs.
   :ensure nil
   :init
   (ensure-file-from-github "tarsius/keychain-environment/master/keychain-environment.el")
@@ -310,9 +306,8 @@ current buffer's, reload dir-locals."
 ;; (use-package epc
 ;;   :ensure t)
 
-;; gcmh.el - The Garbage Collector Magic Hack
-;; https://github.com/emacsmirror/gcmh
 (use-package gcmh
+  ;; The Garbage Collector Magic Hack.
   :defer nil
   :hook (after-init . gcmh-mode)
 
@@ -323,29 +318,27 @@ current buffer's, reload dir-locals."
 
 ;; MISC.
 
-;; dash - A modern list library for Emacs
-;; https://github.com/magnars/dash.el
-(use-package dash)
+(use-package dash
+  ;; A modern list library for Emacs
+  )
 
-;; help-shortdoc-example - Display shortdoc examples to *Help* buffer
-;; https://github.com/buzztaiki/help-shortdoc-example.el
 (use-package help-shortdoc-example
+  ;; Display shortdoc examples to *Help* buffer.
   :straight nil
   :config (help-shortdoc-example-mode 1)
   :init
   (ensure-file-from-github "buzztaiki/help-shortdoc-example.el/main/help-shortdoc-example.el"))
 
-;; restart-emacs.el - Restart emacs from within emacs
-;; https://github.com/iqbalansari/restart-emacs
 (use-package restart-emacs
+  ;; Restart emacs from within emacs.
   :defer t)
 
 (use-package tramp
   :custom (tramp-default-method "ssh")
   :defer t)
 
-;; Displays available keybindings in popup (github.com/justbur/emacs-which-key)
 (use-package which-key
+  ;; Displays available keybindings in popup.
   :custom
   (which-key-popup-type 'side-window)
   (which-key-side-window-location '(right bottom))
