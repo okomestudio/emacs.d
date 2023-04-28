@@ -9,7 +9,7 @@
   (tern-command '("tern" "--no-port-file"))
 
   :ensure-system-package
-  ((tern . "sudo npm install -g tern"))
+  ((tern . "npm install -g tern"))
 
   :init
   (ensure-file-from-github "ternjs/tern/master/emacs/tern.el"))

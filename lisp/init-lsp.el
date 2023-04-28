@@ -29,7 +29,7 @@
 
   :ensure-system-package
   ((sqls . "go get github.com/lighttiger2505/sqls")
-   ;; (unified-language-server . "sudo npm i -g unified-language-server")
+   ;; (unified-language-server . "npm i -g unified-language-server")
    )
 
   :hook
@@ -58,11 +58,11 @@
   :custom (lsp-grammarly-auto-activate nil)
 
   :ensure-system-package
-  (unofficial-grammarly-language-server . "sudo npm i -g @emacs-grammarly/unofficial-grammarly-language-server")
+  (unofficial-grammarly-language-server . "npm i -g @emacs-grammarly/unofficial-grammarly-language-server")
 
   :init
   (use-package keytar
-    :ensure-system-package (keytar . "sudo npm install -g @emacs-grammarly/keytar-cli"))
+    :ensure-system-package (keytar . "npm install -g @emacs-grammarly/keytar-cli"))
 
   (defun ts/grammarly--check-grammar (start end)
     (if (use-region-p)

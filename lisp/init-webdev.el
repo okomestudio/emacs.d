@@ -19,8 +19,8 @@
   (web-mode-style-padding 2)
 
   ;; :ensure-system-package
-  ;; ((csslint . "npm install --save-dev csslint")
-  ;;  (eslint . "npm install --save-dev eslint babel-eslint eslint-plugin-react")
+  ;; ((csslint . "npm install -g --save-dev csslint")
+  ;;  (eslint . "npm install -g --save-dev eslint babel-eslint eslint-plugin-react")
   ;;  (tidy . "sudo apt install tidy"))
 
   ;; :hook (web-mode . ts/web-mode-hook)
@@ -122,7 +122,7 @@
 ;; https://prettier.io/
 (use-package prettier-js
   :disabled
-  :ensure-system-package (prettier . "sudo npm install -g prettier")
+  :ensure-system-package (prettier . "npm install -g prettier")
   :config
   (setq prettier-js-args
         '("--arrow-parens" "always"
@@ -132,7 +132,7 @@
 
 ;; https://github.com/yasuyk/web-beautify
 (use-package web-beautify
-  :ensure-system-package ((js-beautify . "sudo npm install -g js-beautify")))
+  :ensure-system-package ((js-beautify . "npm install -g js-beautify")))
 
 (provide 'init-webdev)
 ;;; init-webdev.el ends here
