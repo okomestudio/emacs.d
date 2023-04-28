@@ -63,7 +63,7 @@
 
 (use-package flycheck
   :ensure-system-package
-  (textlint . "sudo ~/.config/emacs/bin/prepare-textlint")
+  (textlint . "~/.config/emacs/bin/prepare-textlint")
   :init (global-flycheck-mode))
 
 (use-package flycheck-pos-tip
