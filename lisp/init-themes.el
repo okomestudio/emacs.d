@@ -63,12 +63,12 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; MODE-LINE
 
-;; A fancy and fast mode-line inspired by minimalism design
-;; (github.com/seagle0128/doom-modeline)
 (use-package doom-modeline
+  ;; A fancy and fast mode-line inspired by minimalism design
   :demand t
 
   :custom
+  (doom-modeline-buffer-encoding nil)
   (doom-modeline-buffer-file-name-style 'buffer-name)
   (doom-modeline-height 1)
   (doom-modeline-minor-modes t)
