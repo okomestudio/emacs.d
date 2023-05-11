@@ -64,6 +64,7 @@
 (use-package flycheck
   :ensure-system-package
   (textlint . "~/.config/emacs/bin/prepare-textlint")
+  (docutils . "pip install docutils")
   :init (global-flycheck-mode))
 
 (use-package flycheck-pos-tip
