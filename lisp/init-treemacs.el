@@ -3,7 +3,7 @@
 ;;; Code:
 
 (use-package treemacs
-  :after (cfrs treemacs-all-the-icons)
+  :after (cfrs)
   :defer t
 
   :bind
@@ -64,7 +64,10 @@
   (treemacs-filewatch-mode t)
   (treemacs-follow-mode t)
   (treemacs-hide-gitignored-files-mode t)
-  (treemacs-load-theme "all-the-icons")
+
+  ;; NOTE(2023-05-11): Disabled due to some formatting issue.
+  ;; (treemacs-load-theme "all-the-icons")
+
   (treemacs-project-follow-mode t)
   (setq treemacs--project-follow-delay 1.5
         treemacs--project-follow-timer nil)
@@ -75,6 +78,8 @@
   )
 
 (use-package treemacs-all-the-icons
+  ;; NOTE(2023-05-11): Disabled due to some formatting issue.
+  :disabled
   :after (all-the-icons)
   :custom (all-the-icons-scale-factor 1.0))
 
@@ -89,9 +94,8 @@
   :after (treemacs projectile))
 
 (use-package cfrs
-  ;; Child Frame Read String
-  ;; -----------------------
-  ;; https://github.com/Alexander-Miller/cfrs
+  ;; A simple alternative to read-string that allows reading input via a small
+  ;; child-frame spawned at the position of the cursor.
   )
 
 (provide 'init-treemacs)

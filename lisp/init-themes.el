@@ -32,6 +32,7 @@
 ;;; THEME MISC.
 
 (use-package all-the-icons
+  :if (display-graphic-p)
   :init
   (if (not (file-exists-p "~/.local/share/fonts/all-the-icons.ttf"))
       (all-the-icons-install-fonts +1)))
