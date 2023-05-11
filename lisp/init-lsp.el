@@ -50,8 +50,6 @@
     (lsp-ensure-server server)
     (lsp)))
 
-;; lsp-grammerly - lsp-mode and grammarly
-;; https://github.com/emacs-grammarly/lsp-grammarly
 (use-package lsp-grammarly
   :disabled
   :bind ("C-c g" . ts/check-grammar)
@@ -120,17 +118,14 @@
   )
 
 
-;; lsp-ui - UI integration for lsp-mode
-;; https://github.com/emacs-lsp/lsp-ui
 (use-package lsp-ui
+  ;; UI integration for lsp-mode.
   :commands lsp-ui-mode
   :custom
   ((lsp-ui-doc-delay 0.5)
    (lsp-ui-doc-position 'at-point)
    (lsp-ui-doc-use-webkit nil)) )
 
-;; lsp-treemacs - lsp-mode and treemacs
-;; https://github.com/emacs-lsp/lsp-treemacs
 (use-package lsp-treemacs
   :bind ([f7] . lsp-treemacs-symbols)
   :commands lsp-treemacs-errors-list)
