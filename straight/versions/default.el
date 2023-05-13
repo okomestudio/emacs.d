@@ -144,7 +144,7 @@
  ("titlecase.el" . "1fc48a505a0bf7d0e8b1bb25425993212576a3ef")
  ("tramp" . "9af00b81cea7d02f35ae5340b3954e8e8e74958f")
  ("transient" . "b4127842f200848817103e8d4c45c36bc8fdf3b8")
- ("treemacs" . "12193dfa41d73f26386eacaeafd9ffaeee6491bd")
+ ("treemacs" . "127485317a19254ca20ba1910d10edf7dbaa2d97")
  ("typescript.el" . "4fcb4594819caf472ae42ea068a1c7795cf07f46")
  ("typoel" . "173ebe4fc7ac38f344b16e6eaf41f79e38f20d57")
  ("undo-tree" . "16f4121032d09ef44b3d7d02c4d02c3c2f18041f")
