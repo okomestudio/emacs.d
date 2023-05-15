@@ -17,9 +17,12 @@
   ;; (treemacs-file-event-delay 500)
   ;; (treemacs-file-follow-delay 1.01)
   ;; (treemacs-follow-after-init t)
+  ;; (treemacs-indent-guide-style 'line)
+  (treemacs-indentation 2)
+  (treemacs-indentation-string " ")
   ;; (treemacs-is-never-other-window nil)
   ;; (treemacs-missing-project-action 'keep)
-  ;; (treemacs-no-png-images nil)
+  (treemacs-no-png-images 'nil)
   (treemacs-persist-file "~/.config/emacs/.cache/treemacs-persist")
   ;; (treemacs-recenter-after-project-expand 'on-visibility)
   ;; (treemacs-recenter-after-project-jump nil)
@@ -44,10 +47,10 @@
     (message "w %d" (window-size) )
     (treemacs-select-window))
 
-  (when window-system
-    (setq treemacs-indentation 2
-          treemacs-space-between-root-nodes nil
-          treemacs-width 35))
+  ;; (when window-system
+  ;;   (setq treemacs-indentation 2
+  ;;         treemacs-indentation-string " "
+  ;;         treemacs-width 35))
 
   (with-eval-after-load 'treemacs
     (defun ts/treemacs-ignore (filename absolute-path)
@@ -75,9 +78,12 @@
   ;; (setq  (treemacs--project-follow-delay 1.0)
   ;;        (treemacs--project-follow-timer nil)
   ;;        )
+
+  (treemacs-resize-icons 20)
   )
 
 (use-package treemacs-nerd-icons
+  :disabled
   :config
   (treemacs-load-theme "nerd-icons"))
 
