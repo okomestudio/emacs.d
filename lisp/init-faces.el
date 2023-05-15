@@ -180,5 +180,17 @@
   :config (eaw-fullwidth)
   :init (ensure-file-from-github "hamano/locale-eaw/master/eaw.el"))
 
+(use-package nerd-icons
+  :config
+  (if (not (file-exists-p "~/.local/share/fonts/NFM.ttf"))
+      (nerd-icons-install-fonts +1)))
+
+(use-package all-the-icons
+  :disabled
+  :if (display-graphic-p)
+  :init
+  (if (not (file-exists-p "~/.local/share/fonts/all-the-icons.ttf"))
+      (all-the-icons-install-fonts +1)))
+
 (provide 'init-faces)
 ;;; init-faces.el ends here

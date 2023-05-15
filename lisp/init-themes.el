@@ -31,12 +31,6 @@
 
 ;;; THEME MISC.
 
-(use-package all-the-icons
-  :if (display-graphic-p)
-  :init
-  (if (not (file-exists-p "~/.local/share/fonts/all-the-icons.ttf"))
-      (all-the-icons-install-fonts +1)))
-
 ;; solaire-mode.el - Distinguish "real" buffers from "unreal" buffers
 ;; https://github.com/hlissner/emacs-solaire-mode
 (use-package solaire-mode
@@ -79,8 +73,12 @@
   (defun my-doom-modeline-setup ()
     (doom-modeline-mode +1))
 
-  :init
-  (my-doom-modeline-setup))
+  ;; :init
+  ;; (my-doom-modeline-setup)
+
+  :hook (after-init . doom-modeline-mode)
+
+  )
 
 ;; A minor-mode menu for the mode line (github.com/tarsius/minions)
 (use-package minions

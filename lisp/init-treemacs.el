@@ -77,6 +77,10 @@
   ;;        )
   )
 
+(use-package treemacs-nerd-icons
+  :config
+  (treemacs-load-theme "nerd-icons"))
+
 (use-package treemacs-all-the-icons
   ;; NOTE(2023-05-11): Disabled due to some formatting issue.
   :disabled
