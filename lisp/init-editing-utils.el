@@ -3,34 +3,32 @@
 ;;; Code:
 
 
-;; hippie-expand -- Expand the word before the point in various ways
 (use-package hippie-exp
+  ;; Expand the word before the point in various ways.
   :ensure nil
   :init
   (global-set-key [remap dabbrev-expand] 'hippie-expand))
 
-;; Switch between the beginning/end of line or codeLine positioning
 (use-package mwim
+  ;; Switch between the beginning/end of line or code line positioning.
   :bind
   (("C-a" . 'mwim-beginning)
    ("C-e" . 'mwim-end)))
 
-;; multiple-cursors.el - Multiple cursors
-;; https://github.com/magnars/multiple-cursors.el
 (use-package multiple-cursors
+  ;; Multiple cursors.
   :init
   (global-set-key (kbd "C-S-c C-S-c") 'mc/edit-lines)
   (global-set-key (kbd "C->") 'mc/mark-next-like-this)
   (global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
   (global-set-key (kbd "C-S-c C-<") 'mc/mark-all-like-this))
 
-;; Convert buffer text and decorations to HTML
-(use-package htmlize)
+(use-package htmlize
+  ;; Convert buffer text and decorations to HTML
+  )
 
-;; Titlecase things in Emacs
-;;
-;; https://github.com/duckwork/titlecase.el
 (use-package titlecase
+  ;; Titlecase things.
   :ensure nil
 
   :bind
@@ -39,24 +37,25 @@
   :custom
   ((titlecase-skip-words-regexps
     '("\\b[[:upper:]]+\\b"
-     "\\b\\(\\(www\\.\\|\\(s?https?\\|ftp\\|file\\|gopher\\|nntp\\|news\\|telnet\\|wais\\|mailto\\|info\\):\\)\\(//[-a-z0-9_.]+:[0-9]*\\)?\\(?:[-a-z0-9_=#$@~%&*+\\/[:word:]!?:;.,]+([-a-z0-9_=#$@~%&*+\\/[:word:]!?:;.,]+[-a-z0-9_=#$@~%&*+\\/[:word:]]*)\\(?:[-a-z0-9_=#$@~%&*+\\/[:word:]!?:;.,]+[-a-z0-9_=#$@~%&*+\\/[:word:]]\\)?\\|[-a-z0-9_=#$@~%&*+\\/[:word:]!?:;.,]+[-a-z0-9_=#$@~%&*+\\/[:word:]]\\)\\)"
-     )))
+      "\\b\\(\\(www\\.\\|\\(s?https?\\|ftp\\|file\\|gopher\\|nntp\\|news\\|telnet\\|wais\\|mailto\\|info\\):\\)\\(//[-a-z0-9_.]+:[0-9]*\\)?\\(?:[-a-z0-9_=#$@~%&*+\\/[:word:]!?:;.,]+([-a-z0-9_=#$@~%&*+\\/[:word:]!?:;.,]+[-a-z0-9_=#$@~%&*+\\/[:word:]]*)\\(?:[-a-z0-9_=#$@~%&*+\\/[:word:]!?:;.,]+[-a-z0-9_=#$@~%&*+\\/[:word:]]\\)?\\|[-a-z0-9_=#$@~%&*+\\/[:word:]!?:;.,]+[-a-z0-9_=#$@~%&*+\\/[:word:]]\\)\\)"
+      )))
 
   :init
   (ensure-file-from-github "okomestudio/titlecase.el/ts/add-closing-single-quote-as-apostrophe/titlecase.el")
   (ensure-file-from-github "okomestudio/titlecase.el/ts/add-closing-single-quote-as-apostrophe/titlecase-data.el"))
 
-;; Typographical utility (e.g., smart quotation)
 (use-package typo
+  ;; Typographical utility (e.g., smart quotation).
   :hook ((text-mode . typo-mode)))
 
-;; Treat undo history as a tree
 (use-package undo-tree
+  ;; Treat undo history as a tree.
   :custom  (undo-tree-auto-save-history nil)
   :init (global-undo-tree-mode))
 
-;; Operate on current line if region undefined
-(use-package whole-line-or-region)
+(use-package whole-line-or-region
+  ;; Operate on current line if region undefined.
+  )
 
 
 ;;; SYNTAX CHECKING
@@ -94,9 +93,8 @@
 
 ;;; SEARCH AND MOVEMENT
 
-;; ace-isearch - A seamless bridge between isearch, ace-jump-mode, avy, and swoop.
-;; https://github.com/tam17aki/ace-isearch
 (use-package ace-isearch
+  ;; A seamless bridge between isearch, ace-jump-mode, avy, and swoop.
   :custom
   (ace-isearch-input-length 6)
   (ace-isearch-jump-delay 0.75)
@@ -118,9 +116,9 @@
 
 ;;; CHARACTERS
 
-;; list-unicode-display - Search for and list unicode characters
-;; https://github.com/purcell/list-unicode-display
-(use-package list-unicode-display)
+(use-package list-unicode-display
+  ;; Search for and list unicode characters.
+  )
 
 
 (provide 'init-editing-utils)
