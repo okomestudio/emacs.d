@@ -19,6 +19,10 @@
   (add-hook 'after-init-hook #'ts/tear-down-profiler))
 
 
+;; Use sources under this directory for secrets.
+(setq auth-sources '((:source "~/.config/emacs/secrets/.authinfo.gpg")))
+
+
 ;; custom.el is for variables configured interactively.
 (setq custom-file (concat user-emacs-directory "custom.el"))
 (unless (file-exists-p custom-file)
