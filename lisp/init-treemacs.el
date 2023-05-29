@@ -22,7 +22,7 @@
   (treemacs-indentation-string " ")
   ;; (treemacs-is-never-other-window nil)
   ;; (treemacs-missing-project-action 'keep)
-  (treemacs-no-png-images 'nil)
+  (treemacs-no-png-images t)            ; set to nil for image icons
   (treemacs-persist-file "~/.config/emacs/.cache/treemacs-persist")
   ;; (treemacs-recenter-after-project-expand 'on-visibility)
   ;; (treemacs-recenter-after-project-jump nil)
@@ -94,8 +94,7 @@
   :custom (all-the-icons-scale-factor 1.0))
 
 (use-package treemacs-icons-dired
-  :after (treemacs dired)
-  :config (treemacs-icons-dired-mode))
+  :hook (dired-mode . treemacs-icons-dired-enable-once))
 
 (use-package treemacs-magit
   :after (treemacs magit))
