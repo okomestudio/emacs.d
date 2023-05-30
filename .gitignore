@@ -32,6 +32,7 @@ persist
 projectile-bookmarks.eld
 projectile.cache
 request
+secrets/
 snippets
 straight/*
 !straight/versions/
