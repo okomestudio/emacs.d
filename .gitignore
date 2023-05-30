@@ -25,6 +25,7 @@ conf.d
 custom.el
 eln-cache
 elpa
+emojis/
 eshell
 history
 init.d

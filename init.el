@@ -105,6 +105,7 @@
 
 ;; miscellaneous packages
 (require 'init-gpt)
+(require 'init-slack)
 
 ;; Load custom per-site init.el files stored under the init.d directory.
 (let ((custom-init-directory (concat user-emacs-directory "init.d/")))
