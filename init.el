@@ -103,6 +103,8 @@
 (require 'init-plantuml)
 (require 'init-restclient)
 
+;; miscellaneous packages
+(require 'init-gpt)
 
 ;; Load custom per-site init.el files stored under the init.d directory.
 (let ((custom-init-directory (concat user-emacs-directory "init.d/")))
@@ -113,4 +115,3 @@
 (put 'eval 'safe-local-variable #'listp)
 
 (provide 'init)
-;;; init.el ends here
