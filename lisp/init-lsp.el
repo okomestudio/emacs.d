@@ -30,6 +30,7 @@
   :ensure-system-package
   ((sqls . "go get github.com/lighttiger2505/sqls")
    ;; (unified-language-server . "npm i -g unified-language-server")
+   (vscode-html-language-server . "npm i -g vscode-langservers-extracted")
    )
 
   :hook
