@@ -38,7 +38,7 @@
    ;; (html-mode . lsp)
    (js-mode . (lambda () (ts/lsp-mode-hook 'jsts-ls)))
    (json-mode . (lambda () (ts/lsp-mode-hook 'json-ls)))
-   (lsp-mode . lsp-enable-which-key-integration)
+   ;; (lsp-mode . lsp-enable-which-key-integration)
    (markdown-mode . lsp)
    (python-mode . (lambda () (ts/lsp-mode-hook 'pylsp)))
    (sh-mode . (lambda () (ts/lsp-mode-hook 'bash-ls)))
@@ -49,7 +49,15 @@
   :init
   (defun ts/lsp-mode-hook (server)
     (lsp-ensure-server server)
-    (lsp)))
+    (lsp))
+
+  (with-eval-after-load 'lsp-mode
+    (add-hook 'lsp-mode-hook #'lsp-enable-which-key-integration))
+
+  :config
+  (add-to-list 'lsp-language-id-configuration
+               '(".*\\.html?\\.j2" . "html"))
+  )
 
 (use-package lsp-grammarly
   :disabled
