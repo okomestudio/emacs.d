@@ -1,12 +1,12 @@
-;;; init-webdev.el --- Web development environment  -*- lexical-binding: t -*-
+;;; init-webdev.el --- Web dev environment  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;; Code:
 
-;; web-mode - For JavaScript, HTML, and CSS
-;; https://github.com/fxbois/web-mode
 (use-package web-mode
+  ;; Web template editing mode.
+
   ;; :after (company-css company-tern prettier-js add-node-modules-path)
-  :bind (:map web-mode-map ("C-c b" . web-beautify-html)) ; format code
+  :bind (:map web-mode-map ("C-c b" . web-beautify-html))
 
   :custom
   (web-mode-code-indent-offset 2)
@@ -32,33 +32,34 @@
    "\\.jsx?\\'")
 
   :config
-  (defun ts/web-mode-hook ()
-    (add-node-modules-path)
-    (require 'flycheck)
-    ;; Disable checkers not in use
-    (setq-default flycheck-disabled-checkers
-                  (append flycheck-disabled-checkers
-                          '(json-jsonlist
-                            javascript-jshint
-                            javascript-jscs)))
-    (let (checker)
-      (cond ((string= web-mode-content-type "html")
-             (when (executable-find "tidy")
-               (setq checker 'html-tidy)))
-            ((string= web-mode-content-type "css")
-             (when (executable-find "csslint")
-               (setq checker 'css-csslint)))
-            ((or (string= web-mode-content-type "javascript")
-                 (string= web-mode-content-type "jsx"))
-             (when (executable-find "eslint")
-               (setq checker 'javascript-eslint))
-             (web-mode-set-content-type "jsx")
-             (prettier-js-mode)
-             (lsp)
-             (tern-mode)))
 
-      (flycheck-add-mode checker 'web-mode)
-      (flycheck-select-checker checker)))
+  ;; (defun ts/web-mode-hook ()
+  ;;   (add-node-modules-path)
+  ;;   (require 'flycheck)
+  ;;   ;; Disable checkers not in use
+  ;;   (setq-default flycheck-disabled-checkers
+  ;;                 (append flycheck-disabled-checkers
+  ;;                         '(json-jsonlist
+  ;;                           javascript-jshint
+  ;;                           javascript-jscs)))
+  ;;   (let (checker)
+  ;;     (cond ((string= web-mode-content-type "html")
+  ;;            (when (executable-find "tidy")
+  ;;              (setq checker 'html-tidy)))
+  ;;           ((string= web-mode-content-type "css")
+  ;;            (when (executable-find "csslint")
+  ;;              (setq checker 'css-csslint)))
+  ;;           ((or (string= web-mode-content-type "javascript")
+  ;;                (string= web-mode-content-type "jsx"))
+  ;;            (when (executable-find "eslint")
+  ;;              (setq checker 'javascript-eslint))
+  ;;            (web-mode-set-content-type "jsx")
+  ;;            (prettier-js-mode)
+  ;;            (lsp)
+  ;;            (tern-mode)))
+
+  ;;     (flycheck-add-mode checker 'web-mode)
+  ;;     (flycheck-select-checker checker)))
 
   (defun ts/web-mode-flyspell-verify ()
     ;; For detail, see:
@@ -75,7 +76,7 @@
                               web-mode-constant-face
                               web-mode-doctype-face
                               web-mode-keyword-face
-                              web-mode-comment-face  ;; focus on get html label right
+                              web-mode-comment-face ;; focus on get html label right
                               web-mode-function-name-face
                               web-mode-variable-name-face
                               web-mode-css-property-name-face
@@ -106,21 +107,23 @@
                        font-lock-string-face
                        font-lock-function-name-face))))))
 
-  (put 'web-mode 'flyspell-mode-predicate 'ts/web-mode-flyspell-verify)
+  ;; (put 'web-mode 'flyspell-mode-predicate 'ts/web-mode-flyspell-verify)
 
   :init
   ;; (add-to-list 'company-backends '(company-css))
 
-  (put 'web-mode-script-padding 'safe-local-variable #'integerp)
-  (put 'web-mode-style-padding 'safe-local-variable #'integerp))
+  ;; (put 'web-mode-script-padding 'safe-local-variable #'integerp)
+  ;; (put 'web-mode-style-padding 'safe-local-variable #'integerp)
+
+  )
 
 (use-package typescript-mode)
 
 
 ;; CODE FORMATTING UTILITY
 
-;; https://prettier.io/
 (use-package prettier-js
+  ;; See prettier.io.
   :disabled
   :ensure-system-package (prettier . "npm install -g prettier")
   :config
@@ -130,9 +133,7 @@
           "--single-quote"
           "--trailing-comma" "all")))
 
-;; https://github.com/yasuyk/web-beautify
 (use-package web-beautify
   :ensure-system-package ((js-beautify . "npm install -g js-beautify")))
 
 (provide 'init-webdev)
-;;; init-webdev.el ends here
