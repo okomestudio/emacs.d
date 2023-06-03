@@ -1,4 +1,7 @@
 #!/usr/bin/env bash
+#
+# Set `lsp-pylsp-server-command` to this script.
+#
 
 if ! $(pyenv prefix)/bin/pylsp ; then
     pip install python-lsp-server[all] python-lsp-black pyls-isort

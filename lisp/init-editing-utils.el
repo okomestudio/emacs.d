@@ -61,10 +61,15 @@
 ;;; SYNTAX CHECKING
 
 (use-package flycheck
+  :custom
+  (flycheck-rst-executable "~/.config/emacs/bin/rst2pseudoxml")
+
   :ensure-system-package
-  (textlint . "~/.config/emacs/bin/prepare-textlint")
   (docutils . "pip install docutils")
-  :init (global-flycheck-mode))
+  (textlint . "~/.config/emacs/bin/prepare-textlint")
+
+  :init
+  (global-flycheck-mode))
 
 (use-package flycheck-pos-tip
   :custom (flycheck-pos-tip-timeout 60)

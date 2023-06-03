@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+#
+# Set `flycheck-rst-executable` to this script.
+#
+
+if ! $(pyenv prefix)/bin/rst2pseudoxml.py ; then
+    pip install docutils
+fi
+
+exec rst2pseudoxml.py $@
