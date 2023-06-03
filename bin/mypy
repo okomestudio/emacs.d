@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+#
+# Set `flycheck-python-mypy-executable` to this script.
+#
+
+if ! $(pyenv prefix)/bin/mypy ; then
+    pip install mypy
+fi
+
+exec mypy $@

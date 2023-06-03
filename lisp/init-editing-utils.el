@@ -62,6 +62,7 @@
 
 (use-package flycheck
   :custom
+  (flycheck-python-mypy-executable "~/.config/emacs/bin/mypy")
   (flycheck-rst-executable "~/.config/emacs/bin/rst2pseudoxml")
 
   :ensure-system-package
