@@ -2,9 +2,9 @@
 ;;; Commentary:
 ;;; Code:
 
-;; vterm - Emacs libvterm integration
-;; https://github.com/akermu/emacs-libvterm
 (use-package vterm
+  ;; Emacs libvterm integration.
+
   :custom
   (vterm-always-compile-module t)
   (vterm-buffer-name-string "vterm %s")
@@ -26,21 +26,14 @@
   (defun ts/vterm-configure-faces ()
     (face-remap-add-relative 'default :background "#ffffdd")
     ;; (set-face-attribute 'vterm-color-black nil :foreground "#000000" :background "#000000")
-    ;; (set-face-attribute 'vterm-color-red nil :foreground "#000000" :background "#000000")
-    ;; (set-face-attribute 'vterm-color-green nil :foreground "#000000" :background "#000000")
-    ;; (set-face-attribute 'vterm-color-yellow nil :foreground "#000000" :background "#000000")
-    ;; (set-face-attribute 'vterm-color-blue nil :foreground "#000000" :background "#000000")
-    ;; (set-face-attribute 'vterm-color-magenta nil :foreground "#000000" :background "#000000")
-    ;; (set-face-attribute 'vterm-color-cyan nil :foreground "#000000" :background "#000000")
-    ;; (set-face-attribute 'vterm-color-white nil :foreground "#000000" :background "#000000")
     (set (make-local-variable 'buffer-face-mode-face) '(:family "Hack" :foreground "#000000"))
     (buffer-face-mode t))
 
   (require 'vterm))
 
-;; multi-vterm.el - Managing multiple vterm buffers
-;; https://github.com/suonlight/multi-vterm
-(use-package multi-vterm)
+(use-package multi-vterm
+  ;; Managing multiple vterm buffers.
+  )
 
 (provide 'init-vterm)
 ;;; init-vterm.el ends here
