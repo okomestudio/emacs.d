@@ -31,9 +31,8 @@
 
 ;;; THEME MISC.
 
-;; solaire-mode.el - Distinguish "real" buffers from "unreal" buffers
-;; https://github.com/hlissner/emacs-solaire-mode
 (use-package solaire-mode
+  ;; Distinguish "real" buffers from "unreal" buffers.
   :custom (solaire-mode-real-buffer-fn 'ts/solaire-mode-real-buffer-p)
   :init
   (defun ts/solaire-mode-real-buffer-p ()
@@ -42,24 +41,23 @@
 
   (solaire-global-mode +1))
 
-;; Show tooltip at point
 (use-package pos-tip
+  ;; Show tooltip at point.
   :init
   (setq pos-tip-background-color "white")
   (if (and (boundp 'ts/font-size) ts/font-size)
       (setq pos-tip-internal-border-width
             (truncate (* ts/font-size 1.5)))))
 
-;; Highlights delimiters such as parentheses, brackets or braces according to
-;; their depth (github.com/Fanael/rainbow-delimiters)
 (use-package rainbow-delimiters
+  ;; Highlights delimiters such as parentheses, brackets or braces according to
+  ;; their depth.
   :hook (prog-mode . rainbow-delimiters-mode))
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; MODE-LINE
 
 (use-package doom-modeline
-  ;; A fancy and fast mode-line inspired by minimalism design
+  ;; A fancy and fast mode-line inspired by minimalism design.
   :demand t
 
   :custom
@@ -77,19 +75,17 @@
   ;; (my-doom-modeline-setup)
 
   :hook (after-init . doom-modeline-mode)
-
   )
 
-;; A minor-mode menu for the mode line (github.com/tarsius/minions)
 (use-package minions
+  ;; A minor-mode menu for the mode line.
   :custom (minions-direct '(projectile-mode))
   :config (minions-mode 1))
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; MISC.
 
-;; hl-line.el - Highlight the current line.
 (use-package hl-line
+  ;; Highlight the current line.
   :ensure nil
   :config (set-face-attribute 'hl-line nil :inherit nil :background "pale goldenrod")
   :init (global-hl-line-mode +1))
