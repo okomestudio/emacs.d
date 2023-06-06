@@ -78,7 +78,6 @@
 (require 'init-git)
 (require 'init-lsp)
 (require 'init-openwith)
-(require 'init-projectile)
 (require 'init-vterm)
 ;; (require 'init-dired)
 ;; (require 'init-gnus)
@@ -108,6 +107,9 @@
 (require 'init-gpt)
 (require 'init-slack)
 
+;; project management
+(require 'init-projectile)
+
 ;; Load custom per-site init.el files stored under the init.d directory.
 (let ((custom-init-directory (concat user-emacs-directory "init.d/")))
   (when (file-exists-p custom-init-directory)
@@ -117,3 +119,4 @@
 (put 'eval 'safe-local-variable #'listp)
 
 (provide 'init)
+;;; init.el ends here
