@@ -168,15 +168,11 @@ current buffer's, reload dir-locals."
   (tooltip-mode 1)
   (setq-default indent-tabs-mode nil)
 
-  ;; winner-mode
-  ;; -----------
-  ;; Built-in global minor mode for undo/redo changes in window
-  ;; configuration. C-c <left> undoes, C-c <right> redoes.
+  ;; Global minor mode to undo (C-c <left>) or redo (C-c <right>) a change in
+  ;; window configuration.
   (winner-mode 1)
 
-  ;; mule.el
-  ;; -------
-  ;; Basic commands for multilingual environment.
+  ;; For multilingual environment.
   (prefer-coding-system 'utf-8)         ; Use UTF-8 when possible
   (set-default-coding-systems 'utf-8)
   (set-language-environment "UTF-8")
