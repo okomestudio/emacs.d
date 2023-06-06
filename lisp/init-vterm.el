@@ -5,6 +5,8 @@
 (use-package vterm
   ;; Emacs libvterm integration.
 
+  :bind (:map vterm-mode-map ("C-c C-t" . vterm-copy-mode))
+
   :custom
   (vterm-always-compile-module t)
   (vterm-buffer-name-string "vterm %s")
