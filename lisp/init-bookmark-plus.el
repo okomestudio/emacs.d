@@ -2,12 +2,10 @@
 ;;; Commentary:
 ;;; Code:
 
-;; bookmark+ - Enhances vanilla Emacs bookmarks in many way
-;; https://www.emacswiki.org/emacs/BookmarkPlus
 (use-package bookmark+
+  ;; Enhances vanilla Emacs bookmarks in many way.
   :defer 2
-  :init
-  (require 'bookmark+))
+  :init (require 'bookmark+))
 
 (provide 'init-bookmark-plus)
 ;;; init-bookmark-plus.el ends here
