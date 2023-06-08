@@ -2,14 +2,16 @@
 ;;; Commentary:
 ;;; Code:
 
-;; anki-editor - Emacs minor mode for making Anki cards with Org
-;; https://github.com/louietan/anki-editor
 (use-package anki-editor
+  ;; Emacs minor mode for making Anki cards with Org.
+  :defer t
+  :straight (:fork "orgtre")
+  :ensure-system-package (curl . "sudo apt install curl")
+
   :custom
-  (anki-editor-use-math-jax t)
-  (request-log-level 'debug)
-  :ensure-system-package
-  (curl . "sudo apt install curl"))
+  (anki-editor-latex-style 'mathjax)
+  ;; (request-log-level 'debug)
+  )
 
 (provide 'init-anki)
 ;;; init-anki.el ends here
