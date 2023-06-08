@@ -73,7 +73,6 @@
 (require 'init-bookmark-plus)
 (require 'init-company)
 (require 'init-docker)
-(require 'init-edit-server)
 (require 'init-elfeed)
 (require 'init-git)
 (require 'init-lsp)
