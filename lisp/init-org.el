@@ -2,12 +2,12 @@
 ;;; Commentary:
 ;;; Code:
 
-(defcustom ts/org-books-file "~/.books.org"
+(defcustom ts/org-books-file "~/.config/emacs/.books.org"
   "Default org-books-file."
   :type '(string)
   :group 'ts)
 
-(defcustom ts/org-default-notes-file "~/.notes.org"
+(defcustom ts/org-default-notes-file "~/.config/emacs/.notes.org"
   "Default org-default-notes-file."
   :type '(string)
   :group 'ts)
