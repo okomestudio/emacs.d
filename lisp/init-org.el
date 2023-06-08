@@ -130,6 +130,7 @@
 (use-package org-agenda
   :after (org)
   :straight nil
+
   :custom
   (org-agenda-current-time-string "⭠ NOW ────────────────────")
   (org-agenda-include-diary t)
@@ -141,12 +142,13 @@
   (put 'org-agenda-custom-commands 'safe-local-variable #'listp))
 
 (use-package org-books
-  ;;Reading list management with org mode.
+  ;; Reading list management with org mode.
   :custom (org-books-file ts/org-books-file))
 
 (use-package org-modern
   ;; Modern Org Style.
   :init (global-org-modern-mode)
+
   :custom
   (org-modern-block nil)
   (org-modern-checkbox '((?X . #("▢𐄂" 0 2 (composition ((2)))))
@@ -179,6 +181,7 @@
 (use-package org-roam
   ;; Rudimentary Roam replica with org-mode.
   :after org
+
   :bind
   (("C-c n l" . org-roam-buffer-toggle)
    ("C-c n f" . org-roam-node-find)
@@ -279,12 +282,14 @@
 (use-package org-roam-bibtex
   :after org-roam
   :config (require 'org-ref) ; optional: if using Org-ref v2 or v3 citation links
+
   :custom
   (orb-insert-link-description "${author-abbrev} ${date}")
   (orb-roam-ref-format 'org-ref-v3))
 
 (use-package org-roam-ui
   :after org-roam
+
   :custom
   (org-roam-ui-follow t)
   (org-roam-ui-sync-theme t)
@@ -300,14 +305,13 @@
 (use-package ox-gfm)
 
 
-(defcustom ts/max-buffer-size 100000
+(defcustom valign-max-buffer-size 100000
   "Default max-buffer-size over which valign-mode will not activate."
   :type '(integer)
   :group 'ts)
 
 (use-package valign
   ;; Pixel-perfect visual alignment for Org and Markdown tables.
-
   :custom
   (valign-fancy-bar t)
   (valign-max-table-size 4000)
@@ -317,7 +321,7 @@
   ;; Add logic to avoid loading valign-mode for large buffers.
   (add-hook 'org-mode-hook
             (lambda ()
-              (when (not (> (buffer-size) ts/max-buffer-size))
+              (when (not (> (buffer-size) valign-max-buffer-size))
                 (valign-mode)
                 )
               )
