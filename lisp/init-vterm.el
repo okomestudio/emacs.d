@@ -16,7 +16,9 @@
   (vterm-timer-delay 0.02)
 
   :ensure-system-package
-  (cmake . "sudo apt install -y cmake libtool-bin libvterm-dev")
+  (("/usr/include/vterm.h" . "sudo apt install -y libvterm-dev")
+   ("/usr/bin/cmake" . "sudo apt install -y cmake")
+   ("/usr/bin/libtool" . "sudo apt install -y libtool-bin"))
 
   :hook
   ((vterm-mode . (lambda ()
@@ -30,11 +32,11 @@
     ;; (set-face-attribute 'vterm-color-black nil :foreground "#000000" :background "#000000")
     (set (make-local-variable 'buffer-face-mode-face) '(:family "Hack" :foreground "#000000"))
     (buffer-face-mode t))
-
-  (require 'vterm))
+  )
 
 (use-package multi-vterm
   ;; Managing multiple vterm buffers.
+  :after vterm
   )
 
 (provide 'init-vterm)
