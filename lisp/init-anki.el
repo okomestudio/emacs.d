@@ -6,7 +6,7 @@
   ;; Emacs minor mode for making Anki cards with Org.
   :defer t
   :straight (:fork "orgtre")
-  :ensure-system-package (curl . "sudo apt install curl")
+  :ensure-system-package (curl . "sudo apt install -y curl")
 
   :custom
   (anki-editor-latex-style 'mathjax)

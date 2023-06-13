@@ -28,8 +28,8 @@
   (projectile-git-fd-args "-H -0 -E .git -tf")
 
   :ensure-system-package
-  ((ag . "sudo apt-get install silversearcher-ag")
-   (fdfind . "sudo apt install fd-find"))
+  ((ag . "sudo apt install -y silversearcher-ag")
+   (fdfind . "sudo apt install -y fd-find"))
 
   :init
   (use-package ag)

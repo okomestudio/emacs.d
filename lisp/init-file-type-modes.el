@@ -52,7 +52,7 @@
 ;; This mode allows browser preview with C-c C-c v
 (use-package markdown-mode
   :commands (markdown-mode gfm-mode)
-  :ensure-system-package ((pandoc . "sudo apt install pandoc"))
+  :ensure-system-package ((pandoc . "sudo apt install -y pandoc"))
   :init (setq markdown-command "pandoc")
   :mode (("README\\.md\\'" . gfm-mode)
          ("\\.md\\'" . markdown-mode)

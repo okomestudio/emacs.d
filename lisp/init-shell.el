@@ -25,7 +25,7 @@
 
 (use-package flymake-shellcheck
   :disabled
-  :ensure-system-package (shellcheck . "sudo apt install shellcheck")
+  :ensure-system-package (shellcheck . "sudo apt install -y shellcheck")
   :if (executable-find "shellcheck")
   :commands flymake-shellcheck-load
   :hook ((sh-mode) . flymake-shellcheck-load)

@@ -273,7 +273,7 @@ current buffer's, reload dir-locals."
   ;; the emacs variables process-environment and exec-path.
   ;;
   :config (direnv-mode)
-  :ensure-system-package ((direnv . "sudo apt install direnv")))
+  :ensure-system-package ((direnv . "sudo apt install -y direnv")))
 
 (use-package exec-path-from-shell
   ;; Make Emacs use the PATH set up by the user's shell.
