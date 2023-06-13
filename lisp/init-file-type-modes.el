@@ -5,8 +5,8 @@
 ;; INI
 
 (use-package any-ini-mode
-  :straight nil
-  :init (ensure-file-from-url "https://www.emacswiki.org/emacs/download/any-ini-mode.el")
+  :disabled
+  ;; :init (ensure-file-from-url "https://www.emacswiki.org/emacs/download/any-ini-mode.el")
   :mode "\\.ini\\'" "\\.conf\\'")
 
 
@@ -37,13 +37,10 @@
                                  "--wrap-line-length" "88")))
         (web-beautify-js)))))
 
-;; https://github.com/ljos/jq-mode
-;;
-;; TODO: Enable jq-mode with jq in JSON but yq in YAML.
-;;
 (use-package jq-mode
+  ;; TODO: Enable jq-mode with jq in JSON but yq in YAML.
   :ensure-system-package
-  ((jq . "sudo apt install jq")
+  ((jq . "sudo apt install -y jq")
    (yq . "pip install yq")))
 
 
@@ -64,11 +61,9 @@
   ((marksman . "sudo snap install marksman")
    (pandoc . "sudo apt install -y pandoc"))
 
-  :init
-  (setq markdown-command "pandoc")
+  :init (setq markdown-command "pandoc")
 
-  :config
-  (require 'lsp-marksman)
+  :config (require 'lsp-marksman)
   )
 
 
@@ -83,8 +78,7 @@
 ;; SYSTEMD
 
 (use-package systemd
-  :mode
-  ("\\.\\(service|timer\\)\\'" . systemd-mode))
+  :mode ("\\.\\(service|timer\\)\\'" . systemd-mode))
 
 
 ;; YAML
