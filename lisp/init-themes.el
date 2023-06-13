@@ -58,6 +58,7 @@
 
 (use-package doom-modeline
   ;; A fancy and fast mode-line inspired by minimalism design.
+  :after nerd-icons
   :demand t
 
   :custom
@@ -70,9 +71,6 @@
   :preface
   (defun my-doom-modeline-setup ()
     (doom-modeline-mode +1))
-
-  ;; :init
-  ;; (my-doom-modeline-setup)
 
   :hook (after-init . doom-modeline-mode)
   )
