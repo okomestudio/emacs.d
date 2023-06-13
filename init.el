@@ -81,7 +81,7 @@
 ;; (require 'init-dired)
 ;; (require 'init-gnus)
 ;; (require 'init-tern)
-;; (require 'init-yasnippet)
+(require 'init-yasnippet)
 
 ;; file formats
 (require 'init-file-type-modes)

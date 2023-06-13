@@ -49,15 +49,27 @@
 
 ;; MARKDOWN
 
-;; This mode allows browser preview with C-c C-c v
 (use-package markdown-mode
+  ;; For browser preview, use C-c C-c v.
   :commands (markdown-mode gfm-mode)
-  :ensure-system-package ((pandoc . "sudo apt install -y pandoc"))
-  :init (setq markdown-command "pandoc")
+
   :mode (("README\\.md\\'" . gfm-mode)
          ("\\.md\\'" . markdown-mode)
          ("\\.markdown\\'" . markdown-mode)
-         ("\\.lr\\'" . markdown-mode)))
+         ("\\.lr\\'" . markdown-mode))
+
+  :hook (markdown-mode . lsp)
+
+  :ensure-system-package
+  ((marksman . "sudo snap install marksman")
+   (pandoc . "sudo apt install -y pandoc"))
+
+  :init
+  (setq markdown-command "pandoc")
+
+  :config
+  (require 'lsp-marksman)
+  )
 
 
 ;; RST
