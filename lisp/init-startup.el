@@ -38,7 +38,8 @@
                                    (abbreviate-file-name (expand-file-name buffer-file-name))
                                  (buffer-name) )))
                   " - Emacs"))
-  (setq-default scroll-bar-width 6)
+
+  ;; (setq-default scroll-bar-width 6)
 
   ;; hack-dir-local-variables
   ;; ------------------------
@@ -238,7 +239,7 @@ current buffer's, reload dir-locals."
 (use-package yascroll
   ;; Yet Another Scroll Bar Mode.
   :init
-  (ensure-file-from-github "emacsorphanage/yascroll/master/yascroll.el")
+  ;; (ensure-file-from-github "emacsorphanage/yascroll/master/yascroll.el")
 
   ;; Enable only if no GUI:
   (if (not window-system)
@@ -248,7 +249,10 @@ current buffer's, reload dir-locals."
                       (with-selected-frame frame
                         (when (not window-system)
                           (global-yascroll-bar-mode +1)))))
-        (global-yascroll-bar-mode +1))))
+        (global-yascroll-bar-mode +1))
+    (global-yascroll-bar-mode +1)       ; since toolkit scrollbars in wayland don't work well
+    )
+  )
 
 
 ;; INPUT DEVICES
@@ -330,6 +334,7 @@ current buffer's, reload dir-locals."
   :defer t)
 
 (use-package tramp
+  :straight nil
   :custom (tramp-default-method "ssh")
   :defer t)
 
