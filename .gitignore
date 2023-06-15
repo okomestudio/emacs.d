@@ -37,5 +37,6 @@ secrets/
 snippets
 straight/*
 !straight/versions/
+tramp
 transient
 url
