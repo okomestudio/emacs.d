@@ -2,6 +2,17 @@
 ;;; Commentary:
 ;;; Code:
 
+(use-package prog-mode
+  :straight nil
+  :hook
+  ((prog-mode . (lambda ()
+                  (remove-trailing-whitespaces-on-save)
+                  (show-paren-mode)))))
+
+(use-package text-mode
+  :straight nil
+  :hook ((text-mode . remove-trailing-whitespaces-on-save)))
+
 ;; INI
 
 (use-package any-ini-mode

@@ -345,19 +345,5 @@ current buffer's, reload dir-locals."
   :config
   (which-key-mode +1))
 
-
-;; STANDARD BUILT-IN MAJOR MODES
-
-(use-package prog-mode
-  :straight nil
-  :hook
-  ((prog-mode . (lambda ()
-                  (remove-trailing-whitespaces-on-save)
-                  (show-paren-mode)))))
-
-(use-package text-mode
-  :straight nil
-  :hook ((text-mode . remove-trailing-whitespaces-on-save)))
-
 (provide 'init-startup)
 ;;; init-startup.el ends here
