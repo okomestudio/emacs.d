@@ -28,7 +28,8 @@
   ;; (treemacs-recenter-after-project-jump nil)
   (treemacs-show-cursor t)
   ;; (treemacs-show-hidden-files nil)
-  (treemacs-width 35)
+  (treemacs-wide-toggle-width 75)
+  (treemacs-width 30)
   ;; (treemacs-width-is-initially-locked nil)
 
   :config
