@@ -335,6 +335,9 @@ current buffer's, reload dir-locals."
 
 (use-package which-key
   ;; Displays available keybindings in popup.
+
+  :bind (("C-h W" . which-key-show-top-level))
+
   :custom
   (which-key-popup-type 'side-window)
   (which-key-side-window-location '(right bottom))
