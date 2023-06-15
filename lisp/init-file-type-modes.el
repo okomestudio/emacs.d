@@ -6,12 +6,12 @@
   :straight nil
   :hook
   ((prog-mode . (lambda ()
-                  (remove-trailing-whitespaces-on-save)
+                  (ts/remove-trailing-whitespaces-on-save)
                   (show-paren-mode)))))
 
 (use-package text-mode
   :straight nil
-  :hook ((text-mode . remove-trailing-whitespaces-on-save)))
+  :hook ((text-mode . ts/remove-trailing-whitespaces-on-save)))
 
 ;; INI
 

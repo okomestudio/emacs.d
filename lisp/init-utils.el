@@ -62,7 +62,7 @@ root)."
     (file-name-directory (directory-file-name (expand-file-name path)))))
 
 
-(defun remove-trailing-whitespaces-on-save ()
+(defun ts/remove-trailing-whitespaces-on-save ()
   "Remove trailing whitespaces on save.
 
   Use this function with a mode hook."
