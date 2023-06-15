@@ -39,20 +39,6 @@
     (treemacs)
     (pop-global-mark))
 
-  (defun ts/treemacs-resize ()
-    "TBD"
-    (interactive)
-    (treemacs-select-window)
-    (enlarge-window-horizontally 10)
-    (message "%d" treemacs-width)
-    (message "w %d" (window-size) )
-    (treemacs-select-window))
-
-  ;; (when window-system
-  ;;   (setq treemacs-indentation 2
-  ;;         treemacs-indentation-string " "
-  ;;         treemacs-width 35))
-
   (with-eval-after-load 'treemacs
     (defun ts/treemacs-ignore (filename absolute-path)
       "Define a predicate function for files to be ignored from view in Treemacs."
@@ -71,6 +57,7 @@
 
   ;; NOTE(2023-05-11): Disabled due to some formatting issue.
   ;; (treemacs-load-theme "all-the-icons")
+  ;; (treemacs-resize-icons 20)
 
   (treemacs-project-follow-mode t)
   (setq treemacs--project-follow-delay 1.5
@@ -79,14 +66,11 @@
   ;; (setq  (treemacs--project-follow-delay 1.0)
   ;;        (treemacs--project-follow-timer nil)
   ;;        )
-
-  (treemacs-resize-icons 20)
   )
 
 (use-package treemacs-nerd-icons
   :disabled
-  :config
-  (treemacs-load-theme "nerd-icons"))
+  :config (treemacs-load-theme "nerd-icons"))
 
 (use-package treemacs-all-the-icons
   ;; NOTE(2023-05-11): Disabled due to some formatting issue.
