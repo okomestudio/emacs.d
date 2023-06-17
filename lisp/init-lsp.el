@@ -55,8 +55,9 @@
     (add-hook 'lsp-mode-hook #'lsp-enable-which-key-integration))
 
   :config
-  (add-to-list 'lsp-language-id-configuration
-               '(".*\\.html?\\.j2" . "html"))
+  (add-to-list 'lsp-language-id-configuration '(".*\\.html?\\.j2" . "html"))
+
+  (setq lsp-headerline-arrow "➤")
   )
 
 (use-package lsp-grammarly
