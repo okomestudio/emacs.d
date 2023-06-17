@@ -10,7 +10,11 @@
   ;;
   ;; Run: docker container run --name explainshell --restart always \
   ;;          -p 5023:5000 -d spaceinvaderone/explainshell
-  (lsp-bash-explainshell-endpoint "http://localhost:5023")
+  ;; (lsp-bash-explainshell-endpoint "http://localhost:5023")
+  (lsp-bash-explainshell-endpoint nil)  ; explainshell integration by
+                                        ; bash-language-server appears not to be
+                                        ; working; see
+                                        ; github.com/bash-lsp/bash-language-server/issues/726
 
   (lsp-bash-highlight-parsing-errors t)
   (lsp-log-io t)
@@ -28,10 +32,10 @@
   (lsp-sqls-timeout 30)
 
   :ensure-system-package
-  ((sqls . "go install github.com/lighttiger2505/sqls@latest")
+  ((shellcheck . "sudo apt install -y shellcheck")  ; for bash-ls
+   (sqls . "go install github.com/lighttiger2505/sqls@latest")
    ;; (unified-language-server . "npm i -g unified-language-server")
-   (vscode-html-language-server . "npm i -g vscode-langservers-extracted")
-   )
+   (vscode-html-language-server . "npm i -g vscode-langservers-extracted"))
 
   :hook
   ((dockerfile-mode . (lambda () (ts/lsp-mode-hook 'dockerfile-ls)))
@@ -130,11 +134,35 @@
 
 (use-package lsp-ui
   ;; UI integration for lsp-mode.
+  ;;
+  ;; Note that unfocusing the doc frame often leads to unresponsiveness.
+  ;; Pressing an arrow key goes out of the state. See
+  ;; https://github.com/emacs-lsp/lsp-ui/issues/715.
+  ;;
   :commands lsp-ui-mode
+
+  :bind
+  (("C-h D d" . (lambda ()
+                  (interactive)
+                  (if (lsp-ui-doc--visible-p)
+                      (lsp-ui-doc-hide) (lsp-ui-doc-show))))
+   ("C-h D f" . lsp-ui-doc-focus-frame) ; want to run this within the above function...
+   )
+
   :custom
-  ((lsp-ui-doc-delay 0.5)
-   (lsp-ui-doc-position 'at-point)
-   (lsp-ui-doc-use-webkit nil)) )
+  (lsp-ui-doc-border "black")
+  (lsp-ui-doc-delay 0.1)
+  (lsp-ui-doc-max-height 25)
+  (lsp-ui-doc-position 'at-point)
+  (lsp-ui-doc-show-with-cursor nil)
+  (lsp-ui-doc-show-with-mouse nil)
+  (lsp-ui-doc-text-scale-level -1.0)
+  (lsp-ui-doc-use-childframe t)
+  (lsp-ui-doc-use-webkit nil)
+  (lsp-ui-sideline-show-code-actions t)
+  (lsp-ui-sideline-show-diagnostics t)
+  (lsp-ui-sideline-show-hover t)
+  )
 
 (use-package lsp-treemacs
   :bind ([f7] . lsp-treemacs-symbols)
