@@ -38,7 +38,8 @@
    (vscode-html-language-server . "npm i -g vscode-langservers-extracted"))
 
   :hook
-  ((dockerfile-mode . (lambda () (ts/lsp-mode-hook 'dockerfile-ls)))
+  ((ansible . (lambda () (ts/lsp-mode-hook 'ansible-ls)))
+   (dockerfile-mode . (lambda () (ts/lsp-mode-hook 'dockerfile-ls)))
    ;; (html-mode . lsp)
    (js-mode . (lambda () (ts/lsp-mode-hook 'jsts-ls)))
    (json-mode . (lambda () (ts/lsp-mode-hook 'json-ls)))
@@ -57,6 +58,8 @@
 
   (with-eval-after-load 'lsp-mode
     (add-hook 'lsp-mode-hook #'lsp-enable-which-key-integration))
+
+  (put 'lsp-ansible-python-interpreter-path 'safe-local-variable #'stringp)
 
   :config
   (add-to-list 'lsp-language-id-configuration '(".*\\.html?\\.j2" . "html"))
