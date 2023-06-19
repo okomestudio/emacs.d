@@ -329,10 +329,6 @@ current buffer's, reload dir-locals."
   :init
   (ensure-file-from-github "buzztaiki/help-shortdoc-example.el/main/help-shortdoc-example.el"))
 
-(use-package restart-emacs
-  ;; Restart emacs from within emacs.
-  :defer t)
-
 (use-package tramp
   :straight nil
   :custom (tramp-default-method "ssh")
