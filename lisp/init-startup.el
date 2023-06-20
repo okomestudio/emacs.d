@@ -20,7 +20,10 @@
   (tab-width 2)
   (use-short-answers t)
   (vc-follow-symlinks t)
-  (x-select-request-type '(UTF8_STRING COMPOUND_TEXT TEXT STRING))
+
+  ;; Set to nil on Wayland, '(UTF8_STRING COMPOUND_TEXT TEXT STRING) on X:
+  (x-select-request-type nil)
+
   (word-wrap-by-category t)
 
   :init
