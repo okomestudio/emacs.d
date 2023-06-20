@@ -11,7 +11,7 @@ Usage: $scriptname
 
 Run OCR on the content of clipboard and send text to STDOUT.
 
-Required packages: xclip, tesseract
+Required packages: wl-clipboard (for Wayland), xclip (for X), tesseract
 
 USAGE
   exit "${1:-1}"
@@ -25,9 +25,16 @@ function error() {
 }
 
 
-function main() {
+function main_x() {
+  # For X:
   xclip -selection clipboard -t image/png -l 1 -o \
     | tesseract stdin stdout
+}
+
+
+function main() {
+  # For Wayland:
+  wl-paste -t image/png | tesseract stdin stdout
 }
 
 

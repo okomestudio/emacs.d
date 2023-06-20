@@ -68,6 +68,7 @@
 (require 'init-editing-utils)
 (require 'init-editing-lookup)
 (require 'init-ime)
+(require 'init-pbocr)
 
 (require 'init-anki)
 (require 'init-bookmark-plus)

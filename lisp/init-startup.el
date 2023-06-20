@@ -3,9 +3,6 @@
 ;;; Code:
 
 (use-package emacs
-  :bind
-  (("C-x C-y" . ts/pbocr))
-
   :custom
   (async-shell-command-buffer "new-buffer")
   (case-fold-search t)
@@ -27,12 +24,6 @@
   (word-wrap-by-category t)
 
   :init
-  (defun ts/pbocr ()
-    "Run OCR on the image in clipboard and paste the text."
-    (interactive)
-    (insert (shell-command-to-string
-             (expand-file-name "bin/pbocr" user-emacs-directory))))
-
   (when window-system
     (setq select-enable-clipboard t))
 
