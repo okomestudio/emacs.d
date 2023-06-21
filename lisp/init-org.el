@@ -12,8 +12,6 @@
   :type '(string)
   :group 'ts)
 
-(straight-use-package 'org)
-
 (use-package org
   :after (ob-typescript ox-gfm)
   :ensure org-contrib
@@ -21,6 +19,39 @@
   :bind
   (("C-c l" . 'org-store-link)
    ("M-S q" . 'org-unfill-paragraph))
+
+  :custom
+  (fill-column 80)
+  (org-adapt-indentation nil)
+  (org-babel-python-command "~/.pyenv/shims/python")
+  (org-blank-before-new-entry '((heading . auto) (plain-list-item . auto)))
+  (org-capture-templates '(("b" "Book" entry (file ts/org-books-file)
+                            "%(let* ((url (substring-no-properties (current-kill 0)))
+                                      (details (org-books-get-details url)))
+                                      (when details (apply #'org-books-format 1 details)))")
+                           ("t" "Task" entry (file+headline "" "Tasks")
+		                        "* TODO %?\n  %u\n  %a") ))
+  (org-default-notes-file ts/org-default-notes-file)
+  (org-ellipsis "⮷")
+  (org-export-with-broken-links t)
+  (org-export-with-section-numbers nil)
+  (org-file-apps '(("\\.mp4\\'" . "vlc --repeat %s")))
+  (org-hide-emphasis-markers t)
+  (org-image-actual-width nil)
+  ;; (org-indent-indentation-per-level 4)
+  (org-list-allow-alphabetical t)
+  (org-list-indent-offset 2)
+  ;; (org-plantuml-jar-path ts/path-plantuml)
+  (org-preview-latex-image-directory ".ltximg/")
+  (org-return-follows-link t)
+  (org-startup-folded nil)
+  (org-startup-indented t)
+  (org-support-shift-select t)
+  (org-tags-column 0)
+  (org-todo-keywords '((sequence "TODO" "WIP" "|" "SKIP" "DONE")))
+
+  :hook
+  (org-mode . (lambda () (org-superstar-mode 1) (turn-on-visual-line-mode)))
 
   :config
   (defun org-unfill-paragraph (&optional region)
@@ -42,8 +73,10 @@
   (plist-put org-format-latex-options :scale 1.5)
 
   ;; Add characters allowed to bound emphasis markup.
-  (setcar org-emphasis-regexp-components "-—[:space:]('\"{\x200B|│")
-  (setcar (nthcdr 1 org-emphasis-regexp-components) "-—[:space:].,:!?;'\")}\\[\x200B|│")
+  (setcar org-emphasis-regexp-components
+          "-—[:space:]('\"{\x200B|│")
+  (setcar (nthcdr 1 org-emphasis-regexp-components)
+          "-—[:space:].,:!?;'\")}\\[\x200B|│")
   (org-set-emph-re 'org-emphasis-regexp-components org-emphasis-regexp-components)
 
   ;; For document export
@@ -91,41 +124,7 @@
    '(font-lock-comment-face
      ((t (:inherit 'fixed-pitch))))
    )
-
-  :custom
-  ((fill-column 80)
-   (org-adapt-indentation nil)
-   (org-babel-python-command "~/.pyenv/shims/python")
-   (org-blank-before-new-entry '((heading . auto) (plain-list-item . auto)))
-   (org-capture-templates '(("b" "Book" entry (file ts/org-books-file)
-                             "%(let* ((url (substring-no-properties (current-kill 0)))
-                                      (details (org-books-get-details url)))
-                                      (when details (apply #'org-books-format 1 details)))")
-                            ("t" "Task" entry (file+headline "" "Tasks")
-		                         "* TODO %?\n  %u\n  %a") ))
-   (org-default-notes-file ts/org-default-notes-file)
-   (org-ellipsis "⮷")
-   (org-export-with-broken-links t)
-   (org-export-with-section-numbers nil)
-   (org-file-apps '(("\\.mp4\\'" . "vlc --repeat %s")))
-   (org-hide-emphasis-markers t)
-   (org-image-actual-width nil)
-   ;; (org-indent-indentation-per-level 4)
-   (org-list-allow-alphabetical t)
-   (org-list-indent-offset 2)
-   ;; (org-plantuml-jar-path ts/path-plantuml)
-   (org-preview-latex-image-directory ".ltximg/")
-   (org-return-follows-link t)
-   (org-startup-folded nil)
-   (org-startup-indented t)
-   (org-support-shift-select t)
-   (org-tags-column 0)
-   (org-todo-keywords '((sequence "TODO" "WIP" "|" "SKIP" "DONE"))))
-
-  :hook
-  ((org-mode . (lambda ()
-                 (org-superstar-mode 1)
-                 (turn-on-visual-line-mode)))))
+  )
 
 (use-package org-agenda
   :after (org)
@@ -143,12 +142,11 @@
 
 (use-package org-books
   ;; Reading list management with org mode.
+  :disabled
   :custom (org-books-file ts/org-books-file))
 
 (use-package org-modern
   ;; Modern Org Style.
-  :init (global-org-modern-mode)
-
   :custom
   (org-modern-block nil)
   (org-modern-checkbox '((?X . #("▢𐄂" 0 2 (composition ((2)))))
@@ -163,7 +161,11 @@
   (org-modern-tag t)
   (org-modern-timestamp t)
   (org-modern-todo t)
-  (org-modern-variable-pitch t))
+  (org-modern-variable-pitch t)
+
+  :init
+  (with-eval-after-load 'org (global-org-modern-mode))
+  )
 
 (use-package org-modern-indent
   :straight
@@ -171,12 +173,46 @@
                      :host github
                      :repo "jdtsmith/org-modern-indent")
 
-  :config (add-hook 'org-mode-hook #'org-modern-indent-mode 90))
+  :config
+  (add-hook 'org-mode-hook #'org-modern-indent-mode 90))
 
-(use-package org-ref
-  ;; For citations, cross-references, bibliographies.
-  :custom (bibtex-completion-pdf-field "file")
-  :init (put 'bibtex-completion-bibliography 'safe-local-variable #'listp))
+(use-package org-sticky-header
+  :init
+  (org-sticky-header-mode +1))
+
+(use-package org-superstar
+  :custom
+  (org-superstar-headline-bullets-list '("◉" "🞛" "○" "▷")))
+
+(use-package ob-typescript)
+(use-package ox-gfm)
+
+
+(defcustom valign-max-buffer-size 100000
+  "Default max-buffer-size over which valign-mode will not activate."
+  :type '(integer)
+  :group 'ts)
+
+(use-package valign
+  ;; Pixel-perfect visual alignment for Org and Markdown tables.
+  :custom
+  (valign-fancy-bar t)
+  (valign-max-table-size 4000)
+  (valign-signal-parse-error t)
+
+  :init
+  ;; Add logic to avoid loading valign-mode for large buffers.
+  (add-hook 'org-mode-hook
+            (lambda ()
+              (when (not (> (buffer-size) valign-max-buffer-size))
+                (valign-mode))))
+
+  :config
+  (use-package ftable)
+  )
+
+
+;;; Org Roam
 
 (use-package org-roam
   ;; Rudimentary Roam replica with org-mode.
@@ -191,10 +227,6 @@
 
   :bind-keymap
   ("C-c n d" . org-roam-dailies-map)
-
-  :config
-  (require 'org-roam-dailies)
-  (org-roam-db-autosync-mode)
 
   :custom
   (org-roam-completion-everywhere t)
@@ -277,59 +309,35 @@
   (put 'org-roam-db-location 'safe-local-variable #'stringp)
   (put 'org-roam-directory 'safe-local-variable #'stringp)
   (put 'org-roam-mode-sections 'safe-local-variable #'listp)
-  (put 'org-roam-ui-port 'safe-local-variable #'integerp))
+  (put 'org-roam-ui-port 'safe-local-variable #'integerp)
 
-(use-package org-roam-bibtex
-  :after org-roam
-  :config (require 'org-ref) ; optional: if using Org-ref v2 or v3 citation links
-
-  :custom
-  (orb-insert-link-description "${author-abbrev} ${date}")
-  (orb-roam-ref-format 'org-ref-v3))
+  :config
+  (require 'org-roam-dailies)
+  (org-roam-db-autosync-mode)
+  )
 
 (use-package org-roam-ui
   :after org-roam
-
   :custom
   (org-roam-ui-follow t)
   (org-roam-ui-sync-theme t)
-  (org-roam-ui-update-on-save t))
+  (org-roam-ui-update-on-save t)
+  )
 
-(use-package org-sticky-header
-  :init (org-sticky-header-mode +1))
-
-(use-package org-superstar
-  :custom (org-superstar-headline-bullets-list '("◉" "🞛" "○" "▷")))
-
-(use-package ob-typescript)
-(use-package ox-gfm)
-
-
-(defcustom valign-max-buffer-size 100000
-  "Default max-buffer-size over which valign-mode will not activate."
-  :type '(integer)
-  :group 'ts)
-
-(use-package valign
-  ;; Pixel-perfect visual alignment for Org and Markdown tables.
+(use-package org-roam-bibtex
+  :after org-roam
   :custom
-  (valign-fancy-bar t)
-  (valign-max-table-size 4000)
-  (valign-signal-parse-error t)
-
-  :init
-  ;; Add logic to avoid loading valign-mode for large buffers.
-  (add-hook 'org-mode-hook
-            (lambda ()
-              (when (not (> (buffer-size) valign-max-buffer-size))
-                (valign-mode)
-                )
-              )
-            )
+  (orb-insert-link-description "${author-abbrev} ${date}")
+  (orb-roam-ref-format 'org-ref-v3)
 
   :config
-  (use-package ftable)
+  (require 'org-ref) ; optional: if using Org-ref v2 or v3 citation links
   )
+
+(use-package org-ref
+  ;; For citations, cross-references, bibliographies.
+  :custom (bibtex-completion-pdf-field "file")
+  :init (put 'bibtex-completion-bibliography 'safe-local-variable #'listp))
 
 (provide 'init-org)
 ;;; init-org.el ends here
