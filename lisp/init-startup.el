@@ -345,5 +345,9 @@ current buffer's, reload dir-locals."
   (system-packages-use-sudo t)
   (system-packages-package-manager 'apt))
 
+(use-package switch-buffer-functions
+  ;; Hook run when switching current buffer.
+  )
+
 (provide 'init-startup)
 ;;; init-startup.el ends here
