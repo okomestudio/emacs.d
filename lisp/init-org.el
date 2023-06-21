@@ -70,8 +70,6 @@
       (while (outline-previous-heading)
         (org-id-get-create))))
 
-  (plist-put org-format-latex-options :scale 1.5)
-
   ;; Update regex for org emphasis; see, e.g.,
   ;; https://stackoverflow.com/a/63805680/515392.
   (setcar org-emphasis-regexp-components
@@ -93,52 +91,41 @@
           (concat "[:space:]" (string ?\N{ZERO WIDTH SPACE})))
   (org-set-emph-re 'org-emphasis-regexp-components org-emphasis-regexp-components)
 
-  ;; For document export
+  ;; Babel and document export
   (require 'ox-md)                      ; Markdown
   (require 'ox-gfm)                     ; GitHub-flavored Markdown
 
   (add-to-list 'org-src-lang-modes '("plantuml" . plantuml))
 
   (org-babel-do-load-languages
-   'org-babel-load-languages
-   '((C . t)
-     (dot . t)
-     (emacs-lisp . t)
-     (js . t)
-     (plantuml . t)
-     (python . t)
-     (shell . t)
-     (sql . t)
-     (typescript . t)))
+   'org-babel-load-languages '((C . t)
+                               (dot . t)
+                               (emacs-lisp . t)
+                               (js . t)
+                               (plantuml . t)
+                               (python . t)
+                               (shell . t)
+                               (sql . t)
+                               (typescript . t)))
 
+  (plist-put org-format-latex-options :scale 1.5) ; scale rendered expression
+
+  ;; Color styling
   (custom-set-faces
    ;; Code block
-   '(org-block-begin-line
-     ((t (:foreground "#999999" :background "#f1ede5" :extend t))))
-   '(org-block
-     ((t (:background "#fbf6ed" :extend t))))
-   '(org-block-end-line
-     ((t (:foreground "#999999" :background "#f1ede5" :extend t))))
-   '(org-modern-bracket-line
-     ((t (:foreground "#999999" :background "#f1ede5" :extend t))))
-
+   '(org-block-begin-line ((t (:foreground "#999999" :background "#f1ede5" :extend t))))
+   '(org-block ((t (:background "#fbf6ed" :extend t))))
+   '(org-block-end-line ((t (:foreground "#999999" :background "#f1ede5" :extend t))))
+   '(org-modern-bracket-line ((t (:foreground "#999999" :background "#f1ede5" :extend t))))
    ;; Drawer
-   '(org-drawer
-     ((t (:foreground "#999999" :height 1.0 :inherit 'fixed-pitch))))
-   '(org-special-keyword
-     ((t (:foreground "#999999" :height 1.0 :inherit 'fixed-pitch))))
-   '(org-property-value
-     ((t (:foreground "#999999" :height 1.0 :inherit 'fixed-pitch))))
-
+   '(org-drawer ((t (:foreground "#999999" :height 1.0 :inherit 'fixed-pitch))))
+   '(org-special-keyword ((t (:foreground "#999999" :height 1.0 :inherit 'fixed-pitch))))
+   '(org-property-value ((t (:foreground "#999999" :height 1.0 :inherit 'fixed-pitch))))
    ;; Table
-   '(org-table
-     ((t (:inherit 'variable-pitch))))
+   '(org-table ((t (:inherit 'variable-pitch))))
 
    ;; Code-like comments
-   '(font-lock-comment-face
-     ((t (:inherit 'fixed-pitch))))
-   )
-  )
+   '(font-lock-comment-face ((t (:inherit 'fixed-pitch))))))
 
 (use-package org-agenda
   :after (org)
@@ -178,8 +165,7 @@
   (org-modern-variable-pitch t)
 
   :init
-  (with-eval-after-load 'org (global-org-modern-mode))
-  )
+  (with-eval-after-load 'org (global-org-modern-mode)))
 
 (use-package org-modern-indent
   :straight
@@ -202,6 +188,8 @@
 (use-package ox-gfm)
 
 
+;; Org table styling
+
 (defcustom valign-max-buffer-size 100000
   "Default max-buffer-size over which valign-mode will not activate."
   :type '(integer)
@@ -222,8 +210,7 @@
                 (valign-mode))))
 
   :config
-  (use-package ftable)
-  )
+  (use-package ftable))
 
 
 ;;; Org Roam
@@ -244,9 +231,9 @@
 
   :custom
   (org-roam-completion-everywhere t)
-  (org-roam-dailies-capture-templates
-   '(("d" "default" entry "* %?\n<%<%Y-%m-%d %a %H:%M>>"
-      :target (file+head "%<%Y-%m-%d>.org" "#+title: %<%Y-%m-%d>\n"))))
+  (org-roam-dailies-capture-templates '(("d" "default" entry "* %?\n<%<%Y-%m-%d %a %H:%M>>"
+                                         :target
+                                         (file+head "%<%Y-%m-%d>.org" "#+title: %<%Y-%m-%d>\n"))))
   (org-roam-dailies-directory "journal/")
   (org-roam-db-location (file-truename "~/.config/emacs/roam/.roam.db"))
   (org-roam-directory (file-truename "~/.config/emacs/roam"))
@@ -254,68 +241,64 @@
   (org-roam-mode-sections (list #'org-roam-backlinks-section
                                 #'org-roam-reflinks-section
                                 #'org-roam-unlinked-references-section))
-  (org-roam-node-annotation-function
-   (lambda (node) (concat " " (marginalia--time (org-roam-node-file-mtime node)))))
-  (org-roam-node-display-template
-   (concat "${my-node-entry} ${my-node-parent-title} " (propertize "${tags}" 'face 'org-tag)))
+  (org-roam-node-annotation-function (lambda (node)
+                                       (concat " "
+                                               (marginalia--time (org-roam-node-file-mtime node)))))
+  (org-roam-node-display-template (concat "${my-node-entry} ${my-node-parent-title} "
+                                          (propertize "${tags}" 'face 'org-tag)))
 
   :init
-  ;; Override some functions here:
-  (eval-after-load 'org-roam-node
-    '(cl-defmethod org-roam-node-my-node-entry ((node org-roam-node))
-       (org-roam-node-title node)))
+  (with-eval-after-load 'org-roam-node
+    (cl-defmethod org-roam-node-my-node-entry ((node org-roam-node))
+      (org-roam-node-title node))
 
-  (eval-after-load 'org-roam-node
-    '(cl-defmethod org-roam-node-my-node-parent-title ((node org-roam-node))
-       (if (string= (org-roam-node-title node) (org-roam-node-file-title node))
-           ""
-         (concat
-          (propertize "< "
-                      'face '(:foreground "dim gray"))
-          (propertize (org-roam-node-file-title node)
-                      'face '(:slant italic :foreground "dim gray" :height 1.0 :underline t)))
-         )
-       ))
+    (cl-defmethod org-roam-node-my-node-parent-title ((node org-roam-node))
+      (if (string= (org-roam-node-title node) (org-roam-node-file-title node))
+          ""
+        (concat (propertize "< "
+                            'face '(:foreground "dim gray"))
+                (propertize (org-roam-node-file-title node)
+                            'face '(:slant italic :foreground "dim gray" :height 1.0 :underline t)))))
 
-  (eval-after-load 'org-roam-node
-    '(cl-defmethod org-roam-node-slug ((node org-roam-node))
-       "Return the slug of NODE. Overridden to use hyphens instead of underscores."
-       (let ((title (org-roam-node-title node))
-             (slug-trim-chars '(;; Combining Diacritical Marks https://www.unicode.org/charts/PDF/U0300.pdf
-                                768   ; U+0300 COMBINING GRAVE ACCENT
-                                769   ; U+0301 COMBINING ACUTE ACCENT
-                                770   ; U+0302 COMBINING CIRCUMFLEX ACCENT
-                                771   ; U+0303 COMBINING TILDE
-                                772   ; U+0304 COMBINING MACRON
-                                774   ; U+0306 COMBINING BREVE
-                                775   ; U+0307 COMBINING DOT ABOVE
-                                776   ; U+0308 COMBINING DIAERESIS
-                                777   ; U+0309 COMBINING HOOK ABOVE
-                                778   ; U+030A COMBINING RING ABOVE
-                                779   ; U+030B COMBINING DOUBLE ACUTE ACCENT
-                                780   ; U+030C COMBINING CARON
-                                795   ; U+031B COMBINING HORN
-                                803   ; U+0323 COMBINING DOT BELOW
-                                804   ; U+0324 COMBINING DIAERESIS BELOW
-                                805   ; U+0325 COMBINING RING BELOW
-                                807   ; U+0327 COMBINING CEDILLA
-                                813   ; U+032D COMBINING CIRCUMFLEX ACCENT BELOW
-                                814   ; U+032E COMBINING BREVE BELOW
-                                816   ; U+0330 COMBINING TILDE BELOW
-                                817   ; U+0331 COMBINING MACRON BELOW
-                                )))
-         (cl-flet* ((nonspacing-mark-p (char) (memq char slug-trim-chars))
-                    (strip-nonspacing-marks (s) (string-glyph-compose
-                                                 (apply #'string
-                                                        (seq-remove #'nonspacing-mark-p
-                                                                    (string-glyph-decompose s)))))
-                    (cl-replace (title pair) (replace-regexp-in-string (car pair) (cdr pair) title)))
-           (let* ((pairs `(("[^[:alnum:][:digit:]]" . "-") ;; convert anything not alphanumeric
-                           ("--*" . "-") ;; remove sequential underscores
-                           ("^-" . "")   ;; remove starting underscore
-                           ("-$" . ""))) ;; remove ending underscore
-                  (slug (-reduce-from #'cl-replace (strip-nonspacing-marks title) pairs)))
-             (downcase slug))))) )
+    (cl-defmethod org-roam-node-slug ((node org-roam-node))
+      "Return the slug of NODE. Overridden to use hyphens instead of underscores."
+      (let ((title (org-roam-node-title node))
+            ;; Combining Diacritical Marks https://www.unicode.org/charts/PDF/U0300.pdf
+            (slug-trim-chars '(768   ; U+0300 COMBINING GRAVE ACCENT
+                               769   ; U+0301 COMBINING ACUTE ACCENT
+                               770   ; U+0302 COMBINING CIRCUMFLEX ACCENT
+                               771   ; U+0303 COMBINING TILDE
+                               772   ; U+0304 COMBINING MACRON
+                               774   ; U+0306 COMBINING BREVE
+                               775   ; U+0307 COMBINING DOT ABOVE
+                               776   ; U+0308 COMBINING DIAERESIS
+                               777   ; U+0309 COMBINING HOOK ABOVE
+                               778   ; U+030A COMBINING RING ABOVE
+                               779   ; U+030B COMBINING DOUBLE ACUTE ACCENT
+                               780   ; U+030C COMBINING CARON
+                               795   ; U+031B COMBINING HORN
+                               803   ; U+0323 COMBINING DOT BELOW
+                               804   ; U+0324 COMBINING DIAERESIS BELOW
+                               805   ; U+0325 COMBINING RING BELOW
+                               807   ; U+0327 COMBINING CEDILLA
+                               813   ; U+032D COMBINING CIRCUMFLEX ACCENT BELOW
+                               814   ; U+032E COMBINING BREVE BELOW
+                               816   ; U+0330 COMBINING TILDE BELOW
+                               817))); U+0331 COMBINING MACRON BELOW
+        (cl-flet* ((nonspacing-mark-p (char)
+                     (memq char slug-trim-chars))
+                   (strip-nonspacing-marks (s)
+                     (string-glyph-compose (apply #'string
+                                                  (seq-remove #'nonspacing-mark-p
+                                                              (string-glyph-decompose s)))))
+                   (cl-replace (title pair)
+                     (replace-regexp-in-string (car pair) (cdr pair) title)))
+          (let* ((pairs `(("[^[:alnum:][:digit:]]" . "-") ;; convert anything not alphanumeric
+                          ("--*" . "-") ;; remove sequential underscores
+                          ("^-" . "")   ;; remove starting underscore
+                          ("-$" . ""))) ;; remove ending underscore
+                 (slug (-reduce-from #'cl-replace (strip-nonspacing-marks title) pairs)))
+            (downcase slug))))))
 
   (put 'orb-preformat-keywords 'safe-local-variable #'listp)
   (put 'org-roam-capture-templates 'safe-local-variable #'listp)
@@ -327,16 +310,14 @@
 
   :config
   (require 'org-roam-dailies)
-  (org-roam-db-autosync-mode)
-  )
+  (org-roam-db-autosync-mode))
 
 (use-package org-roam-ui
   :after org-roam
   :custom
   (org-roam-ui-follow t)
   (org-roam-ui-sync-theme t)
-  (org-roam-ui-update-on-save t)
-  )
+  (org-roam-ui-update-on-save t))
 
 (use-package org-roam-bibtex
   :after org-roam
@@ -345,8 +326,7 @@
   (orb-roam-ref-format 'org-ref-v3)
 
   :config
-  (require 'org-ref) ; optional: if using Org-ref v2 or v3 citation links
-  )
+  (require 'org-ref)) ; optional: if using Org-ref v2 or v3 citation links
 
 (use-package org-ref
   ;; For citations, cross-references, bibliographies.
