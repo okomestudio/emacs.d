@@ -5,7 +5,9 @@
 (use-package vterm
   ;; Emacs libvterm integration.
 
-  :bind (:map vterm-mode-map ("C-c C-t" . vterm-copy-mode))
+  :bind
+  (:map vterm-mode-map
+        ("C-c C-t" . vterm-copy-mode))
 
   :custom
   (vterm-always-compile-module t)
@@ -31,13 +33,11 @@
     (face-remap-add-relative 'default :background "#ffffdd")
     ;; (set-face-attribute 'vterm-color-black nil :foreground "#000000" :background "#000000")
     (set (make-local-variable 'buffer-face-mode-face) '(:family "Hack" :foreground "#000000"))
-    (buffer-face-mode t))
-  )
+    (buffer-face-mode t)))
 
 (use-package multi-vterm
   ;; Managing multiple vterm buffers.
-  :after vterm
-  )
+  :after vterm)
 
 (provide 'init-vterm)
 ;;; init-vterm.el ends here

@@ -6,8 +6,8 @@
   :straight nil
 
   :custom
-  ((sh-basic-offset 4)
-   (sh-indentation 4))
+  (sh-basic-offset 4)
+  (sh-indentation 4)
 
   :mode
   ("\\.sh\\'"
@@ -17,7 +17,9 @@
 (use-package bats-mode)
 
 (use-package ansi-color
-  :hook (compilation-filter . ts/colorize-buffer)
+  :hook
+  (compilation-filter . ts/colorize-buffer)
+
   :config
   (defun ts/colorize-buffer ()
     (when (eq major-mode 'compilation-mode)
@@ -25,10 +27,15 @@
 
 (use-package flymake-shellcheck
   :disabled
-  :ensure-system-package (shellcheck . "sudo apt install -y shellcheck")
   :if (executable-find "shellcheck")
   :commands flymake-shellcheck-load
-  :hook ((sh-mode) . flymake-shellcheck-load)
+
+  :ensure-system-package
+  (shellcheck . "sudo apt install -y shellcheck")
+
+  :hook
+  ((sh-mode) . flymake-shellcheck-load)
+
   :init
   (setq sh-basic-offset 4
         sh-indentation 4)

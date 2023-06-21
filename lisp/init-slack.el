@@ -11,7 +11,6 @@
 
   :config
   (when (file-exists-p (concat user-emacs-directory "conf.d/slack.el"))
-    (load (concat user-emacs-directory "conf.d/slack.el")))
-  )
+    (load (concat user-emacs-directory "conf.d/slack.el"))))
 
 (provide 'init-slack)

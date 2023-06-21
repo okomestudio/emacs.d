@@ -4,7 +4,9 @@
 
 (defun debug-message (text)
   "Print a debug message TEXT with timestamp."
-  (message "%s: %s" (format-time-string "%FT%H:%M:%S.%3N" (current-time)) text))
+  (message "%s: %s"
+           (format-time-string "%FT%H:%M:%S.%3N" (current-time))
+           text))
 
 
 (defun ensure-directory-exists (path)
@@ -97,8 +99,7 @@ directory tree."
         (setq parent-directory (parent-directory dir-locals-file))
         (setq dir-locals-file
               (cond ((not (eq parent-directory nil)) (locate-dominating-file parent-directory name))
-                    (t nil)))
-        ))
+                    (t nil)))))
     dir-locals-files))
 
 (defun ts/reload-dir-locals-for-current-buffer ()
