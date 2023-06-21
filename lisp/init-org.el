@@ -72,11 +72,25 @@
 
   (plist-put org-format-latex-options :scale 1.5)
 
-  ;; Add characters allowed to bound emphasis markup.
+  ;; Update regex for org emphasis; see, e.g.,
+  ;; https://stackoverflow.com/a/63805680/515392.
   (setcar org-emphasis-regexp-components
-          "-—[:space:]('\"{\x200B|│")
+          (concat (string ?- ?—)
+                  "[:space:]"
+                  (string ?\N{ZERO WIDTH SPACE}
+                          ?[ ?( ?{
+                          ?‘ ?“
+                          ?| ?│ )))
   (setcar (nthcdr 1 org-emphasis-regexp-components)
-          "-—[:space:].,:!?;'\")}\\[\x200B|│")
+          (concat (string ?] ?) ?})
+                  "[:space:]"
+                  (string ?\N{ZERO WIDTH SPACE}
+                          ?’ ?”
+                          ?| ?│
+                          ?. ?, ?? ?! ?; ?:
+                          ?— ?- )))
+  (setcar (nthcdr 2 org-emphasis-regexp-components)
+          (concat "[:space:]" (string ?\N{ZERO WIDTH SPACE})))
   (org-set-emph-re 'org-emphasis-regexp-components org-emphasis-regexp-components)
 
   ;; For document export
