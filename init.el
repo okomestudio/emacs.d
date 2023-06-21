@@ -47,7 +47,6 @@
 (require 'init-org)
 
 (require 'init-startup)
-(require 'init-system-packages)
 (require 'init-themes)
 (require 'init-faces)
 (require 'init-minibuffer)

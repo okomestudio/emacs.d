@@ -340,5 +340,10 @@ current buffer's, reload dir-locals."
   :config
   (which-key-mode +1))
 
+(use-package system-packages
+  :custom
+  (system-packages-use-sudo t)
+  (system-packages-package-manager 'apt))
+
 (provide 'init-startup)
 ;;; init-startup.el ends here
