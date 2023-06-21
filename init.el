@@ -1,13 +1,8 @@
 ;;; emacs --- Emacs configuration  -*- lexical-binding: t -*-
-;;
 ;;; Commentary:
-;;
-;; This file should be placed at ~/.config/emacs/init.el.
-;;
-;;
 ;;; Code:
 
-;; Profiling init.el.
+;; init profiling
 (defconst ts/profile-init nil "Set to t to profile init.el.")
 
 (when ts/profile-init
@@ -19,12 +14,12 @@
   (add-hook 'after-init-hook #'ts/tear-down-profiler))
 
 
-;; Use sources under this directory for secrets.
+;; auth-info
 (setq auth-sources '((:source "~/.config/emacs/secrets/.authinfo.gpg")))
 (setq authinfo-hidden "\\(api_token\\|apikey\\|cookie\\|secret\\|passphrase\\|password\\)")
 
 
-;; custom.el is for variables configured interactively.
+;; custom.el
 (setq custom-file (concat user-emacs-directory "custom.el"))
 (unless (file-exists-p custom-file)
   (write-region "" nil custom-file))
@@ -32,7 +27,7 @@
   (load custom-file))
 
 
-;; Set up load-paths for local modules.
+;; load-path
 (defconst ts/lisp-dir (expand-file-name "lisp" user-emacs-directory)
   "Path to the Lisp file directory.")
 (defconst ts/site-lisp-dir (expand-file-name "site-lisp" ts/lisp-dir)
@@ -42,22 +37,15 @@
 (add-to-list 'load-path ts/site-lisp-dir)
 
 
-;; Load personal helper functions.
+;; Load global helper functions
 (require 'init-utils)
 
-
-;; Configure package managing around straight and use-package.
-
+;; Configure packages
 ;; (require 'init-package)
 (require 'init-straight)
 
-
-;; Configure modules.
-
-;; org
 (require 'init-org)
 
-;; essentials
 (require 'init-startup)
 (require 'init-system-packages)
 (require 'init-themes)
@@ -84,10 +72,8 @@
 ;; (require 'init-tern)
 (require 'init-yasnippet)
 
-;; file formats
 (require 'init-file-type-modes)
 
-;; programming languages and dev frameworks
 (require 'init-c)
 (require 'init-elisp)
 (require 'init-kotlin)
@@ -103,14 +89,12 @@
 (require 'init-plantuml)
 (require 'init-restclient)
 
-;; miscellaneous packages
 (require 'init-gpt)
 (require 'init-slack)
 
-;; project management
 (require 'init-projectile)
 
-;; Load custom per-site init.el files stored under the init.d directory.
+;; Load additional init.el files in init.d/:
 (let ((custom-init-directory (concat user-emacs-directory "init.d/")))
   (when (file-exists-p custom-init-directory)
     (mapc (lambda (f) (load f))
