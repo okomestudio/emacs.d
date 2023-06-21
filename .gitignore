@@ -33,6 +33,7 @@ persist
 projectile-bookmarks.eld
 projectile.cache
 request
+roam/
 secrets/
 snippets
 straight/*
@@ -40,3 +41,4 @@ straight/*
 tramp
 transient
 url
+var/
