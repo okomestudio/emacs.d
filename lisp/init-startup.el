@@ -17,7 +17,6 @@
   (next-error-message-highlight t)
   (read-process-output-max (* 1 1024 1024)) ; 1 mb
   (ring-bell-function 'ignore)              ; Disable beeping (in C source code)
-  (scroll-bar-width 6)
   (tab-width 2)
   (uniquify-buffer-name-style 'forward)
   (use-short-answers t)
