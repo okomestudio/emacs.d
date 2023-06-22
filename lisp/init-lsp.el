@@ -51,11 +51,12 @@
    (web-mode . (lambda () (ts/lsp-mode-hook 'html-ls)))
    (yaml-mode . (lambda () (ts/lsp-mode-hook 'yamlls))))
 
-  :init
+  :preface
   (defun ts/lsp-mode-hook (server)
     (lsp-ensure-server server)
     (lsp))
 
+  :init
   (with-eval-after-load 'lsp-mode
     (add-hook 'lsp-mode-hook #'lsp-enable-which-key-integration))
 
@@ -64,8 +65,8 @@
   :config
   (add-to-list 'lsp-language-id-configuration '(".*\\.html?\\.j2" . "html"))
 
-  (setq lsp-headerline-arrow "➤")
-  )
+  (setq lsp-headerline-arrow "➤"))
+
 
 (use-package lsp-grammarly
   :disabled

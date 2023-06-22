@@ -28,6 +28,8 @@
 (tool-bar-mode -1)
 (scroll-bar-mode -1)
 
+(fringe-mode '(8 . 8))
+
 (setq frame-inhibit-implied-resize t)
 
 (setq native-comp-jit-compilation t)
