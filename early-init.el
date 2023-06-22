@@ -28,7 +28,7 @@
 (tool-bar-mode -1)
 (scroll-bar-mode -1)
 
-(fringe-mode '(8 . 8))
+(fringe-mode '(6 . 6))
 
 (setq frame-inhibit-implied-resize t)
 
