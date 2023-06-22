@@ -37,6 +37,10 @@
 (add-to-list 'load-path ts/site-lisp-dir)
 
 
+(defgroup ts nil
+  "TS personal customization group.")
+
+
 ;; Load global helper functions
 (require 'init-utils)
 
