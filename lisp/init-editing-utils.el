@@ -9,11 +9,13 @@
   :init
   (global-set-key [remap dabbrev-expand] 'hippie-expand))
 
+
 (use-package mwim
   ;; Switch between the beginning/end of line or code line positioning.
   :bind
   (("C-a" . 'mwim-beginning)
    ("C-e" . 'mwim-end)))
+
 
 (use-package multiple-cursors
   ;; Multiple cursors.
@@ -23,35 +25,38 @@
   (global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
   (global-set-key (kbd "C-S-c C-<") 'mc/mark-all-like-this))
 
+
 (use-package htmlize
   ;; Convert buffer text and decorations to HTML
   )
 
+
 (use-package titlecase
   ;; Titlecase things.
-  :ensure nil
-
   :bind
   (("M-c" . titlecase-dwim))
 
   :custom
-  ((titlecase-skip-words-regexps
+  (titlecase-skip-words-regexps
     '("\\b[[:upper:]]+\\b"
       "\\b\\(\\(www\\.\\|\\(s?https?\\|ftp\\|file\\|gopher\\|nntp\\|news\\|telnet\\|wais\\|mailto\\|info\\):\\)\\(//[-a-z0-9_.]+:[0-9]*\\)?\\(?:[-a-z0-9_=#$@~%&*+\\/[:word:]!?:;.,]+([-a-z0-9_=#$@~%&*+\\/[:word:]!?:;.,]+[-a-z0-9_=#$@~%&*+\\/[:word:]]*)\\(?:[-a-z0-9_=#$@~%&*+\\/[:word:]!?:;.,]+[-a-z0-9_=#$@~%&*+\\/[:word:]]\\)?\\|[-a-z0-9_=#$@~%&*+\\/[:word:]!?:;.,]+[-a-z0-9_=#$@~%&*+\\/[:word:]]\\)\\)"
       )))
 
-  :init
-  (ensure-file-from-github "okomestudio/titlecase.el/ts/add-closing-single-quote-as-apostrophe/titlecase.el")
-  (ensure-file-from-github "okomestudio/titlecase.el/ts/add-closing-single-quote-as-apostrophe/titlecase-data.el"))
 
 (use-package typo
   ;; Typographical utility (e.g., smart quotation).
-  :hook ((text-mode . typo-mode)))
+  :hook
+  ((text-mode . typo-mode)))
+
 
 (use-package undo-tree
   ;; Treat undo history as a tree.
-  :custom  (undo-tree-auto-save-history nil)
-  :init (global-undo-tree-mode))
+  :custom
+  (undo-tree-auto-save-history nil)
+
+  :init
+  (global-undo-tree-mode))
+
 
 (use-package whole-line-or-region
   ;; Operate on current line if region undefined.
@@ -72,28 +77,36 @@
   :init
   (global-flycheck-mode))
 
+
 (use-package flycheck-pos-tip
-  :custom (flycheck-pos-tip-timeout 60)
-  :init (with-eval-after-load 'flycheck (flycheck-pos-tip-mode)))
+  :custom
+  (flycheck-pos-tip-timeout 60)
+
+  :init
+  (with-eval-after-load 'flycheck
+    (flycheck-pos-tip-mode)))
 
 
 ;;; SPELLING
 
 (use-package flyspell
-  :bind (("M-s M-s" . flyspell-auto-correct-previous-word))
+  :bind
+  (("M-s M-s" . flyspell-auto-correct-previous-word))
+
   :hook
   ((prog-mode . flyspell-prog-mode)
    (shell-script-mode . flyspell-prog-mode)
    (text-mode . flyspell-mode)))
 
+
 (use-package ispell
   :custom
-  ((ispell-dictionary "en_US")
-   (ispell-local-dictionary-alist
-    '(("en_US" "[[:alpha:]]" "[^[:alpha:]]" "['’]" t ("-d" "en_US") nil utf-8)
-      ("en_GB" "[[:alpha:]]" "[^[:alpha:]]" "['’]" t ("-d" "en_GB") nil utf-8))))
+  (ispell-dictionary "en_US")
+  (ispell-local-dictionary-alist
+   '(("en_US" "[[:alpha:]]" "[^[:alpha:]]" "['’]" t ("-d" "en_US") nil utf-8)
+     ("en_GB" "[[:alpha:]]" "[^[:alpha:]]" "['’]" t ("-d" "en_GB") nil utf-8)))
 
-  :config
+  :init
   (put 'ispell-dictionary 'safe-local-variable #'stringp))
 
 
@@ -105,7 +118,7 @@
   (ace-isearch-input-length 6)
   (ace-isearch-jump-delay 0.75)
 
-  :init
+  :preface
   (defun ts/ace-isearch-function-from-isearch ()
     (consult-line isearch-string))
 
@@ -115,6 +128,7 @@
     (setq ace-isearch-function-from-isearch
           'ts/ace-isearch-function-from-isearch))
 
+  :init
   (use-package ace-jump-mode)
 
   (add-hook 'after-init-hook 'ts/init-ace-isearch))
