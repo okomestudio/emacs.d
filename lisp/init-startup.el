@@ -2,6 +2,7 @@
 ;;; Commentary:
 ;;; Code:
 
+
 (use-package emacs
   :custom
   (async-shell-command-buffer "new-buffer")
@@ -11,9 +12,12 @@
   (inhibit-splash-screen nil)
   (inhibit-startup-screen nil)
   (load-prefer-newer t)
+  (mouse-wheel-progressive-speed t)
+  (mouse-wheel-scroll-amount '(3 ((shift) . 1)))
   (next-error-message-highlight t)
   (read-process-output-max (* 1 1024 1024)) ; 1 mb
   (ring-bell-function 'ignore)              ; Disable beeping (in C source code)
+  (scroll-bar-width 6)
   (tab-width 2)
   (uniquify-buffer-name-style 'forward)
   (use-short-answers t)
@@ -24,18 +28,7 @@
 
   (word-wrap-by-category t)
 
-  :init
-  (when window-system
-    (setq select-enable-clipboard t))
-
-  (setq-default frame-title-format
-                '((:eval (list (if (buffer-file-name)
-                                   (abbreviate-file-name (expand-file-name buffer-file-name))
-                                 (buffer-name) )))
-                  " - Emacs"))
-
-  ;; (setq-default scroll-bar-width 6)
-
+  :preface
   ;; hack-dir-local-variables
   ;; ------------------------
   ;; Add an advice so that .dir-locals.el are looked for upward in the directory hierarchy.
@@ -60,11 +53,10 @@ top down to the current directory.")
             (setq buffer-file-name original-buffer-file-name)))
       (funcall func)))
 
-  (advice-add 'hack-dir-local-variables :around #'ts/hack-dir-local-variables-advice)
-
-  ;; Reload .dir-locals.el. See https://emacs.stackexchange.com/a/13096/599
   (defun ts/reload-dir-locals-for-current-buffer ()
-    "Reload dir locals for the current buffer."
+    "Reload .dir-locals.el for the current buffer.
+
+See https://emacs.stackexchange.com/a/13096/599"
     (interactive)
     (let ((enable-local-variables :all))
       (hack-dir-local-variables-non-file-buffer)))
@@ -79,8 +71,13 @@ current buffer's, reload dir-locals."
           (when (equal default-directory dir)
             (ts/reload-dir-locals-for-current-buffer))))))
 
-  (add-hook 'emacs-lisp-mode-hook
-            (defun enable-autoreload-for-dir-locals ()
+  :init
+  (advice-add 'hack-dir-local-variables :around
+              #'ts/hack-dir-local-variables-advice)
+
+  (add-hook 'lisp-data-mode-hook
+            (lambda ()
+              (interactive)
               (when (and (buffer-file-name)
                          (equal dir-locals-file
                                 (file-name-nondirectory (buffer-file-name))))
@@ -88,19 +85,17 @@ current buffer's, reload dir-locals."
                           'ts/reload-dir-locals-for-all-buffer-in-this-directory
                           nil t))))
 
-  ;; apropos
-  ;; -------
-  ;; Bind `C-h a` to apropos for ease of access.
-  (global-set-key (kbd "C-h a") 'ts/apropos-prefix)
-  (define-prefix-command 'ts/apropos-prefix nil "Apropos (a,d,f,i,l,v,C-v)")
-  (define-key ts/apropos-prefix (kbd "a") 'apropos)
-  (define-key ts/apropos-prefix (kbd "d") 'apropos-documentation)
-  (define-key ts/apropos-prefix (kbd "f") 'apropos-command)
-  (define-key ts/apropos-prefix (kbd "i") 'info-apropos)
-  (define-key ts/apropos-prefix (kbd "l") 'apropos-library)
-  (define-key ts/apropos-prefix (kbd "v") 'apropos-variable)
-  (define-key ts/apropos-prefix (kbd "C-v") 'apropos-value)
-  (setq apropos-sort-by-scores t))
+  (setq-default frame-title-format
+                '((:eval
+                   (list (if (buffer-file-name)
+                             (abbreviate-file-name
+                              (expand-file-name buffer-file-name))
+                           (buffer-name))))
+                  " - Emacs"))
+
+  (when window-system
+    (setq select-enable-clipboard t)))
+
 
 (use-package simple
   ;; Basic editing commands for Emacs.
@@ -120,7 +115,7 @@ current buffer's, reload dir-locals."
   (size-indication-mode t)
   (tab-always-indent t)                 ; in indent.el
 
-  :init
+  :preface
   (defun ts/insert-zero-width-space ()
     (interactive)
     (insert-char #x200b))
@@ -157,6 +152,7 @@ current buffer's, reload dir-locals."
           (emacs-lisp-docstring-fill-column t))
       (fill-paragraph nil region)))
 
+  :init
   (column-number-mode t)
   (global-so-long-mode +1)              ; mitigate perf on files with long lines
   (show-paren-mode +1)                  ; highlight matching parens
@@ -171,8 +167,8 @@ current buffer's, reload dir-locals."
   ;; For multilingual environment.
   (prefer-coding-system 'utf-8)         ; Use UTF-8 when possible
   (set-default-coding-systems 'utf-8)
-  (set-language-environment "UTF-8")
-  )
+  (set-language-environment "UTF-8"))
+
 
 (use-package files
   :straight nil
@@ -187,56 +183,51 @@ current buffer's, reload dir-locals."
   (make-backup-files nil)
   (require-final-newline nil)
 
-  :init
-  (ensure-directory-exists ts/backup-cache-dir)
-
   :preface
-  (defconst ts/backup-cache-dir (expand-file-name "~/.cache/emacs-backups")))
+  (defconst ts/backup-cache-dir (expand-file-name "~/.cache/emacs-backups"))
+
+  :init
+  (ensure-directory-exists ts/backup-cache-dir))
 
 
 ;; WINDOWS AND FRAMES
 
 (use-package ace-window
   ;; Quickly switch windows in Emacs.
-  :bind (("M-O" . 'ace-window))
-  :custom (aw-dispatch-always t))
+  :bind
+  (("M-O" . 'ace-window))
+
+  :custom
+  (aw-dispatch-always t))
+
 
 (use-package frame-cmds
   ;; Frame functions and commands.
-  :ensure nil
-  :bind (("M-o" . 'other-window-or-frame))
+  :bind
+  ("M-o" . 'other-window-or-frame))
 
-  :init
-  (ensure-file-from-url "https://www.emacswiki.org/emacs/download/frame-fns.el")
-  (ensure-file-from-url "https://www.emacswiki.org/emacs/download/frame-cmds.el"))
 
 (use-package shackle
   ;; Enforce rules for popup windows.
   :disabled
 
-  :config (shackle-mode 1)
-
   :custom
   (shackle-default-alignment 'below)
   (shackle-default-size 0.4)
-  ;; (shackle-rules '(("*Warnings*"
-  ;;                   :select nil :size 0.25)
-  ;;                  (magit-status-mode
-  ;;                   :align right :size 0.5 :inhibit-window-quit t :other t)))
-  )
+  (shackle-rules '(("*Warnings*"
+                    :select nil :size 0.25)
+                   (magit-status-mode
+                    :align right :size 0.5 :inhibit-window-quit t :other t)))
 
-(use-package topsy
-  ;; Simple sticky header showing definition beyond top of window.
-  :disabled                             ; Because of conflict with lsp
-  :quelpa (topsy :fetcher github :repo "alphapapa/topsy.el")
-  :hook (prog-mode . topsy-mode))
+  :config
+  (shackle-mode 1))
+
 
 (use-package yascroll
   ;; Yet Another Scroll Bar Mode.
   :init
-  ;; (ensure-file-from-github "emacsorphanage/yascroll/master/yascroll.el")
-
-  ;; Enable only if no GUI:
+  ;; Want to enable only in non-GUI mode, but enable it in Wayland as toolkit
+  ;; scrollbars are not very configurable.
   (if (not window-system)
       (if (daemonp)
           (add-hook 'after-make-frame-functions
@@ -245,18 +236,7 @@ current buffer's, reload dir-locals."
                         (when (not window-system)
                           (global-yascroll-bar-mode +1)))))
         (global-yascroll-bar-mode +1))
-    (global-yascroll-bar-mode +1)       ; since toolkit scrollbars in wayland don't work well
-    )
-  )
-
-
-;; INPUT DEVICES
-
-(use-package mwheel
-  :straight nil
-  :custom
-  (mouse-wheel-progressive-speed t)
-  (mouse-wheel-scroll-amount '(3 ((shift) . 1))))
+    (global-yascroll-bar-mode +1)))
 
 
 ;; SHELL
@@ -265,14 +245,19 @@ current buffer's, reload dir-locals."
   ;; Add node_modules/.bin to exec-path.
   )
 
+
 (use-package direnv
   ;; direnv integration.
   ;;
   ;; Invoke direnv to obtain the environment for the current file, then update
   ;; the emacs variables process-environment and exec-path.
   ;;
-  :config (direnv-mode)
-  :ensure-system-package ((direnv . "sudo apt install -y direnv")))
+  :ensure-system-package
+  (direnv . "sudo apt install -y direnv")
+
+  :config
+  (direnv-mode))
+
 
 (use-package exec-path-from-shell
   ;; Make Emacs use the PATH set up by the user's shell.
@@ -280,14 +265,17 @@ current buffer's, reload dir-locals."
   ;; Ensure environment variables look the same in the user's shell.
   ;;
   :if (or (memq window-system '(mac ns x)) (daemonp))
-  :config (exec-path-from-shell-initialize))
+
+  :config
+  (exec-path-from-shell-initialize))
+
 
 (use-package keychain-environment
   ;; Loads keychain environment variables into emacs.
-  :ensure nil
-  :init
-  (ensure-file-from-github "tarsius/keychain-environment/master/keychain-environment.el")
-  (require 'keychain-environment)
+  :straight
+  (:host github :repo "tarsius/keychain-environment")
+
+  :config
   (keychain-refresh-environment))
 
 
@@ -297,9 +285,6 @@ current buffer's, reload dir-locals."
   :straight nil
   :custom (byte-compile-warnigns '(cl-functions)))
 
-;; A RPC stack for the Emacs Lisp
-;; (use-package epc
-;;   :ensure t)
 
 (use-package gcmh
   ;; The Garbage Collector Magic Hack.
@@ -311,44 +296,71 @@ current buffer's, reload dir-locals."
   (gcmh-idle-delay 5))
 
 
+;; HELP
+
+(use-package apropos
+  :straight nil
+
+  :bind
+  (:prefix "C-h a"
+   :prefix-map ts/apropos-prefix-map
+   ("a" . apropos)
+   ("d" . apropos-documentation)
+   ("f" . apropos-command)
+   ("i" . info-apropos)
+   ("l" . apropos-library)
+   ("v" . apropos-variable)
+   ("C-v" . apropos-value))
+
+  :custom
+  (apropos-sort-by-scores t))
+
+
+(use-package help-shortdoc-example
+  ;; Display shortdoc examples to *Help* buffer.
+  :straight
+  (:host github :repo "buzztaiki/help-shortdoc-example.el")
+
+  :config
+  (help-shortdoc-example-mode 1))
+
+
+(use-package which-key
+  ;; Displays available keybindings in popup.
+  :bind
+  (("C-h W" . which-key-show-top-level))
+
+  :custom
+  (which-key-popup-type 'side-window)
+  (which-key-side-window-location '(right bottom))
+
+  :init
+  (which-key-mode +1))
+
+
 ;; MISC.
 
 (use-package dash
   ;; A modern list library for Emacs
   )
 
-(use-package help-shortdoc-example
-  ;; Display shortdoc examples to *Help* buffer.
-  :straight nil
-  :config (help-shortdoc-example-mode 1)
-  :init
-  (ensure-file-from-github "buzztaiki/help-shortdoc-example.el/main/help-shortdoc-example.el"))
 
 (use-package tramp
   :straight nil
   :custom (tramp-default-method "ssh")
   :defer t)
 
-(use-package which-key
-  ;; Displays available keybindings in popup.
-
-  :bind (("C-h W" . which-key-show-top-level))
-
-  :custom
-  (which-key-popup-type 'side-window)
-  (which-key-side-window-location '(right bottom))
-
-  :config
-  (which-key-mode +1))
 
 (use-package system-packages
   :custom
   (system-packages-use-sudo t)
   (system-packages-package-manager 'apt))
 
+
 (use-package switch-buffer-functions
   ;; Hook run when switching current buffer.
   )
+
 
 (provide 'init-startup)
 ;;; init-startup.el ends here
