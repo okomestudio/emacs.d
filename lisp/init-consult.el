@@ -4,23 +4,27 @@
 
 (use-package consult
   ;; Consulting completing-read.
+  :bind
+  (:prefix "M-g"
+   :prefix-map ts/consult-prefix-map
+   ("b" . consult-bookmark)
+   ("f" . consult-find)
+   ("F" . consult-locate)
+   ("g" . consult-git-grep)
+   ("G" . consult-grep)
+   ("i" . consult-imenu)
+   ("I" . consult-imenu-multi)
+   ("l" . consult-line)
+   ("L" . consult-line-multi)
+   ("m" . consult-mark)
+   ("M" . consult-global-mark)
+   ("M-g" . consult-goto-line))
+
   :ensure-system-package
-  ((locate . "sudo apt install -y locate"))
+  (locate . "sudo apt install -y locate")
 
   :init
-  (global-set-key (kbd "M-g b") 'consult-bookmark)
-  (global-set-key (kbd "M-g f") 'consult-find)
-  (global-set-key (kbd "M-g F") 'consult-locate)
-  (global-set-key (kbd "M-g g") 'consult-git-grep)
-  (global-set-key (kbd "M-g G") 'consult-grep)
-  (global-set-key (kbd "M-g i") 'consult-imenu)
-  (global-set-key (kbd "M-g I") 'consult-imenu-multi)
-  (global-set-key (kbd "M-g l") 'consult-line)
-  (global-set-key (kbd "M-g L") 'consult-line-multi)
-  (global-set-key (kbd "M-g m") 'consult-mark)
-  (global-set-key (kbd "M-g M") 'consult-gloabl-mark)
-  (global-set-key (kbd "M-g M-g") 'consult-goto-line)
-  (global-set-key [remap apropos] #'consult-apropos)
+  ;; (global-set-key [remap apropos] #'consult-apropos)
   (global-set-key [remap electric-apropos] #'consult-apropos)
   (global-set-key [remap switch-to-buffer-other-window] #'consult-buffer-other-window)
   (global-set-key [remap switch-to-buffer] #'consult-buffer)
