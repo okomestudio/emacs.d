@@ -55,6 +55,7 @@
 (require 'init-faces)
 (require 'init-minibuffer)
 (require 'init-treemacs)
+(require 'init-consult)
 
 (require 'init-editing-utils)
 (require 'init-editing-lookup)
