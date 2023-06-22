@@ -38,12 +38,14 @@
    (vscode-html-language-server . "npm i -g vscode-langservers-extracted"))
 
   :hook
-  ((ansible . (lambda () (ts/lsp-mode-hook 'ansible-ls)))
+  ((ansible . (lambda ()
+                (lsp-disconnect)        ; disconnect yamlls
+                (setq-local lsp-disabled-clients '(yamlls))
+                (ts/lsp-mode-hook 'ansible-ls)))
    (dockerfile-mode . (lambda () (ts/lsp-mode-hook 'dockerfile-ls)))
    ;; (html-mode . lsp)
    (js-mode . (lambda () (ts/lsp-mode-hook 'jsts-ls)))
    (json-mode . (lambda () (ts/lsp-mode-hook 'json-ls)))
-   ;; (lsp-mode . lsp-enable-which-key-integration)
    (markdown-mode . lsp)
    (python-mode . (lambda () (ts/lsp-mode-hook 'pylsp)))
    (sh-mode . (lambda () (ts/lsp-mode-hook 'bash-ls)))
@@ -56,11 +58,13 @@
     (lsp-ensure-server server)
     (lsp))
 
+  (put 'lsp-ansible-python-interpreter-path 'safe-local-variable #'stringp)
+  (put 'lsp-ansible-validation-lint-arguments 'safe-local-variable #'stringp)
+  (put 'lsp-disabled-clients 'safe-local-variable #'listp)
+
   :init
   (with-eval-after-load 'lsp-mode
     (add-hook 'lsp-mode-hook #'lsp-enable-which-key-integration))
-
-  (put 'lsp-ansible-python-interpreter-path 'safe-local-variable #'stringp)
 
   :config
   (add-to-list 'lsp-language-id-configuration '(".*\\.html?\\.j2" . "html"))
