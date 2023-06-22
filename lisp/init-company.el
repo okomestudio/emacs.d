@@ -7,7 +7,7 @@
   ;; See https://emacs.stackexchange.com/a/24800/599 for key binding tips.
   :bind
   (:map company-mode-map
-   ("TAB" . company-indent-or-complete-common)
+   ("<C-tab>" . company-indent-or-complete-common)
 
    :map company-active-map
    ("<tab>" . company-complete-selection)
