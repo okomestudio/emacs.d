@@ -16,7 +16,7 @@
 
 ;; auth-info
 (setq auth-sources '((:source "~/.config/emacs/secrets/.authinfo.gpg")))
-(setq authinfo-hidden "\\(api_token\\|apikey\\|cookie\\|secret\\|passphrase\\|password\\)")
+(setq authinfo-hidden "\\(api_token\\|authkey\\|cookie\\|secret\\|passphrase\\|password\\)")
 
 
 ;; custom.el
