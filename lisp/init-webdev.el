@@ -134,6 +134,7 @@
           "--trailing-comma" "all")))
 
 (use-package web-beautify
+  :disabled
   :ensure-system-package ((js-beautify . "npm install -g js-beautify")))
 
 (provide 'init-webdev)
