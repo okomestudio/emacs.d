@@ -14,11 +14,6 @@
   (add-hook 'after-init-hook #'ts/tear-down-profiler))
 
 
-;; auth-info
-(setq auth-sources '((:source "~/.config/emacs/secrets/.authinfo.gpg")))
-(setq authinfo-hidden "\\(api_token\\|authkey\\|cookie\\|secret\\|passphrase\\|password\\)")
-
-
 ;; custom.el
 (setq custom-file (concat user-emacs-directory "custom.el"))
 (unless (file-exists-p custom-file)
@@ -51,6 +46,7 @@
 (require 'init-org)
 
 (require 'init-startup)
+(require 'init-auth-source)
 (require 'init-themes)
 (require 'init-faces)
 (require 'init-minibuffer)
