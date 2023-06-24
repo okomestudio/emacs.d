@@ -76,16 +76,16 @@
           (concat (string ?- ?—)
                   "[:space:]"
                   (string ?\N{ZERO WIDTH SPACE}
-                          ?[ ?( ?{
+                          ?\[ ?\( ?{
                           ?‘ ?“
                           ?| ?│ )))
   (setcar (nthcdr 1 org-emphasis-regexp-components)
-          (concat (string ?] ?) ?})
+          (concat (string ?\] ?\) ?})
                   "[:space:]"
                   (string ?\N{ZERO WIDTH SPACE}
                           ?’ ?”
                           ?| ?│
-                          ?. ?, ?? ?! ?; ?:
+                          ?. ?, ?? ?! ?\; ?:
                           ?— ?- )))
   (setcar (nthcdr 2 org-emphasis-regexp-components)
           (concat "[:space:]" (string ?\N{ZERO WIDTH SPACE})))
