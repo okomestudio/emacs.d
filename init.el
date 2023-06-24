@@ -5,6 +5,10 @@
 ;; init profiling
 (defconst ts/profile-init nil "Set to t to profile init.el.")
 
+;; suppress some warnings (set t while development)
+(setq byte-compile-warnings '(not obsolete))
+
+
 (when ts/profile-init
   (require 'profiler)
   (profiler-start 'cpu)
