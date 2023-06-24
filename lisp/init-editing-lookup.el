@@ -8,10 +8,10 @@
 
 (use-package init-editing-lookup
   :straight nil
-  :after (define-word powerthesaurus eww go-translate)
+  :after (define-word powerthesaurus eww)
+
   :bind
-  (
-   :prefix "M-L"
+  (:prefix "M-L"
    :prefix-map text-map
    :prefix-docstring "Keymap for editing lookup"
    ("d w" . define-word-at-point)
@@ -21,9 +21,7 @@
    ("s w e" . search-wikipedia)
    ("s w j" . search-wikipedia-ja)
    ("s d" . search-weblio)
-   ("t" . gts-do-translate)
-   )
-  )
+   ("t" . (lambda () (interactive) (gts-do-translate)))))
 
 
 (use-package define-word
@@ -99,32 +97,32 @@
 
 (use-package go-translate
   ;; A translation framework.
+  :defer t
 
   :custom
-  (gts-split-width-threshold 120)       ; if buffer width is less than this, then split vertically
+  (gts-split-width-threshold 120)
   (gts-translate-list '(("en" "ja") ("ja" "en")))
 
   :config
-  ;; Get DeepL auth key from authinfo:
-  (setq deepl-auth (car (auth-source-search :host "deepl.com"
-                                            :requires '(:authkey))))
-  (setq deepl-authkey (plist-get deepl-auth :authkey))
+  (setq deepl-authkey (plist-get (car (auth-source-search
+                                       :host "deepl.com"
+                                       :requires '(:authkey)))
+                                 :authkey))
 
-  ;; Define default engines:
-  (setq gts-custom-engines (list
-                            (gts-google-engine :parser (gts-google-summary-parser))
-                            (gts-google-rpc-engine :parser (gts-google-rpc-parser))
-                            (gts-bing-engine) ))
+  (setq gts-custom-engines
+        (list (gts-google-engine :parser (gts-google-summary-parser))
+              (gts-google-rpc-engine :parser (gts-google-rpc-parser))
+              (gts-bing-engine)))
 
   ;; If the auth key exists, add DeepL engine:
-  (if (not (null deepl-authkey))
-      (push (gts-deepl-engine :auth-key deepl-authkey :pro nil) gts-custom-engines))
+  (unless (null deepl-authkey)
+    (push (gts-deepl-engine :auth-key deepl-authkey :pro nil)
+          gts-custom-engines))
 
   (setq gts-default-translator (gts-translator
                                 :picker (gts-prompt-picker)
                                 :engines gts-custom-engines
-                                :render (gts-buffer-render)) )
-  )
+                                :render (gts-buffer-render))))
 
 
 (provide 'init-editing-lookup)
