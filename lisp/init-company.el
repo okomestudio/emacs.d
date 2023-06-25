@@ -20,7 +20,7 @@
    ("RET" . company-complete-selection))
 
   :custom
-  (company-minimum-prefix-length 1)
+  (company-minimum-prefix-length 2)
   (company-selection-wrap-around t)
   (company-show-numbers 'left)
   (company-tooltip-align-annotations t)
