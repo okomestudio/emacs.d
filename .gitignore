@@ -28,7 +28,7 @@ elpa
 emojis/
 eshell
 history
-init.d
+init.d/
 persist
 projectile-bookmarks.eld
 projectile.cache
