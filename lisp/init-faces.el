@@ -220,5 +220,19 @@ See https://knowledge.sakura.ad.jp/8494/"
       (all-the-icons-install-fonts +1)))
 
 
+(use-package font-core
+  :straight nil
+
+  :config
+  (add-hook 'switch-buffer-functions
+            (lambda (_pref current)
+              ;; NOTE: This hook is for turning off font-lock-mode in
+              ;; list-colors-display only.
+              (when (string-equal (buffer-name current)
+                                  "*Colors*")
+                (font-lock-mode -1)
+                (list-colors-display)))))
+
+
 (provide 'init-faces)
 ;;; init-faces.el ends here
