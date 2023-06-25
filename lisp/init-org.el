@@ -2,6 +2,7 @@
 ;;; Commentary:
 ;;; Code:
 
+
 (defcustom ts/org-books-file "~/.config/emacs/.books.org"
   "Default org-books-file."
   :type '(string)
@@ -11,6 +12,7 @@
   "Default org-default-notes-file."
   :type '(string)
   :group 'ts)
+
 
 (use-package org
   :after (ob-typescript ox-gfm)
@@ -127,6 +129,7 @@
    ;; Code-like comments
    '(font-lock-comment-face ((t (:inherit 'fixed-pitch))))))
 
+
 (use-package org-agenda
   :after (org)
   :straight nil
@@ -141,10 +144,12 @@
   :init
   (put 'org-agenda-custom-commands 'safe-local-variable #'listp))
 
+
 (use-package org-books
   ;; Reading list management with org mode.
   :disabled
   :custom (org-books-file ts/org-books-file))
+
 
 (use-package org-modern
   ;; Modern Org Style.
@@ -167,6 +172,7 @@
   :init
   (with-eval-after-load 'org (global-org-modern-mode)))
 
+
 (use-package org-modern-indent
   :straight
   (org-modern-indent :type git
@@ -176,13 +182,16 @@
   :config
   (add-hook 'org-mode-hook #'org-modern-indent-mode 90))
 
+
 (use-package org-sticky-header
   :init
   (org-sticky-header-mode +1))
 
+
 (use-package org-superstar
   :custom
   (org-superstar-headline-bullets-list '("◉" "🞛" "○" "▷")))
+
 
 (use-package ob-typescript)
 (use-package ox-gfm)
@@ -194,6 +203,7 @@
   "Default max-buffer-size over which valign-mode will not activate."
   :type '(integer)
   :group 'ts)
+
 
 (use-package valign
   ;; Pixel-perfect visual alignment for Org and Markdown tables.
@@ -241,50 +251,58 @@
   (org-roam-mode-sections (list #'org-roam-backlinks-section
                                 #'org-roam-reflinks-section
                                 #'org-roam-unlinked-references-section))
-  (org-roam-node-annotation-function (lambda (node)
-                                       (concat " "
-                                               (marginalia--time (org-roam-node-file-mtime node)))))
-  (org-roam-node-display-template (concat "${my-node-entry} ${my-node-parent-title} "
-                                          (propertize "${tags}" 'face 'org-tag)))
+  (org-roam-node-display-template (concat "​​​​​${my-node-entry:*}"
+                                          (propertize "${tags:16}" 'face 'org-tag)
+                                          " ${my-node-timestamp:*}"))
 
   :init
   (with-eval-after-load 'org-roam-node
-    (cl-defmethod org-roam-node-my-node-entry ((node org-roam-node))
-      (org-roam-node-title node))
+    (cl-defmethod org-roam-node-my-node-timestamp ((node org-roam-node))
+      (marginalia--time
+       (let* ((node-properties (org-roam-node-properties node))
+              (node-mtime (cdr (assoc "MTIME" node-properties)))
+              (inhibit-message t))
+         (if node-mtime
+             (org-roam-timestamps-encode (car (split-string node-mtime)))
+           (org-roam-node-file-mtime node)))))
 
-    (cl-defmethod org-roam-node-my-node-parent-title ((node org-roam-node))
-      (if (string= (org-roam-node-title node) (org-roam-node-file-title node))
-          ""
-        (concat (propertize "< "
-                            'face '(:foreground "dim gray"))
-                (propertize (org-roam-node-file-title node)
-                            'face '(:slant italic :foreground "dim gray" :height 1.0 :underline t)))))
+    (cl-defmethod org-roam-node-my-node-entry ((node org-roam-node))
+      (let* ((node-title (org-roam-node-title node))
+             (node-file-title (org-roam-node-file-title node)))
+        (concat
+         node-title
+         (if (string= node-title node-file-title)
+             ""
+           (concat (propertize " ❬ "
+                               'face '(:foreground "SeaGreen4"))
+                   (propertize node-file-title
+                               'face '(:slant italic :foreground "SeaGreen4")))))))
 
     (cl-defmethod org-roam-node-slug ((node org-roam-node))
       "Return the slug of NODE. Overridden to use hyphens instead of underscores."
       (let ((title (org-roam-node-title node))
             ;; Combining Diacritical Marks https://www.unicode.org/charts/PDF/U0300.pdf
-            (slug-trim-chars '(768   ; U+0300 COMBINING GRAVE ACCENT
-                               769   ; U+0301 COMBINING ACUTE ACCENT
-                               770   ; U+0302 COMBINING CIRCUMFLEX ACCENT
-                               771   ; U+0303 COMBINING TILDE
-                               772   ; U+0304 COMBINING MACRON
-                               774   ; U+0306 COMBINING BREVE
-                               775   ; U+0307 COMBINING DOT ABOVE
-                               776   ; U+0308 COMBINING DIAERESIS
-                               777   ; U+0309 COMBINING HOOK ABOVE
-                               778   ; U+030A COMBINING RING ABOVE
-                               779   ; U+030B COMBINING DOUBLE ACUTE ACCENT
-                               780   ; U+030C COMBINING CARON
-                               795   ; U+031B COMBINING HORN
-                               803   ; U+0323 COMBINING DOT BELOW
-                               804   ; U+0324 COMBINING DIAERESIS BELOW
-                               805   ; U+0325 COMBINING RING BELOW
-                               807   ; U+0327 COMBINING CEDILLA
-                               813   ; U+032D COMBINING CIRCUMFLEX ACCENT BELOW
-                               814   ; U+032E COMBINING BREVE BELOW
-                               816   ; U+0330 COMBINING TILDE BELOW
-                               817))); U+0331 COMBINING MACRON BELOW
+            (slug-trim-chars '(768    ; U+0300 COMBINING GRAVE ACCENT
+                               769    ; U+0301 COMBINING ACUTE ACCENT
+                               770    ; U+0302 COMBINING CIRCUMFLEX ACCENT
+                               771    ; U+0303 COMBINING TILDE
+                               772    ; U+0304 COMBINING MACRON
+                               774    ; U+0306 COMBINING BREVE
+                               775    ; U+0307 COMBINING DOT ABOVE
+                               776    ; U+0308 COMBINING DIAERESIS
+                               777    ; U+0309 COMBINING HOOK ABOVE
+                               778    ; U+030A COMBINING RING ABOVE
+                               779    ; U+030B COMBINING DOUBLE ACUTE ACCENT
+                               780    ; U+030C COMBINING CARON
+                               795    ; U+031B COMBINING HORN
+                               803    ; U+0323 COMBINING DOT BELOW
+                               804    ; U+0324 COMBINING DIAERESIS BELOW
+                               805    ; U+0325 COMBINING RING BELOW
+                               807    ; U+0327 COMBINING CEDILLA
+                               813    ; U+032D COMBINING CIRCUMFLEX ACCENT BELOW
+                               814    ; U+032E COMBINING BREVE BELOW
+                               816    ; U+0330 COMBINING TILDE BELOW
+                               817))) ; U+0331 COMBINING MACRON BELOW
         (cl-flet* ((nonspacing-mark-p (char)
                      (memq char slug-trim-chars))
                    (strip-nonspacing-marks (s)
@@ -312,12 +330,14 @@
   (require 'org-roam-dailies)
   (org-roam-db-autosync-mode))
 
+
 (use-package org-roam-ui
   :after org-roam
   :custom
   (org-roam-ui-follow t)
   (org-roam-ui-sync-theme t)
   (org-roam-ui-update-on-save t))
+
 
 (use-package org-roam-bibtex
   :after org-roam
@@ -328,10 +348,24 @@
   :config
   (require 'org-ref)) ; optional: if using Org-ref v2 or v3 citation links
 
+
 (use-package org-ref
   ;; For citations, cross-references, bibliographies.
   :custom (bibtex-completion-pdf-field "file")
   :init (put 'bibtex-completion-bibliography 'safe-local-variable #'listp))
+
+
+(use-package org-roam-timestamps
+  :after org-roam
+
+  :custom
+  (org-roam-timestamps-minimum-gap 10)
+  (org-roam-timestamps-parent-file t)
+  (org-roam-timestamps-remember-timestamps t)
+
+  :config
+  (org-roam-timestamps-mode))
+
 
 (provide 'init-org)
 ;;; init-org.el ends here
