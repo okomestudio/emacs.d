@@ -49,18 +49,6 @@
     t))
 
 
-(defun ts/set-fallback-cjk-font (fontset-name)
-  (let ((font-family (seq-find #'ts/font-exists-p
-                               '(;; "HackGen"
-                                 "VL Gothic"
-                                 "Noto Sans Mono CJK JP"))))
-    (set-fontset-font fontset-name
-                      'unicode
-                      (font-spec :family font-family)
-                      nil
-                      'append)))
-
-
 (use-package faces
   :straight nil
 
@@ -80,6 +68,18 @@
   (treemacs-mode . (lambda () (text-scale-decrease 0.4)))
 
   :preface
+  (setq ts/font-family-default "Hack"
+        ts/font-family-fixed-ptch "Hack"
+        ts/font-family-variable-pitch "EB Garamond"
+        ts/font-family-cjk-fallbacks '("VL Gothic" "Noto Sans Mono CJK JP"))
+
+  ;; Set relative scales for font faces here. For best alignment, try with fixed
+  ;; pitch font so that two ASCII characters have the same width with a CJK
+  ;; character.
+  (setq ts/font-relative-scales '(("Hack" . 1.0) ; use as reference size
+                                  ("VL Gothic" . 1.225)
+                                  ("EB Garamond". 1.4)))
+
   (defun ts/apply-if-gui (&rest action)
     "Apply ACTION if we are in a GUI."
     (if (daemonp)
@@ -93,10 +93,19 @@
         (select-frame (selected-frame))
         (apply action))))
 
+  (defun ts/set-fallback-cjk-font (fontset-name)
+    (let ((font-family (seq-find #'ts/font-exists-p
+                                 ts/font-family-cjk-fallbacks)))
+      (set-fontset-font fontset-name
+                        'unicode
+                        (font-spec :family font-family)
+                        nil
+                        'append)))
+
   (defun ts/setup-font-for-frame ()
-    (set-face-attribute 'default nil :family "Hack")
-    (set-face-attribute 'fixed-pitch nil :family "Hack")
-    (set-face-attribute 'variable-pitch nil :family "EB Garamond")
+    (set-face-attribute 'default nil :family ts/font-family-default)
+    (set-face-attribute 'fixed-pitch nil :family ts/font-family-fixed-ptch)
+    (set-face-attribute 'variable-pitch nil :family ts/font-family-variable-pitch)
     (ts/set-fallback-cjk-font nil))
 
   (defun ts/create-cjk-hybrid-fontset (size name)
@@ -109,19 +118,8 @@ See https://knowledge.sakura.ad.jp/8494/"
       (ts/set-fallback-cfk-font fontset-name)
       fontset-name))
 
-  (defun ts/setup-frame ()
-    (defvar ts/default-font (font-spec :family "Hack"
-                                       :size (ts/default-font-size)))
-    (set-frame-font ts/default-font)
-    (ts/set-fallback-cjk-font nil))
-
   :init
-  ;; Set relative scales for font faces here. For best alignment, try with fixed
-  ;; pitch font so that two ASCII characters have the same width with a CJK
-  ;; character.
-  (dolist (element '(("Hack" . 1.0)
-                     ("VL Gothic" . 1.225)
-                     ("EB Garamond". 1.4)))
+  (dolist (element ts/font-relative-scales)
     (add-to-list 'face-font-rescale-alist element))
 
   (ts/apply-if-gui 'ts/setup-font-for-frame))
