@@ -233,6 +233,7 @@
   (("C-c n l" . org-roam-buffer-toggle)
    ("C-c n f" . org-roam-node-find)
    ("C-c n i" . org-roam-node-insert)
+
    :map org-mode-map
    ("C-M-i" . completion-at-point))
 
@@ -254,6 +255,15 @@
   (org-roam-node-display-template (concat "​​​​​${my-node-entry:*}"
                                           (propertize "${tags:16}" 'face 'org-tag)
                                           " ${my-node-timestamp:*}"))
+
+  :preface
+  (put 'orb-preformat-keywords 'safe-local-variable #'listp)
+  (put 'org-roam-capture-templates 'safe-local-variable #'listp)
+  (put 'org-roam-dailies-capture-templates 'safe-local-variable #'listp)
+  (put 'org-roam-db-location 'safe-local-variable #'stringp)
+  (put 'org-roam-directory 'safe-local-variable #'stringp)
+  (put 'org-roam-mode-sections 'safe-local-variable #'listp)
+  (put 'org-roam-ui-port 'safe-local-variable #'integerp)
 
   :init
   (with-eval-after-load 'org-roam-node
@@ -317,14 +327,6 @@
                           ("-$" . ""))) ;; remove ending underscore
                  (slug (-reduce-from #'cl-replace (strip-nonspacing-marks title) pairs)))
             (downcase slug))))))
-
-  (put 'orb-preformat-keywords 'safe-local-variable #'listp)
-  (put 'org-roam-capture-templates 'safe-local-variable #'listp)
-  (put 'org-roam-dailies-capture-templates 'safe-local-variable #'listp)
-  (put 'org-roam-db-location 'safe-local-variable #'stringp)
-  (put 'org-roam-directory 'safe-local-variable #'stringp)
-  (put 'org-roam-mode-sections 'safe-local-variable #'listp)
-  (put 'org-roam-ui-port 'safe-local-variable #'integerp)
 
   :config
   (require 'org-roam-dailies)
