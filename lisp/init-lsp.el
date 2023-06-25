@@ -2,6 +2,7 @@
 ;;; Commentary:
 ;;; Code:
 
+
 (use-package lsp-mode
   :commands lsp
 
@@ -32,7 +33,7 @@
   (lsp-sqls-timeout 30)
 
   :ensure-system-package
-  ((shellcheck . "sudo apt install -y shellcheck")  ; for bash-ls
+  ((shellcheck . "sudo apt install -y shellcheck") ; for bash-ls
    (sqls . "go install github.com/lighttiger2505/sqls@latest")
    ;; (unified-language-server . "npm i -g unified-language-server")
    (vscode-html-language-server . "npm i -g vscode-langservers-extracted"))
@@ -136,8 +137,7 @@
         (ts/grammarly--check-grammar start end)
       (progn
         (mark-paragraph)
-        (ts/grammarly--check-grammar (region-beginning) (region-end)))))
-  )
+        (ts/grammarly--check-grammar (region-beginning) (region-end))))))
 
 
 (use-package lsp-ui
@@ -150,31 +150,53 @@
   :commands lsp-ui-mode
 
   :bind
-  (("C-h D d" . (lambda ()
-                  (interactive)
-                  (if (lsp-ui-doc--visible-p)
-                      (lsp-ui-doc-hide) (lsp-ui-doc-show))))
-   ("C-h D f" . lsp-ui-doc-focus-frame) ; want to run this within the above function...
-   )
+  (:map lsp-ui-mode-map
+   ("C-h D" . ts/lsp-ui-doc-show-and-focus)
+
+   :map lsp-ui-doc-frame-mode-map
+   ("q" . (lambda ()
+            (interactive)
+            (let* ((win (lsp-ui-doc--get-parent :window)))
+              (lsp-ui-doc-unfocus-frame)
+              (lsp-ui-doc-frame-mode -1)
+              (lsp-ui-doc-hide)
+              (select-window win)))))
 
   :custom
   (lsp-ui-doc-border "black")
   (lsp-ui-doc-delay 0.1)
-  (lsp-ui-doc-max-height 25)
+  (lsp-ui-doc-max-height 5)
   (lsp-ui-doc-position 'at-point)
   (lsp-ui-doc-show-with-cursor nil)
   (lsp-ui-doc-show-with-mouse nil)
   (lsp-ui-doc-text-scale-level -1.0)
   (lsp-ui-doc-use-childframe t)
   (lsp-ui-doc-use-webkit nil)
+  (lsp-ui-sideline-delay 1.0)
   (lsp-ui-sideline-show-code-actions t)
   (lsp-ui-sideline-show-diagnostics t)
   (lsp-ui-sideline-show-hover t)
-  )
+
+  :preface
+  (defun ts/lsp-ui-doc-show-and-focus ()
+    (interactive)
+
+    (defun ts/try-focus-frame (delay)
+      (run-with-idle-timer delay nil
+                           (lambda ()
+                             (if (lsp-ui-doc--frame-visible-p)
+                                 (lsp-ui-doc-focus-frame)
+                               (lsp-ui-doc-show)
+                               (ts/try-focus-frame (* delay 1.2))))))
+
+    (lsp-ui-doc-show)
+    (ts/try-focus-frame 0.1)))
+
 
 (use-package lsp-treemacs
   :bind ([f7] . lsp-treemacs-symbols)
   :commands lsp-treemacs-errors-list)
+
 
 (provide 'init-lsp)
 ;;; init-lsp.el ends here
