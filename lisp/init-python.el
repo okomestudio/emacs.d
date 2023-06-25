@@ -57,15 +57,13 @@
   :custom
   (pyenv-show-active-python-in-modeline nil)
 
-  :hook
-  (switch-buffer-functions
-   .
-   (lambda (_prev curr)
-     (interactive)
-     (if (string-equal "Python" (format-mode-line mode-name nil nil curr))
-         (pyenv-use-corresponding))))
-
   :config
+  (add-hook 'switch-buffer-functions
+            (lambda (_prev curr)
+              (if (string-equal "Python"
+                                (format-mode-line mode-name nil nil curr))
+                  (pyenv-use-corresponding))))
+
   (global-pyenv-mode))
 
 
