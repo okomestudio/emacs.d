@@ -31,9 +31,9 @@
 
   :preface
   (defun ts/solaire-mode-real-buffer-p ()
-    (if (string-prefix-p "*elfeed" (buffer-name))
-        't
-      (solaire-mode-real-buffer-p)))
+    (cond ((string-prefix-p "*elfeed" (buffer-name)) t)
+          ((string-prefix-p "*Colors*" (buffer-name)) nil)
+          (t (solaire-mode-real-buffer-p))))
 
   :config
   (solaire-global-mode +1))
