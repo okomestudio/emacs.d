@@ -75,20 +75,27 @@
 
 (use-package lsp-grammarly
   :disabled
-  :bind ("C-c g" . ts/check-grammar)
-  :custom (lsp-grammarly-auto-activate nil)
+
+  :bind
+  ("C-c g" . ts/check-grammar)
+
+  :custom
+  (lsp-grammarly-auto-activate nil)
 
   :ensure-system-package
   (unofficial-grammarly-language-server . "npm i -g @emacs-grammarly/unofficial-grammarly-language-server")
 
   :init
   (use-package keytar
-    :ensure-system-package (keytar . "npm install -g @emacs-grammarly/keytar-cli"))
+    :ensure-system-package
+    (keytar . "npm install -g @emacs-grammarly/keytar-cli"))
 
   (defun ts/grammarly--check-grammar (start end)
     (if (use-region-p)
         (let* ((parent-buffer (current-buffer))
-               (tmp-filename (make-temp-file (concat (expand-file-name (buffer-file-name parent-buffer)) "-")))
+               (tmp-filename (make-temp-file
+                              (concat (expand-file-name (buffer-file-name parent-buffer))
+                                      "-")))
                (tmp-buffer (get-buffer-create tmp-filename)))
           (copy-to-buffer tmp-buffer start end)
           (with-current-buffer tmp-buffer
@@ -100,15 +107,18 @@
                   (text-mode)
                   (use-local-map (copy-keymap text-mode-map))
                   (local-set-key (kbd "C-x k")
-                                 (lambda () (interactive) (ts/grammarly--finalize tmp-buffer parent-buffer start end)))
+                                 (lambda ()
+                                   (interactive)
+                                   (ts/grammarly--finalize tmp-buffer parent-buffer start end)))
                   (local-set-key (kbd "C-c C-c")
-                                 (lambda () (interactive) (ts/grammarly--finalize tmp-buffer parent-buffer start end)))
+                                 (lambda ()
+                                   (interactive)
+                                   (ts/grammarly--finalize tmp-buffer parent-buffer start end)))
 
                   (lsp)
                   (lsp-grammarly-check-grammar))
-              (progn
-                (add-hook 'kill-emacs-hook (lambda () (ts/grammarly--clean-up-tmp-file tmp-filename))))
-              ) ))
+              (add-hook 'kill-emacs-hook (lambda ()
+                                           (ts/grammarly--clean-up-tmp-file tmp-filename))))))
       (message "No region marked to check for grammar")))
 
   (defun ts/grammarly--clean-up-tmp-buffer (buffer)
