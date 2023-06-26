@@ -3,17 +3,6 @@
 ;;; Code:
 
 
-(defcustom ts/org-books-file "~/.config/emacs/.books.org"
-  "Default org-books-file."
-  :type '(string)
-  :group 'ts)
-
-(defcustom ts/org-default-notes-file "~/.config/emacs/.notes.org"
-  "Default org-default-notes-file."
-  :type '(string)
-  :group 'ts)
-
-
 (use-package org
   :after (ob-typescript ox-gfm)
   :ensure org-contrib
@@ -27,20 +16,12 @@
   (org-adapt-indentation nil)
   (org-babel-python-command "~/.pyenv/shims/python")
   (org-blank-before-new-entry '((heading . auto) (plain-list-item . auto)))
-  (org-capture-templates '(("b" "Book" entry (file ts/org-books-file)
-                            "%(let* ((url (substring-no-properties (current-kill 0)))
-                                      (details (org-books-get-details url)))
-                                      (when details (apply #'org-books-format 1 details)))")
-                           ("t" "Task" entry (file+headline "" "Tasks")
-		                        "* TODO %?\n  %u\n  %a") ))
-  (org-default-notes-file ts/org-default-notes-file)
   (org-ellipsis "⮷")
   (org-export-with-broken-links t)
   (org-export-with-section-numbers nil)
   (org-file-apps '(("\\.mp4\\'" . "vlc --repeat %s")))
   (org-hide-emphasis-markers t)
   (org-image-actual-width nil)
-  ;; (org-indent-indentation-per-level 4)
   (org-list-allow-alphabetical t)
   (org-list-indent-offset 2)
   ;; (org-plantuml-jar-path ts/path-plantuml)
@@ -148,7 +129,15 @@
 (use-package org-books
   ;; Reading list management with org mode.
   :disabled
-  :custom (org-books-file ts/org-books-file))
+
+  :init
+  (defcustom ts/org-books-file "~/.config/emacs/.books.org"
+    "Default org-books-file."
+    :type '(string)
+    :group 'ts)
+
+  :custom
+  (org-books-file ts/org-books-file))
 
 
 (use-package org-modern
@@ -170,7 +159,8 @@
   (org-modern-variable-pitch t)
 
   :init
-  (with-eval-after-load 'org (global-org-modern-mode)))
+  (with-eval-after-load 'org
+    (global-org-modern-mode)))
 
 
 (use-package org-modern-indent
@@ -230,9 +220,10 @@
   :after org
 
   :bind
-  (("C-c n l" . org-roam-buffer-toggle)
+  (("C-c n c" . (lambda () (interactive) (org-capture nil "f")))
    ("C-c n f" . org-roam-node-find)
    ("C-c n i" . org-roam-node-insert)
+   ("C-c n l" . org-roam-buffer-toggle)
 
    :map org-mode-map
    ("C-M-i" . completion-at-point))
@@ -288,10 +279,8 @@
                    (propertize node-file-title
                                'face '(:slant italic :foreground "SeaGreen4")))))))
 
-    (cl-defmethod org-roam-node-slug ((node org-roam-node))
-      "Return the slug of NODE. Overridden to use hyphens instead of underscores."
-      (let ((title (org-roam-node-title node))
-            ;; Combining Diacritical Marks https://www.unicode.org/charts/PDF/U0300.pdf
+    (defun ts/org-roam-node-slug (title)
+      (let* (;; Combining Diacritical Marks https://www.unicode.org/charts/PDF/U0300.pdf
             (slug-trim-chars '(768    ; U+0300 COMBINING GRAVE ACCENT
                                769    ; U+0301 COMBINING ACUTE ACCENT
                                770    ; U+0302 COMBINING CIRCUMFLEX ACCENT
@@ -316,17 +305,24 @@
         (cl-flet* ((nonspacing-mark-p (char)
                      (memq char slug-trim-chars))
                    (strip-nonspacing-marks (s)
-                     (string-glyph-compose (apply #'string
-                                                  (seq-remove #'nonspacing-mark-p
-                                                              (string-glyph-decompose s)))))
+                     (string-glyph-compose
+                      (apply #'string
+                             (seq-remove #'nonspacing-mark-p
+                                         (string-glyph-decompose s)))))
                    (cl-replace (title pair)
                      (replace-regexp-in-string (car pair) (cdr pair) title)))
           (let* ((pairs `(("[^[:alnum:][:digit:]]" . "-") ;; convert anything not alphanumeric
                           ("--*" . "-") ;; remove sequential underscores
                           ("^-" . "")   ;; remove starting underscore
                           ("-$" . ""))) ;; remove ending underscore
-                 (slug (-reduce-from #'cl-replace (strip-nonspacing-marks title) pairs)))
-            (downcase slug))))))
+                 (slug (-reduce-from #'cl-replace
+                                     (strip-nonspacing-marks title)
+                                     pairs)))
+            (downcase slug)))))
+
+    (cl-defmethod org-roam-node-slug ((node org-roam-node))
+      "Return the slug of NODE. Overridden to use hyphens instead of underscores."
+      (ts/org-roam-node-slug (org-roam-node-title node))))
 
   :config
   (require 'org-roam-dailies)
