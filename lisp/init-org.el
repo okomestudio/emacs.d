@@ -361,8 +361,8 @@
   :after org-roam
 
   :custom
-  (org-roam-timestamps-minimum-gap 10)
-  (org-roam-timestamps-parent-file t)
+  (org-roam-timestamps-minimum-gap 10800)
+  (org-roam-timestamps-parent-file nil)
   (org-roam-timestamps-remember-timestamps t)
 
   :config
