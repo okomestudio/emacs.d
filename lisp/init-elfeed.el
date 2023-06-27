@@ -8,10 +8,11 @@
   (elfeed-search-filter "@3-month-ago ")
 
   :hook
-  (elfeed-show-mode . ts/elfeed-show-mode-hook)
+  (elfeed-show-mode . init-elfeed--elfeed-show-mode-hook)
 
   :preface
-  (defun ts/elfeed-show-mode-hook ()
+  (defun init-elfeed--elfeed-show-mode-hook ()
+    ;; Adjust the feed article page style here:
     (setq-local shr-width nil
                 shr-max-width nil
                 shr-use-fonts t)
@@ -20,10 +21,10 @@
 
 (use-package elfeed-org
   :custom
-  (rmh-elfeed-org-files (ts/rmh-elfeed-org-files))
+  (rmh-elfeed-org-files (init-elfeed--rmh-elfeed-org-files))
 
   :preface
-  (defun ts/rmh-elfeed-org-files ()
+  (defun init-elfeed--rmh-elfeed-org-files ()
     (let ((conf-d-dir (concat user-emacs-directory "conf.d/")))
       (if (file-exists-p conf-d-dir)
           (directory-files conf-d-dir t "^elfeed.*\\.org$"))))
