@@ -16,10 +16,23 @@
                       (load-theme theme t))))
       (load-theme theme t)))
 
+  (defun init-themes--scale-color (orig factor)
+    (let* ((result 0.0))
+      (cl-loop for pow downfrom 2
+               for x in orig
+               do
+               (setq result
+                     (+ result (* (expt 256 pow) (round (* x factor))))))
+      (format "#%X" result)))
+
   :init
-  (custom-set-variables
-   '(spacemacs-theme-custom-colors
-     '((base . "#322938")))) ; #655370 for light, true-color
+  (setq spacemacs-theme-custom-colors
+        `((base . "#322938")  ; #655370 for light, true-color
+
+          ;; Make some colors slightly darker
+          (head3 . ,(init-themes--scale-color '(#x67 #xb1 #x1d) 0.80))
+          (head4 . ,(init-themes--scale-color '(#xb1 #x95 #x1d) 0.80))
+          (cyan . ,(init-themes--scale-color '(#x21 #xb8 #xc7) 0.95))))
 
   (ts/configure-theme 'spacemacs-light))
 
