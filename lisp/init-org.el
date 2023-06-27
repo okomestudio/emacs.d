@@ -331,6 +331,7 @@
 
 (use-package org-roam-ui
   :after org-roam
+
   :custom
   (org-roam-ui-follow t)
   (org-roam-ui-sync-theme t)
@@ -339,6 +340,7 @@
 
 (use-package org-roam-bibtex
   :after org-roam
+
   :custom
   (orb-insert-link-description "${author-abbrev} ${date}")
   (orb-roam-ref-format 'org-ref-v3)
@@ -349,8 +351,11 @@
 
 (use-package org-ref
   ;; For citations, cross-references, bibliographies.
-  :custom (bibtex-completion-pdf-field "file")
-  :init (put 'bibtex-completion-bibliography 'safe-local-variable #'listp))
+  :custom
+  (bibtex-completion-pdf-field "file")
+
+  :preface
+  (put 'bibtex-completion-bibliography 'safe-local-variable #'listp))
 
 
 (use-package org-roam-timestamps
