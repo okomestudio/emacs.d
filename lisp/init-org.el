@@ -216,8 +216,12 @@
 ;;; Org Roam
 
 (use-package org-roam
-  ;; Rudimentary Roam replica with org-mode.
   :after org
+
+  :straight
+  (:type git :host github :repo "okomestudio/org-roam"
+   :branch "unlinked-ref-custom-word-boundary"
+   :fork "okomestudio")
 
   :bind
   (("C-c n c" . (lambda () (interactive) (org-capture nil "f")))
@@ -246,6 +250,8 @@
   (org-roam-node-display-template (concat "​​​​​${my-node-entry:*}"
                                           (propertize "${tags:16}" 'face 'org-tag)
                                           " ${my-node-timestamp:*}"))
+  (org-roam-unlinked-references-word-boundary-re
+   "|(\\b%1$s\\b|(?<=[^\x20-\x7e\xff61-\xff9f])%1$s(?=[^\x20-\x7e\xff61-\xff9f]))")
 
   :preface
   (put 'orb-preformat-keywords 'safe-local-variable #'listp)
