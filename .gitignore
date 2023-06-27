@@ -41,5 +41,6 @@ straight/*
 !straight/versions/
 tramp
 transient
+tutorial/
 url
 var/
