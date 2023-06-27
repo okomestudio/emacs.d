@@ -50,6 +50,7 @@
 (require 'init-org)
 
 (require 'init-startup)
+(require 'init-wayland)
 (require 'init-auth-source)
 (require 'init-themes)
 (require 'init-faces)
