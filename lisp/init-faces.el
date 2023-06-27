@@ -106,7 +106,10 @@
     (set-face-attribute 'default nil :family ts/font-family-default)
     (set-face-attribute 'fixed-pitch nil :family ts/font-family-fixed-ptch)
     (set-face-attribute 'variable-pitch nil :family ts/font-family-variable-pitch)
-    (ts/set-fallback-cjk-font nil))
+    (ts/set-fallback-cjk-font nil)
+
+    (set-face-attribute 'italic nil :slant 'italic :underline nil)
+    (set-face-attribute 'underline nil :slant 'normal :underline t))
 
   (defun ts/create-cjk-hybrid-fontset (size name)
     "Create a CJK hybrid fontset of SIZE named fontset-NAME
