@@ -236,7 +236,7 @@
   ("C-c n d" . org-roam-dailies-map)
 
   :custom
-  (org-roam-completion-everywhere t)
+  (org-roam-completion-everywhere nil)
   (org-roam-dailies-capture-templates '(("d" "default" entry "* %?\n<%<%Y-%m-%d %a %H:%M>>"
                                          :target
                                          (file+head "%<%Y-%m-%d>.org" "#+title: %<%Y-%m-%d>\n"))))
