@@ -20,6 +20,7 @@
    ("RET" . company-complete-selection))
 
   :custom
+  (company-idle-delay 1.0)
   (company-minimum-prefix-length 2)
   (company-selection-wrap-around t)
   (company-show-numbers 'left)
