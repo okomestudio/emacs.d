@@ -57,21 +57,23 @@
   ;; https://stackoverflow.com/a/63805680/515392.
   (setcar org-emphasis-regexp-components
           (concat (string ?- ?—)
-                  "[:space:]"
+                  "[:space:][:nonascii:]"
                   (string ?\N{ZERO WIDTH SPACE}
                           ?\[ ?\( ?{
                           ?‘ ?“
-                          ?| ?│ )))
+                          ?| ?│ )
+                  ""))
   (setcar (nthcdr 1 org-emphasis-regexp-components)
           (concat (string ?\] ?\) ?})
-                  "[:space:]"
+                  "[:space:][:nonascii:]"
                   (string ?\N{ZERO WIDTH SPACE}
                           ?’ ?”
                           ?| ?│
                           ?. ?, ?? ?! ?\; ?:
-                          ?— ?- )))
+                          ?— ?- )
+                  ""))
   (setcar (nthcdr 2 org-emphasis-regexp-components)
-          (concat "[:space:]" (string ?\N{ZERO WIDTH SPACE})))
+          (concat "[:space:]"))
   (org-set-emph-re 'org-emphasis-regexp-components org-emphasis-regexp-components)
 
   ;; Babel and document export
