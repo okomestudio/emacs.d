@@ -69,7 +69,7 @@
 (require 'init-openwith)
 (require 'init-vterm)
 ;; (require 'init-dired)
-;; (require 'init-gnus)
+(require 'init-gnus)
 ;; (require 'init-tern)
 (require 'init-yasnippet)
 
