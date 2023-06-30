@@ -40,15 +40,11 @@
   "TS personal customization group.")
 
 
-;; Load global helper functions
-(require 'init-utils)
-
 ;; Configure packages
-;; (require 'init-package)
-(require 'init-straight)
+(require 'init-straight) ;; or init-package
 
+(require 'init-utils)
 (require 'init-org)
-
 (require 'init-startup)
 (require 'init-wayland)
 (require 'init-auth-source)

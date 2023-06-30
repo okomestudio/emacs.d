@@ -2,6 +2,12 @@
 ;;; Commentary:
 ;;; Code:
 
+
+(use-package s
+  ;; The long lost Emacs string manipulation library.
+  )
+
+
 (defun debug-message (text)
   "Print a debug message TEXT with timestamp."
   (message "%s: %s"

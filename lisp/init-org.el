@@ -276,16 +276,19 @@
            (org-roam-node-file-mtime node)))))
 
     (cl-defmethod org-roam-node-my-node-entry ((node org-roam-node))
-      (let* ((node-title (org-roam-node-title node))
-             (node-file-title (org-roam-node-file-title node)))
+      (let* ((title-annotate-color "SeaGreen4")
+             (node-title (org-roam-node-title node))
+             (node-file-title (or (if (not (s-blank? (org-roam-node-file-title node)))
+                                    (org-roam-node-file-title node))
+                                  (file-name-nondirectory (org-roam-node-file node)))))
         (concat
          node-title
          (if (string= node-title node-file-title)
              ""
            (concat (propertize " ❬ "
-                               'face '(:foreground "SeaGreen4"))
+                               'face `(:foreground ,title-annotate-color))
                    (propertize node-file-title
-                               'face '(:slant italic :foreground "SeaGreen4")))))))
+                               'face `(:foreground ,title-annotate-color :slant italic)))))))
 
     (defun ts/org-roam-node-slug (title)
       (let* (;; Combining Diacritical Marks https://www.unicode.org/charts/PDF/U0300.pdf
