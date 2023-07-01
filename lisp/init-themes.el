@@ -99,7 +99,7 @@
   :config
   (set-face-attribute 'hl-line nil
                       :inherit nil
-                      :background "pale goldenrod"))
+                      :background "lemon chiffon"))
 
 
 (use-package highlight-indent-guides
