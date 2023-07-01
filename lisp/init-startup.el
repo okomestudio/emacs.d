@@ -330,8 +330,11 @@ current buffer's, reload dir-locals."
   (("C-h W" . which-key-show-top-level))
 
   :custom
+  (which-key-max-description-length 1.0)
+  (which-key-min-column-description-width 40)
   (which-key-popup-type 'side-window)
   (which-key-side-window-location '(right bottom))
+  (which-key-side-window-max-width 56)
 
   :init
   (which-key-mode +1))
