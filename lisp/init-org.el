@@ -107,7 +107,7 @@
    '(org-special-keyword ((t (:foreground "#999999" :height 1.0 :inherit 'fixed-pitch))))
    '(org-property-value ((t (:foreground "#999999" :height 1.0 :inherit 'fixed-pitch))))
    ;; Table
-   '(org-table ((t (:inherit 'variable-pitch))))
+   '(org-table ((t (:inherit 'fixed-pitch))))
 
    ;; Code-like comments
    '(font-lock-comment-face ((t (:inherit 'fixed-pitch))))))
@@ -191,12 +191,6 @@
 
 ;; Org table styling
 
-(defcustom valign-max-buffer-size 100000
-  "Default max-buffer-size over which valign-mode will not activate."
-  :type '(integer)
-  :group 'ts)
-
-
 (use-package valign
   ;; Pixel-perfect visual alignment for Org and Markdown tables.
   :custom
@@ -204,11 +198,18 @@
   (valign-max-table-size 4000)
   (valign-signal-parse-error t)
 
+  :preface
+  (defcustom valign-max-buffer-size 100000
+    "Default max-buffer-size over which valign-mode will not activate."
+    :type '(integer)
+    :group 'ts)
+
   :init
   ;; Add logic to avoid loading valign-mode for large buffers.
   (add-hook 'org-mode-hook
             (lambda ()
               (when (not (> (buffer-size) valign-max-buffer-size))
+                (custom-set-faces '(org-table ((t (:inherit 'variable-pitch)))))
                 (valign-mode))))
 
   :config
