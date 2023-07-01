@@ -115,7 +115,7 @@
 (use-package ace-isearch
   ;; A seamless bridge between isearch, ace-jump-mode, avy, and swoop.
   :custom
-  (ace-isearch-input-length 6)
+  (ace-isearch-input-length 1)
   (ace-isearch-jump-delay 0.75)
 
   :preface
