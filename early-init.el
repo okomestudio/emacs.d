@@ -2,11 +2,11 @@
 ;;;
 ;;; Commentary:
 ;;;
-;;; Provides early initialization for Emacs > 27.1.
+;;; Provides early initialization for Emacs.
 ;;;
 ;;; Code:
 
-(setq debug-on-error nil)               ; set t when debugging startup issues:
+(setq debug-on-error nil) ;; set t when debugging startup issues
 
 (let ((minver "29.0"))
   (when (version< emacs-version minver)
@@ -33,6 +33,8 @@
 (setq frame-inhibit-implied-resize t)
 
 (setq native-comp-jit-compilation t)
+
+(setq redisplay-skip-fontification-on-input t)
 
 (provide 'early-init)
 ;;; early-init.el ends here
