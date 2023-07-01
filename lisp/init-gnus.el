@@ -42,6 +42,7 @@ Each list item is:
   (setq gnus-directory (concat gnus-home-directory "news/")
         gnus-dribble-directory gnus-home-directory
         gnus-init-file (concat gnus-home-directory "gnus.el")
+        gnus-startup-file (concat gnus-home-directory ".newsrc")
         gnus-summary-insert-old-articles t
         gnus-summary-line-format "%U%R%z%I%(%[%o: %-23,23f%]%) %s\\n"
         message-directory (concat gnus-home-directory "mail/"))
