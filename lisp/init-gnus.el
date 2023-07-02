@@ -1,5 +1,34 @@
 ;;; init-gnus.el --- Gnus  -*- lexical-binding: t -*-
 ;;; Commentary:
+;;
+;; To open the Gnus manual, hit ~C-h i d m gnus~.
+;;
+;; In the group buffer:
+;;
+;;   - RET :: enters the group under the cursor
+;;   - g :: check for new news and mail
+;;   - l :: show only groups with unread articles
+;;   - m :: create a new mail
+;;   - q :: quit Gnus (make sure you do before quitting Emacs)
+;;
+;; In the summary and article buffer:
+;;
+;;   - RET :: view the article under the cursor
+;;   - m :: create a new mail
+;;   - R :: reply by mail and cite the article
+;;   - r :: reply by mail without citing the article
+;;   - t :: toggle all headers
+;;   - C-c C-c :: send message
+;;   - C-c C-d :: save message as draft
+;;   - C-c C-k :: kill message
+;;   - C-c C-m f :: attach file
+;;   - M-q :: reformat paragraph
+;;
+;; For Gmail IMAP:
+;;
+;;   - B DEL or B backspace :: archive message (removes inbox tag)
+;;   - B m and choose [Gmail]/Trash :: move message to trash
+;;
 ;;; Code:
 
 
