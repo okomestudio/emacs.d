@@ -11,7 +11,7 @@
    ("f" . consult-find)
    ("F" . consult-locate)
    ("g" . consult-git-grep)
-   ("G" . consult-grep)
+   ("G" . consult-ripgrep)
    ("i" . consult-imenu)
    ("I" . consult-imenu-multi)
    ("l" . consult-line)
@@ -19,6 +19,20 @@
    ("m" . consult-mark)
    ("M" . consult-global-mark)
    ("M-g" . consult-goto-line))
+
+  :custom
+  (consult-ripgrep-args (concat "rg"
+                                " --null"
+                                " --line-buffered"
+                                " --color=never"
+                                " --max-columns=1000"
+                                " --path-separator /"
+                                " --smart-case"
+                                " --no-heading"
+                                " --with-filename"
+                                " --line-number"
+                                " --search-zip"
+                                " --follow"))
 
   :ensure-system-package
   (locate . "sudo apt install -y locate")
