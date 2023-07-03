@@ -18,6 +18,7 @@
    ("d p" . powerthesaurus-lookup-dwim)
    ("s a e" . search-amazon)
    ("s a j" . search-amazon-ja)
+   ("s g" . search-goodreads)
    ("s w e" . search-wikipedia)
    ("s w j" . search-wikipedia-ja)
    ("s d" . search-weblio)
@@ -56,6 +57,7 @@
   (defun ts/eww-render--after (&rest _)
     (ts/eww-set-start-at "amazon.co.jp" "^結果")
     (ts/eww-set-start-at "amazon.com" "^RESULTS")
+    (ts/eww-set-start-at "goodreads.com" "^Page ")
     (ts/eww-set-start-at "en.m.wikipedia.org" "^ *Search")
     (ts/eww-set-start-at "ja.m.wikipedia.org" "^ *検索")
     (ts/eww-set-start-at "www.weblio.jp" "^ *Weblio 辞書"))
@@ -81,6 +83,10 @@
   (defun search-amazon-ja (str)
     (interactive (list (ts/region-or-read-string "Amazon (JP): ")))
     (ts/make-query "https://amazon.co.jp/s?k=%s" str))
+
+  (defun search-goodreads (str)
+    (interactive (list (ts/region-or-read-string "Goodreads: ")))
+    (ts/make-query "https://goodreads.com/search?q=%s" str))
 
   (defun search-weblio (str)
     (interactive (list (ts/region-or-read-string "Weblio: ")))
