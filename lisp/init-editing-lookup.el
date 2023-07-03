@@ -6,23 +6,41 @@
 ;;; Code:
 
 
+(require 'okutil)
+
+
 (use-package init-editing-lookup
+  :after (define-word powerthesaurus eww chatgpt-shell)
   :straight nil
-  :after (define-word powerthesaurus eww)
 
   :bind
-  (:prefix "M-L"
-   :prefix-map text-map
-   :prefix-docstring "Keymap for editing lookup"
-   ("d w" . define-word-at-point)
-   ("d p" . powerthesaurus-lookup-dwim)
-   ("s a e" . search-amazon)
-   ("s a j" . search-amazon-ja)
-   ("s g" . search-goodreads)
-   ("s w e" . search-wikipedia)
-   ("s w j" . search-wikipedia-ja)
-   ("s d" . search-weblio)
-   ("t" . (lambda () (interactive) (gts-do-translate)))))
+  (:prefix-map
+   lookup-map
+   :prefix-docstring "Keymap for text lookup"
+   :prefix "M-L"
+   ("t" . gts-do-translate)
+   ("g" . ask-chatgpt)
+
+   :prefix-map lookup-dict-map
+   :prefix-docstring "Keymap for dictionary lookup"
+   :prefix "M-L d"
+   ("w" . define-word-at-point)
+   ("p" . powerthesaurus-lookup-dwim)
+
+   :prefix-map lookup-web-map
+   :prefix-docstring "Keymap for dictionary lookup"
+   :prefix "M-L s"
+   ("a e" . search-amazon)
+   ("a j" . search-amazon-ja)
+   ("d" . search-weblio)
+   ("g" . search-goodreads)
+   ("w e" . search-wikipedia)
+   ("w j" . search-wikipedia-ja))
+
+  :init
+  (defun ask-chatgpt (str)
+    (interactive (list (okutil-string-from-region-or-prompt "Ask ChatGPT: ")))
+    (chatgpt-shell-send-to-buffer str)))
 
 
 (use-package define-word
@@ -61,43 +79,35 @@
     (ts/eww-set-start-at "en.m.wikipedia.org" "^ *Search")
     (ts/eww-set-start-at "ja.m.wikipedia.org" "^ *検索")
     (ts/eww-set-start-at "www.weblio.jp" "^ *Weblio 辞書"))
-  (add-hook 'eww-after-render-hook 'ts/eww-render--after)
 
-  (defun ts/region-or-read-string (prompt &optional initial history default inherit)
-    "When region is specified, use it as string; otherwise, get it interactively."
-    (if (not (region-active-p))
-        (read-string prompt initial history default inherit)
-      (prog1
-          (buffer-substring-no-properties (region-beginning) (region-end))
-        (deactivate-mark)
-        (message ""))))
+  (add-hook 'eww-after-render-hook 'ts/eww-render--after)
 
   (defun ts/make-query (site-url str)
     "Look up term STR at SITE-URL in eww."
     (eww-browse-url (format site-url (url-hexify-string str))))
 
   (defun search-amazon (str)
-    (interactive (list (ts/region-or-read-string "Amazon (US): ")))
+    (interactive (list (okutil-string-from-region-or-prompt "Amazon (US): ")))
     (ts/make-query "https://amazon.com/s?k=%s" str))
 
   (defun search-amazon-ja (str)
-    (interactive (list (ts/region-or-read-string "Amazon (JP): ")))
+    (interactive (list (okutil-string-from-region-or-prompt "Amazon (JP): ")))
     (ts/make-query "https://amazon.co.jp/s?k=%s" str))
 
   (defun search-goodreads (str)
-    (interactive (list (ts/region-or-read-string "Goodreads: ")))
+    (interactive (list (okutil-string-from-region-or-prompt "Goodreads: ")))
     (ts/make-query "https://goodreads.com/search?q=%s" str))
 
   (defun search-weblio (str)
-    (interactive (list (ts/region-or-read-string "Weblio: ")))
+    (interactive (list (okutil-string-from-region-or-prompt "Weblio: ")))
     (ts/make-query "https://www.weblio.jp/content/%s" (upcase str)))
 
   (defun search-wikipedia (str)
-    (interactive (list (ts/region-or-read-string "Wikipedia (en): ")))
+    (interactive (list (okutil-string-from-region-or-prompt "Wikipedia (en): ")))
     (ts/make-query "https://en.m.wikipedia.org/wiki/%s" str))
 
   (defun search-wikipedia-ja (str)
-    (interactive (list (ts/region-or-read-string "Wikipedia (ja): ")))
+    (interactive (list (okutil-string-from-region-or-prompt "Wikipedia (ja): ")))
     (ts/make-query "https://ja.m.wikipedia.org/wiki/%s" str)))
 
 
