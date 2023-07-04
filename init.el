@@ -53,6 +53,7 @@
 (require 'init-minibuffer)
 (require 'init-treemacs)
 (require 'init-consult)
+(require 'init-hydra)
 
 (require 'init-editing-utils)
 (require 'init-editing-lookup)
