@@ -28,14 +28,22 @@
    ("p" . powerthesaurus-lookup-dwim)
 
    :prefix-map lookup-web-map
-   :prefix-docstring "Keymap for dictionary lookup"
+   :prefix-docstring "Keymap for web lookup"
    :prefix "M-L s"
-   ("a e" . search-amazon)
-   ("a j" . search-amazon-ja)
    ("d" . search-weblio)
    ("g" . search-goodreads)
-   ("w e" . search-wikipedia)
-   ("w j" . search-wikipedia-ja))
+
+   :prefix-map lookup-amazon-map
+   :prefix-docstring "Keymap for Amazon lookup"
+   :prefix "M-L s a"
+   ("e" . search-amazon)
+   ("j" . search-amazon-ja)
+
+   :prefix-map lookup-wikipedia-map
+   :prefix-docstring "Keymap for Wikipedia lookup"
+   :prefix "M-L s w"
+   ("e" . search-wikipedia)
+   ("j" . search-wikipedia-ja))
 
   :init
   (defun ask-chatgpt (str)
