@@ -37,13 +37,7 @@ Each list item is:
                    sender)
           (message (format "Sending message using '%s' with config '%s'"
                            sender xmess))
-          (if (boundp 'openwith-mode)
-              ;; without this, attachment may open
-              (let ((openwith-mode-state (default-value 'openwith-mode)))
-                (openwith-mode -1)
-                (message-send-and-exit)
-                (openwith-mode openwith-mode-state))
-            (message-send-and-exit))))))
+          (message-send-and-exit)))))
 
   :init
   ;; Some init timing issue prevents the use of :custom, so do them here.

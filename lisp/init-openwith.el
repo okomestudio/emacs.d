@@ -8,8 +8,11 @@
   :custom
   (openwith-associations '(("\\.pdf\\'" "okular" (file))))
 
-  :init
-  (openwith-mode t))
+  :config
+  (openwith-mode t)
+
+  (with-eval-after-load 'mm-util
+    (add-to-list 'mm-inhibit-file-name-handlers 'openwith-file-handler)))
 
 
 (provide 'init-openwith)
