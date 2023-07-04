@@ -186,7 +186,8 @@
 
 
 (use-package ob-typescript)
-(use-package ox-gfm)
+(use-package ox-gfm :after ox)
+(use-package ox-hugo :after ox)
 
 
 ;; Org table styling
