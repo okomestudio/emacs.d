@@ -18,12 +18,11 @@
                                         ; github.com/bash-lsp/bash-language-server/issues/726
 
   (lsp-bash-highlight-parsing-errors t)
+  (lsp-diagnostics-provider :auto)
   (lsp-log-io t)
   (lsp-pylsp-configuration-sources ["flake8"])
   (lsp-pylsp-plugins-flake8-enabled t)
   (lsp-pylsp-plugins-pycodestyle-enabled nil)
-  (lsp-pylsp-plugins-pydocstyle-add-ignore ["D100", "D103"])
-  (lsp-pylsp-plugins-pydocstyle-convention "google")
   (lsp-pylsp-plugins-pydocstyle-enabled t)
   (lsp-pylsp-plugins-pyflakes-enabled nil)
   (lsp-pylsp-plugins-pylint-enabled nil)

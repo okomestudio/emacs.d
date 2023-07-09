@@ -5,6 +5,7 @@
 
 if ! $(pyenv prefix)/bin/pylsp ; then
     pip install python-lsp-server[all] python-lsp-black pyls-isort
+    pip install flake8 flake8-docstrings pydocstyle[toml]
 fi
 
 exec pylsp -v $@
