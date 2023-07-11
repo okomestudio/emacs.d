@@ -225,7 +225,7 @@
 
   :straight
   (:type git :host github :repo "okomestudio/org-roam"
-   :branch "unlinked-ref-custom-word-boundary"
+   :branch "okomestudio"
    :fork "okomestudio")
 
   :bind
