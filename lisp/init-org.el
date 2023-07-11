@@ -221,7 +221,7 @@
 ;;; Org Roam
 
 (use-package org-roam
-  :after org
+  :after (org adaptive-wrap)
 
   :straight
   (:type git :host github :repo "okomestudio/org-roam"
@@ -257,6 +257,12 @@
                                           " ${my-node-timestamp:*}"))
   (org-roam-unlinked-references-word-boundary-re
    "|(\\b%1$s\\b|(?<=[^\x20-\x7e\xff61-\xff9f])%1$s(?=[^\x20-\x7e\xff61-\xff9f]))")
+
+  :hook
+  (org-roam-mode . (lambda ()
+                     (visual-line-mode +1)
+                     (setq-local adaptive-wrap-extra-indent 4)
+                     (adaptive-wrap-prefix-mode +1)))
 
   :preface
   (put 'orb-preformat-keywords 'safe-local-variable #'listp)
@@ -382,6 +388,11 @@
 
   :config
   (org-roam-timestamps-mode))
+
+
+(use-package adaptive-wrap
+  :custom
+  (adaptive-wrap-extra-indent 4))
 
 
 (provide 'init-org)
