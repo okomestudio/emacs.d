@@ -91,6 +91,7 @@
                                (python . t)
                                (shell . t)
                                (sql . t)
+                               (sqlite . t)
                                (typescript . t)))
 
   (plist-put org-format-latex-options :scale 1.5) ; scale rendered expression
