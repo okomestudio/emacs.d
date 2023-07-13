@@ -12,11 +12,14 @@
 
   :preface
   (defun init-elfeed--elfeed-show-mode-hook ()
+    ;(toggle-truncate-lines +1)
+
     ;; Adjust the feed article page style here:
     (setq-local shr-width nil
-                shr-max-width nil
-                shr-use-fonts t)
-    (toggle-truncate-lines +1)))
+                shr-max-width 95
+                shr-indentation 5
+                shr-use-fonts t
+                shr-folding-mode nil)))
 
 
 (use-package elfeed-org
@@ -38,6 +41,8 @@
   :custom
   (elfeed-goodies/entry-pane-position 'bottom)
   (elfeed-goodies/entry-pane-size 0.8)
+  (elfeed-goodies/feed-source-column-width 28)
+  (elfeed-goodies/tag-column-width 16)
 
   :config
   (elfeed-goodies/setup)
