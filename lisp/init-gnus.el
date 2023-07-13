@@ -86,9 +86,9 @@ _g_: get new messages
 ^Message Summary^ ^^             ^Threads
 ^^^^^^^^^^^---------------------------------
 _o_: open         _f_: forward   _t_: toggle
-_m_: create new   _A_: archive
-_r_: reply all    _L_: label
-_R_: reply        ^ ^
+_m_: create new   _A_: archive   ^ ^
+_r_: reply all    _C_: copy
+_R_: reply        _M_: move
 "
     ("o" gnus-summary-show-article)
     ("m" gnus-summary-mail-other-window)
@@ -96,7 +96,8 @@ _R_: reply        ^ ^
     ("R" gnus-summary-reply-with-original)
     ("f" gnus-summary-mail-forward)
     ("A" gnus-summary-delete-article)
-    ("L" gnus-summary-move-article)
+    ("C" gnus-summary-copy-article)
+    ("M" gnus-summary-move-article)
     ("t" gnus-summary-toggle-threads)
     ("c" nil "cancel")
     ("q" gnus-summary-exit "quit" :color blue))
