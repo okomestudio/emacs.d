@@ -9,17 +9,37 @@
 
   :hook
   (elfeed-show-mode . init-elfeed--elfeed-show-mode-hook)
+  (elfeed-search-update . (lambda ()
+                            (setq-local nobreak-char-display nil)
+                            (text-scale-set 0.5)))
 
   :preface
   (defun init-elfeed--elfeed-show-mode-hook ()
-    ;(toggle-truncate-lines +1)
+    (setq-local nobreak-char-display nil) ;; remove underline from zenkaku space
 
-    ;; Adjust the feed article page style here:
-    (setq-local shr-width nil
-                shr-max-width 95
+    ;; adjust entry style via shr:
+    (setq-local shr-folding-mode nil
                 shr-indentation 5
+                shr-max-image-proportion 0.8
+                shr-max-width 95
                 shr-use-fonts t
-                shr-folding-mode nil)))
+                shr-width nil))
+
+  :config
+  (defhydra hydra-elfeed-show (:color pink :hint nil)
+    "
+^elfeed-show^
+^^^^^^^^^^^^^------------------------------
+_b_: visit the current entry in the browser
+_q_: kill the buffer
+_z_: zoom image (when on image)
+"
+    ("b" elfeed-show-visit)
+    ("c" nil "cancel")
+    ("q" elfeed-kill-buffer)
+    ("z" shr-zoom-image))
+
+  (define-key elfeed-show-mode-map "." 'hydra-elfeed-show/body))
 
 
 (use-package elfeed-org
