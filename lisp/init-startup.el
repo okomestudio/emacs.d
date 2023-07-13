@@ -15,16 +15,17 @@
   (mouse-wheel-progressive-speed t)
   (mouse-wheel-scroll-amount '(3 ((shift) . 1)))
   (next-error-message-highlight t)
+  (pixel-scroll-precision-large-scroll-height 5.0)
   (read-process-output-max (* 1 1024 1024)) ; 1 mb
   (ring-bell-function 'ignore)              ; Disable beeping (in C source code)
   (tab-width 2)
   (uniquify-buffer-name-style 'forward)
   (use-short-answers t)
   (vc-follow-symlinks t)
-
-  ;; Set to nil on Wayland, '(UTF8_STRING COMPOUND_TEXT TEXT STRING) on X:
-  (x-select-request-type nil)
-
+  (x-select-request-type
+   (cond ((eq window-system 'pgtk) nil)
+         ((eq window-system 'x) '(UTF8_STRING COMPOUND_TEXT TEXT STRING))
+         (t nil)))
   (word-wrap-by-category t)
 
   :preface
@@ -93,7 +94,9 @@ current buffer's, reload dir-locals."
                   " - Emacs"))
 
   (when window-system
-    (setq select-enable-clipboard t)))
+    (setq select-enable-clipboard t))
+
+  (pixel-scroll-precision-mode +1))
 
 
 (use-package simple
@@ -225,17 +228,7 @@ current buffer's, reload dir-locals."
 (use-package yascroll
   ;; Yet Another Scroll Bar Mode.
   :init
-  ;; Want to enable only in non-GUI mode, but enable it in Wayland as toolkit
-  ;; scrollbars are not very configurable.
-  (if (not window-system)
-      (if (daemonp)
-          (add-hook 'after-make-frame-functions
-                    (lambda (frame)
-                      (with-selected-frame frame
-                        (when (not window-system)
-                          (global-yascroll-bar-mode +1)))))
-        (global-yascroll-bar-mode +1))
-    (global-yascroll-bar-mode +1)))
+  (global-yascroll-bar-mode +1))
 
 
 ;; SHELL
