@@ -1,4 +1,4 @@
-;;; init-editing-lookup.el --- Editing-Lookup  -*- lexical-binding: t -*-
+;;; init-lookup.el --- Lookup  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;;
 ;;;   The collection of lookup utility exposed via a common key prefix.
@@ -9,46 +9,36 @@
 (require 'okutil)
 
 
-(use-package init-editing-lookup
+(use-package init-lookup
   :after (define-word powerthesaurus eww chatgpt-shell)
   :straight nil
 
   :bind
-  (:prefix-map
-   lookup-map
-   :prefix-docstring "Keymap for text lookup"
+  (:prefix-map lookup-map
+   :prefix-docstring "Keymap for lookup"
    :prefix "M-L"
+   ("c" . ask-chatgpt)
+   ("g" . search-goodreads)
    ("t" . gts-do-translate)
-   ("g" . ask-chatgpt)
+
+   :prefix-map lookup-amazon-map
+   :prefix-docstring "Keymap for Amazon lookup"
+   :prefix "M-L a"
+   ("e" . search-amazon-en)
+   ("j" . search-amazon-ja)
 
    :prefix-map lookup-dict-map
    :prefix-docstring "Keymap for dictionary lookup"
    :prefix "M-L d"
+   ("d" . search-weblio)
    ("w" . define-word-at-point)
    ("p" . powerthesaurus-lookup-dwim)
 
-   :prefix-map lookup-web-map
-   :prefix-docstring "Keymap for web lookup"
-   :prefix "M-L s"
-   ("d" . search-weblio)
-   ("g" . search-goodreads)
-
-   :prefix-map lookup-amazon-map
-   :prefix-docstring "Keymap for Amazon lookup"
-   :prefix "M-L s a"
-   ("e" . search-amazon)
-   ("j" . search-amazon-ja)
-
    :prefix-map lookup-wikipedia-map
    :prefix-docstring "Keymap for Wikipedia lookup"
-   :prefix "M-L s w"
-   ("e" . search-wikipedia)
-   ("j" . search-wikipedia-ja))
-
-  :init
-  (defun ask-chatgpt (str)
-    (interactive (list (okutil-string-from-region-or-prompt "Ask ChatGPT: ")))
-    (chatgpt-shell-send-to-buffer str)))
+   :prefix "M-L w"
+   ("e" . search-wikipedia-en)
+   ("j" . search-wikipedia-ja)))
 
 
 (use-package define-word
@@ -94,7 +84,7 @@
     "Look up term STR at SITE-URL in eww."
     (eww-browse-url (format site-url (url-hexify-string str))))
 
-  (defun search-amazon (str)
+  (defun search-amazon-en (str)
     (interactive (list (okutil-string-from-region-or-prompt "Amazon (US): ")))
     (ts/make-query "https://amazon.com/s?k=%s" str))
 
@@ -110,7 +100,7 @@
     (interactive (list (okutil-string-from-region-or-prompt "Weblio: ")))
     (ts/make-query "https://www.weblio.jp/content/%s" (upcase str)))
 
-  (defun search-wikipedia (str)
+  (defun search-wikipedia-en (str)
     (interactive (list (okutil-string-from-region-or-prompt "Wikipedia (en): ")))
     (ts/make-query "https://en.m.wikipedia.org/wiki/%s" str))
 
@@ -149,5 +139,5 @@
                                 :render (gts-buffer-render))))
 
 
-(provide 'init-editing-lookup)
-;;; init-editing-lookup.el ends here
+(provide 'init-lookup)
+;;; init-lookup.el ends here

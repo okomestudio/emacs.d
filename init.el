@@ -56,7 +56,7 @@
 (require 'init-hydra)
 
 (require 'init-editing-utils)
-(require 'init-editing-lookup)
+(require 'init-lookup)
 (require 'init-ime)
 (require 'init-pbocr)
 
