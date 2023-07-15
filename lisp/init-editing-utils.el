@@ -74,6 +74,9 @@
   (docutils . "pip install docutils")
   (textlint . "~/.config/emacs/bin/prepare-textlint")
 
+  :preface
+  (put 'flycheck-textlint-config 'safe-local-variable #'stringp)
+
   :init
   (global-flycheck-mode))
 
