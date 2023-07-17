@@ -1,4 +1,4 @@
-;;; init-gpt.el --- GPT clients  -*- lexical-binding: t -*-
+;;; init-ai.el --- GPT clients  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;; Code:
 
@@ -31,5 +31,25 @@
 (use-package gptel)
 
 
-(provide 'init-gpt)
-;;; init-gpt.el ends here
+(use-package org-ai
+  :custom
+  (org-ai-default-chat-model "gpt-3.5-turbo")
+  (org-ai-image-directory "~/Downloads/org-ai/")
+  (org-ai-sd-directory "~/Downloads/org-ai/")
+
+  :hook
+  (org-mode . org-ai-mode)
+
+  :commands
+  (org-ai-mode
+   org-ai-global-mode)
+
+  :init
+  (org-ai-global-mode)
+
+  :config
+  (org-ai-install-yasnippets))
+
+
+(provide 'init-ai)
+;;; init-ai.el ends here

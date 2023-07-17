@@ -91,7 +91,7 @@
 (require 'init-plantuml)
 (require 'init-restclient)
 
-(require 'init-gpt)
+(require 'init-ai)
 (require 'init-slack)
 
 (require 'init-projectile)
