@@ -2,6 +2,7 @@
 ;;; Commentary:
 ;;; Code:
 
+
 (use-package prog-mode
   :straight nil
   :hook
@@ -9,9 +10,11 @@
                   (ts/remove-trailing-whitespaces-on-save)
                   (show-paren-mode)))))
 
+
 (use-package text-mode
   :straight nil
   :hook ((text-mode . ts/remove-trailing-whitespaces-on-save)))
+
 
 ;; INI
 
@@ -19,6 +22,7 @@
   :disabled
   ;; :init (ensure-file-from-url "https://www.emacswiki.org/emacs/download/any-ini-mode.el")
   :mode "\\.ini\\'" "\\.conf\\'")
+
 
 
 ;; JSON
@@ -47,6 +51,7 @@
                                  "--jslint-happy"
                                  "--wrap-line-length" "88")))
         (web-beautify-js)))))
+
 
 (use-package jq-mode
   ;; TODO: Enable jq-mode with jq in JSON but yq in YAML.
@@ -84,6 +89,11 @@
   :straight nil
   :ensure-system-package ((sphinx-quickstart . "pip install sphinx"))
   :mode "\\.rst\\'")
+
+
+;; SSH CONFIG
+
+(use-package ssh-config-mode)
 
 
 ;; SYSTEMD
