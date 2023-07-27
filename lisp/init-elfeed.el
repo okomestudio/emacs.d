@@ -5,7 +5,7 @@
 
 (use-package elfeed
   :custom
-  (elfeed-search-filter "@3-month-ago ")
+  (elfeed-search-filter "@3-month-ago -news")
 
   :hook
   (elfeed-show-mode . init-elfeed--elfeed-show-mode-hook)
