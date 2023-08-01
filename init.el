@@ -46,6 +46,7 @@
 (require 'init-utils)
 (require 'init-org)
 (require 'init-startup)
+(require 'init-help)
 (require 'init-wayland)
 (require 'init-auth-source)
 (require 'init-themes)
