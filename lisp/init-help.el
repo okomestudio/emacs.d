@@ -3,6 +3,16 @@
 ;;; Code:
 
 
+(use-package helpful
+  :bind
+  (("C-c C-d" . helpful-at-point)
+   ("C-h F" . helpful-function)
+   ("C-h f" . helpful-callable)
+   ("C-h k" . helpful-key)
+   ("C-h v" . helpful-variable)
+   ("C-h x" . helpful-command)))
+
+
 (use-package apropos
   :straight nil
 
