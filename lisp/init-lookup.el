@@ -21,24 +21,20 @@
    ("g" . search-goodreads)
    ("t" . gts-do-translate)
 
-   :prefix-map lookup-amazon-map
-   :prefix-docstring "Keymap for Amazon lookup"
-   :prefix "M-L a"
-   ("e" . search-amazon-en)
-   ("j" . search-amazon-ja)
-
-   :prefix-map lookup-dict-map
-   :prefix-docstring "Keymap for dictionary lookup"
-   :prefix "M-L d"
-   ("d" . search-weblio)
-   ("w" . define-word-at-point)
+   :prefix-map lookup-english-map
+   :prefix-docstring "Keymap for English lookup"
+   :prefix "M-L e"
+   ("a" . search-amazon-en)
+   ("d" . define-word-at-point)
    ("p" . powerthesaurus-lookup-dwim)
+   ("w" . search-wikipedia-en)
 
-   :prefix-map lookup-wikipedia-map
-   :prefix-docstring "Keymap for Wikipedia lookup"
-   :prefix "M-L w"
-   ("e" . search-wikipedia-en)
-   ("j" . search-wikipedia-ja)))
+   :prefix-map lookup-japanese-map
+   :prefix-docstring "Keymap for Japanese lookup"
+   :prefix "M-L j"
+   ("a" . search-amazon-ja)
+   ("d" . search-weblio)
+   ("w" . search-wikipedia-ja)))
 
 
 (use-package define-word
