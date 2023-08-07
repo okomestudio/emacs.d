@@ -29,6 +29,7 @@ emojis/
 eshell
 history
 init.d/
+multisession/
 network-security.data
 persist
 projectile-bookmarks.eld
