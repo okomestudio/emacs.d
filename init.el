@@ -67,6 +67,7 @@
 (require 'init-company)
 (require 'init-docker)
 (require 'init-elfeed)
+(require 'init-eww)
 (require 'init-git)
 (require 'init-lsp)
 (require 'init-openwith)
