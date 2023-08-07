@@ -100,7 +100,7 @@ current buffer's, reload dir-locals."
   (when window-system
     (setq select-enable-clipboard t))
 
-  (pixel-scroll-precision-mode +1))
+  (pixel-scroll-precision-mode -1))
 
 
 (use-package simple
@@ -117,6 +117,7 @@ current buffer's, reload dir-locals."
   :custom
   (save-interprogram-paste-before-kill t)
   (sentence-end-double-space nil)       ; in paragraphs.el
+  (show-paren-context-when-offscreen t)
   (show-paren-delay 0)
   (size-indication-mode t)
   (tab-always-indent t)                 ; in indent.el

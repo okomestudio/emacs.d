@@ -9,6 +9,7 @@
    ("C-h F" . helpful-function)
    ("C-h f" . helpful-callable)
    ("C-h k" . helpful-key)
+   ("C-h l" . view-lossage)
    ("C-h v" . helpful-variable)
    ("C-h x" . helpful-command)))
 
