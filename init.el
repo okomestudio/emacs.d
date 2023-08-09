@@ -61,6 +61,7 @@
 (require 'init-lookup)
 (require 'init-ime)
 (require 'init-pbocr)
+(require 'init-pdf)
 
 (require 'init-anki)
 (require 'init-bookmark-plus)
