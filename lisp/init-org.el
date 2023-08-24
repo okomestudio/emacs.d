@@ -111,7 +111,17 @@
    '(org-table ((t (:inherit 'fixed-pitch))))
 
    ;; Code-like comments
-   '(font-lock-comment-face ((t (:inherit 'fixed-pitch))))))
+   '(font-lock-comment-face ((t (:inherit 'fixed-pitch)))))
+
+  ;; Add Org export handlers
+  (defun init-org--org-html-link (link contents info)
+    (format "<pre>%s</pre>" contents))
+
+  (org-export-define-derived-backend 'substack 'html
+    :menu-entry
+    '(?S "Export to Substack HTML" (lambda (a s v b)
+                                     (org-html-export-to-html a s v)))
+    :translate-alist '((link . init-org--org-html-link))))
 
 
 (use-package org-agenda
