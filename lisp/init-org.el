@@ -4,7 +4,7 @@
 
 
 (use-package org
-  :after (ob-typescript ox-gfm)
+  :after (ob-typescript)
   :ensure org-contrib
 
   :bind
@@ -76,10 +76,7 @@
           (concat "[:space:]"))
   (org-set-emph-re 'org-emphasis-regexp-components org-emphasis-regexp-components)
 
-  ;; Babel and document export
-  (require 'ox-md)                      ; Markdown
-  (require 'ox-gfm)                     ; GitHub-flavored Markdown
-
+  ;; Babel
   (add-to-list 'org-src-lang-modes '("plantuml" . plantuml))
 
   (org-babel-do-load-languages
@@ -111,17 +108,40 @@
    '(org-table ((t (:inherit 'fixed-pitch))))
 
    ;; Code-like comments
-   '(font-lock-comment-face ((t (:inherit 'fixed-pitch)))))
+   '(font-lock-comment-face ((t (:inherit 'fixed-pitch))))))
 
-  ;; Add Org export handlers
-  (defun init-org--org-html-link (link contents info)
-    (format "<pre>%s</pre>" contents))
+
+(use-package ox
+  ;; Org export.
+  :after (org ox-gfm)
+  :straight nil
+
+  :config
+  (require 'ox-md)  ;; Markdown
+  (require 'ox-gfm) ;; GitHub-flavored Markdown
+
+  (defun init-org--org-html-link (link desc info)
+    (let* ((raw-link (org-element-property :raw-link link))
+           (raw-path (org-element-property :path link))
+           (type (org-element-property :type link))
+           (link-is-url (member type '("http" "https" "ftp" "mailto")))
+           (desc (org-string-nw-p desc)))
+      (if (not link-is-url)
+          desc
+        (format "<a href=\"%s\">%s</a>" raw-link desc))))
 
   (org-export-define-derived-backend 'substack 'html
     :menu-entry
-    '(?S "Export to Substack HTML" (lambda (a s v b)
-                                     (org-html-export-to-html a s v)))
-    :translate-alist '((link . init-org--org-html-link))))
+    '(?S "Export to Substack article"
+         ((?o "As HTML file and open"
+	            (lambda (a s v b)
+	              (if a
+                    (org-export-to-buffer t s v b)
+                  (let* ((f (concat (file-name-sans-extension buffer-file-name) ".html")))
+                    (org-open-file (org-export-to-file 'substack f nil s v b))))))))
+
+    :translate-alist
+    '((link . init-org--org-html-link))))
 
 
 (use-package org-agenda
