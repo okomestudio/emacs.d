@@ -126,9 +126,13 @@
            (type (org-element-property :type link))
            (link-is-url (member type '("http" "https" "ftp" "mailto")))
            (desc (org-string-nw-p desc)))
-      (if (not link-is-url)
-          desc
-        (format "<a href=\"%s\">%s</a>" raw-link desc))))
+      (if link-is-url
+          (format "<a href=\"%s\">%s</a>" raw-link (if desc desc raw-link))
+        (if (string= (substring raw-link 0 3) "id:")
+            desc
+          (if (member (file-name-extension raw-link) '("gif" "jpeg" "jpg" "png"))
+              (format "<img src=\"%s\" />" raw-link)
+            (format "<a href=\"%s\">%s</a>" raw-link desc))))))
 
   (org-export-define-derived-backend 'substack 'html
     :menu-entry
