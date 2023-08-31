@@ -130,7 +130,7 @@
           (format "<a href=\"%s\">%s</a>" raw-link (if desc desc raw-link))
         (if (string= (substring raw-link 0 3) "id:")
             desc
-          (if (member (file-name-extension raw-link) '("gif" "jpeg" "jpg" "png"))
+          (if (member (file-name-extension raw-link) '("gif" "jpeg" "jpg" "png" "webp"))
               (format "<img src=\"%s\" />" raw-link)
             (format "<a href=\"%s\">%s</a>" raw-link desc))))))
 
