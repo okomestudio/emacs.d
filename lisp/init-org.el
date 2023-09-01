@@ -33,6 +33,10 @@
   (org-tags-column 0)
   (org-todo-keywords '((sequence "TODO" "WIP" "|" "SKIP" "DONE")))
 
+  :ensure-system-package
+  (latex . "sudo apt install -y texlive texlive-latex-extra")
+  (dvipng . "sudo apt install -y dvipng")
+
   :hook
   (org-mode . (lambda () (org-superstar-mode 1) (turn-on-visual-line-mode)))
 
