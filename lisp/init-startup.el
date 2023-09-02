@@ -306,6 +306,9 @@ current buffer's, reload dir-locals."
   :defer t)
 
 
+(use-package uuid)
+
+
 (use-package system-packages
   :custom
   (system-packages-use-sudo t)
