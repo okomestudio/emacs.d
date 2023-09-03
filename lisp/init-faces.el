@@ -55,6 +55,7 @@
   :ensure-system-package
   ("/usr/share/fonts/opentype/ebgaramond/EBGaramond08-Regular.otf" . fonts-ebgaramond)
   ("/usr/share/fonts/opentype/noto/NotoSansCJK-Regular.ttc" . fonts-noto-cjk)
+  ("/usr/share/fonts/truetype/bizud-gothic/BIZUDGothic-Regular.ttf" . fonts-morisawa-bizud-gothic)
   ("/usr/share/fonts/truetype/hack/Hack-Regular.ttf" . fonts-hack)
   ("/usr/share/fonts/truetype/vlgothic/VL-Gothic-Regular.ttf" . fonts-vlgothic)
 
@@ -71,13 +72,16 @@
   (setq ts/font-family-default "Hack"
         ts/font-family-fixed-ptch "Hack"
         ts/font-family-variable-pitch "EB Garamond"
-        ts/font-family-cjk-fallbacks '("Noto Sans Mono CJK JP" "VL Gothic"))
+        ts/font-family-cjk-fallbacks '("BIZ UDGothic"
+                                       "Noto Sans Mono CJK JP"
+                                       "VL Gothic"))
 
   ;; Set relative scales for font faces here. For best alignment, try with fixed
   ;; pitch font so that two ASCII characters have the same width with a CJK
   ;; character.
   (setq ts/font-relative-scales '(("Hack" . 1.0) ; use as reference size
                                   ("EB Garamond". 1.4)
+                                  ("BIZ UDGothic" . 1.225)
                                   ("Noto Sans Mono CJK JP" . 1.225)
                                   ("VL Gothic" . 1.225)))
 
