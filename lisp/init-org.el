@@ -286,6 +286,7 @@
                                          :target
                                          (file+head "%<%Y-%m-%d>.org" "#+title: %<%Y-%m-%d>\n"))))
   (org-roam-dailies-directory "journal/")
+  (org-roam-database-connector 'sqlite-builtin)
   (org-roam-db-location (file-truename "~/.config/emacs/roam/.roam.db"))
   (org-roam-directory (file-truename "~/.config/emacs/roam"))
   (org-roam-extract-new-file-path "topic/${id}/${slug}.org")
