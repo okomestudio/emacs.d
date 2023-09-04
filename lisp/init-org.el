@@ -152,6 +152,10 @@
     '((link . init-org--org-html-link))))
 
 
+(use-package ox-gfm :after ox)
+(use-package ox-hugo :after ox)
+
+
 (use-package org-agenda
   :after (org)
   :straight nil
@@ -225,8 +229,6 @@
 
 
 (use-package ob-typescript)
-(use-package ox-gfm :after ox)
-(use-package ox-hugo :after ox)
 
 
 ;; Org table styling
