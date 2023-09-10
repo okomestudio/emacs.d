@@ -330,15 +330,27 @@
              (node-title (org-roam-node-title node))
              (node-file-title (or (if (not (s-blank? (org-roam-node-file-title node)))
                                     (org-roam-node-file-title node))
-                                  (file-name-nondirectory (org-roam-node-file node)))))
+                                  (file-name-nondirectory (org-roam-node-file node))))
+             (node-properties (org-roam-node-properties node))
+             (node-parent (or (cdr (assoc-string "PARENT" node-properties)))))
         (concat
          node-title
-         (if (string= node-title node-file-title)
-             ""
-           (concat (propertize " ❬ "
-                               'face `(:foreground ,title-annotate-color))
-                   (propertize node-file-title
-                               'face `(:foreground ,title-annotate-color :slant italic)))))))
+         (let* ((parent (if (not (string= node-title node-file-title))
+                            node-file-title
+                          (if (not node-parent)
+                              nil
+                            (let* ((desc (replace-regexp-in-string
+                                          "\\[\\[\\(.+\\)\\]\\[\\(.+\\)\\]\\]"
+                                          "\\2"
+                                          node-parent)))
+                              (if desc desc node-parent))))))
+           (if (not parent)
+               ""
+             (concat
+              (propertize " ❬ "
+                          'face `(:foreground ,title-annotate-color))
+              (propertize parent
+                          'face `(:foreground ,title-annotate-color :slant italic))))))))
 
     (defun ts/org-roam-node-slug (title)
       (let* (;; Combining Diacritical Marks https://www.unicode.org/charts/PDF/U0300.pdf
