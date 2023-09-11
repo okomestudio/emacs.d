@@ -365,7 +365,7 @@
                           (if (member node-title (org-roam-node-aliases node))
                               (list " = " node-file-title)
                             (let ((x (init-org--get-parent-title (init-org--get-node-from-file (org-roam-node-file node)))))
-                              (if x (list " ❬ " x)))
+                              (if x (list " ❬ " x) (list " ❬ " node-file-title)))
                             ))))
         (concat
          node-title
