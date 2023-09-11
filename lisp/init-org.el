@@ -325,32 +325,57 @@
              (org-roam-timestamps-encode (car (split-string node-mtime)))
            (org-roam-node-file-mtime node)))))
 
+
+    (defun init-org--get-node-id-from-file (file)
+      (caar (org-roam-db-query `[:select nodes:id :from nodes :where (and (= nodes:file ,file) (= nodes:level 0))])))
+
+    (setq init-org--file-node-cache '())
+
+    (defun init-org--get-node-from-file (file)
+      (let ((x (assoc file init-org--file-node-cache)))
+        (if x
+            (let* ((ttl 30.0)
+                   (v (cdr x))
+                   (tt (car v))
+                   (dt (- (float-time) tt)))
+              (if (< dt ttl)
+                  (car (cdr v))
+                (setf init-org--file-node-cache (assoc-delete-all file init-org--file-node-cache))
+                (init-org--get-node-from-file file)))
+          (let ((y (org-roam-node-from-id (init-org--get-node-id-from-file file))))
+            (add-to-list 'init-org--file-node-cache `(,file ,(float-time) ,y))
+            y))))
+
+    (defun init-org--get-parent-title (node)
+      (let ((parent (cdr (assoc-string "PARENT" (org-roam-node-properties node)))))
+        (when parent
+          (replace-regexp-in-string "\\[\\[\\(.+\\)\\]\\[\\(.+\\)\\]\\]"
+                                    "\\2"
+                                    parent))))
+
     (cl-defmethod org-roam-node-my-node-entry ((node org-roam-node))
       (let* ((title-annotate-color "SeaGreen4")
              (node-title (org-roam-node-title node))
              (node-file-title (or (if (not (s-blank? (org-roam-node-file-title node)))
-                                    (org-roam-node-file-title node))
+                                      (org-roam-node-file-title node))
                                   (file-name-nondirectory (org-roam-node-file node))))
-             (node-properties (org-roam-node-properties node))
-             (node-parent (or (cdr (assoc-string "PARENT" node-properties)))))
+             (title-aux (if (string= node-title node-file-title)
+                            (let ((x (init-org--get-parent-title node)))
+                              (if x (list " ❬ " x)))
+                          (if (member node-title (org-roam-node-aliases node))
+                              (list " = " node-file-title)
+                            (let ((x (init-org--get-parent-title (init-org--get-node-from-file (org-roam-node-file node)))))
+                              (if x (list " ❬ " x)))
+                            ))))
         (concat
          node-title
-         (let* ((parent (if (not (string= node-title node-file-title))
-                            node-file-title
-                          (if (not node-parent)
-                              nil
-                            (let* ((desc (replace-regexp-in-string
-                                          "\\[\\[\\(.+\\)\\]\\[\\(.+\\)\\]\\]"
-                                          "\\2"
-                                          node-parent)))
-                              (if desc desc node-parent))))))
-           (if (not parent)
-               ""
+         (if (not title-aux)
+             ""
+           (let ((sym (nth 0 title-aux))
+                 (aux (nth 1 title-aux)))
              (concat
-              (propertize " ❬ "
-                          'face `(:foreground ,title-annotate-color))
-              (propertize parent
-                          'face `(:foreground ,title-annotate-color :slant italic))))))))
+              (propertize sym 'face `(:foreground ,title-annotate-color))
+              (propertize aux 'face `(:foreground ,title-annotate-color :slant italic))))))))
 
     (defun ts/org-roam-node-slug (title)
       (let* (;; Combining Diacritical Marks https://www.unicode.org/charts/PDF/U0300.pdf
