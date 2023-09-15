@@ -6,6 +6,7 @@
 (use-package elfeed
   :custom
   (elfeed-search-filter "@3-month-ago -news")
+  (elfeed-show-unique-buffers t)
 
   :hook
   (elfeed-show-mode . init-elfeed--elfeed-show-mode-hook)
