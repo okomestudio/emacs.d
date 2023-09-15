@@ -21,6 +21,11 @@
   ;; not work properly if they are in different display.
   ;;
   ;; See https://www.emacswiki.org/emacs/CopyAndPaste#h5o-4.
+  ;;
+  ;; IMPORTANT: The very first use of wl-paste will lead to yanking to get
+  ;; stuck, due to no content. To avoid this issue, run "wl-copy foo" in shell
+  ;; before starting Emacs.
+  ;;
   (setq init-wayland--wl-copy-process nil)
 
   (defun init-wayland--wl-copy (text)
@@ -33,7 +38,7 @@
 
   (defun init-wayland--wl-paste ()
     (if (and init-wayland--wl-copy-process (process-live-p init-wayland--wl-copy-process))
-        nil                 ; should return nil if we're the current paste owner
+        nil ;; should return nil if we're the current paste owner
       (shell-command-to-string "wl-paste -n | tr -d \r"))))
 
 
