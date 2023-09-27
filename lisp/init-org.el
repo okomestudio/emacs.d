@@ -57,6 +57,35 @@
       (while (outline-previous-heading)
         (org-id-get-create))))
 
+  (defun org-interpolate-leaf-nodes-for-export ()
+    "Extrapolate leaf heading nodes for export.
+
+When invoked within an Org buffer, the headings are traversed in
+its copy, each leaf heading expanded with the body of the target
+node."
+    (interactive)
+    (let* ((tmp-buffer (org-export-copy-buffer)))
+      (with-current-buffer tmp-buffer
+        (beginning-of-buffer)
+        (while (outline-next-heading)
+          (while (org-goto-first-child) t)
+          (end-of-line)
+          (backward-char)
+          (when (link-hint--org-link-at-point-p)
+            (save-excursion
+              (org-open-at-point +1)
+              (with-current-buffer (current-buffer)
+                (org-preserve-local-variables
+                 (let* ((end (org-end-of-subtree t t)))
+                   (previous-line)
+                   (org-back-to-heading)
+                   (copy-region-as-kill (re-search-forward "^\\s-*$") end)))
+                (kill-buffer)))
+            (end-of-line)
+            (org-return-and-maybe-indent)
+            (org-yank))))
+      (switch-to-buffer tmp-buffer)))
+
   ;; Update regex for org emphasis; see, e.g.,
   ;; https://stackoverflow.com/a/63805680/515392.
   (setcar org-emphasis-regexp-components
