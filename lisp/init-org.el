@@ -94,6 +94,7 @@
                                (sql . t)
                                (sqlite . t)
                                (typescript . t)))
+  (add-to-list 'org-babel-tangle-lang-exts '("js" . "js"))
 
   (plist-put org-format-latex-options :scale 1.5) ; scale rendered expression
 
