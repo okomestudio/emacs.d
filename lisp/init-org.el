@@ -248,6 +248,9 @@ node."
   (add-hook 'org-mode-hook #'org-modern-indent-mode 90))
 
 
+(use-package org-side-tree)
+
+
 (use-package org-sticky-header
   :init
   (org-sticky-header-mode +1))
