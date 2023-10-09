@@ -72,18 +72,23 @@ node."
           (end-of-line)
           (backward-char)
           (when (link-hint--org-link-at-point-p)
-            (save-excursion
-              (org-open-at-point +1)
-              (with-current-buffer (current-buffer)
-                (org-preserve-local-variables
-                 (let* ((end (org-end-of-subtree t t)))
-                   (previous-line)
-                   (org-back-to-heading)
-                   (copy-region-as-kill (re-search-forward "^\\s-*$") end)))
-                (kill-buffer)))
-            (end-of-line)
-            (org-return-and-maybe-indent)
-            (org-yank))))
+            (let* ((has-content nil))
+              (save-excursion
+                (org-open-at-point +1)
+                (beginning-of-line)
+                (if (eq ?* (char-after))
+                    (setq has-content t))
+                (with-current-buffer (current-buffer)
+                  (org-preserve-local-variables
+                   (let* ((end (org-end-of-subtree t t)))
+                     (previous-line)
+                     (org-back-to-heading)
+                     (copy-region-as-kill (re-search-forward "^\\s-*$") end)))
+                  (kill-buffer)))
+              (end-of-line)
+              (org-return-and-maybe-indent)
+              (when has-content
+                (org-yank))))))
       (switch-to-buffer tmp-buffer)))
 
   ;; Update regex for org emphasis; see, e.g.,
