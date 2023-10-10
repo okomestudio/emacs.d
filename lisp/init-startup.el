@@ -93,10 +93,6 @@ current buffer's, reload dir-locals."
                            (buffer-name))))
                   " - Emacs"))
 
-  ;; Balance windows on split/delete by default:
-  (seq-doseq (fn (list #'split-window #'delete-window))
-    (advice-add fn :after #'(lambda (&rest args) (balance-windows))))
-
   (when window-system
     (setq select-enable-clipboard t))
 
