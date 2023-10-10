@@ -2,17 +2,31 @@
 ;;; Commentary:
 ;;; Code:
 
-(use-package sh-mode
+(use-package sh-script
   :straight nil
 
   :custom
   (sh-basic-offset 4)
   (sh-indentation 4)
 
+  :hook
+  (sh-mode . flymake-mode)
+
   :mode
   ("\\.sh\\'"
    "bash_*"
-   "bashrc\\'"))
+   "bashrc\\'")
+
+  ;; NOTE: Commented out in case we need the lines later.
+  ;;
+  ;; :init
+  ;; (add-to-list 'auto-mode-alist '("\\.bats\\'" . sh-mode))
+  ;; (add-to-list 'interpreter-mode-alist '("bats" . sh-mode))
+  )
+
+(use-package flymake
+  :ensure-system-package
+  (shellcheck . "sudo apt install -y shellcheck"))
 
 (use-package bats-mode)
 
@@ -24,23 +38,6 @@
   (defun ts/colorize-buffer ()
     (when (eq major-mode 'compilation-mode)
       (ansi-color-apply-on-region compilation-filter-start (point-max)))))
-
-(use-package flymake-shellcheck
-  :disabled
-  :if (executable-find "shellcheck")
-  :commands flymake-shellcheck-load
-
-  :ensure-system-package
-  (shellcheck . "sudo apt install -y shellcheck")
-
-  :hook
-  ((sh-mode) . flymake-shellcheck-load)
-
-  :init
-  (setq sh-basic-offset 4
-        sh-indentation 4)
-  (add-to-list 'auto-mode-alist '("\\.bats\\'" . sh-mode))
-  (add-to-list 'interpreter-mode-alist '("bats" . sh-mode)))
 
 (provide 'init-shell)
 ;;; init-shell.el ends here
