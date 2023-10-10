@@ -18,7 +18,7 @@
  ("circe" . "57fe189d7c0b98b9b1b5a59767cea1c7e2c22b13")
  ("citeproc-el" . "290320fc579f886255f00d7268600df7fa5cc7e8")
  ("company-box" . "b6f53e26adf948aca55c3ff6c22c21a6a6614253")
- ("company-mode" . "3ec40b0a0ea751b6c48f24abd58c8304deb53014")
+ ("company-mode" . "2b114a528ec3f1939b1d154d2cc48ddc7defe8a8")
  ("company-restclient" . "e5a3ec54edb44776738c13e13e34c85b3085277b")
  ("compat" . "e07c0f29d45a73cc0bdf9423780979978c1d9d22")
  ("consult" . "fe49dedd71802ff97be7b89f1ec4bd61b98c2b13")
