@@ -6,8 +6,8 @@
   :straight nil
 
   :custom
-  (sh-basic-offset 4)
-  (sh-indentation 4)
+  (sh-basic-offset 2)
+  (sh-indentation 2)
 
   :hook
   (sh-mode . flymake-mode)
