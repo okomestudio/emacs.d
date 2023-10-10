@@ -130,7 +130,7 @@ node."
                                (typescript . t)))
   (add-to-list 'org-babel-tangle-lang-exts '("js" . "js"))
 
-  (plist-put org-format-latex-options :scale 1.5) ; scale rendered expression
+  (plist-put org-format-latex-options :scale 1.0) ; scale rendered expression
 
   ;; Color styling
   (custom-set-faces
