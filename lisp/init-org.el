@@ -34,7 +34,7 @@
   (org-todo-keywords '((sequence "TODO" "WIP" "|" "SKIP" "DONE")))
 
   :ensure-system-package
-  (latex . "sudo apt install -y texlive texlive-latex-extra")
+  (latex . "sudo apt install -y texlive texlive-latex-extra texlive-lang-cjk")
   (dvipng . "sudo apt install -y dvipng")
 
   :hook
@@ -130,7 +130,7 @@ node."
                                (typescript . t)))
   (add-to-list 'org-babel-tangle-lang-exts '("js" . "js"))
 
-  (plist-put org-format-latex-options :scale 1.5) ; scale rendered expression
+  (plist-put org-format-latex-options :scale 1.0) ; scale rendered expression
 
   ;; Color styling
   (custom-set-faces
