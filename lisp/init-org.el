@@ -34,7 +34,7 @@
   (org-todo-keywords '((sequence "TODO" "WIP" "|" "SKIP" "DONE")))
 
   :ensure-system-package
-  (latex . "sudo apt install -y texlive texlive-latex-extra texlive-lang-cjk")
+  (latex . "sudo apt install -y texlive texlive-latex-extra texlive-lang-cjk texlive-xetex")
   (dvipng . "sudo apt install -y dvipng")
 
   :hook
