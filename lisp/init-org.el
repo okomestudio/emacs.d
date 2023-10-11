@@ -22,7 +22,6 @@
   (org-file-apps '(("\\.mp4\\'" . "vlc --repeat %s")))
   (org-hide-emphasis-markers t)
   (org-image-actual-width nil)
-  (org-latex-create-formula-image-program 'dvisvgm)
   (org-list-allow-alphabetical t)
   (org-list-indent-offset 2)
   ;; (org-plantuml-jar-path ts/path-plantuml)
@@ -35,8 +34,8 @@
   (org-todo-keywords '((sequence "TODO" "WIP" "|" "SKIP" "DONE")))
 
   :ensure-system-package
-  (latex . "sudo apt install -y texlive texlive-latex-extra texlive-lang-cjk texlive-xetex")
-  (dvipng . "sudo apt install -y dvipng")
+  (latex . "sudo apt install -y texlive texlive-latex-extra texlive-lang-cjk texlive-extra-utils texlive-luatex")
+  (pdfcropmargins . "pip install pdfCropMargins")
 
   :hook
   (org-mode . (lambda () (org-superstar-mode 1) (turn-on-visual-line-mode)))
@@ -146,7 +145,29 @@ node."
    '(org-table ((t (:inherit 'fixed-pitch))))
 
    ;; Code-like comments
-   '(font-lock-comment-face ((t (:inherit 'fixed-pitch))))))
+   '(font-lock-comment-face ((t (:inherit 'fixed-pitch)))))
+
+  ;; (setq org-latex-inputenc-alist '(("utf8" . "utf8x")))
+  ;; (add-to-list 'org-latex-packages-alist '("" "unicode-math"))
+  (setq org-preview-latex-default-process 'lualatexpdf)
+  (setq org-preview-latex-process-alist
+        '((lualatexpdf :programs ("lualatex" "dvisvgm")
+                    :description "pdf > svg"
+                    :message "you need to install the programs: lualatex and dvisvgm."
+                    :image-input-type "pdf"
+                    :image-output-type "svg"
+                    :image-size-adjust (1.7 . 1.5)
+                    :latex-compiler ("lualatex -interaction nonstopmode --shell-escape -output-directory %o %f")
+                    :image-converter ("pdfcropmargins -v -p 0 %f -o /tmp/cropped.pdf ; dvisvgm -P /tmp/cropped.pdf -n -b min -c %S -o %O"))
+          (lualatexdvi :programs ("lualatex" "dvisvgm")
+                    :description "dvi > svg"
+                    :message "you need to install the programs: lualatex and dvisvgm."
+                    :image-input-type "dvi"
+                    :image-output-type "svg"
+                    :image-size-adjust (1.7 . 1.5)
+                    :latex-compiler ("dvilualatex -interaction nonstopmode --shell-escape -output-directory %o %f")
+                    :image-converter ("dvisvgm %f -n -b min -c %S -o %O"))))
+  )
 
 
 (use-package ox
