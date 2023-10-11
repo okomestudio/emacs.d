@@ -51,6 +51,7 @@
 (require 'init-auth-source)
 (require 'init-themes)
 (require 'init-faces)
+(require 'init-text-scale)
 (require 'init-minibuffer)
 (require 'init-treemacs)
 (require 'init-consult)

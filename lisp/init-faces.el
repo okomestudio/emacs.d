@@ -59,15 +59,6 @@
   ("/usr/share/fonts/truetype/hack/Hack-Regular.ttf" . fonts-hack)
   ("/usr/share/fonts/truetype/vlgothic/VL-Gothic-Regular.ttf" . fonts-vlgothic)
 
-  :hook
-  ;; Change text scale within some modes
-  (elfeed-search-mode . (lambda () (text-scale-set 1.5)))
-  (elfeed-show-mode . (lambda () (text-scale-set 1.5)))
-  (org-mode . (lambda () (text-scale-set 1.5)))
-  (prog-mode . (lambda () (text-scale-set 0.5)))
-  (text-mode . (lambda () (text-scale-set 0.5)))
-  (treemacs-mode . (lambda () (text-scale-decrease 0.4)))
-
   :preface
   (setq ts/font-family-default "Hack"
         ts/font-family-fixed-ptch "Hack"

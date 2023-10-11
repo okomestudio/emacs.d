@@ -22,6 +22,7 @@
   (org-file-apps '(("\\.mp4\\'" . "vlc --repeat %s")))
   (org-hide-emphasis-markers t)
   (org-image-actual-width nil)
+  (org-latex-create-formula-image-program 'dvisvgm)
   (org-list-allow-alphabetical t)
   (org-list-indent-offset 2)
   ;; (org-plantuml-jar-path ts/path-plantuml)
@@ -129,8 +130,6 @@ node."
                                (sqlite . t)
                                (typescript . t)))
   (add-to-list 'org-babel-tangle-lang-exts '("js" . "js"))
-
-  (plist-put org-format-latex-options :scale 1.0) ; scale rendered expression
 
   ;; Color styling
   (custom-set-faces
