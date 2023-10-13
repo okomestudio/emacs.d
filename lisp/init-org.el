@@ -286,6 +286,13 @@ node."
   (org-superstar-headline-bullets-list '("◉" "🞛" "○" "▷")))
 
 
+(use-package org-transclusion
+  :bind
+  (:map org-mode-map
+   ("C-c C-n a" . org-transclusion-add)
+   ("C-c C-n t" . org-transclusion-mode)))
+
+
 (use-package ob-typescript)
 
 
