@@ -67,8 +67,10 @@
         (recenter 0))))
 
   (defun ts/eww-render--after (&rest _)
+    "Move to the specified line on page load."
     (ts/eww-set-start-at "amazon.co.jp" "^結果")
     (ts/eww-set-start-at "amazon.com" "^RESULTS")
+    (ts/eww-set-start-at "b.hatena.ne.jp" "^記事へのコメント")
     (ts/eww-set-start-at "goodreads.com" "^Page ")
     (ts/eww-set-start-at "en.m.wikipedia.org" "^ *Search")
     (ts/eww-set-start-at "ja.m.wikipedia.org" "^ *検索")

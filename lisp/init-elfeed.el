@@ -4,6 +4,10 @@
 
 
 (use-package elfeed
+  :bind
+  (:map elfeed-show-mode-map
+   ("B" . init-elfeed--visit-hatena-bookmark-comments))
+
   :custom
   (elfeed-search-filter "@3-month-ago -news")
   (elfeed-show-unique-buffers nil)
@@ -26,16 +30,23 @@
                 shr-use-fonts t
                 shr-width nil))
 
+  (defun init-elfeed--visit-hatena-bookmark-comments (arg)
+    (interactive "P")
+    (elfeed-show-yank)
+    (ts/visit-hatena-bookmark-comments arg))
+
   :config
   (defhydra hydra-elfeed-show (:color pink :hint nil)
     "
 ^elfeed-show^
 ^^^^^^^^^^^^^------------------------------
 _b_: visit the current entry in the browser
+_B_: visit Hatena Bookmark comments for the entry
 _q_: kill the buffer
 _z_: zoom image (when on image)
 "
     ("b" elfeed-show-visit)
+    ("B" init-elfeed--visit-hatena-bookmark-comments)
     ("c" nil "cancel")
     ("q" elfeed-kill-buffer)
     ("z" shr-zoom-image))

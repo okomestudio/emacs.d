@@ -108,11 +108,25 @@ directory tree."
                     (t nil)))))
     dir-locals-files))
 
+
 (defun ts/reload-dir-locals-for-current-buffer ()
   "Reload dir locals for the current buffer."
   (interactive)
   (let ((enable-local-variables :all))
     (hack-dir-local-variables)))
+
+
+(defun ts/visit-hatena-bookmark-comments (arg &optional url)
+  "Visit the Hatena Bookmark comments section for the URL.
+
+If URL is not supplied, the function will attempt to yank one from kill ring."
+  (interactive "P")
+  (let* ((url (if (equal url nil) (current-kill 0) url))
+         (hatena-url (string-replace "https://" "https://b.hatena.ne.jp/entry/s/" url)))
+    (pcase arg
+      ('(4) (browse-url hatena-url))
+      (_ (eww hatena-url)))))
+
 
 (provide 'init-utils)
 ;;; init-utils.el ends here
