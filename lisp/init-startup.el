@@ -6,6 +6,8 @@
 (use-package emacs
   :custom
   (async-shell-command-buffer "new-buffer")
+  (browse-url-browser-function 'eww-browse-url)
+  (browse-url-generic-program "xdg-open")
   (case-fold-search t)
   (compilation-scroll-output t)
   (enable-recursive-minibuffers t)

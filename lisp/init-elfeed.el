@@ -6,7 +6,7 @@
 (use-package elfeed
   :bind
   (:map elfeed-show-mode-map
-   ("B" . init-elfeed--visit-hatena-bookmark-comments))
+        ("B" . init-elfeed--visit-hatena-bookmark-comments))
 
   :custom
   (elfeed-search-filter "@3-month-ago -news")
