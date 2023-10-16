@@ -414,7 +414,7 @@ node."
     (defun init-org--get-parent-title (node)
       (let ((parent (cdr (assoc-string "PARENT" (org-roam-node-properties node)))))
         (when parent
-          (replace-regexp-in-string "\\[\\[\\(.+\\)\\]\\[\\(.+\\)\\]\\]"
+          (replace-regexp-in-string "\\[\\[\\(.+\\)\\]\\[\\([[:space:]0-9a-zA-Zぁ-んァ-ヶｱ-ﾝﾞﾟ一-龠]+\\)\\]\\]"
                                     "\\2"
                                     parent))))
 
