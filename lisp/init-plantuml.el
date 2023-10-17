@@ -9,6 +9,7 @@
   :custom
   ((org-plantuml-jar-path ts/path-plantuml)
    (plantuml-default-exec-mode 'jar)
+   (plantuml-indent-level 4)
    (plantuml-jar-path ts/path-plantuml))
 
   :ensure-system-package
