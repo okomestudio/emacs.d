@@ -24,7 +24,6 @@
   (org-image-actual-width nil)
   (org-list-allow-alphabetical t)
   (org-list-indent-offset 2)
-  ;; (org-plantuml-jar-path ts/path-plantuml)
   (org-preview-latex-image-directory ".ltximg/")
   (org-return-follows-link t)
   (org-startup-folded nil)
