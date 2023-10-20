@@ -4,6 +4,9 @@
 
 
 (use-package polymode
+  :custom
+  (polymode-lsp-integration nil) ;; see https://github.com/polymode/polymode/issues/316
+
   :mode
   ("\.py$" . poly-python-sql-mode)
 
