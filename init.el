@@ -101,6 +101,8 @@
 
 (require 'init-projectile)
 
+(require 'init-polymode)
+
 ;; Load additional init.el files in init.d/:
 (let ((custom-init-directory (concat user-emacs-directory "init.d/")))
   (when (file-exists-p custom-init-directory)
