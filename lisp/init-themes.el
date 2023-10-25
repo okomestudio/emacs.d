@@ -43,8 +43,8 @@
 
 
 (use-package flexoki-themes
-  :defer t
-  :config (init-themes--configure-theme 'flexoki-themes-light))
+  :config
+  (init-themes--configure-theme 'flexoki-themes-light))
 
 
 ;; MINOR THEME ADJUSTMENTS
