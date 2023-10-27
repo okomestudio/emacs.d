@@ -30,7 +30,10 @@
     :innermodes '(poly-sql-expr-python-innermode)
     (setq polymode-eval-region-function #'poly-python-sql-eval-chunk)
     (define-key poly-python-sql-mode-map
-                (kbd "C-c C-c") 'polymode-eval-chunk)))
+                (kbd "C-c C-c") 'polymode-eval-chunk))
+
+  (add-to-list 'interpreter-mode-alist '("python" . poly-python-sql-mode))
+  (add-to-list 'interpreter-mode-alist '("python3" . poly-python-sql-mode)))
 
 
 (provide 'init-polymode)
