@@ -16,7 +16,8 @@
   (elfeed-show-mode . init-elfeed--elfeed-show-mode-hook)
   (elfeed-search-update . (lambda ()
                             (setq-local nobreak-char-display nil)
-                            (text-scale-set 0.5)))
+                            ;; (text-scale-set 0.5)
+                            ))
 
   :preface
   (defun init-elfeed--elfeed-show-mode-hook ()
