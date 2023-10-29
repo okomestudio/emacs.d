@@ -44,6 +44,7 @@
 (require 'init-straight) ;; or init-package
 
 (require 'init-utils)
+(require 'dir-locals-utils)
 (require 'init-org)
 (require 'init-startup)
 (require 'init-help)

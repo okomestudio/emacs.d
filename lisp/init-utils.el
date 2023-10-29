@@ -109,13 +109,6 @@ directory tree."
     dir-locals-files))
 
 
-(defun ts/reload-dir-locals-for-current-buffer ()
-  "Reload dir locals for the current buffer."
-  (interactive)
-  (let ((enable-local-variables :all))
-    (hack-dir-local-variables)))
-
-
 (defun ts/visit-hatena-bookmark-comments (arg &optional url)
   "Visit the Hatena Bookmark comments section for the URL.
 

@@ -30,63 +30,7 @@
          (t nil)))
   (word-wrap-by-category t)
 
-  :preface
-  ;; hack-dir-local-variables
-  ;; ------------------------
-  ;; Add an advice so that .dir-locals.el are looked for upward in the directory hierarchy.
-  (defvar walk-dir-locals-upward t
-    "Look for .dir-locals.el up in directory hierarchy.
-
-If non-nil, evaluate .dir-locals.el files starting in the current
-directory and going up. Otherwise they will be evaluated from the
-top down to the current directory.")
-
-  (defun ts/hack-dir-local-variables-advice (func)
-    (if walk-dir-locals-upward
-        (let ((dir-locals-file ".dir-locals.el")
-              (original-buffer-file-name (buffer-file-name))
-              (nesting (ts/locate-dominating-files
-                        (or (buffer-file-name) default-directory) dir-locals-file)))
-          (unwind-protect
-              (dolist (name nesting)
-                ;; make it look like a file higher up in the hierarchy is visited
-                (setq buffer-file-name (concat name dir-locals-file))
-                (funcall func))
-            (setq buffer-file-name original-buffer-file-name)))
-      (funcall func)))
-
-  (defun ts/reload-dir-locals-for-current-buffer ()
-    "Reload .dir-locals.el for the current buffer.
-
-See https://emacs.stackexchange.com/a/13096/599"
-    (interactive)
-    (let ((enable-local-variables :all))
-      (hack-dir-local-variables-non-file-buffer)))
-
-  (defun ts/reload-dir-locals-for-all-buffer-in-this-directory ()
-    "For every buffer with the same `default-directory` as the
-current buffer's, reload dir-locals."
-    (interactive)
-    (let ((dir default-directory))
-      (dolist (buffer (buffer-list))
-        (with-current-buffer buffer
-          (when (equal default-directory dir)
-            (ts/reload-dir-locals-for-current-buffer))))))
-
   :init
-  (advice-add 'hack-dir-local-variables :around
-              #'ts/hack-dir-local-variables-advice)
-
-  (add-hook 'lisp-data-mode-hook
-            (lambda ()
-              (interactive)
-              (when (and (buffer-file-name)
-                         (equal dir-locals-file
-                                (file-name-nondirectory (buffer-file-name))))
-                (add-hook 'after-save-hook
-                          'ts/reload-dir-locals-for-all-buffer-in-this-directory
-                          nil t))))
-
   (setq-default frame-title-format
                 '((:eval
                    (list (if (buffer-file-name)
