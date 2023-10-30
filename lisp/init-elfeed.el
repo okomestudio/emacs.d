@@ -5,8 +5,22 @@
 
 (use-package elfeed
   :bind
-  (:map elfeed-show-mode-map
-        ("B" . init-elfeed--visit-hatena-bookmark-comments))
+  (:map elfeed-search-mode-map
+   ("C-c f 1" ("Select filter 1" .
+               (lambda ()
+                 (interactive)
+                 (init-elfeed--switch-filter "@3-month-ago -news"))))
+   ("C-c f 2" ("Select filter 2" .
+               (lambda ()
+                 (interactive)
+                 (init-elfeed--switch-filter "@3-month-ago +news +hatena -hn"))))
+   ("C-c f 3" ("Select filter 3" .
+               (lambda ()
+                 (interactive)
+                 (init-elfeed--switch-filter "@3-month-ago +news -hatena +hn"))))
+
+   :map elfeed-show-mode-map
+   ("B" . init-elfeed--visit-hatena-bookmark-comments))
 
   :custom
   (elfeed-search-filter "@3-month-ago -news")
@@ -37,6 +51,11 @@
     (ts/visit-hatena-bookmark-comments arg))
 
   :config
+  (defun init-elfeed--switch-filter (filter)
+    (with-current-buffer (elfeed-search-buffer)
+      (setf elfeed-search-filter filter)
+      (elfeed-search-update :force)))
+
   (defhydra hydra-elfeed-show (:color pink :hint nil)
     "
 ^elfeed-show^
