@@ -9,7 +9,8 @@
    '("\\*Messages\\*"
     "Output\\*$"
     "\\*Async Shell Command\\*"
-    "\\*elfeed-entry\\*" elfeed-show-mode
+    "elfeed-entry" elfeed-show-mode
+    "magit:" magit-mode
     helpful-mode
     help-mode
     compilation-mode))
