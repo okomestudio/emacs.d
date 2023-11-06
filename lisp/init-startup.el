@@ -6,8 +6,6 @@
 (use-package emacs
   :custom
   (async-shell-command-buffer "new-buffer")
-  (browse-url-browser-function 'eww-browse-url)
-  (browse-url-generic-program "xdg-open")
   (case-fold-search t)
   (compilation-scroll-output t)
   (enable-recursive-minibuffers t)
@@ -137,6 +135,13 @@
 
   :init
   (ensure-directory-exists ts/backup-cache-dir))
+
+
+(use-package browse-url
+  :custom
+  (browse-url-browser-function 'eww-browse-url)
+  (browse-url-generic-program "xdg-open")
+  (browse-url-handlers '(("localhost" . browse-url-generic))))
 
 
 ;; WINDOWS AND FRAMES
