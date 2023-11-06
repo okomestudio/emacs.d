@@ -57,6 +57,7 @@
 (require 'init-treemacs)
 (require 'init-consult)
 (require 'init-hydra)
+(require 'init-popper)
 
 (require 'init-editing-utils)
 (require 'init-flycheck)
