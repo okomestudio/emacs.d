@@ -111,5 +111,10 @@ _z_: zoom image (when on image)
   (define-key init-elfeed--map (kbd "M-v") 'scroll-down-command))
 
 
+(use-package elfeed-webkit
+  :disabled
+  :after elfeed)
+
+
 (provide 'init-elfeed)
 ;;; init-elfeed.el ends here
