@@ -75,7 +75,7 @@
 (require 'init-git)
 (require 'init-lsp)
 (require 'init-openwith)
-(require 'init-vterm)
+
 ;; (require 'init-dired)
 (require 'init-gnus)
 ;; (require 'init-tern)
@@ -104,6 +104,10 @@
 (require 'init-projectile)
 
 (require 'init-polymode)
+
+(require 'init-vterm)
+(require 'init-eat)
+
 
 ;; Load additional init.el files in init.d/:
 (let ((custom-init-directory (concat user-emacs-directory "init.d/")))
