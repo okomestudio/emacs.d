@@ -16,7 +16,7 @@
   (mouse-wheel-scroll-amount '(3 ((shift) . 1)))
   (next-error-message-highlight t)
   (pixel-scroll-precision-large-scroll-height 5.0)
-  (read-process-output-max (* 1 1024 1024)) ; 1 mb
+  (read-process-output-max (* 4 1024 1024)) ; 4 mb
   (ring-bell-function 'ignore)              ; Disable beeping (in C source code)
   (tab-width 2)
   (uniquify-buffer-name-style 'forward)
