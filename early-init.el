@@ -8,15 +8,14 @@
 
 (setq debug-on-error nil) ;; set t when debugging startup issues
 
-(let ((minver "29.0"))
+(let ((minver "29.1"))
   (when (version< emacs-version minver)
     (error "The minimum Emacs version expected is %s" minver)))
 
-;; Reduce GC usage while initialization. 800 kb is the default (2021-08-01):
-(let ((init-gc-cons-threshold most-positive-fixnum))
-  (setq gc-cons-threshold init-gc-cons-threshold)
-  (add-hook 'emacs-startup-hook
-            (lambda () (setq gc-cons-threshold 800000))))
+;; Reduce GC usage while initialization. 800 kb is the default (2021-08-01).
+;; Note that the threshold while running is set by gcmh later in init and the
+;; following temporary setting will be overridden. Use that for adjustment.
+(setq gc-cons-threshold most-positive-fixnum)
 
 (setq package-enable-at-startup nil)
 

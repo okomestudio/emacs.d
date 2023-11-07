@@ -108,6 +108,8 @@
 (require 'init-vterm)
 (require 'init-eat)
 
+(require 'init-optimizations)
+
 
 ;; Load additional init.el files in init.d/:
 (let ((custom-init-directory (concat user-emacs-directory "init.d/")))
@@ -116,6 +118,6 @@
           (directory-files custom-init-directory t ".el$"))))
 
 (put 'eval 'safe-local-variable #'listp)
-
+(setq gc-cons-threshold 100000000)
 (provide 'init)
 ;;; init.el ends here

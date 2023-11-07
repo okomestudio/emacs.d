@@ -30,6 +30,7 @@
   (lsp-response-timeout 30)
   (lsp-sqls-workspace-config-path "root")
   (lsp-sqls-timeout 30)
+  (lsp-use-plists t)
 
   :ensure-system-package
   ((shellcheck . "sudo apt install -y shellcheck") ; for bash-ls
