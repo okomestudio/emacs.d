@@ -14,7 +14,15 @@
                 "*.ti" ("terminfo/e" "terminfo/e/*")
                 ("terminfo/65" "terminfo/65/*")
                 ("integration" "integration/*")
-                (:exclude ".dir-locals.el" "*-tests.el"))))
+                (:exclude ".dir-locals.el" "*-tests.el")))
+
+  ;; :init
+  ;; The following might be necessary for performance. See
+  ;; https://www.reddit.com/r/emacs/comments/17nl7cw/comment/k7u1ueu/
+  ;;
+  ;; (setq process-adaptive-read-buffering nil)
+  ;; (setq read-process-output-max (* 4 1024 1024))
+  )
 
 (provide 'init-eat)
 ;;; init-eat.el ends here
