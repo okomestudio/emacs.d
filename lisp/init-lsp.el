@@ -19,7 +19,7 @@
 
   (lsp-bash-highlight-parsing-errors t)
   (lsp-diagnostics-provider :auto)
-  (lsp-log-io t)
+  (lsp-log-io nil) ;; set to t for debugging
   (lsp-pylsp-configuration-sources ["flake8"])
   (lsp-pylsp-plugins-flake8-enabled t)
   (lsp-pylsp-plugins-pycodestyle-enabled nil)
