@@ -15,7 +15,12 @@
   (popper-reference-buffers
    '(
      "\\*Async Shell Command\\*"
+     "\\*Async-native-compile-log\\*"
+     "\\*direnv\\*$"
+     "\\*elfeed-log\\*$"
      "\\*Messages\\*"
+     "\\*straight-process\\*$"
+     ;; "\\*Warnings\\*"
      "CAPTURE-.*\\.org$"
      "Output\\*$"
      compilation-mode
