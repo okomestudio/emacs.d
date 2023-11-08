@@ -6,7 +6,7 @@
 ;;;
 ;;; Code:
 
-(setq debug-on-error nil) ;; set t when debugging startup issues
+(setq debug-on-error t) ;; set t when debugging startup issues
 
 (let ((minver "29.1"))
   (when (version< emacs-version minver)
