@@ -41,7 +41,8 @@
 
 
 ;; Configure packages
-(require 'init-straight) ;; or init-package
+(require 'init-straight) ;; also configures use-package
+;; (require 'init-package) ;; use this instead for non-straight use-package
 
 (require 'init-utils)
 (require 'dir-locals-utils)

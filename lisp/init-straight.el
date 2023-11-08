@@ -18,6 +18,7 @@
 (straight-use-package 'use-package-ensure-system-package)
 
 (setq straight-use-package-by-default t)
+(setq use-package-enable-imenu-support t)
 
 (provide 'init-straight)
 ;;; init-straight.el ends here
