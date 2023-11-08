@@ -289,7 +289,11 @@ node."
   :bind
   (:map org-mode-map
    ("C-c C-n a" . org-transclusion-add)
-   ("C-c C-n t" . org-transclusion-mode)))
+   ("C-c C-n t" . org-transclusion-mode))
+
+  :config
+  (add-to-list 'org-transclusion-extensions 'org-transclusion-indent-mode)
+  (require 'org-transclusion-indent-mode))
 
 
 (use-package ob-typescript)
