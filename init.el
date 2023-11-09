@@ -109,6 +109,8 @@
 (require 'init-vterm)
 (require 'init-eat)
 
+;; (require 'init-eaf)
+
 (require 'init-optimizations)
 
 

@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+target=~/.config/emacs/straight/repos/eaf/
+
+# git clone --depth=1 -b master https://github.com/emacs-eaf/emacs-application-framework.git $target
+
+cd "$target"
+
+chmod +x ./install-eaf.py
+
+./install-eaf.py
