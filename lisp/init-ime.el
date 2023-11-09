@@ -6,7 +6,7 @@
 (use-package mozc
   :custom
   (default-input-method "japanese-mozc")
-  (mozc-candidate-style 'posframe)
+  (mozc-candidate-style 'overlay) ;; or 'posframe
 
   :ensure-system-package
   ("/usr/bin/mozc_emacs_helper" . "sudo apt install -y emacs-mozc-bin"))
