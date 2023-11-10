@@ -8,6 +8,7 @@
   :hook
   (elfeed-search-mode . (lambda () (text-scale-set 1.5)))
   (elfeed-show-mode . (lambda () (text-scale-set 1.5)))
+  (eww-mode . (lambda () (text-scale-set 1.5)))
   (org-mode . (lambda () (text-scale-set 1.5)))
   (prog-mode . (lambda () (text-scale-set 0.5)))
   (text-mode . (lambda () (text-scale-set 0.5)))
