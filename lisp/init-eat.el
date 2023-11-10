@@ -16,6 +16,12 @@
                 ("integration" "integration/*")
                 (:exclude ".dir-locals.el" "*-tests.el")))
 
+  :init
+  (add-hook 'eshell-post-command-hook
+            (lambda ()
+              (sleep-for 0.2)
+              (end-of-buffer)))
+
   ;; :init
   ;; The following might be necessary for performance. See
   ;; https://www.reddit.com/r/emacs/comments/17nl7cw/comment/k7u1ueu/
