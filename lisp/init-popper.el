@@ -16,12 +16,15 @@
    '(
      "\\*Async Shell Command\\*"
      "\\*Async-native-compile-log\\*"
+     "\\*Buffer List\\*"
      "\\*direnv\\*$"
      "\\*elfeed-log\\*$"
+     "\\*lsp-log\\*$"
      "\\*Messages\\*"
+     "\\*scratch\\*$"
      "\\*straight-process\\*$"
      ;; "\\*Warnings\\*"
-     "CAPTURE-.*\\.org$"
+     ;; "CAPTURE-.*\\.org$"
      "Output\\*$"
      compilation-mode
      ;;"elfeed-entry" elfeed-show-mode elfeed-goodies-show-mode
