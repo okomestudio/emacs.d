@@ -17,7 +17,11 @@
    ("C-c f 3" ("Select filter 3" .
                (lambda ()
                  (interactive)
-                 (init-elfeed--switch-filter "@3-month-ago +news -hatena +hn"))))
+                 (init-elfeed--switch-filter "@3-month-ago +news -hatena +hn +thread -job"))))
+   ("C-c f 4" ("Select filter 4" .
+               (lambda ()
+                 (interactive)
+                 (init-elfeed--switch-filter "@3-month-ago +news -hatena +hn -thread +job"))))
 
    :map elfeed-show-mode-map
    ("B" . init-elfeed--visit-hatena-bookmark-comments))
