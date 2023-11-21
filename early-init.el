@@ -23,7 +23,7 @@
 (push '(tool-bar-lines . 0) default-frame-alist)
 (push '(vertical-scroll-bars) default-frame-alist)
 
-(menu-bar-mode 1)
+(menu-bar-mode -1)
 (tool-bar-mode -1)
 (scroll-bar-mode -1)
 
@@ -34,6 +34,10 @@
 (setq native-comp-jit-compilation t)
 
 (setq redisplay-skip-fontification-on-input t)
+
+(setq initial-buffer-choice 'org-agenda)
+(setq inhibit-splash-screen nil)
+(setq inhibit-startup-screen nil)
 
 (provide 'early-init)
 ;;; early-init.el ends here

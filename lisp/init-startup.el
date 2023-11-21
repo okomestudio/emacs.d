@@ -9,8 +9,6 @@
   (case-fold-search t)
   (compilation-scroll-output t)
   (enable-recursive-minibuffers t)
-  (inhibit-splash-screen nil)
-  (inhibit-startup-screen nil)
   (load-prefer-newer t)
   (mouse-wheel-progressive-speed t)
   (mouse-wheel-scroll-amount '(3 ((shift) . 1)))
