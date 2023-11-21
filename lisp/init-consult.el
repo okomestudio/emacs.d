@@ -18,7 +18,8 @@
    ("L" . consult-line-multi)
    ("m" . consult-mark)
    ("M" . consult-global-mark)
-   ("M-g" . consult-goto-line))
+   ("M-g" . consult-goto-line)
+   ("o" . consult-outline))
 
   :custom
   (consult-ripgrep-args (concat "rg"
