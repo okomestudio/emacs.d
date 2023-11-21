@@ -8,7 +8,7 @@
 
   :custom
   (default-input-method "japanese-mozc")
-  (mozc-candidate-style 'posframe) ;; or 'overlay or 'echo-area
+  (mozc-candidate-style 'echo-area) ;; choices are 'overlay, 'echo-area, 'posframe
 
   :ensure-system-package
   ("/usr/bin/mozc_emacs_helper" . "sudo apt install -y emacs-mozc-bin"))
