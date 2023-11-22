@@ -16,6 +16,7 @@
    '(
      "\\*Async Shell Command\\*"
      "\\*Async-native-compile-log\\*"
+     "\\*Backtrace\\*"
      "\\*Buffer List\\*"
      "\\*direnv\\*$"
      "\\*elfeed-log\\*$"
