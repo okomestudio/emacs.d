@@ -491,6 +491,8 @@ node."
       (ts/org-roam-node-slug (org-roam-node-title node))))
 
   :config
+  (setq find-file-visit-truename t) ;; See 5.3 Setting up Org-roam
+
   (require 'org-roam-dailies)
   (org-roam-db-autosync-mode))
 
