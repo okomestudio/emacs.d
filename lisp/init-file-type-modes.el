@@ -64,23 +64,31 @@
 
 (use-package markdown-mode
   ;; For browser preview, use C-c C-c v.
+  :custom
+  (markdown-fontify-code-block-natively t)
+  (markdown-header-scaling t)
+  (markdown-indent-on-enter t)
+
   :commands (markdown-mode gfm-mode)
 
-  :mode (("README\\.md\\'" . gfm-mode)
-         ("\\.md\\'" . markdown-mode)
-         ("\\.markdown\\'" . markdown-mode)
-         ("\\.lr\\'" . markdown-mode))
+  :mode
+  (("README\\.md\\'" . gfm-mode)
+   ("\\.md\\'" . gfm-mode)
+   ("\\.markdown\\'" . gfm-mode)
+   ("\\.lr\\'" . gfm-mode))
 
-  :hook (markdown-mode . lsp)
+  :hook
+  (markdown-mode . lsp)
 
   :ensure-system-package
-  ((marksman . "sudo snap install marksman")
-   (pandoc . "sudo apt install -y pandoc"))
+  (marksman . "sudo snap install marksman")
+  (pandoc . "sudo apt install -y pandoc")
 
-  :init (setq markdown-command "pandoc")
+  :init
+  (setq markdown-command "pandoc")
 
-  :config (require 'lsp-marksman)
-  )
+  :config
+  (require 'lsp-marksman))
 
 
 ;; RST
