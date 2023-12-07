@@ -22,6 +22,14 @@
                (lambda ()
                  (interactive)
                  (init-elfeed--switch-filter "@3-month-ago +news -hatena +hn -thread +job"))))
+   ("C-c c" ("Comments for URL" .
+               (lambda (arg)
+                 (interactive "P")
+                 (let* ((entry (elfeed-search-selected :ignore-region))
+                        (url (cdr (elfeed-entry-id entry))))
+                   (if (string-match "news.ycombinator.com" url)
+                       (ts/visit-url arg url)
+                     (ts/visit-hatena-bookmark-comments arg url))))))
 
    :map elfeed-show-mode-map
    ("B" . init-elfeed--visit-hatena-bookmark-comments))

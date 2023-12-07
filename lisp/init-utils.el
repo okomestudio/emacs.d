@@ -109,6 +109,14 @@ directory tree."
     dir-locals-files))
 
 
+(defun ts/visit-url (arg url)
+  "Visit URL with a web browser."
+  (interactive "P")
+  (pcase arg
+    ('(4) (browse-url url))
+    (_ (eww url))))
+
+
 (defun ts/visit-hatena-bookmark-comments (arg &optional url)
   "Visit the Hatena Bookmark comments section for the URL.
 
@@ -116,9 +124,7 @@ If URL is not supplied, the function will attempt to yank one from kill ring."
   (interactive "P")
   (let* ((url (if (equal url nil) (current-kill 0) url))
          (hatena-url (string-replace "https://" "https://b.hatena.ne.jp/entry/s/" url)))
-    (pcase arg
-      ('(4) (browse-url hatena-url))
-      (_ (eww hatena-url)))))
+    (ts/visit-url arg hatena-url)))
 
 
 (provide 'init-utils)
