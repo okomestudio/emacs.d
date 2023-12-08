@@ -100,6 +100,7 @@
 (require 'init-restclient)
 
 (require 'init-ai)
+(require 'init-osm)
 (require 'init-slack)
 
 (require 'init-projectile)
