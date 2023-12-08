@@ -8,8 +8,9 @@
   :ensure org-contrib
 
   :bind
-  (("C-c l" . 'org-store-link)
-   ("M-S q" . 'org-unfill-paragraph))
+  (:map org-mode-map
+   ("C-c l" . 'org-store-link)
+   ("M-q" . 'okutil-org-fill-or-unfill-paragraph))
 
   :custom
   (fill-column 80)
@@ -40,14 +41,6 @@
   (org-mode . (lambda () (org-superstar-mode 1) (turn-on-visual-line-mode)))
 
   :config
-  (defun org-unfill-paragraph (&optional region)
-    "Takes a multi-line paragraph and makes it into a single line of text."
-    (interactive (progn (barf-if-buffer-read-only) '(t)))
-    (let ((fill-column (point-max))
-          ;; This would override 'fill-column' if it's an integer.
-          (emacs-lisp-docstring-fill-column t))
-      (org-fill-paragraph nil region)))
-
   (defun org-ensure-all-headings-with-ids ()
     "Ensure all headings have IDs."
     (interactive)
@@ -151,21 +144,21 @@ node."
   (setq org-preview-latex-default-process 'lualatexpdf)
   (setq org-preview-latex-process-alist
         '((lualatexpdf :programs ("lualatex" "dvisvgm")
-                    :description "pdf > svg"
-                    :message "you need to install the programs: lualatex and dvisvgm."
-                    :image-input-type "pdf"
-                    :image-output-type "svg"
-                    :image-size-adjust (1.7 . 1.5)
-                    :latex-compiler ("lualatex -interaction nonstopmode --shell-escape -output-directory %o %f")
-                    :image-converter ("pdfcropmargins -v -p 0 -a -5 %f -o /tmp/cropped.pdf ; dvisvgm -P /tmp/cropped.pdf -n -b min -c %S -o %O"))
+                       :description "pdf > svg"
+                       :message "you need to install the programs: lualatex and dvisvgm."
+                       :image-input-type "pdf"
+                       :image-output-type "svg"
+                       :image-size-adjust (1.7 . 1.5)
+                       :latex-compiler ("lualatex -interaction nonstopmode --shell-escape -output-directory %o %f")
+                       :image-converter ("pdfcropmargins -v -p 0 -a -5 %f -o /tmp/cropped.pdf ; dvisvgm -P /tmp/cropped.pdf -n -b min -c %S -o %O"))
           (lualatexdvi :programs ("lualatex" "dvisvgm")
-                    :description "dvi > svg"
-                    :message "you need to install the programs: lualatex and dvisvgm."
-                    :image-input-type "dvi"
-                    :image-output-type "svg"
-                    :image-size-adjust (1.7 . 1.5)
-                    :latex-compiler ("dvilualatex -interaction nonstopmode --shell-escape -output-directory %o %f")
-                    :image-converter ("dvisvgm %f -n -b min -c %S -o %O"))))
+                       :description "dvi > svg"
+                       :message "you need to install the programs: lualatex and dvisvgm."
+                       :image-input-type "dvi"
+                       :image-output-type "svg"
+                       :image-size-adjust (1.7 . 1.5)
+                       :latex-compiler ("dvilualatex -interaction nonstopmode --shell-escape -output-directory %o %f")
+                       :image-converter ("dvisvgm %f -n -b min -c %S -o %O"))))
   )
 
 
