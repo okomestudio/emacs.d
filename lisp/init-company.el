@@ -34,8 +34,18 @@
 ;; Frontends
 
 (use-package company-box
+  :custom
+  (company-box-backends-colors
+   '((company-capf . (:all
+                      (:foreground "black" :background "#eeeeee")
+                      :selected
+                      (:foreground "black" :background "#ffffff")))))
+
   :hook
-  (company-mode . company-box-mode))
+  (company-mode . company-box-mode)
+
+  :config
+  (set-face-background 'company-box-background "#eeeeee"))
 
 
 (use-package company-posframe
