@@ -289,6 +289,7 @@ node."
   (require 'org-transclusion-indent-mode))
 
 
+(use-package org-web-tools)
 (use-package ob-typescript)
 
 
