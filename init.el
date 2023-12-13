@@ -47,6 +47,7 @@
 (require 'init-utils)
 (require 'dir-locals-utils)
 (require 'init-org)
+(require 'init-org-roam)
 (require 'init-startup)
 (require 'init-help)
 (require 'init-wayland)
