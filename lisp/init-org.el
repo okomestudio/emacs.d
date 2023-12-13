@@ -218,20 +218,6 @@ node."
   (put 'org-agenda-custom-commands 'safe-local-variable #'listp))
 
 
-(use-package org-books
-  ;; Reading list management with org mode.
-  :disabled
-
-  :init
-  (defcustom ts/org-books-file "~/.config/emacs/.books.org"
-    "Default org-books-file."
-    :type '(string)
-    :group 'ts)
-
-  :custom
-  (org-books-file ts/org-books-file))
-
-
 (use-package org-modern
   ;; Modern Org Style.
   :custom
