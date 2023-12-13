@@ -182,6 +182,7 @@ See https://knowledge.sakura.ad.jp/8494/"
                                    org-code
                                    org-indent
                                    org-latex-and-related
+                                   org-modern-bracket-line
                                    org-checkbox
                                    org-formula
                                    org-meta-line

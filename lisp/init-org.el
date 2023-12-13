@@ -221,7 +221,7 @@ node."
 (use-package org-modern
   ;; Modern Org Style.
   :custom
-  (org-modern-block nil)
+  (org-modern-block-name t) ;; use org-modern-indent
   (org-modern-checkbox '((?X . #("▢𐄂" 0 2 (composition ((2)))))
                          (?- . #("▢–" 0 2 (composition ((2)))))
                          (?\s . #("▢" 0 1 (composition ((1)))))))
@@ -234,7 +234,6 @@ node."
   (org-modern-tag t)
   (org-modern-timestamp t)
   (org-modern-todo t)
-  (org-modern-variable-pitch t)
 
   :init
   (with-eval-after-load 'org
@@ -242,6 +241,7 @@ node."
 
 
 (use-package org-modern-indent
+  ;; Modern block styling with org-indent.
   :straight
   (org-modern-indent :type git
                      :host github
