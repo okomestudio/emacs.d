@@ -31,7 +31,7 @@
      ;;"elfeed-entry" elfeed-show-mode elfeed-goodies-show-mode
      help-mode
      helpful-mode
-     magit-mode "magit:"
+     ;; magit-mode "magit:"
      ))
   (popper-window-height (lambda (win)
                           (fit-window-to-buffer
