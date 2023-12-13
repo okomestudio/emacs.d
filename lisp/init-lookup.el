@@ -1,8 +1,8 @@
 ;;; init-lookup.el --- Lookup  -*- lexical-binding: t -*-
 ;;; Commentary:
-;;;
-;;;   The collection of lookup utility exposed via a common key prefix.
-;;;
+;;
+;;   The collection of lookup utility exposed via a common key prefix.
+;;
 ;;; Code:
 
 
@@ -26,6 +26,8 @@
    :prefix "M-L e"
    ("a" . search-amazon-en)
    ("d" . define-word-at-point)
+   ("e" . search-duckduckgo-en)
+   ("j" . search-justapedia-en)
    ("p" . powerthesaurus-lookup-dwim)
    ("w" . search-wikipedia-en)
 
@@ -34,6 +36,7 @@
    :prefix "M-L j"
    ("a" . search-amazon-ja)
    ("d" . search-weblio)
+   ("e" . search-duckduckgo-ja)
    ("w" . search-wikipedia-ja)))
 
 
@@ -78,33 +81,45 @@
 
   (add-hook 'eww-after-render-hook 'ts/eww-render--after)
 
-  (defun ts/make-query (site-url str)
+  (defun init-lookup--make-query (site-url str)
     "Look up term STR at SITE-URL in eww."
     (eww-browse-url (format site-url (url-hexify-string str))))
 
   (defun search-amazon-en (str)
     (interactive (list (okutil-string-from-region-or-prompt "Amazon (US): ")))
-    (ts/make-query "https://amazon.com/s?k=%s" str))
+    (init-lookup--make-query "https://amazon.com/s?k=%s" str))
 
   (defun search-amazon-ja (str)
     (interactive (list (okutil-string-from-region-or-prompt "Amazon (JP): ")))
-    (ts/make-query "https://amazon.co.jp/s?k=%s" str))
+    (init-lookup--make-query "https://amazon.co.jp/s?k=%s" str))
+
+  (defun search-duckduckgo-en (str)
+    (interactive (list (okutil-string-from-region-or-prompt "DuckDuckGo (en): ")))
+    (init-lookup--make-query "https://html.duckduckgo.com/html/?q=%s&kp=-2&kl=wt-wt&ks=s" str))
+
+  (defun search-duckduckgo-ja (str)
+    (interactive (list (okutil-string-from-region-or-prompt "DuckDuckGo (ja): ")))
+    (init-lookup--make-query "https://html.duckduckgo.com/html/?q=%s&kp=-2&kl=jp-jp&ks=s" str))
 
   (defun search-goodreads (str)
     (interactive (list (okutil-string-from-region-or-prompt "Goodreads: ")))
-    (ts/make-query "https://goodreads.com/search?q=%s" str))
+    (init-lookup--make-query "https://goodreads.com/search?q=%s" str))
 
   (defun search-weblio (str)
     (interactive (list (okutil-string-from-region-or-prompt "Weblio: ")))
-    (ts/make-query "https://www.weblio.jp/content/%s" (upcase str)))
+    (init-lookup--make-query "https://www.weblio.jp/content/%s" (upcase str)))
 
   (defun search-wikipedia-en (str)
     (interactive (list (okutil-string-from-region-or-prompt "Wikipedia (en): ")))
-    (ts/make-query "https://en.m.wikipedia.org/wiki/%s" str))
+    (init-lookup--make-query "https://en.m.wikipedia.org/wiki/%s" str))
 
   (defun search-wikipedia-ja (str)
     (interactive (list (okutil-string-from-region-or-prompt "Wikipedia (ja): ")))
-    (ts/make-query "https://ja.m.wikipedia.org/wiki/%s" str)))
+    (init-lookup--make-query "https://ja.m.wikipedia.org/wiki/%s" str))
+
+  (defun search-justapedia-en (str)
+    (interactive (list (okutil-string-from-region-or-prompt "Justapedia (en): ")))
+    (init-lookup--make-query "https://justapedia.org/wiki/%s" str)))
 
 
 (use-package go-translate
