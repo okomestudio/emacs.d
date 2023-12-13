@@ -254,10 +254,6 @@ node."
 (use-package org-side-tree)
 
 
-(use-package org-sticky-header
-  :init
-  (org-sticky-header-mode +1))
-
 
 (use-package org-superstar
   :custom
