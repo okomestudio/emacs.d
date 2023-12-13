@@ -38,7 +38,8 @@
   (pdfcropmargins . "pip install pdfCropMargins")
 
   :hook
-  (org-mode . (lambda () (org-superstar-mode 1) (turn-on-visual-line-mode)))
+  (org-mode . (lambda ()
+                (turn-on-visual-line-mode)))
 
   :config
   (defun org-ensure-all-headings-with-ids ()
@@ -129,15 +130,28 @@ node."
    '(org-block ((t (:background "#fbf6ed" :extend t))))
    '(org-block-end-line ((t (:foreground "#999999" :background "#f1ede5" :extend t))))
    '(org-modern-bracket-line ((t (:foreground "#999999" :background "#f1ede5" :extend t))))
+
    ;; Drawer
    '(org-drawer ((t (:foreground "#999999" :height 1.0 :inherit 'fixed-pitch))))
    '(org-special-keyword ((t (:foreground "#999999" :height 1.0 :inherit 'fixed-pitch))))
    '(org-property-value ((t (:foreground "#999999" :height 1.0 :inherit 'fixed-pitch))))
+
    ;; Table
    '(org-table ((t (:inherit 'fixed-pitch))))
 
    ;; Code-like comments
-   '(font-lock-comment-face ((t (:inherit 'fixed-pitch)))))
+   '(font-lock-comment-face ((t (:inherit 'fixed-pitch))))
+
+   ;; Headings size
+   '(org-document-title ((t (:height 1.24))))
+   '(org-level-1 ((t (:inherit outline-1 :height 1.24))))
+   '(org-level-2 ((t (:inherit outline-2 :height 1.12))))
+   '(org-level-3 ((t (:inherit outline-3 :height 1.0))))
+   '(org-level-4 ((t (:inherit outline-4 :height 0.9))))
+   '(org-level-5 ((t (:inherit outline-5 :height 0.9))))
+   '(org-level-6 ((t (:inherit outline-6 :height 0.9))))
+   '(org-level-7 ((t (:inherit outline-7 :height 0.9))))
+   '(org-level-8 ((t (:inherit outline-8 :height 0.9)))))
 
   ;; (setq org-latex-inputenc-alist '(("utf8" . "utf8x")))
   ;; (add-to-list 'org-latex-packages-alist '("" "unicode-math"))
@@ -228,7 +242,7 @@ node."
   (org-modern-hide-stars 'nil)
   (org-modern-keyword "‣ ")
   (org-modern-priority t)
-  (org-modern-star nil)
+  (org-modern-star '("◉" "🞛" "○" "▷"))
   (org-modern-statistics t)
   (org-modern-table nil)
   (org-modern-tag t)
@@ -252,12 +266,6 @@ node."
 
 
 (use-package org-side-tree)
-
-
-
-(use-package org-superstar
-  :custom
-  (org-superstar-headline-bullets-list '("◉" "🞛" "○" "▷")))
 
 
 (use-package org-transclusion
