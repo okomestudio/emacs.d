@@ -26,9 +26,9 @@
    :prefix "M-L e"
    ("a" . search-amazon-en)
    ("d" . define-word-at-point)
-   ("e" . search-duckduckgo-en)
    ("j" . search-justapedia-en)
    ("p" . powerthesaurus-lookup-dwim)
+   ("s" . search-duckduckgo-en)
    ("w" . search-wikipedia-en)
 
    :prefix-map lookup-japanese-map
@@ -36,7 +36,7 @@
    :prefix "M-L j"
    ("a" . search-amazon-ja)
    ("d" . search-weblio)
-   ("e" . search-duckduckgo-ja)
+   ("s" . search-duckduckgo-ja)
    ("w" . search-wikipedia-ja)))
 
 
