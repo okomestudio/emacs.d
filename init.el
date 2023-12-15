@@ -63,6 +63,7 @@
 
 (require 'init-editing-utils)
 (require 'init-flycheck)
+(require 'init-eww)
 (require 'init-lookup)
 (require 'init-ime)
 (require 'init-pbocr)
@@ -73,7 +74,6 @@
 (require 'init-company)
 (require 'init-docker)
 (require 'init-elfeed)
-(require 'init-eww)
 (require 'init-git)
 (require 'init-lsp)
 (require 'init-openwith)
