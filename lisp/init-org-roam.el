@@ -42,12 +42,6 @@
   (org-roam-unlinked-references-word-boundary-re
    "|(\\b%1$s\\b|(?<=[^\x20-\x7e\xff61-\xff9f])%1$s(?=[^\x20-\x7e\xff61-\xff9f]))")
 
-  :hook
-  (org-roam-mode . (lambda ()
-                     (visual-line-mode +1)
-                     (setq-local adaptive-wrap-extra-indent 4)
-                     (adaptive-wrap-prefix-mode +1)))
-
   :preface
   (put 'orb-preformat-keywords 'safe-local-variable #'listp)
   (put 'org-roam-capture-templates 'safe-local-variable #'listp)
@@ -214,9 +208,13 @@
 
 
 (use-package adaptive-wrap
-  :disabled
-  :custom
-  (adaptive-wrap-extra-indent 4))
+  :hook
+  (org-roam-mode . (lambda ()
+                     (turn-on-visual-line-mode)
+                     ;; Format org-roam buffer so that unlinked reference list
+                     ;; are easier to see.
+                     (setq-local adaptive-wrap-extra-indent 4)
+                     (adaptive-wrap-prefix-mode +1))))
 
 
 (provide 'init-org-roam)
