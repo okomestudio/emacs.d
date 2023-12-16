@@ -40,6 +40,7 @@ request
 roam/
 secrets/
 snippets
+speed-type/
 straight/*
 !straight/versions/
 tramp
