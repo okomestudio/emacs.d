@@ -66,24 +66,7 @@
   (defun init-elfeed--switch-filter (filter)
     (with-current-buffer (elfeed-search-buffer)
       (setf elfeed-search-filter filter)
-      (elfeed-search-update :force)))
-
-  (defhydra hydra-elfeed-show (:color pink :hint nil)
-    "
-^elfeed-show^
-^^^^^^^^^^^^^------------------------------
-_b_: visit the current entry in the browser
-_B_: visit Hatena Bookmark comments for the entry
-_q_: kill the buffer
-_z_: zoom image (when on image)
-"
-    ("b" elfeed-show-visit)
-    ("B" init-elfeed--visit-hatena-bookmark-comments)
-    ("c" nil "cancel")
-    ("q" elfeed-kill-buffer)
-    ("z" shr-zoom-image))
-
-  (define-key elfeed-show-mode-map "." 'hydra-elfeed-show/body))
+      (elfeed-search-update :force))))
 
 
 (use-package elfeed-org
@@ -102,6 +85,8 @@ _z_: zoom image (when on image)
 
 
 (use-package elfeed-goodies
+  :disabled
+
   :custom
   (elfeed-goodies/entry-pane-position 'bottom)
   (elfeed-goodies/entry-pane-size 0.8)
@@ -121,11 +106,6 @@ _z_: zoom image (when on image)
     :keymap init-elfeed--map)
   (add-to-list 'emulation-mode-map-alists `((init-elfeed--mode) . ,init-elfeed--map))
   (define-key init-elfeed--map (kbd "M-v") 'scroll-down-command))
-
-
-(use-package elfeed-webkit
-  :disabled
-  :after elfeed)
 
 
 (provide 'init-elfeed)
