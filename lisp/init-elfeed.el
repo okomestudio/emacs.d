@@ -17,11 +17,15 @@
    ("C-c f 3" ("Select filter 3" .
                (lambda ()
                  (interactive)
-                 (init-elfeed--switch-filter "@3-month-ago +news -hatena +hn +thread -job"))))
+                 (init-elfeed--switch-filter "@3-month-ago +news -hatena +hn +thread -comment -job"))))
    ("C-c f 4" ("Select filter 4" .
                (lambda ()
                  (interactive)
-                 (init-elfeed--switch-filter "@3-month-ago +news -hatena +hn -thread +job"))))
+                 (init-elfeed--switch-filter "@3-month-ago +news -hatena +hn -thread +comment -job"))))
+   ("C-c f 5" ("Select filter 4" .
+               (lambda ()
+                 (interactive)
+                 (init-elfeed--switch-filter "@3-month-ago +news -hatena +hn -thread -comment +job"))))
    ("C-c c" ("Comments for URL" .
                (lambda (arg)
                  (interactive "P")
@@ -36,6 +40,9 @@
 
   :custom
   (elfeed-search-filter "@3-month-ago -news")
+  (elfeed-search-title-max-width 100)
+  (elfeed-search-title-min-width 16)
+  (elfeed-search-trailing-width 30)
   (elfeed-show-unique-buffers nil)
 
   :hook
@@ -66,7 +73,10 @@
   (defun init-elfeed--switch-filter (filter)
     (with-current-buffer (elfeed-search-buffer)
       (setf elfeed-search-filter filter)
-      (elfeed-search-update :force))))
+      (elfeed-search-update :force)))
+
+  (set-face-attribute 'elfeed-search-title-face nil :foreground "#555")
+  (set-face-attribute 'elfeed-search-unread-title-face nil :foreground "#000"))
 
 
 (use-package elfeed-org

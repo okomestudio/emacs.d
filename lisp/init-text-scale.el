@@ -6,7 +6,7 @@
   :straight nil
 
   :hook
-  (elfeed-search-mode . (lambda () (text-scale-set 1.5)))
+  (elfeed-search-mode . (lambda () (text-scale-set 1.0)))
   (elfeed-show-mode . (lambda () (text-scale-set 1.5)))
   (eww-mode . (lambda () (text-scale-set 1.5)))
   (org-mode . (lambda () (text-scale-set 1.5)))
