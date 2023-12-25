@@ -115,6 +115,7 @@
 
 (require 'init-optimizations)
 
+(require 'init-tetris)
 
 ;; Load additional init.el files in init.d/:
 (let ((custom-init-directory (concat user-emacs-directory "init.d/")))
@@ -124,5 +125,6 @@
 
 (put 'eval 'safe-local-variable #'listp)
 (setq gc-cons-threshold 100000000)
+
 (provide 'init)
 ;;; init.el ends here
