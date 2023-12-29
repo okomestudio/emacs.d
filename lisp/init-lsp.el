@@ -49,6 +49,7 @@
    (json-mode . (lambda () (ts/lsp-mode-hook 'json-ls)))
    (markdown-mode . lsp)
    (python-mode . (lambda () (ts/lsp-mode-hook 'pylsp)))
+   (python-ts-mode . (lambda () (ts/lsp-mode-hook 'pylsp)))
    (sh-mode . (lambda () (ts/lsp-mode-hook 'bash-ls)))
    (sql-mode . (lambda () (ts/lsp-mode-hook 'sqls)))
    (web-mode . (lambda () (ts/lsp-mode-hook 'html-ls)))

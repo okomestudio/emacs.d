@@ -12,7 +12,7 @@
 
   :config
   (setq polymode-prefix-key (kbd "M-n"))
-  (define-hostmode poly-python-hostmode :mode 'python-mode)
+  (define-hostmode poly-python-hostmode :mode 'python-ts-mode)
 
   (define-innermode poly-sql-expr-python-innermode
     :mode 'sql-mode

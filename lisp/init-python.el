@@ -2,6 +2,19 @@
 ;;; Commentary:
 ;;; Code:
 
+
+(use-package emacs
+  :straight nil
+
+  :init
+  (add-to-list 'treesit-language-source-alist
+               '(python "https://github.com/tree-sitter/tree-sitter-python.git"))
+
+  ;; Run treesit-install-language-grammar before using.
+  (add-to-list 'major-mode-remap-alist
+               '(python-mode . python-ts-mode)))
+
+
 (use-package python
   :after (blacken py-isort)
 
