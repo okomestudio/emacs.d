@@ -23,6 +23,7 @@ auto-save-list
 bookmarks
 conf.d
 custom.el
+devdocs/
 eln-cache
 elpa
 emojis/
