@@ -7,33 +7,15 @@
   :commands lsp
 
   :custom
-  ;; TODO: Start the service on start.
-  ;;
-  ;; Run: docker container run --name explainshell --restart always \
-  ;;          -p 5023:5000 -d spaceinvaderone/explainshell
-  ;; (lsp-bash-explainshell-endpoint "http://localhost:5023")
-  (lsp-bash-explainshell-endpoint nil)  ; explainshell integration by
-                                        ; bash-language-server appears not to be
-                                        ; working; see
-                                        ; github.com/bash-lsp/bash-language-server/issues/726
-
-  (lsp-bash-highlight-parsing-errors t)
   (lsp-diagnostics-provider :auto)
   (lsp-log-io nil) ;; set to t for debugging
   (lsp-response-timeout 30)
   (lsp-use-plists t)
 
-  :ensure-system-package
-  ((shellcheck . "sudo apt install -y shellcheck") ; for bash-ls
-   ;; (unified-language-server . "npm i -g unified-language-server")
-   ;; (vscode-html-language-server . "npm i -g vscode-langservers-extracted")
-   )
-
   :hook
   ((dockerfile-mode . (lambda () (init-lsp-lsp-mode-hook 'dockerfile-ls)))
    (json-mode . (lambda () (init-lsp-lsp-mode-hook 'json-ls)))
    (markdown-mode . lsp)
-   (sh-mode . (lambda () (init-lsp-lsp-mode-hook 'bash-ls)))
    (yaml-mode . (lambda () (init-lsp-lsp-mode-hook 'yamlls))))
 
   :preface
@@ -61,48 +43,26 @@
   :commands lsp-ui-mode
 
   :bind
-  (
-   ;; :map lsp-ui-mode-map
-   ;; ("C-h D" . init-lsp--lsp-ui-doc-show-and-focus)
+  (:map lsp-ui-mode-map
+   ("C-F" . lsp-ui-doc-focus-frame)
 
    :map lsp-ui-doc-frame-mode-map
-   ("q" . (lambda ()
-            (interactive)
-            (let* ((win (lsp-ui-doc--get-parent :window)))
-              (lsp-ui-doc-unfocus-frame)
-              (lsp-ui-doc-frame-mode -1)
-              (lsp-ui-doc-hide)
-              (select-window win)))))
+   ("q" . lsp-ui-doc-unfocus-frame))
 
   :custom
   (lsp-ui-doc-border "black")
-  (lsp-ui-doc-delay 0.1)
-  (lsp-ui-doc-max-height 5)
+  (lsp-ui-doc-delay 0.2)
+  (lsp-ui-doc-max-height 10)
   (lsp-ui-doc-position 'at-point)
   (lsp-ui-doc-show-with-cursor nil)
-  (lsp-ui-doc-show-with-mouse nil)
+  (lsp-ui-doc-show-with-mouse t)
   (lsp-ui-doc-text-scale-level -1.0)
   (lsp-ui-doc-use-childframe t)
   (lsp-ui-doc-use-webkit nil)
   (lsp-ui-sideline-delay 1.0)
   (lsp-ui-sideline-show-code-actions t)
   (lsp-ui-sideline-show-diagnostics t)
-  (lsp-ui-sideline-show-hover t)
-
-  :preface
-  (defun init-lsp--lsp-ui-doc-show-and-focus ()
-    (interactive)
-
-    (defun init-lsp--try-focus-frame (delay)
-      (run-with-idle-timer delay nil
-                           (lambda ()
-                             (if (lsp-ui-doc--frame-visible-p)
-                                 (lsp-ui-doc-focus-frame)
-                               (lsp-ui-doc-show)
-                               (init-lsp--try-focus-frame (* delay 1.2))))))
-
-    (lsp-ui-doc-show)
-    (init-lsp--try-focus-frame 0.1)))
+  (lsp-ui-sideline-show-hover t))
 
 
 (use-package lsp-treemacs
