@@ -21,13 +21,10 @@
   (lsp-diagnostics-provider :auto)
   (lsp-log-io nil) ;; set to t for debugging
   (lsp-response-timeout 30)
-  (lsp-sqls-workspace-config-path "root")
-  (lsp-sqls-timeout 30)
   (lsp-use-plists t)
 
   :ensure-system-package
   ((shellcheck . "sudo apt install -y shellcheck") ; for bash-ls
-   (sqls . "go install github.com/lighttiger2505/sqls@latest")
    ;; (unified-language-server . "npm i -g unified-language-server")
    (vscode-html-language-server . "npm i -g vscode-langservers-extracted"))
 
@@ -38,7 +35,6 @@
    (json-mode . (lambda () (init-lsp-lsp-mode-hook 'json-ls)))
    (markdown-mode . lsp)
    (sh-mode . (lambda () (init-lsp-lsp-mode-hook 'bash-ls)))
-   (sql-mode . (lambda () (init-lsp-lsp-mode-hook 'sqls)))
    (web-mode . (lambda () (init-lsp-lsp-mode-hook 'html-ls)))
    (yaml-mode . (lambda () (init-lsp-lsp-mode-hook 'yamlls))))
 

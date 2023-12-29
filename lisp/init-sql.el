@@ -93,5 +93,23 @@
   (ensure-file-from-github "emacsmirror/emacswiki.org/master/sql-upcase.el"))
 
 
+(use-package devdocs
+  :hook
+  (sql-mode . (lambda () (setq-local devdocs-current-docs '("sqlite"
+                                                            "postgresql~16")))))
+
+
+(use-package lsp-mode
+  :custom
+  (lsp-sqls-workspace-config-path "root")
+  (lsp-sqls-timeout 30)
+
+  :ensure-system-package
+  (sqls . "go install github.com/lighttiger2505/sqls@latest")
+
+  :hook
+  (sql-mode . (lambda () (init-lsp-lsp-mode-hook 'sqls))))
+
+
 (provide 'init-sql)
 ;;; init-sql.el ends here
