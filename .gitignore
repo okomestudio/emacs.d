@@ -45,6 +45,7 @@ straight/*
 !straight/versions/
 tramp
 transient
+tree-sitter/
 tutorial/
 url
 var/
