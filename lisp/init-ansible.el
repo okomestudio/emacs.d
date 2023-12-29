@@ -16,7 +16,11 @@
   (ansible . (lambda ()
                (lsp-disconnect)         ; disconnect yamlls
                (setq-local lsp-disabled-clients '(yamlls))
-               (init-lsp-lsp-mode-hook 'ansible-ls))))
+               (init-lsp-lsp-mode-hook 'ansible-ls)))
+
+  :preface
+  (put 'lsp-ansible-python-interpreter-path 'safe-local-variable #'stringp)
+  (put 'lsp-ansible-validation-lint-arguments 'safe-local-variable #'stringp))
 
 
 (provide 'init-ansible)
