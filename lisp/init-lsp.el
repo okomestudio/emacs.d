@@ -32,11 +32,7 @@
    (vscode-html-language-server . "npm i -g vscode-langservers-extracted"))
 
   :hook
-  ((ansible . (lambda ()
-                (lsp-disconnect)        ; disconnect yamlls
-                (setq-local lsp-disabled-clients '(yamlls))
-                (init-lsp-lsp-mode-hook 'ansible-ls)))
-   (dockerfile-mode . (lambda () (init-lsp-lsp-mode-hook 'dockerfile-ls)))
+  ((dockerfile-mode . (lambda () (init-lsp-lsp-mode-hook 'dockerfile-ls)))
    ;; (html-mode . lsp)
    (js-mode . (lambda () (init-lsp-lsp-mode-hook 'jsts-ls)))
    (json-mode . (lambda () (init-lsp-lsp-mode-hook 'json-ls)))
