@@ -2,11 +2,13 @@
 ;;; Commentary:
 ;;; Code:
 
-(use-package web-mode
-  ;; Web template editing mode.
 
+(use-package web-mode
   ;; :after (company-css company-tern prettier-js add-node-modules-path)
-  :bind (:map web-mode-map ("C-c b" . web-beautify-html))
+
+  :bind
+  (:map web-mode-map
+   ("C-c b" . web-beautify-html))
 
   :custom
   (web-mode-code-indent-offset 2)
@@ -28,7 +30,7 @@
   :mode
   ("\\.css\\'"
    "\\.html?\\'"
-   "\\.j2\\'"                           ; Jinja2 template
+   "\\.html?\\.j2\\'" ;; Jinja2 HTML template
    "\\.jsx?\\'")
 
   :config
@@ -117,6 +119,7 @@
 
   )
 
+
 (use-package typescript-mode)
 
 
@@ -133,8 +136,35 @@
           "--single-quote"
           "--trailing-comma" "all")))
 
+
 (use-package web-beautify
   :disabled
   :ensure-system-package ((js-beautify . "npm install -g js-beautify")))
 
+
+(use-package devdocs
+  :hook
+  (web-mode . (lambda () (setq-local devdocs-current-docs '("axios"
+                                                            "css"
+                                                            "dom"
+                                                            "html"
+                                                            "http"
+                                                            "javascript"
+                                                            "jinja~3.1"
+                                                            "jquery"
+                                                            "prettier"
+                                                            "react"
+                                                            "typescript"
+                                                            "vite")))))
+
+
+(use-package lsp-mode
+  :hook
+  (web-mode . 'lsp)
+
+  :config
+  (add-to-list 'lsp-language-id-configuration '(".*\\.html?\\.j2" . "html")))
+
+
 (provide 'init-webdev)
+;;; init-webdev.el ends here

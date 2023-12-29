@@ -26,16 +26,14 @@
   :ensure-system-package
   ((shellcheck . "sudo apt install -y shellcheck") ; for bash-ls
    ;; (unified-language-server . "npm i -g unified-language-server")
-   (vscode-html-language-server . "npm i -g vscode-langservers-extracted"))
+   ;; (vscode-html-language-server . "npm i -g vscode-langservers-extracted")
+   )
 
   :hook
   ((dockerfile-mode . (lambda () (init-lsp-lsp-mode-hook 'dockerfile-ls)))
-   ;; (html-mode . lsp)
-   (js-mode . (lambda () (init-lsp-lsp-mode-hook 'jsts-ls)))
    (json-mode . (lambda () (init-lsp-lsp-mode-hook 'json-ls)))
    (markdown-mode . lsp)
    (sh-mode . (lambda () (init-lsp-lsp-mode-hook 'bash-ls)))
-   (web-mode . (lambda () (init-lsp-lsp-mode-hook 'html-ls)))
    (yaml-mode . (lambda () (init-lsp-lsp-mode-hook 'yamlls))))
 
   :preface
@@ -43,8 +41,6 @@
     (lsp-ensure-server server)
     (lsp))
 
-  (put 'lsp-ansible-python-interpreter-path 'safe-local-variable #'stringp)
-  (put 'lsp-ansible-validation-lint-arguments 'safe-local-variable #'stringp)
   (put 'lsp-disabled-clients 'safe-local-variable #'listp)
 
   :init
@@ -52,8 +48,6 @@
     (add-hook 'lsp-mode-hook #'lsp-enable-which-key-integration))
 
   :config
-  (add-to-list 'lsp-language-id-configuration '(".*\\.html?\\.j2" . "html"))
-
   (setq lsp-headerline-arrow "➤"))
 
 
