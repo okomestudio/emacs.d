@@ -124,6 +124,31 @@
         ("C-c t" . python-pytest-dispatch)))
 
 
+(use-package devdocs
+  :hook
+  (python-mode
+   . (lambda () (setq-local devdocs-current-docs '("python~3.12"))))
+  (python-ts-mode
+   . (lambda () (setq-local devdocs-current-docs '("python~3.12")))))
+
+
+(use-package pydoc
+  :bind
+  (:map python-mode-map
+   ("C-h D" . (lambda () (interactive) (init-python--pydoc-or-devdocs)))
+   :map python-ts-mode-map
+   ("C-h D" . (lambda () (interactive) (init-python--pydoc-or-devdocs))))
+
+  :init
+  (defun init-python--pydoc-or-devdocs ()
+    (let* ((name-of-symbol-at-point (if (symbol-at-point)
+                                        (symbol-name (symbol-at-point))
+                                      "")))
+      (if (not (symbol-at-point))
+          (devdocs-lookup)
+        (pydoc name-of-symbol-at-point)))))
+
+
 (use-package lsp-mode
   :custom
   (lsp-pylsp-configuration-sources ["flake8"])

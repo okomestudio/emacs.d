@@ -32,6 +32,15 @@
   (apropos-sort-by-scores t))
 
 
+(use-package devdocs
+  ;; Emacs viewer for DevDocs. See https://devdocs.io.
+  ;;
+  ;; Run devdocs-install to download select docs locally.
+  ;;
+  :bind
+  (("C-h D" . devdocs-lookup)))
+
+
 (use-package help-shortdoc-example
   ;; Display shortdoc examples to *Help* buffer.
   :straight
