@@ -124,5 +124,20 @@
         ("C-c t" . python-pytest-dispatch)))
 
 
+(use-package lsp-mode
+  :custom
+  (lsp-pylsp-configuration-sources ["flake8"])
+  (lsp-pylsp-plugins-flake8-enabled t)
+  (lsp-pylsp-plugins-pycodestyle-enabled nil)
+  (lsp-pylsp-plugins-pydocstyle-enabled t)
+  (lsp-pylsp-plugins-pyflakes-enabled nil)
+  (lsp-pylsp-plugins-pylint-enabled nil)
+  (lsp-pylsp-server-command '("~/.config/emacs/bin/pylsp"))
+
+  :hook
+  (python-mode . (lambda () (init-lsp-lsp-mode-hook 'pylsp)))
+  (python-ts-mode . (lambda () (init-lsp-lsp-mode-hook 'pylsp))))
+
+
 (provide 'init-python)
 ;;; init-python.el ends here
