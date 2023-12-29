@@ -3,27 +3,14 @@
 ;;; Code:
 
 
-(use-package emacs
-  :straight nil
-
-  :init
-  (add-to-list 'treesit-language-source-alist
-               '(python "https://github.com/tree-sitter/tree-sitter-python.git"))
-
-  ;; Run treesit-install-language-grammar before using.
-  (add-to-list 'major-mode-remap-alist
-               '(python-mode . python-ts-mode)))
-
-
 (use-package python
   :after (blacken py-isort)
 
   :bind
   (:map python-mode-map
-        ("C-c b" . (lambda ()
-                     (interactive)
-                     (blacken-buffer)
-                     (py-isort-buffer))))
+   ("C-c b" . init-python--format-python-code)
+   :map python-ts-mode-map
+   ("C-c b" . init-python--format-python-code))
 
   :custom
   (python-indent-guess-indent-offset-verbose nil)
@@ -33,7 +20,56 @@
                                          "--InteractiveShell.display_page=True"))
 
   :ensure-system-package
-  (ipython . "pip install ipython"))
+  (ipython . "pip install ipython")
+
+  :preface
+  (defun init-python--format-python-code ()
+    "Format Python code."
+    (interactive)
+    (blacken-buffer)
+    (py-isort-buffer))
+
+  :init
+  (add-to-list 'treesit-language-source-alist
+               '(python "https://github.com/tree-sitter/tree-sitter-python.git"))
+
+  ;; Run treesit-install-language-grammar before using.
+  (add-to-list 'major-mode-remap-alist '(python-mode . python-ts-mode)))
+
+
+(use-package polymode
+  :mode
+  ("\\.py[iw]?\\'" . pm-python-sql-mode)
+
+  :interpreter
+  (("python" . pm-python-sql-mode)
+   ("python3" . pm-python-sql-mode))
+
+  :config
+  (define-hostmode init-python--pm-python-hostmode
+    :mode 'python-mode)
+
+  (define-hostmode init-python--pm-python-ts-hostmode init-python--pm-python-hostmode
+    :mode 'python-ts-mode)
+
+  (define-innermode init-python--pm-sql-expr-python-innermode
+    :mode 'sql-mode
+    :head-matcher "\"\\{3\\}--[[:blank:]]*\\(sql\\|SQL\\)"
+    :tail-matcher "\"\\{3\\}"
+    :head-mode 'host
+    :tail-mode 'host)
+
+  (defun init-python--pm-python-sql-eval-chunk (beg end msg)
+    "Calls out to `sql-send-region' with the polymode chunk region"
+    (sql-send-region beg end))
+
+  (define-polymode pm-python-sql-mode
+    :hostmode 'init-python--pm-python-ts-hostmode
+    :innermodes '(init-python--pm-sql-expr-python-innermode)
+
+    (setq polymode-eval-region-function #'init-python--pm-python-sql-eval-chunk)
+    (define-key pm-python-sql-mode-map
+                (kbd "C-c C-c") 'polymode-eval-chunk)))
 
 
 (use-package blacken
@@ -86,6 +122,7 @@
   :bind
   (:map python-mode-map
         ("C-c t" . python-pytest-dispatch)))
+
 
 (provide 'init-python)
 ;;; init-python.el ends here
