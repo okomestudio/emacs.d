@@ -36,23 +36,34 @@
 (use-package lsp-ui
   ;; UI integration for lsp-mode.
   ;;
-  ;; Note that unfocusing the doc frame often leads to unresponsiveness.
-  ;; Pressing an arrow key goes out of the state. See
-  ;; https://github.com/emacs-lsp/lsp-ui/issues/715.
+  ;; Note that unfocusing the doc frame leads to unresponsiveness.
+  ;; Pressing an arrow key or tab goes out of that state. See
+  ;; https://github.com/emacs-lsp/lsp-ui/issues/751.
   ;;
   :commands lsp-ui-mode
 
   :bind
   (:map lsp-ui-mode-map
-   ("C-F" . lsp-ui-doc-focus-frame)
-
-   :map lsp-ui-doc-frame-mode-map
-   ("q" . lsp-ui-doc-unfocus-frame))
+        ("C-h ." . (lambda (arg)
+                     (interactive "P")
+                     (pcase arg
+                       ('(4) (progn
+                               (lsp-ui-doc-show)
+                               ))
+                       (_ (progn
+                            (if (lsp-ui-doc--visible-p)
+                                (lsp-ui-doc-focus-frame)
+                              (lsp-ui-doc-glance)))))))
+        :map lsp-ui-doc-frame-mode-map
+        ("q" . (lambda ()
+                 (interactive)
+                 (lsp-ui-doc-unfocus-frame)
+                 (lsp-ui-doc-hide))))
 
   :custom
   (lsp-ui-doc-border "black")
   (lsp-ui-doc-delay 0.2)
-  (lsp-ui-doc-max-height 10)
+  (lsp-ui-doc-max-height 20)
   (lsp-ui-doc-position 'at-point)
   (lsp-ui-doc-show-with-cursor nil)
   (lsp-ui-doc-show-with-mouse t)
@@ -62,7 +73,10 @@
   (lsp-ui-sideline-delay 1.0)
   (lsp-ui-sideline-show-code-actions t)
   (lsp-ui-sideline-show-diagnostics t)
-  (lsp-ui-sideline-show-hover t))
+  (lsp-ui-sideline-show-hover t)
+
+  :config
+  (set-face-background 'lsp-ui-doc-background "#eeeeee"))
 
 
 (use-package lsp-treemacs
