@@ -93,7 +93,7 @@
 (require 'init-scala)
 (require 'init-shell)
 (require 'init-sql)
-(require 'init-webdev)
+(require 'init-webmode)
 
 (require 'init-ansible)
 (require 'init-graphviz)
