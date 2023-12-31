@@ -101,10 +101,13 @@
   ;; window configuration.
   (winner-mode 1)
 
-  ;; For multilingual environment.
-  (prefer-coding-system 'utf-8)         ; Use UTF-8 when possible
-  (set-default-coding-systems 'utf-8)
-  (set-language-environment "UTF-8"))
+  ;; For multilingual environment:
+  (set-language-environment "UTF-8") ;; or "Japanese", for example
+
+  ;; avoid prefer-coding-system (see https://github.com/takueof/.emacs.d/blob/master/init.el):
+  (set-coding-system-priority 'utf-8)
+  (setq-default buffer-file-coding-system 'utf-8-unix)
+  (set-default-coding-systems 'utf-8))
 
 
 (use-package files
