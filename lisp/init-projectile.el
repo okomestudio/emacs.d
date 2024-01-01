@@ -2,21 +2,26 @@
 ;;; Commentary:
 ;;; Code:
 
+
 (use-package projectile
   :bind
   (:map ctl-x-4-map
-   ("p" . (lambda () (interactive)
-            (other-window -1) (projectile-switch-project) (other-window +1)))
+   ("p" . (lambda ()
+            (interactive)
+            (other-window -1)
+            (projectile-switch-project)
+            (other-window +1)))
 
    :map projectile-mode-map
-   ("s-p" . projectile-command-map)     ; "s-" is "super"
+   ("s-p" . projectile-command-map) ; "s-" is "super"
    ("C-c p" . projectile-command-map))
 
   :custom
   (projectile-auto-discover nil)
   (projectile-enable-caching nil)
   (projectile-indexing-method 'alien)
-  (projectile-mode-line-function '(lambda () (format " [%s]" (projectile-project-name))))
+  (projectile-mode-line-function '(lambda ()
+                                    (format " [%s]" (projectile-project-name))))
   (projectile-project-root-functions '(projectile-root-local
                                        projectile-root-bottom-up
                                        projectile-root-top-down
@@ -24,17 +29,15 @@
   (projectile-project-search-path '("~/.config/emacs/" ("~/github.com/" . 2)))
 
   ;; Remove --strip-cwd-prefix till `fd` version 8.3.0+ is available:
-  (projectile-generic-command "fd . -0 --type f --color=never")
+  ;; NOTE(2023-12-31): fd-find is at 8.6.0 in Bookworm so the below can be removed.
+  ;; (projectile-generic-command "fd . -0 --type f --color=never")
   (projectile-git-fd-args "-H -0 -E .git -tf")
 
   :ensure-system-package
-  ((ag . "sudo apt install -y silversearcher-ag")
-   (fdfind . "sudo apt install -y fd-find"))
+  (ag . "sudo apt install -y silversearcher-ag")
+  (fdfind . "sudo apt install -y fd-find")
 
-  :init
-  (use-package ag)
-  (projectile-mode +1)
-
+  :preface
   (put 'projectile-project-compilation-cmd 'safe-local-variable #'stringp)
   (put 'projectile-project-compilation-dir 'safe-local-variable #'stringp)
   (put 'projectile-project-configure-cmd 'safe-local-variable #'stringp)
@@ -42,7 +45,11 @@
   (put 'projectile-project-package-cmd 'safe-local-variable #'stringp)
   (put 'projectile-project-run-cmd 'safe-local-variable #'stringp)
   (put 'projectile-project-test-cmd 'safe-local-variable #'stringp)
-  )
+
+  :init
+  (use-package ag)
+  (projectile-mode +1))
+
 
 (provide 'init-projectile)
 ;;; init-projectile.el ends here

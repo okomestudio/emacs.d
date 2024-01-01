@@ -3,7 +3,8 @@
 ;;; Code:
 
 ;; init profiling
-(defconst ts/profile-init nil "Set to t to profile init.el.")
+(defconst ts/profile-init nil
+  "Set to t to profile init.el.")
 
 ;; suppress some warnings (set t while development)
 (setq byte-compile-warnings '(not obsolete))
@@ -42,12 +43,13 @@
 
 ;; Configure packages
 (require 'init-straight) ;; also configures use-package
-;; (require 'init-package) ;; use this instead for non-straight use-package
+;; (require 'init-package) ;; uncomment this instead for use-package without straight
 
 (require 'dir-locals-utils)
 (require 'init-org)
 (require 'init-org-roam)
 (require 'init-startup)
+;; (require 'init-dired)
 (require 'init-help)
 (require 'init-wayland)
 (require 'init-auth-source)
@@ -61,30 +63,27 @@
 (require 'init-hydra)
 (require 'init-popper)
 
-(require 'init-editing-utils)
-(require 'init-flycheck)
-(require 'init-eww)
-(require 'init-lookup)
-(require 'init-ime)
-(require 'init-pbocr)
-(require 'init-pdf)
+(require 'init-lsp)
 
-(require 'init-anki)
+(require 'init-editing-utils)
 (require 'init-bookmark-plus)
 (require 'init-company)
-(require 'init-docker)
-(require 'init-elfeed)
-(require 'init-git)
-(require 'init-lsp)
+(require 'init-eww)
+(require 'init-flycheck)
+(require 'init-ime)
+(require 'init-lookup)
 (require 'init-openwith)
-
-;; (require 'init-dired)
-(require 'init-gnus)
-;; (require 'init-tern)
+(require 'init-pbocr)
+(require 'init-polymode)
+(require 'init-projectile)
 (require 'init-yasnippet)
 
 (require 'init-file-type-modes)
+(require 'init-docker)
+(require 'init-graphviz)
 (require 'init-json)
+(require 'init-pdf)
+(require 'init-plantuml)
 
 (require 'init-c)
 (require 'init-elisp)
@@ -94,20 +93,19 @@
 (require 'init-scala)
 (require 'init-shell)
 (require 'init-sql)
+;; (require 'init-tern)
 (require 'init-webmode)
 
-(require 'init-ansible)
-(require 'init-graphviz)
-(require 'init-plantuml)
-(require 'init-restclient)
-
 (require 'init-ai)
+(require 'init-anki)
+(require 'init-ansible)
+(require 'init-elfeed)
+(require 'init-git)
+(require 'init-gnus)
 (require 'init-osm)
+(require 'init-restclient)
 (require 'init-slack)
-
-(require 'init-projectile)
-
-(require 'init-polymode)
+(require 'init-tetris)
 
 (require 'init-vterm)
 (require 'init-eat)
@@ -116,7 +114,6 @@
 
 (require 'init-optimizations)
 
-(require 'init-tetris)
 
 ;; Load additional init.el files in init.d/:
 (let ((custom-init-directory (concat user-emacs-directory "init.d/")))

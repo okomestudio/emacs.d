@@ -6,30 +6,12 @@
 (require 'okutil)
 
 
-(use-package elsa
-  :disabled
-  :ensure-system-package
-  (eask . "curl -fsSL https://raw.githubusercontent.com/emacs-eask/cli/master/webinstall/install.sh | sh")
-
-  :config
-  (elsa-lsp-register))
-
-
 (use-package erefactor)
 
 
 (use-package eros
   :hook
   (emacs-lisp-mode . eros-mode))
-
-
-(use-package flycheck-elsa
-  :disabled
-  :custom
-  (flycheck-elsa-backend 'eask)
-
-  :hook
-  (emacs-lisp-mode . flycheck-elsa-setup))
 
 
 (use-package flycheck-package
@@ -63,10 +45,6 @@
     (enable-paredit-mode)))
 
 
-(use-package suggest
-  :defer t)
-
-
 ;; SYNTAX HIGHLIGHTING
 
 (use-package highlight-defined
@@ -85,14 +63,38 @@
 
 (use-package highlight-sexp
   :custom
-  ;; (hl-sexp-background-color "gray95")
   (hl-sexp-background-color (okutil-color-scale '(#xff #xfc #xf9) 0.96))
 
   :hook
   (emacs-lisp-mode . highlight-sexp-mode))
 
 
+;; ELSA
+
+(use-package elsa
+  :disabled
+  :ensure-system-package
+  (eask . "curl -fsSL https://raw.githubusercontent.com/emacs-eask/cli/master/webinstall/install.sh | sh")
+
+  :config
+  (elsa-lsp-register))
+
+
+(use-package flycheck-elsa
+  :disabled
+  :custom
+  (flycheck-elsa-backend 'eask)
+
+  :hook
+  (emacs-lisp-mode . flycheck-elsa-setup))
+
+
 ;; HELP & DOCUMENTATION
+
+(use-package suggest
+  ;; For discovering elisp functions based on examples.
+  :defer t)
+
 
 (use-package devdocs
   :hook

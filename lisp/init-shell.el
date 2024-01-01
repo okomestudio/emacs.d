@@ -70,5 +70,6 @@
   :ensure-system-package
   (shellcheck . "sudo apt install -y shellcheck"))
 
+
 (provide 'init-shell)
 ;;; init-shell.el ends here

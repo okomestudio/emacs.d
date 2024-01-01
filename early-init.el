@@ -1,9 +1,9 @@
 ;;; early-init.el  -*- lexical-binding: t -*-
 ;;;
 ;;; Commentary:
-;;;
-;;; Provides early initialization for Emacs.
-;;;
+;;
+;; Provides early initialization for Emacs.
+;;
 ;;; Code:
 
 (setq debug-on-error t) ;; set t when debugging startup issues
