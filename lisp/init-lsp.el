@@ -12,12 +12,6 @@
   (lsp-response-timeout 30)
   (lsp-use-plists t)
 
-  :hook
-  ((dockerfile-mode . (lambda () (init-lsp-lsp-mode-hook 'dockerfile-ls)))
-   (json-mode . (lambda () (init-lsp-lsp-mode-hook 'json-ls)))
-   (markdown-mode . lsp)
-   (yaml-mode . (lambda () (init-lsp-lsp-mode-hook 'yamlls))))
-
   :preface
   (defun init-lsp-lsp-mode-hook (server)
     (lsp-ensure-server server)

@@ -43,5 +43,16 @@
   (yq . "pip install yq"))
 
 
+(use-package devdocs
+  :hook
+  (json-mode
+   . (lambda () (setq-local devdocs-current-docs '("jq")))))
+
+
+(use-package lsp-mode
+  :hook
+  (json-mode . (lambda () (init-lsp-lsp-mode-hook 'json-ls))))
+
+
 (provide 'init-json)
 ;;; init-json.el ends here
