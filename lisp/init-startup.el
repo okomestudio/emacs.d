@@ -128,22 +128,6 @@
   ("M-o" . 'other-window-or-frame))
 
 
-(use-package shackle
-  ;; Enforce rules for popup windows.
-  :disabled
-
-  :custom
-  (shackle-default-alignment 'below)
-  (shackle-default-size 0.4)
-  (shackle-rules '(("*Warnings*"
-                    :select nil :size 0.25)
-                   (magit-status-mode
-                    :align right :size 0.5 :inhibit-window-quit t :other t)))
-
-  :config
-  (shackle-mode 1))
-
-
 (use-package yascroll
   ;; Yet Another Scroll Bar Mode.
   :init

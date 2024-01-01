@@ -61,9 +61,9 @@
 (require 'init-treemacs)
 (require 'init-consult)
 (require 'init-hydra)
-(require 'init-popper)
 (require 'init-projectile)
 (require 'init-lsp)
+(require 'init-windows)
 ;; (require 'init-eaf)
 
 (require 'init-editing-utils)
