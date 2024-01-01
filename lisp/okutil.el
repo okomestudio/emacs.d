@@ -90,6 +90,7 @@ will be created in the my-lipdir directory."
 
 (defun okutil-font-installed-p (font-name)
   "Check if font named FONT-NAME is installed."
+  ;; Another function, x-list-fonts, could also be used.
   (find-font (font-spec :name font-name)))
 
 
