@@ -6,9 +6,6 @@
 ;;; Code:
 
 
-(require 's)
-
-
 (defun okutil-color-scale (color factor)
   "Scale COLOR lighter or darker by a numeric FACTOR.
 
