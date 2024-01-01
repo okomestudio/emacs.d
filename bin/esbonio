@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+
+if ! $(pyenv prefix)/bin/esbonio ; then
+    pip install esbonio
+fi
+
+exec esbonio $@

@@ -12,17 +12,5 @@
                                           (delete-trailing-whitespace)))))))
 
 
-;; RST
-
-(use-package rst-mode
-  :straight nil
-
-  :ensure-system-package
-  (sphinx-quickstart . "pip install sphinx")
-
-  :mode
-  "\\.rst\\'")
-
-
 (provide 'init-text-mode)
 ;;; init-text-mode.el ends here

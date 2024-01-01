@@ -95,6 +95,7 @@
 
 (require 'init-text-mode)
 (require 'init-markdown)
+(require 'init-rst)
 (require 'init-yaml)
 
 (require 'init-conf-mode)
