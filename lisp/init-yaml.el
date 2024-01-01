@@ -8,12 +8,15 @@
   (yaml-mode . (lambda () (typo-mode -1)))
 
   :mode
-  ("\\.ya?ml\\(\\.j2\\)?\\'" . yaml-mode))
+  ("\\.ya?ml\\'" . yaml-mode))
 
 
 (use-package lsp-mode
   :hook
-  (yaml-mode . (lambda () (init-lsp-lsp-mode-hook 'yamlls))))
+  (yaml-mode . (lambda ()
+                 ;; If in ansible-mode, do not activate yamlls.
+                 (if (not (bound-and-true-p ansible))
+                     (init-lsp-lsp-mode-hook 'yamlls)))))
 
 
 (provide 'init-yaml)
