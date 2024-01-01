@@ -4,24 +4,28 @@
 
 
 (use-package lsp-mode
-  :commands lsp
+  :commands (lsp lsp-deferred)
 
   :custom
   (lsp-diagnostics-provider :auto)
+  (lsp-keymap-prefix "C-c l")
   (lsp-log-io nil) ;; set to t for debugging
   (lsp-response-timeout 30)
   (lsp-use-plists t)
+
+  :hook
+  (lsp-mode . lsp-enable-which-key-integration)
 
   :preface
   (defun init-lsp-lsp-mode-hook (server)
     (lsp-ensure-server server)
     (lsp))
 
-  (put 'lsp-disabled-clients 'safe-local-variable #'listp)
+  (defun init-lsp-ensure-lsp-deferred (server)
+    (lsp-ensure-server server)
+    (lsp-deferred))
 
-  :init
-  (with-eval-after-load 'lsp-mode
-    (add-hook 'lsp-mode-hook #'lsp-enable-which-key-integration))
+  (put 'lsp-disabled-clients 'safe-local-variable #'listp)
 
   :config
   (setq lsp-headerline-arrow "➤"))

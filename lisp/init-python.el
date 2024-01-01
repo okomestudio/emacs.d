@@ -4,7 +4,7 @@
 
 
 (use-package python
-  :after (blacken py-isort)
+  :after (polymode blacken py-isort)
 
   :bind
   (:map python-mode-map
@@ -34,13 +34,11 @@
                '(python "https://github.com/tree-sitter/tree-sitter-python.git"))
 
   ;; Run treesit-install-language-grammar before using.
-  (add-to-list 'major-mode-remap-alist '(python-mode . python-ts-mode)))
+  (add-to-list 'major-mode-remap-alist '(python-mode . pm-python-sql-mode))
+  (add-to-list 'major-mode-remap-alist '(python-ts-mode . pm-python-sql-mode)))
 
 
 (use-package polymode
-  :mode
-  ("\\.py[iw]?\\'" . pm-python-sql-mode)
-
   :interpreter
   (("python" . pm-python-sql-mode)
    ("python3" . pm-python-sql-mode))
@@ -76,7 +74,7 @@
   :ensure-system-package
   (black . "pip install black")
 
-  :init
+  :preface
   (put 'blacken-line-length 'safe-local-variable #'integerp))
 
 
@@ -160,8 +158,8 @@
   (lsp-pylsp-server-command '("~/.config/emacs/bin/pylsp"))
 
   :hook
-  (python-mode . (lambda () (init-lsp-lsp-mode-hook 'pylsp)))
-  (python-ts-mode . (lambda () (init-lsp-lsp-mode-hook 'pylsp))))
+  (python-mode . lsp-deferred)
+  (python-ts-mode . lsp-deferred))
 
 
 (provide 'init-python)

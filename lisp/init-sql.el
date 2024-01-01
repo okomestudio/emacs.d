@@ -8,7 +8,7 @@
 
   :bind
   (:map sql-mode-map
-        ("C-c b" . init-sql--beautify-sql))
+   ("C-c b" . init-sql--beautify-sql))
 
   :hook
   (sql-interactive-mode . (lambda () (setq truncate-lines t)))
@@ -103,14 +103,14 @@
 
 (use-package lsp-mode
   :custom
-  (lsp-sqls-workspace-config-path "root")
+  ;; (lsp-sqls-workspace-config-path "root")
   (lsp-sqls-timeout 30)
 
-  :ensure-system-package
-  (sqls . "go install github.com/lighttiger2505/sqls@latest")
-
   :hook
-  (sql-mode . (lambda () (init-lsp-lsp-mode-hook 'sqls))))
+  (sql-mode . lsp-deferred) ;; uses 'sqls
+
+  :ensure-system-package
+  (sqls . "go install github.com/lighttiger2505/sqls@latest"))
 
 
 (provide 'init-sql)
