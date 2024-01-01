@@ -13,31 +13,20 @@
     (load-theme theme t)))
 
 
-(defun init-themes--scale-color (orig factor)
-  "Make color ORIG lighter or darker by FACTOR."
-  (let* ((result 0.0))
-    (cl-loop for pow downfrom 2
-             for x in orig
-             do
-             (setq result
-                   (+ result (* (expt 256 pow) (round (* x factor))))))
-    (format "#%X" result)))
-
-
 ;; THEMES
 
 (use-package spacemacs-theme
   :disabled
   :defer t
-
   :init
+  (require 'okutil)
   (setq spacemacs-theme-custom-colors
         `((base . "#322938") ;; #655370 for light, true-color
 
           ;; Make some colors slightly darker
-          (head3 . ,(init-themes--scale-color '(#x67 #xb1 #x1d) 0.80))
-          (head4 . ,(init-themes--scale-color '(#xb1 #x95 #x1d) 0.80))
-          (cyan . ,(init-themes--scale-color '(#x21 #xb8 #xc7) 0.95))))
+          (head3 . ,(okutil-color-scale '(#x67 #xb1 #x1d) 0.80))
+          (head4 . ,(okutil-color-scale '(#xb1 #x95 #x1d) 0.80))
+          (cyan . ,(okutil-color-scale '(#x21 #xb8 #xc7) 0.95))))
 
   (init-themes--configure-theme 'spacemacs-light))
 

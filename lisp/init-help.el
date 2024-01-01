@@ -19,7 +19,7 @@
 
   :bind
   (:prefix "C-h a"
-   :prefix-map ts/apropos-prefix-map
+   :prefix-map apropos-prefix-map
    ("a" . apropos)
    ("d" . apropos-documentation)
    ("f" . apropos-command)

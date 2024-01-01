@@ -6,7 +6,7 @@
   ;; Consulting completing-read.
   :bind
   (:prefix "M-g"
-   :prefix-map ts/consult-prefix-map
+   :prefix-map consult-prefix-map
    ("b" . consult-bookmark)
    ("f" . consult-find)
    ("F" . consult-locate)

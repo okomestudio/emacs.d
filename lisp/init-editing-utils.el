@@ -18,7 +18,6 @@
 
 
 (use-package multiple-cursors
-  ;; Multiple cursors.
   :init
   (global-set-key (kbd "C-S-c C-S-c") 'mc/edit-lines)
   (global-set-key (kbd "C->") 'mc/mark-next-like-this)
@@ -34,7 +33,8 @@
 (use-package titlecase
   ;; Titlecase things.
   :bind
-  (("M-c" . titlecase-dwim))
+  (:map text-mode-map
+   ("M-c" . titlecase-dwim))
 
   :custom
   (titlecase-skip-words-regexps
@@ -46,7 +46,7 @@
 (use-package typo
   ;; Typographical utility (e.g., smart quotation).
   :hook
-  ((text-mode . typo-mode)))
+  (text-mode . typo-mode))
 
 
 (use-package undo-tree
@@ -67,7 +67,8 @@
 
 (use-package flyspell
   :bind
-  (("M-s M-s" . flyspell-auto-correct-previous-word))
+  (:map text-mode-map
+   ("M-s M-s" . flyspell-auto-correct-previous-word))
 
   :hook
   ((prog-mode . flyspell-prog-mode)
@@ -82,7 +83,7 @@
    '(("en_US" "[[:alpha:]]" "[^[:alpha:]]" "['’]" t ("-d" "en_US") nil utf-8)
      ("en_GB" "[[:alpha:]]" "[^[:alpha:]]" "['’]" t ("-d" "en_GB") nil utf-8)))
 
-  :init
+  :preface
   (put 'ispell-dictionary 'safe-local-variable #'stringp))
 
 
@@ -95,26 +96,17 @@
   (ace-isearch-jump-delay 0.75)
 
   :preface
-  (defun ts/ace-isearch-function-from-isearch ()
+  (defun init-editing-utils--ace-isearch-function-from-isearch ()
     (consult-line isearch-string))
 
-  (defun ts/init-ace-isearch ()
+  (defun init-editing-utils--init-ace-isearch ()
     (global-ace-isearch-mode +1)
     ;; This needs to be set after mode activation to override auto-detection:
-    (setq ace-isearch-function-from-isearch
-          'ts/ace-isearch-function-from-isearch))
+    (setq ace-isearch-function-from-isearch 'init-editing-utils--ace-isearch-function-from-isearch))
 
   :init
   (use-package ace-jump-mode)
-
-  (add-hook 'after-init-hook 'ts/init-ace-isearch))
-
-
-;;; CHARACTERS
-
-(use-package list-unicode-display
-  ;; Search for and list unicode characters.
-  )
+  (add-hook 'after-init-hook 'init-editing-utils--init-ace-isearch))
 
 
 (provide 'init-editing-utils)

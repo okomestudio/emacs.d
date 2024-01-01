@@ -84,5 +84,12 @@
                                 :render (gts-buffer-render))))
 
 
+(use-package list-unicode-display
+  ;; Search for and list unicode characters.
+  ;;
+  ;; Type list-unicode-display to search for unicode chars.
+  )
+
+
 (provide 'init-lookup)
 ;;; init-lookup.el ends here

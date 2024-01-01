@@ -46,10 +46,10 @@
   :straight nil
 
   :bind
-  (("<f5>" . 'ts/revert-buffer-no-confirm)
-   ("C-S-o" . 'ts/newline-above)
-   ("C-c C-x SPC" . 'ts/insert-zero-width-space)
-   ("C-o" . 'ts/newline-below)
+  (("<f5>" . 'okutil-revert-buffer-no-confirm)
+   ("C-S-o" . 'okutil-insert-newline-above)
+   ("C-c C-x SPC" . 'okutil-insert-zero-width-space)
+   ("C-o" . 'okutil-insert-newline-below)
    ("M-q" . 'okutil-fill-or-unfill-paragraph))
 
   :custom
@@ -60,36 +60,9 @@
   (size-indication-mode t)
   (tab-always-indent t)                 ; in indent.el
 
-  :preface
-  (defun ts/insert-zero-width-space ()
-    (interactive)
-    (insert-char #x200b))
-
-  (defun ts/newline-above ()
-    (interactive)
-    (back-to-indentation)
-    (newline-and-indent)
-    (forward-line -1)
-    (indent-according-to-mode))
-
-  (defun ts/newline-below ()
-    (interactive)
-    (end-of-line)
-    (newline-and-indent))
-
-  (defun ts/revert-buffer-no-confirm (&optional force-reverting)
-    "Interactive call to 'revert-buffer'.
-
-    Ignoring the auto-save file and not requesting for confirmation.
-    When the current buffer is modified, the command refuses to
-    revert it, unless you specify the optional argument:
-    FORCE-REVERTING to true."
-    (interactive "P")
-    (if (or force-reverting (not (buffer-modified-p)))
-        (revert-buffer :ignore-auto :noconfirm)
-      (error "The buffer has been modified")))
-
   :init
+  (require 'okutil)
+
   (column-number-mode t)
   (global-so-long-mode +1)              ; mitigate perf on files with long lines
   (show-paren-mode +1)                  ; highlight matching parens
@@ -127,7 +100,8 @@
   (defconst ts/backup-cache-dir (expand-file-name "~/.cache/emacs-backups"))
 
   :init
-  (ensure-directory-exists ts/backup-cache-dir))
+  (require 'okutil)
+  (okutil-ensure-directory-exists ts/backup-cache-dir))
 
 
 (use-package browse-url

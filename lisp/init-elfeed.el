@@ -35,9 +35,10 @@
                  (interactive "P")
                  (let* ((entry (elfeed-search-selected :ignore-region))
                         (url (cdr (elfeed-entry-id entry))))
+                   (require 'okutil)
                    (if (string-match "news.ycombinator.com" url)
-                       (ts/visit-url arg url)
-                     (ts/visit-hatena-bookmark-comments arg url))))))
+                       (okutil-url-visit arg url)
+                     (okutil-hatena-visit-bookmark-comments arg url))))))
 
    :map elfeed-show-mode-map
    ("B" . init-elfeed--visit-hatena-bookmark-comments))
@@ -68,22 +69,24 @@
                 shr-use-fonts t
                 shr-width nil))
 
-  (defun init-elfeed--visit-hatena-bookmark-comments (arg)
-    (interactive "P")
-    (elfeed-show-yank)
-    (ts/visit-hatena-bookmark-comments arg))
-
   :config
   (defun init-elfeed--switch-filter (filter)
     (with-current-buffer (elfeed-search-buffer)
       (setf elfeed-search-filter filter)
       (elfeed-search-update :force)))
 
+  (defun init-elfeed--visit-hatena-bookmark-comments (arg)
+    (interactive "P")
+    (elfeed-show-yank)
+    (require 'okutil)
+    (okutil-hatena-visit-bookmark-comments arg))
+
   (set-face-attribute 'elfeed-search-title-face nil :foreground "#555")
   (set-face-attribute 'elfeed-search-unread-title-face nil :foreground "#000"))
 
 
 (use-package elfeed-org
+  :disabled
   :custom
   (rmh-elfeed-org-files (init-elfeed--rmh-elfeed-org-files))
 
@@ -100,7 +103,6 @@
 
 (use-package elfeed-goodies
   :disabled
-
   :custom
   (elfeed-goodies/entry-pane-position 'bottom)
   (elfeed-goodies/entry-pane-size 0.8)

@@ -90,7 +90,9 @@
   :hook ((sql-mode sql-interactive-mode) . sql-upcase-mode)
 
   :init
-  (ensure-file-from-github "emacsmirror/emacswiki.org/master/sql-upcase.el"))
+  (require 'okutil)
+  (okutil-ensure-file-from-github
+   "emacsmirror/emacswiki.org/master/sql-upcase.el"))
 
 
 (use-package devdocs

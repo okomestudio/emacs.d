@@ -71,7 +71,8 @@
   :straight nil
 
   :init
-  (ensure-file-from-github
+  (require 'okutil)
+  (okutil-ensure-file-from-github
    "ppareit/graphviz-dot-mode/master/company-graphviz-dot.el"))
 
 
@@ -97,7 +98,8 @@
   :straight nil
 
   :init
-  (ensure-file-from-url
+  (require 'okutil)
+  (okutil-ensure-file-from-url
    (concat "https://gist.githubusercontent.com/"
            "okomestudio/de8c59960ce8f195ee0224de5db5a168/"
            "raw/1193992ffeeca8193ebf459b377c27f628ac3246/company-tern.el"))

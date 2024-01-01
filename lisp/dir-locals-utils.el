@@ -4,8 +4,6 @@
 ;;
 ;;; Code:
 
-(require 'init-utils)
-
 
 (defgroup dir-locals-utils nil
   "Customization group for dir-locals-utils.")
@@ -25,9 +23,10 @@
 up. Otherwise they will be evaluated from the top down to the
 current directory."
   (when dir-locals-utils-walk-dir-locals-upward
+    (require 'okutil)
     (let ((dir-locals-file ".dir-locals.el")
           (original-buffer-file-name (buffer-file-name))
-          (nesting (ts/locate-dominating-files
+          (nesting (okutil-locate-dominating-files
                     (or (buffer-file-name) default-directory) dir-locals-file)))
       (unwind-protect
           (dolist (name nesting)

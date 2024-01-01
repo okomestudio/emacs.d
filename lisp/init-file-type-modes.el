@@ -6,58 +6,34 @@
 (use-package prog-mode
   :straight nil
   :hook
-  ((prog-mode . (lambda ()
-                  (ts/remove-trailing-whitespaces-on-save)
-                  (show-paren-mode)))))
+  (prog-mode . (lambda ()
+                 (add-hook 'local-write-file-hooks
+                           #'(lambda () (save-excursion
+                                          (delete-trailing-whitespace))))
+                 (show-paren-mode))))
 
 
 (use-package text-mode
   :straight nil
-  :hook ((text-mode . ts/remove-trailing-whitespaces-on-save)))
+  :hook
+  (text-mode . (lambda ()
+                 (add-hook 'local-write-file-hooks
+                           #'(lambda () (save-excursion
+                                          (delete-trailing-whitespace)))))))
 
 
 ;; INI
 
 (use-package any-ini-mode
   :disabled
-  ;; :init (ensure-file-from-url "https://www.emacswiki.org/emacs/download/any-ini-mode.el")
-  :mode "\\.ini\\'" "\\.conf\\'")
 
+  ;; :init
+  ;; (require 'okutil)
+  ;; (okutil-ensure-file-from-url
+  ;;  "https://www.emacswiki.org/emacs/download/any-ini-mode.el")
 
-
-;; JSON
-
-(use-package json-mode
-  :after (web-beautify)
-  :bind (:map json-mode-map ("C-c b" . ts/beautify-json-via-python))
-  :custom (js-indent-level 4)
-  :mode "\\.json\\(\\.j2\\)?\\'"
-  :config
-  (defun ts/beautify-json-via-python ()
-    "See, e.g., https://emacs.stackexchange.com/a/12152/599"
-    (interactive)
-    (save-excursion
-      (shell-command-on-region (point-min) (point-max)
-                               "python -m json.tool"
-                               (buffer-name) t)))
-
-  (defun ts/beautify-json-via-js ()
-    (interactive)
-    (save-excursion
-      (let ((web-beautify-args '("-f" "-"
-                                 "--end-with-newline"
-                                 "--keep-array-indentation"
-                                 "--no-preserve-newlines"
-                                 "--jslint-happy"
-                                 "--wrap-line-length" "88")))
-        (web-beautify-js)))))
-
-
-(use-package jq-mode
-  ;; TODO: Enable jq-mode with jq in JSON but yq in YAML.
-  :ensure-system-package
-  ((jq . "sudo apt install -y jq")
-   (yq . "pip install yq")))
+  :mode
+  "\\.ini\\'" "\\.conf\\'")
 
 
 ;; MARKDOWN

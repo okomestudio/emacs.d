@@ -12,10 +12,10 @@
 (when ts/profile-init
   (require 'profiler)
   (profiler-start 'cpu)
-  (defun ts/tear-down-profiler ()
+  (defun init--tear-down-profiler ()
     (profiler-report)
     (profiler-stop))
-  (add-hook 'after-init-hook #'ts/tear-down-profiler))
+  (add-hook 'after-init-hook #'init--tear-down-profiler))
 
 
 ;; custom.el
@@ -44,7 +44,6 @@
 (require 'init-straight) ;; also configures use-package
 ;; (require 'init-package) ;; use this instead for non-straight use-package
 
-(require 'init-utils)
 (require 'dir-locals-utils)
 (require 'init-org)
 (require 'init-org-roam)
@@ -54,6 +53,7 @@
 (require 'init-auth-source)
 (require 'init-themes)
 (require 'init-faces)
+(require 'init-icons)
 (require 'init-text-scale)
 (require 'init-minibuffer)
 (require 'init-treemacs)
@@ -84,6 +84,7 @@
 (require 'init-yasnippet)
 
 (require 'init-file-type-modes)
+(require 'init-json)
 
 (require 'init-c)
 (require 'init-elisp)

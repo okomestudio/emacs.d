@@ -114,7 +114,7 @@
               (propertize sym 'face `(:foreground ,title-annotate-color))
               (propertize aux 'face `(:foreground ,title-annotate-color :slant italic))))))))
 
-    (defun ts/org-roam-node-slug (title)
+    (defun init-org-roam--org-roam-node-slug (title)
       (let* (;; Combining Diacritical Marks https://www.unicode.org/charts/PDF/U0300.pdf
             (slug-trim-chars '(768    ; U+0300 COMBINING GRAVE ACCENT
                                769    ; U+0301 COMBINING ACUTE ACCENT
@@ -157,7 +157,7 @@
 
     (cl-defmethod org-roam-node-slug ((node org-roam-node))
       "Return the slug of NODE. Overridden to use hyphens instead of underscores."
-      (ts/org-roam-node-slug (org-roam-node-title node))))
+      (init-org-roam--org-roam-node-slug (org-roam-node-title node))))
 
   :config
   (setq find-file-visit-truename t) ;; See 5.3 Setting up Org-roam

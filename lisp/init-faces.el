@@ -2,6 +2,10 @@
 ;;; Commentary:
 ;;; Code:
 
+
+(require 'okutil)
+
+
 (defcustom ts/default-font-size nil
   "Default font size."
   :type '(float)
@@ -14,14 +18,9 @@
   :group 'ts)
 
 
-(defun ts/monitor-count ()
-  "Get the number of display monitors."
-  (length (display-monitor-attributes-list)))
-
-
 (defun ts/display-width ()
   "Get the pixel with per display monitor."
-  (/ (display-pixel-width) (ts/monitor-count)))
+  (/ (display-pixel-width) (okutil-monitor-count)))
 
 
 (defun ts/default-font-size ()
@@ -76,7 +75,7 @@
                                   ("Noto Sans Mono CJK JP" . 1.225)
                                   ("VL Gothic" . 1.225)))
 
-  (defun ts/apply-if-gui (&rest action)
+  (defun init-faces--apply-if-gui (&rest action)
     "Apply ACTION if we are in a GUI."
     (if (daemonp)
         (add-hook 'server-after-make-frame-hook
@@ -121,7 +120,7 @@ See https://knowledge.sakura.ad.jp/8494/"
   (dolist (element ts/font-relative-scales)
     (add-to-list 'face-font-rescale-alist element))
 
-  (ts/apply-if-gui 'ts/setup-font-for-frame))
+  (init-faces--apply-if-gui 'ts/setup-font-for-frame))
 
 
 (use-package mixed-pitch
@@ -203,21 +202,6 @@ See https://knowledge.sakura.ad.jp/8494/"
 
   :config
   (eaw-fullwidth))
-
-
-(use-package nerd-icons
-  :config
-  (if (not (file-exists-p "~/.local/share/fonts/NFM.ttf"))
-      (nerd-icons-install-fonts +1)))
-
-
-(use-package all-the-icons
-  :disabled
-  :if (display-graphic-p)
-
-  :config
-  (if (not (file-exists-p "~/.local/share/fonts/all-the-icons.ttf"))
-      (all-the-icons-install-fonts +1)))
 
 
 (use-package font-core

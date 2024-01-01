@@ -42,7 +42,8 @@ Each list item is:
   :init
   ;; Some init timing issue prevents the use of :custom, so do them here.
   (setq gnus-home-directory "~/.local/var/gnus/")
-  (ensure-directory-exists gnus-home-directory)
+  (require 'okutil)
+  (okutil-ensure-directory-exists gnus-home-directory)
 
   (setq gnus-directory (concat gnus-home-directory "news/")
         gnus-dribble-directory gnus-home-directory

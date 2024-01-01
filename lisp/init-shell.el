@@ -36,10 +36,10 @@
 
 (use-package ansi-color
   :hook
-  (compilation-filter . ts/colorize-buffer)
+  (compilation-filter . init-shell--colorize-buffer)
 
   :config
-  (defun ts/colorize-buffer ()
+  (defun init-shell--colorize-buffer ()
     (when (eq major-mode 'compilation-mode)
       (ansi-color-apply-on-region compilation-filter-start (point-max)))))
 
