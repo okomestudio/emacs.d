@@ -157,8 +157,14 @@ See http://blog.binchen.org/posts/effective-spell-check-in-emacs.html"
 
 
 (use-package lsp-mode
+  ;; Use ts-ls
   :hook
-  (web-mode . 'lsp)
+  (web-mode . (lambda ()
+                (setq-local lsp-disabled-clients '(jsts-ls))
+                (lsp-deferred)))
+
+  :ensure-system-package
+  (typescript-language-server . "npm install -g typescript-language-server typescript")
 
   :config
   (add-to-list 'lsp-language-id-configuration '(".*\\.html?\\.j2" . "html")))
