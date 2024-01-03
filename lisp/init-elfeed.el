@@ -86,7 +86,6 @@
 
 
 (use-package elfeed-org
-  :disabled
   :custom
   (rmh-elfeed-org-files (init-elfeed--rmh-elfeed-org-files))
 
