@@ -16,7 +16,7 @@
 
   :bind
   (:map web-mode-map
-   ("C-c b" . web-beautify-html))
+   ("C-c b" . (lambda () (interactive) (prettier-js))))
 
   :hook
   (web-mode . init-webmode--set-up-flycheck)
@@ -129,9 +129,7 @@ See http://blog.binchen.org/posts/effective-spell-check-in-emacs.html"
 (use-package typescript-mode)
 
 
-(use-package prettier-js
-  :disabled
-
+(use-package prettier-js ;; or use web-beautify (?)
   :ensure-system-package
   (prettier . "npm install -g prettier")
 
@@ -140,13 +138,6 @@ See http://blog.binchen.org/posts/effective-spell-check-in-emacs.html"
                            "--print-width" "88"
                            "--single-quote"
                            "--trailing-comma" "all")))
-
-
-(use-package web-beautify
-  :disabled
-
-  :ensure-system-package
-  (js-beautify . "npm install -g js-beautify"))
 
 
 (use-package devdocs
