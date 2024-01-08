@@ -25,7 +25,7 @@
    ("C-c f 5" ("Select filter 5" .
                (lambda ()
                  (interactive)
-                 (init-elfeed--switch-filter "@3-month-ago +news -hatena +hn -thread -comment +job"))))
+                 (init-elfeed--switch-filter "@3-month-ago +news -hatena -hn -thread -comment +job"))))
    ("C-c f 6" ("Select filter 6" .
                (lambda ()
                  (interactive)
