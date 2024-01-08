@@ -66,5 +66,10 @@
   (which-key-mode +1))
 
 
+(use-package sicp
+  ;; "Structure and Interpretation of Computer Programs" as info
+  )
+
+
 (provide 'init-help)
 ;;; init-help.el ends here
