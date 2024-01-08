@@ -23,6 +23,7 @@
   (org-file-apps '(("\\.mp4\\'" . "vlc --repeat %s")))
   (org-hide-emphasis-markers t)
   (org-image-actual-width nil)
+  (org-imenu-depth 6)
   (org-list-allow-alphabetical t)
   (org-list-indent-offset 2)
   (org-preview-latex-image-directory ".ltximg/")
