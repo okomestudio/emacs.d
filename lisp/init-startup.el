@@ -10,10 +10,7 @@
   (compilation-scroll-output t)
   (enable-recursive-minibuffers t)
   (load-prefer-newer t)
-  (mouse-wheel-progressive-speed t)
-  (mouse-wheel-scroll-amount '(3 ((shift) . 1)))
   (next-error-message-highlight t)
-  (pixel-scroll-precision-large-scroll-height 5.0)
   (read-process-output-max (* 4 1024 1024)) ; 4 mb
   (ring-bell-function 'ignore)              ; Disable beeping (in C source code)
   (tab-width 2)
@@ -36,9 +33,26 @@
                   " - Emacs"))
 
   (when window-system
-    (setq select-enable-clipboard t))
+    (setq select-enable-clipboard t)))
 
-  (pixel-scroll-precision-mode -1))
+
+(use-package emacs ;; scroll configuration
+  :custom
+  (mouse-wheel-progressive-speed nil)
+  (mouse-wheel-scroll-amount '(1 ((shift) . hscroll)
+                                 ((meta))
+                                 ((control meta) . global-text-scale)
+                                 ((control) . text-scale)))
+  (pixel-scroll-precision-interpolation-factor 1.2)
+  (pixel-scroll-precision-large-scroll-height 1.0)
+  (pixel-scroll-precision-momentum-min-velocity 0.5)
+  (pixel-scroll-precision-momentum-seconds 0.5) ; 1.75
+  (pixel-scroll-precision-momentum-tick 0.05)
+  (pixel-scroll-precision-interpolation-total-time 0.1)
+  (pixel-scroll-precision-interpolation-between-scroll 0.001)
+
+  :init
+  (pixel-scroll-precision-mode +1))
 
 
 (use-package simple
