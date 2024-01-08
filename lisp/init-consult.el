@@ -4,6 +4,13 @@
 
 (use-package consult
   ;; Consulting completing-read.
+  :straight
+  (:pre-build
+   ;; build info manual, which appears missing by default:
+   ("emacs" "-Q" "-batch" "-L" "./" "--visit" "README.org" "--funcall" "org-texinfo-export-to-texinfo")
+   ("makeinfo" "consult.texi" "-o" "consult.info")
+   ("install-info" "consult.info" "dir"))
+
   :bind
   (:prefix "M-g"
    :prefix-map consult-prefix-map
