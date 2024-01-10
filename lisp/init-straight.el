@@ -1,6 +1,18 @@
 ;;; init-straight.el --- Straight  -*- lexical-binding: t -*-
 ;;; Commentary:
+;;
+;; To upgrade a package and its dependencies:
+;;
+;;   M-x straight-pull-package-and-deps <package>
+;;   M-x straight-freeze-version
+;;
+;; Save the straight/versions/default.el file.
+;;
+;; Use the straight-visit-package and straight-visit-package-website functions
+;; to browse the package code base and the package website, respectively.
+;;
 ;;; Code:
+
 
 (let ((bootstrap-file (expand-file-name "straight/repos/straight.el/bootstrap.el"
                                         user-emacs-directory))
@@ -19,6 +31,7 @@
 
 (setq straight-use-package-by-default t)
 (setq use-package-enable-imenu-support t)
+
 
 (provide 'init-straight)
 ;;; init-straight.el ends here
