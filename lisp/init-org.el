@@ -290,7 +290,8 @@ node."
 
   :init
   (add-to-list 'Info-directory-list
-               "/home/taro/.config/emacs/straight/build/org-transclusion/docs/")
+               (expand-file-name "straight/build/org-transclusion/docs/"
+                                 user-emacs-directory))
 
   :config
   (add-to-list 'org-transclusion-extensions 'org-transclusion-indent-mode)
