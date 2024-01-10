@@ -281,8 +281,12 @@ node."
 
   :bind
   (:map org-mode-map
-   ("C-c C-n a" . org-transclusion-add)
-   ("C-c C-n t" . org-transclusion-mode))
+   :prefix "C-c C-n"
+   :prefix-map ok-org-transclusion-map
+   ("A" . org-transclusion-add-all)
+   ("D" . org-transclusion-remove-all)
+   ("a" . org-transclusion-add)
+   ("t" . org-transclusion-mode))
 
   :init
   (add-to-list 'Info-directory-list
