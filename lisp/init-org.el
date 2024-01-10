@@ -10,6 +10,7 @@
   :bind
   (:map org-mode-map
    ("C-c l" . 'org-store-link)
+   ("M-g i" . 'consult-org-heading)
    ("M-q" . 'okutil-org-fill-or-unfill-paragraph))
 
   :custom
