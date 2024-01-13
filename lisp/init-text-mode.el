@@ -12,5 +12,10 @@
                                           (delete-trailing-whitespace)))))))
 
 
+(require 'init-markdown)
+(require 'init-rst)
+(require 'init-yaml)
+
+
 (provide 'init-text-mode)
 ;;; init-text-mode.el ends here

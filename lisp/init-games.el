@@ -1,4 +1,4 @@
-;;; init-tetris.el --- Tetris  -*- lexical-binding: t -*-
+;;; init-games.el --- Games  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;; Code:
 
@@ -15,5 +15,5 @@
                     [1 0 0]]))
 
 
-(provide 'init-tetris)
-;;; init-tetris.el ends here
+(provide 'init-games)
+;;; init-games.el ends here

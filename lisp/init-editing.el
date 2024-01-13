@@ -1,6 +1,13 @@
-;;; init-editing-utils.el --- Editing-Utils  -*- lexical-binding: t -*-
+;;; init-editing.el --- Editing  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;; Code:
+
+
+(require 'init-company)
+(require 'init-flycheck)
+(require 'init-pbocr)
+(require 'init-polymode)
+(require 'init-yasnippet)
 
 
 (use-package hippie-exp
@@ -96,18 +103,18 @@
   (ace-isearch-jump-delay 0.75)
 
   :preface
-  (defun init-editing-utils--ace-isearch-function-from-isearch ()
+  (defun init-editing--ace-isearch-function-from-isearch ()
     (consult-line isearch-string))
 
-  (defun init-editing-utils--init-ace-isearch ()
+  (defun init-editing--init-ace-isearch ()
     (global-ace-isearch-mode +1)
     ;; This needs to be set after mode activation to override auto-detection:
-    (setq ace-isearch-function-from-isearch 'init-editing-utils--ace-isearch-function-from-isearch))
+    (setq ace-isearch-function-from-isearch 'init-editing--ace-isearch-function-from-isearch))
 
   :init
   (use-package ace-jump-mode)
-  (add-hook 'after-init-hook 'init-editing-utils--init-ace-isearch))
+  (add-hook 'after-init-hook 'init-editing--init-ace-isearch))
 
 
-(provide 'init-editing-utils)
-;;; init-editing-utils.el ends here
+(provide 'init-editing)
+;;; init-editing.el ends here

@@ -1,13 +1,12 @@
-;;; init-windows.el --- Windows  -*- lexical-binding: t -*-
+;;; init-popper.el --- Popper  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;
-;; Windows placement.
+;; A minor-mode to summon and dismiss buffers easily.
 ;;
 ;;; Code:
 
 
 (use-package popper
-  ;; Emacs minor-mode to summon and dismiss buffers easily.
   :bind
   (("C-~"   . popper-toggle)
    ("C-`"   . popper-cycle)
@@ -19,6 +18,7 @@
      "\\*Async-native-compile-log\\*\\'"
      "\\*Backtrace\\*\\'"
      "\\*Buffer List\\*\\'"
+     "\\*ChatGPT>"
      "\\*devdocs\\*\\'"
      "\\*direnv\\*\\'"
      "\\*elfeed-log\\*\\'"
@@ -46,5 +46,5 @@
   (popper-echo-mode +1))
 
 
-(provide 'init-windows)
-;;; init-windows.el ends here
+(provide 'init-popper)
+;;; init-popper.el ends here
