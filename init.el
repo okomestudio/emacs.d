@@ -45,7 +45,6 @@
 (require 'init-straight) ;; also configures use-package
 ;; (require 'init-package) ;; uncomment this instead for use-package without straight
 
-(require 'dir-locals-utils)
 (require 'init-org)
 (require 'init-org-roam)
 (require 'init-startup)
@@ -60,22 +59,23 @@
 (require 'init-ime)
 (require 'init-terminal)
 (require 'init-editing)
+(require 'init-dir-locals)
 (require 'init-lookup)
-(require 'init-file-viewers)
-(require 'init-web-browsing)
 (require 'init-text-mode)
 (require 'init-conf-mode)
 (require 'init-prog)
+(require 'init-file-viewers)
+(require 'init-web-browsing)
 (require 'init-ai)
 (require 'init-games)
 (require 'init-optimizations)
 
 
 ;; Load additional init.el files in init.d/:
-(let ((custom-init-directory (concat user-emacs-directory "init.d/")))
-  (when (file-exists-p custom-init-directory)
+(let ((custom-init-dir (expand-file-name "init.d" user-emacs-directory)))
+  (when (file-exists-p custom-init-dir)
     (mapc (lambda (f) (load f))
-          (directory-files custom-init-directory t ".el$"))))
+          (directory-files custom-init-dir t ".el$"))))
 
 (put 'eval 'safe-local-variable #'listp)
 (setq gc-cons-threshold 100000000)

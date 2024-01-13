@@ -1,28 +1,28 @@
-;;; dir-locals-utils.el --- Utilities for dir locals  -*- lexical-binding: t -*-
+;;; init-dir-locals.el --- Utilities for dir locals  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;
 ;;
 ;;; Code:
 
 
-(defgroup dir-locals-utils nil
-  "Customization group for dir-locals-utils.")
+(defgroup init-dir-locals nil
+  "Customization group for init-dir-locals.")
 
 
 ;; Add an advice so that .dir-locals.el are looked for upward in the directory hierarchy.
 
-(defcustom dir-locals-utils-walk-dir-locals-upward t
+(defcustom init-dir-locals-walk-dir-locals-upward t
   "If t, look for .dir-locals.el up in directory hierarchy."
   :type '(bool)
-  :group 'dir-locals-utils)
+  :group 'init-dir-locals)
 
 
-(defun dir-locals-utils--hack-dir-local-variables-advice (func)
+(defun init-dir-locals--hack-dir-local-variables-advice (func)
   "If deir-locals-utils-walk-dir-locals-upward is non-nil, evaluate
 .dir-locals.el files starting in the current directory and going
 up. Otherwise they will be evaluated from the top down to the
 current directory."
-  (when dir-locals-utils-walk-dir-locals-upward
+  (when init-dir-locals-walk-dir-locals-upward
     (require 'okutil)
     (let ((dir-locals-file ".dir-locals.el")
           (original-buffer-file-name (buffer-file-name))
@@ -38,7 +38,7 @@ current directory."
 
 
 (advice-add 'hack-dir-local-variables
-            :around #'dir-locals-utils--hack-dir-local-variables-advice)
+            :around #'init-dir-locals--hack-dir-local-variables-advice)
 
 
 ;; Reloading utilities
@@ -47,7 +47,7 @@ current directory."
 ;; See https://emacs.stackexchange.com/a/13096/599.
 
 
-(defun dir-locals-utils-reload-for-current-buffer ()
+(defun init-dir-locals-reload-for-current-buffer ()
   "Reload dir-locals for the current buffer."
   (interactive)
   (let ((enable-local-variables :all))
@@ -62,7 +62,7 @@ Set this within symlinked .dir-locals.el.")
 (put 'default-directory-symlinked 'safe-local-variable #'stringp)
 
 
-(defun dir-locals-utils-reload-for-all-buffers ()
+(defun init-dir-locals-reload-for-all-buffers ()
   "Reload dir-locals for all buffers in `default-directory`."
   (interactive)
   (let ((dir (or default-directory-symlinked
@@ -70,7 +70,7 @@ Set this within symlinked .dir-locals.el.")
     (dolist (buffer (buffer-list))
       (with-current-buffer buffer
         (when (equal default-directory dir)
-          (dir-locals-utils-reload-for-current-buffer))))))
+          (init-dir-locals-reload-for-current-buffer))))))
 
 
 (add-hook 'emacs-lisp-mode-hook
@@ -79,7 +79,7 @@ Set this within symlinked .dir-locals.el.")
                        (equal dir-locals-file
                               (file-name-nondirectory (buffer-file-name))))
               (add-hook 'after-save-hook
-                        'dir-locals-utils-reload-for-all-buffers
+                        'init-dir-locals-reload-for-all-buffers
                         nil t))))
 
 
@@ -90,9 +90,9 @@ Set this within symlinked .dir-locals.el.")
                        (equal dir-locals-file
                               (file-name-nondirectory (buffer-file-name))))
               (add-hook 'after-save-hook
-                        'dir-locals-utils-reload-for-all-buffers
+                        'init-dir-locals-reload-for-all-buffers
                         nil t))))
 
 
-(provide 'dir-locals-utils)
-;;; dir-locals-utils.el ends here
+(provide 'init-dir-locals)
+;;; init-dir-locals.el ends here
