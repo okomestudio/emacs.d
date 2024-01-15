@@ -89,6 +89,7 @@
  ("highlight-sexp" . "403f32f76b6524fe6eac967b559a5fcc64901f7a")
  ("ht.el" . "1c49aad1c820c86f7ee35bf9fff8429502f60fef")
  ("hydra" . "317e1de33086637579a7aeb60f77ed0405bf359b")
+ ("imenu-list" . "76f2335ee6f2f066d87fe4e4729219d70c9bc70d")
  ("ipretty" . "042f5cc4e6f81d59115e8335c582bb5c571c2585")
  ("jeison" . "19a51770f24eaa7b538c7be6a8a5c25d154b641f")
  ("jinja2-mode" . "03e5430a7efe1d163a16beaf3c82c5fd2c2caee1")
