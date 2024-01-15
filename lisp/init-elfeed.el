@@ -9,7 +9,7 @@
    ("C-c f 1" ("Select filter 1" .
                (lambda ()
                  (interactive)
-                 (init-elfeed--switch-filter "@3-month-ago -news"))))
+                 (init-elfeed--switch-filter "@3-month-ago -news -checkout"))))
    ("C-c f 2" ("Select filter 2" .
                (lambda ()
                  (interactive)
