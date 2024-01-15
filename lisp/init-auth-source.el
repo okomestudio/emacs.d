@@ -7,7 +7,9 @@
   :straight nil
 
   :custom
-  (auth-sources '((:source "~/.config/emacs/secrets/.authinfo.gpg")))
+  (auth-sources `((:source
+                   ,(expand-file-name "secrets/.authinfo.gpg"
+                                      user-emacs-directory))))
   (authinfo-hidden (concat
                     "\\("
                     (mapconcat
