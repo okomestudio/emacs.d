@@ -117,6 +117,7 @@ See https://knowledge.sakura.ad.jp/8494/"
                                    font-latex-sectioning-5-face
                                    font-lock-builtin-face
                                    font-lock-comment-delimiter-face
+                                   font-lock-comment-face
                                    font-lock-constant-face
                                    font-lock-doc-face
                                    font-lock-function-name-face
