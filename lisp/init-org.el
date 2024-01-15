@@ -134,15 +134,15 @@ node."
    '(org-modern-bracket-line ((t (:foreground "#999999" :background "#f1ede5" :extend t))))
 
    ;; Drawer
-   '(org-drawer ((t (:foreground "#999999" :height 1.0 :inherit 'fixed-pitch))))
-   '(org-special-keyword ((t (:foreground "#999999" :height 1.0 :inherit 'fixed-pitch))))
-   '(org-property-value ((t (:foreground "#999999" :height 1.0 :inherit 'fixed-pitch))))
+   '(org-drawer ((t (:foreground "#999999" :height 1.0 :inherit fixed-pitch))))
+   '(org-special-keyword ((t (:foreground "#999999" :height 1.0 :inherit fixed-pitch))))
+   '(org-property-value ((t (:foreground "#999999" :height 1.0 :inherit fixed-pitch))))
 
    ;; Table
-   '(org-table ((t (:inherit 'fixed-pitch))))
+   '(org-table ((t (:inherit fixed-pitch))))
 
    ;; Code-like comments
-   '(font-lock-comment-face ((t (:inherit 'fixed-pitch))))
+   '(font-lock-comment-face ((t (:inherit fixed-pitch))))
 
    ;; Headings size
    '(org-document-title ((t (:height 1.24))))
