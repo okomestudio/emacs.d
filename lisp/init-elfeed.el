@@ -4,45 +4,6 @@
 
 
 (use-package elfeed
-  :bind
-  (:map elfeed-search-mode-map
-   ("C-c f 1" ("Select filter 1" .
-               (lambda ()
-                 (interactive)
-                 (init-elfeed--switch-filter "@3-month-ago -news -checkout"))))
-   ("C-c f 2" ("Select filter 2" .
-               (lambda ()
-                 (interactive)
-                 (init-elfeed--switch-filter "@3-month-ago +news +hatena -hn"))))
-   ("C-c f 3" ("Select filter 3" .
-               (lambda ()
-                 (interactive)
-                 (init-elfeed--switch-filter "@3-month-ago +news -hatena +hn +thread -comment -job"))))
-   ("C-c f 4" ("Select filter 4" .
-               (lambda ()
-                 (interactive)
-                 (init-elfeed--switch-filter "@3-month-ago +news -hatena +hn -thread +comment -job"))))
-   ("C-c f 5" ("Select filter 5" .
-               (lambda ()
-                 (interactive)
-                 (init-elfeed--switch-filter "@3-month-ago +news -hatena -hn -thread -comment +job"))))
-   ("C-c f 6" ("Select filter 6" .
-               (lambda ()
-                 (interactive)
-                 (init-elfeed--switch-filter "@3-month-ago +checkout"))))
-   ("C-c c" ("Comments for URL" .
-               (lambda (arg)
-                 (interactive "P")
-                 (let* ((entry (elfeed-search-selected :ignore-region))
-                        (url (cdr (elfeed-entry-id entry))))
-                   (require 'okutil)
-                   (if (string-match "news.ycombinator.com" url)
-                       (okutil-url-visit arg url)
-                     (okutil-hatena-visit-bookmark-comments arg url))))))
-
-   :map elfeed-show-mode-map
-   ("B" . init-elfeed--visit-hatena-bookmark-comments))
-
   :custom
   (elfeed-search-filter "@3-month-ago -news")
   (elfeed-search-title-max-width 100)
@@ -70,17 +31,6 @@
                 shr-width nil))
 
   :config
-  (defun init-elfeed--switch-filter (filter)
-    (with-current-buffer (elfeed-search-buffer)
-      (setf elfeed-search-filter filter)
-      (elfeed-search-update :force)))
-
-  (defun init-elfeed--visit-hatena-bookmark-comments (arg)
-    (interactive "P")
-    (elfeed-show-yank)
-    (require 'okutil)
-    (okutil-hatena-visit-bookmark-comments arg))
-
   (set-face-attribute 'elfeed-search-title-face nil :foreground "#555")
   (set-face-attribute 'elfeed-search-unread-title-face nil :foreground "#000"))
 
