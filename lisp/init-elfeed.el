@@ -5,7 +5,6 @@
 
 (use-package elfeed
   :custom
-  (elfeed-search-filter "@3-month-ago -news")
   (elfeed-search-title-max-width 100)
   (elfeed-search-title-min-width 16)
   (elfeed-search-trailing-width 30)
@@ -14,9 +13,7 @@
   :hook
   (elfeed-show-mode . init-elfeed--elfeed-show-mode-hook)
   (elfeed-search-update . (lambda ()
-                            (setq-local nobreak-char-display nil)
-                            ;; (text-scale-set 0.5)
-                            ))
+                            (setq-local nobreak-char-display nil)))
 
   :preface
   (defun init-elfeed--elfeed-show-mode-hook ()
