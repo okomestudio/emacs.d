@@ -1,6 +1,10 @@
 ;;; emacs --- Emacs configuration  -*- lexical-binding: t -*-
 ;;; Commentary:
+;;
+;; Main init.el. Place this at a path that Emacs can find.
+;;
 ;;; Code:
+
 
 ;; init profiling
 (defconst ts/profile-init nil
@@ -71,14 +75,17 @@
 (require 'init-optimizations)
 
 
-;; Load additional init.el files in init.d/:
+;; Load additional init.el files in init.d/.
 (let ((custom-init-dir (expand-file-name "init.d" user-emacs-directory)))
   (when (file-exists-p custom-init-dir)
     (mapc (lambda (f) (load f))
+          ;; The returned files are sorted  with string-lessp:
           (directory-files custom-init-dir t ".el$"))))
+
 
 (put 'eval 'safe-local-variable #'listp)
 (setq gc-cons-threshold 100000000)
+
 
 (provide 'init)
 ;;; init.el ends here
