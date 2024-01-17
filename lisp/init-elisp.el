@@ -6,6 +6,23 @@
 (require 'okutil)
 
 
+(use-package elisp-mode
+  :straight nil
+
+  :bind
+  (; no global key binding
+   :map emacs-lisp-mode-map
+   ("C-c b" . init-elisp--format-elisp-buffer))
+
+  :config
+  (defun init-elisp--format-elisp-buffer ()
+    "Format Elisp buffer."
+    (interactive)
+    (save-excursion
+      (indent-region (progn (beginning-of-buffer) (point))
+                     (progn (end-of-buffer) (point))))))
+
+
 (use-package erefactor)
 
 
