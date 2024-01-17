@@ -23,6 +23,11 @@
                      (progn (end-of-buffer) (point))))))
 
 
+(use-package aggressive-indent
+  :hook
+  (emacs-lisp-mode . aggressive-indent-mode))
+
+
 (use-package erefactor)
 
 
@@ -44,7 +49,7 @@
 
 (use-package nameless
   :hook
-  (emacs-lisp-mode .  nameless-mode)
+  (emacs-lisp-mode . nameless-mode)
 
   :custom
   (nameless-global-aliases '())
