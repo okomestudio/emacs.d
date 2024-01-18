@@ -17,10 +17,10 @@
   (uniquify-buffer-name-style 'forward)
   (use-short-answers t)
   (vc-follow-symlinks t)
-  (x-select-request-type
-   (cond ((eq window-system 'pgtk) nil)
-         ((eq window-system 'x) '(UTF8_STRING COMPOUND_TEXT TEXT STRING))
-         (t nil)))
+  ;; (x-select-request-type
+  ;;  (cond ((eq window-system 'pgtk) nil)
+  ;;        ((eq window-system 'x) '(UTF8_STRING COMPOUND_TEXT TEXT STRING))
+  ;;        (t nil)))
   (word-wrap-by-category t)
 
   :init

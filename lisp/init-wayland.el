@@ -6,12 +6,16 @@
 ;;; Code:
 
 
-(use-package simple
+(use-package emacs
   :straight nil
 
   :custom
   (interprogram-cut-function 'init-wayland--wl-copy)
   (interprogram-paste-function 'init-wayland--wl-paste)
+  (x-select-request-type
+   (cond ((eq window-system 'pgtk) nil)
+         ((eq window-system 'x) '(UTF8_STRING COMPOUND_TEXT TEXT STRING))
+         (t nil)))
 
   :ensure-system-package
   ("/usr/bin/wl-copy" . "sudo apt install -y wl-clipboard")
