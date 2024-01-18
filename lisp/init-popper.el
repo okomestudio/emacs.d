@@ -29,6 +29,7 @@
      "\\*Warnings\\*\\'"
      ;; "CAPTURE-.*\\.org\\'"
      "Output\\*\\'"
+     comint-mode
      compilation-mode
      help-mode
      helpful-mode
