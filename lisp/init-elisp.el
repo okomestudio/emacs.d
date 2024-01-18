@@ -12,6 +12,8 @@
   :bind
   (; no global key binding
    :map emacs-lisp-mode-map
+   ("C-c b" . init-elisp--format-elisp-buffer)
+   :map lisp-data-mode-map
    ("C-c b" . init-elisp--format-elisp-buffer))
 
   :config
