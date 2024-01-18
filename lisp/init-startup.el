@@ -65,10 +65,6 @@
   (tooltip-mode 1)
   (setq-default indent-tabs-mode nil)
 
-  ;; Global minor mode to undo (C-c <left>) or redo (C-c <right>) a change in
-  ;; window configuration.
-  (winner-mode 1)
-
   ;; For multilingual environment:
   (set-language-environment "UTF-8") ;; or "Japanese", for example
 
