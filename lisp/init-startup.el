@@ -125,23 +125,6 @@
   (browse-url-handlers '(("localhost" . browse-url-generic))))
 
 
-;; WINDOWS AND FRAMES
-
-(use-package ace-window
-  ;; Quickly switch windows in Emacs.
-  :bind
-  (("M-O" . 'ace-window))
-
-  :custom
-  (aw-dispatch-always t))
-
-
-(use-package frame-cmds
-  ;; Frame functions and commands.
-  :bind
-  ("M-o" . 'other-window-or-frame))
-
-
 (use-package yascroll
   ;; Yet Another Scroll Bar Mode.
   :init
