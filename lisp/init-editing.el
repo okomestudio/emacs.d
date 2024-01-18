@@ -58,6 +58,15 @@
 
 (use-package undo-tree
   ;; Treat undo history as a tree.
+  :bind
+  (;
+   :map undo-tree-map
+   ("C-/" . undo-tree-undo)
+   ("C-?" . undo-tree-redo)
+   :map undo-tree-mode-map
+   ("C-/" . undo-tree-undo)
+   ("C-?" . undo-tree-redo))
+
   :custom
   (undo-tree-auto-save-history nil)
 
