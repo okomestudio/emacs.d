@@ -52,6 +52,7 @@
 (require 'init-org)
 (require 'init-org-roam)
 (require 'init-startup)
+(require 'init-scrolling)
 (require 'init-navigation)
 (require 'init-minibuffer)
 (require 'init-help)
