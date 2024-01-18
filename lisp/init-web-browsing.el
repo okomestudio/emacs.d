@@ -6,6 +6,13 @@
 ;;; Code:
 
 
+(use-package browse-url
+  :custom
+  (browse-url-browser-function 'eww-browse-url)
+  (browse-url-generic-program "xdg-open")
+  (browse-url-handlers '(("localhost" . browse-url-generic))))
+
+
 (require 'init-anki)
 (require 'init-elfeed)
 (require 'init-eww)

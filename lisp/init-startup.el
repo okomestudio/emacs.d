@@ -118,13 +118,6 @@
   (okutil-ensure-directory-exists ts/backup-cache-dir))
 
 
-(use-package browse-url
-  :custom
-  (browse-url-browser-function 'eww-browse-url)
-  (browse-url-generic-program "xdg-open")
-  (browse-url-handlers '(("localhost" . browse-url-generic))))
-
-
 (use-package yascroll
   ;; Yet Another Scroll Bar Mode.
   :init
