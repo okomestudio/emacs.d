@@ -243,6 +243,9 @@ node."
                          (?\s . #("▢" 0 1 (composition ((1)))))))
   (org-modern-hide-stars 'nil)
   (org-modern-keyword "‣ ")
+  (org-modern-list '((?+ . "▷")
+                     (?- . "–")
+                     (?* . "▶")))
   (org-modern-priority t)
   (org-modern-star '("◉" "🞛" "○" "▷"))
   (org-modern-statistics t)
@@ -280,7 +283,8 @@ node."
     ("install-info" "./docs/org-transclusion.info" "./docs/dir")))
 
   :bind
-  (:map org-mode-map
+  (;
+   :map org-mode-map
    :prefix "C-c C-n"
    :prefix-map ok-org-transclusion-map
    ("A" . org-transclusion-add-all)
