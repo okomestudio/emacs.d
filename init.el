@@ -73,7 +73,6 @@
 (require 'init-web-browsing)
 (require 'init-ai)
 (require 'init-games)
-(require 'init-optimizations)
 
 
 ;; Load additional init.el files in init.d/.
@@ -83,6 +82,13 @@
           ;; The returned files are sorted  with string-lessp:
           (directory-files custom-init-dir t ".el$"))))
 
+
+(require 'init-optimizations)
+
+(add-to-list 'after-init-hook
+             (lambda ()
+               (message "Emacs (pid:%d) started in %s"
+                        (emacs-pid) (emacs-init-time))))
 
 (put 'eval 'safe-local-variable #'listp)
 
