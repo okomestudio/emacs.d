@@ -16,6 +16,7 @@
 
   :hook
   (after-init . gcmh-mode)
+  (focus-out-hook . garbage-collect)
 
   :custom
   (gcmh-high-cons-threshold (* 64 1024 1024))
