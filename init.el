@@ -85,7 +85,6 @@
 
 
 (put 'eval 'safe-local-variable #'listp)
-(setq gc-cons-threshold 100000000)
 
 
 (provide 'init)
