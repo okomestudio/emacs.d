@@ -31,6 +31,8 @@
 
 (setq straight-use-package-by-default t)
 (setq use-package-enable-imenu-support t)
+(setq use-package-verbose t)
+(setq use-package-minimum-reported-time 0.05)
 
 
 (provide 'init-straight)
