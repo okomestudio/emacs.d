@@ -244,7 +244,7 @@ node."
   (org-modern-hide-stars 'nil)
   (org-modern-keyword "‣ ")
   (org-modern-list '((?+ . "▷")
-                     (?- . "–")
+                     (?- . "𑁋") ;; "–"
                      (?* . "▶")))
   (org-modern-priority t)
   (org-modern-star '("◉" "🞛" "○" "▷"))
