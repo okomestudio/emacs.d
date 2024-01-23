@@ -14,9 +14,9 @@
   (sh-mode . flymake-mode)
 
   :mode
-  ("\\.sh\\'"
-   "bash_*"
-   "bashrc\\'")
+  ("\\.sh\\'" . sh-mode)
+  ("bash_*" . sh-mode)
+  ("bashrc\\'" . sh-mode)
 
   ;; NOTE: Commented out in case we need the lines later.
   ;;
