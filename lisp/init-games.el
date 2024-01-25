@@ -4,6 +4,14 @@
 
 
 (use-package tetris
+  :bind
+  (;
+   :map tetris-mode-map
+   ("i" . tetris-rotate-prev)
+   ("j" . tetris-move-left)
+   ("k" . tetris-move-right)
+   ("m" . tetris-move-down))
+
   :custom
   (tetris-use-color nil)
   (tetris-x-colors [[0.5 0.5 1]
