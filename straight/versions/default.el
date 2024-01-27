@@ -133,7 +133,7 @@
  ("org-modern" . "418b1adeec936e42abe1e3151633951055909ea4")
  ("org-modern-indent" . "85f95d093d9b2d8fb9e4a705529eac4e2a888e87")
  ("org-ref" . "26c06912c7833104c7b4c7b96b8f200e98067a68")
- ("org-roam" . "a924a120a2bbb46f0d1136d42df49d81e6238189")
+ ("org-roam" . "7cdcb763cb0faae4d93366ae000392b00a1087dc")
  ("org-roam-bibtex" . "f90ac12b7ae5ba7bcdebfe53796fd0417946e5e1")
  ("org-roam-timestamps" . "c4ff1e2f5b0905b5caa917249aab56ddc1de1ab3")
  ("org-roam-ui" . "5ac74960231db0bf7783c2ba7a19a60f582e91ab")
