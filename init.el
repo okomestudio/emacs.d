@@ -68,7 +68,6 @@
 (require 'init-lookup)
 (require 'init-text-mode)
 (require 'init-conf-mode)
-(require 'init-prog)
 
 ;; Load additional init.el files in init.d/.
 (use-package init-loader
