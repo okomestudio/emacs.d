@@ -32,7 +32,6 @@
 ;; Load more config files from init.d
 (use-package init-loader
   :custom
-  (init-loader-byte-compile nil)
   (init-loader-default-regexp "\\(?:\\`[[:digit:]]\\{2\\}-\\).*[^-][^X].el\\'")
   (init-loader-show-log-after-init t)
 
