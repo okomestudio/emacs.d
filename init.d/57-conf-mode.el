@@ -1,7 +1,6 @@
-;;; init-conf-mode.el --- conf-mode  -*- lexical-binding: t -*-
+;;; 57-conf-mode.el --- conf-mode  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;; Code:
-
 
 (use-package conf-mode
   :disabled
@@ -27,6 +26,4 @@
 (use-package systemd
   :mode ("\\.\\(service|timer\\)\\'" . systemd-mode))
 
-
-(provide 'init-conf-mode)
-;;; init-conf-mode.el ends here
+;;; 57-conf-mode.el ends here
