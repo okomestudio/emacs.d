@@ -1,7 +1,9 @@
-;;; init-ai.el --- GPT clients  -*- lexical-binding: t -*-
+;;; 80-ai.el --- AI  -*- lexical-binding: t -*-
 ;;; Commentary:
+;;
+;; Initialize AI-related tools, including GPT clients.
+;; 
 ;;; Code:
-
 
 (require 'okutil)
 
@@ -50,6 +52,4 @@
   :config
   (org-ai-install-yasnippets))
 
-
-(provide 'init-ai)
-;;; init-ai.el ends here
+;;; 80-ai.el ends here

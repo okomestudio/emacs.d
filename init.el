@@ -71,8 +71,6 @@
 (require 'init-prog)
 (require 'init-file-viewers)
 (require 'init-web-browsing)
-(require 'init-ai)
-
 
 ;; Load additional init.el files in init.d/.
 (use-package init-loader
