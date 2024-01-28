@@ -69,7 +69,6 @@
 (require 'init-text-mode)
 (require 'init-conf-mode)
 (require 'init-prog)
-(require 'init-file-viewers)
 
 ;; Load additional init.el files in init.d/.
 (use-package init-loader
