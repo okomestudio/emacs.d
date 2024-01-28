@@ -1,7 +1,6 @@
-;;; init-rst.el --- rst-mode  -*- lexical-binding: t -*-
+;;; 55-rst.el --- rst-mode  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;; Code:
-
 
 (use-package rst-mode
   :straight nil
@@ -25,6 +24,4 @@
                     :activation-fn (lsp-activate-on "rst")
                     :server-id 'esbonio)))
 
-
-(provide 'init-rst)
-;;; init-rst.el ends here
+;;; 55-rst.el ends here

@@ -1,7 +1,6 @@
-;;; init-yaml.el --- YAML  -*- lexical-binding: t -*-
+;;; 55-yaml.el --- YAML  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;; Code:
-
 
 (use-package yaml-mode
   :hook
@@ -18,6 +17,4 @@
                  (if (not (bound-and-true-p ansible))
                      (init-lsp-lsp-mode-hook 'yamlls)))))
 
-
-(provide 'init-yaml)
-;;; init-yaml.el ends here
+;;; 55-yaml.el ends here

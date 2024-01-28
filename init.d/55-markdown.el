@@ -1,7 +1,6 @@
-;;; init-markdown.el --- Markdown  -*- lexical-binding: t -*-
+;;; 55-markdown.el --- Markdown  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;; Code:
-
 
 (use-package markdown-mode
   ;; For browser preview, use C-c C-c v.
@@ -42,6 +41,4 @@
   :hook
   (markdown-mode . lsp))
 
-
-(provide 'init-markdown)
-;;; init-markdown.el ends here
+;;; 55-markdown.el ends here
