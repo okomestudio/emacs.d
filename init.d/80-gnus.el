@@ -1,4 +1,4 @@
-;;; init-gnus.el --- Gnus  -*- lexical-binding: t -*-
+;;; 80-gnus.el --- Gnus  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;
 ;; To open the Gnus manual, hit ~C-h i d m gnus~.
@@ -125,6 +125,4 @@ _f_: forward
 
   (define-key gnus-article-mode-map "." 'hydra-gnus-article/body))
 
-
-(provide 'init-gnus)
-;;; init-gnus.el ends here
+;;; 80-gnus.el ends here
