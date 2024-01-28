@@ -1,7 +1,9 @@
-;;; init-anki.el --- Anki  -*- lexical-binding: t -*-
+;;; 80-anki.el --- Anki  -*- lexical-binding: t -*-
 ;;; Commentary:
+;;
+;; Initialize Anki.
+;;
 ;;; Code:
-
 
 (use-package anki-editor
   ;; Emacs minor mode for making Anki cards with Org.
@@ -37,6 +39,4 @@
     (insert "*** Front\n")
     (insert "*** Back\n")))
 
-
-(provide 'init-anki)
-;;; init-anki.el ends here
+;;; 80-anki.el ends here
