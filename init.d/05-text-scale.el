@@ -2,7 +2,7 @@
 ;;; Commentary:
 ;;; Code:
 
-(use-package face-remap
+(use-package emacs
   :straight nil
 
   :hook

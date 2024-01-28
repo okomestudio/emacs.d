@@ -33,7 +33,7 @@
 (use-package init-loader
   :custom
   (init-loader-byte-compile nil)
-  (init-loader-default-regexp "\\(?:\\`[[:digit:]]\\{2\\}-\\)[^X]+\\'")
+  (init-loader-default-regexp "\\(?:\\`[[:digit:]]\\{2\\}-\\).*[^-][^X].el\\'")
   (init-loader-show-log-after-init t)
 
   :config
