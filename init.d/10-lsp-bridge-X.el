@@ -1,10 +1,9 @@
-;;; init-lsp-bridge.el --- lsp-bridge  -*- lexical-binding: t -*-
+;;; 10-lsp-bridge.el --- lsp-bridge  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;
 ;; Fast, multi-threaded LSP client.
 ;;
 ;;; Code:
-
 
 (use-package posframe
   :straight t
@@ -29,6 +28,4 @@
   :init
   (global-lsp-bridge-mode))
 
-
-(provide 'init-lsp-bridge)
-;;; init-lsp-bridge.el ends here
+;;; 10-lsp-bridge.el ends here

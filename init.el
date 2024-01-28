@@ -51,6 +51,7 @@
 ;; Load additional init.el files in init.d/.
 (use-package init-loader
   :custom
+  (init-loader-default-regexp "\\(?:\\`[[:digit:]]\\{2\\}-\\)[^X]+\\'")
   (init-loader-show-log-after-init t)
 
   :config

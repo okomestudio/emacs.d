@@ -1,11 +1,9 @@
-;;; init-eaf.el --- Emacs Application Framework  -*- lexical-binding: t -*-
+;;; 10-eaf.el --- Emacs Application Framework  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;; Code:
 
-
 (use-package eaf
   :disabled
-
   :straight
   '(eaf :type git
         :host github
@@ -18,6 +16,4 @@
   (require 'eaf-browser)
   (require 'eaf-pdf-viewer))
 
-
-(provide 'init-eaf)
-;;; init-eaf.el ends here
+;;; 10-eaf.el ends here

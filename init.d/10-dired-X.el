@@ -1,4 +1,4 @@
-;;; init-dired.el --- Dired  -*- lexical-binding: t -*-
+;;; 10-dired.el --- Dired  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;; Code:
 
@@ -7,5 +7,4 @@
 ;; (setq-default dired-omit-files-p t)
 ;; (setq dired-omit-files "^\\.$\\|^\\.\\.$\\|\\.pyc$\\|\\.pyo$\\|\#$")
 
-(provide 'init-dired)
-;;; init-dired.el ends here
+;;; 10-dired.el ends here

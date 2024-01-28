@@ -1,11 +1,10 @@
-;;; init-secrets.el --- secrets.el  -*- lexical-binding: t -*-
+;;; 08-secrets.el --- secrets.el  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;
 ;; For this example of using this with KeepassXC, see
 ;; https://ph-uhl.com/emacs-password-management-on-linux/.
 ;;
 ;;; Code:
-
 
 (use-package secrets
   :commands
@@ -42,6 +41,4 @@
                :session secrets-service item-path secrets-interface-item
                "GetSecret" :object-path secrets-session-path)))))))
 
-
-(provide 'init-secrets)
-;;; init-secrets.el ends here
+;;; 08-secrets.el ends here

@@ -1,4 +1,4 @@
-;;; init-webkit.el --- webkit  -*- lexical-binding: t -*-
+;;; 10-webkit.el --- webkit  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;
 ;; An Emacs Dynamic Module for WebKit, aka a fully fledged browser
@@ -12,12 +12,10 @@
 
 (use-package webkit
   :disabled
-
   :straight
   '(webkit :type git :host github :repo "akirakyle/emacs-webkit"
            :branch "main"
            :files (:defaults "*.js" "*.css" "*.so")
            :pre-build ("make")))
 
-(provide 'init-webkit)
-;;; init-webkit.el ends here
+;;; 10-webkit.el ends here
