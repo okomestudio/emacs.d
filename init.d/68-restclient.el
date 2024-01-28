@@ -1,8 +1,8 @@
-;;; init-restclient.el --- restclient.el  -*- lexical-binding: t -*-
+;;; 68-restclient.el --- restclient.el  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;; Code:
 
-(use-package restclient
+(use-package restclient ;; derives from fundamental-mode
   ;; HTTP REST client.
   :defer t)
 
@@ -13,5 +13,4 @@
   ;; An org-mode extension to restclient.el
   :defer t)
 
-(provide 'init-restclient)
-;;; init-restclient.el ends here
+;;; 68-restclient.el ends here
