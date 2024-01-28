@@ -1,7 +1,9 @@
-;;; init-pdf.el --- PDF  -*- lexical-binding: t -*-
+;;; 70-pdf.el --- PDF  -*- lexical-binding: t -*-
 ;;; Commentary:
+;;
+;; Initialize PDF utilities.
+;; 
 ;;; Code:
-
 
 (use-package pdf-tools
   :config
@@ -12,6 +14,4 @@
   (define-key pdf-view-mode-map (kbd "C-s") 'isearch-forward)
   (setq pdf-view-resize-factor 1.1))
 
-
-(provide 'init-pdf)
-;;; init-pdf.el ends here
+;;; 70-pdf.el ends here
