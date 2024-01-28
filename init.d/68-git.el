@@ -1,15 +1,12 @@
-;;; init-git.el --- Git  -*- lexical-binding: t -*-
+;;; 68-git.el --- Git  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;; Code:
 
-
-(use-package magit)
+(use-package magit)  ;; not derived from prog-mode
 
 
 (use-package devdocs
   :hook
   (magit-mode . (lambda () (setq-local devdocs-current-docs '("git")))))
 
-
-(provide 'init-git)
-;;; init-git.el ends here
+;;; 68-git.el ends here
