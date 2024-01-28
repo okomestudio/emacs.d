@@ -1,7 +1,6 @@
-;;; init-grammarly.el --- Grammarly  -*- lexical-binding: t -*-
+;;; 40-grammarly.el --- Grammarly  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;; Code:
-
 
 (use-package lsp-grammarly
   :bind
@@ -76,6 +75,4 @@
       (mark-paragraph)
       (init-lsp--grammarly--check-grammar (region-beginning) (region-end)))))
 
-
-(provide 'init-grammarly)
-;;; init-grammarly.el ends here
+;;; 40-grammarly.el ends here
