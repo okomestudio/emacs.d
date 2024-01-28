@@ -70,7 +70,6 @@
 (require 'init-conf-mode)
 (require 'init-prog)
 (require 'init-file-viewers)
-(require 'init-web-browsing)
 
 ;; Load additional init.el files in init.d/.
 (use-package init-loader
