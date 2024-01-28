@@ -30,7 +30,7 @@ emojis/
 eshell
 games/
 history
-init.d/
+init.d/*-user-*
 multisession/
 network-security.data
 persist
