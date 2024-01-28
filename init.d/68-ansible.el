@@ -1,9 +1,8 @@
-;;; init-ansible.el --- Ansible  -*- lexical-binding: t -*-
+;;; 68-ansible.el --- Ansible  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;; Code:
 
-
-(use-package ansible)
+(use-package ansible) ;; not derived from prog-mode
 
 
 (use-package poly-ansible
@@ -36,6 +35,4 @@
   (put 'lsp-ansible-python-interpreter-path 'safe-local-variable #'stringp)
   (put 'lsp-ansible-validation-lint-arguments 'safe-local-variable #'stringp))
 
-
-(provide 'init-ansible)
-;;; init-ansible.el ends here
+;;; 68-ansible.el ends here
