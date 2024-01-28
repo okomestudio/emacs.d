@@ -13,7 +13,6 @@
 ;;
 ;;; Code:
 
-
 (let ((bootstrap-file (expand-file-name "straight/repos/straight.el/bootstrap.el"
                                         user-emacs-directory))
       (url (concat "https://raw.githubusercontent.com/"
@@ -34,6 +33,4 @@
 (setq use-package-verbose t)
 (setq use-package-minimum-reported-time 0.05)
 
-
-(provide 'init-straight)
 ;;; init-straight.el ends here

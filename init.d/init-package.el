@@ -22,5 +22,4 @@
 (eval-when-compile
   (require 'use-package))
 
-(provide 'init-package)
 ;;; init-package.el ends here
