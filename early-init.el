@@ -6,11 +6,12 @@
 ;;
 ;;; Code:
 
-(setq debug-on-error t) ;; set t when debugging startup issues
-
 (let ((minver "29.1"))
   (when (version< emacs-version minver)
     (error "The minimum Emacs version expected is %s" minver)))
+
+(setq debug-on-error t) ;; set t when debugging startup issues
+(setq byte-compile-warnings '(not obsolete)) ;; set t for development
 
 ;; Reduce GC usage while initialization. 800 kb is the default (2021-08-01).
 ;; Note that the threshold while running is set by gcmh later in init and the
