@@ -139,6 +139,20 @@ See http://blog.binchen.org/posts/effective-spell-check-in-emacs.html"
                            "--trailing-comma" "all")))
 
 
+(use-package tern
+  :disabled 
+  :ensure nil
+  :custom
+  (tern-command '("tern" "--no-port-file"))
+
+  :ensure-system-package
+  (tern . "npm install -g tern")
+
+  :init
+  (require 'okutil)
+  (okutil-ensure-file-from-github "ternjs/tern/master/emacs/tern.el"))
+
+
 (use-package devdocs
   :hook
   (web-mode . (lambda () (setq-local devdocs-current-docs '("axios"
