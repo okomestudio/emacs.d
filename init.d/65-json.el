@@ -1,13 +1,12 @@
-;;; init-json.el --- JSON  -*- lexical-binding: t -*-
+;;; 65-json.el --- JSON  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;; Code:
-
 
 (use-package json-mode
   :after (web-beautify)
   :bind
   (:map json-mode-map
-   ("C-c b" . init-json--beautify-json-via-python))
+        ("C-c b" . init-json--beautify-json-via-python))
 
   :custom
   (js-indent-level 4)
@@ -53,6 +52,4 @@
   :hook
   (json-mode . (lambda () (init-lsp-lsp-mode-hook 'json-ls))))
 
-
-(provide 'init-json)
-;;; init-json.el ends here
+;;; 65-json.el ends here

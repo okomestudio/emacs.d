@@ -1,7 +1,6 @@
-;;; init-shell.el --- Shell  -*- lexical-binding: t -*-
+;;; 65-shell.el --- Shell  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;; Code:
-
 
 (use-package sh-script
   :straight nil
@@ -70,6 +69,4 @@
   :ensure-system-package
   (shellcheck . "sudo apt install -y shellcheck"))
 
-
-(provide 'init-shell)
-;;; init-shell.el ends here
+;;; 65-shell.el ends here

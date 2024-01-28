@@ -1,16 +1,15 @@
-;;; init-python.el --- Python  -*- lexical-binding: t -*-
+;;; 65-python.el --- Python  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;; Code:
-
 
 (use-package python
   :after (polymode blacken py-isort)
 
   :bind
   (:map python-mode-map
-   ("C-c b" . init-python--format-python-code)
-   :map python-ts-mode-map
-   ("C-c b" . init-python--format-python-code))
+        ("C-c b" . init-python--format-python-code)
+        :map python-ts-mode-map
+        ("C-c b" . init-python--format-python-code))
 
   :custom
   (python-indent-guess-indent-offset-verbose nil)
@@ -161,6 +160,4 @@
   (python-mode . lsp-deferred)
   (python-ts-mode . lsp-deferred))
 
-
-(provide 'init-python)
-;;; init-python.el ends here
+;;; 65-python.el ends here

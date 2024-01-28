@@ -1,7 +1,6 @@
-;;; init-plantuml.el --- Plantuml  -*- lexical-binding: t -*-
+;;; 65-plantuml.el --- Plantuml  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;; Code:
-
 
 (defconst init-plantuml-path-plantuml
   (expand-file-name "/usr/share/plantuml/plantuml.jar")
@@ -22,6 +21,4 @@
   ("\\.plantuml\\'" . plantuml-mode)
   ("\\.puml\\'" . plantuml-mode))
 
-
-(provide 'init-plantuml)
-;;; init-plantuml.el ends here
+;;; 65-plantuml.el ends here

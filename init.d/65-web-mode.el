@@ -1,7 +1,6 @@
-;;; init-webmode.el --- web-mode  -*- lexical-binding: t -*-
+;;; 65-web-mode.el --- web-mode  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;; Code:
-
 
 (use-package web-mode
   :custom
@@ -16,7 +15,7 @@
 
   :bind
   (:map web-mode-map
-   ("C-c b" . (lambda () (interactive) (prettier-js))))
+        ("C-c b" . (lambda () (interactive) (prettier-js))))
 
   :hook
   (web-mode . init-webmode--set-up-flycheck)
@@ -169,6 +168,4 @@ See http://blog.binchen.org/posts/effective-spell-check-in-emacs.html"
   :config
   (add-to-list 'lsp-language-id-configuration '(".*\\.html?\\.j2" . "html")))
 
-
-(provide 'init-webmode)
-;;; init-webmode.el ends here
+;;; 65-web-mode.el ends here

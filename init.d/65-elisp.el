@@ -1,7 +1,6 @@
-;;; init-elisp.el --- Elisp  -*- lexical-binding: t -*-
+;;; 65-elisp.el --- Elisp  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;; Code:
-
 
 (require 'okutil)
 
@@ -123,8 +122,6 @@
 (use-package devdocs
   :hook
   (emacs-lisp-mode
-   . (lambda () (setq-local devdocs-current-docs '("elisp")))))
+   . (lambda () (setq-local devdocs-current-docs '("lisp")))))
 
-
-(provide 'init-elisp)
-;;; init-elisp.el ends here
+;;; 65-elisp.el ends here

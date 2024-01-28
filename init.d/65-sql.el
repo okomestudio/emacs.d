@@ -1,14 +1,13 @@
-;;; init-sql.el --- SQL  -*- lexical-binding: t -*-
+;;; 65-sql.el --- SQL  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;; Code:
-
 
 (use-package sql
   :after sqlformat
 
   :bind
   (:map sql-mode-map
-   ("C-c b" . init-sql--beautify-sql))
+        ("C-c b" . init-sql--beautify-sql))
 
   :hook
   (sql-interactive-mode . (lambda () (setq truncate-lines t)))
@@ -112,6 +111,4 @@
   :ensure-system-package
   (sqls . "go install github.com/lighttiger2505/sqls@latest"))
 
-
-(provide 'init-sql)
-;;; init-sql.el ends here
+;;; 65-sql.el ends here

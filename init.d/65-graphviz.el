@@ -1,7 +1,6 @@
-;;; init-graphviz.el --- Graphviz  -*- lexical-binding: t -*-
+;;; 65-graphviz.el --- Graphviz  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;; Code:
-
 
 (use-package graphviz-dot-mode
   :custom
@@ -10,6 +9,4 @@
   :ensure-system-package
   (dot . "sudo apt install -y graphviz"))
 
-
-(provide 'init-graphviz)
-;;; init-graphviz.el ends here
+;;; 65-graphviz.el ends here

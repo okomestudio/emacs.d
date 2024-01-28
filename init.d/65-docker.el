@@ -1,7 +1,6 @@
-;;; init-docker.el --- Docker  -*- lexical-binding: t -*-
+;;; 65-docker.el --- Docker  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;; Code:
-
 
 (use-package docker
   :defer t)
@@ -21,6 +20,4 @@
   :hook
   (dockerfile-mode . (lambda () (init-lsp-lsp-mode-hook 'dockerfile-ls))))
 
-
-(provide 'init-docker)
-;;; init-docker.el ends here
+;;; 65-docker.el ends here
