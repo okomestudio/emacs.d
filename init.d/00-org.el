@@ -179,7 +179,7 @@ node."
 
 (use-package ox
   ;; Org export.
-  :after (org ox-gfm)
+  :after (org)
   :straight nil
 
   :config
