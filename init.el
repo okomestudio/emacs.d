@@ -72,15 +72,15 @@
 (require 'init-file-viewers)
 (require 'init-web-browsing)
 (require 'init-ai)
-(require 'init-games)
 
 
 ;; Load additional init.el files in init.d/.
-(let ((custom-init-dir (expand-file-name "init.d" user-emacs-directory)))
-  (when (file-exists-p custom-init-dir)
-    (mapc (lambda (f) (load f))
-          ;; The returned files are sorted  with string-lessp:
-          (directory-files custom-init-dir t ".el$"))))
+(use-package init-loader
+  :custom
+  (init-loader-show-log-after-init t)
+
+  :config
+  (init-loader-load (expand-file-name "init.d" user-emacs-directory)))
 
 
 (require 'init-optimizations)

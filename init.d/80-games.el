@@ -1,11 +1,13 @@
-;;; init-games.el --- Games  -*- lexical-binding: t -*-
+;;; 80-games.el --- Games  -*- lexical-binding: t -*-
 ;;; Commentary:
+;;
+;; Initialize games.
+;;
 ;;; Code:
-
 
 (use-package tetris
   :bind
-  (;
+  (;;
    :map tetris-mode-map
    ("i" . tetris-rotate-prev)
    ("j" . tetris-move-left)
@@ -22,6 +24,4 @@
                     [0 1 0]
                     [1 0 0]]))
 
-
-(provide 'init-games)
-;;; init-games.el ends here
+;;; 80-games.el ends here
