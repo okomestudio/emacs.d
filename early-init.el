@@ -39,5 +39,4 @@
 (setq inhibit-splash-screen nil)
 (setq inhibit-startup-screen nil)
 
-(provide 'early-init)
 ;;; early-init.el ends here

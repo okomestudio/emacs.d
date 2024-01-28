@@ -5,7 +5,6 @@
 ;;
 ;;; Code:
 
-
 ;; init profiling
 (defconst ts/profile-init nil
   "Set to t to profile init.el.")
@@ -49,26 +48,6 @@
 (require 'init-straight) ;; also configures use-package
 ;; (require 'init-package) ;; uncomment this instead for use-package without straight
 
-(require 'init-org)
-(require 'init-org-roam)
-(require 'init-startup)
-(require 'init-scrolling)
-(require 'init-navigation)
-(require 'init-minibuffer)
-(require 'init-help)
-(require 'init-wayland)
-(require 'init-auth-source)
-(require 'init-visuals)
-(require 'init-projectile)
-(require 'init-lsp)
-(require 'init-ime)
-(require 'init-terminal)
-(require 'init-editing)
-(require 'init-dir-locals)
-(require 'init-lookup)
-(require 'init-text-mode)
-(require 'init-conf-mode)
-
 ;; Load additional init.el files in init.d/.
 (use-package init-loader
   :custom
@@ -78,8 +57,6 @@
   (init-loader-load (expand-file-name "init.d" user-emacs-directory)))
 
 
-(require 'init-optimizations)
-
 (add-to-list 'after-init-hook
              (lambda ()
                (message "Emacs (pid:%d) started in %s"
@@ -87,6 +64,4 @@
 
 (put 'eval 'safe-local-variable #'listp)
 
-
-(provide 'init)
 ;;; init.el ends here
