@@ -21,6 +21,7 @@
      "\\*devdocs\\*\\'"
      "\\*direnv\\*\\'"
      "\\*elfeed-log\\*\\'"
+     "\\*init log\\*\\'"
      "\\*lsp-log\\*\\'"
      "\\*Messages\\*\\'"
      "\\*scratch\\*\\'"
