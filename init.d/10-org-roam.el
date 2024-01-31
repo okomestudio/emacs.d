@@ -14,7 +14,7 @@
    :type git
    :host github
    :repo "okomestudio/org-roam"
-   :branch "refactor-org-roam-unlinked-references-section"
+   :branch "okome"
    :fork "okomestudio")
 
   :bind
