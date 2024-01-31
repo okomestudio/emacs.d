@@ -36,8 +36,8 @@
 
 (setq redisplay-skip-fontification-on-input t)
 
-(setq initial-buffer-choice 'org-agenda)
 (setq inhibit-splash-screen nil)
 (setq inhibit-startup-screen nil)
+(setq initial-buffer-choice nil)
 
 ;;; early-init.el ends here
