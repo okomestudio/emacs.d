@@ -13,14 +13,14 @@
   (;
    :prefix-map lookup-map
    :prefix-docstring "Keymap for lookup"
-   :prefix "M-L"
+   :prefix "C-h C-l"
    ("c" . ask-chatgpt)
    ("g" . eww-search-goodreads)
    ("t" . gts-do-translate)
 
    :prefix-map lookup-english-map
    :prefix-docstring "Keymap for English lookup"
-   :prefix "M-L e"
+   :prefix "C-h C-l e"
    ("a" . eww-search-amazon-en)
    ("d" . define-word-at-point)
    ("h" . pronounce-word)
@@ -31,7 +31,7 @@
 
    :prefix-map lookup-japanese-map
    :prefix-docstring "Keymap for Japanese lookup"
-   :prefix "M-L j"
+   :prefix "C-h C-l j"
    ("a" . eww-search-amazon-ja)
    ("d" . eww-search-weblio)
    ("s" . eww-search-duckduckgo-ja)
