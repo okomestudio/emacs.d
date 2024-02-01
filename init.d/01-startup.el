@@ -141,14 +141,9 @@
   )
 
 
-(use-package tramp
-  :straight nil
-  :custom (tramp-default-method "ssh")
-  :defer t)
-
-
-(use-package uuid)
-
+(use-package switch-buffer-functions
+  ;; Hook run when switching current buffer.
+  )
 
 (use-package system-packages
   :custom
@@ -156,8 +151,12 @@
   (system-packages-package-manager 'apt))
 
 
-(use-package switch-buffer-functions
-  ;; Hook run when switching current buffer.
-  )
+(use-package tramp
+  :straight nil
+  :custom (tramp-default-method "ssh")
+  :defer t)
+
+
+(use-package uuid)
 
 ;;; 01-startup.el ends here
