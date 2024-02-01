@@ -24,6 +24,7 @@
    ("C-c n l" . org-roam-buffer-toggle)
 
    :map org-mode-map
+   ("C-c a" . org-roam-alias-add)
    ("C-M-i" . completion-at-point))
 
   :bind-keymap
