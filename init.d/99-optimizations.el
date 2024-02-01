@@ -2,11 +2,13 @@
 ;;; Commentary:
 ;;; Code:
 
-(use-package bytecomp
+(use-package emacs
   :straight nil
 
   :custom
-  (byte-compile-warnigns '(cl-functions)))
+  (byte-compile-warnigns '(cl-functions))
+  (jit-lock-defer-time 0.05)
+  (package-native-compile t))
 
 
 (use-package gcmh
@@ -18,7 +20,7 @@
   (focus-out-hook . garbage-collect)
 
   :custom
-  (gcmh-high-cons-threshold (* 64 1024 1024))
+  (gcmh-high-cons-threshold (* 1024 1024 1024))
   (gcmh-idle-delay 5))
 
 ;;; 99-optimizations.el ends here
