@@ -6,7 +6,7 @@
 ;;; Code:
 
 (use-package init-lookup
-  :after (define-word powerthesaurus eww chatgpt-shell)
+  :after (chatgpt-shell define-word eww powerthesaurus)
   :straight nil
 
   :bind
