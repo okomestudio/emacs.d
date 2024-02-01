@@ -23,6 +23,7 @@
    :prefix "M-L e"
    ("a" . eww-search-amazon-en)
    ("d" . define-word-at-point)
+   ("h" . pronounce-word)
    ("j" . eww-search-justapedia-en)
    ("p" . powerthesaurus-lookup-dwim)
    ("s" . eww-search-duckduckgo-en)
