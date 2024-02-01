@@ -202,7 +202,7 @@ FORCE-REVERTING to true."
 
 
 (defun okutil-string-from-region-or-prompt (prompt &optional initial history default inherit)
-  "Read string from region when active; otherwise, get it from PROMPT.
+  "Read string from region, at-point, or PROMPT.
 
 See `read-string` for the meaning of INITIAL, HISTORY, DEFAULT, and INHERIT."
   (if (region-active-p)
@@ -210,7 +210,10 @@ See `read-string` for the meaning of INITIAL, HISTORY, DEFAULT, and INHERIT."
           (buffer-substring-no-properties (region-beginning) (region-end))
         (deactivate-mark)
         (message ""))
-    (read-string prompt initial history default inherit)))
+    (let ((word (thing-at-point 'word 'no-properties)))
+      (if word
+          word
+        (read-string prompt initial history default inherit)))))
 
 
 (defun okutil-url-visit (arg url)
