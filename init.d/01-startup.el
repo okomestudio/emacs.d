@@ -10,7 +10,6 @@
   (enable-recursive-minibuffers t)
   (load-prefer-newer t)
   (next-error-message-highlight t)
-  (read-process-output-max (* 4 1024 1024)) ; 4 mb
   (ring-bell-function 'ignore)              ; Disable beeping (in C source code)
   (tab-width 2)
   (uniquify-buffer-name-style 'forward)
