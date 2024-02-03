@@ -6,6 +6,8 @@
 ;;; Code:
 
 (use-package elfeed
+  :defer t
+
   :custom
   (elfeed-curl-max-connections 16)
   (elfeed-search-title-max-width 100)

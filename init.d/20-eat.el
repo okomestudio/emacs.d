@@ -6,6 +6,8 @@
 ;;; Code:
 
 (use-package eat
+  :defer t
+
   :straight
   '(eat :type git
         :host codeberg
@@ -16,11 +18,10 @@
                 ("integration" "integration/*")
                 (:exclude ".dir-locals.el" "*-tests.el")))
 
-  :init
-  (add-hook 'eshell-post-command-hook
-            (lambda ()
-              (sleep-for 0.2)
-              (end-of-buffer)))
+  :hook
+  (eshell-post-command . (lambda ()
+                           (sleep-for 0.2)
+                           (end-of-buffer)))
 
   ;; :init
   ;; The following might be necessary for performance. See

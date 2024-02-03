@@ -3,6 +3,7 @@
 ;;; Code:
 
 (use-package sh-script
+  :defer t
   :straight nil
 
   :custom
@@ -30,10 +31,12 @@
   (shellcheck . "sudo apt install -y shellcheck"))
 
 
-(use-package bats-mode)
+(use-package bats-mode :defer t)
 
 
 (use-package ansi-color
+  :defer t
+
   :hook
   (compilation-filter . init-shell--colorize-buffer)
 
@@ -44,6 +47,8 @@
 
 
 (use-package devdocs
+  :defer t
+
   :hook
   (sh-mode . (lambda () (setq-local devdocs-current-docs '("bash")))))
 
@@ -51,6 +56,7 @@
 (use-package lsp-mode
   ;; explainshell integration by bash-language-server appears not to be working;
   ;; see github.com/bash-lsp/bash-language-server/issues/726
+  :defer t
 
   :custom
   ;; TODO: Start the service on start.

@@ -2,7 +2,7 @@
 ;;; Commentary:
 ;;; Code:
 
-(use-package ansible) ;; not derived from prog-mode
+(use-package ansible :defer t) ;; not derived from prog-mode
 
 
 (use-package poly-ansible
@@ -16,15 +16,20 @@
   ;; polymode activate ansible automatically.
   ;;
   ;; jinja2-mode inherits from html-mode.
+  :defer t
   )
 
 
 (use-package devdocs
+  :defer t
+
   :hook
   (ansible . (lambda () (setq-local devdocs-current-docs '("ansible")))))
 
 
 (use-package lsp-mode
+  :defer t
+
   :hook
   (ansible . (lambda ()
                (setq-local lsp-disabled-clients '(yamlls eslint))

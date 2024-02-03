@@ -2,7 +2,6 @@
 ;;; Commentary:
 ;;; Code:
 
-(require 'okutil)
 
 (defcustom ts/font-family-default "Hack"
   "Font family for default face."
@@ -64,6 +63,7 @@ characters have the same width with a CJK character."
         (apply action))))
 
   (defun init-faces--set-fallback-cjk-font (fontset-name font-families)
+    (require 'okutil)
     (let ((font-family (seq-find #'okutil-font-installed-p font-families)))
       (set-fontset-font fontset-name
                         'unicode
@@ -171,9 +171,8 @@ See https://knowledge.sakura.ad.jp/8494/"
 
 (use-package eaw
   ;; East Asian Ambiguous Width問題と絵文字の横幅問題の修正ロケール.
-  ;;
-  ;; See https://github.com/hamano/locale-eaw.
-  ;;
+  :defer t
+
   :straight
   (:host github :repo "hamano/locale-eaw")
 
@@ -182,6 +181,7 @@ See https://knowledge.sakura.ad.jp/8494/"
 
 
 (use-package font-core
+  :defer t
   :straight nil
 
   :config
@@ -189,8 +189,7 @@ See https://knowledge.sakura.ad.jp/8494/"
             (lambda (_pref current)
               ;; NOTE: This hook is for turning off font-lock-mode in
               ;; list-colors-display only.
-              (when (string-equal (buffer-name current)
-                                  "*Colors*")
+              (when (string-equal (buffer-name current) "*Colors*")
                 (font-lock-mode -1)
                 (list-colors-display)))))
 

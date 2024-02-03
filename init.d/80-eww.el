@@ -5,11 +5,12 @@
 ;;
 ;;; Code:
 
-(require 'okutil)
-
-
 (use-package eww
+  :defer t
+
   :config
+  (require 'okutil)
+
   (defun init-eww--eww-set-start-at (url-regexp search-regexp)
     "When site matches URL-REGEXP, start displaying from line matching SEARCH-REGEXP.
 
@@ -74,6 +75,8 @@ See http://emacs.rubikitch.com/eww-weblio/ for reference."
 
 
 (use-package shr
+  :defer t
+
   :custom
   (shr-use-xwidgets-for-media nil))
 

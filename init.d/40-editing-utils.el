@@ -4,7 +4,9 @@
 
 (use-package hippie-exp
   ;; Expand the word before the point in various ways.
+  :defer t
   :ensure nil
+
   :init
   (global-set-key [remap dabbrev-expand] 'hippie-expand))
 
@@ -17,6 +19,8 @@
 
 
 (use-package multiple-cursors
+  :defer t
+
   :init
   (global-set-key (kbd "C-S-c C-S-c") 'mc/edit-lines)
   (global-set-key (kbd "C->") 'mc/mark-next-like-this)
@@ -26,20 +30,24 @@
 
 (use-package htmlize
   ;; Convert buffer text and decorations to HTML
+  :defer t
   )
 
 
 (use-package titlecase
   ;; Titlecase things.
+  :defer t
+
   :bind
-  (:map text-mode-map
+  (;
+   :map text-mode-map
    ("M-c" . titlecase-dwim))
 
   :custom
   (titlecase-skip-words-regexps
-    '("\\b[[:upper:]]+\\b"
-      "\\b\\(\\(www\\.\\|\\(s?https?\\|ftp\\|file\\|gopher\\|nntp\\|news\\|telnet\\|wais\\|mailto\\|info\\):\\)\\(//[-a-z0-9_.]+:[0-9]*\\)?\\(?:[-a-z0-9_=#$@~%&*+\\/[:word:]!?:;.,]+([-a-z0-9_=#$@~%&*+\\/[:word:]!?:;.,]+[-a-z0-9_=#$@~%&*+\\/[:word:]]*)\\(?:[-a-z0-9_=#$@~%&*+\\/[:word:]!?:;.,]+[-a-z0-9_=#$@~%&*+\\/[:word:]]\\)?\\|[-a-z0-9_=#$@~%&*+\\/[:word:]!?:;.,]+[-a-z0-9_=#$@~%&*+\\/[:word:]]\\)\\)"
-      )))
+   '("\\b[[:upper:]]+\\b"
+     "\\b\\(\\(www\\.\\|\\(s?https?\\|ftp\\|file\\|gopher\\|nntp\\|news\\|telnet\\|wais\\|mailto\\|info\\):\\)\\(//[-a-z0-9_.]+:[0-9]*\\)?\\(?:[-a-z0-9_=#$@~%&*+\\/[:word:]!?:;.,]+([-a-z0-9_=#$@~%&*+\\/[:word:]!?:;.,]+[-a-z0-9_=#$@~%&*+\\/[:word:]]*)\\(?:[-a-z0-9_=#$@~%&*+\\/[:word:]!?:;.,]+[-a-z0-9_=#$@~%&*+\\/[:word:]]\\)?\\|[-a-z0-9_=#$@~%&*+\\/[:word:]!?:;.,]+[-a-z0-9_=#$@~%&*+\\/[:word:]]\\)\\)"
+     )))
 
 
 (use-package typo
@@ -85,6 +93,8 @@
 
 
 (use-package ispell
+  :defer t
+
   :custom
   (ispell-dictionary "en_US")
   (ispell-local-dictionary-alist
@@ -99,6 +109,8 @@
 
 (use-package ace-isearch
   ;; A seamless bridge between isearch, ace-jump-mode, avy, and swoop.
+  :defer t
+
   :custom
   (ace-isearch-input-length 1)
   (ace-isearch-jump-delay 0.75)

@@ -5,9 +5,6 @@
 ;;
 ;;; Code:
 
-(require 'okutil)
-
-
 (use-package shell-maker
   :defer t
 
@@ -29,6 +26,7 @@
 
   :init
   (defun ask-chatgpt (str)
+    (require 'okutil)
     (interactive (list (okutil-string-from-region-or-prompt "Ask ChatGPT: ")))
     (chatgpt-shell-send-to-buffer str)))
 

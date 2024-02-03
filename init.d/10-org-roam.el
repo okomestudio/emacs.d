@@ -130,7 +130,9 @@
      (let ((node-mtime (cdr (assoc "MTIME" (org-roam-node-properties node))))
            (inhibit-message t))
        (if node-mtime
-           (org-roam-timestamps-encode (car (split-string node-mtime)))
+           (progn
+             (require 'org-roam-timestamps)
+             (org-roam-timestamps-encode (car (split-string node-mtime))))
          (org-roam-node-file-mtime node)))))
 
 

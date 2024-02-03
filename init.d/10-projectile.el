@@ -3,17 +3,20 @@
 ;;; Code:
 
 (use-package projectile
-  :bind
-  (:map ctl-x-4-map
-        ("p" . (lambda ()
-                 (interactive)
-                 (other-window -1)
-                 (projectile-switch-project)
-                 (other-window +1)))
+  :defer t
 
-        :map projectile-mode-map
-        ("s-p" . projectile-command-map) ; "s-" is "super"
-        ("C-c p" . projectile-command-map))
+  :bind
+  (;
+   :map ctl-x-4-map
+   ("p" . (lambda ()
+            (interactive)
+            (other-window -1)
+            (projectile-switch-project)
+            (other-window +1)))
+
+   :map projectile-mode-map
+   ("s-p" . projectile-command-map) ; "s-" is "super"
+   ("C-c p" . projectile-command-map))
 
   :custom
   (projectile-auto-discover nil)
@@ -45,8 +48,7 @@
   (put 'projectile-project-run-cmd 'safe-local-variable #'stringp)
   (put 'projectile-project-test-cmd 'safe-local-variable #'stringp)
 
-  :init
-  (use-package ag)
+  :config
   (projectile-mode +1))
 
 ;;; 10-projectile.el ends here
