@@ -31,6 +31,6 @@
 
 ;; IMENU
 
-(use-package imenu-list)
+(use-package imenu-list :defer t)
 
 ;;; 02-navigation.el ends here

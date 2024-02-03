@@ -3,8 +3,6 @@
 ;;; Code:
 
 (use-package mozc
-  :after mozc-posframe
-
   :custom
   (default-input-method "japanese-mozc")
   (mozc-candidate-style 'echo-area) ;; choices are 'overlay, 'echo-area, 'posframe
@@ -14,6 +12,8 @@
 
 
 (use-package mozc-posframe
+  :disabled
+
   :straight
   (mozc-posframe :type git :host github :repo "derui/mozc-posframe")
 

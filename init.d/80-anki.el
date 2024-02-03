@@ -5,6 +5,23 @@
 ;;
 ;;; Code:
 
+(defun anki-template ()
+  "Insert template for Anki notes."
+  (interactive)
+  (insert "* Anki notes :anki:\n")
+  (insert ":PROPERTIES:\n")
+  (insert ":VISIBILITY: folded\n")
+  (insert ":ANKI_DECK: Default\n")
+  (insert ":END:\n")
+  (org-id-get-create)
+  (insert "** Note\n")
+  (insert ":PROPERTIES:\n")
+  (insert ":ANKI_NOTE_TYPE: Basic (and reversed card)\n")
+  (insert ":ANKI_NOTE_ID:\n")
+  (insert ":END:\n")
+  (insert "*** Front\n")
+  (insert "*** Back\n"))
+
 (use-package anki-editor
   ;; Emacs minor mode for making Anki cards with Org.
   :defer t
@@ -19,24 +36,6 @@
   ;; (request-log-level 'debug)
 
   :ensure-system-package
-  (curl . "sudo apt install -y curl")
-
-  :init
-  (defun anki-template ()
-    "Insert template for Anki notes."
-    (interactive)
-    (insert "* Anki notes :anki:\n")
-    (insert ":PROPERTIES:\n")
-    (insert ":VISIBILITY: folded\n")
-    (insert ":ANKI_DECK: Default\n")
-    (insert ":END:\n")
-    (org-id-get-create)
-    (insert "** Note\n")
-    (insert ":PROPERTIES:\n")
-    (insert ":ANKI_NOTE_TYPE: Basic (and reversed card)\n")
-    (insert ":ANKI_NOTE_ID:\n")
-    (insert ":END:\n")
-    (insert "*** Front\n")
-    (insert "*** Back\n")))
+  (curl . "sudo apt install -y curl"))
 
 ;;; 80-anki.el ends here

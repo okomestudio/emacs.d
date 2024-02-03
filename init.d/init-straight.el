@@ -31,6 +31,6 @@
 (setq straight-use-package-by-default t)
 (setq use-package-enable-imenu-support t)
 (setq use-package-verbose t)
-(setq use-package-minimum-reported-time 0.05)
+(setq use-package-minimum-reported-time 0.01)
 
 ;;; init-straight.el ends here

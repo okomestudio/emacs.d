@@ -42,6 +42,8 @@
 
 (use-package help-shortdoc-example
   ;; Display shortdoc examples to *Help* buffer.
+  :defer t
+
   :straight
   (:host github :repo "buzztaiki/help-shortdoc-example.el")
 
@@ -67,6 +69,7 @@
 
 (use-package sicp
   ;; "Structure and Interpretation of Computer Programs" as info
+  :defer t
   )
 
 ;;; 02-help.el ends here

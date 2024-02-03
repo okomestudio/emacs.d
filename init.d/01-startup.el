@@ -3,6 +3,15 @@
 ;;; Code:
 
 (use-package emacs
+  :straight nil
+
+  :bind
+  (("<f5>" . 'okutil-revert-buffer-no-confirm)
+   ("C-S-o" . 'okutil-insert-newline-above)
+   ("C-c C-x SPC" . 'okutil-insert-zero-width-space)
+   ("C-o" . 'okutil-insert-newline-below)
+   ("M-q" . 'okutil-fill-or-unfill-paragraph))
+
   :custom
   (async-shell-command-buffer "new-buffer")
   (case-fold-search t)
@@ -15,43 +24,31 @@
   (uniquify-buffer-name-style 'forward)
   (use-short-answers t)
   (vc-follow-symlinks t)
-  ;; (x-select-request-type
-  ;;  (cond ((eq window-system 'pgtk) nil)
-  ;;        ((eq window-system 'x) '(UTF8_STRING COMPOUND_TEXT TEXT STRING))
-  ;;        (t nil)))
   (word-wrap-by-category t)
 
-  :init
-  (setq-default frame-title-format
-                '((:eval
-                   (list (if (buffer-file-name)
-                             (abbreviate-file-name
-                              (expand-file-name buffer-file-name))
-                           (buffer-name))))
-                  " - Emacs"))
-
-  (when window-system
-    (setq select-enable-clipboard t)))
-
-
-(use-package simple
-  ;; Basic editing commands for Emacs.
-  :straight nil
-
-  :bind
-  (("<f5>" . 'okutil-revert-buffer-no-confirm)
-   ("C-S-o" . 'okutil-insert-newline-above)
-   ("C-c C-x SPC" . 'okutil-insert-zero-width-space)
-   ("C-o" . 'okutil-insert-newline-below)
-   ("M-q" . 'okutil-fill-or-unfill-paragraph))
-
-  :custom
-  (save-interprogram-paste-before-kill t)
+  ;; Basic editing
   (sentence-end-double-space nil)       ; in paragraphs.el
   (show-paren-context-when-offscreen t)
   (show-paren-delay 0)
   (size-indication-mode t)
   (tab-always-indent t)                 ; in indent.el
+
+  ;; File related config
+  (auto-save-default nil)
+  (backup-by-copying t)
+  (backup-directory-alist `((".*" . ,(expand-file-name ".cache/backups"
+                                                       user-emacs-directory))))
+  (create-lockfiles nil)
+  (make-backup-files nil)
+  (require-final-newline nil)
+
+  ;; Frame
+  (frame-title-format '((:eval
+                         (list (if (buffer-file-name)
+                                   (abbreviate-file-name
+                                    (expand-file-name buffer-file-name))
+                                 (buffer-name))))
+                        " - Emacs"))
 
   :init
   (require 'okutil)
@@ -72,31 +69,11 @@
   (set-default-coding-systems 'utf-8))
 
 
-(use-package files
-  :straight nil
-
-  :custom
-  (auto-save-default nil)
-  ;; (auto-save-file-name-transforms '((".*" ts/backup-cache-dir t)))
-  (backup-by-copying t)
-  ;; (backup-directory-alist '(("." . ts/backup-cache-dir)))
-  (backup-directory-alist `((".*" . ,ts/backup-cache-dir)))
-  (create-lockfiles nil)
-  (make-backup-files nil)
-  (require-final-newline nil)
-
-  :preface
-  (defconst ts/backup-cache-dir (expand-file-name "~/.cache/emacs-backups"))
-
-  :init
-  (require 'okutil)
-  (okutil-ensure-directory-exists ts/backup-cache-dir))
-
-
 ;; SHELL
 
 (use-package add-node-modules-path
   ;; Add node_modules/.bin to exec-path.
+  :defer t
   )
 
 
@@ -106,6 +83,8 @@
   ;; Invoke direnv to obtain the environment for the current file, then update
   ;; the emacs variables process-environment and exec-path.
   ;;
+  :defer t
+
   :ensure-system-package
   (direnv . "sudo apt install -y direnv")
 
@@ -118,6 +97,7 @@
   ;;
   ;; Ensure environment variables look the same in the user's shell.
   ;;
+  :defer t
   :if (or (memq window-system '(mac ns x)) (daemonp))
 
   :config
@@ -126,6 +106,8 @@
 
 (use-package keychain-environment
   ;; Loads keychain environment variables into emacs.
+  :defer t
+
   :straight
   (:host github :repo "tarsius/keychain-environment")
 

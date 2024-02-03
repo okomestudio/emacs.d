@@ -3,6 +3,8 @@
 ;;; Code:
 
 (use-package nerd-icons
+  :defer t
+
   :config
   (if (not (file-exists-p "~/.local/share/fonts/NFM.ttf"))
       (nerd-icons-install-fonts +1)))

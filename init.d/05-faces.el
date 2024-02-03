@@ -2,7 +2,6 @@
 ;;; Commentary:
 ;;; Code:
 
-
 (defcustom ts/font-family-default "Hack"
   "Font family for default face."
   :type '(string)
@@ -38,7 +37,7 @@ characters have the same width with a CJK character."
   :group 'ts)
 
 
-(use-package faces
+(use-package emacs
   :straight nil
 
   :ensure-system-package
@@ -96,11 +95,22 @@ See https://knowledge.sakura.ad.jp/8494/"
   (dolist (element ts/face-font-relative-scales)
     (add-to-list 'face-font-rescale-alist element))
 
-  (init-faces--apply-if-gui 'init-faces--setup-font-for-frame))
+  (init-faces--apply-if-gui 'init-faces--setup-font-for-frame)
+
+
+  ;; NOTE: This hook is for turning off font-lock-mode in
+  ;; list-colors-display only.
+  (add-hook 'switch-buffer-functions
+            (lambda (_pref current)
+              (when (string-equal (buffer-name current) "*Colors*")
+                (font-lock-mode -1)
+                (list-colors-display)))))
 
 
 (use-package mixed-pitch
   ;; Enable mixing fixed-pitch and variable-pitch.
+  :defer t
+
   :custom
   (mixed-pitch-variable-pitch-cursor nil)
   (mixed-pitch-fixed-pitch-faces '(diff-added
@@ -178,19 +188,5 @@ See https://knowledge.sakura.ad.jp/8494/"
 
   :config
   (eaw-fullwidth))
-
-
-(use-package font-core
-  :defer t
-  :straight nil
-
-  :config
-  (add-hook 'switch-buffer-functions
-            (lambda (_pref current)
-              ;; NOTE: This hook is for turning off font-lock-mode in
-              ;; list-colors-display only.
-              (when (string-equal (buffer-name current) "*Colors*")
-                (font-lock-mode -1)
-                (list-colors-display)))))
 
 ;;; 05-faces.el ends here

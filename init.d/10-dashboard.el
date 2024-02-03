@@ -44,6 +44,6 @@
 
   (dashboard-setup-startup-hook))
 
-(use-package wotd)
+(use-package wotd :defer t)
 
 ;;; 10-dashboard.el ends here

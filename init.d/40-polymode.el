@@ -8,6 +8,8 @@
 ;;; Code:
 
 (use-package polymode
+  :defer t
+
   :custom
   (polymode-lsp-integration nil) ;; see https://github.com/polymode/polymode/issues/316
   )

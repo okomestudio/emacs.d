@@ -3,8 +3,9 @@
 ;;; Code:
 
 (use-package rust-mode
+  :defer t
+
   :custom
   (rust-format-on-save t))
 
-(provide 'init-rust)
 ;;; 65-rust.el ends here

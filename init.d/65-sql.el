@@ -3,11 +3,13 @@
 ;;; Code:
 
 (use-package sql
+  :defer t
   :after sqlformat
 
   :bind
-  (:map sql-mode-map
-        ("C-c b" . init-sql--beautify-sql))
+  (;
+   :map sql-mode-map
+   ("C-c b" . init-sql--beautify-sql))
 
   :hook
   (sql-interactive-mode . (lambda () (setq truncate-lines t)))
@@ -52,6 +54,8 @@
 
 (use-package sqlformat
   ;; The sqlfluff version of sqlformat.
+  :defer t
+
   :custom
   (sqlformat-command 'sqlfluff)
 
@@ -95,12 +99,16 @@
 
 
 (use-package devdocs
+  :defer t
+
   :hook
   (sql-mode . (lambda () (setq-local devdocs-current-docs '("sqlite"
                                                             "postgresql~16")))))
 
 
 (use-package lsp-mode
+  :defer t
+
   :custom
   ;; (lsp-sqls-workspace-config-path "root")
   (lsp-sqls-timeout 30)

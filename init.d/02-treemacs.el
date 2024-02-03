@@ -62,20 +62,23 @@
 
 
 (use-package treemacs-icons-dired
+  :defer t
   :hook (dired-mode . treemacs-icons-dired-enable-once))
 
 
 (use-package treemacs-magit
+  :defer t
   :after (treemacs magit))
 
 
 (use-package treemacs-projectile
+  :defer t
   :after (treemacs projectile))
 
 
 (use-package cfrs
   ;; A simple alternative to read-string that allows reading input via a small
   ;; child-frame spawned at the position of the cursor.
-  )
+  :defer t)
 
 ;;; 02-treemacs.el ends here

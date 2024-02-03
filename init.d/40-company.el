@@ -4,19 +4,22 @@
 
 (use-package company
   ;; See https://emacs.stackexchange.com/a/24800/599 for key binding tips.
+  :defer t
+
   :bind
-  (:map company-mode-map
-        ("<C-tab>" . company-indent-or-complete-common)
+  (;
+   :map company-mode-map
+   ("<C-tab>" . company-indent-or-complete-common)
 
-        :map company-active-map
-        ("<tab>" . company-complete-selection)
-        ("SPC" . nil)
-        ("TAB" . company-complete-selection)
+   :map company-active-map
+   ("<tab>" . company-complete-selection)
+   ("SPC" . nil)
+   ("TAB" . company-complete-selection)
 
-        :map company-active-map
-        :filter (company-explicit-action-p)
-        ("<return>" . company-complete-selection)
-        ("RET" . company-complete-selection))
+   :map company-active-map
+   :filter (company-explicit-action-p)
+   ("<return>" . company-complete-selection)
+   ("RET" . company-complete-selection))
 
   :custom
   (company-idle-delay 1.0)
@@ -26,13 +29,15 @@
   (company-tooltip-align-annotations t)
   (company-tooltip-limit 20)
 
-  :init
-  (add-hook 'after-init-hook 'global-company-mode))
+  :hook
+  (after-init . global-company-mode))
 
 
 ;; Frontends
 
 (use-package company-box
+  :defer t
+
   :custom
   (company-box-backends-colors
    '((company-capf . (:all

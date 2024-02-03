@@ -6,6 +6,7 @@
 
 
 (use-package elisp-mode
+  :defer t
   :straight nil
 
   :bind
@@ -29,7 +30,8 @@
   (emacs-lisp-mode . aggressive-indent-mode))
 
 
-(use-package erefactor)
+(use-package erefactor
+  :defer t)
 
 
 (use-package eros
@@ -58,7 +60,6 @@
 
 
 (use-package paredit
-  :defer t
   :hook
   (emacs-lisp-mode . init-elisp--paredit-hook)
 
@@ -130,6 +131,8 @@
 
 
 (use-package devdocs
+  :defer t
+
   :hook
   (emacs-lisp-mode
    . (lambda () (setq-local devdocs-current-docs '("lisp")))))

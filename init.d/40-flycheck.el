@@ -3,6 +3,8 @@
 ;;; Code:
 
 (use-package flycheck
+  :defer t
+
   :custom
   (flycheck-python-mypy-executable "~/.config/emacs/bin/mypy")
   (flycheck-rst-executable "~/.config/emacs/bin/rst2pseudoxml")
@@ -14,16 +16,17 @@
   :preface
   (put 'flycheck-textlint-config 'safe-local-variable #'stringp)
 
-  :init
-  (global-flycheck-mode))
+  :hook
+  (after-init . global-flycheck-mode))
 
 
 (use-package flycheck-pos-tip
+  :defer t
+
   :custom
   (flycheck-pos-tip-timeout 60)
 
-  :init
-  (with-eval-after-load 'flycheck
-    (flycheck-pos-tip-mode)))
+  :config
+  (flycheck-pos-tip-mode))
 
 ;;; 40-flycheck.el ends here

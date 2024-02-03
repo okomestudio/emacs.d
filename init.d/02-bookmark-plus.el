@@ -4,7 +4,7 @@
 
 (use-package bookmark+
   ;; Enhances vanilla Emacs bookmarks in many way.
-  :defer 7
+  :defer 5
 
   :custom
   (bmkp-bmenu-state-file (expand-file-name ".cache/bmk-bmenu-state.el"

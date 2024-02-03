@@ -4,6 +4,8 @@
 
 (use-package consult
   ;; Consulting completing-read.
+  :defer t
+
   :straight
   (:pre-build
    ;; build info manual, which appears missing by default:
@@ -12,21 +14,26 @@
    ("install-info" "consult.info" "dir"))
 
   :bind
-  (:prefix "M-g"
-           :prefix-map consult-prefix-map
-           ("b" . consult-bookmark)
-           ("f" . consult-find)
-           ("F" . consult-locate)
-           ("g" . consult-git-grep)
-           ("G" . consult-ripgrep)
-           ("i" . consult-imenu)
-           ("I" . consult-imenu-multi)
-           ("l" . consult-line)
-           ("L" . consult-line-multi)
-           ("m" . consult-mark)
-           ("M" . consult-global-mark)
-           ("M-g" . consult-goto-line)
-           ("o" . consult-outline))
+  (([remap electric-apropos] . consult-apropos)
+   ;; ([remap apropos] . consult-apropos)
+   ([remap switch-to-buffer-other-window] . consult-buffer-other-window)
+   ([remap switch-to-buffer] . consult-buffer)
+
+   :prefix "M-g"
+   :prefix-map consult-prefix-map
+   ("b" . consult-bookmark)
+   ("f" . consult-find)
+   ("F" . consult-locate)
+   ("g" . consult-git-grep)
+   ("G" . consult-ripgrep)
+   ("i" . consult-imenu)
+   ("I" . consult-imenu-multi)
+   ("l" . consult-line)
+   ("L" . consult-line-multi)
+   ("m" . consult-mark)
+   ("M" . consult-global-mark)
+   ("M-g" . consult-goto-line)
+   ("o" . consult-outline))
 
   :custom
   (consult-ripgrep-args (concat "rg"
@@ -45,12 +52,6 @@
   :ensure-system-package
   (locate . "sudo apt install -y locate")
 
-  :init
-  ;; (global-set-key [remap apropos] #'consult-apropos)
-  (global-set-key [remap electric-apropos] #'consult-apropos)
-  (global-set-key [remap switch-to-buffer-other-window] #'consult-buffer-other-window)
-  (global-set-key [remap switch-to-buffer] #'consult-buffer)
-
   :config
   (consult-customize consult-theme
                      :preview-key '(:debounce 0.2 any)))
@@ -65,6 +66,7 @@
 
 
 (use-package consult-flycheck
+  :defer t
   :after (consult flycheck)
 
   :bind
@@ -72,6 +74,7 @@
 
 
 (use-package consult-flyspell
+  :defer t
   :after (consult flyspell)
 
   :bind
@@ -79,10 +82,12 @@
 
 
 (use-package consult-lsp
+  :defer t
   :after (consult lsp))
 
 
 (use-package consult-projectile
+  :defer t
   :after (consult projectile)
 
   :bind

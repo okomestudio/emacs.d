@@ -3,6 +3,7 @@
 ;;; Code:
 
 (use-package auth-source
+  :defer t
   :straight nil
 
   :custom

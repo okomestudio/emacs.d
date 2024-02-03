@@ -16,6 +16,7 @@
   ;;
   ;; Offers a hook to add relevant actions on a target determined by context.
   ;;
+  :defer t
   :after embark-consult)
 
 
@@ -35,18 +36,24 @@
 
 
 (use-package nerd-icons-completion
+  :defer t
+
   :config
   (nerd-icons-completion-mode))
 
 
 (use-package orderless
   ;; Emacs completion style that matches multiple regexps in any order.
+  :defer t
+
   :custom
   (completion-styles '(orderless)))
 
 
 (use-package savehist
   ;; Save minibuffer history.
+  :defer t
+
   :init
   (savehist-mode))
 

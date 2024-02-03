@@ -27,6 +27,8 @@
 
 
 (use-package flymake
+  :defer t
+
   :ensure-system-package
   (shellcheck . "sudo apt install -y shellcheck"))
 

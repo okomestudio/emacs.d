@@ -50,10 +50,11 @@
   (org-ai-mode
    org-ai-global-mode)
 
-  :init
-  (org-ai-global-mode)
+  ;; :init
+  ;; (org-ai-global-mode)
 
-  :config
-  (org-ai-install-yasnippets))
+  ;; :config
+  ;; (org-ai-install-yasnippets)
+  )
 
 ;;; 80-ai.el ends here

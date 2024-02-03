@@ -7,10 +7,11 @@
   :after (polymode blacken py-isort)
 
   :bind
-  (:map python-mode-map
-        ("C-c b" . init-python--format-python-code)
-        :map python-ts-mode-map
-        ("C-c b" . init-python--format-python-code))
+  (;
+   :map python-mode-map
+   ("C-c b" . init-python--format-python-code)
+   :map python-ts-mode-map
+   ("C-c b" . init-python--format-python-code))
 
   :custom
   (python-indent-guess-indent-offset-verbose nil)
@@ -29,7 +30,7 @@
     (blacken-buffer)
     (py-isort-buffer))
 
-  :init
+  :config
   (add-to-list 'treesit-language-source-alist
                '(python "https://github.com/tree-sitter/tree-sitter-python.git"))
 
@@ -127,8 +128,9 @@
   :after (direnv)
 
   :bind
-  (:map python-mode-map
-        ("C-c t" . python-pytest-dispatch)))
+  (;
+   :map python-mode-map
+   ("C-c t" . python-pytest-dispatch)))
 
 
 (use-package devdocs
@@ -161,6 +163,8 @@
 
 
 (use-package lsp-mode
+  :defer t
+
   :custom
   (lsp-pylsp-configuration-sources ["flake8"])
   (lsp-pylsp-plugins-flake8-enabled t)

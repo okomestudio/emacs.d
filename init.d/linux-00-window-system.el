@@ -10,6 +10,8 @@
   :straight nil
 
   :custom
+  (save-interprogram-paste-before-kill t)
+  (select-enable-clipboard t)
   (x-select-request-type '(UTF8_STRING COMPOUND_TEXT TEXT STRING)))
 
 
@@ -20,6 +22,8 @@
   :custom
   (interprogram-cut-function #'ok--wl-copy)
   (interprogram-paste-function #'ok--wl-paste)
+  (save-interprogram-paste-before-kill t)
+  (select-enable-clipboard t)
   (x-select-request-type nil)
 
   :ensure-system-package

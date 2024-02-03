@@ -39,6 +39,8 @@
 
 (use-package solaire-mode
   ;; Distinguish "real" buffers from "unreal" buffers.
+  :defer t
+
   :custom
   (solaire-mode-real-buffer-fn 'init-themes--solaire-mode-real-buffer-p)
 
@@ -82,13 +84,11 @@
 
 (use-package minions
   ;; A minor-mode menu for the mode line.
-  :defer t
-
   :custom
   (minions-direct '(projectile-mode))
 
-  :config
-  (minions-mode 1))
+  :hook
+  (after-init . (lambda () (minions-mode 1))))
 
 
 ;; MISC.
@@ -97,8 +97,8 @@
   ;; Highlight the current line.
   :straight nil
 
-  :init
-  (global-hl-line-mode +1)
+  :hook
+  (after-init . (lambda () (global-hl-line-mode +1)))
 
   :config
   (set-face-attribute 'hl-line nil

@@ -3,6 +3,8 @@
 ;;; Code:
 
 (use-package graphviz-dot-mode
+  :defer t
+
   :custom
   (graphviz-dot-indent-width 2)
 
