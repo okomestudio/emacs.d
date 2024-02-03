@@ -135,11 +135,6 @@
 
 ;; MISC.
 
-(use-package dash
-  ;; A modern list library for Emacs
-  )
-
-
 (use-package switch-buffer-functions
   ;; Hook run when switching current buffer.
   :defer t
@@ -156,8 +151,5 @@
   :defer t
   :straight nil
   :custom (tramp-default-method "ssh"))
-
-
-(use-package uuid)
 
 ;;; 01-startup.el ends here

@@ -92,6 +92,16 @@
   (emacs-lisp-mode . highlight-sexp-mode))
 
 
+;; COMMON LIBRARIES
+
+(use-package dash
+  ;; A modern list library for Emacs
+  :defer t)
+
+(use-package uuid
+  :defer t)
+
+
 ;; ELSA
 
 (use-package elsa
