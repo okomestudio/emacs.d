@@ -4,7 +4,6 @@
 
 (use-package org
   :defer t
-  :after (ob-typescript)
   :ensure org-contrib
 
   :bind
@@ -114,6 +113,7 @@ node."
   ;; Babel
   (add-to-list 'org-src-lang-modes '("plantuml" . plantuml))
 
+  (use-package ob-typescript)
   (org-babel-do-load-languages
    'org-babel-load-languages '((C . t)
                                (dot . t)
@@ -176,8 +176,7 @@ node."
                        :image-output-type "svg"
                        :image-size-adjust (1.7 . 1.5)
                        :latex-compiler ("dvilualatex -interaction nonstopmode --shell-escape -output-directory %o %f")
-                       :image-converter ("dvisvgm %f -n -b min -c %S -o %O"))))
-  )
+                       :image-converter ("dvisvgm %f -n -b min -c %S -o %O")))))
 
 
 (use-package ox
@@ -260,9 +259,9 @@ node."
   (org-modern-timestamp t)
   (org-modern-todo t)
 
-  :init
-  (with-eval-after-load 'org
-    (global-org-modern-mode)))
+  :hook
+  (org-mode . org-modern-mode)
+  (org-agenda-finalize . org-modern-agenda))
 
 
 (use-package org-modern-indent
@@ -274,7 +273,7 @@ node."
                      :host github
                      :repo "jdtsmith/org-modern-indent")
 
-  :config
+  :init
   (add-hook 'org-mode-hook #'org-modern-indent-mode 90))
 
 
@@ -313,7 +312,6 @@ node."
 
 
 (use-package org-web-tools :defer t)
-(use-package ob-typescript :defer t)
 
 
 ;; Org table styling
@@ -333,13 +331,11 @@ node."
     :type '(integer)
     :group 'ts)
 
-  :init
-  ;; Add logic to avoid loading valign-mode for large buffers.
-  (add-hook 'org-mode-hook
-            (lambda ()
-              (when (not (> (buffer-size) valign-max-buffer-size))
-                (custom-set-faces '(org-table ((t (:inherit 'variable-pitch)))))
-                (valign-mode))))
+  :hook
+  (org-mode . (lambda ()
+                (when (not (> (buffer-size) valign-max-buffer-size))
+                  (custom-set-faces '(org-table ((t (:inherit 'variable-pitch)))))
+                  (valign-mode))))
 
   :config
   (use-package ftable))
