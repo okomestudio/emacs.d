@@ -3,12 +3,13 @@
 ;;; Code:
 
 (use-package treemacs
-  :after (cfrs)
   :defer t
 
   :bind
-  (([f8] . init-treemacs--treemacs)
-   ([mouse-1] . treemacs-single-click-expand-action))
+  (;
+   ([f8] . ok-treemacs-show)
+   ([mouse-1] . treemacs-single-click-expand-action)
+   ("M-0" . treemacs-select-window))
 
   :custom
   (treemacs-indentation 2)
@@ -20,30 +21,44 @@
   (treemacs-width 30)
 
   :config
-  (defun init-treemacs--treemacs ()
+  (use-package cfrs
+    ;; A simple alternative to read-string that allows reading input via a small
+    ;; child-frame spawned at the position of the cursor. :defer t
+    )
+
+  (defun ok-treemacs-show ()
     (interactive)
     (push-mark)
     (treemacs)
     (pop-global-mark))
 
-  (with-eval-after-load 'treemacs
-    (defun init-treemacs--treemacs-ignore (filename absolute-path)
-      "Define a predicate function for files to be ignored from view in Treemacs."
-      (or
-       ;; probably just for testing
-       (string-match-p "\\.vwxyz$" filename)
-       ;; all org-roam node files except templates
-       (and (string-match-p ".*/roam/.*" absolute-path)
-            (not (string-match-p ".*/roam/template/?.*" absolute-path)))))
+  (defun ok--treemacs-ignore (filename absolute-path)
+    "Predicate for files to be ignored from view in Treemacs."
+    (or
+     ;; probably just for testing
+     (string-match-p "\\.vwxyz$" filename)
+     ;; all org-roam node files except templates
+     (and (string-match-p ".*/roam/.*" absolute-path)
+          (not (string-match-p ".*/roam/template/?.*" absolute-path)))))
 
-    (add-to-list 'treemacs-ignored-file-predicates #'init-treemacs--treemacs-ignore))
+  (add-to-list 'treemacs-ignored-file-predicates #'ok--treemacs-ignore)
 
   (treemacs-filewatch-mode t)
   (treemacs-follow-mode t)
   (treemacs-hide-gitignored-files-mode t)
+  (treemacs-fringe-indicator-mode 'always)
+  (when treemacs-python-executable
+    (treemacs-git-commit-diff-mode t))
+
+  (pcase (cons (not (null (executable-find "git")))
+               (not (null treemacs-python-executable)))
+    (`(t . t)
+     (treemacs-git-mode 'deferred))
+    (`(t . _)
+     (treemacs-git-mode 'simple)))
 
   (treemacs-project-follow-mode t)
-  (setq treemacs--project-follow-delay 1.5
+  (setq treemacs--project-follow-delay 1.0
         treemacs--project-follow-timer nil))
 
 
@@ -75,10 +90,7 @@
   :defer t
   :after (treemacs projectile))
 
-
-(use-package cfrs
-  ;; A simple alternative to read-string that allows reading input via a small
-  ;; child-frame spawned at the position of the cursor.
-  :defer t)
-
+;; Local Variables:
+;; nameless-aliases: (("" . "ok"))
+;; End:
 ;;; 02-treemacs.el ends here
