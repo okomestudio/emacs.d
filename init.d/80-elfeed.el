@@ -7,6 +7,7 @@
 
 (use-package elfeed
   :custom
+  (elfeed-curl-max-connections 16)
   (elfeed-search-title-max-width 100)
   (elfeed-search-title-min-width 16)
   (elfeed-search-trailing-width 30)
