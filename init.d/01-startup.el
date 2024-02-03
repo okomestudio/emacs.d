@@ -142,18 +142,20 @@
 
 (use-package switch-buffer-functions
   ;; Hook run when switching current buffer.
+  :defer t
   )
 
 (use-package system-packages
+  :defer t
   :custom
   (system-packages-use-sudo t)
   (system-packages-package-manager 'apt))
 
 
 (use-package tramp
+  :defer t
   :straight nil
-  :custom (tramp-default-method "ssh")
-  :defer t)
+  :custom (tramp-default-method "ssh"))
 
 
 (use-package uuid)

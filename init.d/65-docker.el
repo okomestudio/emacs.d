@@ -11,12 +11,16 @@
 
 
 (use-package devdocs
+  :defer t
+
   :hook
   (dockerfile-mode
    . (lambda () (setq-local devdocs-current-docs '("docker")))))
 
 
 (use-package lsp-mode
+  :defer t
+
   :hook
   (dockerfile-mode . (lambda () (init-lsp-lsp-mode-hook 'dockerfile-ls))))
 

@@ -3,6 +3,8 @@
 ;;; Code:
 
 (use-package yaml-mode
+  :defer t
+
   :hook
   (yaml-mode . (lambda () (typo-mode -1)))
 
@@ -11,6 +13,8 @@
 
 
 (use-package lsp-mode
+  :defer t
+
   :hook
   (yaml-mode . (lambda ()
                  ;; If in ansible-mode, do not activate yamlls.

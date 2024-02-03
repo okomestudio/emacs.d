@@ -7,6 +7,7 @@
 ;;; Code:
 
 (use-package org-roam
+  :defer t
   :after (org)
 
   :straight
@@ -276,6 +277,7 @@
 
 
 (use-package org-roam-ui
+  :defer t
   :after org-roam
 
   :custom
@@ -285,6 +287,7 @@
 
 
 (use-package org-roam-bibtex
+  :defer t
   :after org-roam
 
   :custom
@@ -297,6 +300,8 @@
 
 (use-package org-ref
   ;; For citations, cross-references, bibliographies.
+  :defer t
+
   :custom
   (bibtex-completion-pdf-field "file")
 
@@ -305,6 +310,7 @@
 
 
 (use-package org-roam-timestamps
+  :defer t
   :after org-roam
 
   :custom
@@ -317,6 +323,8 @@
 
 
 (use-package adaptive-wrap
+  :defer t
+
   :hook
   (org-roam-mode . (lambda ()
                      (turn-on-visual-line-mode)

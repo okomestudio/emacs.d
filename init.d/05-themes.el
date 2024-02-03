@@ -55,6 +55,8 @@
 (use-package rainbow-delimiters
   ;; Highlights delimiters such as parentheses, brackets or braces according to
   ;; their depth.
+  :defer t
+
   :hook
   (prog-mode . rainbow-delimiters-mode))
 
@@ -80,6 +82,8 @@
 
 (use-package minions
   ;; A minor-mode menu for the mode line.
+  :defer t
+
   :custom
   (minions-direct '(projectile-mode))
 

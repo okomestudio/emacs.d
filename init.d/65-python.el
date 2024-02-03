@@ -3,6 +3,7 @@
 ;;; Code:
 
 (use-package python
+  :defer t
   :after (polymode blacken py-isort)
 
   :bind
@@ -38,6 +39,8 @@
 
 
 (use-package polymode
+  :defer t
+
   :interpreter
   (("python" . pm-python-sql-mode)
    ("python3" . pm-python-sql-mode))
@@ -70,6 +73,8 @@
 
 
 (use-package blacken
+  :defer t
+
   :ensure-system-package
   (black . "pip install black")
 
@@ -77,10 +82,13 @@
   (put 'blacken-line-length 'safe-local-variable #'integerp))
 
 
-(use-package cython-mode)
+(use-package cython-mode
+  :defer t)
 
 
 (use-package py-isort
+  :defer t
+
   :straight
   (py-isort
    :type git :host github :repo "paetzke/py-isort.el"
@@ -95,6 +103,7 @@
 
 
 (use-package pyenv
+  :defer t
   :after switch-buffer-functions
 
   :straight
@@ -114,6 +123,7 @@
 
 
 (use-package python-pytest
+  :defer t
   :after (direnv)
 
   :bind
@@ -122,6 +132,8 @@
 
 
 (use-package devdocs
+  :defer t
+
   :hook
   (python-mode
    . (lambda () (setq-local devdocs-current-docs '("python~3.12"))))
@@ -130,11 +142,13 @@
 
 
 (use-package pydoc
+  :defer t
+
   :bind
   (:map python-mode-map
-   ("C-h D" . (lambda () (interactive) (init-python--pydoc-or-devdocs)))
-   :map python-ts-mode-map
-   ("C-h D" . (lambda () (interactive) (init-python--pydoc-or-devdocs))))
+        ("C-h D" . (lambda () (interactive) (init-python--pydoc-or-devdocs)))
+        :map python-ts-mode-map
+        ("C-h D" . (lambda () (interactive) (init-python--pydoc-or-devdocs))))
 
   :init
   (defun init-python--pydoc-or-devdocs ()

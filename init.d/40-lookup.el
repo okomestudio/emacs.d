@@ -6,6 +6,7 @@
 ;;; Code:
 
 (use-package init-lookup
+  :defer t
   :after (chatgpt-shell define-word eww powerthesaurus)
   :straight nil
 
@@ -40,11 +41,13 @@
 
 (use-package define-word
   ;; Display the definition of word at point.
+  :defer t
   :custom (define-word-default-service 'wordnik))
 
 
 (use-package powerthesaurus
   ;; Powerthesaurus integration.
+  :defer t
   )
 
 
@@ -89,6 +92,7 @@
   ;; Search for and list unicode characters.
   ;;
   ;; Type list-unicode-display to search for unicode chars.
+  :defer t
   )
 
 ;;; 40-lookup.el ends here

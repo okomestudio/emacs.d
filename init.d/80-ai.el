@@ -2,18 +2,21 @@
 ;;; Commentary:
 ;;
 ;; Initialize AI-related tools, including GPT clients.
-;; 
+;;
 ;;; Code:
 
 (require 'okutil)
 
 
 (use-package shell-maker
+  :defer t
+
   :straight
   (:host github :repo "xenodium/chatgpt-shell" :files ("shell-maker.el")))
 
 
 (use-package chatgpt-shell
+  :defer t
   :requires shell-maker
 
   :straight
@@ -30,10 +33,13 @@
     (chatgpt-shell-send-to-buffer str)))
 
 
-(use-package gptel)
+(use-package gptel
+  :defer t)
 
 
 (use-package org-ai
+  :defer t
+
   :custom
   (org-ai-default-chat-model "gpt-3.5-turbo")
   (org-ai-image-directory "~/Downloads/org-ai/")
