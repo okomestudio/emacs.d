@@ -57,119 +57,129 @@
   (put 'org-roam-mode-sections 'safe-local-variable #'listp)
   (put 'org-roam-ui-port 'safe-local-variable #'integerp)
 
-  :init
-  (with-eval-after-load 'org-roam-node
-    (cl-defmethod org-roam-node-my-node-timestamp ((node org-roam-node))
-      (marginalia--time
-       (let* ((node-properties (org-roam-node-properties node))
-              (node-mtime (cdr (assoc "MTIME" node-properties)))
-              (inhibit-message t))
-         (if node-mtime
-             (org-roam-timestamps-encode (car (split-string node-mtime)))
-           (org-roam-node-file-mtime node)))))
-
-
-    (defun init-org--get-node-id-from-file (file)
-      (caar (org-roam-db-query `[:select nodes:id :from nodes :where (and (= nodes:file ,file) (= nodes:level 0))])))
-
-    (setq init-org--file-node-cache '())
-
-    (defun init-org--get-node-from-file (file)
-      (let ((x (assoc file init-org--file-node-cache)))
-        (if x
-            (let* ((ttl 30.0)
-                   (v (cdr x))
-                   (tt (car v))
-                   (dt (- (float-time) tt)))
-              (if (< dt ttl)
-                  (car (cdr v))
-                (setf init-org--file-node-cache (assoc-delete-all file init-org--file-node-cache))
-                (init-org--get-node-from-file file)))
-          (let ((y (org-roam-node-from-id (init-org--get-node-id-from-file file))))
-            (add-to-list 'init-org--file-node-cache `(,file ,(float-time) ,y))
-            y))))
-
-    (defun init-org--get-parent-title (node)
-      (let ((parent (cdr (assoc-string "PARENT" (org-roam-node-properties node)))))
-        (when parent
-          (replace-regexp-in-string "\\[\\[\\(.+\\)\\]\\[\\([[:space:]0-9a-zA-Zぁ-んァ-ヶｱ-ﾝﾞﾟ一-龠]+\\)\\]\\]"
-                                    "\\2"
-                                    parent))))
-
-    (cl-defmethod org-roam-node-my-node-entry ((node org-roam-node))
-      (let* ((title-annotate-color "SeaGreen4")
-             (node-title (org-roam-node-title node))
-             (node-file-title (or (if (not (s-blank? (org-roam-node-file-title node)))
-                                      (org-roam-node-file-title node))
-                                  (file-name-nondirectory (org-roam-node-file node))))
-             (title-aux (if (string= node-title node-file-title)
-                            (let ((x (init-org--get-parent-title node)))
-                              (if x (list " ❬ " x)))
-                          (if (member node-title (org-roam-node-aliases node))
-                              (list " = " node-file-title)
-                            (let ((x (init-org--get-parent-title (init-org--get-node-from-file (org-roam-node-file node)))))
-                              (if x (list " ❬ " x) (list " ❬ " node-file-title)))
-                            ))))
-        (concat
-         node-title
-         (if (not title-aux)
-             ""
-           (let ((sym (nth 0 title-aux))
-                 (aux (nth 1 title-aux)))
-             (concat
-              (propertize sym 'face `(:foreground ,title-annotate-color))
-              (propertize aux 'face `(:foreground ,title-annotate-color :slant italic))))))))
-
-    (defun init-org-roam--org-roam-node-slug (title)
-      (let* (;; Combining Diacritical Marks https://www.unicode.org/charts/PDF/U0300.pdf
-             (slug-trim-chars '(768   ; U+0300 COMBINING GRAVE ACCENT
-                                769   ; U+0301 COMBINING ACUTE ACCENT
-                                770   ; U+0302 COMBINING CIRCUMFLEX ACCENT
-                                771   ; U+0303 COMBINING TILDE
-                                772   ; U+0304 COMBINING MACRON
-                                774   ; U+0306 COMBINING BREVE
-                                775   ; U+0307 COMBINING DOT ABOVE
-                                776   ; U+0308 COMBINING DIAERESIS
-                                777   ; U+0309 COMBINING HOOK ABOVE
-                                778   ; U+030A COMBINING RING ABOVE
-                                779   ; U+030B COMBINING DOUBLE ACUTE ACCENT
-                                780   ; U+030C COMBINING CARON
-                                795   ; U+031B COMBINING HORN
-                                803   ; U+0323 COMBINING DOT BELOW
-                                804   ; U+0324 COMBINING DIAERESIS BELOW
-                                805   ; U+0325 COMBINING RING BELOW
-                                807   ; U+0327 COMBINING CEDILLA
-                                813   ; U+032D COMBINING CIRCUMFLEX ACCENT BELOW
-                                814   ; U+032E COMBINING BREVE BELOW
-                                816   ; U+0330 COMBINING TILDE BELOW
-                                817)))  ; U+0331 COMBINING MACRON BELOW
-        (cl-flet* ((nonspacing-mark-p (char)
-                     (memq char slug-trim-chars))
-                   (strip-nonspacing-marks (s)
-                     (string-glyph-compose
-                      (apply #'string
-                             (seq-remove #'nonspacing-mark-p
-                                         (string-glyph-decompose s)))))
-                   (cl-replace (title pair)
-                     (replace-regexp-in-string (car pair) (cdr pair) title)))
-          (let* ((pairs `(("[^[:alnum:][:digit:]]" . "-") ;; convert anything not alphanumeric
-                          ("--*" . "-") ;; remove sequential underscores
-                          ("^-" . "")   ;; remove starting underscore
-                          ("-$" . ""))) ;; remove ending underscore
-                 (slug (-reduce-from #'cl-replace
-                                     (strip-nonspacing-marks title)
-                                     pairs)))
-            (downcase slug)))))
-
-    (cl-defmethod org-roam-node-slug ((node org-roam-node))
-      "Return the slug of NODE. Overridden to use hyphens instead of underscores."
-      (init-org-roam--org-roam-node-slug (org-roam-node-title node))))
-
   :config
   (setq find-file-visit-truename t) ;; See 5.3 Setting up Org-roam
 
   (require 'org-roam-dailies)
   (org-roam-db-autosync-mode)
+
+
+  ;; Customize title list in minibuffer
+
+  (defvar ok-org-roam--file-node-cache '())
+
+  (defun ok-org-roam--get-node-id-from-file (file)
+    (caar (org-roam-db-query `[:select nodes:id :from nodes
+                                       :where (and (= nodes:file ,file)
+                                                   (= nodes:level 0))])))
+
+  (defun ok-org-roam--get-node-from-file (file)
+    (let ((cached (assoc file ok-org-roam--file-node-cache)))
+      (if cached
+          (let* ((ttl 30.0)
+                 (v (cdr cached))
+                 (tt (car v))
+                 (dt (- (float-time) tt)))
+            (if (< dt ttl)
+                (cdr v)
+              (message "Invalidating %s" file)
+              (setf ok-org-roam--file-node-cache (assoc-delete-all file ok-org-roam--file-node-cache))
+              (ok-org-roam--get-node-from-file file)))
+        (let ((node (org-roam-node-from-id (ok-org-roam--get-node-id-from-file file))))
+          (push `(,file . (,(float-time) . ,node)) ok-org-roam--file-node-cache)
+          node))))
+
+  (defun ok-org-roam--get-parent-title (node)
+    (let ((parent (cdr (assoc-string "PARENT" (org-roam-node-properties node)))))
+      (when parent
+        ;; NOTE: This replacement may not be necessary, but some links are not
+        ;; rendered correctly in minibuffer without. For now, the slow down due
+        ;; to parsing is not significant.
+        (replace-regexp-in-string "\\[\\[\\(.+\\)\\]\\[\\([^]]+\\)\\]\\]"
+                                  "\\2"
+                                  parent))))
+
+  (defun ok-org-roam--get-title-aux (node)
+    (let* ((node-title (org-roam-node-title node))
+           (node-file-title (or (if (not (s-blank? (org-roam-node-file-title node)))
+                                    (org-roam-node-file-title node))
+                                (file-name-nondirectory (org-roam-node-file node)))))
+      (if (string= node-title node-file-title)
+          (let ((p (ok-org-roam--get-parent-title node)))
+            (if p (list " ❬ " p)))
+        (if (member node-title (org-roam-node-aliases node))
+            (list " = " node-file-title)
+          (let ((p (ok-org-roam--get-parent-title (ok-org-roam--get-node-from-file (org-roam-node-file node)))))
+            (if p (list " ❬ " p) (list " ❬ " node-file-title)))))))
+
+  (defun ok-org-roam--render-title-aux (title-aux)
+    (if (not title-aux)
+        ""
+      (let ((color "SeaGreen4")
+            (sym (nth 0 title-aux))
+            (aux (nth 1 title-aux)))
+        (concat (propertize sym 'face `(:foreground ,color))
+                (propertize aux 'face `(:foreground ,color :slant italic))))))
+
+  (cl-defmethod org-roam-node-my-node-entry ((node org-roam-node))
+    (concat (org-roam-node-title node) (ok-org-roam--render-title-aux (ok-org-roam--get-title-aux node))))
+
+  (cl-defmethod org-roam-node-my-node-timestamp ((node org-roam-node))
+    (marginalia--time
+     (let ((node-mtime (cdr (assoc "MTIME" (org-roam-node-properties node))))
+           (inhibit-message t))
+       (if node-mtime
+           (org-roam-timestamps-encode (car (split-string node-mtime)))
+         (org-roam-node-file-mtime node)))))
+
+
+  ;; Customize node slug generation
+
+  (defun ok-org-roam--org-roam-node-slug (title)
+    (let (;; Combining Diacritical Marks https://www.unicode.org/charts/PDF/U0300.pdf
+          (slug-trim-chars '(768     ; U+0300 COMBINING GRAVE ACCENT
+                             769     ; U+0301 COMBINING ACUTE ACCENT
+                             770     ; U+0302 COMBINING CIRCUMFLEX ACCENT
+                             771     ; U+0303 COMBINING TILDE
+                             772     ; U+0304 COMBINING MACRON
+                             774     ; U+0306 COMBINING BREVE
+                             775     ; U+0307 COMBINING DOT ABOVE
+                             776     ; U+0308 COMBINING DIAERESIS
+                             777     ; U+0309 COMBINING HOOK ABOVE
+                             778     ; U+030A COMBINING RING ABOVE
+                             779     ; U+030B COMBINING DOUBLE ACUTE ACCENT
+                             780     ; U+030C COMBINING CARON
+                             795     ; U+031B COMBINING HORN
+                             803     ; U+0323 COMBINING DOT BELOW
+                             804     ; U+0324 COMBINING DIAERESIS BELOW
+                             805     ; U+0325 COMBINING RING BELOW
+                             807     ; U+0327 COMBINING CEDILLA
+                             813     ; U+032D COMBINING CIRCUMFLEX ACCENT BELOW
+                             814     ; U+032E COMBINING BREVE BELOW
+                             816     ; U+0330 COMBINING TILDE BELOW
+                             817)))  ; U+0331 COMBINING MACRON BELOW
+      (cl-flet* ((nonspacing-mark-p (char)
+                   (memq char slug-trim-chars))
+                 (strip-nonspacing-marks (s)
+                   (string-glyph-compose
+                    (apply #'string
+                           (seq-remove #'nonspacing-mark-p
+                                       (string-glyph-decompose s)))))
+                 (cl-replace (title pair)
+                   (replace-regexp-in-string (car pair) (cdr pair) title)))
+        (let* ((pairs `(("[^[:alnum:][:digit:]]" . "-") ;; convert anything not alphanumeric
+                        ("--*" . "-") ;; remove sequential underscores
+                        ("^-" . "")   ;; remove starting underscore
+                        ("-$" . ""))) ;; remove ending underscore
+               (slug (-reduce-from #'cl-replace
+                                   (strip-nonspacing-marks title)
+                                   pairs)))
+          (downcase slug)))))
+
+  (cl-defmethod org-roam-node-slug ((node org-roam-node))
+    "Return the slug of NODE. Overridden to use hyphens instead of underscores."
+    (ok-org-roam--org-roam-node-slug (org-roam-node-title node)))
+
 
   ;; Customized unlinked references section
 
@@ -198,7 +208,7 @@
   ;; Lenient version:
   ;;   "|(\\b%1$s\\b|(?<=[^\x20-\x7e\xff61-\xff9f])%1$s(?=[^\x20-\x7e\xff61-\xff9f]))"
 
-  (defun init-org-roam--title-regex (orig-fun titles)
+  (defun ok-org-roam-roam--title-regex (orig-fun titles)
     (let ((bounded-re (substring (mapconcat #'org-roam-unlinked-references-apply-word-boundary-re titles "") 1))
           ;; See http://www.drregex.com/2019/02/variable-length-lookbehinds-actually.html
           (positive-lookbehind "(?=(?'a'[\\s\\S]*))(?'b'(%s)(?=\\k'a'\\z)|(?<=(?=x^|(?&b))[\\s\\S]))")
@@ -215,9 +225,9 @@
               bounded-re)))
 
   (advice-add 'org-roam-unlinked-references-title-regex
-              :around #'init-org-roam--title-regex)
+              :around #'ok-org-roam-roam--title-regex)
 
-  (defun init-org-roam--apply-word-boundary-re (orig-fun title)
+  (defun ok-org-roam-roam--apply-word-boundary-re (orig-fun title)
     (let ((s title))
       ;; Expand and match quote variants:
       (setq s (replace-regexp-in-string " [\'\‘]\\(\\w\\)" " [\'\‘]\\1" s))
@@ -230,9 +240,9 @@
         s)))
 
   (advice-add 'org-roam-unlinked-references-apply-word-boundary-re
-              :around #'init-org-roam--apply-word-boundary-re)
+              :around #'ok-org-roam-roam--apply-word-boundary-re)
 
-  (defun init-org-roam--result-filter-p (orig-fun matched-text matched-file row col titles node)
+  (defun ok-org-roam-roam--result-filter-p (orig-fun matched-text matched-file row col titles node)
     (let* ((linked-re (format "\\[\\[id:%s\\]\\[.*\\]\\]" (org-roam-node-id node)))
            result)
       (if (not (file-equal-p (org-roam-node-file node) matched-file))
@@ -253,16 +263,16 @@
       result))
 
   (advice-add 'org-roam-unlinked-references-result-filter-p
-              :around #'init-org-roam--result-filter-p)
+              :around #'ok-org-roam-roam--result-filter-p)
 
-  (defun init-org-roam--unlinked-references-preview-line (orig-fun file row col file-prev row-prev col-prev)
+  (defun ok-org-roam-roam--unlinked-references-preview-line (orig-fun file row col file-prev row-prev col-prev)
     "Use ellipsis for duplicate line."
     (if (and (string= file file-prev) (= row row-prev))
         "⎯〃⎯"
       (funcall orig-fun file row col file-prev row-prev col-prev)))
 
   (advice-add 'org-roam-unlinked-references-preview-line
-              :around #'init-org-roam--unlinked-references-preview-line))
+              :around #'ok-org-roam-roam--unlinked-references-preview-line))
 
 
 (use-package org-roam-ui
@@ -315,4 +325,7 @@
                      (setq-local adaptive-wrap-extra-indent 4)
                      (adaptive-wrap-prefix-mode +1))))
 
+;; Local Variables:
+;; nameless-aliases: (("io" . "init-org") ("" . "ok-org-roam"))
+;; End:
 ;;; 10-org-roam.el ends here
