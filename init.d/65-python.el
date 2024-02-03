@@ -4,14 +4,13 @@
 
 (use-package python
   :defer t
-  :after (polymode blacken py-isort)
 
   :bind
   (;
    :map python-mode-map
-   ("C-c b" . init-python--format-python-code)
+   ("C-c b" . ok-python--format-python-code)
    :map python-ts-mode-map
-   ("C-c b" . init-python--format-python-code))
+   ("C-c b" . ok-python--format-python-code))
 
   :custom
   (python-indent-guess-indent-offset-verbose nil)
@@ -24,9 +23,11 @@
   (ipython . "pip install ipython")
 
   :preface
-  (defun init-python--format-python-code ()
+  (defun ok-python--format-python-code ()
     "Format Python code."
     (interactive)
+    (require 'blacken)
+    (require 'py-isort)
     (blacken-buffer)
     (py-isort-buffer))
 
@@ -47,28 +48,28 @@
    ("python3" . pm-python-sql-mode))
 
   :config
-  (define-hostmode init-python--pm-python-hostmode
+  (define-hostmode ok-python--pm-python-hostmode
     :mode 'python-mode)
 
-  (define-hostmode init-python--pm-python-ts-hostmode init-python--pm-python-hostmode
+  (define-hostmode ok-python--pm-python-ts-hostmode ok-python--pm-python-hostmode
     :mode 'python-ts-mode)
 
-  (define-innermode init-python--pm-sql-expr-python-innermode
+  (define-innermode ok-python--pm-sql-expr-python-innermode
     :mode 'sql-mode
     :head-matcher "\"\\{3\\}--[[:blank:]]*\\(sql\\|SQL\\)"
     :tail-matcher "\"\\{3\\}"
     :head-mode 'host
     :tail-mode 'host)
 
-  (defun init-python--pm-python-sql-eval-chunk (beg end msg)
+  (defun ok-python--pm-python-sql-eval-chunk (beg end msg)
     "Calls out to `sql-send-region' with the polymode chunk region"
     (sql-send-region beg end))
 
   (define-polymode pm-python-sql-mode
-    :hostmode 'init-python--pm-python-ts-hostmode
-    :innermodes '(init-python--pm-sql-expr-python-innermode)
+    :hostmode 'ok-python--pm-python-ts-hostmode
+    :innermodes '(ok-python--pm-sql-expr-python-innermode)
 
-    (setq polymode-eval-region-function #'init-python--pm-python-sql-eval-chunk)
+    (setq polymode-eval-region-function #'ok-python--pm-python-sql-eval-chunk)
     (define-key pm-python-sql-mode-map
                 (kbd "C-c C-c") 'polymode-eval-chunk)))
 
@@ -137,29 +138,29 @@
   :defer t
 
   :hook
-  (python-mode
-   . (lambda () (setq-local devdocs-current-docs '("python~3.12"))))
-  (python-ts-mode
-   . (lambda () (setq-local devdocs-current-docs '("python~3.12")))))
+  (python-mode . (lambda () (setq-local devdocs-current-docs '("python~3.12"))))
+  (python-ts-mode . (lambda () (setq-local devdocs-current-docs '("python~3.12")))))
 
 
 (use-package pydoc
   :defer t
 
   :bind
-  (:map python-mode-map
-        ("C-h D" . (lambda () (interactive) (init-python--pydoc-or-devdocs)))
-        :map python-ts-mode-map
-        ("C-h D" . (lambda () (interactive) (init-python--pydoc-or-devdocs))))
+  (;
+   :map python-mode-map
+   ("C-h D" . (lambda () (interactive) (ok-python--pydoc-or-devdocs)))
+   :map python-ts-mode-map
+   ("C-h D" . (lambda () (interactive) (ok-python--pydoc-or-devdocs))))
 
-  :init
-  (defun init-python--pydoc-or-devdocs ()
-    (let* ((name-of-symbol-at-point (if (symbol-at-point)
-                                        (symbol-name (symbol-at-point))
-                                      "")))
-      (if (not (symbol-at-point))
-          (devdocs-lookup)
-        (pydoc name-of-symbol-at-point)))))
+  :hook
+  (python-mode . (lambda () (require 'pydoc)))
+  (python-ts-mode . (lambda () (require 'pydoc)))
+
+  :config
+  (defun ok-python--pydoc-or-devdocs ()
+    (if (symbol-at-point)
+        (pydoc-at-point)
+      (devdocs-lookup))))
 
 
 (use-package lsp-mode
@@ -178,4 +179,7 @@
   (python-mode . lsp-deferred)
   (python-ts-mode . lsp-deferred))
 
+;; Local Variables:
+;; nameless-aliases: (("" . "ok-python"))
+;; End:
 ;;; 65-python.el ends here
