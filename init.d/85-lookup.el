@@ -1,13 +1,13 @@
-;;; 40-lookup.el --- Lookup  -*- lexical-binding: t -*-
+;;; 85-lookup.el --- Lookup  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;
-;;   The collection of lookup utility exposed via a common key prefix.
+;; The collection of lookup utility exposed via a common key prefix.
 ;;
 ;;; Code:
 
-(use-package init-lookup
+(use-package 85-lookup
   :defer t
-  :after (chatgpt-shell define-word eww powerthesaurus)
+  ;; :after (chatgpt-shell define-word eww powerthesaurus)
   :straight nil
 
   :bind
@@ -36,7 +36,17 @@
    ("a" . eww-search-amazon-ja)
    ("d" . eww-search-weblio)
    ("s" . eww-search-duckduckgo-ja)
-   ("w" . eww-search-wikipedia-ja)))
+   ("w" . eww-search-wikipedia-ja))
+
+  :hook
+  (after-init
+   . (lambda ()
+       (defun ask-chatgpt (str)
+         (require 'okutil)
+         (interactive (list (okutil-string-from-region-or-prompt "Ask ChatGPT: ")))
+         (require 'chatgpt-shell)
+         (chatgpt-shell-send-to-buffer str))
+       )))
 
 
 (use-package define-word
@@ -47,8 +57,7 @@
 
 (use-package powerthesaurus
   ;; Powerthesaurus integration.
-  :defer t
-  )
+  :defer t)
 
 
 (use-package synosaurus
@@ -92,7 +101,6 @@
   ;; Search for and list unicode characters.
   ;;
   ;; Type list-unicode-display to search for unicode chars.
-  :defer t
-  )
+  :defer t)
 
-;;; 40-lookup.el ends here
+;;; 85-lookup.el ends here

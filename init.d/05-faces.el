@@ -36,8 +36,50 @@ characters have the same width with a CJK character."
   :type '(list)
   :group 'ts)
 
+(defun ok-face--apply-if-gui (&rest action)
+  "Apply ACTION if we are in a GUI."
+  (if (daemonp)
+      (add-hook 'server-after-make-frame-hook
+                (lambda ()
+                  (let ((frame (selected-frame)))
+                    (select-frame frame)
+                    (if (display-graphic-p frame)
+                        (apply action)))))
+    (when (display-graphic-p)
+      (select-frame (selected-frame))
+      (apply action))))
 
-(use-package emacs
+(defun ok-face--set-fallback-cjk-font (fontset-name font-families)
+  (require 'okutil)
+  (let ((font-family (seq-find #'okutil-font-installed-p font-families)))
+    (set-fontset-font fontset-name
+                      'unicode
+                      (font-spec :family font-family)
+                      nil
+                      'append)))
+
+(defun ok-face--setup-font-for-frame ()
+  (set-face-attribute 'default nil :family ts/font-family-default)
+  (set-face-attribute 'fixed-pitch nil :family ts/font-family-fixed-pitch)
+  (set-face-attribute 'variable-pitch nil :family ts/font-family-variable-pitch)
+  (ok-face--set-fallback-cjk-font nil ts/font-family-cjk)
+
+  (set-face-attribute 'italic nil :slant 'italic :underline nil)
+  (set-face-attribute 'underline nil :slant 'normal :underline t))
+
+(defun ok-face--create-cjk-hybrid-fontset (size name)
+  "Create a CJK hybrid fontset of SIZE named fontset-NAME.
+
+See https://knowledge.sakura.ad.jp/8494/"
+  (let ((font-spec (format "Hack:weight=normal:slant=normal:size=%d" size))
+        (fontset-name (format "fontset-%s" name)))
+    (create-fontset-from-ascii-font font-spec nil name)
+    (ok-face--set-fallback-cfk-font fontset-name ts/font-family-cjk)
+    fontset-name))
+
+
+(use-package 05-faces
+  :defer t
   :straight nil
 
   :ensure-system-package
@@ -47,64 +89,24 @@ characters have the same width with a CJK character."
   ("/usr/share/fonts/truetype/hack/Hack-Regular.ttf" . fonts-hack)
   ("/usr/share/fonts/truetype/vlgothic/VL-Gothic-Regular.ttf" . fonts-vlgothic)
 
-  :preface
-  (defun init-faces--apply-if-gui (&rest action)
-    "Apply ACTION if we are in a GUI."
-    (if (daemonp)
-        (add-hook 'server-after-make-frame-hook
-                  (lambda ()
-                    (let ((frame (selected-frame)))
-                      (select-frame frame)
-                      (if (display-graphic-p frame)
-                          (apply action)))))
-      (when (display-graphic-p)
-        (select-frame (selected-frame))
-        (apply action))))
+  :hook
+  (after-init . (lambda ()
+                  ;; (set-face-attribute 'default nil :height 110) ;; 11pt
 
-  (defun init-faces--set-fallback-cjk-font (fontset-name font-families)
-    (require 'okutil)
-    (let ((font-family (seq-find #'okutil-font-installed-p font-families)))
-      (set-fontset-font fontset-name
-                        'unicode
-                        (font-spec :family font-family)
-                        nil
-                        'append)))
+                  (dolist (element ts/face-font-relative-scales)
+                    (add-to-list 'face-font-rescale-alist element))
 
-  (defun init-faces--setup-font-for-frame ()
-    (set-face-attribute 'default nil :family ts/font-family-default)
-    (set-face-attribute 'fixed-pitch nil :family ts/font-family-fixed-pitch)
-    (set-face-attribute 'variable-pitch nil :family ts/font-family-variable-pitch)
-    (init-faces--set-fallback-cjk-font nil ts/font-family-cjk)
-
-    (set-face-attribute 'italic nil :slant 'italic :underline nil)
-    (set-face-attribute 'underline nil :slant 'normal :underline t))
-
-  (defun init-faces--create-cjk-hybrid-fontset (size name)
-    "Create a CJK hybrid fontset of SIZE named fontset-NAME.
-
-See https://knowledge.sakura.ad.jp/8494/"
-    (let ((font-spec (format "Hack:weight=normal:slant=normal:size=%d" size))
-          (fontset-name (format "fontset-%s" name)))
-      (create-fontset-from-ascii-font font-spec nil name)
-      (init-faces--set-fallback-cfk-font fontset-name ts/font-family-cjk)
-      fontset-name))
-
-  :init
-  ;; (set-face-attribute 'default nil :height 110) ;; 11pt
-
-  (dolist (element ts/face-font-relative-scales)
-    (add-to-list 'face-font-rescale-alist element))
-
-  (init-faces--apply-if-gui 'init-faces--setup-font-for-frame)
+                  (ok-face--apply-if-gui 'ok-face--setup-font-for-frame)
 
 
-  ;; NOTE: This hook is for turning off font-lock-mode in
-  ;; list-colors-display only.
-  (add-hook 'switch-buffer-functions
-            (lambda (_pref current)
-              (when (string-equal (buffer-name current) "*Colors*")
-                (font-lock-mode -1)
-                (list-colors-display)))))
+                  ;; NOTE: This hook is for turning off font-lock-mode in
+                  ;; list-colors-display only.
+                  (add-hook 'switch-buffer-functions
+                            (lambda (_pref current)
+                              (when (string-equal (buffer-name current) "*Colors*")
+                                (font-lock-mode -1)
+                                (list-colors-display))))
+                  )))
 
 
 (use-package mixed-pitch
@@ -189,4 +191,7 @@ See https://knowledge.sakura.ad.jp/8494/"
   :config
   (eaw-fullwidth))
 
+;; Local Variables:
+;; nameless-aliases: (("" . "ok-face"))
+;; End:
 ;;; 05-faces.el ends here

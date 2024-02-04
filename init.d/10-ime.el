@@ -3,6 +3,11 @@
 ;;; Code:
 
 (use-package mozc
+  :defer t
+
+  :commands
+  (toggle-input-method)
+
   :custom
   (default-input-method "japanese-mozc")
   (mozc-candidate-style 'echo-area) ;; choices are 'overlay, 'echo-area, 'posframe

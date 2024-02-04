@@ -5,14 +5,16 @@
 ;;
 ;;; Code:
 
-(require 'hydra)
-
-
 (use-package gnus
   :defer t
+  :straight nil
+  :commands (gnus)
+
+  :custom
+  (gnus-home-directory "~/.local/var/gnus")
 
   :preface
-  (defcustom init-gnus-smtp-accounts '()
+  (defcustom ok-gnus-smtp-accounts '()
     "List of SMTP servers associated with sender email address.
 
 Each list item is:
@@ -21,12 +23,24 @@ Each list item is:
     :type 'list
     :group 'ts)
 
-  (defun init-gnus--send-message ()
+  :config
+  (if (not (file-directory-p gnus-home-directory))
+      (make-directory gnus-home-directory :parents))
+
+  (setq gnus-directory (concat gnus-home-directory "news/")
+        gnus-dribble-directory gnus-home-directory
+        gnus-init-file (concat gnus-home-directory "gnus.el")
+        gnus-startup-file (concat gnus-home-directory ".newsrc")
+        gnus-summary-insert-old-articles t
+        gnus-summary-line-format "%U%R%z%I%(%[%o: %-23,23f%]%) %s\\n"
+        message-directory (concat gnus-home-directory "mail/"))
+
+  (defun ok-gnus--send-message ()
     "Set SMTP server from list of multiple ones and send mail."
     (interactive)
     (message-remove-header "X-Message-SMTP-Method")
     (let ((sender (message-fetch-field "From")))
-      (loop for (addr server port usr) in init-gnus-smtp-accounts
+      (loop for (addr server port usr) in ok-gnus-smtp-accounts
             when (string-match (format "\\(^\\|<\\)%s\\(>\\|$\\)" addr)
                                sender)
             do (message-add-header
@@ -41,24 +55,9 @@ Each list item is:
                            sender xmess))
           (message-send-and-exit)))))
 
-  :init
-  ;; Some init timing issue prevents the use of :custom, so do them here.
-  (setq gnus-home-directory "~/.local/var/gnus/")
-  (require 'okutil)
-  (okutil-ensure-directory-exists gnus-home-directory)
-
-  (setq gnus-directory (concat gnus-home-directory "news/")
-        gnus-dribble-directory gnus-home-directory
-        gnus-init-file (concat gnus-home-directory "gnus.el")
-        gnus-startup-file (concat gnus-home-directory ".newsrc")
-        gnus-summary-insert-old-articles t
-        gnus-summary-line-format "%U%R%z%I%(%[%o: %-23,23f%]%) %s\\n"
-        message-directory (concat gnus-home-directory "mail/"))
-
-  :config
   (add-hook 'gnus-message-setup-hook
             '(lambda ()
-               (local-set-key (kbd "C-c C-c") 'init-gnus--send-message))))
+               (local-set-key (kbd "C-c C-c") 'ok-gnus--send-message))))
 
 
 (use-package gnus-group
@@ -66,6 +65,7 @@ Each list item is:
   :straight nil
 
   :config
+  (require 'hydra)
   (defhydra hydra-gnus-group (:color pink :hint nil)
     "
 ^Group^
@@ -86,6 +86,7 @@ _g_: get new messages
   :straight nil
 
   :config
+  (require 'hydra)
   (defhydra hydra-gnus-summary (:color pink :hint nil)
     "
 ^Message Summary^ ^^             ^Threads
@@ -115,6 +116,7 @@ _R_: reply        _M_: move
   :straight nil
 
   :config
+  (require 'hydra)
   (defhydra hydra-gnus-article (:color pink :hint nil)
     "
 ^Message^
@@ -130,4 +132,7 @@ _f_: forward
 
   (define-key gnus-article-mode-map "." 'hydra-gnus-article/body))
 
+;; Local Variables:
+;; nameless-aliases: (("" . "ok-gnus"))
+;; End:
 ;;; 80-gnus.el ends here

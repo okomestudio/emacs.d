@@ -4,11 +4,13 @@
 
 (use-package vertico
   ;; VERTical Interactive COmpletion.
+  :defer t
+
   :custom
   (vertico-count 20)
 
-  :init
-  (vertico-mode))
+  :hook
+  (after-init . vertico-mode))
 
 
 (use-package embark
@@ -21,7 +23,7 @@
 
 
 (use-package embark-consult
-  ;:demand t ; only necessary if you have the hook below
+  ;; :demand t ; only necessary if you have the hook below
 
   ;; Use if you want to have consult previews as you move around an
   ;; auto-updating embark collect buffer.
@@ -31,8 +33,10 @@
 
 (use-package marginalia
   ;; Marginalia in the minibuffer.
-  :init
-  (marginalia-mode))
+  :defer t
+
+  :hook
+  (vertico-mode . marginalia-mode))
 
 
 (use-package nerd-icons-completion
@@ -54,7 +58,7 @@
   ;; Save minibuffer history.
   :defer t
 
-  :init
-  (savehist-mode))
+  :hook
+  (minibuffer-setup . savehist-mode))
 
 ;;; 02-minibuffer.el ends here

@@ -8,7 +8,6 @@
 
 (use-package org-roam
   :defer t
-  :after (org)
 
   :straight
   (;; pull from fork for custom features
@@ -126,6 +125,7 @@
     (concat (org-roam-node-title node) (ok-org-roam--render-title-aux (ok-org-roam--get-title-aux node))))
 
   (cl-defmethod org-roam-node-my-node-timestamp ((node org-roam-node))
+    (require 'marginalia)
     (marginalia--time
      (let ((node-mtime (cdr (assoc "MTIME" (org-roam-node-properties node))))
            (inhibit-message t))
@@ -336,6 +336,6 @@
                      (adaptive-wrap-prefix-mode +1))))
 
 ;; Local Variables:
-;; nameless-aliases: (("io" . "init-org") ("" . "ok-org-roam"))
+;; nameless-aliases: (("" . "ok-org-roam"))
 ;; End:
 ;;; 10-org-roam.el ends here

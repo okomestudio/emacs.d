@@ -223,8 +223,8 @@ node."
 
 (use-package org-agenda
   :defer t
-  :after (org)
   :straight nil
+  :commands (org-agenda)
 
   :custom
   (org-agenda-current-time-string "⭠ NOW ────────────────────")
@@ -233,7 +233,7 @@ node."
   (org-agenda-start-on-weekday 0)
   (org-agenda-use-tag-inheritance t)    ; set nil to speed up parsing
 
-  :init
+  :preface
   (put 'org-agenda-custom-commands 'safe-local-variable #'listp))
 
 

@@ -31,6 +31,8 @@
 (setq straight-use-package-by-default t)
 (setq use-package-enable-imenu-support t)
 (setq use-package-verbose t)
+(setq use-package-compute-statistics t) ;; for use-package-report
 (setq use-package-minimum-reported-time 0.01)
+(setq message-log-max t)
 
 ;;; init-straight.el ends here

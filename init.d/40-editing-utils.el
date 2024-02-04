@@ -7,12 +7,14 @@
   :defer t
   :ensure nil
 
-  :init
-  (global-set-key [remap dabbrev-expand] 'hippie-expand))
+  :bind
+  ([remap dabbrev-expand] . hippie-expand))
 
 
 (use-package mwim
   ;; Switch between the beginning/end of line or code line positioning.
+  :defer t
+
   :bind
   (("C-a" . 'mwim-beginning)
    ("C-e" . 'mwim-end)))
@@ -21,17 +23,16 @@
 (use-package multiple-cursors
   :defer t
 
-  :init
-  (global-set-key (kbd "C-S-c C-S-c") 'mc/edit-lines)
-  (global-set-key (kbd "C->") 'mc/mark-next-like-this)
-  (global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
-  (global-set-key (kbd "C-S-c C-<") 'mc/mark-all-like-this))
+  :bind
+  ("C-S-c C-S-c" . mc/edit-lines)
+  ("C->" . mc/mark-next-like-this)
+  ("C-<" . mc/mark-previous-like-this)
+  ("C-S-c C-<" . mc/mark-all-like-this))
 
 
 (use-package htmlize
   ;; Convert buffer text and decorations to HTML
-  :defer t
-  )
+  :defer t)
 
 
 (use-package titlecase
@@ -52,12 +53,16 @@
 
 (use-package typo
   ;; Typographical utility (e.g., smart quotation).
+  :defer t
+
   :hook
   (text-mode . typo-mode))
 
 
 (use-package undo-tree
   ;; Treat undo history as a tree.
+  :defer t
+
   :bind
   (;
    :map undo-tree-map
@@ -70,26 +75,29 @@
   :custom
   (undo-tree-auto-save-history nil)
 
-  :init
-  (global-undo-tree-mode))
+  :hook
+  (after-init . (lambda () (global-undo-tree-mode))))
 
 
 (use-package whole-line-or-region
   ;; Operate on current line if region undefined.
-  )
+  :defer t)
 
 
 ;;; SPELLING
 
 (use-package flyspell
+  :defer t
+
   :bind
-  (:map text-mode-map
+  (;
+   :map text-mode-map
    ("M-s M-s" . flyspell-auto-correct-previous-word))
 
   :hook
-  ((prog-mode . flyspell-prog-mode)
-   (shell-script-mode . flyspell-prog-mode)
-   (text-mode . flyspell-mode)))
+  (prog-mode . flyspell-prog-mode)
+  (shell-script-mode . flyspell-prog-mode)
+  (text-mode . flyspell-mode))
 
 
 (use-package ispell
@@ -107,6 +115,9 @@
 
 ;;; SEARCH AND MOVEMENT
 
+(use-package ace-jump-mode :defer t)
+
+
 (use-package ace-isearch
   ;; A seamless bridge between isearch, ace-jump-mode, avy, and swoop.
   :defer t
@@ -115,17 +126,11 @@
   (ace-isearch-input-length 1)
   (ace-isearch-jump-delay 0.75)
 
-  :preface
-  (defun init-editing--ace-isearch-function-from-isearch ()
-    (consult-line isearch-string))
-
-  (defun init-editing--init-ace-isearch ()
-    (global-ace-isearch-mode +1)
-    ;; This needs to be set after mode activation to override auto-detection:
-    (setq ace-isearch-function-from-isearch 'init-editing--ace-isearch-function-from-isearch))
-
-  :init
-  (use-package ace-jump-mode)
-  (add-hook 'after-init-hook 'init-editing--init-ace-isearch))
+  :hook
+  (after-init . (lambda ()
+                  (global-ace-isearch-mode +1)
+                  (defun ok-isearch-callback ()
+                    (consult-line isearch-string))
+                  (setq ace-isearch-function-from-isearch #'ok-isearch-callback))))
 
 ;;; 40-editing-utils.el ends here

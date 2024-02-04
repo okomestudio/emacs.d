@@ -1,4 +1,4 @@
-;;; 10-dashboard.el --- Emacs Application Framework  -*- lexical-binding: t -*-
+;;; 85-dashboard.el --- Emacs Application Framework  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;; Code:
 
@@ -12,8 +12,9 @@
   (dashboard-items '((recents . 3)
                      (projects . 3)
                      (bookmarks . 3)
-                     (agenda . 3)
-                     (vocab)))
+                     ;; (agenda . 3)
+                     ;; (vocab)
+                     ))
   (dashboard-projects-backend 'projectile)
   (dashboard-startup-banner 'logo)
   (dashboard-set-file-icons t)
@@ -46,4 +47,4 @@
 
 (use-package wotd :defer t)
 
-;;; 10-dashboard.el ends here
+;;; 85-dashboard.el ends here

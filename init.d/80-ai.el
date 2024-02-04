@@ -22,13 +22,7 @@
   :custom
   (chatgpt-shell-openai-key (lambda ()
                               (auth-source-pick-first-password
-                               :host "api.openai.com")))
-
-  :init
-  (defun ask-chatgpt (str)
-    (require 'okutil)
-    (interactive (list (okutil-string-from-region-or-prompt "Ask ChatGPT: ")))
-    (chatgpt-shell-send-to-buffer str)))
+                               :host "api.openai.com"))))
 
 
 (use-package gptel

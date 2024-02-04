@@ -22,7 +22,7 @@
   :ensure-system-package
   (ipython . "pip install ipython")
 
-  :preface
+  :config
   (defun ok-python--format-python-code ()
     "Format Python code."
     (interactive)
@@ -31,7 +31,6 @@
     (blacken-buffer)
     (py-isort-buffer))
 
-  :config
   (add-to-list 'treesit-language-source-alist
                '(python "https://github.com/tree-sitter/tree-sitter-python.git"))
 

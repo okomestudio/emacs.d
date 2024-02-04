@@ -16,8 +16,7 @@
   ;; polymode activate ansible automatically.
   ;;
   ;; jinja2-mode inherits from html-mode.
-  :defer t
-  )
+  :defer t)
 
 
 (use-package devdocs
@@ -31,6 +30,10 @@
   :defer t
 
   :hook
+  (yaml-mode . (lambda ()
+                 ;; If in ansible-mode, do not activate yamlls.
+                 (if (not (bound-and-true-p ansible))
+                     (init-lsp-lsp-mode-hook 'yamlls))))
   (ansible . (lambda ()
                (setq-local lsp-disabled-clients '(yamlls eslint))
                (lsp-ensure-server 'ansible-ls)

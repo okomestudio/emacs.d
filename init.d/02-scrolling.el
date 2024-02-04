@@ -6,6 +6,9 @@
 ;;; Code:
 
 (use-package emacs ;; scroll configuration
+  :defer t
+  :straight nil
+
   :custom
   (mouse-wheel-progressive-speed nil)
   (mouse-wheel-scroll-amount '(1 ((shift) . hscroll)
@@ -20,12 +23,14 @@
   (pixel-scroll-precision-interpolation-total-time 0.1)
   (pixel-scroll-precision-interpolation-between-scroll 0.001)
 
-  :init
-  (pixel-scroll-precision-mode +1))
+  :hook
+  (after-init . (lambda () (pixel-scroll-precision-mode +1))))
 
 
 (use-package yascroll
-  :init
-  (global-yascroll-bar-mode +1))
+  :defer t
+
+  :hook
+  (after-init . (lambda () (global-yascroll-bar-mode +1))))
 
 ;;; 02-scrolling.el ends here
