@@ -7,6 +7,7 @@
 
 (use-package elfeed
   :defer t
+  :commands (elfeed)
 
   :custom
   (elfeed-curl-max-connections 16)
