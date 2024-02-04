@@ -82,7 +82,6 @@
                  (dt (- (float-time) tt)))
             (if (< dt ttl)
                 (cdr v)
-              (message "Invalidating %s" file)
               (setf ok-org-roam--file-node-cache (assoc-delete-all file ok-org-roam--file-node-cache))
               (ok-org-roam--get-node-from-file file)))
         (let ((node (org-roam-node-from-id (ok-org-roam--get-node-id-from-file file))))
