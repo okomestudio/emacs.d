@@ -89,6 +89,18 @@
           (push `(,file . (,(float-time) . ,node)) ok-org-roam--file-node-cache)
           node))))
 
+  (defun ok-org-roam-visit-parent-at-point (node)
+    "Visit parent of given NODE at point, if exists."
+    (interactive "P")
+    (let ((parent (cdr (assoc-string "PARENT"
+                                     (org-roam-node-properties
+                                      (if node
+                                          node
+                                        (org-roam-node-at-point)))))))
+      (if parent
+          (org-link-open-from-string parent)
+        (message "No parent found"))))
+
   (defun ok-org-roam--get-parent-title (node)
     (let ((parent (cdr (assoc-string "PARENT" (org-roam-node-properties node)))))
       (when parent
