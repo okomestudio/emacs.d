@@ -26,6 +26,7 @@ custom.el
 devdocs/
 eln-cache
 elpa
+emms/
 emojis/
 eshell
 games/
@@ -37,6 +38,7 @@ persist
 projectile-bookmarks.eld
 projectile.cache
 projects
+recentf
 request
 roam/
 secrets/
