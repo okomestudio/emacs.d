@@ -63,137 +63,133 @@
   (require 'org-roam-dailies)
   (org-roam-db-autosync-mode)
 
-
   ;; Customize title list in minibuffer
+  (with-eval-after-load 'org-roam-node
+    (defvar ok-org-roam--file-node-cache '())
 
-  (defvar ok-org-roam--file-node-cache '())
+    (defun ok-org-roam--get-node-id-from-file (file)
+      (caar (org-roam-db-query `[:select nodes:id :from nodes
+                                         :where (and (= nodes:file ,file)
+                                                     (= nodes:level 0))])))
 
-  (defun ok-org-roam--get-node-id-from-file (file)
-    (caar (org-roam-db-query `[:select nodes:id :from nodes
-                                       :where (and (= nodes:file ,file)
-                                                   (= nodes:level 0))])))
+    (defun ok-org-roam--get-node-from-file (file)
+      (let ((cached (assoc file ok-org-roam--file-node-cache)))
+        (if cached
+            (let* ((ttl 30.0)
+                   (v (cdr cached))
+                   (tt (car v))
+                   (dt (- (float-time) tt)))
+              (if (< dt ttl)
+                  (cdr v)
+                (setf ok-org-roam--file-node-cache (assoc-delete-all file ok-org-roam--file-node-cache))
+                (ok-org-roam--get-node-from-file file)))
+          (let ((node (org-roam-node-from-id (ok-org-roam--get-node-id-from-file file))))
+            (push `(,file . (,(float-time) . ,node)) ok-org-roam--file-node-cache)
+            node))))
 
-  (defun ok-org-roam--get-node-from-file (file)
-    (let ((cached (assoc file ok-org-roam--file-node-cache)))
-      (if cached
-          (let* ((ttl 30.0)
-                 (v (cdr cached))
-                 (tt (car v))
-                 (dt (- (float-time) tt)))
-            (if (< dt ttl)
-                (cdr v)
-              (setf ok-org-roam--file-node-cache (assoc-delete-all file ok-org-roam--file-node-cache))
-              (ok-org-roam--get-node-from-file file)))
-        (let ((node (org-roam-node-from-id (ok-org-roam--get-node-id-from-file file))))
-          (push `(,file . (,(float-time) . ,node)) ok-org-roam--file-node-cache)
-          node))))
+    (defun ok-org-roam-visit-parent-at-point (node)
+      "Visit parent of given NODE at point, if exists."
+      (interactive "P")
+      (let ((parent (cdr (assoc-string "PARENT"
+                                       (org-roam-node-properties
+                                        (if node
+                                            node
+                                          (org-roam-node-at-point)))))))
+        (if parent
+            (org-link-open-from-string parent)
+          (message "No parent found"))))
 
-  (defun ok-org-roam-visit-parent-at-point (node)
-    "Visit parent of given NODE at point, if exists."
-    (interactive "P")
-    (let ((parent (cdr (assoc-string "PARENT"
-                                     (org-roam-node-properties
-                                      (if node
-                                          node
-                                        (org-roam-node-at-point)))))))
-      (if parent
-          (org-link-open-from-string parent)
-        (message "No parent found"))))
+    (defun ok-org-roam--get-parent-title (node)
+      (let ((parent (cdr (assoc-string "PARENT" (org-roam-node-properties node)))))
+        (when parent
+          ;; NOTE: This replacement may not be necessary, but some links are not
+          ;; rendered correctly in minibuffer without. For now, the slow down due
+          ;; to parsing is not significant.
+          (replace-regexp-in-string "\\[\\[\\(.+\\)\\]\\[\\([^]]+\\)\\]\\]"
+                                    "\\2"
+                                    parent))))
 
-  (defun ok-org-roam--get-parent-title (node)
-    (let ((parent (cdr (assoc-string "PARENT" (org-roam-node-properties node)))))
-      (when parent
-        ;; NOTE: This replacement may not be necessary, but some links are not
-        ;; rendered correctly in minibuffer without. For now, the slow down due
-        ;; to parsing is not significant.
-        (replace-regexp-in-string "\\[\\[\\(.+\\)\\]\\[\\([^]]+\\)\\]\\]"
-                                  "\\2"
-                                  parent))))
+    (defun ok-org-roam--get-title-aux (node)
+      (let* ((node-title (org-roam-node-title node))
+             (node-file-title (or (if (not (s-blank? (org-roam-node-file-title node)))
+                                      (org-roam-node-file-title node))
+                                  (file-name-nondirectory (org-roam-node-file node)))))
+        (if (string= node-title node-file-title)
+            (let ((p (ok-org-roam--get-parent-title node)))
+              (if p (list " ❬ " p)))
+          (if (member node-title (org-roam-node-aliases node))
+              (list " = " node-file-title)
+            (let ((p (ok-org-roam--get-parent-title (ok-org-roam--get-node-from-file (org-roam-node-file node)))))
+              (if p (list " ❬ " p) (list " ❬ " node-file-title)))))))
 
-  (defun ok-org-roam--get-title-aux (node)
-    (let* ((node-title (org-roam-node-title node))
-           (node-file-title (or (if (not (s-blank? (org-roam-node-file-title node)))
-                                    (org-roam-node-file-title node))
-                                (file-name-nondirectory (org-roam-node-file node)))))
-      (if (string= node-title node-file-title)
-          (let ((p (ok-org-roam--get-parent-title node)))
-            (if p (list " ❬ " p)))
-        (if (member node-title (org-roam-node-aliases node))
-            (list " = " node-file-title)
-          (let ((p (ok-org-roam--get-parent-title (ok-org-roam--get-node-from-file (org-roam-node-file node)))))
-            (if p (list " ❬ " p) (list " ❬ " node-file-title)))))))
+    (defun ok-org-roam--render-title-aux (title-aux)
+      (if (not title-aux)
+          ""
+        (let ((color "SeaGreen4")
+              (sym (nth 0 title-aux))
+              (aux (nth 1 title-aux)))
+          (concat (propertize sym 'face `(:foreground ,color))
+                  (propertize aux 'face `(:foreground ,color :slant italic))))))
 
-  (defun ok-org-roam--render-title-aux (title-aux)
-    (if (not title-aux)
-        ""
-      (let ((color "SeaGreen4")
-            (sym (nth 0 title-aux))
-            (aux (nth 1 title-aux)))
-        (concat (propertize sym 'face `(:foreground ,color))
-                (propertize aux 'face `(:foreground ,color :slant italic))))))
+    (cl-defmethod org-roam-node-my-node-entry ((node org-roam-node))
+      (concat (org-roam-node-title node) (ok-org-roam--render-title-aux (ok-org-roam--get-title-aux node))))
 
-  (cl-defmethod org-roam-node-my-node-entry ((node org-roam-node))
-    (concat (org-roam-node-title node) (ok-org-roam--render-title-aux (ok-org-roam--get-title-aux node))))
+    (cl-defmethod org-roam-node-my-node-timestamp ((node org-roam-node))
+      (require 'marginalia)
+      (marginalia--time
+       (let ((node-mtime (cdr (assoc "MTIME" (org-roam-node-properties node))))
+             (inhibit-message t))
+         (if node-mtime
+             (progn
+               (require 'org-roam-timestamps)
+               (org-roam-timestamps-encode (car (split-string node-mtime))))
+           (org-roam-node-file-mtime node)))))
 
-  (cl-defmethod org-roam-node-my-node-timestamp ((node org-roam-node))
-    (require 'marginalia)
-    (marginalia--time
-     (let ((node-mtime (cdr (assoc "MTIME" (org-roam-node-properties node))))
-           (inhibit-message t))
-       (if node-mtime
-           (progn
-             (require 'org-roam-timestamps)
-             (org-roam-timestamps-encode (car (split-string node-mtime))))
-         (org-roam-node-file-mtime node)))))
+    ;; Customize node slug generation
+    (defun ok-org-roam--org-roam-node-slug (title)
+      (let (;; Combining Diacritical Marks https://www.unicode.org/charts/PDF/U0300.pdf
+            (slug-trim-chars '(768    ; U+0300 COMBINING GRAVE ACCENT
+                               769    ; U+0301 COMBINING ACUTE ACCENT
+                               770    ; U+0302 COMBINING CIRCUMFLEX ACCENT
+                               771    ; U+0303 COMBINING TILDE
+                               772    ; U+0304 COMBINING MACRON
+                               774    ; U+0306 COMBINING BREVE
+                               775    ; U+0307 COMBINING DOT ABOVE
+                               776    ; U+0308 COMBINING DIAERESIS
+                               777    ; U+0309 COMBINING HOOK ABOVE
+                               778    ; U+030A COMBINING RING ABOVE
+                               779    ; U+030B COMBINING DOUBLE ACUTE ACCENT
+                               780    ; U+030C COMBINING CARON
+                               795    ; U+031B COMBINING HORN
+                               803    ; U+0323 COMBINING DOT BELOW
+                               804    ; U+0324 COMBINING DIAERESIS BELOW
+                               805    ; U+0325 COMBINING RING BELOW
+                               807    ; U+0327 COMBINING CEDILLA
+                               813    ; U+032D COMBINING CIRCUMFLEX ACCENT BELOW
+                               814    ; U+032E COMBINING BREVE BELOW
+                               816    ; U+0330 COMBINING TILDE BELOW
+                               817))) ; U+0331 COMBINING MACRON BELOW
+        (cl-flet* ((nonspacing-mark-p (char)
+                     (memq char slug-trim-chars))
+                   (strip-nonspacing-marks (s)
+                     (string-glyph-compose
+                      (apply #'string
+                             (seq-remove #'nonspacing-mark-p
+                                         (string-glyph-decompose s)))))
+                   (cl-replace (title pair)
+                     (replace-regexp-in-string (car pair) (cdr pair) title)))
+          (let* ((pairs `(("[^[:alnum:][:digit:]]" . "-") ;; convert anything not alphanumeric
+                          ("--*" . "-") ;; remove sequential underscores
+                          ("^-" . "")   ;; remove starting underscore
+                          ("-$" . ""))) ;; remove ending underscore
+                 (slug (-reduce-from #'cl-replace
+                                     (strip-nonspacing-marks title)
+                                     pairs)))
+            (downcase slug)))))
 
-
-  ;; Customize node slug generation
-
-  (defun ok-org-roam--org-roam-node-slug (title)
-    (let (;; Combining Diacritical Marks https://www.unicode.org/charts/PDF/U0300.pdf
-          (slug-trim-chars '(768     ; U+0300 COMBINING GRAVE ACCENT
-                             769     ; U+0301 COMBINING ACUTE ACCENT
-                             770     ; U+0302 COMBINING CIRCUMFLEX ACCENT
-                             771     ; U+0303 COMBINING TILDE
-                             772     ; U+0304 COMBINING MACRON
-                             774     ; U+0306 COMBINING BREVE
-                             775     ; U+0307 COMBINING DOT ABOVE
-                             776     ; U+0308 COMBINING DIAERESIS
-                             777     ; U+0309 COMBINING HOOK ABOVE
-                             778     ; U+030A COMBINING RING ABOVE
-                             779     ; U+030B COMBINING DOUBLE ACUTE ACCENT
-                             780     ; U+030C COMBINING CARON
-                             795     ; U+031B COMBINING HORN
-                             803     ; U+0323 COMBINING DOT BELOW
-                             804     ; U+0324 COMBINING DIAERESIS BELOW
-                             805     ; U+0325 COMBINING RING BELOW
-                             807     ; U+0327 COMBINING CEDILLA
-                             813     ; U+032D COMBINING CIRCUMFLEX ACCENT BELOW
-                             814     ; U+032E COMBINING BREVE BELOW
-                             816     ; U+0330 COMBINING TILDE BELOW
-                             817)))  ; U+0331 COMBINING MACRON BELOW
-      (cl-flet* ((nonspacing-mark-p (char)
-                   (memq char slug-trim-chars))
-                 (strip-nonspacing-marks (s)
-                   (string-glyph-compose
-                    (apply #'string
-                           (seq-remove #'nonspacing-mark-p
-                                       (string-glyph-decompose s)))))
-                 (cl-replace (title pair)
-                   (replace-regexp-in-string (car pair) (cdr pair) title)))
-        (let* ((pairs `(("[^[:alnum:][:digit:]]" . "-") ;; convert anything not alphanumeric
-                        ("--*" . "-") ;; remove sequential underscores
-                        ("^-" . "")   ;; remove starting underscore
-                        ("-$" . ""))) ;; remove ending underscore
-               (slug (-reduce-from #'cl-replace
-                                   (strip-nonspacing-marks title)
-                                   pairs)))
-          (downcase slug)))))
-
-  (cl-defmethod org-roam-node-slug ((node org-roam-node))
-    "Return the slug of NODE. Overridden to use hyphens instead of underscores."
-    (ok-org-roam--org-roam-node-slug (org-roam-node-title node)))
-
+    (cl-defmethod org-roam-node-slug ((node org-roam-node))
+      "Return the slug of NODE. Overridden to use hyphens instead of underscores."
+      (ok-org-roam--org-roam-node-slug (org-roam-node-title node))))
 
   ;; Customized unlinked references section
 
