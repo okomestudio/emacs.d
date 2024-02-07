@@ -16,6 +16,7 @@
   (async-shell-command-buffer "new-buffer")
   (case-fold-search t)
   (compilation-scroll-output t)
+  (confirm-kill-processes nil)
   (enable-recursive-minibuffers t)
   (load-prefer-newer t)
   (next-error-message-highlight t)
