@@ -56,16 +56,19 @@
 
 (use-package which-key
   ;; Displays available keybindings in popup.
+  :defer t
+
   :bind
   (("C-h W" . which-key-show-top-level))
 
   :custom
   (which-key-idle-delay 0.5)
-  (which-key-max-description-length 1.0)
-  (which-key-min-column-description-width 40)
+  (which-key-max-description-length nil)
+  (which-key-min-column-description-width 0)
   (which-key-popup-type 'side-window)
+  (which-key-show-docstrings nil)
   (which-key-side-window-location '(right bottom))
-  (which-key-side-window-max-width 70)
+  (which-key-side-window-max-width 0.8)
 
   :init
   (which-key-mode +1))
