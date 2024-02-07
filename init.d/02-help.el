@@ -1,12 +1,15 @@
 ;;; 02-help.el --- Help  -*- lexical-binding: t -*-
 ;;; Commentary:
+;;
+;; Help related utilities.
+;;
 ;;; Code:
 
 (use-package helpful
   :bind
   (("C-c C-d" . helpful-at-point)
    ("C-h F" . helpful-function)
-   ("C-h f" . helpful-callable)
+   ("C-h f" . helpful-callable) ;; for both functions and macros
    ("C-h k" . helpful-key)
    ("C-h l" . view-lossage)
    ("C-h v" . helpful-variable)
@@ -17,7 +20,8 @@
   :straight nil
 
   :bind
-  (:prefix "C-h a"
+  (;
+   :prefix "C-h a"
    :prefix-map apropos-prefix-map
    ("a" . apropos)
    ("d" . apropos-documentation)
@@ -43,7 +47,6 @@
 (use-package help-shortdoc-example
   ;; Display shortdoc examples to *Help* buffer.
   :defer t
-
   :straight
   (:host github :repo "buzztaiki/help-shortdoc-example.el")
 
@@ -57,11 +60,12 @@
   (("C-h W" . which-key-show-top-level))
 
   :custom
+  (which-key-idle-delay 0.5)
   (which-key-max-description-length 1.0)
   (which-key-min-column-description-width 40)
   (which-key-popup-type 'side-window)
   (which-key-side-window-location '(right bottom))
-  (which-key-side-window-max-width 56)
+  (which-key-side-window-max-width 70)
 
   :init
   (which-key-mode +1))
@@ -69,7 +73,6 @@
 
 (use-package sicp
   ;; "Structure and Interpretation of Computer Programs" as info
-  :defer t
-  )
+  :defer t)
 
 ;;; 02-help.el ends here
