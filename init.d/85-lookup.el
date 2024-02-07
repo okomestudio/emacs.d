@@ -24,7 +24,7 @@
    :prefix "C-h C-l e"
    ("a" . eww-search-amazon-en)
    ("d" . define-word-at-point)
-   ("h" . pronounce-word)
+   ("h" . hatsuon-play-audio)
    ("j" . eww-search-justapedia-en)
    ("p" . powerthesaurus-lookup-dwim)
    ("s" . eww-search-duckduckgo-en)
@@ -49,6 +49,8 @@
        )))
 
 
+;; Dictionaries
+
 (use-package define-word
   ;; Display the definition of word at point.
   :defer t
@@ -66,6 +68,16 @@
   :custom (synosaurus-choose-method 'default)
   :ensure-system-package (wn . "sudo apt install -y wordnet"))
 
+
+;; Pronunciation
+
+(use-package hatsuon
+  :defer t
+  :straight
+  (:host github :repo "okomestudio/hatsuon.el" :branch "main"))
+
+
+;; Translation
 
 (use-package go-translate
   ;; A translation framework.
@@ -96,6 +108,8 @@
                                 :engines gts-custom-engines
                                 :render (gts-buffer-render))))
 
+
+;; Misc.
 
 (use-package list-unicode-display
   ;; Search for and list unicode characters.
