@@ -4,12 +4,15 @@
 
 (use-package markdown-mode
   ;; For browser preview, use C-c C-c v.
+  :defer t
+
   :custom
   (markdown-fontify-code-block-natively t)
   (markdown-header-scaling t)
   (markdown-indent-on-enter t)
 
-  :commands (markdown-mode gfm-mode)
+  :commands
+  (markdown-mode gfm-mode)
 
   :mode
   ("README\\.md\\'" . gfm-mode)
@@ -21,11 +24,10 @@
   (markdown-mode . lsp)
 
   :ensure-system-package
-  (marksman . "sudo snap install marksman")
   (pandoc . "sudo apt install -y pandoc")
 
-  :init
-  (setq markdown-command "pandoc")
+  ;; :init
+  ;; (setq markdown-command "pandoc")
 
   :config
   (require 'lsp-marksman))
@@ -35,8 +37,7 @@
   :defer t
 
   :hook
-  (markdown-mode
-   . (lambda () (setq-local devdocs-current-docs '("markdown")))))
+  (markdown-mode . (lambda () (setq-local devdocs-current-docs '("markdown")))))
 
 
 (use-package lsp-mode
