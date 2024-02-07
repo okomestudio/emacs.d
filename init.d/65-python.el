@@ -103,6 +103,17 @@
   (isort . "pip install isort"))
 
 
+(use-package pyimport
+  :defer t
+  :straight
+  (:host github :repo "okomestudio/pyimport"
+         :branch "python-ts-mode-support"
+         :fork "okomestudio")
+
+  :ensure-system-package
+  (pyflakes . "pip install pyflakes"))
+
+
 (use-package pyenv
   :defer t
   :after switch-buffer-functions
