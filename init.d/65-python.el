@@ -195,6 +195,47 @@
   (python-mode . lsp-deferred)
   (python-ts-mode . lsp-deferred))
 
+
+(use-package pymacs
+  :defer t
+  :straight
+  (;;
+   :host github
+   :repo "Pymacs2/Pymacs"
+   :post-build ;; See what install-pymacs.sh does:
+   (("pip" "install" "-U" "pyopenssl")
+    `("pip" "install" "-e" ,(file-name-concat user-emacs-directory
+                                              "straight/repos/Pymacs/"))))
+
+  :ensure-system-package
+  ("/usr/share/doc/python3-dev" . "sudo apt install -y python3-dev")
+  ("/usr/include/openssl/ssl.h" . "sudo apt install -y libssl-dev")
+  ("/usr/share/doc/libffi-dev" . "sudo apt install -y libffi-dev"))
+
+
+(use-package ropemacs
+  :defer t
+  :after (pymacs)
+  :straight
+  (;;
+   :files nil
+   :post-build
+   (("pip" "install" "-U" "rope")
+    `("pip" "install" "-e" ,(file-name-concat user-emacs-directory
+                                              "straight/repos/ropemacs/"))))
+
+  :bind
+  (("C-x p l" . (lambda ()
+                  (interactive)
+                  (require 'pymacs)
+                  (pymacs-load "ropemacs" "rope-"))))
+
+  :init
+  (setq ropemacs-enable-autoimport t)
+  (setq ropemacs-enable-shortcuts nil)
+  (setq ropemacs-local-prefix "C-c C-a")
+  (setq ropemacs-autoimport-modules '("os" "shutil" "typing")))
+
 ;; Local Variables:
 ;; nameless-aliases: (("" . "ok-python"))
 ;; End:
