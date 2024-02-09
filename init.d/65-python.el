@@ -15,9 +15,8 @@
   :custom
   (python-indent-guess-indent-offset-verbose nil)
   (python-indent-offset 4)
-  (python-shell-interpreter "~/.pyenv/shims/ipython")
-  (python-shell-interpreter-args (concat "-i --simple-prompt "
-                                         "--InteractiveShell.display_page=True"))
+  (python-shell-interpreter (expand-file-name "bin/python-shell-interpreter"
+                                              user-emacs-directory))
 
   :ensure-system-package
   (ipython . "pip install ipython")

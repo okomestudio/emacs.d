@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+#
+# Python shell interpreter
+#
+
+if ! ipython ; then
+  exec python -i $@
+else
+  exec ipython -i --simple-prompt --InteractiveShell.display_page=True $@
+fi
