@@ -96,17 +96,7 @@ See https://knowledge.sakura.ad.jp/8494/"
                   (dolist (element ts/face-font-relative-scales)
                     (add-to-list 'face-font-rescale-alist element))
 
-                  (ok-face--apply-if-gui 'ok-face--setup-font-for-frame)
-
-
-                  ;; NOTE: This hook is for turning off font-lock-mode in
-                  ;; list-colors-display only.
-                  (add-hook 'switch-buffer-functions
-                            (lambda (_pref current)
-                              (when (string-equal (buffer-name current) "*Colors*")
-                                (font-lock-mode -1)
-                                (list-colors-display))))
-                  )))
+                  (ok-face--apply-if-gui 'ok-face--setup-font-for-frame))))
 
 
 (use-package mixed-pitch

@@ -78,4 +78,14 @@
   ;; "Structure and Interpretation of Computer Programs" as info
   :defer t)
 
+
+(use-package help ;; help-mode
+  :defer t
+  :straight nil
+  :hook
+  (help-mode . (lambda ()
+                 (when (string= (buffer-name (current-buffer)) "*Colors*")
+                   ;; Without this, list-colors-display won't render with colors
+                   (font-lock-mode -1)))))
+
 ;;; 02-help.el ends here
