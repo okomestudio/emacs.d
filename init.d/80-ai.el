@@ -5,21 +5,13 @@
 ;;
 ;;; Code:
 
-(use-package shell-maker
-  :defer t
-
-  :straight
-  (:host github :repo "xenodium/chatgpt-shell" :files ("shell-maker.el")))
-
-
 (use-package chatgpt-shell
   :defer t
-  :requires shell-maker
-
   :straight
-  (:host github :repo "xenodium/chatgpt-shell" :files ("chatgpt-shell.el"))
+  (chatgpt-shell :host github :repo "xenodium/chatgpt-shell")
 
   :custom
+  (chatgpt-shell-model-version "gpt-3.5-turbo")
   (chatgpt-shell-openai-key (lambda ()
                               (auth-source-pick-first-password
                                :host "api.openai.com"))))
@@ -42,13 +34,6 @@
 
   :commands
   (org-ai-mode
-   org-ai-global-mode)
-
-  ;; :init
-  ;; (org-ai-global-mode)
-
-  ;; :config
-  ;; (org-ai-install-yasnippets)
-  )
+   org-ai-global-mode))
 
 ;;; 80-ai.el ends here

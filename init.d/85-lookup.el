@@ -7,7 +7,6 @@
 
 (use-package 85-lookup
   :defer t
-  ;; :after (chatgpt-shell define-word eww powerthesaurus)
   :straight nil
 
   :bind
@@ -45,8 +44,7 @@
          (require 'okutil)
          (interactive (list (okutil-string-from-region-or-prompt "Ask ChatGPT: ")))
          (require 'chatgpt-shell)
-         (chatgpt-shell-send-to-buffer str))
-       )))
+         (chatgpt-shell-send-to-buffer str)))))
 
 
 ;; Dictionaries
