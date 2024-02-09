@@ -1,17 +1,19 @@
 ;;; 02-consult.el --- Consult  -*- lexical-binding: t -*-
 ;;; Commentary:
+;;
+;; Consulting completing-read.
+;;
 ;;; Code:
 
 (use-package consult
-  ;; Consulting completing-read.
   :defer t
 
   :straight
   (:pre-build
    ;; build info manual, which appears missing by default:
-   ("emacs" "-Q" "-batch" "-L" "./" "--visit" "README.org" "--funcall" "org-texinfo-export-to-texinfo")
-   ("makeinfo" "consult.texi" "-o" "consult.info")
-   ("install-info" "consult.info" "dir"))
+   (("emacs" "-Q" "-batch" "-L" "./" "--visit" "README.org" "--funcall" "org-texinfo-export-to-texinfo")
+    ("makeinfo" "consult.texi" "-o" "consult.info")
+    ("install-info" "consult.info" "dir")))
 
   :bind
   (([remap electric-apropos] . consult-apropos)
