@@ -116,22 +116,30 @@
 
 (use-package pyenv
   :defer t
-  :after switch-buffer-functions
-
   :straight
   (:host github :repo "aiguofer/pyenv.el")
 
   :custom
   (pyenv-show-active-python-in-modeline nil)
 
-  :config
-  (add-hook 'switch-buffer-functions
-            (lambda (_prev curr)
-              (if (string-equal "Python"
-                                (format-mode-line mode-name nil nil curr))
-                  (pyenv-use-corresponding))))
+  :hook
+  (after-init . (lambda () (global-pyenv-mode)))
+  (projectile-after-switch-project . (lambda (&rest args)
+                                       (pyenv-use-corresponding)
+                                       (shell-command-to-string
+                                        (expand-file-name "bin/bootstrap-python-venv"
+                                                          user-emacs-directory))))
 
-  (global-pyenv-mode))
+  :config
+  ;; advise consult-projectile-switch-project to trigger project switch hooks
+  ;; These projectile hooks won't trigger unless projectile-switch-project is
+  ;; used.
+  (advice-add #'consult-projectile-switch-project
+              :around
+              (lambda (orig-func)
+                (run-hooks 'projectile-before-switch-project-hook)
+                (funcall orig-func)
+                (run-hooks 'projectile-after-switch-project-hook))))
 
 
 (use-package python-pytest
@@ -183,7 +191,6 @@
   (lsp-pylsp-plugins-pydocstyle-enabled t)
   (lsp-pylsp-plugins-pyflakes-enabled nil)
   (lsp-pylsp-plugins-pylint-enabled nil)
-  (lsp-pylsp-server-command '("~/.config/emacs/bin/pylsp"))
 
   :hook
   (python-mode . lsp-deferred)

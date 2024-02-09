@@ -120,8 +120,8 @@
 
 (use-package switch-buffer-functions
   ;; Hook run when switching current buffer.
-  :defer t
-  )
+  :disabled)
+
 
 (use-package system-packages
   :defer t

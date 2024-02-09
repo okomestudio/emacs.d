@@ -1,0 +1,32 @@
+#!/usr/bin/env bash
+#
+# Bootstrap virtual environment with missing Python packages.
+#
+
+if [ -z "$VIRTUAL_ENV" ]; then
+  # If outside a virtual environment, do nothing.
+  exit 0
+fi
+
+# pylsp
+
+if ! "${VIRTUAL_ENV}/bin/pylsp" ; then
+  pip install python-lsp-server[all] python-lsp-black pyls-isort
+  pip install flake8 flake8-docstrings pydocstyle[toml]
+fi
+
+
+# Pymacs and ropemacs
+
+if ! python -c 'import Pymacs'; then
+  pip install -U pyopenssl
+  pip install -e ~/.config/emacs/straight/repos/Pymacs/
+fi
+
+if ! python -c 'import rope'; then
+  pip install -U rope
+fi
+
+if ! python -c 'import ropemacs'; then
+  pip install -e ~/.config/emacs/straight/repos/ropemacs/
+fi
