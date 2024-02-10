@@ -61,6 +61,7 @@ See: https://knowledge.sakura.ad.jp/8494/"
   (set-face-attribute 'variable-pitch frame :family ok-face-font-family-variable-pitch)
 
   ;; Look for a CJK font and use it to render UNICODE chars in this frame:
+  (require 'dash)
   (let* ((font-specs (--map (font-spec :family it) ok-face-cjk-font-families))
          (matched-font-spec (seq-find (lambda (font-spec)
                                         (find-font font-spec))
