@@ -65,24 +65,25 @@
 
   ;; Customize title list in minibuffer
   (with-eval-after-load 'org-roam-node
-    (defvar ok-org-roam--file-node-cache '())
+    (defvar ok-org-roam--file-node-cache '()
+      "Cache file nodes.")
 
     (defun ok-org-roam--get-node-id-from-file (file)
       (caar (org-roam-db-query `[:select nodes:id :from nodes
                                          :where (and (= nodes:file ,file)
                                                      (= nodes:level 0))])))
 
+    (defun ok-org-roam-file-node-cache-maybe-invalidate ()
+      (let ((file buffer-file-name))
+        (when (string= (file-name-extension file) "org")
+          (setf ok-org-roam--file-node-cache (assoc-delete-all file ok-org-roam--file-node-cache)))))
+
+    (add-hook 'after-save-hook #'ok-org-roam-file-node-cache-maybe-invalidate)
+
     (defun ok-org-roam--get-node-from-file (file)
       (let ((cached (assoc file ok-org-roam--file-node-cache)))
         (if cached
-            (let* ((ttl 30.0)
-                   (v (cdr cached))
-                   (tt (car v))
-                   (dt (- (float-time) tt)))
-              (if (< dt ttl)
-                  (cdr v)
-                (setf ok-org-roam--file-node-cache (assoc-delete-all file ok-org-roam--file-node-cache))
-                (ok-org-roam--get-node-from-file file)))
+            (cdr (cdr cached))
           (let ((node (org-roam-node-from-id (ok-org-roam--get-node-id-from-file file))))
             (push `(,file . (,(float-time) . ,node)) ok-org-roam--file-node-cache)
             node))))
