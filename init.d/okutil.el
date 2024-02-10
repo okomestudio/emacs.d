@@ -13,12 +13,14 @@ FACTOR is between 0.0 to 2.0, where 1.0 means unchanged.
 
 Example:
 
-  (okutil-color-scale '(#x55 #x44 #x33) 0.0)  ;; black
-  (okutil-color-scale '(#x55 #x44 #x33) 0.8)  ;; darker
-  (okutil-color-scale '(#x55 #x44 #x33) 1.0)  ;; unchanged
-  (okutil-color-scale '(#x55 #x44 #x33) 1.2)  ;; lighter
-  (okutil-color-scale '(#x55 #x44 #x33) 2.0)  ;; white"
-  (let* ((result 0.0))
+  (okutil-color-scale \"#554433\" 0.0)  ;; black
+  (okutil-color-scale \"#554433\" 0.8)  ;; darker
+  (okutil-color-scale \"#554433\" 1.0)  ;; unchanged
+  (okutil-color-scale \"#554433\" 1.2)  ;; lighter
+  (okutil-color-scale \"#554433\" 2.0)  ;; white"
+  (if (stringp color)
+      (setq color (color-name-to-rgb color)))
+  (let ((result 0.0))
     (cl-loop
      for pow downfrom 2
      for x in color
@@ -26,12 +28,12 @@ Example:
      (setq result
            (+ result
               (* (expt 256 pow)
-                 (min 255
-                      (max 0
-                           (round
-                            (if (< factor 1.0)
-                                (* x factor)
-                              (+ x (* (- 255 x) (- factor 1.0)))))))))))
+                 (round (* 255
+                           (min 1.0
+                                (max 0.0
+                                     (if (< factor 1.0)
+                                         (* x factor)
+                                       (+ x (* (- 1.0 x) (- factor 1.0))))))))))))
     (format "#%X" result)))
 
 

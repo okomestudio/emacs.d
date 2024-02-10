@@ -99,12 +99,15 @@
 
 (use-package highlight-sexp
   :defer t
-
-  :custom
-  (hl-sexp-background-color (okutil-color-scale '(#xff #xfc #xf9) 0.96))
-
   :hook
-  (emacs-lisp-mode . highlight-sexp-mode))
+  (emacs-lisp-mode . highlight-sexp-mode)
+  (after-load-theme . (lambda ()
+                        (require 'okutil)
+                        (let* ((mode (frame-parameter nil 'background-mode))
+                               (scale (if (string= mode "dark") 1.04 0.96))
+                               (bg (face-attribute 'default :background))
+                               (bg-hl (okutil-color-scale bg scale)))
+                          (setq hl-sexp-background-color bg-hl)))))
 
 
 ;; COMMON LIBRARIES

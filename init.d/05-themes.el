@@ -5,42 +5,61 @@
 ;;
 ;;; Code:
 
-(defun ok-themes--configure-theme (theme)
-  "Configure and load THEME."
-  (if (daemonp)
-      (add-hook 'after-make-frame-functions
-                (lambda (frame)
-                  (with-selected-frame frame
-                    (load-theme theme t))))
-    (load-theme theme t)))
+
+(defvar ok-themes-default-theme 'nano-light ;; 'flexoki-theme-light
+  "Default theme at startup.")
 
 
 ;; THEME
 
 (use-package flexoki-themes
-  :config (ok-themes--configure-theme 'flexoki-themes-light))
+  :defer t)
 
 
 (use-package nano-theme
-  :disabled
-  :straight (:host github :repo "rougier/nano-theme")
-  :config (ok-themes--configure-theme 'nano))
+  :defer t
+  :straight (:host github :repo "rougier/nano-theme"))
 
 
 (use-package spacemacs-theme
-  :disabled
   :defer t
-  :init
+  :config
   (require 'okutil)
-  (setq spacemacs-theme-custom-colors
-        `((base . "#322938") ;; #655370 for light, true-color
+  (let ((mode (frame-parameter nil 'background-mode)))
+    (if (string= mode "light")
+        (setq spacemacs-theme-custom-colors
+              `((base . "#322938") ;; #655370 for light, true-color
 
-          ;; Make some colors slightly darker
-          (head3 . ,(okutil-color-scale '(#x67 #xb1 #x1d) 0.80))
-          (head4 . ,(okutil-color-scale '(#xb1 #x95 #x1d) 0.80))
-          (cyan . ,(okutil-color-scale '(#x21 #xb8 #xc7) 0.95))))
+                ;; Make some colors slightly darker
+                (head3 . ,(okutil-color-scale "#67b11d" 0.80))
+                (head4 . ,(okutil-color-scale "#b1951d" 0.80))
+                (cyan . ,(okutil-color-scale "#21b8c7" 0.95)))))))
 
-  (ok-themes--configure-theme 'spacemacs-light))
+
+;; The following utility functions assume that one and only one theme gets
+;; loaded at any time.
+
+(defvar after-load-theme-hook nil
+  "Hooks to run after `load-theme'. ")
+
+(advice-add 'load-theme
+            :around
+            (lambda (orig-fun theme &optional no-confirm no-enable)
+              (mapc #'disable-theme custom-enabled-themes)
+              (funcall orig-fun theme no-confirm no-enable)
+              (run-hooks 'after-load-theme-hook)))
+
+(defun ok-themes-initial-theme (theme)
+  "Set the THEME to load at Emacs startup."
+  (if (daemonp)
+      (add-hook 'after-make-frame-functions
+                (lambda (frame)
+                  (with-selected-frame frame
+                    (load-theme theme t))))
+    (add-hook 'after-init-hook (lambda () (load-theme theme t)))))
+
+
+(ok-themes-initial-theme ok-themes-default-theme)
 
 
 ;; MODE LINE
@@ -49,8 +68,6 @@
   ;; A fancy and fast mode-line inspired by minimalism design.
   :defer t
   :after nerd-icons
-  :requires (flexoki-themes spacemacs-theme)
-  :demand t
 
   :custom
   (doom-modeline-buffer-encoding nil)
@@ -61,7 +78,12 @@
   (mode-line-percent-position nil)
 
   :hook
-  (after-init . doom-modeline-mode))
+  (after-load-theme . (lambda ()
+                        (if (member (car custom-enabled-themes) '(flexoki-themes-dark
+                                                                  flexoki-themes-light))
+                            (doom-modeline-mode +1)
+                          (if (default-value 'doom-modeline-mode)
+                              (doom-modeline-mode -1))))))
 
 
 (use-package doom-nano-modeline
@@ -74,7 +96,7 @@
 (use-package minions
   ;; A minor-mode menu for the mode line.
   :custom (minions-direct '(projectile-mode))
-  :hook (after-init . (lambda () (minions-mode 1))))
+  :hook (after-load-theme . (lambda () (minions-mode 1))))
 
 
 ;; MINOR THEME ADJUSTMENTS
@@ -110,14 +132,15 @@
 (use-package hl-line
   ;; Highlight the current line.
   :straight nil
-
   :hook
   (after-init . (lambda () (global-hl-line-mode +1)))
-
-  :config
-  (set-face-attribute 'hl-line nil
-                      :inherit nil
-                      :background "lemon chiffon"))
+  (after-load-theme . (lambda ()
+                        (require 'okutil)
+                        (let* ((mode (frame-parameter nil 'background-mode))
+                               (scale (if (string= mode "dark") 1.03 0.97))
+                               (bg (face-attribute 'default :background))
+                               (bg-hl (okutil-color-scale bg scale)))
+                          (set-face-attribute 'hl-line nil :background bg-hl)))))
 
 
 (use-package highlight-indent-guides
