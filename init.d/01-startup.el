@@ -63,6 +63,12 @@
   (tooltip-mode 1)
   (setq-default indent-tabs-mode nil)
 
+
+  ;; auto-revert-mode
+  (setq global-auto-revert-non-file-buffers t)
+  (global-auto-revert-mode 1)
+
+
   ;; For multilingual environment:
   (set-language-environment "UTF-8") ;; or "Japanese", for example
 
