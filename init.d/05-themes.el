@@ -18,7 +18,9 @@
 
 (use-package nano-theme
   :defer t
-  :straight (:host github :repo "rougier/nano-theme"))
+  :straight (:host github :repo "rougier/nano-theme")
+  :custom
+  (nano-window-divider-show t))
 
 
 (use-package spacemacs-theme
