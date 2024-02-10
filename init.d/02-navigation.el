@@ -34,6 +34,16 @@
   (after-init . (lambda () (winner-mode 1))))
 
 
+;; FILES
+
+(use-package recentf
+  :defer t
+  :straight nil
+  :custom
+  (recentf-mode t)
+  (recentf-save-file (expand-file-name ".cache/recentf" user-emacs-directory)))
+
+
 ;; IMENU
 
 (use-package imenu-list :defer t)
