@@ -127,35 +127,33 @@ node."
                                (typescript . t)))
   (add-to-list 'org-babel-tangle-lang-exts '("js" . "js"))
 
-  ;; Color styling
-  (custom-set-faces
-   ;; Code block
-   '(org-block-begin-line ((t (:foreground "#999999" :background "#f1ede5" :extend t))))
-   '(org-block ((t (:background "#fbf6ed" :extend t))))
-   '(org-block-end-line ((t (:foreground "#999999" :background "#f1ede5" :extend t))))
-   '(org-modern-bracket-line ((t (:foreground "#999999" :background "#f1ede5" :extend t))))
-
-   ;; Drawer
-   '(org-drawer ((t (:foreground "#999999" :height 1.0 :inherit fixed-pitch))))
-   '(org-special-keyword ((t (:foreground "#999999" :height 1.0 :inherit fixed-pitch))))
-   '(org-property-value ((t (:foreground "#999999" :height 1.0 :inherit fixed-pitch))))
-
-   ;; Table
-   '(org-table ((t (:inherit fixed-pitch))))
-
-   ;; Code-like comments
-   '(font-lock-comment-face ((t (:inherit fixed-pitch))))
-
-   ;; Headings size
-   '(org-document-title ((t (:height 1.24))))
-   '(org-level-1 ((t (:inherit outline-1 :height 1.24))))
-   '(org-level-2 ((t (:inherit outline-2 :height 1.12))))
-   '(org-level-3 ((t (:inherit outline-3 :height 1.0))))
-   '(org-level-4 ((t (:inherit outline-4 :height 0.9))))
-   '(org-level-5 ((t (:inherit outline-5 :height 0.9))))
-   '(org-level-6 ((t (:inherit outline-6 :height 0.9))))
-   '(org-level-7 ((t (:inherit outline-7 :height 0.9))))
-   '(org-level-8 ((t (:inherit outline-8 :height 0.9)))))
+  ;; Font face config
+  (when nil
+    (set-face-attribute 'font-lock-comment-face nil
+                        :inherit 'fixed-pitch)
+    (set-face-attribute 'org-block nil
+                        :background "#fbf6ed" :extend t)
+    (set-face-attribute 'org-block-end-line nil
+                        :foreground "#999999" :background "#f1ede5" :extend t)
+    (set-face-attribute 'org-block-begin-line nil
+                        :foreground "#999999" :background "#f1ede5" :extend t)
+    (set-face-attribute 'org-drawer nil
+                        :foreground "#999999" :height 1.0 :inherit 'fixed-pitch)
+    (set-face-attribute 'org-property-value nil
+                        :foreground "#999999" :height 1.0 :inherit 'fixed-pitch)
+    (set-face-attribute 'org-table nil
+                        :inherit 'fixed-pitch)
+    (set-face-attribute 'org-special-keyword nil
+                        :foreground "#999999" :height 1.0 :inherit 'fixed-pitch)
+    (set-face-attribute 'org-document-title nil :height 1.24)
+    (set-face-attribute 'org-level-1 nil :height 1.24)
+    (set-face-attribute 'org-level-2 nil :height 1.12)
+    (set-face-attribute 'org-level-3 nil :height 1.00)
+    (set-face-attribute 'org-level-4 nil :height 0.90)
+    (set-face-attribute 'org-level-5 nil :height 0.90)
+    (set-face-attribute 'org-level-6 nil :height 0.90)
+    (set-face-attribute 'org-level-7 nil :height 0.90)
+    (set-face-attribute 'org-level-8 nil :height 0.90))
 
   ;; (setq org-latex-inputenc-alist '(("utf8" . "utf8x")))
   ;; (add-to-list 'org-latex-packages-alist '("" "unicode-math"))
@@ -261,7 +259,12 @@ node."
 
   :hook
   (org-mode . org-modern-mode)
-  (org-agenda-finalize . org-modern-agenda))
+  (org-agenda-finalize . org-modern-agenda)
+
+  :config
+  (when nil
+    (set-face-attribute 'org-modern-bracket-line nil
+                        :foreground "#999999" :background "#f1ede5" :extend t)))
 
 
 (use-package org-modern-indent

@@ -125,11 +125,17 @@
     (defun ok-org-roam--render-title-aux (title-aux)
       (if (not title-aux)
           ""
-        (let ((color "SeaGreen4")
-              (sym (nth 0 title-aux))
-              (aux (nth 1 title-aux)))
-          (concat (propertize sym 'face `(:foreground ,color))
-                  (propertize aux 'face `(:foreground ,color :slant italic))))))
+        (let ((sym (nth 0 title-aux))
+              (aux (nth 1 title-aux))
+              (face-sym `(;; symbol
+                          :foreground ,(face-attribute 'completions-annotations
+                                                       :foreground)))
+              (face-aux `(;; text
+                          :foreground ,(face-attribute 'completions-annotations
+                                                       :foreground)
+                          :slant italic)))
+          (concat (propertize sym 'face face-sym)
+                  (propertize aux 'face face-aux)))))
 
     (cl-defmethod org-roam-node-my-node-entry ((node org-roam-node))
       (concat (org-roam-node-title node) (ok-org-roam--render-title-aux (ok-org-roam--get-title-aux node))))

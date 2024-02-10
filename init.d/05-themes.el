@@ -1,8 +1,11 @@
 ;;; 05-themes.el --- Themes  -*- lexical-binding: t -*-
 ;;; Commentary:
+;;
+;; Configure Emacs themes. Visuals, colors, etc.
+;;
 ;;; Code:
 
-(defun init-themes--configure-theme (theme)
+(defun ok-themes--configure-theme (theme)
   "Configure and load THEME."
   (if (daemonp)
       (add-hook 'after-make-frame-functions
@@ -12,7 +15,17 @@
     (load-theme theme t)))
 
 
-;; THEMES
+;; THEME
+
+(use-package flexoki-themes
+  :config (ok-themes--configure-theme 'flexoki-themes-light))
+
+
+(use-package nano-theme
+  :disabled
+  :straight (:host github :repo "rougier/nano-theme")
+  :config (ok-themes--configure-theme 'nano))
+
 
 (use-package spacemacs-theme
   :disabled
@@ -27,12 +40,41 @@
           (head4 . ,(okutil-color-scale '(#xb1 #x95 #x1d) 0.80))
           (cyan . ,(okutil-color-scale '(#x21 #xb8 #xc7) 0.95))))
 
-  (init-themes--configure-theme 'spacemacs-light))
+  (ok-themes--configure-theme 'spacemacs-light))
 
 
-(use-package flexoki-themes
-  :config
-  (init-themes--configure-theme 'flexoki-themes-light))
+;; MODE LINE
+
+(use-package doom-modeline
+  ;; A fancy and fast mode-line inspired by minimalism design.
+  :defer t
+  :after nerd-icons
+  :requires (flexoki-themes spacemacs-theme)
+  :demand t
+
+  :custom
+  (doom-modeline-buffer-encoding nil)
+  (doom-modeline-buffer-file-name-style 'buffer-name)
+  (doom-modeline-height 1)
+  (doom-modeline-minor-modes t)
+  (doom-modeline-vcs-max-length 12)
+  (mode-line-percent-position nil)
+
+  :hook
+  (after-init . doom-modeline-mode))
+
+
+(use-package doom-nano-modeline
+  :disabled
+  :requires (nano-theme)
+  :straight (:host github :repo "ronisbr/doom-nano-modeline")
+  :config (doom-nano-modeline-mode 1))
+
+
+(use-package minions
+  ;; A minor-mode menu for the mode line.
+  :custom (minions-direct '(projectile-mode))
+  :hook (after-init . (lambda () (minions-mode 1))))
 
 
 ;; MINOR THEME ADJUSTMENTS
@@ -42,10 +84,10 @@
   :defer t
 
   :custom
-  (solaire-mode-real-buffer-fn 'init-themes--solaire-mode-real-buffer-p)
+  (solaire-mode-real-buffer-fn 'ok-themes--solaire-mode-real-buffer-p)
 
   :preface
-  (defun init-themes--solaire-mode-real-buffer-p ()
+  (defun ok-themes--solaire-mode-real-buffer-p ()
     (cond ((string-prefix-p "*elfeed" (buffer-name)) t)
           ((string-prefix-p "*Colors*" (buffer-name)) nil)
           (t (solaire-mode-real-buffer-p))))
@@ -61,34 +103,6 @@
 
   :hook
   (prog-mode . rainbow-delimiters-mode))
-
-
-;; MODE-LINE
-
-(use-package doom-modeline
-  ;; A fancy and fast mode-line inspired by minimalism design.
-  :after nerd-icons
-  :demand t
-
-  :custom
-  (doom-modeline-buffer-encoding nil)
-  (doom-modeline-buffer-file-name-style 'buffer-name)
-  (doom-modeline-height 1)
-  (doom-modeline-minor-modes t)
-  (doom-modeline-vcs-max-length 12)
-  (mode-line-percent-position nil)
-
-  :hook
-  (after-init . doom-modeline-mode))
-
-
-(use-package minions
-  ;; A minor-mode menu for the mode line.
-  :custom
-  (minions-direct '(projectile-mode))
-
-  :hook
-  (after-init . (lambda () (minions-mode 1))))
 
 
 ;; MISC.
@@ -136,4 +150,7 @@
       (setq pos-tip-internal-border-width
             (truncate (* ts/font-size 1.5)))))
 
+;; Local Variables:
+;; nameless-aliases: (("" . "ok-themes"))
+;; End:
 ;;; 05-themes.el ends here
