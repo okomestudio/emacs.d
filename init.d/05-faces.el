@@ -1,84 +1,74 @@
 ;;; 05-faces.el --- Faces  -*- lexical-binding: t -*-
 ;;; Commentary:
+;;
+;; Font face configuration.
+;;
 ;;; Code:
 
-(defcustom ts/font-family-default "Hack"
-  "Font family for default face."
-  :type '(string)
-  :group 'ts)
+(defvar ok-face-font-family-default "Hack"
+  "Font family for default face.")
 
-(defcustom ts/font-family-fixed-pitch "Hack"
-  "Font family for fixed pitch face."
-  :type '(string)
-  :group 'ts)
+(defvar ok-face-font-family-fixed-pitch "Hack"
+  "Font family for fixed pitch face.")
 
-(defcustom ts/font-family-variable-pitch "EB Garamond"
-  "Font family for variable pitch face."
-  :type '(string)
-  :group 'ts)
+(defvar ok-face-font-family-variable-pitch "EB Garamond"
+  "Font family for variable pitch face.")
 
-(defcustom ts/font-family-cjk '("BIZ UDGothic"
-                                "Noto Sans Mono CJK JP"
-                                "VL Gothic")
-  "Default CJK fonts. Emacs will pick the first one available in the list."
-  :type '(list)
-  :group 'ts)
+(defvar ok-face-cjk-font-families '("BIZ UDGothic"
+                             "Noto Sans Mono CJK JP"
+                             "VL Gothic")
+  "CJK fonts to look for in order.
 
-(defcustom ts/face-font-relative-scales '(("Hack" . 1.0) ; reference
-                                          ("EB Garamond". 1.4)
-                                          ("BIZ UDGothic" . 1.225)
-                                          ("Noto Sans Mono CJK JP" . 1.225)
-                                          ("VL Gothic" . 1.225))
+The first one available will be picked for CJK characters.")
+
+(defvar ok-face-face-font-rescale-alist '(("Hack" . 1.0) ; reference
+                                   ("EB Garamond". 1.4)
+                                   ("BIZ UDGothic" . 1.225)
+                                   ("Noto Sans Mono CJK JP" . 1.225)
+                                   ("VL Gothic" . 1.225))
   "Set relative scales for font faces.
 
 For best alignment, try with fixed pitch font so that two ASCII
-characters have the same width with a CJK character."
-  :type '(list)
-  :group 'ts)
+characters have the same width with a CJK character.")
 
-(defun ok-face--apply-if-gui (&rest action)
-  "Apply ACTION if we are in a GUI."
-  (if (daemonp)
-      (add-hook 'server-after-make-frame-hook
-                (lambda ()
-                  (let ((frame (selected-frame)))
-                    (select-frame frame)
-                    (if (display-graphic-p frame)
-                        (apply action)))))
+(defun ok-face--set-up-action (&rest action)
+  "Set up ACTION to run at the correct timing."
+  (defun ok-face--apply-if-gui ()
     (when (display-graphic-p)
       (select-frame (selected-frame))
-      (apply action))))
+      (apply action)))
 
-(defun ok-face--set-fallback-cjk-font (fontset-name font-families)
-  (require 'okutil)
-  (let ((font-family (seq-find #'okutil-font-installed-p font-families)))
-    (set-fontset-font fontset-name
-                      'unicode
-                      (font-spec :family font-family)
-                      nil
-                      'append)))
-
-(defun ok-face--setup-font-for-frame ()
-  (set-face-attribute 'default nil :family ts/font-family-default)
-  (set-face-attribute 'fixed-pitch nil :family ts/font-family-fixed-pitch)
-  (set-face-attribute 'variable-pitch nil :family ts/font-family-variable-pitch)
-  (ok-face--set-fallback-cjk-font nil ts/font-family-cjk)
-
-  (set-face-attribute 'italic nil :slant 'italic :underline nil)
-  (set-face-attribute 'underline nil :slant 'normal :underline t))
+  (if (daemonp)
+      (add-hook 'server-after-make-frame-hook ok-face--apply-if-gui)
+    (ok-face--apply-if-gui)))
 
 (defun ok-face--create-cjk-hybrid-fontset (size name)
-  "Create a CJK hybrid fontset of SIZE named fontset-NAME.
+  "Create a CJK hybrid fontset named fontset-NAME from an ASCII font.
 
-See https://knowledge.sakura.ad.jp/8494/"
-  (let ((font-spec (format "Hack:weight=normal:slant=normal:size=%d" size))
+SIZE is the font size of the ASCII font. This could be used
+instead of `set-fontset-font' for CJK chars. TODO: Make this
+fully functiona.
+
+See: https://knowledge.sakura.ad.jp/8494/"
+  (let ((ascii-font (format "Hack:weight=normal:slant=normal:size=%d" size))
         (fontset-name (format "fontset-%s" name)))
-    (create-fontset-from-ascii-font font-spec nil name)
-    (ok-face--set-fallback-cfk-font fontset-name ts/font-family-cjk)
-    fontset-name))
+    (create-fontset-from-ascii-font ascii-font nil fontset-name)))
 
+(defun ok-face--setup-faces-for-frame (&optional frame)
+  "Set up default faces for the frame."
+  (set-face-attribute 'default frame :family ok-face-font-family-default)
+  (set-face-attribute 'fixed-pitch frame :family ok-face-font-family-fixed-pitch)
+  (set-face-attribute 'variable-pitch frame :family ok-face-font-family-variable-pitch)
+
+  ;; Look for a CJK font and use it to render UNICODE chars in this frame:
+  (let* ((font-specs (--map (font-spec :family it) ok-face-cjk-font-families))
+         (matched-font-spec (seq-find (lambda (font-spec)
+                                        (find-font font-spec))
+                                      font-specs)))
+    (set-fontset-font nil 'unicode matched-font-spec frame 'append)))
 
 (use-package 05-faces
+  ;; :disabled
   :defer t
   :straight nil
 
@@ -91,12 +81,9 @@ See https://knowledge.sakura.ad.jp/8494/"
 
   :hook
   (after-init . (lambda ()
-                  ;; (set-face-attribute 'default nil :height 110) ;; 11pt
-
-                  (dolist (element ts/face-font-relative-scales)
+                  (dolist (element ok-face-face-font-rescale-alist)
                     (add-to-list 'face-font-rescale-alist element))
-
-                  (ok-face--apply-if-gui 'ok-face--setup-font-for-frame))))
+                  (ok-face--set-up-action 'ok-face--setup-faces-for-frame))))
 
 
 (use-package mixed-pitch
