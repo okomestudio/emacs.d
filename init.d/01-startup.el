@@ -23,6 +23,7 @@
   (ring-bell-function 'ignore)              ; Disable beeping (in C source code)
   (tab-width 2)
   (uniquify-buffer-name-style 'forward)
+  (use-dialog-box nil)
   (use-short-answers t)
   (vc-follow-symlinks t)
   (word-wrap-by-category t)
