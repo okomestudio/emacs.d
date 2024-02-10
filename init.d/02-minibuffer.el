@@ -57,8 +57,8 @@
 (use-package savehist
   ;; Save minibuffer history.
   :defer t
-
-  :hook
-  (minibuffer-setup . savehist-mode))
+  :straight nil
+  :custom (savehist-file (expand-file-name ".cache/history" user-emacs-directory))
+  :hook (minibuffer-setup . savehist-mode))
 
 ;;; 02-minibuffer.el ends here

@@ -40,6 +40,7 @@
   (backup-directory-alist `((".*" . ,(expand-file-name ".cache/backups"
                                                        user-emacs-directory))))
   (create-lockfiles nil)
+  (history-length 25)
   (make-backup-files nil)
   (require-final-newline nil)
 
