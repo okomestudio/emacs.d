@@ -14,10 +14,10 @@
     (profiler-stop))
   (add-hook 'after-init-hook #'init--tear-down-profiler))
 
-(add-to-list 'after-init-hook
-             (lambda ()
-               (message "Emacs (pid:%d) started in %s"
-                        (emacs-pid) (emacs-init-time))))
+(add-hook 'after-init-hook
+          (lambda ()
+            (message "Emacs (pid:%d) started in %s" (emacs-pid) (emacs-init-time)))
+          100)
 
 ;; custom.el
 (setq custom-file (locate-user-emacs-file "custom.el"))
