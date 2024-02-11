@@ -6,25 +6,22 @@
 ;;; Code:
 
 
-(defvar ok-themes-default-theme 'nano-light ;; 'flexoki-theme-light
+(defvar ok-themes-default-theme 'flexoki-themes-light
   "Default theme at startup.")
 
 
 ;; THEME
 
-(use-package flexoki-themes
-  :defer t)
+(use-package flexoki-themes)
 
 
 (use-package nano-theme
-  :defer t
   :straight (:host github :repo "rougier/nano-theme")
-  :custom
-  (nano-window-divider-show t))
+  :custom (nano-window-divider-show t))
 
 
 (use-package spacemacs-theme
-  :defer t
+  :disabled
   :config
   (require 'okutil)
   (let ((mode (frame-parameter nil 'background-mode)))
@@ -68,7 +65,6 @@
 
 (use-package doom-modeline
   ;; A fancy and fast mode-line inspired by minimalism design.
-  :defer t
   :after nerd-icons
 
   :custom
@@ -123,8 +119,6 @@
 (use-package rainbow-delimiters
   ;; Highlights delimiters such as parentheses, brackets or braces according to
   ;; their depth.
-  :defer t
-
   :hook
   (prog-mode . rainbow-delimiters-mode))
 
