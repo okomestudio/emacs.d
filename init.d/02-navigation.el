@@ -39,7 +39,9 @@
 (use-package recentf
   :defer t
   :straight nil
-  :custom (recentf-mode t))
+  :custom
+  (recentf-exclude '("/\\.config/emacs/var/"))
+  (recentf-mode t))
 
 
 (use-package save-place
