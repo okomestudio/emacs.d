@@ -22,25 +22,14 @@
   :config
   (use-package cfrs
     ;; A simple alternative to read-string that allows reading input via a small
-    ;; child-frame spawned at the position of the cursor. :defer t
-    )
+    ;; child-frame spawned at the position of the cursor.
+    :defer t)
 
   (defun ok-treemacs-show ()
     (interactive)
     (push-mark)
     (treemacs)
     (pop-global-mark))
-
-  (defun ok--treemacs-ignore (filename absolute-path)
-    "Predicate for files to be ignored from view in Treemacs."
-    (or
-     ;; probably just for testing
-     (string-match-p "\\.vwxyz$" filename)
-     ;; all org-roam node files except templates
-     (and (string-match-p ".*/roam/.*" absolute-path)
-          (not (string-match-p ".*/roam/template/?.*" absolute-path)))))
-
-  (add-to-list 'treemacs-ignored-file-predicates #'ok--treemacs-ignore)
 
   (treemacs-filewatch-mode t)
   (treemacs-follow-mode t)
