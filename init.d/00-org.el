@@ -188,7 +188,7 @@ node."
   (require 'ox-md)  ;; Markdown
   (require 'ox-gfm) ;; GitHub-flavored Markdown
 
-  (defun init-org--org-html-link (link desc info)
+  (defun ok-org--org-html-link (link desc info)
     (let* ((raw-link (org-element-property :raw-link link))
            (raw-path (org-element-property :path link))
            (type (org-element-property :type link))
@@ -202,18 +202,19 @@ node."
               (format "<img src=\"%s\" />" raw-link)
             (format "<a href=\"%s\">%s</a>" raw-link desc))))))
 
-  (org-export-define-derived-backend 'substack 'html
-    :menu-entry
-    '(?S "Export to Substack article"
-         ((?o "As HTML file and open"
-	            (lambda (a s v b)
-	              (if a
-                    (org-export-to-buffer t s v b)
-                  (let* ((f (concat (file-name-sans-extension buffer-file-name) ".html")))
-                    (org-open-file (org-export-to-file 'substack f nil s v b))))))))
+  (org-export-define-derived-backend
+   'substack 'html
+   :menu-entry
+   '(?S "Export to Substack article"
+        ((?o "As HTML file and open"
+	           (lambda (a s v b)
+	             (if a
+                   (org-export-to-buffer t s v b)
+                 (let ((f (concat (file-name-sans-extension buffer-file-name) ".html")))
+                   (org-open-file (org-export-to-file 'substack f nil s v b))))))))
 
-    :translate-alist
-    '((link . init-org--org-html-link))))
+   :translate-alist
+   '((link . ok-org--org-html-link))))
 
 
 (use-package ox-gfm :after ox)
@@ -326,4 +327,7 @@ node."
   :config
   (use-package ftable))
 
+;; Local Variables:
+;; nameless-aliases: (("" . "ok-org"))
+;; End:
 ;;; 00-org.el ends here
