@@ -11,8 +11,6 @@
   :custom
   (emms-player-list '(emms-player-mpv))
   (emms-info-functions '(emms-info-native))
-  (emms-source-file-default-directory `(,(expand-file-name ".cache/emms"
-                                                           user-emacs-directory)))
 
   :ensure-system-package
   (mpv . "sudo apt install mpv")

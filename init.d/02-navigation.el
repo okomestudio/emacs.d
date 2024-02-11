@@ -39,15 +39,12 @@
 (use-package recentf
   :defer t
   :straight nil
-  :custom
-  (recentf-mode t)
-  (recentf-save-file (expand-file-name ".cache/recentf" user-emacs-directory)))
+  :custom (recentf-mode t))
 
 
 (use-package save-place
   :defer t
   :straight nil
-  :custom (save-place-file (expand-file-name ".cache/places" user-emacs-directory))
   :init (save-place-mode 1))
 
 

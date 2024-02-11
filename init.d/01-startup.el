@@ -2,6 +2,13 @@
 ;;; Commentary:
 ;;; Code:
 
+(use-package no-littering
+  :custom
+  (no-littering-etc-directory (expand-file-name (convert-standard-filename "etc/")
+                                                user-emacs-directory))
+  (no-littering-var-directory (expand-file-name (convert-standard-filename "var/")
+                                                user-emacs-directory)))
+
 (use-package emacs
   :straight nil
 
@@ -20,7 +27,7 @@
   (enable-recursive-minibuffers t)
   (load-prefer-newer t)
   (next-error-message-highlight t)
-  (ring-bell-function 'ignore)              ; Disable beeping (in C source code)
+  (ring-bell-function 'ignore)          ; Disable beeping (in C source code)
   (tab-width 2)
   (uniquify-buffer-name-style 'forward)
   (use-dialog-box nil)
@@ -38,8 +45,6 @@
   ;; File related config
   (auto-save-default nil)
   (backup-by-copying t)
-  (backup-directory-alist `((".*" . ,(expand-file-name ".cache/backups"
-                                                       user-emacs-directory))))
   (create-lockfiles nil)
   (history-length 25)
   (make-backup-files nil)

@@ -15,7 +15,6 @@
   (treemacs-indentation 2)
   (treemacs-indentation-string " ")
   (treemacs-no-png-images t) ;; set to nil for image icons
-  (treemacs-persist-file "~/.config/emacs/.cache/treemacs-persist")
   (treemacs-show-cursor t)
   (treemacs-wide-toggle-width 75)
   (treemacs-width 30)
