@@ -46,18 +46,12 @@
 
 (use-package help-shortdoc-example
   ;; Display shortdoc examples to *Help* buffer.
-  :defer t
-  :straight
-  (:host github :repo "buzztaiki/help-shortdoc-example.el")
-
-  :config
-  (help-shortdoc-example-mode 1))
+  :straight (:host github :repo "buzztaiki/help-shortdoc-example.el")
+  :config (help-shortdoc-example-mode 1))
 
 
 (use-package which-key
   ;; Displays available keybindings in popup.
-  :defer t
-
   :bind
   (("C-h W" . which-key-show-top-level))
 
@@ -76,11 +70,10 @@
 
 (use-package sicp
   ;; "Structure and Interpretation of Computer Programs" as info
-  :defer t)
+  )
 
 
 (use-package help ;; help-mode
-  :defer t
   :straight nil
   :hook
   (help-mode . (lambda ()

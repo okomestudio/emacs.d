@@ -6,7 +6,6 @@
 ;;; Code:
 
 (use-package 85-lookup
-  :defer t
   :straight nil
 
   :bind
@@ -51,13 +50,12 @@
 
 (use-package define-word
   ;; Display the definition of word at point.
-  :defer t
   :custom (define-word-default-service 'wordnik))
 
 
 (use-package powerthesaurus
   ;; Powerthesaurus integration.
-  :defer t)
+  )
 
 
 (use-package synosaurus
@@ -70,7 +68,6 @@
 ;; Pronunciation
 
 (use-package hatsuon
-  :defer t
   :straight
   (:host github :repo "okomestudio/hatsuon.el" :branch "main"))
 
@@ -79,8 +76,6 @@
 
 (use-package go-translate
   ;; A translation framework.
-  :defer t
-
   :custom
   (gts-split-width-threshold 120)
   (gts-translate-list '(("en" "ja") ("ja" "en")))
@@ -113,6 +108,6 @@
   ;; Search for and list unicode characters.
   ;;
   ;; Type list-unicode-display to search for unicode chars.
-  :defer t)
+  )
 
 ;;; 85-lookup.el ends here

@@ -4,8 +4,6 @@
 
 (use-package markdown-mode
   ;; For browser preview, use C-c C-c v.
-  :defer t
-
   :custom
   (markdown-fontify-code-block-natively t)
   (markdown-header-scaling t)
@@ -34,15 +32,11 @@
 
 
 (use-package devdocs
-  :defer t
-
   :hook
   (markdown-mode . (lambda () (setq-local devdocs-current-docs '("markdown")))))
 
 
 (use-package lsp-mode
-  :defer t
-
   :hook
   (markdown-mode . lsp))
 

@@ -3,8 +3,6 @@
 ;;; Code:
 
 (use-package projectile
-  :defer t
-
   :bind
   (;
    :map ctl-x-4-map

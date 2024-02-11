@@ -3,8 +3,6 @@
 ;;; Code:
 
 (use-package mozc
-  :defer t
-
   :commands
   (toggle-input-method)
 

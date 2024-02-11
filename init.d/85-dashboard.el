@@ -3,6 +3,8 @@
 ;;; Code:
 
 (use-package dashboard
+  :demand t
+
   :custom
   (dashboard-agenda-release-buffers t)
   (dashboard-center-content t)
@@ -44,6 +46,6 @@
 
   (dashboard-setup-startup-hook))
 
-(use-package wotd :defer t)
+(use-package wotd)
 
 ;;; 85-dashboard.el ends here

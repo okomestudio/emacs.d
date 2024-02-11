@@ -6,8 +6,6 @@
 ;;; Code:
 
 (use-package eww
-  :defer t
-
   :config
   (require 'okutil)
 
@@ -75,8 +73,6 @@ See http://emacs.rubikitch.com/eww-weblio/ for reference."
 
 
 (use-package shr
-  :defer t
-
   :custom
   (shr-use-xwidgets-for-media nil))
 

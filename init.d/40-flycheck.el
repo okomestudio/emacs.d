@@ -3,8 +3,6 @@
 ;;; Code:
 
 (use-package flycheck
-  :defer t
-
   :custom
   (flycheck-python-mypy-executable "~/.config/emacs/bin/mypy")
   (flycheck-rst-executable "~/.config/emacs/bin/rst2pseudoxml")
@@ -21,8 +19,6 @@
 
 
 (use-package flycheck-pos-tip
-  :defer t
-
   :custom
   (flycheck-pos-tip-timeout 60)
 

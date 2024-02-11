@@ -3,8 +3,6 @@
 ;;; Code:
 
 (use-package python
-  :defer t
-
   :bind
   (;
    :map python-mode-map
@@ -39,8 +37,6 @@
 
 
 (use-package polymode
-  :defer t
-
   :interpreter
   (("python" . pm-python-sql-mode)
    ("python3" . pm-python-sql-mode))
@@ -73,8 +69,6 @@
 
 
 (use-package blacken
-  :defer t
-
   :ensure-system-package
   (black . "pip install black")
 
@@ -82,21 +76,15 @@
   (put 'blacken-line-length 'safe-local-variable #'integerp))
 
 
-(use-package cython-mode
-  :defer t)
+(use-package cython-mode)
 
 
 (use-package py-isort
-  :defer t
-
-  :straight
-  (py-isort
-   :type git :host github :repo "paetzke/py-isort.el"
-
-   ;; Use patch till PR #21 gets merged
-   :fork (:host github
-                :repo "okomestudio/py-isort.el"
-                :branch "ts/provide-default-settings-path"))
+  :straight (:type git :host github :repo "paetzke/py-isort.el"
+                   ;; Use patch till PR #21 gets merged
+                   :fork (:host github
+                                :repo "okomestudio/py-isort.el"
+                                :branch "ts/provide-default-settings-path"))nxs
 
   :ensure-system-package
   (isort . "pip install isort"))
@@ -114,9 +102,7 @@
 
 
 (use-package pyenv
-  :defer t
-  :straight
-  (:host github :repo "aiguofer/pyenv.el")
+  :straight (:host github :repo "aiguofer/pyenv.el")
 
   :custom
   (pyenv-show-active-python-in-modeline nil)
@@ -142,7 +128,6 @@
 
 
 (use-package python-pytest
-  :defer t
   :after (direnv)
 
   :bind
@@ -152,16 +137,12 @@
 
 
 (use-package devdocs
-  :defer t
-
   :hook
   (python-mode . (lambda () (setq-local devdocs-current-docs '("python~3.12"))))
   (python-ts-mode . (lambda () (setq-local devdocs-current-docs '("python~3.12")))))
 
 
 (use-package pydoc
-  :defer t
-
   :bind
   (;
    :map python-mode-map
@@ -181,8 +162,6 @@
 
 
 (use-package lsp-mode
-  :defer t
-
   :custom
   (lsp-pylsp-configuration-sources ["flake8"])
   (lsp-pylsp-plugins-flake8-enabled t)
@@ -197,7 +176,6 @@
 
 
 (use-package pymacs
-  :defer t
   :straight
   (;;
    :host github
@@ -214,7 +192,6 @@
 
 
 (use-package ropemacs
-  :defer t
   :after (pymacs)
   :straight
   (;;

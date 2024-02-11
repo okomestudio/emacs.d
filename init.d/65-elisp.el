@@ -3,7 +3,6 @@
 ;;; Code:
 
 (use-package elisp-mode
-  :defer t
   :straight nil
 
   :bind
@@ -23,40 +22,29 @@
 
 
 (use-package aggressive-indent
-  :defer t
-
   :hook
   (emacs-lisp-mode . aggressive-indent-mode))
 
 
-(use-package erefactor
-  :defer t)
+(use-package erefactor)
 
 
 (use-package eros
-  :defer t
-
   :hook
   (emacs-lisp-mode . eros-mode))
 
 
 (use-package flycheck-package
-  :defer t
-
   :hook
   (emacs-lisp-mode . flycheck-package-setup))
 
 
 (use-package ipretty
-  :defer t
-
   :config
   (ipretty-mode 1))
 
 
 (use-package nameless
-  :defer t
-
   :hook
   (emacs-lisp-mode . nameless-mode)
 
@@ -66,8 +54,6 @@
 
 
 (use-package paredit
-  :defer t
-
   :hook
   (emacs-lisp-mode . init-elisp--paredit-hook)
 
@@ -80,8 +66,6 @@
 ;; SYNTAX HIGHLIGHTING
 
 (use-package highlight-defined
-  :defer t
-
   :custom
   (highlight-defined-face-use-itself t)
 
@@ -91,14 +75,11 @@
 
 
 (use-package highlight-quoted
-  :defer t
-
   :hook
   (emacs-lisp-mode . highlight-quoted-mode))
 
 
 (use-package highlight-sexp
-  :defer t
   :hook
   (emacs-lisp-mode . highlight-sexp-mode)
   (after-load-theme . (lambda ()
@@ -114,10 +95,9 @@
 
 (use-package dash
   ;; A modern list library for Emacs
-  :defer t)
+  )
 
-(use-package uuid
-  :defer t)
+(use-package uuid)
 
 
 ;; ELSA
@@ -144,12 +124,10 @@
 
 (use-package suggest
   ;; For discovering elisp functions based on examples.
-  :defer t)
+  )
 
 
 (use-package devdocs
-  :defer t
-
   :hook
   (emacs-lisp-mode
    . (lambda () (setq-local devdocs-current-docs '("lisp")))))

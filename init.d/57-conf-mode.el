@@ -19,13 +19,12 @@
 ;; SSH CONFIG
 
 (use-package ssh-config-mode ;; doesn't actually derive from conf-mode
-  :defer t)
+  )
 
 
 ;; SYSTEMD
 
 (use-package systemd
-  :defer t
   :mode ("\\.\\(service|timer\\)\\'" . systemd-mode))
 
 ;;; 57-conf-mode.el ends here

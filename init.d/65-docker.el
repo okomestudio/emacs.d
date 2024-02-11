@@ -2,25 +2,19 @@
 ;;; Commentary:
 ;;; Code:
 
-(use-package docker
-  :defer t)
+(use-package docker)
 
 
-(use-package dockerfile-mode
-  :defer t)
+(use-package dockerfile-mode)
 
 
 (use-package devdocs
-  :defer t
-
   :hook
   (dockerfile-mode
    . (lambda () (setq-local devdocs-current-docs '("docker")))))
 
 
 (use-package lsp-mode
-  :defer t
-
   :hook
   (dockerfile-mode . (lambda () (init-lsp-lsp-mode-hook 'dockerfile-ls))))
 

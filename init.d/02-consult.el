@@ -6,8 +6,6 @@
 ;;; Code:
 
 (use-package consult
-  :defer t
-
   :straight
   (:pre-build
    ;; build info manual, which appears missing by default:
@@ -68,7 +66,6 @@
 
 
 (use-package consult-flycheck
-  :defer t
   :after (consult flycheck)
 
   :bind
@@ -76,7 +73,6 @@
 
 
 (use-package consult-flyspell
-  :defer t
   :after (consult flyspell)
 
   :bind
@@ -84,12 +80,10 @@
 
 
 (use-package consult-lsp
-  :defer t
   :after (consult lsp))
 
 
 (use-package consult-projectile
-  :defer t
   :after (consult projectile)
 
   :bind

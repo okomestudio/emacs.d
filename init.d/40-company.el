@@ -4,8 +4,6 @@
 
 (use-package company
   ;; See https://emacs.stackexchange.com/a/24800/599 for key binding tips.
-  :defer t
-
   :bind
   (;
    :map company-mode-map
@@ -36,8 +34,6 @@
 ;; Frontends
 
 (use-package company-box
-  :defer t
-
   :custom
   (company-box-backends-colors
    '((company-capf . (:all

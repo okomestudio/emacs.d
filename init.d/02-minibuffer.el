@@ -4,13 +4,8 @@
 
 (use-package vertico
   ;; VERTical Interactive COmpletion.
-  :defer t
-
-  :custom
-  (vertico-count 20)
-
-  :hook
-  (after-init . vertico-mode))
+  :custom (vertico-count 20)
+  :hook (after-init . vertico-mode))
 
 
 (use-package embark
@@ -18,7 +13,6 @@
   ;;
   ;; Offers a hook to add relevant actions on a target determined by context.
   ;;
-  :defer t
   :after embark-consult)
 
 
@@ -27,36 +21,25 @@
 
   ;; Use if you want to have consult previews as you move around an
   ;; auto-updating embark collect buffer.
-  :hook
-  (embark-collect-mode . consult-preview-at-point-mode))
+  :hook (embark-collect-mode . consult-preview-at-point-mode))
 
 
 (use-package marginalia
   ;; Marginalia in the minibuffer.
-  :defer t
-
-  :hook
-  (vertico-mode . marginalia-mode))
+  :hook (vertico-mode . marginalia-mode))
 
 
 (use-package nerd-icons-completion
-  :defer t
-
-  :config
-  (nerd-icons-completion-mode))
+  :config (nerd-icons-completion-mode))
 
 
 (use-package orderless
   ;; Emacs completion style that matches multiple regexps in any order.
-  :defer t
-
-  :custom
-  (completion-styles '(orderless)))
+  :custom (completion-styles '(orderless)))
 
 
 (use-package savehist
   ;; Save minibuffer history.
-  :defer t
   :straight nil
   :hook (minibuffer-setup . savehist-mode))
 

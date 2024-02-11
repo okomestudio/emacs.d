@@ -3,7 +3,6 @@
 ;;; Code:
 
 (use-package json-mode
-  :defer t
   :after (web-beautify)
 
   :bind
@@ -40,23 +39,17 @@
 
 (use-package jq-mode
   ;; TODO: Enable jq-mode with jq in JSON but yq in YAML.
-  :defer t
-
   :ensure-system-package
   (jq . "sudo apt install -y jq")
   (yq . "pip install yq"))
 
 
 (use-package devdocs
-  :defer t
-
   :hook
   (json-mode . (lambda () (setq-local devdocs-current-docs '("jq")))))
 
 
 (use-package lsp-mode
-  :defer t
-
   :hook
   (json-mode . (lambda () (init-lsp-lsp-mode-hook 'json-ls))))
 

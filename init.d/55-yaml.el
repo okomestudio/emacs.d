@@ -3,8 +3,6 @@
 ;;; Code:
 
 (use-package yaml-mode
-  :defer t
-
   :hook
   (yaml-mode . (lambda () (typo-mode -1)))
 

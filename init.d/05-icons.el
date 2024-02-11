@@ -3,19 +3,18 @@
 ;;; Code:
 
 (use-package nerd-icons
-  :defer t
-
+  :if (member system-type '(gnu gnu/linux gnu/kfreebsd))
   :config
-  (if (not (file-exists-p "~/.local/share/fonts/NFM.ttf"))
-      (nerd-icons-install-fonts +1)))
+  (unless (file-exists-p "~/.local/share/fonts/NFM.ttf")
+    (nerd-icons-install-fonts +1)))
 
 
 (use-package all-the-icons
   :disabled
-  :if (display-graphic-p)
-
+  :if (and (display-graphic-p)
+           (member system-type '(gnu gnu/linux gnu/kfreebsd)))
   :config
-  (if (not (file-exists-p "~/.local/share/fonts/all-the-icons.ttf"))
-      (all-the-icons-install-fonts +1)))
+  (unless (file-exists-p "~/.local/share/fonts/all-the-icons.ttf")
+    (all-the-icons-install-fonts +1)))
 
 ;;; 05-icons.el ends here

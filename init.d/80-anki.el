@@ -24,10 +24,7 @@
 
 (use-package anki-editor
   ;; Emacs minor mode for making Anki cards with Org.
-  :defer t
-
-  :straight
-  (:fork "orgtre")
+  :straight (:fork "orgtre")
 
   :custom
   (anki-editor-latex-style 'mathjax)

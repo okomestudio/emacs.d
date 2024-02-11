@@ -6,8 +6,6 @@
 ;;; Code:
 
 (use-package emms
-  :defer t
-
   :custom
   (emms-player-list '(emms-player-mpv))
   (emms-info-functions '(emms-info-native))

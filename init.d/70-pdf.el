@@ -6,8 +6,6 @@
 ;;; Code:
 
 (use-package pdf-tools
-  :defer t
-
   :config
   (pdf-tools-install)
   (add-hook 'pdf-view-mode-hook (lambda() (nlinum-mode -1)))

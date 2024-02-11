@@ -3,7 +3,6 @@
 ;;; Code:
 
 (use-package lsp-mode
-  :defer t
   :commands (lsp lsp-deferred)
 
   :custom
@@ -38,7 +37,6 @@
   ;; Pressing an arrow key or tab goes out of that state. See
   ;; https://github.com/emacs-lsp/lsp-ui/issues/751.
   ;;
-  :defer t
   :commands lsp-ui-mode
 
   :bind
@@ -79,7 +77,7 @@
 
 
 (use-package lsp-treemacs
-  :defer t
+  :after (treemacs lsp)
   :bind ([f7] . lsp-treemacs-symbols)
   :commands lsp-treemacs-errors-list)
 

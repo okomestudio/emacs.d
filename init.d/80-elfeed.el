@@ -6,7 +6,6 @@
 ;;; Code:
 
 (use-package elfeed
-  :defer t
   :commands (elfeed)
 
   :custom

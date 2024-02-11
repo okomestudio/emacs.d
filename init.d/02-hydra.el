@@ -2,7 +2,6 @@
 ;;; Commentary:
 ;;; Code:
 
-(use-package hydra
-  :defer t)
+(use-package hydra)
 
 ;;; 02-hydra.el ends here

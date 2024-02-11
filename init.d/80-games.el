@@ -6,8 +6,6 @@
 ;;; Code:
 
 (use-package tetris
-  :defer t
-
   :bind
   (;;
    :map tetris-mode-map

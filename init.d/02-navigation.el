@@ -5,25 +5,19 @@
 ;; WINDOWS AND FRAMES
 
 (use-package ace-window
-  :defer t
-
   :bind
   ("M-O" . 'ace-window)
 
-  :custom
-  (aw-dispatch-always t))
+  :custom (aw-dispatch-always t))
 
 
 (use-package frame-cmds
-  :defer t
-
   :bind
   ("M-o" . 'other-window-or-frame))
 
 
 (use-package winner
   ;; Undo or redo a change in window configuration.
-  :defer t
   :straight nil
 
   :bind
@@ -37,7 +31,6 @@
 ;; FILES
 
 (use-package recentf
-  :defer t
   :straight nil
   :custom
   (recentf-exclude '("/\\.config/emacs/var/"))
@@ -45,13 +38,12 @@
 
 
 (use-package save-place
-  :defer t
   :straight nil
   :init (save-place-mode 1))
 
 
 ;; IMENU
 
-(use-package imenu-list :defer t)
+(use-package imenu-list)
 
 ;;; 02-navigation.el ends here

@@ -7,18 +7,12 @@
 ;;; Code:
 
 (use-package org-roam
-  :defer t
-
-  :straight
-  (;; pull from fork for custom features
-   :type git
-   :host github
-   :repo "okomestudio/org-roam"
-   :branch "okome"
-   :fork "okomestudio")
+  :straight (:host github :repo "okomestudio/org-roam"
+                   :branch "okome" :fork "okomestudio")
 
   :bind
-  (("C-c n c" . (lambda () (interactive) (org-capture nil "f")))
+  (;
+   ("C-c n c" . (lambda () (interactive) (org-capture nil "f")))
    ("C-c n f" . org-roam-node-find)
    ("C-c n i" . org-roam-node-insert)
    ("C-c n l" . org-roam-buffer-toggle)
@@ -293,7 +287,6 @@
 
 
 (use-package org-roam-ui
-  :defer t
   :after org-roam
 
   :custom
@@ -303,7 +296,6 @@
 
 
 (use-package org-roam-bibtex
-  :defer t
   :after org-roam
 
   :custom
@@ -316,8 +308,6 @@
 
 (use-package org-ref
   ;; For citations, cross-references, bibliographies.
-  :defer t
-
   :custom
   (bibtex-completion-pdf-field "file")
 
@@ -326,7 +316,6 @@
 
 
 (use-package org-roam-timestamps
-  :defer t
   :after org-roam
 
   :custom
@@ -339,8 +328,6 @@
 
 
 (use-package adaptive-wrap
-  :defer t
-
   :hook
   (org-roam-mode . (lambda ()
                      (turn-on-visual-line-mode)

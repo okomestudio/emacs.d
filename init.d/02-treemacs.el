@@ -3,8 +3,6 @@
 ;;; Code:
 
 (use-package treemacs
-  :defer t
-
   :bind
   (;
    ([f8] . ok-treemacs-show)
@@ -65,17 +63,14 @@
 
 
 (use-package treemacs-icons-dired
-  :defer t
   :hook (dired-mode . treemacs-icons-dired-enable-once))
 
 
 (use-package treemacs-magit
-  :defer t
   :after (treemacs magit))
 
 
 (use-package treemacs-projectile
-  :defer t
   :after (treemacs projectile))
 
 ;; Local Variables:

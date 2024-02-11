@@ -29,10 +29,11 @@
 (straight-use-package 'use-package-ensure-system-package)
 
 (setq straight-use-package-by-default t)
-(setq use-package-enable-imenu-support t)
-(setq use-package-verbose t)
-(setq use-package-compute-statistics t) ;; for use-package-report
-(setq use-package-minimum-reported-time 0.01)
+(setq use-package-always-defer t       ;; use :demand t to override
+      use-package-compute-statistics t ;; for use-package-report
+      use-package-enable-imenu-support t
+      use-package-minimum-reported-time 0.01
+      use-package-verbose t)
 (setq message-log-max t)
 
 ;;; init-straight.el ends here

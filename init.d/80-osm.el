@@ -6,8 +6,6 @@
 ;;; Code:
 
 (use-package osm
-  :defer t
-
   :custom
   (osm-copyright nil))
 

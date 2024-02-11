@@ -6,7 +6,6 @@
 ;;; Code:
 
 (use-package gnus
-  :defer t
   :straight nil
   :commands (gnus)
 
@@ -61,7 +60,6 @@ Each list item is:
 
 
 (use-package gnus-group
-  :defer t
   :straight nil
 
   :config
@@ -82,7 +80,6 @@ _g_: get new messages
 
 
 (use-package gnus-sum
-  :defer t
   :straight nil
 
   :config
@@ -112,7 +109,6 @@ _R_: reply        _M_: move
 
 
 (use-package gnus-art
-  :defer t
   :straight nil
 
   :config

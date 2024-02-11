@@ -6,8 +6,6 @@
 ;;; Code:
 
 (use-package eat
-  :defer t
-
   :straight
   '(eat :type git
         :host codeberg

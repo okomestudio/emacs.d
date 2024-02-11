@@ -3,8 +3,6 @@
 ;;; Code:
 
 (use-package web-mode
-  :defer t
-
   :custom
   (web-mode-code-indent-offset 2)
   (web-mode-css-indent-offset 2)
@@ -127,12 +125,10 @@ See http://blog.binchen.org/posts/effective-spell-check-in-emacs.html"
   )
 
 
-(use-package typescript-mode :defer t)
+(use-package typescript-mode)
 
 
 (use-package prettier-js ;; or use web-beautify (?)
-  :defer t
-
   :ensure-system-package
   (prettier . "npm install -g prettier")
 
@@ -158,8 +154,6 @@ See http://blog.binchen.org/posts/effective-spell-check-in-emacs.html"
 
 
 (use-package devdocs
-  :defer t
-
   :hook
   (web-mode . (lambda () (setq-local devdocs-current-docs '("axios"
                                                             "css"
@@ -176,8 +170,6 @@ See http://blog.binchen.org/posts/effective-spell-check-in-emacs.html"
 
 
 (use-package lsp-mode
-  :defer t
-
   ;; Use ts-ls
   :hook
   (web-mode . (lambda ()

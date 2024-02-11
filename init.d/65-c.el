@@ -3,8 +3,7 @@
 ;;; Code:
 
 (use-package cc-mode
-  :defer t
-  :ensure nil
+  :straight nil
   :config
   (setq c-basic-offset 2))
 

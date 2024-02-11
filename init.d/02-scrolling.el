@@ -6,7 +6,6 @@
 ;;; Code:
 
 (use-package emacs ;; scroll configuration
-  :defer t
   :straight nil
 
   :custom
@@ -28,8 +27,6 @@
 
 
 (use-package yascroll
-  :defer t
-
   :hook
   (after-init . (lambda () (global-yascroll-bar-mode +1))))
 

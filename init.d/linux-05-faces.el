@@ -122,13 +122,8 @@ See: https://knowledge.sakura.ad.jp/8494/"
 
 (use-package eaw
   ;; East Asian Ambiguous Width問題と絵文字の横幅問題の修正ロケール.
-  :defer t
-
-  :straight
-  (:host github :repo "hamano/locale-eaw")
-
-  :config
-  (eaw-fullwidth))
+  :straight (:host github :repo "hamano/locale-eaw")
+  :config (eaw-fullwidth))
 
 ;; Local Variables:
 ;; nameless-aliases: (("" . "ok-face"))

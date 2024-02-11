@@ -6,9 +6,7 @@
 ;;; Code:
 
 (use-package chatgpt-shell
-  :defer t
-  :straight
-  (chatgpt-shell :host github :repo "xenodium/chatgpt-shell")
+  :straight (chatgpt-shell :host github :repo "xenodium/chatgpt-shell")
 
   :custom
   (chatgpt-shell-model-version "gpt-3.5-turbo")
@@ -17,13 +15,10 @@
                                :host "api.openai.com"))))
 
 
-(use-package gptel
-  :defer t)
+(use-package gptel)
 
 
 (use-package org-ai
-  :defer t
-
   :custom
   (org-ai-default-chat-model "gpt-3.5-turbo")
   (org-ai-image-directory "~/Downloads/org-ai/")

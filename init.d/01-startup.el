@@ -3,6 +3,8 @@
 ;;; Code:
 
 (use-package no-littering
+  :demand t
+
   :custom
   (no-littering-etc-directory (expand-file-name (convert-standard-filename "etc/")
                                                 user-emacs-directory))
@@ -10,6 +12,7 @@
                                                 user-emacs-directory)))
 
 (use-package emacs
+  :demand t
   :straight nil
 
   :bind
@@ -87,7 +90,6 @@
 
 (use-package add-node-modules-path
   ;; Add node_modules/.bin to exec-path.
-  :defer t
   )
 
 
@@ -97,13 +99,8 @@
   ;; Invoke direnv to obtain the environment for the current file, then update
   ;; the emacs variables process-environment and exec-path.
   ;;
-  :defer t
-
-  :ensure-system-package
-  (direnv . "sudo apt install -y direnv")
-
-  :config
-  (direnv-mode))
+  :ensure-system-package (direnv . "sudo apt install -y direnv")
+  :config (direnv-mode))
 
 
 (use-package exec-path-from-shell
@@ -111,22 +108,14 @@
   ;;
   ;; Ensure environment variables look the same in the user's shell.
   ;;
-  :defer t
   :if (or (memq window-system '(mac ns x)) (daemonp))
-
-  :config
-  (exec-path-from-shell-initialize))
+  :config (exec-path-from-shell-initialize))
 
 
 (use-package keychain-environment
   ;; Loads keychain environment variables into emacs.
-  :defer t
-
-  :straight
-  (:host github :repo "tarsius/keychain-environment")
-
-  :config
-  (keychain-refresh-environment))
+  :straight (:host github :repo "tarsius/keychain-environment")
+  :config (keychain-refresh-environment))
 
 
 ;; MISC.
@@ -137,14 +126,12 @@
 
 
 (use-package system-packages
-  :defer t
   :custom
   (system-packages-use-sudo t)
   (system-packages-package-manager 'apt))
 
 
 (use-package tramp
-  :defer t
   :straight nil
   :custom (tramp-default-method "ssh"))
 

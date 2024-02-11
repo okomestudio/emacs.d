@@ -4,7 +4,6 @@
 
 (use-package hippie-exp
   ;; Expand the word before the point in various ways.
-  :defer t
   :ensure nil
 
   :bind
@@ -13,16 +12,12 @@
 
 (use-package mwim
   ;; Switch between the beginning/end of line or code line positioning.
-  :defer t
-
   :bind
   (("C-a" . 'mwim-beginning)
    ("C-e" . 'mwim-end)))
 
 
 (use-package multiple-cursors
-  :defer t
-
   :bind
   ("C-S-c C-S-c" . mc/edit-lines)
   ("C->" . mc/mark-next-like-this)
@@ -32,13 +27,11 @@
 
 (use-package htmlize
   ;; Convert buffer text and decorations to HTML
-  :defer t)
+  )
 
 
 (use-package titlecase
   ;; Titlecase things.
-  :defer t
-
   :bind
   (;
    :map text-mode-map
@@ -61,8 +54,6 @@
 
 (use-package undo-tree
   ;; Treat undo history as a tree.
-  :defer t
-
   :bind
   (;
    :map undo-tree-map
@@ -81,14 +72,12 @@
 
 (use-package whole-line-or-region
   ;; Operate on current line if region undefined.
-  :defer t)
+  )
 
 
 ;;; SPELLING
 
 (use-package flyspell
-  :defer t
-
   :bind
   (;
    :map text-mode-map
@@ -101,8 +90,6 @@
 
 
 (use-package ispell
-  :defer t
-
   :custom
   (ispell-dictionary "en_US")
   (ispell-local-dictionary-alist
@@ -115,13 +102,11 @@
 
 ;;; SEARCH AND MOVEMENT
 
-(use-package ace-jump-mode :defer t)
+(use-package ace-jump-mode)
 
 
 (use-package ace-isearch
   ;; A seamless bridge between isearch, ace-jump-mode, avy, and swoop.
-  :defer t
-
   :custom
   (ace-isearch-input-length 1)
   (ace-isearch-jump-delay 0.75)
