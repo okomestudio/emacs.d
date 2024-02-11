@@ -18,6 +18,7 @@
 .mc-lists.el
 .org-id-locations
 custom.el
+elpa/
 init.d/*-user-*
 roam/
 straight/*
