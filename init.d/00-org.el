@@ -127,33 +127,36 @@ node."
                                (typescript . t)))
   (add-to-list 'org-babel-tangle-lang-exts '("js" . "js"))
 
-  ;; Font face config
-  (when nil
-    (set-face-attribute 'font-lock-comment-face nil
-                        :inherit 'fixed-pitch)
-    (set-face-attribute 'org-block nil
-                        :background "#fbf6ed" :extend t)
-    (set-face-attribute 'org-block-end-line nil
-                        :foreground "#999999" :background "#f1ede5" :extend t)
+  ;; FONT FACE
+  (let ((bg-mode (frame-parameter nil 'background-mode))
+        (bg-block (face-attribute 'org-block :background))
+        (fg-shadow (face-attribute 'shadow :foreground)))
     (set-face-attribute 'org-block-begin-line nil
-                        :foreground "#999999" :background "#f1ede5" :extend t)
-    (set-face-attribute 'org-drawer nil
-                        :foreground "#999999" :height 1.0 :inherit 'fixed-pitch)
-    (set-face-attribute 'org-property-value nil
-                        :foreground "#999999" :height 1.0 :inherit 'fixed-pitch)
-    (set-face-attribute 'org-table nil
-                        :inherit 'fixed-pitch)
-    (set-face-attribute 'org-special-keyword nil
-                        :foreground "#999999" :height 1.0 :inherit 'fixed-pitch)
-    (set-face-attribute 'org-document-title nil :height 1.24)
-    (set-face-attribute 'org-level-1 nil :height 1.24)
-    (set-face-attribute 'org-level-2 nil :height 1.12)
-    (set-face-attribute 'org-level-3 nil :height 1.00)
-    (set-face-attribute 'org-level-4 nil :height 0.90)
-    (set-face-attribute 'org-level-5 nil :height 0.90)
-    (set-face-attribute 'org-level-6 nil :height 0.90)
-    (set-face-attribute 'org-level-7 nil :height 0.90)
-    (set-face-attribute 'org-level-8 nil :height 0.90))
+                        :foreground fg-shadow
+                        :background bg-block)
+    (set-face-attribute 'org-block-end-line nil
+                        :foreground fg-shadow
+                        :background bg-block ) ;; "#f1ede5"
+
+    (set-face-attribute 'org-drawer nil :foreground fg-shadow)
+    (set-face-attribute 'org-property-value nil :foreground fg-shadow)
+    (set-face-attribute 'org-special-keyword nil :foreground fg-shadow))
+
+  (set-face-attribute 'font-lock-comment-face nil :inherit 'fixed-pitch)
+  (set-face-attribute 'org-drawer nil :inherit 'fixed-pitch)
+  (set-face-attribute 'org-property-value nil :inherit 'fixed-pitch)
+  (set-face-attribute 'org-special-keyword nil :inherit 'fixed-pitch)
+  (set-face-attribute 'org-table nil :inherit 'fixed-pitch)
+
+  (set-face-attribute 'org-document-title nil :height 1.24)
+  (set-face-attribute 'org-level-1 nil :height 1.24)
+  (set-face-attribute 'org-level-2 nil :height 1.12)
+  (set-face-attribute 'org-level-3 nil :height 1.00)
+  (set-face-attribute 'org-level-4 nil :height 0.90)
+  (set-face-attribute 'org-level-5 nil :height 0.90)
+  (set-face-attribute 'org-level-6 nil :height 0.90)
+  (set-face-attribute 'org-level-7 nil :height 0.90)
+  (set-face-attribute 'org-level-8 nil :height 0.90)
 
   ;; (setq org-latex-inputenc-alist '(("utf8" . "utf8x")))
   ;; (add-to-list 'org-latex-packages-alist '("" "unicode-math"))
@@ -259,28 +262,19 @@ node."
 
   :hook
   (org-mode . org-modern-mode)
-  (org-agenda-finalize . org-modern-agenda)
-
-  :config
-  (when nil
-    (set-face-attribute 'org-modern-bracket-line nil
-                        :foreground "#999999" :background "#f1ede5" :extend t)))
+  (org-agenda-finalize . org-modern-agenda))
 
 
 (use-package org-modern-indent
   ;; Modern block styling with org-indent.
   :defer t
-
-  :straight
-  (org-modern-indent :type git
-                     :host github
-                     :repo "jdtsmith/org-modern-indent")
-
-  :init
-  (add-hook 'org-mode-hook #'org-modern-indent-mode 90))
+  :straight (:host github :repo "jdtsmith/org-modern-indent")
+  :init (add-hook 'org-mode-hook #'org-modern-indent-mode 90))
 
 
-(use-package org-side-tree :defer t)
+(use-package org-side-tree
+  :disabled
+  :defer t)
 
 
 (use-package org-transclusion

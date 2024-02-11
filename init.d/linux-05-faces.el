@@ -66,7 +66,11 @@ See: https://knowledge.sakura.ad.jp/8494/"
          (matched-font-spec (seq-find (lambda (font-spec)
                                         (find-font font-spec))
                                       font-specs)))
-    (set-fontset-font nil 'unicode matched-font-spec frame 'append)))
+    (set-fontset-font nil 'unicode matched-font-spec frame 'append))
+
+  ;; NOTE: By default, italic is rendered as underline, for which this is a fix.
+  (set-face-attribute 'italic nil :slant 'italic :underline nil)
+  (set-face-attribute 'underline nil :slant 'normal :underline t))
 
 (use-package emacs
   :defer t
@@ -112,7 +116,8 @@ See: https://knowledge.sakura.ad.jp/8494/"
   :config
   (delete 'org-table mixed-pitch-fixed-pitch-faces)
   (add-to-list 'mixed-pitch-fixed-pitch-faces 'font-lock-comment-face)
-  (add-to-list 'mixed-pitch-fixed-pitch-faces 'org-modern-bracket-line))
+  (add-to-list 'mixed-pitch-fixed-pitch-faces 'org-modern-bracket-line)
+  (add-to-list 'mixed-pitch-fixed-pitch-faces 'org-modern-tag))
 
 
 (use-package eaw
