@@ -75,10 +75,4 @@
   :config
   (set-face-background 'lsp-ui-doc-background "#eeeeee"))
 
-
-(use-package lsp-treemacs
-  :after (treemacs lsp)
-  :bind ([f7] . lsp-treemacs-symbols)
-  :commands lsp-treemacs-errors-list)
-
 ;;; 10-lsp.el ends here
