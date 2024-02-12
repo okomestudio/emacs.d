@@ -6,18 +6,18 @@
 ;;
 ;;; Code:
 
+;; Redirect native compilation cache if possible.
+(when (fboundp 'startup-redirect-eln-cache)
+  (startup-redirect-eln-cache
+   (convert-standard-filename
+    (expand-file-name  "var/eln-cache/" user-emacs-directory))))
+
 (let ((minver "29.1"))
   (when (version< emacs-version minver)
     (error "The minimum Emacs version expected is %s" minver)))
 
 (setq debug-on-error t) ;; set t when debugging startup issues
 (setq byte-compile-warnings '(not obsolete)) ;; set t for development
-
-;; Redirect native compilation cache if possible.
-(when (fboundp 'startup-redirect-eln-cache)
-  (startup-redirect-eln-cache
-   (convert-standard-filename
-    (expand-file-name  "var/eln-cache/" user-emacs-directory))))
 
 ;; Reduce GC usage while initialization. 800 kb is the default (2021-08-01).
 ;; Note that the threshold while running is set by gcmh later in init and the
