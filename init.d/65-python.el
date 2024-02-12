@@ -1,12 +1,15 @@
 ;;; 65-python.el --- Python  -*- lexical-binding: t -*-
 ;;; Commentary:
+;;
+;; Configure Python-related utilities.
+;;
 ;;; Code:
 
 (use-package python
   :straight nil
 
   :bind
-  (;
+  (;; no globals
    :map python-mode-map
    ("C-c b" . ok-python--format-python-code)
    :map python-ts-mode-map
@@ -133,7 +136,7 @@
   :after (direnv)
 
   :bind
-  (;
+  (;; no globals
    :map python-mode-map
    ("C-c t" . python-pytest-dispatch)))
 
@@ -146,11 +149,11 @@
 
 (use-package pydoc
   :bind
-  (;
+  (;; no globals
    :map python-mode-map
-   ("C-h D" . (lambda () (interactive) (ok-python--pydoc-or-devdocs)))
+   ("C-h D" . ok-python--pydoc-or-devdocs)
    :map python-ts-mode-map
-   ("C-h D" . (lambda () (interactive) (ok-python--pydoc-or-devdocs))))
+   ("C-h D" . ok-python--pydoc-or-devdocs))
 
   :hook
   (python-mode . (lambda () (require 'pydoc)))
@@ -158,6 +161,7 @@
 
   :config
   (defun ok-python--pydoc-or-devdocs ()
+    (interactive)
     (if (symbol-at-point)
         (pydoc-at-point)
       (devdocs-lookup))))
@@ -178,10 +182,10 @@
 
 
 (use-package pymacs
+  :disabled
   :straight
   (;;
-   :host github
-   :repo "Pymacs2/Pymacs"
+   :host github :repo "Pymacs2/Pymacs"
    :post-build ;; See what install-pymacs.sh does:
    (("pip" "install" "-U" "pyopenssl")
     `("pip" "install" "-e" ,(file-name-concat user-emacs-directory
@@ -194,6 +198,7 @@
 
 
 (use-package ropemacs
+  :disabled
   :after (pymacs)
   :straight
   (;;
