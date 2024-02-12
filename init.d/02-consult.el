@@ -90,6 +90,17 @@
   (("C-c p A" . consult-projectile)
    ([remap projectile-find-dir] . consult-projectile-find-dir)
    ([remap projectile-find-file] . consult-projectile-find-file)
-   ([remap projectile-switch-project] . consult-projectile-switch-project)))
+   ([remap projectile-switch-project] . consult-projectile-switch-project))
+
+  :config
+  ;; advise consult-projectile-switch-project to trigger project switch hooks
+  ;; These projectile hooks won't trigger unless projectile-switch-project is
+  ;; used.
+  (advice-add #'consult-projectile-switch-project
+              :around
+              (lambda (orig-func)
+                (run-hooks 'projectile-before-switch-project-hook)
+                (funcall orig-func)
+                (run-hooks 'projectile-after-switch-project-hook))))
 
 ;;; 02-consult.el ends here

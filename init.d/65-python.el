@@ -118,18 +118,7 @@
                                        (pyenv-use-corresponding)
                                        (shell-command-to-string
                                         (expand-file-name "bin/bootstrap-python-venv"
-                                                          user-emacs-directory))))
-
-  :config
-  ;; advise consult-projectile-switch-project to trigger project switch hooks
-  ;; These projectile hooks won't trigger unless projectile-switch-project is
-  ;; used.
-  (advice-add #'consult-projectile-switch-project
-              :around
-              (lambda (orig-func)
-                (run-hooks 'projectile-before-switch-project-hook)
-                (funcall orig-func)
-                (run-hooks 'projectile-after-switch-project-hook))))
+                                                          user-emacs-directory)))))
 
 
 (use-package python-pytest
