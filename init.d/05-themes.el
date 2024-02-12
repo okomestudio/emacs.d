@@ -12,7 +12,12 @@
 
 ;; THEME
 
-(use-package flexoki-themes)
+(use-package flexoki-themes
+  :config
+  (with-eval-after-load 'company
+    (let ((mode (frame-parameter nil 'background-mode)))
+      (when (string= mode "light")
+        (set-face-attribute 'company-tooltip nil :background "#eeeeee")))))
 
 
 (use-package nano-theme
@@ -161,13 +166,10 @@
 
 (use-package pos-tip
   ;; Show tooltip at point.
-  :disabled
-
-  :init
-  (setq pos-tip-background-color "white")
-  (if (and (boundp 'ts/font-size) ts/font-size)
-      (setq pos-tip-internal-border-width
-            (truncate (* ts/font-size 1.5)))))
+  :custom
+  (pos-tip-background-color "#dddddd")
+  (pos-tip-border-width 5)
+  (pos-tip-internal-border-width 5))
 
 ;; Local Variables:
 ;; nameless-aliases: (("" . "ok-themes"))

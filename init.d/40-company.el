@@ -3,15 +3,16 @@
 ;;; Code:
 
 (use-package company
-  ;; See https://emacs.stackexchange.com/a/24800/599 for key binding tips.
+  ;; Do not use `global-company-mode' when `lsp' completion is also in use.
   :bind
-  (;
+  (;; See https://emacs.stackexchange.com/a/24800/599 for key binding tips.
    :map company-mode-map
-   ("<C-tab>" . company-indent-or-complete-common)
+   ("C-<tab>" . company-indent-or-complete-common)
 
    :map company-active-map
-   ("<tab>" . company-complete-selection)
    ("SPC" . nil)
+   ;; See https://emacs.stackexchange.com/q/9631/599:
+   ("<tab>" . company-complete-selection)
    ("TAB" . company-complete-selection)
 
    :map company-active-map
@@ -25,45 +26,30 @@
   (company-selection-wrap-around t)
   (company-show-numbers 'left)
   (company-tooltip-align-annotations t)
-  (company-tooltip-limit 20)
-
-  :hook
-  (after-init . global-company-mode))
+  (company-tooltip-limit 10))
 
 
-;; Frontends
+;; FRONTENDS
+
+(use-package company-quickhelp
+  :bind (:map company-active-map
+              ("C-c h" . company-quickhelp-manual-begin))
+  :custom (company-quickhelp-delay 2.0)
+  :hook (company-mode . company-quickhelp-mode))
+
 
 (use-package company-box
-  :custom
-  (company-box-backends-colors
-   '((company-capf . (:all
-                      (:foreground "black" :background "#eeeeee")
-                      :selected
-                      (:foreground "black" :background "#ffffff")))))
-
-  :hook
-  (company-mode . company-box-mode)
-
-  :config
-  (set-face-background 'company-box-background "#eeeeee"))
+  :disabled
+  :hook (company-mode . company-box-mode)
+  :custom (company-box-doc-delay 1.0))
 
 
 (use-package company-posframe
   :disabled
-
-  :custom
-  (company-posframe-font
-   (font-spec
-    :size (max (ts/default-font-size)
-               (/ (* (face-attribute 'default :height)
-                     1.5)
-                  10))))
-
-  :hook
-  (company-mode . (lambda () (company-posframe-mode 1))))
+  :hook (company-mode . (lambda () (company-posframe-mode 1))))
 
 
-;; Backends
+;; BACKENDS
 
 (use-package company-graphviz-dot
   :disabled

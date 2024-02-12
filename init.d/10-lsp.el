@@ -6,6 +6,7 @@
   :commands (lsp lsp-deferred)
 
   :custom
+  (lsp-completion-enable t)
   (lsp-diagnostics-provider :auto)
   (lsp-keymap-prefix "C-c l")
   (lsp-log-io nil) ;; set to t for debugging
