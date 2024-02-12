@@ -3,6 +3,8 @@
 ;;; Code:
 
 (use-package python
+  :straight nil
+
   :bind
   (;
    :map python-mode-map
@@ -80,22 +82,22 @@
 
 
 (use-package py-isort
-  :straight (:type git :host github :repo "paetzke/py-isort.el"
-                   ;; Use patch till PR #21 gets merged
-                   :fork (:host github
-                                :repo "okomestudio/py-isort.el"
-                                :branch "ts/provide-default-settings-path"))nxs
+  :straight
+  (py-isort
+   :host github :repo "paetzke/py-isort.el"
+   ;; For https://github.com/paetzke/py-isort.el/pull/21
+   :fork (:host github
+                :repo "okomestudio/py-isort.el"
+                :branch "ts/provide-default-settings-path"))
 
   :ensure-system-package
   (isort . "pip install isort"))
 
 
 (use-package pyimport
-  :defer t
   :straight
-  (:host github :repo "okomestudio/pyimport"
-         :branch "python-ts-mode-support"
-         :fork "okomestudio")
+  (:host github :repo "okomestudio/pyimport" :branch "project-awareness"
+         :files ("*.el" ("bin/make-imports.py" . "bin/make-imports.py")))
 
   :ensure-system-package
   (pyflakes . "pip install pyflakes"))
@@ -166,7 +168,7 @@
   (lsp-pylsp-configuration-sources ["flake8"])
   (lsp-pylsp-plugins-flake8-enabled t)
   (lsp-pylsp-plugins-pycodestyle-enabled nil)
-  (lsp-pylsp-plugins-pydocstyle-enabled t)
+  (lsp-pylsp-plugins-pydocstyle-enabled nil) ;; redundant with flake8?
   (lsp-pylsp-plugins-pyflakes-enabled nil)
   (lsp-pylsp-plugins-pylint-enabled nil)
 
