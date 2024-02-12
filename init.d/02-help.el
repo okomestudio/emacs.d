@@ -53,7 +53,7 @@
 (use-package which-key
   ;; Displays available keybindings in popup.
   :bind
-  (("C-h W" . which-key-show-top-level))
+  (("C-h a k" . which-key-show-top-level))
 
   :custom
   (which-key-idle-delay 0.5)
@@ -64,8 +64,8 @@
   (which-key-side-window-location '(right bottom))
   (which-key-side-window-max-width 0.8)
 
-  :init
-  (which-key-mode +1))
+  :hook
+  (after-init . (lambda () (which-key-mode +1))))
 
 
 (use-package sicp
