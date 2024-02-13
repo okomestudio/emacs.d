@@ -99,23 +99,4 @@
   :preface
   (put 'ispell-dictionary 'safe-local-variable #'stringp))
 
-
-;;; SEARCH AND MOVEMENT
-
-(use-package ace-jump-mode)
-
-
-(use-package ace-isearch
-  ;; A seamless bridge between isearch, ace-jump-mode, avy, and swoop.
-  :custom
-  (ace-isearch-input-length 1)
-  (ace-isearch-jump-delay 0.75)
-
-  :hook
-  (after-init . (lambda ()
-                  (global-ace-isearch-mode +1)
-                  (defun ok-isearch-callback ()
-                    (consult-line isearch-string))
-                  (setq ace-isearch-function-from-isearch #'ok-isearch-callback))))
-
 ;;; 40-editing-utils.el ends here
