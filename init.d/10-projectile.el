@@ -6,15 +6,6 @@
 ;;; Code:
 
 (use-package projectile
-  :bind
-  (;; no globals
-   :map ctl-x-4-map
-   ("p" . (lambda ()
-            (interactive)
-            (other-window -1)
-            (projectile-switch-project)
-            (other-window +1))))
-
   :bind-keymap
   ("s-p" . projectile-command-map) ;; "s-" is "super"
   ("C-c p" . projectile-command-map)
@@ -49,6 +40,13 @@
   (put 'projectile-project-test-cmd 'safe-local-variable #'stringp)
 
   :config
-  (projectile-mode +1))
+  (projectile-mode +1)
+
+  ;; Doing this in :bind doesn't appear to work:
+  (keymap-global-set "C-x 4 p" (lambda ()
+                                 (interactive)
+                                 (other-window -1)
+                                 (projectile-switch-project)
+                                 (other-window +1))))
 
 ;;; 10-projectile.el ends here
