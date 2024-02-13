@@ -1,9 +1,12 @@
 ;;; 65-rust.el --- Rust  -*- lexical-binding: t -*-
 ;;; Commentary:
+;;
+;; Configure Rust related utilities.
+;;
 ;;; Code:
 
 (use-package rust-mode
-  :custom
-  (rust-format-on-save t))
+  :disabled 
+  :custom (rust-format-on-save t))
 
 ;;; 65-rust.el ends here

@@ -1,4 +1,4 @@
-;;; 05-faces.el --- Faces  -*- lexical-binding: t -*-
+;;; linux-05-faces.el --- Faces  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;
 ;; Font face configuration.
@@ -128,4 +128,4 @@ See: https://knowledge.sakura.ad.jp/8494/"
 ;; Local Variables:
 ;; nameless-aliases: (("" . "ok-face"))
 ;; End:
-;;; 05-faces.el ends here
+;;; linux-05-faces.el ends here

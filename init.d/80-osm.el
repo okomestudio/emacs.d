@@ -6,7 +6,7 @@
 ;;; Code:
 
 (use-package osm
-  :custom
-  (osm-copyright nil))
+  :disabled
+  :custom (osm-copyright nil))
 
 ;;; 80-osm.el ends here

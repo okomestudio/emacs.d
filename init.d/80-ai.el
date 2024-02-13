@@ -15,17 +15,18 @@
                                :host "api.openai.com"))))
 
 
-(use-package gptel)
+(use-package gptel
+  :disabled)
 
 
 (use-package org-ai
+  :disabled
   :custom
   (org-ai-default-chat-model "gpt-3.5-turbo")
   (org-ai-image-directory "~/Downloads/org-ai/")
   (org-ai-sd-directory "~/Downloads/org-ai/")
 
-  :hook
-  (org-mode . org-ai-mode)
+  :hook (org-mode . org-ai-mode)
 
   :commands
   (org-ai-mode
