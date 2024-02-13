@@ -5,10 +5,9 @@
 (use-package prog-mode
   :straight nil
   :hook
-  (prog-mode . (lambda ()
-                 (add-hook 'local-write-file-hooks
-                           #'(lambda () (save-excursion
-                                          (delete-trailing-whitespace))))
-                 (show-paren-mode))))
+  (before-save . (lambda ()
+                   (when (derived-mode-p '(prog-mode))
+                     (save-excursion
+                       (delete-trailing-whitespace))))))
 
 ;;; 60-prog-mode.el ends here
