@@ -1,12 +1,15 @@
 ;;; 00-org.el --- Org  -*- lexical-binding: t -*-
 ;;; Commentary:
+;;
+;; Configure Org mode.
+;;
 ;;; Code:
 
 (use-package org
   :ensure org-contrib
 
   :bind
-  (;
+  (;; no globals
    :map org-mode-map
    ("C-c C-l" . 'org-insert-link)
    ("C-c l" . 'org-store-link)
@@ -14,13 +17,10 @@
    ("M-q" . 'okutil-org-fill-or-unfill-paragraph))
 
   :custom
-  (fill-column 80)
   (org-adapt-indentation nil)
   (org-babel-python-command "~/.pyenv/shims/python")
-  (org-blank-before-new-entry '((heading . auto) (plain-list-item . auto)))
+  (org-blank-before-new-entry '((heading . nil) (plain-list-item . nil)))
   (org-ellipsis "⮷")
-  (org-export-with-broken-links t)
-  (org-export-with-section-numbers nil)
   (org-file-apps '(("\\.mp4\\'" . "vlc --repeat %s")))
   (org-hide-emphasis-markers t)
   (org-image-actual-width nil)
@@ -41,9 +41,11 @@
 
   :hook
   (org-mode . (lambda ()
+                (setq-local fill-column 80)
                 (turn-on-visual-line-mode)))
 
   :config
+  ;; HELPER FUNCTIONS
   (defun org-ensure-all-headings-with-ids ()
     "Ensure all headings have IDs."
     (interactive)
@@ -86,6 +88,7 @@ node."
                 (org-yank))))))
       (switch-to-buffer tmp-buffer)))
 
+  ;; EMPHASIS
   ;; Update regex for org emphasis; see, e.g.,
   ;; https://stackoverflow.com/a/63805680/515392.
   (setcar org-emphasis-regexp-components
@@ -109,7 +112,7 @@ node."
           (concat "[:space:]"))
   (org-set-emph-re 'org-emphasis-regexp-components org-emphasis-regexp-components)
 
-  ;; Babel
+  ;; BABEL
   (add-to-list 'org-src-lang-modes '("plantuml" . plantuml))
 
   (use-package ob-typescript)
@@ -124,6 +127,7 @@ node."
                                (sql . t)
                                (sqlite . t)
                                (typescript . t)))
+  
   (add-to-list 'org-babel-tangle-lang-exts '("js" . "js"))
 
   ;; FONT FACE
@@ -157,26 +161,30 @@ node."
   (set-face-attribute 'org-level-7 nil :height 0.90)
   (set-face-attribute 'org-level-8 nil :height 0.90)
 
+  ;; LATEX PREVIEW
   ;; (setq org-latex-inputenc-alist '(("utf8" . "utf8x")))
   ;; (add-to-list 'org-latex-packages-alist '("" "unicode-math"))
   (setq org-preview-latex-default-process 'lualatexpdf)
-  (setq org-preview-latex-process-alist
-        '((lualatexpdf :programs ("lualatex" "dvisvgm")
-                       :description "pdf > svg"
-                       :message "you need to install the programs: lualatex and dvisvgm."
-                       :image-input-type "pdf"
-                       :image-output-type "svg"
-                       :image-size-adjust (1.7 . 1.5)
-                       :latex-compiler ("lualatex -interaction nonstopmode --shell-escape -output-directory %o %f")
-                       :image-converter ("pdfcropmargins -v -p 0 -a -5 %f -o /tmp/cropped.pdf ; dvisvgm -P /tmp/cropped.pdf -n -b min -c %S -o %O"))
-          (lualatexdvi :programs ("lualatex" "dvisvgm")
-                       :description "dvi > svg"
-                       :message "you need to install the programs: lualatex and dvisvgm."
-                       :image-input-type "dvi"
-                       :image-output-type "svg"
-                       :image-size-adjust (1.7 . 1.5)
-                       :latex-compiler ("dvilualatex -interaction nonstopmode --shell-escape -output-directory %o %f")
-                       :image-converter ("dvisvgm %f -n -b min -c %S -o %O")))))
+  (add-to-list 'org-preview-latex-process-alist
+               '(lualatexpdf
+                 :programs ("lualatex" "dvisvgm")
+                 :description "pdf > svg"
+                 :message "you need to install the programs: lualatex and dvisvgm."
+                 :image-input-type "pdf"
+                 :image-output-type "svg"
+                 :image-size-adjust (1.7 . 1.5)
+                 :latex-compiler ("lualatex -interaction nonstopmode --shell-escape -output-directory %o %f")
+                 :image-converter ("pdfcropmargins -v -p 0 -a -5 %f -o /tmp/cropped.pdf ; dvisvgm -P /tmp/cropped.pdf -n -b min -c %S -o %O")))
+  (add-to-list 'org-preview-latex-process-alist
+               '(lualatexdvi
+                 :programs ("lualatex" "dvisvgm")
+                 :description "dvi > svg"
+                 :message "you need to install the programs: lualatex and dvisvgm."
+                 :image-input-type "dvi"
+                 :image-output-type "svg"
+                 :image-size-adjust (1.7 . 1.5)
+                 :latex-compiler ("dvilualatex -interaction nonstopmode --shell-escape -output-directory %o %f")
+                 :image-converter ("dvisvgm %f -n -b min -c %S -o %O"))))
 
 
 (use-package ox
@@ -184,6 +192,10 @@ node."
   :after (org)
   :straight nil
 
+  :custom
+  (org-export-with-broken-links t)
+  (org-export-with-section-numbers nil)
+  
   :config
   (require 'ox-md)  ;; Markdown
   (require 'ox-gfm) ;; GitHub-flavored Markdown
@@ -195,10 +207,11 @@ node."
            (link-is-url (member type '("http" "https" "ftp" "mailto")))
            (desc (org-string-nw-p desc)))
       (if link-is-url
-          (format "<a href=\"%s\">%s</a>" raw-link (if desc desc raw-link))
+          (format "<a href=\"%s\">%s</a>" raw-link (or desc raw-link))
         (if (string= (substring raw-link 0 3) "id:")
             desc
-          (if (member (file-name-extension raw-link) '("gif" "jpeg" "jpg" "png" "webp"))
+          (if (member (file-name-extension raw-link)
+                      '("gif" "jpeg" "jpg" "png" "webp"))
               (format "<img src=\"%s\" />" raw-link)
             (format "<a href=\"%s\">%s</a>" raw-link desc))))))
 
@@ -210,7 +223,8 @@ node."
 	           (lambda (a s v b)
 	             (if a
                    (org-export-to-buffer t s v b)
-                 (let ((f (concat (file-name-sans-extension buffer-file-name) ".html")))
+                 (let ((f (concat (file-name-sans-extension buffer-file-name)
+                                  ".html")))
                    (org-open-file (org-export-to-file 'substack f nil s v b))))))))
 
    :translate-alist
@@ -300,7 +314,8 @@ node."
   (require 'org-transclusion-indent-mode))
 
 
-(use-package org-web-tools)
+(use-package org-web-tools
+  :disabled)
 
 
 ;; Org table styling
