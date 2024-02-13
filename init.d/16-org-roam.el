@@ -1,4 +1,4 @@
-;;; 10-org-roam.el --- Org Roam  -*- lexical-binding: t -*-
+;;; 16-org-roam.el --- Org Roam  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;
 ;; A tool for networked thought. It reproduces some of Roam Research's key
@@ -339,4 +339,4 @@
 ;; Local Variables:
 ;; nameless-aliases: (("" . "ok-org-roam"))
 ;; End:
-;;; 10-org-roam.el ends here
+;;; 16-org-roam.el ends here

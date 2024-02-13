@@ -1,4 +1,4 @@
-;;; 01-startup.el --- Startup  -*- lexical-binding: t -*-
+;;; 00-startup.el --- Startup  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;; Code:
 
@@ -141,4 +141,4 @@
   :straight nil
   :custom (tramp-default-method "ssh"))
 
-;;; 01-startup.el ends here
+;;; 00-startup.el ends here
