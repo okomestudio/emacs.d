@@ -1,7 +1,7 @@
 ;;; 80-gnus.el --- Gnus  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;
-;; To open the Gnus manual, hit ~C-h i d m gnus~.
+;; Configure Gnus.
 ;;
 ;;; Code:
 
@@ -10,32 +10,25 @@
   :commands (gnus)
 
   :custom
-  (gnus-home-directory "~/.local/var/gnus")
+  (gnus-home-directory (no-littering-expand-var-file-name "gnus/"))
 
-  :preface
-  (defcustom ok-gnus-smtp-accounts '()
+  :init
+  (defcustom ok-gnus-smtp-accounts nil
     "List of SMTP servers associated with sender email address.
 
-Each list item is:
-
-  (<sender email address> <SMTP server> <port> <SMTP login>)."
+Each list item is a list of form `(addr server, port usr)', where
+`addr' is sender email address, `server' is SMTP server, `port'
+is port, and `usr' is SMTP login."
     :type 'list
-    :group 'ts)
+    :group 'ok)
 
   :config
-  (if (not (file-directory-p gnus-home-directory))
-      (make-directory gnus-home-directory :parents))
-
-  (setq gnus-directory (concat gnus-home-directory "news/")
-        gnus-dribble-directory gnus-home-directory
-        gnus-init-file (concat gnus-home-directory "gnus.el")
-        gnus-startup-file (concat gnus-home-directory ".newsrc")
-        gnus-summary-insert-old-articles t
+  (setq gnus-summary-insert-old-articles t
         gnus-summary-line-format "%U%R%z%I%(%[%o: %-23,23f%]%) %s\\n"
-        message-directory (concat gnus-home-directory "mail/"))
+        message-directory (concat gnus-home-directory "Mail/"))
 
   (defun ok-gnus--send-message ()
-    "Set SMTP server from list of multiple ones and send mail."
+    "Set SMTP server from a list and send mail."
     (interactive)
     (message-remove-header "X-Message-SMTP-Method")
     (let ((sender (message-fetch-field "From")))
@@ -61,9 +54,7 @@ Each list item is:
 
 (use-package gnus-group
   :straight nil
-
   :config
-  (require 'hydra)
   (defhydra hydra-gnus-group (:color pink :hint nil)
     "
 ^Group^
@@ -81,9 +72,7 @@ _g_: get new messages
 
 (use-package gnus-sum
   :straight nil
-
   :config
-  (require 'hydra)
   (defhydra hydra-gnus-summary (:color pink :hint nil)
     "
 ^Message Summary^ ^^             ^Threads
@@ -110,9 +99,7 @@ _R_: reply        _M_: move
 
 (use-package gnus-art
   :straight nil
-
   :config
-  (require 'hydra)
   (defhydra hydra-gnus-article (:color pink :hint nil)
     "
 ^Message^
