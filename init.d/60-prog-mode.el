@@ -6,7 +6,7 @@
   :straight nil
   :hook
   (before-save . (lambda ()
-                   (when (derived-mode-p '(prog-mode))
+                   (when (derived-mode-p 'prog-mode)
                      (save-excursion
                        (delete-trailing-whitespace))))))
 
