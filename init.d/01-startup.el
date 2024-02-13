@@ -86,6 +86,12 @@
   (set-default-coding-systems 'utf-8))
 
 
+;; COMMON ELISP LIBRARIES
+
+(use-package dash) ;; A modern list library for Emacs
+(use-package uuid)
+
+
 ;; SHELL
 
 (use-package add-node-modules-path

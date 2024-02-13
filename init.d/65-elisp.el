@@ -94,15 +94,6 @@
                           (setq hl-sexp-background-color bg-hl)))))
 
 
-;; COMMON LIBRARIES
-
-(use-package dash
-  ;; A modern list library for Emacs
-  )
-
-(use-package uuid)
-
-
 ;; ELSA
 
 (use-package elsa
