@@ -1,22 +1,25 @@
 ;;; 65-elisp.el --- Elisp  -*- lexical-binding: t -*-
 ;;; Commentary:
+;;
+;; Configure Emacs Lisp related utilities.
+;;
 ;;; Code:
 
 (use-package elisp-mode
   :straight nil
 
   :bind
-  (; no global key binding
+  (;; no global key binding
    :map emacs-lisp-mode-map
-   ("C-c b" . init-elisp--format-elisp-buffer)
+   ("C-c b" . ok-elisp--format-elisp-buffer)
    :map lisp-data-mode-map
-   ("C-c b" . init-elisp--format-elisp-buffer))
+   ("C-c b" . ok-elisp--format-elisp-buffer))
 
   :hook
   (emacs-lisp-mode . company-mode)
 
   :config
-  (defun init-elisp--format-elisp-buffer ()
+  (defun ok-elisp--format-elisp-buffer ()
     "Format Elisp buffer."
     (interactive)
     (save-excursion
@@ -25,26 +28,22 @@
 
 
 (use-package aggressive-indent
-  :hook
-  (emacs-lisp-mode . aggressive-indent-mode))
+  :hook (emacs-lisp-mode . aggressive-indent-mode))
 
 
 (use-package erefactor)
 
 
 (use-package eros
-  :hook
-  (emacs-lisp-mode . eros-mode))
+  :hook (emacs-lisp-mode . eros-mode))
 
 
 (use-package flycheck-package
-  :hook
-  (emacs-lisp-mode . flycheck-package-setup))
+  :hook (emacs-lisp-mode . flycheck-package-setup))
 
 
 (use-package ipretty
-  :config
-  (ipretty-mode 1))
+  :config (ipretty-mode 1))
 
 
 (use-package nameless
@@ -78,8 +77,7 @@
 
 
 (use-package highlight-quoted
-  :hook
-  (emacs-lisp-mode . highlight-quoted-mode))
+  :hook (emacs-lisp-mode . highlight-quoted-mode))
 
 
 (use-package highlight-sexp
@@ -122,8 +120,9 @@
 
 
 (use-package devdocs
-  :hook
-  (emacs-lisp-mode
-   . (lambda () (setq-local devdocs-current-docs '("lisp")))))
+  :hook (emacs-lisp-mode . (lambda () (setq-local devdocs-current-docs '("lisp")))))
 
+;; Local Variables:
+;; nameless-aliases: (("" . "ok-elisp"))
+;; End:
 ;;; 65-elisp.el ends here
