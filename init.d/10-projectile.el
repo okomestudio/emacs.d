@@ -1,20 +1,23 @@
 ;;; 10-projectile.el --- Projectile  -*- lexical-binding: t -*-
 ;;; Commentary:
+;;
+;; Configure Projectile.
+;;
 ;;; Code:
 
 (use-package projectile
   :bind
-  (;
+  (;; no globals
    :map ctl-x-4-map
    ("p" . (lambda ()
             (interactive)
             (other-window -1)
             (projectile-switch-project)
-            (other-window +1)))
+            (other-window +1))))
 
-   :map projectile-mode-map
-   ("s-p" . projectile-command-map) ; "s-" is "super"
-   ("C-c p" . projectile-command-map))
+  :bind-keymap
+  ("s-p" . projectile-command-map) ;; "s-" is "super"
+  ("C-c p" . projectile-command-map)
 
   :custom
   (projectile-auto-discover nil)
