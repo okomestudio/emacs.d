@@ -12,6 +12,9 @@
    :map lisp-data-mode-map
    ("C-c b" . init-elisp--format-elisp-buffer))
 
+  :hook
+  (emacs-lisp-mode . company-mode)
+
   :config
   (defun init-elisp--format-elisp-buffer ()
     "Format Elisp buffer."
