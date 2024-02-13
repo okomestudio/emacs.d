@@ -1,15 +1,12 @@
 ;;; 20-vterm.el --- vterm  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;
-;; Emacs libvterm integration.
+;; Configure vterm related utilities.
 ;;
 ;;; Code:
 
 (use-package vterm
-  :bind
-  (:map vterm-mode-map
-        ("C-c C-t" . vterm-copy-mode))
-
+  ;; Emacs libvterm integration.
   :custom
   (vterm-always-compile-module t)
   (vterm-buffer-name-string "vterm %s")
@@ -25,18 +22,10 @@
 
   :hook
   (vterm-mode . (lambda ()
-                  (init-vterm--vterm-configure-faces)
                   (setq-local global-hl-line-mode nil
-                              solaire-mode nil)))
-
-  :init
-  (defun init-vterm--vterm-configure-faces ()
-    (face-remap-add-relative 'default :background "#ffffdd")
-    ;; (set-face-attribute 'vterm-color-black nil
-    ;;                     :foreground "#000000" :background "#000000")
-    (set (make-local-variable 'buffer-face-mode-face)
-         '(:family "Hack" :foreground "#000000"))
-    (buffer-face-mode t)))
+                              solaire-mode nil
+                              buffer-face-mode-face 'fixed-pitch)
+                  (buffer-face-mode t))))
 
 
 (use-package multi-vterm

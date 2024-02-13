@@ -6,6 +6,7 @@
 ;;; Code:
 
 (use-package eat
+  :disabled
   :straight
   '(eat :type git
         :host codeberg
@@ -19,14 +20,6 @@
   :hook
   (eshell-post-command . (lambda ()
                            (sleep-for 0.2)
-                           (end-of-buffer)))
-
-  ;; :init
-  ;; The following might be necessary for performance. See
-  ;; https://www.reddit.com/r/emacs/comments/17nl7cw/comment/k7u1ueu/
-  ;;
-  ;; (setq process-adaptive-read-buffering nil)
-  ;; (setq read-process-output-max (* 4 1024 1024))
-  )
+                           (end-of-buffer))))
 
 ;;; 20-eat.el ends here
