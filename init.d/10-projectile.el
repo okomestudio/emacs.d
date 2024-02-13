@@ -22,6 +22,7 @@
   :custom
   (projectile-auto-discover nil)
   (projectile-enable-caching nil)
+  (projectile-git-fd-args "-H -0 -E .git -tf")
   (projectile-indexing-method 'alien)
   (projectile-mode-line-function '(lambda ()
                                     (format " [%s]" (projectile-project-name))))
@@ -29,12 +30,10 @@
                                        projectile-root-bottom-up
                                        projectile-root-top-down
                                        projectile-root-top-down-recurring))
-  (projectile-project-search-path '("~/.config/emacs/" ("~/github.com/" . 2)))
-
-  ;; Remove --strip-cwd-prefix till `fd` version 8.3.0+ is available:
-  ;; NOTE(2023-12-31): fd-find is at 8.6.0 in Bookworm so the below can be removed.
-  ;; (projectile-generic-command "fd . -0 --type f --color=never")
-  (projectile-git-fd-args "-H -0 -E .git -tf")
+  (projectile-project-search-path `(,(expand-file-name "straight/repos/"
+                                                       user-emacs-directory)
+                                    (,(expand-file-name "github.com/"
+                                                        (getenv "HOME")) . 2)))
 
   :ensure-system-package
   (ag . "sudo apt install -y silversearcher-ag")
