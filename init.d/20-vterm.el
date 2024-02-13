@@ -10,10 +10,12 @@
   :custom
   (vterm-always-compile-module t)
   (vterm-buffer-name-string "vterm %s")
-  (vterm-install t)
   (vterm-max-scrollback 5000)
   (vterm-module-cmake-args "-DUSE_SYSTEM_LIBVTERM=no")
   (vterm-timer-delay 0.02)
+
+  ;; Need to unset this to let the shell's pyenv manage venvs:
+  (vterm-environment '("PYENV_VERSION="))
 
   :ensure-system-package
   ("/usr/include/vterm.h" . "sudo apt install -y libvterm-dev")
