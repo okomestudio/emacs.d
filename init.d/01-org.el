@@ -312,20 +312,14 @@ node."
   (valign-max-table-size 4000)
   (valign-signal-parse-error t)
 
-  :preface
-  (defcustom valign-max-buffer-size 100000
-    "Default max-buffer-size over which valign-mode will not activate."
-    :type '(integer)
-    :group 'ts)
-
   :hook
   (org-mode . (lambda ()
-                (when (not (> (buffer-size) valign-max-buffer-size))
-                  (custom-set-faces '(org-table ((t (:inherit 'variable-pitch)))))
-                  (valign-mode))))
+                (when (<= (buffer-size) ok-valign-max-buffer-size)
+                  (valign-mode 1))))
 
-  :config
-  (use-package ftable))
+  :init
+  (defvar ok-valign-max-buffer-size 100000
+    "Default max-buffer-size above which valign-mode will not activate."))
 
 ;; Local Variables:
 ;; nameless-aliases: (("" . "ok-org"))
