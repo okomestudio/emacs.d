@@ -5,22 +5,22 @@
 ;;
 ;;; Code:
 
-(use-package json-mode
+(use-package json-ts-mode
   :mode "\\.json\\(\\.j2\\)?\\'"
   :bind
   (;; no globals
-   :map json-mode-map
+   :map json-ts-mode-map
    ("C-c b" . ok-json--beautify-json-via-python))
 
   :custom
   (js-indent-level 4)
 
   :hook
-  (json-mode . (lambda ()
-                 (setq-local devdocs-current-docs '("jq"))))
-  (json-mode . (lambda ()
-                 (lsp-ensure-server 'json-ls)
-                 (lsp-deferred)))
+  (json-ts-mode . (lambda ()
+                    (setq-local devdocs-current-docs '("jq"))))
+  (json-ts-mode . (lambda ()
+                    (lsp-ensure-server 'json-ls)
+                    (lsp-deferred)))
 
   :config
   (defun ok-json--beautify-json-via-python ()

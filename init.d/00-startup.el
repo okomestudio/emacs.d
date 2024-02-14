@@ -151,12 +151,9 @@
 
 (use-package treesit-auto
   :demand t
-  :custom
-  (treesit-auto-install 'prompt)
-  (treesit-auto-langs '(bash python yaml))
-
+  :custom (treesit-auto-install 'prompt)
   :config
-  ;; (treesit-auto-add-to-auto-mode-alist 'all)
+  (treesit-auto-add-to-auto-mode-alist 'all)
   (global-treesit-auto-mode))
 
 ;;; 00-startup.el ends here
