@@ -75,7 +75,7 @@
 
 
 (use-package lsp-treemacs
-  :after (treemacs lsp-mode)
+  :after (lsp-mode)
   :bind
   (([f6] . lsp-treemacs-errors-list)
    ([f7] . lsp-treemacs-symbols)))
