@@ -4,7 +4,6 @@
 
 (use-package lsp-mode
   :commands (lsp lsp-deferred)
-
   :custom
   (lsp-completion-enable t)
   (lsp-diagnostics-provider :auto)
@@ -17,14 +16,6 @@
   (lsp-mode . lsp-enable-which-key-integration)
 
   :preface
-  (defun init-lsp-lsp-mode-hook (server)
-    (lsp-ensure-server server)
-    (lsp))
-
-  (defun init-lsp-ensure-lsp-deferred (server)
-    (lsp-ensure-server server)
-    (lsp-deferred))
-
   (put 'lsp-disabled-clients 'safe-local-variable #'listp)
 
   :config
@@ -39,7 +30,6 @@
   ;; https://github.com/emacs-lsp/lsp-ui/issues/751.
   ;;
   :commands lsp-ui-mode
-
   :bind
   (:map lsp-ui-mode-map
         ("C-h ." . (lambda (arg)

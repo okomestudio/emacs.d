@@ -1,23 +1,29 @@
 ;;; 65-json.el --- JSON  -*- lexical-binding: t -*-
 ;;; Commentary:
+;;
+;; Configure JSON related utilities.
+;;
 ;;; Code:
 
 (use-package json-mode
-  :after (web-beautify)
-
+  :mode "\\.json\\(\\.j2\\)?\\'"
   :bind
-  (;
+  (;; no globals
    :map json-mode-map
-   ("C-c b" . init-json--beautify-json-via-python))
+   ("C-c b" . ok-json--beautify-json-via-python))
 
   :custom
   (js-indent-level 4)
 
-  :mode
-  "\\.json\\(\\.j2\\)?\\'"
+  :hook
+  (json-mode . (lambda ()
+                 (setq-local devdocs-current-docs '("jq"))))
+  (json-mode . (lambda ()
+                 (lsp-ensure-server 'json-ls)
+                 (lsp-deferred)))
 
   :config
-  (defun init-json--beautify-json-via-python ()
+  (defun ok-json--beautify-json-via-python ()
     "See, e.g., https://emacs.stackexchange.com/a/12152/599"
     (interactive)
     (save-excursion
@@ -25,7 +31,8 @@
                                "python -m json.tool"
                                (buffer-name) t)))
 
-  (defun init-json--beautify-json-via-js ()
+  (defun ok-json--beautify-json-via-web-beautify ()
+    "Need to install `web-beautify'."
     (interactive)
     (save-excursion
       (let ((web-beautify-args '("-f" "-"
@@ -43,14 +50,7 @@
   (jq . "sudo apt install -y jq")
   (yq . "pip install yq"))
 
-
-(use-package devdocs
-  :hook
-  (json-mode . (lambda () (setq-local devdocs-current-docs '("jq")))))
-
-
-(use-package lsp-mode
-  :hook
-  (json-mode . (lambda () (init-lsp-lsp-mode-hook 'json-ls))))
-
+;; Local Variables:
+;; nameless-aliases: (("" . "ok-json"))
+;; End:
 ;;; 65-json.el ends here

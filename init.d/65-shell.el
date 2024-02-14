@@ -1,16 +1,20 @@
 ;;; 65-shell.el --- Shell  -*- lexical-binding: t -*-
 ;;; Commentary:
+;;
+;; Configure shell related utilities.
+;;
 ;;; Code:
 
 (use-package sh-script
   :straight nil
-
   :custom
   (sh-basic-offset 2)
   (sh-indentation 2)
 
   :hook
   (sh-mode . flymake-mode)
+  (sh-mode . (lambda ()
+               (setq-local devdocs-current-docs '("bash"))))
 
   :mode
   ("\\.sh\\'" . sh-mode)
@@ -48,7 +52,9 @@
   (lsp-bash-highlight-parsing-errors t)
 
   :hook
-  (sh-mode . (lambda () (init-lsp-lsp-mode-hook 'bash-ls)))
+  (sh-mode . (lambda ()
+               (lsp-ensure-server 'bash-ls)
+               (lsp-deferred)))
 
   :ensure-system-package
   (shellcheck . "sudo apt install -y shellcheck"))
