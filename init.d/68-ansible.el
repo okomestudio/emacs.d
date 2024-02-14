@@ -1,5 +1,8 @@
 ;;; 68-ansible.el --- Ansible  -*- lexical-binding: t -*-
 ;;; Commentary:
+;;
+;; Configure Ansible utilities.
+;;
 ;;; Code:
 
 (use-package ansible) ;; not derived from prog-mode
@@ -16,20 +19,20 @@
   ;; polymode activate ansible automatically.
   ;;
   ;; jinja2-mode inherits from html-mode.
-  )
+  :demand t)
 
 
 (use-package devdocs
-  :hook
-  (ansible . (lambda () (setq-local devdocs-current-docs '("ansible")))))
+  :hook (ansible . (lambda () (setq-local devdocs-current-docs '("ansible")))))
 
 
 (use-package lsp-mode
   :hook
   (yaml-mode . (lambda ()
                  ;; If in ansible-mode, do not activate yamlls.
-                 (if (not (bound-and-true-p ansible))
-                     (init-lsp-lsp-mode-hook 'yamlls))))
+                 (unless (bound-and-true-p ansible)
+                   (lsp-ensure-server 'yamlls)
+                   (lsp-deferred))))
   (ansible . (lambda ()
                (setq-local lsp-disabled-clients '(yamlls eslint))
                (lsp-ensure-server 'ansible-ls)
