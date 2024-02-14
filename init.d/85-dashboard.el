@@ -1,10 +1,12 @@
 ;;; 85-dashboard.el --- Emacs Application Framework  -*- lexical-binding: t -*-
 ;;; Commentary:
+;;
+;; Configure Emacs Dashboard.
+;;
 ;;; Code:
 
 (use-package dashboard
   :demand t
-
   :custom
   (dashboard-agenda-release-buffers t)
   (dashboard-center-content t)
@@ -26,6 +28,8 @@
   (dashboard-set-navigator t)
 
   :config
+  (use-package wotd)
+
   (defun dashboard-vocab-gen (list-size)
     (dashboard-insert-heading "Word of the Day:"
                               nil
@@ -46,7 +50,5 @@
   (add-to-list 'dashboard-item-generators '(vocab . dashboard-vocab-gen))
 
   (dashboard-setup-startup-hook))
-
-(use-package wotd)
 
 ;;; 85-dashboard.el ends here

@@ -7,12 +7,10 @@
 
 (use-package gnus
   :straight nil
-  :commands (gnus)
-
   :custom
   (gnus-home-directory (no-littering-expand-var-file-name "gnus/"))
 
-  :init
+  :config
   (defcustom ok-gnus-smtp-accounts nil
     "List of SMTP servers associated with sender email address.
 
@@ -22,7 +20,6 @@ is port, and `usr' is SMTP login."
     :type 'list
     :group 'ok)
 
-  :config
   (setq gnus-summary-insert-old-articles t
         gnus-summary-line-format "%U%R%z%I%(%[%o: %-23,23f%]%) %s\\n"
         message-directory (concat gnus-home-directory "Mail/"))
@@ -48,8 +45,8 @@ is port, and `usr' is SMTP login."
           (message-send-and-exit)))))
 
   (add-hook 'gnus-message-setup-hook
-            '(lambda ()
-               (local-set-key (kbd "C-c C-c") 'ok-gnus--send-message))))
+            #'(lambda ()
+                (local-set-key (kbd "C-c C-c") 'ok-gnus--send-message))))
 
 
 (use-package gnus-group
