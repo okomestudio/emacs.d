@@ -7,54 +7,50 @@
 
 (use-package sh-script
   :straight nil
+  :interpreter "sh"
+  :mode ".*\\.sh\\'"
   :custom
   (sh-basic-offset 2)
   (sh-indentation 2)
 
   :hook
-  (sh-mode . flymake-mode)
-  (sh-mode . (lambda ()
-               (setq-local devdocs-current-docs '("bash"))))
-
-  :mode
-  ("\\.sh\\'" . sh-mode)
-  ("bash_*" . sh-mode)
-  ("bashrc\\'" . sh-mode)
-
-  ;; NOTE: Commented out in case we need the lines later.
-  ;;
-  ;; :init
-  ;; (add-to-list 'auto-mode-alist '("\\.bats\\'" . sh-mode))
-  ;; (add-to-list 'interpreter-mode-alist '("bats" . sh-mode))
-  )
+  (sh-mode . flymake-mode))
 
 
-(use-package flymake
-  :ensure-system-package
-  (shellcheck . "sudo apt install -y shellcheck"))
+(use-package bash-ts-mode
+  :straight nil
+  :interpreter "bash"
+  :mode ("\\.?bash_.*\\'" "\\.?bashrc\\'")
+  :hook
+  (bash-ts-mode . flymake-mode)
+  (bash-ts-mode . (lambda () (setq-local devdocs-current-docs '("bash"))))
+
+  :init
+  (add-to-list 'treesit-language-source-alist
+               '(bash "https://github.com/tree-sitter/tree-sitter-bash"))
+
+  (unless (treesit-language-available-p 'bash)
+    (treesit-install-language-grammar 'bash)))
 
 
-(use-package bats-mode)
+(use-package bats-mode
+  :interpreter "bats")
 
 
 (use-package lsp-mode
-  ;; explainshell integration by bash-language-server appears not to be working;
-  ;; see github.com/bash-lsp/bash-language-server/issues/726
-  :custom
-  ;; TODO: Start the service on start.
+  ;; Run the Explainshell service on start:
   ;;
-  ;; Run: docker container run --name explainshell --restart always \
+  ;;   docker container run --name explainshell --restart always \
   ;;          -p 5023:5000 -d spaceinvaderone/explainshell
   ;;
+  :custom
   (lsp-bash-explainshell-endpoint "http://localhost:5023")
-  ;; (lsp-bash-explainshell-endpoint nil)
-
   (lsp-bash-highlight-parsing-errors t)
 
   :hook
-  (sh-mode . (lambda ()
-               (lsp-ensure-server 'bash-ls)
-               (lsp-deferred)))
+  (bash-ts-mode . (lambda ()
+                    (lsp-ensure-server 'bash-ls)
+                    (lsp-deferred)))
 
   :ensure-system-package
   (shellcheck . "sudo apt install -y shellcheck"))

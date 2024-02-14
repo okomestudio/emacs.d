@@ -141,4 +141,9 @@
   :straight nil
   :custom (tramp-default-method "ssh"))
 
+
+(use-package treesit
+  :demand t
+  :straight nil)
+
 ;;; 00-startup.el ends here
