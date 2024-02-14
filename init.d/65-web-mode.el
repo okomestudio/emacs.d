@@ -3,6 +3,7 @@
 ;;; Code:
 
 (use-package web-mode
+  :disabled
   :custom
   (web-mode-code-indent-offset 2)
   (web-mode-css-indent-offset 2)
@@ -123,9 +124,6 @@ See http://blog.binchen.org/posts/effective-spell-check-in-emacs.html"
 
   ;; (put 'web-mode 'flyspell-mode-predicate 'init-webmode--flyspell-predicate)
   )
-
-
-(use-package typescript-mode)
 
 
 (use-package prettier-js ;; or use web-beautify (?)
