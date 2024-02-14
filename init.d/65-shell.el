@@ -23,14 +23,7 @@
   :mode ("\\.?bash_.*\\'" "\\.?bashrc\\'")
   :hook
   (bash-ts-mode . flymake-mode)
-  (bash-ts-mode . (lambda () (setq-local devdocs-current-docs '("bash"))))
-
-  :init
-  (add-to-list 'treesit-language-source-alist
-               '(bash "https://github.com/tree-sitter/tree-sitter-bash"))
-
-  (unless (treesit-language-available-p 'bash)
-    (treesit-install-language-grammar 'bash)))
+  (bash-ts-mode . (lambda () (setq-local devdocs-current-docs '("bash")))))
 
 
 (use-package bats-mode

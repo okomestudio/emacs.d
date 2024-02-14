@@ -142,8 +142,21 @@
   :custom (tramp-default-method "ssh"))
 
 
+;; TREE-SITTER
+
 (use-package treesit
   :demand t
   :straight nil)
+
+
+(use-package treesit-auto
+  :demand t
+  :custom
+  (treesit-auto-install 'prompt)
+  (treesit-auto-langs '(bash python yaml))
+
+  :config
+  ;; (treesit-auto-add-to-auto-mode-alist 'all)
+  (global-treesit-auto-mode))
 
 ;;; 00-startup.el ends here

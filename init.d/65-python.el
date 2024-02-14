@@ -31,12 +31,6 @@
     (blacken-buffer)
     (py-isort-buffer))
 
-  (add-to-list 'treesit-language-source-alist
-               '(python "https://github.com/tree-sitter/tree-sitter-python.git"))
-
-  (unless (treesit-language-available-p 'python)
-    (treesit-install-language-grammar 'python))
-
   (add-to-list 'major-mode-remap-alist '(python-mode . pm-python-sql-mode))
   (add-to-list 'major-mode-remap-alist '(python-ts-mode . pm-python-sql-mode)))
 
