@@ -130,6 +130,14 @@
 
 ;; MISC.
 
+(use-package ansi-color
+  :straight nil
+  :hook
+  (compilation-filter . (lambda ()
+                          (when (eq major-mode 'compilation-mode)
+                            (ansi-color-apply-on-region compilation-filter-start (point-max))))))
+
+
 (use-package hl-line
   ;; Highlight the current line.
   :straight nil

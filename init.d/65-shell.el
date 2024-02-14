@@ -33,21 +33,6 @@
 (use-package bats-mode)
 
 
-(use-package ansi-color
-  :hook
-  (compilation-filter . init-shell--colorize-buffer)
-
-  :config
-  (defun init-shell--colorize-buffer ()
-    (when (eq major-mode 'compilation-mode)
-      (ansi-color-apply-on-region compilation-filter-start (point-max)))))
-
-
-(use-package devdocs
-  :hook
-  (sh-mode . (lambda () (setq-local devdocs-current-docs '("bash")))))
-
-
 (use-package lsp-mode
   ;; explainshell integration by bash-language-server appears not to be working;
   ;; see github.com/bash-lsp/bash-language-server/issues/726
