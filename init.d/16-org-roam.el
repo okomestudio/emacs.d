@@ -54,7 +54,7 @@
   (require 'org-roam-dailies)
   (org-roam-db-autosync-mode)
 
-  ;; Customize title list in minibuffer
+  ;; TITLE LISTING IN MINIBUFFER
   (with-eval-after-load 'org-roam-node
     (defvar ok-org-roam--file-node-cache '()
       "Cache file nodes.")
@@ -146,27 +146,27 @@
     ;; Customize node slug generation
     (defun ok-org-roam--org-roam-node-slug (title)
       (let (;; Combining Diacritical Marks https://www.unicode.org/charts/PDF/U0300.pdf
-            (slug-trim-chars '(768    ; U+0300 COMBINING GRAVE ACCENT
-                               769    ; U+0301 COMBINING ACUTE ACCENT
-                               770    ; U+0302 COMBINING CIRCUMFLEX ACCENT
-                               771    ; U+0303 COMBINING TILDE
-                               772    ; U+0304 COMBINING MACRON
-                               774    ; U+0306 COMBINING BREVE
-                               775    ; U+0307 COMBINING DOT ABOVE
-                               776    ; U+0308 COMBINING DIAERESIS
-                               777    ; U+0309 COMBINING HOOK ABOVE
-                               778    ; U+030A COMBINING RING ABOVE
-                               779    ; U+030B COMBINING DOUBLE ACUTE ACCENT
-                               780    ; U+030C COMBINING CARON
-                               795    ; U+031B COMBINING HORN
-                               803    ; U+0323 COMBINING DOT BELOW
-                               804    ; U+0324 COMBINING DIAERESIS BELOW
-                               805    ; U+0325 COMBINING RING BELOW
-                               807    ; U+0327 COMBINING CEDILLA
-                               813    ; U+032D COMBINING CIRCUMFLEX ACCENT BELOW
-                               814    ; U+032E COMBINING BREVE BELOW
-                               816    ; U+0330 COMBINING TILDE BELOW
-                               817))) ; U+0331 COMBINING MACRON BELOW
+            (slug-trim-chars '(768 ;; U+0300 COMBINING GRAVE ACCENT
+                               769 ;; U+0301 COMBINING ACUTE ACCENT
+                               770 ;; U+0302 COMBINING CIRCUMFLEX ACCENT
+                               771 ;; U+0303 COMBINING TILDE
+                               772 ;; U+0304 COMBINING MACRON
+                               774 ;; U+0306 COMBINING BREVE
+                               775 ;; U+0307 COMBINING DOT ABOVE
+                               776 ;; U+0308 COMBINING DIAERESIS
+                               777 ;; U+0309 COMBINING HOOK ABOVE
+                               778 ;; U+030A COMBINING RING ABOVE
+                               779 ;; U+030B COMBINING DOUBLE ACUTE ACCENT
+                               780 ;; U+030C COMBINING CARON
+                               795 ;; U+031B COMBINING HORN
+                               803 ;; U+0323 COMBINING DOT BELOW
+                               804 ;; U+0324 COMBINING DIAERESIS BELOW
+                               805 ;; U+0325 COMBINING RING BELOW
+                               807 ;; U+0327 COMBINING CEDILLA
+                               813 ;; U+032D COMBINING CIRCUMFLEX ACCENT BELOW
+                               814 ;; U+032E COMBINING BREVE BELOW
+                               816 ;; U+0330 COMBINING TILDE BELOW
+                               817))) ;; U+0331 COMBINING MACRON BELOW
         (cl-flet* ((nonspacing-mark-p (char)
                      (memq char slug-trim-chars))
                    (strip-nonspacing-marks (s)
@@ -189,103 +189,102 @@
       "Return the slug of NODE. Overridden to use hyphens instead of underscores."
       (ok-org-roam--org-roam-node-slug (org-roam-node-title node))))
 
-  ;; Customized unlinked references section
+  ;; UNLINKED REFERENCES SECTION
+  (with-eval-after-load 'org-roam-mode
+    ;; Stricter:
+    ;; 助詞 (https://ja.wikipedia.org/wiki/%E5%8A%A9%E8%A9%9E)
+    (setq joshi_r '(;; タイトルを名詞と前提
+                    "か" "が" "かしら" "がてら" "から" "きり" "くらい" "ぐらい" "こそ"
+                    "さ" "さえ" "しか" "ずつ"
+                    "だけ" "だの" "で" "では" "でも" "と" "とは" "とも"
+                    "ながら" "なぞ" "など" "なり" "なんぞ" "に" "ね" "の" "のみ"
+                    "は" "ばかり" "へ" "ほど"
+                    "まで" "も"
+                    "や" "やら" "よ" "より"
+                    "を"))
+    (setq joshi_l (append joshi_r
+                          '("かい" "かり" "けど" "けれど" "けれども"
+                            "し" "ぜ" "ぞ"
+                            "たり" "つつ" "ってば" "て" "ても" "ところで" "とも"
+                            "な" "ので" "のに"
+                            "ば"
+                            "まま" "ものか" "ものの" "もん"
+                            "わ")))
+    (setq org-roam-unlinked-references-word-boundary-re
+          (concat "|(\\b%1$s\\b"
+                  "|(?<=" (s-join "|" joshi_l) ")%1$s(?=" (s-join "|" joshi_r) "))"))
+    ;; Lenient version:
+    ;;   "|(\\b%1$s\\b|(?<=[^\x20-\x7e\xff61-\xff9f])%1$s(?=[^\x20-\x7e\xff61-\xff9f]))"
 
-  ;; Stricter:
-  ;; 助詞 (https://ja.wikipedia.org/wiki/%E5%8A%A9%E8%A9%9E)
-  (setq joshi_r '(;; タイトルを名詞と前提
-                  "か" "が" "かしら" "がてら" "から" "きり" "くらい" "ぐらい" "こそ"
-                  "さ" "さえ" "しか" "ずつ"
-                  "だけ" "だの" "で" "では" "でも" "と" "とは" "とも"
-                  "ながら" "なぞ" "など" "なり" "なんぞ" "に" "ね" "の" "のみ"
-                  "は" "ばかり" "へ" "ほど"
-                  "まで" "も"
-                  "や" "やら" "よ" "より"
-                  "を"))
-  (setq joshi_l (append joshi_r
-                        '("かい" "かり" "けど" "けれど" "けれども"
-                          "し" "ぜ" "ぞ"
-                          "たり" "つつ" "ってば" "て" "ても" "ところで" "とも"
-                          "な" "ので" "のに"
-                          "ば"
-                          "まま" "ものか" "ものの" "もん"
-                          "わ")))
-  (setq org-roam-unlinked-references-word-boundary-re
-        (concat "|(\\b%1$s\\b"
-                "|(?<=" (s-join "|" joshi_l) ")%1$s(?=" (s-join "|" joshi_r) "))"))
-  ;; Lenient version:
-  ;;   "|(\\b%1$s\\b|(?<=[^\x20-\x7e\xff61-\xff9f])%1$s(?=[^\x20-\x7e\xff61-\xff9f]))"
+    (defun ok-org-roam-roam--title-regex (orig-fun titles)
+      (let ((bounded-re (substring (mapconcat #'org-roam-unlinked-references-apply-word-boundary-re titles "") 1))
+            ;; See http://www.drregex.com/2019/02/variable-length-lookbehinds-actually.html
+            (positive-lookbehind "(?=(?'a'[\\s\\S]*))(?'b'(%s)(?=\\k'a'\\z)|(?<=(?=x^|(?&b))[\\s\\S]))")
+            (negative-lookbehind "(?!(?=(?<a>[\\s\\S]*))(?<b>(%s)(?=\\k<a>\\z)|(?<=(?=x^|(?&b))[\\s\\S])))"))
+        (format "\"\\[\\[id:[0-9a-f-]+\\]\\[[^][]*(%s)[^][]*\\]\\]|%s(%s)\""
+                bounded-re
+                (format negative-lookbehind
+                        (mapconcat (lambda (s) s)
+                                   '("begin_src +"
+                                     "filetags:( [-_0-9A-Za-z]+)* "
+                                     "header-args:"
+                                     "PYTHONDONTWRITEBYTECODE=1 ")
+                                   "|"))
+                bounded-re)))
 
-  (defun ok-org-roam-roam--title-regex (orig-fun titles)
-    (let ((bounded-re (substring (mapconcat #'org-roam-unlinked-references-apply-word-boundary-re titles "") 1))
-          ;; See http://www.drregex.com/2019/02/variable-length-lookbehinds-actually.html
-          (positive-lookbehind "(?=(?'a'[\\s\\S]*))(?'b'(%s)(?=\\k'a'\\z)|(?<=(?=x^|(?&b))[\\s\\S]))")
-          (negative-lookbehind "(?!(?=(?<a>[\\s\\S]*))(?<b>(%s)(?=\\k<a>\\z)|(?<=(?=x^|(?&b))[\\s\\S])))"))
-      (format "\"\\[\\[id:[0-9a-f-]+\\]\\[[^][]*(%s)[^][]*\\]\\]|%s(%s)\""
-              bounded-re
-              (format negative-lookbehind
-                      (mapconcat (lambda (s) s)
-                                 '("begin_src +"
-                                   "filetags:( [-_0-9A-Za-z]+)* "
-                                   "header-args:"
-                                   "PYTHONDONTWRITEBYTECODE=1 ")
-                                 "|"))
-              bounded-re)))
+    (advice-add 'org-roam-unlinked-references-title-regex
+                :around #'ok-org-roam-roam--title-regex)
 
-  (advice-add 'org-roam-unlinked-references-title-regex
-              :around #'ok-org-roam-roam--title-regex)
+    (defun ok-org-roam-roam--apply-word-boundary-re (orig-fun title)
+      (let ((s title))
+        ;; Expand and match quote variants:
+        (setq s (replace-regexp-in-string " [\'\‘]\\(\\w\\)" " [\'\‘]\\1" s))
+        (setq s (replace-regexp-in-string "\\(\\w\\)[\'\’]" "\\1[\'\’]" s))
+        (setq s (replace-regexp-in-string " [\"\“]\\(\\w\\)" " [\"\“]\\1" s))
+        (setq s (replace-regexp-in-string "\\(\\w\\)[\"\”]" "\\1[\"\”]" s))
+        (let ((s (funcall orig-fun s)))
+          ;; Since orig-fun shell-quotes special chars, some needs unescape:
+          (setq s (replace-regexp-in-string "[\\][[]\\([^][]+\\)[\\][]]" "[\\1]" s))
+          s)))
 
-  (defun ok-org-roam-roam--apply-word-boundary-re (orig-fun title)
-    (let ((s title))
-      ;; Expand and match quote variants:
-      (setq s (replace-regexp-in-string " [\'\‘]\\(\\w\\)" " [\'\‘]\\1" s))
-      (setq s (replace-regexp-in-string "\\(\\w\\)[\'\’]" "\\1[\'\’]" s))
-      (setq s (replace-regexp-in-string " [\"\“]\\(\\w\\)" " [\"\“]\\1" s))
-      (setq s (replace-regexp-in-string "\\(\\w\\)[\"\”]" "\\1[\"\”]" s))
-      (let ((s (funcall orig-fun s)))
-        ;; Since orig-fun shell-quotes special chars, some needs unescape:
-        (setq s (replace-regexp-in-string "[\\][[]\\([^][]+\\)[\\][]]" "[\\1]" s))
-        s)))
+    (advice-add 'org-roam-unlinked-references-apply-word-boundary-re
+                :around #'ok-org-roam-roam--apply-word-boundary-re)
 
-  (advice-add 'org-roam-unlinked-references-apply-word-boundary-re
-              :around #'ok-org-roam-roam--apply-word-boundary-re)
+    (defun ok-org-roam-roam--result-filter-p (orig-fun matched-text matched-file row col titles node)
+      (let* ((linked-re (format "\\[\\[id:%s\\]\\[.*\\]\\]" (org-roam-node-id node)))
+             result)
+        (if (not (file-equal-p (org-roam-node-file node) matched-file))
+            (setq result (not (string-match linked-re matched-text))) ;; Test if unlinked ref
+          ;; Matched text within the same file, possibly of a different node
+          (let* ((other-node (save-match-data
+                               (with-current-buffer (find-file-noselect matched-file)
+                                 (save-excursion
+                                   (goto-char (point-min))
+                                   (forward-line (1- row))
+                                   (move-to-column col)
+                                   (org-roam-node-at-point))))))
+            (if (not (string-equal (org-roam-node-id node)
+                                   (org-roam-node-id other-node)))
+                ;; Matched text within a different node within the same file
+                (setq result (not (string-match linked-re matched-text))) ;; Text if unlinked ref
+              )))
+        result))
 
-  (defun ok-org-roam-roam--result-filter-p (orig-fun matched-text matched-file row col titles node)
-    (let* ((linked-re (format "\\[\\[id:%s\\]\\[.*\\]\\]" (org-roam-node-id node)))
-           result)
-      (if (not (file-equal-p (org-roam-node-file node) matched-file))
-          (setq result (not (string-match linked-re matched-text))) ;; Test if unlinked ref
-        ;; Matched text within the same file, possibly of a different node
-        (let* ((other-node (save-match-data
-                             (with-current-buffer (find-file-noselect matched-file)
-                               (save-excursion
-                                 (goto-char (point-min))
-                                 (forward-line (1- row))
-                                 (move-to-column col)
-                                 (org-roam-node-at-point))))))
-          (if (not (string-equal (org-roam-node-id node)
-                                 (org-roam-node-id other-node)))
-              ;; Matched text within a different node within the same file
-              (setq result (not (string-match linked-re matched-text))) ;; Text if unlinked ref
-            )))
-      result))
+    (advice-add 'org-roam-unlinked-references-result-filter-p
+                :around #'ok-org-roam-roam--result-filter-p)
 
-  (advice-add 'org-roam-unlinked-references-result-filter-p
-              :around #'ok-org-roam-roam--result-filter-p)
+    (defun ok-org-roam-roam--unlinked-references-preview-line (orig-fun file row col file-prev row-prev col-prev)
+      "Use ellipsis for duplicate line."
+      (if (and (string= file file-prev) (= row row-prev))
+          "⎯〃⎯"
+        (funcall orig-fun file row col file-prev row-prev col-prev)))
 
-  (defun ok-org-roam-roam--unlinked-references-preview-line (orig-fun file row col file-prev row-prev col-prev)
-    "Use ellipsis for duplicate line."
-    (if (and (string= file file-prev) (= row row-prev))
-        "⎯〃⎯"
-      (funcall orig-fun file row col file-prev row-prev col-prev)))
-
-  (advice-add 'org-roam-unlinked-references-preview-line
-              :around #'ok-org-roam-roam--unlinked-references-preview-line))
+    (advice-add 'org-roam-unlinked-references-preview-line
+                :around #'ok-org-roam-roam--unlinked-references-preview-line)))
 
 
 (use-package org-roam-ui
   :after org-roam
-
   :custom
   (org-roam-ui-follow t)
   (org-roam-ui-sync-theme t)
@@ -294,7 +293,6 @@
 
 (use-package org-roam-bibtex
   :after org-roam
-
   :custom
   (orb-insert-link-description "${author-abbrev} ${date}")
   (orb-roam-ref-format 'org-ref-v3)
@@ -305,16 +303,12 @@
 
 (use-package org-ref
   ;; For citations, cross-references, bibliographies.
-  :custom
-  (bibtex-completion-pdf-field "file")
-
-  :preface
-  (put 'bibtex-completion-bibliography 'safe-local-variable #'listp))
+  :custom (bibtex-completion-pdf-field "file")
+  :preface (put 'bibtex-completion-bibliography 'safe-local-variable #'listp))
 
 
 (use-package org-roam-timestamps
   :after org-roam
-
   :custom
   (org-roam-timestamps-minimum-gap 86400)
   (org-roam-timestamps-parent-file nil)
