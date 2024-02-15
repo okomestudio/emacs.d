@@ -5,12 +5,9 @@
 ;;
 ;;; Code:
 
-
 (defvar ok-themes-default-theme 'flexoki-themes-light
   "Default theme at startup.")
 
-
-;; THEME
 
 (use-package flexoki-themes
   :config
@@ -21,6 +18,7 @@
 
 
 (use-package nano-theme
+  :disabled
   :straight (:host github :repo "rougier/nano-theme")
   :custom (nano-window-divider-show t))
 
@@ -53,25 +51,11 @@
               (funcall orig-fun theme no-confirm no-enable)
               (run-hooks 'after-load-theme-hook)))
 
-(defun ok-themes-initial-theme (theme)
-  "Set the THEME to load at Emacs startup."
-  (if (daemonp)
-      (add-hook 'after-make-frame-functions
-                (lambda (frame)
-                  (with-selected-frame frame
-                    (load-theme theme t))))
-    (add-hook 'after-init-hook (lambda () (load-theme theme t)))))
-
-
-(ok-themes-initial-theme ok-themes-default-theme)
-
 
 ;; MODE LINE
 
 (use-package doom-modeline
   ;; A fancy and fast mode-line inspired by minimalism design.
-  :after nerd-icons
-
   :custom
   (doom-modeline-buffer-encoding nil)
   (doom-modeline-buffer-file-name-style 'buffer-name)
@@ -106,8 +90,6 @@
 
 (use-package solaire-mode
   ;; Distinguish "real" buffers from "unreal" buffers.
-  :defer t
-
   :custom
   (solaire-mode-real-buffer-fn 'ok-themes--solaire-mode-real-buffer-p)
 
@@ -124,8 +106,7 @@
 (use-package rainbow-delimiters
   ;; Highlights delimiters such as parentheses, brackets or braces according to
   ;; their depth.
-  :hook
-  (prog-mode . rainbow-delimiters-mode))
+  :hook (prog-mode . (lambda () (rainbow-delimiters-mode 1))))
 
 
 ;; MISC.
@@ -141,10 +122,9 @@
 (use-package hl-line
   ;; Highlight the current line.
   :straight nil
+  :init (global-hl-line-mode 1)
   :hook
-  (after-init . (lambda () (global-hl-line-mode +1)))
   (after-load-theme . (lambda ()
-                        (require 'okutil)
                         (let* ((mode (frame-parameter nil 'background-mode))
                                (scale (if (string= mode "dark") 1.03 0.97))
                                (bg (face-attribute 'default :background))
@@ -154,7 +134,6 @@
 
 (use-package highlight-indent-guides
   :disabled
-
   :custom
   (highlight-indent-guides-auto-enabled nil)
   (highlight-indent-guides-character ?\┆)
@@ -163,7 +142,7 @@
   (highlight-indent-guides-responsive 'top)
 
   :hook
-  ((prog-mode) . highlight-indent-guides-mode)
+  (prog-mode . highlight-indent-guides-mode)
 
   :config
   (set-face-background 'highlight-indent-guides-character-face "light yellow")
@@ -178,6 +157,22 @@
   (pos-tip-background-color "#dddddd")
   (pos-tip-border-width 5)
   (pos-tip-internal-border-width 5))
+
+
+;; LOADER
+
+(defun ok-themes-initial-theme (theme)
+  "Set the THEME to load at Emacs startup."
+  (if (daemonp)
+      (add-hook 'after-make-frame-functions
+                (lambda (frame)
+                  (with-selected-frame frame
+                    (load-theme theme t))))
+    ;; (add-hook 'after-init-hook (lambda () (load-theme theme t)))
+    (load-theme theme t)))
+
+
+(ok-themes-initial-theme ok-themes-default-theme)
 
 ;; Local Variables:
 ;; nameless-aliases: (("" . "ok-themes"))
