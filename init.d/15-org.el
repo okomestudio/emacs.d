@@ -218,20 +218,19 @@ node."
               (format "<img src=\"%s\" />" raw-link)
             (format "<a href=\"%s\">%s</a>" raw-link desc))))))
 
-  (org-export-define-derived-backend
-   'substack 'html
-   :menu-entry
-   '(?S "Export to Substack article"
-        ((?o "As HTML file and open"
-	           (lambda (a s v b)
-	             (if a
-                   (org-export-to-buffer t s v b)
-                 (let ((f (concat (file-name-sans-extension buffer-file-name)
-                                  ".html")))
-                   (org-open-file (org-export-to-file 'substack f nil s v b))))))))
+  (org-export-define-derived-backend 'substack 'html
+    :menu-entry
+    '(?S "Export to Substack article"
+         ((?o "As HTML file and open"
+	            (lambda (a s v b)
+	              (if a
+                    (org-export-to-buffer t s v b)
+                  (let ((f (concat (file-name-sans-extension buffer-file-name)
+                                   ".html")))
+                    (org-open-file (org-export-to-file 'substack f nil s v b))))))))
 
-   :translate-alist
-   '((link . ok-org--org-html-link))))
+    :translate-alist
+    '((link . ok-org--org-html-link))))
 
 
 (use-package ox-gfm :after ox)
