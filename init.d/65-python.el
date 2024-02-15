@@ -1,13 +1,12 @@
 ;;; 65-python.el --- Python  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;
-;; Configure Python-related utilities.
+;; Configure Python and related utilities.
 ;;
 ;;; Code:
 
 (use-package python
   :straight nil
-
   :bind
   (;; no globals
    :map python-mode-map
@@ -21,58 +20,24 @@
   (python-shell-interpreter (expand-file-name "bin/python-shell-interpreter"
                                               user-emacs-directory))
 
-  :ensure-system-package
-  (ipython . "pip install ipython")
+  :ensure-system-package (ipython . "pip install ipython")
 
   :config
   (defun ok-python--format-python-code ()
     "Format Python code."
     (interactive)
     (blacken-buffer)
-    (py-isort-buffer))
-
-  (add-to-list 'major-mode-remap-alist '(python-mode . pm-python-sql-mode))
-  (add-to-list 'major-mode-remap-alist '(python-ts-mode . pm-python-sql-mode)))
+    (py-isort-buffer)))
 
 
-(use-package polymode
-  :interpreter
-  (("python" . pm-python-sql-mode)
-   ("python3" . pm-python-sql-mode))
-
-  :config
-  (define-hostmode ok-python--pm-python-hostmode
-    :mode 'python-mode)
-
-  (define-hostmode ok-python--pm-python-ts-hostmode ok-python--pm-python-hostmode
-    :mode 'python-ts-mode)
-
-  (define-innermode ok-python--pm-sql-expr-python-innermode
-    :mode 'sql-mode
-    :head-matcher "\"\\{3\\}--[[:blank:]]*\\(sql\\|SQL\\)"
-    :tail-matcher "\"\\{3\\}"
-    :head-mode 'host
-    :tail-mode 'host)
-
-  (defun ok-python--pm-python-sql-eval-chunk (beg end msg)
-    "Calls out to `sql-send-region' with the polymode chunk region"
-    (sql-send-region beg end))
-
-  (define-polymode pm-python-sql-mode
-    :hostmode 'ok-python--pm-python-ts-hostmode
-    :innermodes '(ok-python--pm-sql-expr-python-innermode)
-
-    (setq polymode-eval-region-function #'ok-python--pm-python-sql-eval-chunk)
-    (define-key pm-python-sql-mode-map
-                (kbd "C-c C-c") 'polymode-eval-chunk)))
+(use-package python-sql-mode
+  :commands (python-sql-mode python-sql-ts-mode)
+  :straight (:host github :repo "okomestudio/python-sql-mode.el"))
 
 
 (use-package blacken
-  :ensure-system-package
-  (black . "pip install black")
-
-  :preface
-  (put 'blacken-line-length 'safe-local-variable #'integerp))
+  :ensure-system-package (black . "pip install black")
+  :preface (put 'blacken-line-length 'safe-local-variable #'integerp))
 
 
 (use-package cython-mode)
@@ -87,8 +52,7 @@
                 :repo "okomestudio/py-isort.el"
                 :branch "ts/provide-default-settings-path"))
 
-  :ensure-system-package
-  (isort . "pip install isort"))
+  :ensure-system-package (isort . "pip install isort"))
 
 
 (use-package pyimport
@@ -96,18 +60,16 @@
   (:host github :repo "okomestudio/pyimport" :branch "project-awareness"
          :files ("*.el" ("bin/make-imports.py" . "bin/make-imports.py")))
 
-  :ensure-system-package
-  (pyflakes . "pip install pyflakes"))
+  :ensure-system-package (pyflakes . "pip install pyflakes"))
 
 
 (use-package pyenv
   :straight (:host github :repo "aiguofer/pyenv.el")
-
   :custom
-  (pyenv-show-active-python-in-modeline nil)
+  (pyenv-show-active-python-in-modeline t)
 
   :hook
-  (after-init . (lambda () (global-pyenv-mode)))
+  ;; (after-init . (lambda () (global-pyenv-mode)))
   (projectile-after-switch-project . (lambda (&rest args)
                                        (pyenv-use-corresponding)
                                        (shell-command-to-string
@@ -117,7 +79,6 @@
 
 (use-package python-pytest
   :after (direnv)
-
   :bind
   (;; no globals
    :map python-mode-map
