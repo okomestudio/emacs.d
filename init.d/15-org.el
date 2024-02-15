@@ -131,14 +131,19 @@ node."
 
   ;; FONT FACE
   (let ((bg-mode (frame-parameter nil 'background-mode))
+        (bg-default (face-attribute 'default :background))
         (bg-block (face-attribute 'org-block :background))
         (fg-shadow (face-attribute 'shadow :foreground)))
     (set-face-attribute 'org-block-begin-line nil
+                        :italic nil
+                        :height 0.8
                         :foreground fg-shadow
-                        :background bg-block)
+                        :background bg-default)
+    (set-face-attribute 'org-block nil
+                        :background bg-default)
     (set-face-attribute 'org-block-end-line nil
                         :foreground fg-shadow
-                        :background bg-block ) ;; "#f1ede5"
+                        :background bg-default) ;; "#f1ede5"
 
     (set-face-attribute 'org-drawer nil :foreground fg-shadow)
     (set-face-attribute 'org-property-value nil :foreground fg-shadow)
@@ -148,7 +153,6 @@ node."
   (set-face-attribute 'org-drawer nil :inherit 'fixed-pitch)
   (set-face-attribute 'org-property-value nil :inherit 'fixed-pitch)
   (set-face-attribute 'org-special-keyword nil :inherit 'fixed-pitch)
-  (set-face-attribute 'org-table nil :inherit 'fixed-pitch)
 
   (set-face-attribute 'org-document-title nil :height 1.24)
   (set-face-attribute 'org-level-1 nil :height 1.24)
