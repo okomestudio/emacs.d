@@ -7,7 +7,6 @@
 
 (use-package elisp-mode
   :straight nil
-
   :bind
   (;; no global key binding
    :map emacs-lisp-mode-map
@@ -16,7 +15,8 @@
    ("C-c b" . ok-elisp--format-elisp-buffer))
 
   :hook
-  (emacs-lisp-mode . company-mode)
+  (emacs-lisp-mode . (lambda () (require 'company) (company-mode)))
+  (emacs-lisp-mode . (lambda () (setq-local devdocs-current-docs '("lisp"))))
 
   :config
   (defun ok-elisp--format-elisp-buffer ()
@@ -47,22 +47,16 @@
 
 
 (use-package nameless
-  :hook
-  (emacs-lisp-mode . nameless-mode)
-
+  :hook (emacs-lisp-mode . nameless-mode)
   :custom
   (nameless-global-aliases '())
   (nameless-private-prefix t))
 
 
 (use-package paredit
-  :hook
-  (emacs-lisp-mode . init-elisp--paredit-hook)
-
-  :config
-  (defun init-elisp--paredit-hook ()
-    (electric-pair-mode -1)
-    (enable-paredit-mode)))
+  :hook (emacs-lisp-mode . (lambda ()
+                             (electric-pair-local-mode -1)
+                             (enable-paredit-mode))))
 
 
 ;; SYNTAX HIGHLIGHTING
@@ -81,15 +75,13 @@
 
 
 (use-package highlight-sexp
-  :hook
-  (emacs-lisp-mode . highlight-sexp-mode)
-  (after-load-theme . (lambda ()
-                        (require 'okutil)
-                        (let* ((mode (frame-parameter nil 'background-mode))
-                               (scale (if (string= mode "dark") 1.04 0.96))
-                               (bg (face-attribute 'default :background))
-                               (bg-hl (okutil-color-scale bg scale)))
-                          (setq hl-sexp-background-color bg-hl)))))
+  :hook (emacs-lisp-mode . highlight-sexp-mode)
+  :config
+  (let* ((mode (frame-parameter nil 'background-mode))
+         (scale (if (string= mode "dark") 1.04 0.96))
+         (bg (face-attribute 'default :background))
+         (bg-hl (okutil-color-scale bg scale)))
+    (setq hl-sexp-background-color bg-hl)))
 
 
 ;; ELSA
@@ -117,10 +109,6 @@
 (use-package suggest
   ;; For discovering elisp functions based on examples.
   )
-
-
-(use-package devdocs
-  :hook (emacs-lisp-mode . (lambda () (setq-local devdocs-current-docs '("lisp")))))
 
 ;; Local Variables:
 ;; nameless-aliases: (("" . "ok-elisp"))
