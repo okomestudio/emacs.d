@@ -13,27 +13,30 @@
 ;;
 ;;; Code:
 
+(defvar bootstrap-version
+  "Straight bootstrap version.")
 (let ((bootstrap-file (expand-file-name "straight/repos/straight.el/bootstrap.el"
                                         user-emacs-directory))
-      (url (concat "https://raw.githubusercontent.com/"
-                   "radian-software/straight.el/develop/install.el")))
+      (bootstrap-version 7))
   (unless (file-exists-p bootstrap-file)
     (with-current-buffer
-	      (url-retrieve-synchronously url
-	                                  'silent 'inhibit-cookies)
+	      (url-retrieve-synchronously
+         (concat "https://raw.githubusercontent.com/"
+                 "radian-software/straight.el/develop/install.el")
+	       'silent 'inhibit-cookies)
       (goto-char (point-max))
       (eval-print-last-sexp)))
   (load bootstrap-file nil 'nomessage))
 
+(setq straight-use-package-by-default t)
+(setq use-package-always-defer t ;; use :demand t to override
+      use-package-compute-statistics ok-debug ;; for use-package-report
+      use-package-enable-imenu-support t
+      use-package-minimum-reported-time 0.001
+      use-package-verbose ok-debug)
+(setq message-log-max t)
+
 (straight-use-package 'use-package)
 (straight-use-package 'use-package-ensure-system-package)
-
-(setq straight-use-package-by-default t)
-(setq use-package-always-defer t       ;; use :demand t to override
-      use-package-compute-statistics t ;; for use-package-report
-      use-package-enable-imenu-support t
-      use-package-minimum-reported-time 0.01
-      use-package-verbose t)
-(setq message-log-max t)
 
 ;;; init-straight.el ends here
