@@ -10,7 +10,7 @@
 (setq file-name-handler-alist nil)
 
 ;; Profiling
-(when nil ;; set t to activate init profiler
+(when ok-debug ;; set t to activate init profiler
   (profiler-start 'cpu)
   (defun init--tear-down-profiler ()
     (profiler-report)
@@ -40,8 +40,7 @@
   ;;          "\\)\\.el\\'"))
   (init-loader-default-regexp
    "\\`\\(?:[[:digit:]]\\{2\\}-\\)\\([-[:alnum:]]+[^-][^X]\\).el\\'")
-
-  (init-loader-show-log-after-init t)
+  (init-loader-show-log-after-init ok-debug)
 
   :config
   (init-loader-load (expand-file-name "init.d" user-emacs-directory)))
