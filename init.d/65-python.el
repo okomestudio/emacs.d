@@ -59,8 +59,9 @@
   :straight
   (:host github :repo "okomestudio/pyimport" :branch "project-awareness"
          :files ("*.el" ("bin/make-imports.py" . "bin/make-imports.py")))
+  :ensure-system-package (pyflakes . "pip install pyflakes")
+  :preface (put 'pyimport-develop-packages 'safe-local-variable #'listp))
 
-  :ensure-system-package (pyflakes . "pip install pyflakes"))
 
 ;; VIRTUAL ENVS
 
@@ -105,6 +106,8 @@
    ("C-c t" . python-pytest-dispatch)))
 
 
+;; HELP & DOCS
+
 (use-package devdocs
   :hook
   (python-mode . (lambda () (setq-local devdocs-current-docs '("python~3.12"))))
@@ -144,6 +147,8 @@
   (python-mode . lsp-deferred)
   (python-ts-mode . lsp-deferred))
 
+
+;; PYMACS
 
 (use-package pymacs
   :disabled
