@@ -50,6 +50,9 @@
   :config (help-shortdoc-example-mode 1))
 
 
+(use-package hydra)
+
+
 (use-package which-key
   ;; Displays available keybindings in popup.
   :bind
