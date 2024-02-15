@@ -7,7 +7,6 @@
 
 (use-package org
   :ensure org-contrib
-
   :bind
   (;; no globals
    :map org-mode-map
@@ -127,7 +126,7 @@ node."
                                (sql . t)
                                (sqlite . t)
                                (typescript . t)))
-  
+
   (add-to-list 'org-babel-tangle-lang-exts '("js" . "js"))
 
   ;; FONT FACE
@@ -191,11 +190,10 @@ node."
   ;; Org export.
   :after (org)
   :straight nil
-
   :custom
   (org-export-with-broken-links t)
   (org-export-with-section-numbers nil)
-  
+
   :config
   (require 'ox-md)  ;; Markdown
   (require 'ox-gfm) ;; GitHub-flavored Markdown
@@ -237,8 +235,7 @@ node."
 
 (use-package org-agenda
   :straight nil
-  :commands (org-agenda)
-
+  :after (org)
   :custom
   (org-agenda-current-time-string "⭠ NOW ────────────────────")
   (org-agenda-include-diary t)
@@ -252,6 +249,7 @@ node."
 
 (use-package org-modern
   ;; Modern Org Style.
+  :after (org)
   :custom
   (org-modern-block-name t) ;; use org-modern-indent
   (org-modern-checkbox '((?X . #("▢𐄂" 0 2 (composition ((2)))))
@@ -278,6 +276,7 @@ node."
 (use-package org-modern-indent
   ;; Modern block styling with org-indent.
   :straight (:host github :repo "jdtsmith/org-modern-indent")
+  :after (org-modern)
   :init (add-hook 'org-mode-hook #'org-modern-indent-mode 90))
 
 
