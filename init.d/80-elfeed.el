@@ -1,7 +1,7 @@
-;;; 80-elfeed.el --- Elfeed  -*- lexical-binding: t -*-
+;;; 80-elfeed.el --- elfeed  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;
-;; Initialize Elfeed.
+;; Configure Elfeed and related utilities.
 ;;
 ;;; Code:
 
@@ -29,8 +29,10 @@
                             (setq-local nobreak-char-display nil)))
 
   :config
-  (set-face-attribute 'elfeed-search-title-face nil :foreground "#555")
-  (set-face-attribute 'elfeed-search-unread-title-face nil :foreground "#000"))
+  (set-face-attribute 'elfeed-search-title-face nil
+                      :foreground (face-attribute 'shadow :foreground))
+  (set-face-attribute 'elfeed-search-unread-title-face nil
+                      :foreground (face-attribute 'default :foreground)))
 
 
 (use-package elfeed-goodies
