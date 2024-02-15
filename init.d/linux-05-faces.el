@@ -24,6 +24,7 @@ The first one available will be picked for CJK characters.")
 (defvar ok-face-face-font-rescale-alist '(("Hack" . 1.0) ; reference
                                    ("EB Garamond". 1.4)
                                    ("BIZ UDGothic" . 1.225)
+                                   ("Linux Biolinum" . 1.4)
                                    ("Noto Sans Mono CJK JP" . 1.225)
                                    ("VL Gothic" . 1.225))
   "Set relative scales for font faces.
@@ -76,6 +77,7 @@ See: https://knowledge.sakura.ad.jp/8494/"
   :straight nil
   :ensure-system-package
   ("/usr/share/fonts/opentype/ebgaramond/EBGaramond08-Regular.otf" . fonts-ebgaramond)
+  ("/usr/share/fonts/opentype/linux-libertine/LinBiolinum_R.otf" . fonts-linuxlibertine)
   ("/usr/share/fonts/opentype/noto/NotoSansCJK-Regular.ttc" . fonts-noto-cjk)
   ("/usr/share/fonts/truetype/bizud-gothic/BIZUDGothic-Regular.ttf" . fonts-morisawa-bizud-gothic)
   ("/usr/share/fonts/truetype/hack/Hack-Regular.ttf" . fonts-hack)
