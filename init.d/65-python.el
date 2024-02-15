@@ -62,20 +62,40 @@
 
   :ensure-system-package (pyflakes . "pip install pyflakes"))
 
+;; VIRTUAL ENVS
 
 (use-package pyenv
+  :disabled
   :straight (:host github :repo "aiguofer/pyenv.el")
-  :custom
-  (pyenv-show-active-python-in-modeline t)
-
+  :custom (pyenv-show-active-python-in-modeline t)
   :hook
-  ;; (after-init . (lambda () (global-pyenv-mode)))
+  (after-init . (lambda () (global-pyenv-mode)))
   (projectile-after-switch-project . (lambda (&rest args)
                                        (pyenv-use-corresponding)
                                        (shell-command-to-string
                                         (expand-file-name "bin/bootstrap-python-venv"
                                                           user-emacs-directory)))))
 
+
+(use-package pyenv-mode
+  :straight (:host github :repo "pythonic-emacs/pyenv-mode")
+  :hook ((python-base-mode python-sql-base-mode) . ok-projectile-pyenv-mode-set)
+  :config
+  (defun ok-projectile-pyenv-mode-set ()
+    (unless (featurep 'pyenv-mode)
+      (pyenv-mode 1))
+    (let* ((project-root-dir (projectile-project-root))
+           (python-version-file (expand-file-name ".python-version" project-root-dir)))
+      (if (not (file-exists-p python-version-file))
+          (pyenv-mode-unset)
+        (let ((python-version (s-trim (with-temp-buffer
+                                        (insert-file-contents python-version-file)
+                                        (buffer-string)))))
+          (pyenv-mode-set python-version)
+          (message "pyenv-mode-set: %s" python-version))))))
+
+
+;; TESTING
 
 (use-package python-pytest
   :after (direnv)
