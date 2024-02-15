@@ -1,13 +1,21 @@
-;;; 68-ansible.el --- Ansible  -*- lexical-binding: t -*-
+;;; 68-ansible.el --- ansible  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;
-;; Configure Ansible utilities.
+;; Configure Ansible and related utilities.
 ;;
 ;;; Code:
 
 (use-package ansible ;; not derived from prog-mode
-  :hook (ansible . (lambda () (setq-local devdocs-current-docs '("ansible")))))
+  :hook
+  (ansible . (lambda () (setq-local devdocs-current-docs '("ansible"))))
+  (ansible . (lambda ()
+               ;; NOTE: To only run ansible-ls, uncomment the following line:
+               ;; (setq-local lsp-disabled-clients '(yamlls eslint))
+               (lsp-deferred)))
 
+  :preface
+  (put 'lsp-ansible-python-interpreter-path 'safe-local-variable #'stringp)
+  (put 'lsp-ansible-validation-lint-arguments 'safe-local-variable #'stringp))
 
 (use-package poly-ansible
   ;; Combines yaml-mode and jinja2-mode for Ansible.
@@ -24,22 +32,5 @@
   :commands poly-ansible-ts-mode
   :straight (:host github :repo "okomestudio/poly-ansible"
                    :branch "ts-mode" :fork "okomestudio"))
-
-
-(use-package lsp-mode
-  :hook
-  ((yaml-mode yaml-ts-mode) . (lambda ()
-                                ;; If in ansible-mode, do not activate yamlls.
-                                (unless (bound-and-true-p ansible)
-                                  (lsp-ensure-server 'yamlls)
-                                  (lsp-deferred))))
-  (ansible . (lambda ()
-               (setq-local lsp-disabled-clients '(yamlls eslint))
-               (lsp-ensure-server 'ansible-ls)
-               (lsp-deferred)))
-
-  :preface
-  (put 'lsp-ansible-python-interpreter-path 'safe-local-variable #'stringp)
-  (put 'lsp-ansible-validation-lint-arguments 'safe-local-variable #'stringp))
 
 ;;; 68-ansible.el ends here
