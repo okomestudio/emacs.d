@@ -64,4 +64,11 @@
 
 (use-package imenu-list)
 
+
+;; BOOKMARK
+
+(use-package bookmark+
+  ;; Enhances vanilla Emacs bookmarks in many way.
+  :defer 5)
+
 ;;; 02-navigation.el ends here
