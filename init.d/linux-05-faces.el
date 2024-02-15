@@ -39,7 +39,7 @@ characters have the same width with a CJK character.")
       (apply action)))
 
   (if (daemonp)
-      (add-hook 'server-after-make-frame-hook ok-face--apply-if-gui)
+      (add-hook 'server-after-make-frame-hook #'ok-face--apply-if-gui)
     (ok-face--apply-if-gui)))
 
 (defun ok-face--create-cjk-hybrid-fontset (size name)
@@ -85,7 +85,7 @@ See: https://knowledge.sakura.ad.jp/8494/"
   (dolist (element ok-face-face-font-rescale-alist)
     (push element face-font-rescale-alist))
   (ok-face--set-up-action 'ok-face--setup-faces-for-frame)
-  
+
   :hook
   ;; Scale texts by mode
   (elfeed-search-mode . (lambda () (text-scale-set 1.0)))
