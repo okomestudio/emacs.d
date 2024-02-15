@@ -31,8 +31,7 @@
   (compilation-scroll-output t)
   (confirm-kill-processes nil)
   (enable-recursive-minibuffers t)
-  ;; (initial-major-mode #'lisp-interaction-mode) ;; major mode used for `*scratch*' buffer
-  (initial-major-mode #'fundamental-mode) ;; major mode used for `*scratch*' buffer
+  (initial-major-mode #'lisp-interaction-mode) ;; for `*scratch*' buffer
   (load-prefer-newer t)
   (next-error-message-highlight t)
   (ring-bell-function 'ignore) ;; disable beeping (in C source code)
