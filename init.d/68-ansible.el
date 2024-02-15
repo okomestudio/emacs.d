@@ -21,18 +21,9 @@
   ;;
   ;; jinja2-mode inherits from html-mode.
   ;;
-  :demand t
-  :config
-  ;; Patch poly-ansible to add tree-sitter support:
-  (define-hostmode ok-yaml-ts-hostmode
-    :mode 'yaml-ts-mode)
-
-  (define-polymode poly-ansible-ts-mode
-    :hostmode 'ok-yaml-ts-hostmode
-    :innermodes '(pm-inner/jinja2)
-
-    (ansible 1)
-    (ansible-doc-mode 1)))
+  :commands poly-ansible-ts-mode
+  :straight (:host github :repo "okomestudio/poly-ansible"
+                   :branch "ts-mode" :fork "okomestudio"))
 
 
 (use-package lsp-mode
