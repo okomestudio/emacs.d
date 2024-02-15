@@ -1,31 +1,29 @@
 ;;; linux-00-window-system.el --- Linux window system  -*- lexical-binding: t -*-
 ;;; Commentary:
-;;;
-;;; This package performs Linux Window system-specific config.
-;;;
+;;
+;; Configure Linux window system-related utilities.
+;;
 ;;; Code:
 
-(use-package emacs
+(use-package emacs ;; for X
   :if (and (eq system-type 'gnu/linux) (memq window-system '(x)))
   :straight nil
-
   :custom
   (save-interprogram-paste-before-kill t)
   (select-enable-clipboard t)
   (x-select-request-type '(UTF8_STRING COMPOUND_TEXT TEXT STRING)))
 
 
-(use-package emacs
+(use-package emacs ;; for Wayland
   :if (and (eq system-type 'gnu/linux) (memq window-system '(pgtk)))
   :straight nil
-
   :custom
   (interprogram-cut-function #'ok--wl-copy)
   (interprogram-paste-function #'ok--wl-paste)
   (save-interprogram-paste-before-kill t)
   (select-enable-clipboard t)
   (x-select-request-type nil)
-
+  
   :ensure-system-package
   ("/usr/bin/wl-copy" . "sudo apt install -y wl-clipboard")
 

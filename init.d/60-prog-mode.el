@@ -1,5 +1,8 @@
 ;;; 60-prog-mode.el --- prog-mode  -*- lexical-binding: t -*-
 ;;; Commentary:
+;;
+;; Configure prog-mode related utilities.
+;;
 ;;; Code:
 
 (use-package prog-mode

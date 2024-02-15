@@ -1,7 +1,7 @@
 ;;; linux-05-faces.el --- Faces  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;
-;; Font face configuration.
+;; Configure font faces and utilities.
 ;;
 ;;; Code:
 
@@ -73,9 +73,7 @@ See: https://knowledge.sakura.ad.jp/8494/"
   (set-face-attribute 'underline nil :slant 'normal :underline t))
 
 (use-package emacs
-  :defer t
   :straight nil
-
   :ensure-system-package
   ("/usr/share/fonts/opentype/ebgaramond/EBGaramond08-Regular.otf" . fonts-ebgaramond)
   ("/usr/share/fonts/opentype/noto/NotoSansCJK-Regular.ttc" . fonts-noto-cjk)
@@ -83,12 +81,12 @@ See: https://knowledge.sakura.ad.jp/8494/"
   ("/usr/share/fonts/truetype/hack/Hack-Regular.ttf" . fonts-hack)
   ("/usr/share/fonts/truetype/vlgothic/VL-Gothic-Regular.ttf" . fonts-vlgothic)
 
+  :init
+  (dolist (element ok-face-face-font-rescale-alist)
+    (push element face-font-rescale-alist))
+  (ok-face--set-up-action 'ok-face--setup-faces-for-frame)
+  
   :hook
-  (after-init . (lambda ()
-                  (dolist (element ok-face-face-font-rescale-alist)
-                    (add-to-list 'face-font-rescale-alist element))
-                  (ok-face--set-up-action 'ok-face--setup-faces-for-frame)))
-
   ;; Scale texts by mode
   (elfeed-search-mode . (lambda () (text-scale-set 1.0)))
   (elfeed-show-mode . (lambda () (text-scale-set 1.5)))
@@ -105,8 +103,6 @@ See: https://knowledge.sakura.ad.jp/8494/"
 
 (use-package mixed-pitch
   ;; Enable mixing fixed-pitch and variable-pitch.
-  :defer t
-
   :custom
   (mixed-pitch-variable-pitch-cursor nil)
 

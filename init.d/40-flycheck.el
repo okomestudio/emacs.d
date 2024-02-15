@@ -1,5 +1,8 @@
 ;;; 40-flycheck.el --- flycheck  -*- lexical-binding: t -*-
 ;;; Commentary:
+;;
+;; Configure flycheck related utilities.
+;;
 ;;; Code:
 
 (use-package flycheck
@@ -19,10 +22,7 @@
 
 
 (use-package flycheck-pos-tip
-  :custom
-  (flycheck-pos-tip-timeout 60)
-
-  :config
-  (flycheck-pos-tip-mode))
+  :custom (flycheck-pos-tip-timeout 60)
+  :config (flycheck-pos-tip-mode))
 
 ;;; 40-flycheck.el ends here

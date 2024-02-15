@@ -1,5 +1,8 @@
 ;;; 00-startup.el --- Startup  -*- lexical-binding: t -*-
 ;;; Commentary:
+;;
+;; Configure Emacs startup settings.
+;;
 ;;; Code:
 
 (use-package no-littering
@@ -28,9 +31,11 @@
   (compilation-scroll-output t)
   (confirm-kill-processes nil)
   (enable-recursive-minibuffers t)
+  ;; (initial-major-mode #'lisp-interaction-mode) ;; major mode used for `*scratch*' buffer
+  (initial-major-mode #'fundamental-mode) ;; major mode used for `*scratch*' buffer
   (load-prefer-newer t)
   (next-error-message-highlight t)
-  (ring-bell-function 'ignore)          ; Disable beeping (in C source code)
+  (ring-bell-function 'ignore) ;; disable beeping (in C source code)
   (tab-width 2)
   (uniquify-buffer-name-style 'forward)
   (use-dialog-box nil)
@@ -39,11 +44,11 @@
   (word-wrap-by-category t)
 
   ;; Basic editing
-  (sentence-end-double-space nil)       ; in paragraphs.el
+  (sentence-end-double-space nil) ;; in paragraphs.el
   (show-paren-context-when-offscreen t)
   (show-paren-delay 0)
   (size-indication-mode t)
-  (tab-always-indent t)                 ; in indent.el
+  (tab-always-indent t) ;; in indent.el
 
   ;; File related config
   (auto-save-default nil)
@@ -65,8 +70,8 @@
   (require 'okutil)
 
   (column-number-mode t)
-  (global-so-long-mode +1)              ; mitigate perf on files with long lines
-  (show-paren-mode +1)                  ; highlight matching parens
+  (global-so-long-mode +1) ;; mitigate perf on files with long lines
+  (show-paren-mode +1)     ;; highlight matching parens
   (subword-mode)
   (tooltip-mode 1)
   (setq-default indent-tabs-mode nil)

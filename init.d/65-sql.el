@@ -34,19 +34,20 @@
   (put 'sql-postgres-program 'safe-local-variable #'stringp)
 
   :config
-  (defadvice org-edit-special (before org-edit-src-code activate)
-    "Intercept org-src-mode to set SQL product variant."
-    (let ((lang (nth 0 (org-babel-get-src-block-info))))
-      (cond
-       ((string= lang "sql")
-        (let ((engine (cdr (assoc :engine
-                                  (nth 2 (org-babel-get-src-block-info))))))
-          (cond ((string= engine "mysql") (sql-set-product 'mysql))
-                ((or (string= engine "postgres")
-                     (string= engine "postgresql")) (sql-set-product 'postgres))
-                (t (sql-set-product 'ansi)))))
-       ((string= lang "sqlite") (sql-set-product 'sqlite))
-       (t (sql-set-product 'ansi)))))
+  (with-eval-after-load 'org
+    (defadvice org-edit-special (before org-edit-src-code activate)
+      "Intercept org-src-mode to set SQL product variant."
+      (let ((lang (nth 0 (org-babel-get-src-block-info))))
+        (cond
+         ((string= lang "sql")
+          (let ((engine (cdr (assoc :engine
+                                    (nth 2 (org-babel-get-src-block-info))))))
+            (cond ((string= engine "mysql") (sql-set-product 'mysql))
+                  ((or (string= engine "postgres")
+                       (string= engine "postgresql")) (sql-set-product 'postgres))
+                  (t (sql-set-product 'ansi)))))
+         ((string= lang "sqlite") (sql-set-product 'sqlite))
+         (t (sql-set-product 'ansi))))))
 
   (sql-set-product 'ansi))
 

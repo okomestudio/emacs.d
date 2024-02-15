@@ -6,8 +6,6 @@
 ;;; Code:
 
 (use-package elfeed
-  :commands (elfeed)
-
   :custom
   (elfeed-curl-max-connections 16)
   (elfeed-search-title-max-width 100)

@@ -64,8 +64,7 @@
   (which-key-side-window-location '(right bottom))
   (which-key-side-window-max-width 0.8)
 
-  :hook
-  (after-init . (lambda () (which-key-mode +1))))
+  :init (which-key-mode +1))
 
 
 (use-package sicp

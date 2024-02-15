@@ -4,8 +4,7 @@
 
 (use-package hippie-exp
   ;; Expand the word before the point in various ways.
-  :ensure nil
-
+  :straight nil
   :bind
   ([remap dabbrev-expand] . hippie-expand))
 
@@ -46,10 +45,7 @@
 
 (use-package typo
   ;; Typographical utility (e.g., smart quotation).
-  :defer t
-
-  :hook
-  (text-mode . typo-mode))
+  :hook (text-mode . typo-mode))
 
 
 (use-package undo-tree
@@ -63,11 +59,8 @@
    ("C-/" . undo-tree-undo)
    ("C-?" . undo-tree-redo))
 
-  :custom
-  (undo-tree-auto-save-history nil)
-
-  :hook
-  (after-init . (lambda () (global-undo-tree-mode))))
+  :custom (undo-tree-auto-save-history nil)
+  :init (global-undo-tree-mode))
 
 
 (use-package whole-line-or-region
@@ -84,9 +77,9 @@
    ("M-s M-s" . flyspell-auto-correct-previous-word))
 
   :hook
-  (prog-mode . flyspell-prog-mode)
-  (shell-script-mode . flyspell-prog-mode)
-  (text-mode . flyspell-mode))
+  ((prog-mode
+    shell-script-mode
+    text-mode) . flyspell-prog-mode))
 
 
 (use-package ispell
