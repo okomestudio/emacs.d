@@ -1,15 +1,12 @@
-;;; 16-org-roam.el --- Org Roam  -*- lexical-binding: t -*-
+;;; 16-org-roam.el --- org-roam  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;
-;; A tool for networked thought. It reproduces some of Roam Research's key
-;; features within Org.
+;; Configure Org Roam and related utilities.
 ;;
 ;;; Code:
 
 (use-package org-roam
-  :straight (:host github :repo "okomestudio/org-roam"
-                   :branch "okome" :fork "okomestudio")
-
+  :straight (:host github :repo "okomestudio/org-roam" :branch "okome" :fork "okomestudio")
   :bind
   (;
    ("C-c n c" . (lambda () (interactive) (org-capture nil "f")))
@@ -32,8 +29,8 @@
                                                     "#+title: %<%Y-%m-%d>\n"))))
   (org-roam-dailies-directory "journal/")
   (org-roam-database-connector 'sqlite-builtin)
-  (org-roam-db-location (file-truename "~/.config/emacs/roam/.roam.db"))
-  (org-roam-directory (file-truename "~/.config/emacs/roam"))
+  (org-roam-db-location (no-littering-expand-var-file-name "org-roam/roam/.roam.db"))
+  (org-roam-directory (no-littering-expand-var-file-name "org-roam/roam/"))
   (org-roam-extract-new-file-path "topic/${id}/${slug}.org")
   (org-roam-mode-sections (list #'org-roam-backlinks-section
                                 #'org-roam-reflinks-section
