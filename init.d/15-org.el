@@ -281,7 +281,12 @@ node."
   ;; Modern block styling with org-indent.
   :straight (:host github :repo "jdtsmith/org-modern-indent")
   :after (org-modern)
-  :init (add-hook 'org-mode-hook #'org-modern-indent-mode 90))
+  :init (add-hook 'org-mode-hook #'org-modern-indent-mode 90)
+  :hook
+  (org-mode . (lambda()
+                ;; See github.com/jdtsmith/org-modern-indent/issues/10
+                (aset org-indent--text-line-prefixes
+                      0 (propertize " " 'face 'org-indent)))))
 
 
 (use-package org-side-tree
