@@ -40,6 +40,10 @@
 (push '(vertical-scroll-bars) default-frame-alist)
 (fringe-mode '(12 . 12))
 
+;; Adjust default frame size if desired:
+;; (add-to-list 'default-frame-alist (cons 'width 120))
+;; (add-to-list 'default-frame-alist (cons 'height 40))
+
 ;; Ignore x session resources
 (advice-add 'x-apply-session-resources :override 'ignore)
 
