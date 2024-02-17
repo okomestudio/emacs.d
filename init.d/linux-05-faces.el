@@ -1,39 +1,53 @@
-;;; linux-05-faces.el --- Faces  -*- lexical-binding: t -*-
+;;; linux-05-faces.el --- faces  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;
-;; Configure font faces and utilities.
+;; Configure font faces and related utilities.
 ;;
 ;;; Code:
 
-(defvar ok-face-font-family-default "Hack"
-  "Font family for default face.")
-
 (defvar ok-face-font-family-fixed-pitch "Hack"
-  "Font family for fixed pitch face.")
+  "Font for the fixed pitch.
+This is also used as the default.")
+
+(defvar ok-face-font-family-fixed-pitch-ja "BIZ UDGothic" ;; "Noto Sans Mono CJK JP"
+  "Font for the fixed pitch in Japanese.")
 
 (defvar ok-face-font-family-variable-pitch "EB Garamond"
-  "Font family for variable pitch face.")
+  "Font for the variable pitch.")
 
-(defvar ok-face-cjk-font-families '("BIZ UDGothic"
-                             "Noto Sans Mono CJK JP"
-                             "VL Gothic")
-  "CJK fonts to look for in order.
+(defvar ok-face-font-family-variable-pitch-ja "Noto Serif CJK JP"
+  "Font for the variable pitch in Japanese.")
 
-The first one available will be picked for CJK characters.")
+(defvar ok-face-font-family-outline "URW Classico"
+  "Font for outlines.")
 
-(defvar ok-face-face-font-rescale-alist '(("Hack" . 1.0) ; reference
-                                   ("EB Garamond". 1.4)
-                                   ("BIZ UDGothic" . 1.225)
-                                   ("Linux Biolinum" . 1.4)
-                                   ("Noto Sans Mono CJK JP" . 1.225)
-                                   ("VL Gothic" . 1.225))
+(defvar ok-face-font-family-outline-ja "Noto Sans CJK JP"
+  "Font for outlines in Japanese.")
+
+(defvar ok-face-face-font-rescale-alist '(("Hack" . 1.00) ; reference
+                                   ("EB Garamond". 1.28)
+                                   ;; ("BIZ UDGothic" . 1.225)
+                                   ("URW Classico" . 1.28)
+                                   ("Noto Sans Mono CJK JP" . 1.18)
+                                   ("Noto Serif Mono CJK JP" . 1.18)
+                                   ("Noto Sans CJK JP" . 1.00)
+                                   ("Noto Serif CJK JP" . 1.00)
+                                   ;; ("VL Gothic" . 1.225)
+                                   ("AoyagiKouzanFontT". 1.00))
   "Set relative scales for font faces.
-
 For best alignment, try with fixed pitch font so that two ASCII
 characters have the same width with a CJK character.")
 
+(defface ok-face-outline '((t :inherit 'default))
+  "Face for outlines.
+Use when contrast with non-outline contenst is desired."
+  :group 'ok)
+
+
+;; UTILITY FUNCTIONS
+
 (defun ok-face--set-up-action (&rest action)
-  "Set up ACTION to run at the correct timing."
+  "Set up ACTION to run on frame creation."
   (defun ok-face--apply-if-gui ()
     (when (display-graphic-p)
       (select-frame (selected-frame))
@@ -43,74 +57,114 @@ characters have the same width with a CJK character.")
       (add-hook 'server-after-make-frame-hook #'ok-face--apply-if-gui)
     (ok-face--apply-if-gui)))
 
-(defun ok-face--create-cjk-hybrid-fontset (size name)
-  "Create a CJK hybrid fontset named fontset-NAME from an ASCII font.
 
-SIZE is the font size of the ASCII font. This could be used
-instead of `set-fontset-font' for CJK chars. TODO: Make this
-fully functiona.
+(defun ok-face--create-fontset (font-family fontset)
+  "Create FONTSET using FONT-FAMILY."
+  (create-fontset-from-fontset-spec
+   (font-xlfd-name (font-spec :family font-family :registry fontset))))
 
-See: https://knowledge.sakura.ad.jp/8494/"
-  (let ((ascii-font (format "Hack:weight=normal:slant=normal:size=%d" size))
-        (fontset-name (format "fontset-%s" name)))
-    (create-fontset-from-ascii-font ascii-font nil fontset-name)))
+
+(defun ok-face--set-fontset-font-japanese (fontset font-family)
+  "Modify FONTSET to use FONT-FAMILY for Japanese rendering."
+  (dolist (characters '(japanese-jisx0208
+                        japanese-jisx0208-1978
+                        japanese-jisx0212
+                        japanese-jisx0213-1
+                        japanese-jisx0213-2
+                        japanese-jisx0213-a
+                        japanese-jisx0213.2004-1
+                        jisx0201
+                        latin-jisx0201
+                        katakana-jisx0201
+                        katakana-sjis))
+    (set-fontset-font fontset characters (font-spec :family font-family) nil 'prepend)))
+
 
 (defun ok-face--setup-faces-for-frame (&optional frame)
-  "Set up default faces for the frame."
-  (set-face-attribute 'default frame :family ok-face-font-family-default)
-  (set-face-attribute 'fixed-pitch frame :family ok-face-font-family-fixed-pitch)
-  (set-face-attribute 'variable-pitch frame :family ok-face-font-family-variable-pitch)
+  "Set up the faces for FRAME."
+  (dolist (font `(,ok-face-font-family-fixed-pitch
+                  ,ok-face-font-family-fixed-pitch-ja
+                  ,ok-face-font-family-variable-pitch
+                  ,ok-face-font-family-variable-pitch-ja
+                  ,ok-face-font-family-outline
+                  ,ok-face-font-family-outline-ja))
+    (if (not (find-font (font-spec :family font)))
+        (message "WARNING: Font `%s' not found" font)))
 
-  ;; Look for a CJK font and use it to render UNICODE chars in this frame:
-  (require 'dash)
-  (let* ((font-specs (--map (font-spec :family it) ok-face-cjk-font-families))
-         (matched-font-spec (seq-find (lambda (font-spec)
-                                        (find-font font-spec))
-                                      font-specs)))
-    (set-fontset-font nil 'unicode matched-font-spec frame 'append))
+  (dolist (element ok-face-face-font-rescale-alist)
+    (push element face-font-rescale-alist))
 
-  ;; NOTE: By default, italic is rendered as underline, for which this is a fix.
-  (set-face-attribute 'italic nil :slant 'italic :underline nil)
-  (set-face-attribute 'underline nil :slant 'normal :underline t))
+  ;; FONTSETS
+
+  ;; Emacs comes with three fontsets: `fontset-startup',
+  ;; `fontset-standard', and `fontset-default', the last of which is
+  ;; the ultimate fallback.
+  (ok-face--create-fontset ok-face-font-family-fixed-pitch "fontset-fixed pitch")
+  (ok-face--create-fontset ok-face-font-family-variable-pitch "fontset-variable pitch")
+  (ok-face--create-fontset ok-face-font-family-outline "fontset-urw classico")
+
+  ;; Modify fontset for multi-lingual support.
+  (set-fontset-font "fontset-default" 'iso-8859-3 ok-face-font-family-fixed-pitch nil 'prepend)
+  (ok-face--set-fontset-font-japanese "fontset-default" ok-face-font-family-fixed-pitch-ja)
+  (ok-face--set-fontset-font-japanese "fontset-fixed pitch" ok-face-font-family-fixed-pitch-ja)
+  (ok-face--set-fontset-font-japanese "fontset-variable pitch" ok-face-font-family-variable-pitch-ja)
+  (ok-face--set-fontset-font-japanese "fontset-urw classico" ok-face-font-family-outline-ja)
+
+  ;; STANDARD FACES
+
+  (set-face-attribute 'default frame
+                      :height 120 :font "fontset-default" :fontset "fontset-default")
+  ;; bold
+  (set-face-attribute 'italic frame :slant 'italic :underline nil)
+  ;; bold-italic
+  (set-face-attribute 'underline frame :slant 'normal :underline t)
+  (set-face-attribute 'fixed-pitch frame
+                      :font "fontset-fixed pitch" :fontset "fontset-fixed pitch")
+  ;; fixed-pitch-serif
+  (set-face-attribute 'variable-pitch frame
+                      :font "fontset-variable pitch" :fontset "fontset-variable pitch")
+  ;; variable-pitch-text
+  (set-face-attribute 'shadow frame :inherit 'default)
+
+  ;; See the Standard Faces section of Emacs manual for the rest of
+  ;; the commonly used faces.
+
+  ;; CUSTOM FACES
+  (set-face-attribute 'ok-face-outline frame
+                      :font "fontset-urw classico" :fontset "fontset-urw classico"))
+
 
 (use-package emacs
   :straight nil
   :ensure-system-package
   ("/usr/share/fonts/opentype/ebgaramond/EBGaramond08-Regular.otf" . fonts-ebgaramond)
-  ("/usr/share/fonts/opentype/linux-libertine/LinBiolinum_R.otf" . fonts-linuxlibertine)
   ("/usr/share/fonts/opentype/noto/NotoSansCJK-Regular.ttc" . fonts-noto-cjk)
   ("/usr/share/fonts/truetype/bizud-gothic/BIZUDGothic-Regular.ttf" . fonts-morisawa-bizud-gothic)
   ("/usr/share/fonts/truetype/hack/Hack-Regular.ttf" . fonts-hack)
   ("/usr/share/fonts/truetype/vlgothic/VL-Gothic-Regular.ttf" . fonts-vlgothic)
 
-  :init
-  (dolist (element ok-face-face-font-rescale-alist)
-    (push element face-font-rescale-alist))
-  (ok-face--set-up-action 'ok-face--setup-faces-for-frame)
+  :init (ok-face--set-up-action 'ok-face--setup-faces-for-frame)
 
   :hook
-  ;; Scale texts by mode
-  (elfeed-search-mode . (lambda () (text-scale-set 1.0)))
-  (elfeed-show-mode . (lambda () (text-scale-set 1.5)))
-  (eww-mode . (lambda () (text-scale-set 1.5)))
+  ;; Scale texts by mode; `text-scale-mode' affect the `default face.
+  (elfeed-search-mode . (lambda () (text-scale-set 0.0)))
+  (elfeed-show-mode . (lambda () (text-scale-set 0.0)))
+  (eww-mode . (lambda () (text-scale-set 0.0)))
   (org-mode
    . (lambda ()
-       (text-scale-set 1.5)
+       (text-scale-set 0.2)
        (let ((factor (expt text-scale-mode-step text-scale-mode-amount)))
          (plist-put org-format-latex-options :scale (* 3.33 factor)))))
-  (prog-mode . (lambda () (text-scale-set 0.5)))
-  (text-mode . (lambda () (text-scale-set 0.5)))
-  (treemacs-mode . (lambda () (text-scale-decrease 0.4))))
+  (prog-mode . (lambda () (text-scale-set 0.0)))
+  (text-mode . (lambda () (text-scale-set 0.0)))
+  (treemacs-mode . (lambda () (text-scale-set -0.5))))
 
 
 (use-package mixed-pitch
-  ;; Enable mixing fixed-pitch and variable-pitch.
-  :custom
-  (mixed-pitch-variable-pitch-cursor nil)
-
-  :hook
-  (org-mode . mixed-pitch-mode)
-
+  :disabled ;; ... until the package gets patched.
+  :straight (:host github :repo "okomestudio/mixed-pitch" :fork "okomestudio")
+  :hook (org-mode . mixed-pitch-mode)
+  :custom (mixed-pitch-variable-pitch-cursor nil)
   :config
   (delete 'org-table mixed-pitch-fixed-pitch-faces)
   (add-to-list 'mixed-pitch-fixed-pitch-faces 'font-lock-comment-face)
