@@ -129,6 +129,11 @@
 
 ;; MISC.
 
+(use-package anzu
+  ;; Displays current and total matches information in the mode-line.
+  :hook (after-init . (lambda () (global-anzu-mode 1))))
+
+
 (use-package switch-buffer-functions
   ;; Hook run when switching current buffer.
   :disabled)
