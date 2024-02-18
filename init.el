@@ -11,7 +11,7 @@
 
 ;; Profiling
 (when ok-debug ;; set t to activate init profiler
-  (profiler-start 'cpu)
+  (profiler-start 'cpu+mem)
   (defun init--tear-down-profiler ()
     (profiler-report)
     (profiler-stop))

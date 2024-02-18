@@ -34,7 +34,6 @@
   (initial-major-mode #'lisp-interaction-mode) ;; for `*scratch*' buffer
   (load-prefer-newer t)
   (next-error-message-highlight t)
-  (ring-bell-function 'ignore) ;; disable beeping (in C source code)
   (tab-width 2)
   (uniquify-buffer-name-style 'forward)
   (use-dialog-box nil)
