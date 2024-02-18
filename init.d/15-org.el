@@ -218,7 +218,6 @@ node."
 
 (use-package org-modern
   ;; Modern Org Style.
-  :after (org)
   :custom
   (org-modern-block-name t) ;; use org-modern-indent
   (org-modern-checkbox '((?X . #("▢𐄂" 0 2 (composition ((2)))))
@@ -362,7 +361,6 @@ node."
 
   (defun ok-org--remap-to-mixed-pitch ()
     (face-remap-add-relative 'default :inherit 'variable-pitch)
-
     (dolist (face ok-org-fixed-pitch-faces)
       (face-remap-add-relative face :inherit 'fixed-pitch)))
 
@@ -375,20 +373,28 @@ node."
               (setq face (car face)))
           (face-remap-add-relative face :height height)))))
 
-  (add-hook 'org-mode-hook (lambda ()
-                             (ok-org--remap-to-mixed-pitch)
-                             (ok-org--handle-text-scale-mode)) 90)
+  (add-hook 'org-modern-indent-mode-hook
+            (lambda ()
+              (ok-org--remap-to-mixed-pitch)
+              (ok-org--handle-text-scale-mode)
+              (force-window-update (current-buffer))) 91)
 
   (dolist (it ok-org--outline-faces)
     (let* ((face (car it))
-           (parent-face (face-attribute face :inherit))
            (prop (cdr it))
-           (height (car (cdr (assoc :height prop))))
-           (weight 'bold))
-      (set-face-attribute parent-face nil :inherit 'ok-face-outline)
-      (set-face-attribute face nil :height height :weight weight)))
+           (height (or (car (cdr (assoc :height prop)))
+                       (face-attribute face :height nil t)))
+           (foreground (face-attribute face :foreground nil t))
+           (weight (face-attribute face :weight nil t))
+           (inherit 'ok-face-outline))
+      (set-face-attribute face nil
+                          :height height
+                          :foreground foreground
+                          :weight weight
+                          :inherit inherit)))
 
-  (set-face-attribute 'org-drawer nil :foreground (face-attribute 'shadow :foreground)))
+  (set-face-attribute 'org-drawer nil
+                      :foreground (face-attribute 'shadow :foreground)))
 
 ;; Local Variables:
 ;; nameless-aliases: (("" . "ok-org"))
