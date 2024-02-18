@@ -1,5 +1,8 @@
 ;;; 40-editing-utils.el --- Editing  -*- lexical-binding: t -*-
 ;;; Commentary:
+;;
+;; Configure editing related utilities.
+;;
 ;;; Code:
 
 (use-package hippie-exp
@@ -45,7 +48,7 @@
 
 (use-package typo
   ;; Typographical utility (e.g., smart quotation).
-  :hook (text-mode . typo-mode))
+  :hook (org-mode . typo-mode))
 
 
 (use-package undo-tree

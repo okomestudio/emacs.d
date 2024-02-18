@@ -9,7 +9,6 @@
   :straight nil
   :mode "\\.ya?ml\\'"
   :hook
-  (yaml-ts-mode . (lambda () (typo-mode -1)))
   (yaml-ts-mode . ok-yaml--patch-yaml-ts-mode)
   (yaml-ts-mode . lsp-deferred)
 
