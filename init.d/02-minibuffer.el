@@ -4,7 +4,9 @@
 
 (use-package vertico
   ;; VERTical Interactive COmpletion.
-  :custom (vertico-count 20)
+  :custom
+  (vertico-count 20)
+  (vertico-cycle t)
   :hook (after-init . vertico-mode))
 
 
