@@ -146,7 +146,7 @@ Use when contrast with non-outline contenst is desired."
          (plist-put org-format-latex-options :scale (* 3.33 factor)))))
   (prog-mode . (lambda () (text-scale-set 0.0)))
   (text-mode . (lambda () (text-scale-set 0.0)))
-  (treemacs-mode . (lambda () (text-scale-set -0.25))))
+  (treemacs-mode . (lambda () (text-scale-set -0.4))))
 
 
 (use-package mixed-pitch

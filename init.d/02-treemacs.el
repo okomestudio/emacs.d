@@ -1,11 +1,13 @@
-;;; 02-treemacs.el --- Treemacs  -*- lexical-binding: t -*-
+;;; 02-treemacs.el --- treemacs  -*- lexical-binding: t -*-
 ;;; Commentary:
+;;
+;; Configure Treemacs and related utilities.
+;;
 ;;; Code:
 
 (use-package treemacs
   :bind
-  (;
-   ([f8] . ok-treemacs-show)
+  (([f8] . ok-treemacs-show)
    ([mouse-1] . treemacs-single-click-expand-action)
    ("M-0" . treemacs-select-window))
 
@@ -14,8 +16,8 @@
   (treemacs-indentation-string " ")
   (treemacs-no-png-images t) ;; set to nil for image icons
   (treemacs-show-cursor t)
-  (treemacs-wide-toggle-width 75)
-  (treemacs-width 30)
+  (treemacs-wide-toggle-width 80)
+  (treemacs-width 25)
 
   :config
   (use-package cfrs
