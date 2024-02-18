@@ -10,12 +10,10 @@
 (use-package ace-isearch
   ;; A seamless bridge between isearch, ace-jump-mode, avy, and swoop.
   :custom
-  (ace-isearch-input-length 1)
-  (ace-isearch-jump-delay 0.75)
+  (ace-isearch-input-length 6)
+  (ace-isearch-jump-delay 0.3)
   (ace-isearch-function-from-isearch 'ace-isearch-consult-line-from-isearch)
-
-  :hook
-  (after-init . (lambda () (global-ace-isearch-mode +1))))
+  :hook (after-init . (lambda () (global-ace-isearch-mode +1))))
 
 
 (use-package ace-jump-mode)
