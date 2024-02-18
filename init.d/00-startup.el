@@ -74,12 +74,6 @@
   (tooltip-mode 1)
   (setq-default indent-tabs-mode nil)
 
-
-  ;; auto-revert-mode
-  (setq global-auto-revert-non-file-buffers t)
-  (global-auto-revert-mode 1)
-
-
   ;; For multilingual environment:
   (set-language-environment "UTF-8") ;; or "Japanese", for example
 
@@ -87,6 +81,14 @@
   (set-coding-system-priority 'utf-8)
   (setq-default buffer-file-coding-system 'utf-8-unix)
   (set-default-coding-systems 'utf-8))
+
+
+(use-package autorevert
+  :straight nil
+  :custom
+  (auto-revert-interval 0.01)
+  (global-auto-revert-non-file-buffers t)
+  :init (global-auto-revert-mode 1))
 
 
 ;; COMMON ELISP LIBRARIES
