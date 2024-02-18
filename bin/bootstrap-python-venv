@@ -3,30 +3,30 @@
 # Bootstrap virtual environment with missing Python packages.
 #
 
-if [ -z "$VIRTUAL_ENV" ]; then
-  # If outside a virtual environment, do nothing.
-  exit 0
+VENV="${VIRTUAL_ENV:-$1}"
+PYTHON="${VENV}/bin/python"
+
+if [ ! -x "$PYTHON" ]; then
+  echo "Python not found at $PYTHON"
+  exit 1
 fi
 
 # pylsp
-
-if ! "${VIRTUAL_ENV}/bin/pylsp" ; then
-  pip install python-lsp-server[all] python-lsp-black pyls-isort
-  pip install flake8 flake8-docstrings pydocstyle[toml]
+if ! "${VENV}/bin/pylsp" ; then
+  "$PYTHON" -m pip install python-lsp-server[all] python-lsp-black pyls-isort
+  "$PYTHON" -m pip install flake8 flake8-docstrings pydocstyle[toml]
 fi
 
+# pymacs and ropemacs
+# if ! $PYTHON -c 'import Pymacs'; then
+#   $PYTHON -m pip install -U pyopenssl
+#   $PYTHON -m pip install -e ~/.config/emacs/straight/repos/Pymacs/
+# fi
 
-# Pymacs and ropemacs
+# if ! $PYTHON -c 'import rope'; then
+#   $PYTHON -m pip install -U rope
+# fi
 
-if ! python -c 'import Pymacs'; then
-  pip install -U pyopenssl
-  pip install -e ~/.config/emacs/straight/repos/Pymacs/
-fi
-
-if ! python -c 'import rope'; then
-  pip install -U rope
-fi
-
-if ! python -c 'import ropemacs'; then
-  pip install -e ~/.config/emacs/straight/repos/ropemacs/
-fi
+# if ! $PYTHON -c 'import ropemacs'; then
+#   $PYTHON -m pip install -e ~/.config/emacs/straight/repos/ropemacs/
+# fi

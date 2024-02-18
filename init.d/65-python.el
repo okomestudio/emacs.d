@@ -20,6 +20,14 @@
   (python-shell-interpreter (expand-file-name "bin/python-shell-interpreter"
                                               user-emacs-directory))
 
+  ;; lsp
+  (lsp-pylsp-configuration-sources ["flake8"])
+  (lsp-pylsp-plugins-flake8-enabled t)
+  (lsp-pylsp-plugins-pycodestyle-enabled nil)
+  (lsp-pylsp-plugins-pydocstyle-enabled nil) ;; redundant with flake8?
+  (lsp-pylsp-plugins-pyflakes-enabled nil)
+  (lsp-pylsp-plugins-pylint-enabled nil)
+
   :ensure-system-package (ipython . "pip install ipython")
 
   :config
@@ -27,7 +35,10 @@
     "Format Python code."
     (interactive)
     (blacken-buffer)
-    (py-isort-buffer)))
+    (py-isort-buffer))
+
+  (add-hook 'python-base-mode-hook #'lsp-deferred 90)
+  (add-hook 'python-sql-base-mode-hook #'lsp-deferred 90))
 
 
 (use-package python-sql-mode
@@ -93,7 +104,14 @@
                                         (insert-file-contents python-version-file)
                                         (buffer-string)))))
           (pyenv-mode-set python-version)
-          (message "pyenv-mode-set: %s" python-version))))))
+          (let ((virtual-env (pyenv-mode-full-path (pyenv-mode-version))))
+            ;; (setenv "VIRTUAL_ENV" (pyenv-mode-full-path (pyenv-mode-version)))
+            ;; (setenv "PYENV_VIRTUAL_ENV" (pyenv-mode-full-path (pyenv-mode-version)))
+            (message (shell-command-to-string
+                      (format "%s %s"
+                              (expand-file-name "bin/bootstrap-python-venv"
+                                                user-emacs-directory)
+                              virtual-env)))))))))
 
 
 ;; TESTING
@@ -132,20 +150,6 @@
     (if (symbol-at-point)
         (pydoc-at-point)
       (devdocs-lookup))))
-
-
-(use-package lsp-mode
-  :custom
-  (lsp-pylsp-configuration-sources ["flake8"])
-  (lsp-pylsp-plugins-flake8-enabled t)
-  (lsp-pylsp-plugins-pycodestyle-enabled nil)
-  (lsp-pylsp-plugins-pydocstyle-enabled nil) ;; redundant with flake8?
-  (lsp-pylsp-plugins-pyflakes-enabled nil)
-  (lsp-pylsp-plugins-pylint-enabled nil)
-
-  :hook
-  (python-mode . lsp-deferred)
-  (python-ts-mode . lsp-deferred))
 
 
 ;; PYMACS
