@@ -57,7 +57,6 @@
   ;; Displays available keybindings in popup.
   :bind
   (("C-h a k" . which-key-show-top-level))
-
   :custom
   (which-key-idle-delay 0.5)
   (which-key-max-description-length nil)
@@ -66,7 +65,7 @@
   (which-key-show-docstrings nil)
   (which-key-side-window-location '(right bottom))
   (which-key-side-window-max-width 0.8)
-
+  (which-key-sort-order 'which-key-key-order-alpha)
   :init (which-key-mode +1))
 
 
