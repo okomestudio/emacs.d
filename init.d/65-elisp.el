@@ -106,6 +106,9 @@
 
 ;; HELP & DOCUMENTATION
 
+(use-package package-lint)
+
+
 (use-package suggest
   ;; For discovering elisp functions based on examples.
   )
