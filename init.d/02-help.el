@@ -1,7 +1,7 @@
-;;; 02-help.el --- Help  -*- lexical-binding: t -*-
+;;; 02-help.el --- help  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;
-;; Help related utilities.
+;; Configure help and related utilities.
 ;;
 ;;; Code:
 
@@ -77,10 +77,12 @@
 
 (use-package help ;; help-mode
   :straight nil
+  :custom (list-faces-sample-text "abcdefghijklmn ABCDEFGHIJKLMN 漢字 ひらがな カタカナ")
   :hook
   (help-mode . (lambda ()
-                 (when (string= (buffer-name (current-buffer)) "*Colors*")
-                   ;; Without this, list-colors-display won't render with colors
+                 (when (member (buffer-name (current-buffer))
+                               '("*Colors*" "*Faces*"))
+                   ;; `list-*' buffers appear to interfere with `font-lock-mode'
                    (font-lock-mode -1)))))
 
 ;;; 02-help.el ends here
