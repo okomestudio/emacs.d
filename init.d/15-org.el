@@ -6,7 +6,6 @@
 ;;; Code:
 
 (use-package org
-  :ensure org-contrib
   :bind
   (;; no globals
    :map org-mode-map
@@ -14,10 +13,8 @@
    ("C-c l" . 'org-store-link)
    ("M-g i" . 'consult-org-heading)
    ("M-q" . 'okutil-org-fill-or-unfill-paragraph))
-
   :custom
   (org-adapt-indentation nil)
-  (org-babel-python-command "~/.pyenv/shims/python")
   (org-blank-before-new-entry '((heading . nil) (plain-list-item . nil)))
   (org-ellipsis "⮷")
   (org-file-apps '(("\\.mp4\\'" . "vlc --repeat %s")))
@@ -26,6 +23,7 @@
   (org-imenu-depth 6)
   (org-list-allow-alphabetical t)
   (org-list-indent-offset 2)
+  (org-M-RET-may-split-line '((headline . nil) (default . t)))
   (org-preview-latex-image-directory ".ltximg/")
   (org-return-follows-link t)
   (org-startup-folded nil)
@@ -33,16 +31,13 @@
   (org-support-shift-select t)
   (org-tags-column 0)
   (org-todo-keywords '((sequence "TODO" "WIP" "|" "SKIP" "DONE")))
-
   :ensure-system-package
   (latex . "sudo apt install -y texlive texlive-latex-extra texlive-lang-cjk texlive-extra-utils texlive-luatex")
   (pdfcropmargins . "pip install pdfCropMargins")
-
   :hook
   (org-mode . (lambda ()
                 (setq-local fill-column 80)
                 (turn-on-visual-line-mode)))
-
   :config
   ;; HELPER FUNCTIONS
   (defun org-ensure-all-headings-with-ids ()
@@ -110,25 +105,6 @@ node."
   (setcar (nthcdr 2 org-emphasis-regexp-components)
           (concat "[:space:]"))
   (org-set-emph-re 'org-emphasis-regexp-components org-emphasis-regexp-components)
-
-  ;; BABEL
-  (add-to-list 'org-src-lang-modes '("plantuml" . plantuml))
-
-  (use-package ob-typescript)
-  (org-babel-do-load-languages
-   'org-babel-load-languages '((C . t)
-                               (dot . t)
-                               (emacs-lisp . t)
-                               (js . t)
-                               (plantuml . t)
-                               (python . t)
-                               (shell . t)
-                               (sql . t)
-                               (sqlite . t)
-                               (typescript . t)))
-
-  (add-to-list 'org-babel-tangle-lang-exts '("js" . "js"))
-
   ;; LATEX PREVIEW
   ;; (setq org-latex-inputenc-alist '(("utf8" . "utf8x")))
   ;; (add-to-list 'org-latex-packages-alist '("" "unicode-math"))
@@ -154,18 +130,115 @@ node."
                  :latex-compiler ("dvilualatex -interaction nonstopmode --shell-escape -output-directory %o %f")
                  :image-converter ("dvisvgm %f -n -b min -c %S -o %O"))))
 
+(use-package org-indent
+  :straight nil
+  :after (org)
+  :hook (org-mode . (lambda () (org-indent-mode 1)))
+  :config
+  (advice-add #'org-indent-refresh-maybe :around
+              (lambda (fun &rest args)
+                "Refresh only when buffer is visible."
+                ;; This could speed up org-agenda in some cases.
+                (when (get-buffer-window (current-buffer) t)
+                  (apply fun args)))))
+
+;; ORG BABEL
+
+(use-package ob-core
+  :straight nil
+  :after (org)
+  :config (add-to-list 'org-src-lang-modes '("plantuml" . plantuml)))
+
+(use-package ob-tangle
+  :straight nil
+  :after (org)
+  :config (add-to-list 'org-babel-tangle-lang-exts '("js" . "js")))
+
+(use-package ob-C
+  :straight nil
+  :after (org)
+  :commands (org-babel-execute:C)
+  :config
+  (add-to-list 'org-babel-load-languages '(C . t))
+  (org-babel-do-load-languages 'org-babel-load-languages org-babel-load-languages))
+
+(use-package ob-dot
+  :straight nil
+  :after (org)
+  :commands (org-babel-execute:dot)
+  :config
+  (add-to-list 'org-babel-load-languages '(dot . t))
+  (org-babel-do-load-languages 'org-babel-load-languages org-babel-load-languages))
+
+(use-package ob-js
+  :straight nil
+  :after (org)
+  :commands (org-babel-execute:js)
+  :config
+  (add-to-list 'org-babel-load-languages '(js . t))
+  (org-babel-do-load-languages 'org-babel-load-languages org-babel-load-languages))
+
+(use-package ob-plantuml
+  :straight nil
+  :after (org)
+  :commands (org-babel-execute:plantuml)
+  :config
+  (add-to-list 'org-babel-load-languages '(plantuml . t))
+  (org-babel-do-load-languages 'org-babel-load-languages org-babel-load-languages))
+
+(use-package ob-python
+  :straight nil
+  :after (org)
+  :commands (org-babel-execute:python)
+  :custom (org-babel-python-command "~/.pyenv/shims/python")
+  :config
+  (add-to-list 'org-babel-load-languages '(python . t))
+  (org-babel-do-load-languages 'org-babel-load-languages org-babel-load-languages))
+
+(use-package ob-shell
+  :straight nil
+  :after (org)
+  :commands (org-babel-execute:bash
+             org-babel-execute:shell
+             org-babel-expand-body:generic)
+  :config
+  (add-to-list 'org-babel-load-languages '(shell . t))
+  (org-babel-do-load-languages 'org-babel-load-languages org-babel-load-languages))
+
+(use-package ob-sql
+  :straight nil
+  :after (org)
+  :commands (org-babel-execute:sql)
+  :config
+  (add-to-list 'org-babel-load-languages '(sql . t))
+  (org-babel-do-load-languages 'org-babel-load-languages org-babel-load-languages))
+
+(use-package ob-sqlite
+  :straight nil
+  :after (org)
+  :commands (org-babel-execute:sqlite)
+  :config
+  (add-to-list 'org-babel-load-languages '(sqlite . t))
+  (org-babel-do-load-languages 'org-babel-load-languages org-babel-load-languages))
+
+(use-package ob-typescript
+  :after (org)
+  :commands (org-babel-execute:typescript)
+  :config
+  (add-to-list 'org-babel-load-languages '(typescript . t))
+  (org-babel-do-load-languages 'org-babel-load-languages org-babel-load-languages))
+
+;; ORG EXPORT
 
 (use-package ox
-  ;; Org export.
-  :after (org)
   :straight nil
+  :after (org)
   :custom
   (org-export-with-broken-links t)
   (org-export-with-section-numbers nil)
-
   :config
-  (require 'ox-md)  ;; Markdown
-  (require 'ox-gfm) ;; GitHub-flavored Markdown
+  (require 'ox-md)
+  (require 'ox-gfm)
 
   (defun ok-org--org-html-link (link desc info)
     (let* ((raw-link (org-element-property :raw-link link))
@@ -183,24 +256,31 @@ node."
             (format "<a href=\"%s\">%s</a>" raw-link desc))))))
 
   (org-export-define-derived-backend
-   'substack 'html
-   :menu-entry
-   '(?S "Export to Substack article"
-        ((?o "As HTML file and open"
-	           (lambda (a s v b)
-	             (if a
-                   (org-export-to-buffer t s v b)
-                 (let ((f (concat (file-name-sans-extension buffer-file-name)
-                                  ".html")))
-                   (org-open-file (org-export-to-file 'substack f nil s v b))))))))
+      'substack 'html
+    :menu-entry
+    '(?S "Export to Substack article"
+         ((?o "As HTML file and open"
+	            (lambda (a s v b)
+	              (if a
+                    (org-export-to-buffer t s v b)
+                  (let ((f (concat (file-name-sans-extension buffer-file-name)
+                                   ".html")))
+                    (org-open-file (org-export-to-file 'substack f nil s v b))))))))
 
-   :translate-alist
-   '((link . ok-org--org-html-link))))
+    :translate-alist
+    '((link . ok-org--org-html-link))))
 
+(use-package ox-gfm ;; GitHub-flavored markdown
+  :after ox)
 
-(use-package ox-gfm :after ox)
-(use-package ox-hugo :after ox)
+(use-package ox-hugo
+  :after ox)
 
+(use-package ox-md ;; markdown
+  :straight nil
+  :after ox)
+
+;; ORG AGENDA
 
 (use-package org-agenda
   :straight nil
@@ -211,13 +291,12 @@ node."
   (org-agenda-inhibit-startup t)
   (org-agenda-start-on-weekday 0)
   (org-agenda-use-tag-inheritance t)    ; set nil to speed up parsing
-
   :preface
   (put 'org-agenda-custom-commands 'safe-local-variable #'listp))
 
+;; APPEARANCE
 
 (use-package org-modern
-  ;; Modern Org Style.
   :custom
   (org-modern-block-name t) ;; use org-modern-indent
   (org-modern-checkbox '((?X . #("▢𐄂" 0 2 (composition ((2)))))
@@ -235,28 +314,47 @@ node."
   (org-modern-tag t)
   (org-modern-timestamp t)
   (org-modern-todo t)
-
   :hook
   (org-mode . org-modern-mode)
   (org-agenda-finalize . org-modern-agenda))
 
-
 (use-package org-modern-indent
-  ;; Modern block styling with org-indent.
   :straight (:host github :repo "jdtsmith/org-modern-indent")
-  :init (add-hook 'org-mode-hook #'org-modern-indent-mode 90)
+  :init (add-hook 'org-indent-mode-hook #'org-modern-indent-mode 90)
   :hook
-  (org-mode . (lambda()
+  (org-indent-mode . (lambda()
                 ;; See github.com/jdtsmith/org-modern-indent/issues/10
                 (require 'org-indent)
                 (if org-indent--text-line-prefixes
                     (aset org-indent--text-line-prefixes
-                          0 (propertize " " 'face 'org-indent))))))
+                          0 (propertize " " 'face 'org-indent)))))
+  :config
+  (advice-add #'org-modern-indent--refresh-watch :around
+              (lambda (fun beg end &rest r)
+                "Refresh only when buffer is visible."
+                ;; This could speed up org-agenda in some cases.
+                (when (get-buffer-window (current-buffer) t)
+                  (apply fun beg end r)))))
 
+(use-package valign
+  ;; Pixel-perfect visual alignment for Org and Markdown tables.
+  :custom
+  (valign-fancy-bar t)
+  (valign-max-table-size 4000)
+  (valign-signal-parse-error t)
+  :hook
+  (org-mode . (lambda ()
+                (when (<= (buffer-size) ok-org--valign-max-buffer-size)
+                  (valign-mode 1))))
+  :init
+  (defvar ok-org--valign-max-buffer-size 100000
+    "Default max-buffer-size above which valign-mode will not activate."))
 
-(use-package org-side-tree
-  :disabled)
+;; MISC.
 
+(use-package org-contrib)
+(use-package org-side-tree :disabled)
+(use-package org-web-tools :disabled)
 
 (use-package org-transclusion
   :straight
@@ -266,9 +364,8 @@ node."
     ("make" "-C" "./docs" "org-transclusion.texi")
     ("makeinfo" "./docs/org-transclusion.texi" "-o" "./docs/org-transclusion.info")
     ("install-info" "./docs/org-transclusion.info" "./docs/dir")))
-
   :bind
-  (;
+  (;; no globals
    :map org-mode-map
    :prefix "C-c C-n"
    :prefix-map ok-org-transclusion-map
@@ -276,37 +373,13 @@ node."
    ("D" . org-transclusion-remove-all)
    ("a" . org-transclusion-add)
    ("t" . org-transclusion-mode))
-
   :init
   (add-to-list 'Info-directory-list
                (expand-file-name "straight/build/org-transclusion/docs/"
                                  user-emacs-directory))
-
   :config
   (add-to-list 'org-transclusion-extensions 'org-transclusion-indent-mode)
   (require 'org-transclusion-indent-mode))
-
-
-(use-package org-web-tools
-  :disabled)
-
-
-(use-package valign
-  ;; Pixel-perfect visual alignment for Org and Markdown tables.
-  :custom
-  (valign-fancy-bar t)
-  (valign-max-table-size 4000)
-  (valign-signal-parse-error t)
-
-  :hook
-  (org-mode . (lambda ()
-                (when (<= (buffer-size) ok-org--valign-max-buffer-size)
-                  (valign-mode 1))))
-
-  :init
-  (defvar ok-org--valign-max-buffer-size 100000
-    "Default max-buffer-size above which valign-mode will not activate."))
-
 
 ;; FONT FACE
 
