@@ -1,4 +1,4 @@
-;;; linux-05-faces.el --- faces  -*- lexical-binding: t -*-
+;;; 05-faces.el --- faces  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;
 ;; Configure font faces and related utilities.
@@ -41,7 +41,6 @@ characters have the same width with a CJK character.")
   "Face for outlines.
 Use when contrast with non-outline contenst is desired."
   :group 'ok)
-
 
 ;; UTILITY FUNCTIONS
 
@@ -122,17 +121,8 @@ Use when contrast with non-outline contenst is desired."
   ;; CUSTOM FACES
   (set-face-attribute 'ok-face-outline frame :font "fontset-urw classico" :fontset "fontset-urw classico"))
 
-
-(use-package emacs
+(use-package faces
   :straight nil
-  :ensure-system-package
-  ("/usr/share/fonts/opentype/ebgaramond/EBGaramond08-Regular.otf" . fonts-ebgaramond)
-  ("/usr/share/fonts/opentype/noto/NotoSansCJK-Regular.ttc" . fonts-noto-cjk)
-  ("/usr/share/fonts/truetype/aoyagi-kouzan-t/AoyagiKouzanT.ttf". fonts-aoyagi-kouzan-t)
-  ("/usr/share/fonts/truetype/bizud-gothic/BIZUDGothic-Regular.ttf" . fonts-morisawa-bizud-gothic)
-  ("/usr/share/fonts/truetype/hack/Hack-Regular.ttf" . fonts-hack)
-  ("/usr/share/fonts/truetype/vlgothic/VL-Gothic-Regular.ttf" . fonts-vlgothic)
-
   :init (ok-face--set-up-action 'ok-face--setup-faces-for-frame)
   :hook
   ;; Scale texts by mode; `text-scale-mode' affect the `default face.
@@ -148,6 +138,17 @@ Use when contrast with non-outline contenst is desired."
   (text-mode . (lambda () (text-scale-set 0.0)))
   (treemacs-mode . (lambda () (text-scale-set -0.4))))
 
+(use-package faces
+  :if (eq system-type 'gnu/linux)
+  :straight nil
+  :ensure-system-package
+  ("/usr/share/fonts/opentype/ebgaramond/EBGaramond08-Regular.otf" . fonts-ebgaramond)
+  ("/usr/share/fonts/opentype/noto/NotoSansCJK-Regular.ttc" . fonts-noto-cjk)
+  ("/usr/share/fonts/truetype/aoyagi-kouzan-t/AoyagiKouzanT.ttf". fonts-aoyagi-kouzan-t)
+  ("/usr/share/fonts/truetype/bizud-gothic/BIZUDGothic-Regular.ttf" . fonts-morisawa-bizud-gothic)
+  ("/usr/share/fonts/truetype/hack/Hack-Regular.ttf" . fonts-hack)
+  ("/usr/share/fonts/truetype/vlgothic/VL-Gothic-Regular.ttf" . fonts-vlgothic))
+;; MISC.
 
 (use-package mixed-pitch
   :disabled ;; ... until the package gets patched.
@@ -160,7 +161,6 @@ Use when contrast with non-outline contenst is desired."
   (add-to-list 'mixed-pitch-fixed-pitch-faces 'org-modern-bracket-line)
   (add-to-list 'mixed-pitch-fixed-pitch-faces 'org-modern-tag))
 
-
 (use-package eaw
   ;; East Asian Ambiguous Width問題と絵文字の横幅問題の修正ロケール.
   :straight (:host github :repo "hamano/locale-eaw")
@@ -169,4 +169,4 @@ Use when contrast with non-outline contenst is desired."
 ;; Local Variables:
 ;; nameless-aliases: (("" . "ok-face"))
 ;; End:
-;;; linux-05-faces.el ends here
+;;; 05-faces.el ends here
