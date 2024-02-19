@@ -224,12 +224,11 @@
         (format "\"\\[\\[id:[0-9a-f-]+\\]\\[[^][]*(%s)[^][]*\\]\\]|%s(%s)\""
                 bounded-re
                 (format negative-lookbehind
-                        (mapconcat (lambda (s) s)
-                                   '("begin_src +"
-                                     "filetags:( [-_0-9A-Za-z]+)* "
-                                     "header-args:"
-                                     "PYTHONDONTWRITEBYTECODE=1 ")
-                                   "|"))
+                        (string-join '("begin_src +"
+                                       "filetags:( [-_0-9A-Za-z]+)* "
+                                       "header-args:"
+                                       "PYTHONDONTWRITEBYTECODE=1 ")
+                                     "|"))
                 bounded-re)))
 
     (advice-add 'org-roam-unlinked-references-title-regex
