@@ -44,8 +44,7 @@
 (defvar after-load-theme-hook nil
   "Hooks to run after `load-theme'. ")
 
-(advice-add 'load-theme
-            :around
+(advice-add #'load-theme :around
             (lambda (orig-fun theme &optional no-confirm no-enable)
               (mapc #'disable-theme custom-enabled-themes)
               (funcall orig-fun theme no-confirm no-enable)
@@ -63,14 +62,24 @@
   (doom-modeline-minor-modes t)
   (doom-modeline-vcs-max-length 12)
   (mode-line-percent-position nil)
+  (doom-modeline-checker-simple-format t)
 
   :hook
   (after-load-theme . (lambda ()
-                        (if (member (car custom-enabled-themes) '(flexoki-themes-dark
-                                                                  flexoki-themes-light))
+                        (if (member (car custom-enabled-themes)
+                                    '(flexoki-themes-dark
+                                      flexoki-themes-light))
                             (doom-modeline-mode +1)
                           (if (default-value 'doom-modeline-mode)
-                              (doom-modeline-mode -1))))))
+                              (doom-modeline-mode -1)))))
+
+  :config
+  (doom-modeline-def-modeline 'lsp-full
+    '(bar workspace-name window-number modals matches follow buffer-info remote-host buffer-position word-count parrot selection-info)
+    '(compilation objed-state persp-name battery grip irc mu4e gnus github debug repl minor-modes input-method indent-info buffer-encoding major-mode process vcs lsp misc-info time))
+
+  (dolist (mode '(python-ts-mode python-sql-ts-mode))
+    (add-to-list 'doom-modeline-mode-alist `(,mode . lsp-full))))
 
 
 (use-package doom-nano-modeline
