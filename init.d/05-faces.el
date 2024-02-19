@@ -5,62 +5,38 @@
 ;;
 ;;; Code:
 
-(defvar ok-face-font-family-fixed-pitch "Hack"
+(defvar ok-faces-font-family-fixed-pitch "Hack"
   "Font for the fixed pitch.
 This is also used as the default.")
 
-(defvar ok-face-font-family-fixed-pitch-ja "BIZ UDGothic" ;; "Noto Sans Mono CJK JP"
+(defvar ok-faces-font-family-fixed-pitch-ja "BIZ UDGothic" ;; "Noto Sans Mono CJK JP"
   "Font for the fixed pitch in Japanese.")
 
-(defvar ok-face-font-family-variable-pitch "EB Garamond"
+(defvar ok-faces-font-family-variable-pitch "EB Garamond"
   "Font for the variable pitch.")
 
-(defvar ok-face-font-family-variable-pitch-ja "Noto Serif CJK JP"
+(defvar ok-faces-font-family-variable-pitch-ja "Noto Serif CJK JP"
   "Font for the variable pitch in Japanese.")
-
-(defvar ok-face-font-family-outline "URW Classico"
-  "Font for outlines.")
-
-(defvar ok-face-font-family-outline-ja "Noto Sans CJK JP"
-  "Font for outlines in Japanese.")
-
-(defvar ok-face-face-font-rescale-alist '(("Hack" . 1.00) ;; reference
-                                   ("EB Garamond". 1.28)
-                                   ("BIZ UDGothic" . 1.00)
-                                   ("URW Classico" . 1.28)
-                                   ("Noto Sans Mono CJK JP" . 1.18)
-                                   ("Noto Sans CJK JP" . 1.00)
-                                   ("Noto Serif CJK JP" . 1.00)
-                                   ;; ("VL Gothic" . 1.225)
-                                   ("AoyagiKouzanFontT". 1.00))
-  "Set relative scales for font faces.
-For best alignment, try with fixed pitch font so that two ASCII
-characters have the same width with a CJK character.")
-
-(defface ok-face-outline '((t :inherit 'default))
-  "Face for outlines.
-Use when contrast with non-outline contenst is desired."
-  :group 'ok)
 
 ;; UTILITY FUNCTIONS
 
-(defun ok-face--set-up-action (&rest action)
+(defun ok-faces--set-up-action (&rest action)
   "Set up ACTION to run on frame creation."
-  (defun ok-face--apply-if-gui ()
+  (defun ok-faces--apply-if-gui ()
     (when (display-graphic-p)
       (select-frame (selected-frame))
       (apply action)))
 
   (if (daemonp)
-      (add-hook 'server-after-make-frame-hook #'ok-face--apply-if-gui)
-    (ok-face--apply-if-gui)))
+      (add-hook 'server-after-make-frame-hook #'ok-faces--apply-if-gui)
+    (ok-faces--apply-if-gui)))
 
-(defun ok-face--create-fontset (font-family fontset)
-  "Create FONTSET using FONT-FAMILY."
-  (create-fontset-from-fontset-spec
-   (font-xlfd-name (font-spec :family font-family :registry fontset))))
+(defun ok-faces-text-scale-mode-height ()
+  "Get the default face height if `text-scale-mode' is active."
+  (when (bound-and-true-p text-scale-mode)
+    (car (cdr (assoc :height (cdr (assoc 'default face-remapping-alist)))))))
 
-(defun ok-face--set-fontset-font-japanese (fontset font-family &optional frame)
+(defun ok-faces--set-fontset-font-japanese (fontset font-family &optional frame)
   "Modify FONTSET to use FONT-FAMILY for Japanese rendering."
   (dolist (characters '(japanese-jisx0208
                         japanese-jisx0208-1978
@@ -75,34 +51,36 @@ Use when contrast with non-outline contenst is desired."
                         katakana-sjis))
     (set-fontset-font fontset characters (font-spec :family font-family) frame)))
 
-(defun ok-face--setup-faces-for-frame (&optional frame)
+(defun ok-faces-font-exists-p (font)
+  "Return t if FONT exists, nil if not."
+  (if (find-font (font-spec :family font))
+      t
+    (message "WARNING: Font `%s' not found" font)))
+
+(defun ok-faces-create-fontset (fontset font-family font-family-ja &optional frame)
+  "Create FONTSET using FONT-FAMILY.
+If FONT-FAMILY-JA is non-nil, use it for Japanese characters."
+  (ok-faces-font-exists-p font-family)
+  (create-fontset-from-fontset-spec
+   (font-xlfd-name (font-spec :family font-family :registry fontset)))
+  (when (and font-family-ja
+             (ok-faces-font-exists-p font-family-ja))
+    (ok-faces--set-fontset-font-japanese fontset font-family-ja frame)))
+
+(defun ok-faces--setup-faces-for-frame (&optional frame)
   "Set up the faces for FRAME."
-  (dolist (font `(,ok-face-font-family-fixed-pitch
-                  ,ok-face-font-family-fixed-pitch-ja
-                  ,ok-face-font-family-variable-pitch
-                  ,ok-face-font-family-variable-pitch-ja
-                  ,ok-face-font-family-outline
-                  ,ok-face-font-family-outline-ja))
-    (if (not (find-font (font-spec :family font)))
-        (message "WARNING: Font `%s' not found" font)))
-
-  (dolist (element ok-face-face-font-rescale-alist)
-    (push element face-font-rescale-alist))
-
   ;; FONTSETS
   ;; Emacs comes with three fontsets: `fontset-startup',
   ;; `fontset-standard', and `fontset-default', the last of which is
   ;; the ultimate fallback.
-  (ok-face--create-fontset ok-face-font-family-fixed-pitch "fontset-fixed pitch")
-  (ok-face--create-fontset ok-face-font-family-variable-pitch "fontset-variable pitch")
-  (ok-face--create-fontset ok-face-font-family-outline "fontset-urw classico")
-
-  ;; Modify fontset for multi-lingual support.
-  (set-fontset-font "fontset-default" 'iso-8859-3 (font-spec :family ok-face-font-family-fixed-pitch) frame)
-  (ok-face--set-fontset-font-japanese "fontset-default" ok-face-font-family-fixed-pitch-ja frame)
-  (ok-face--set-fontset-font-japanese "fontset-fixed pitch" ok-face-font-family-fixed-pitch-ja frame)
-  (ok-face--set-fontset-font-japanese "fontset-variable pitch" ok-face-font-family-variable-pitch-ja frame)
-  (ok-face--set-fontset-font-japanese "fontset-urw classico" ok-face-font-family-outline-ja frame)
+  (set-fontset-font "fontset-default" 'iso-8859-3
+                    (font-spec :family ok-faces-font-family-fixed-pitch) frame)
+  (ok-faces--set-fontset-font-japanese "fontset-default"
+                               ok-faces-font-family-fixed-pitch-ja frame)
+  (ok-faces-create-fontset "fontset-fixed pitch"
+                   ok-faces-font-family-fixed-pitch ok-faces-font-family-fixed-pitch-ja frame)
+  (ok-faces-create-fontset "fontset-variable pitch"
+                   ok-faces-font-family-variable-pitch ok-faces-font-family-variable-pitch-ja frame)
 
   ;; STANDARD FACES
   (set-face-attribute 'default frame :height 120 :font "fontset-default" :fontset "fontset-default")
@@ -117,13 +95,36 @@ Use when contrast with non-outline contenst is desired."
   (set-face-attribute 'shadow frame :inherit 'default)
   ;; See the Standard Faces section of Emacs manual for the rest of
   ;; the commonly used faces.
+  )
 
-  ;; CUSTOM FACES
-  (set-face-attribute 'ok-face-outline frame :font "fontset-urw classico" :fontset "fontset-urw classico"))
+(use-package faces
+  :if (eq system-type 'gnu/linux)
+  :straight nil
+  :autoload (ok-faces--apply-font-rescale)
+  :ensure-system-package
+  ("/usr/share/fonts/opentype/ebgaramond/EBGaramond08-Regular.otf" . fonts-ebgaramond)
+  ("/usr/share/fonts/opentype/noto/NotoSansCJK-Regular.ttc" . fonts-noto-cjk)
+  ("/usr/share/fonts/truetype/aoyagi-kouzan-t/AoyagiKouzanT.ttf". fonts-aoyagi-kouzan-t)
+  ("/usr/share/fonts/truetype/bizud-gothic/BIZUDGothic-Regular.ttf" . fonts-morisawa-bizud-gothic)
+  ("/usr/share/fonts/truetype/hack/Hack-Regular.ttf" . fonts-hack)
+  ("/usr/share/fonts/truetype/vlgothic/VL-Gothic-Regular.ttf" . fonts-vlgothic)
+  :init
+  (dolist (element '(("Hack" . 1.00) ;; reference
+                     ("EB Garamond". 1.28)
+                     ("BIZ UDGothic" . 1.00)
+                     ("Noto Sans Mono CJK JP" . 1.18)
+                     ("Noto Sans CJK JP" . 1.00)
+                     ("Noto Serif CJK JP" . 1.00)
+                     ;; ("VL Gothic" . 1.225)
+                     ("AoyagiKouzanFontT". 1.00)))
+    (push element face-font-rescale-alist)))
 
 (use-package faces
   :straight nil
-  :init (ok-face--set-up-action 'ok-face--setup-faces-for-frame)
+  :init
+  (ok-faces--set-up-action (lambda ()
+                     ;; (ok-faces--apply-font-rescale)
+                     (ok-faces--setup-faces-for-frame)))
   :hook
   ;; Scale texts by mode; `text-scale-mode' affect the `default face.
   (elfeed-search-mode . (lambda () (text-scale-set 0.0)))
@@ -138,16 +139,6 @@ Use when contrast with non-outline contenst is desired."
   (text-mode . (lambda () (text-scale-set 0.0)))
   (treemacs-mode . (lambda () (text-scale-set -0.4))))
 
-(use-package faces
-  :if (eq system-type 'gnu/linux)
-  :straight nil
-  :ensure-system-package
-  ("/usr/share/fonts/opentype/ebgaramond/EBGaramond08-Regular.otf" . fonts-ebgaramond)
-  ("/usr/share/fonts/opentype/noto/NotoSansCJK-Regular.ttc" . fonts-noto-cjk)
-  ("/usr/share/fonts/truetype/aoyagi-kouzan-t/AoyagiKouzanT.ttf". fonts-aoyagi-kouzan-t)
-  ("/usr/share/fonts/truetype/bizud-gothic/BIZUDGothic-Regular.ttf" . fonts-morisawa-bizud-gothic)
-  ("/usr/share/fonts/truetype/hack/Hack-Regular.ttf" . fonts-hack)
-  ("/usr/share/fonts/truetype/vlgothic/VL-Gothic-Regular.ttf" . fonts-vlgothic))
 ;; MISC.
 
 (use-package mixed-pitch
@@ -167,6 +158,6 @@ Use when contrast with non-outline contenst is desired."
   :config (eaw-fullwidth))
 
 ;; Local Variables:
-;; nameless-aliases: (("" . "ok-face"))
+;; nameless-aliases: (("" . "ok-faces"))
 ;; End:
 ;;; 05-faces.el ends here
