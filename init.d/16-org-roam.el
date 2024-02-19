@@ -309,13 +309,11 @@
 
 (use-package org-roam-timestamps
   :after org-roam
+  :config (org-roam-timestamps-mode)
   :custom
   (org-roam-timestamps-minimum-gap 86400)
-  (org-roam-timestamps-parent-file nil)
   (org-roam-timestamps-remember-timestamps t)
-
-  :config
-  (org-roam-timestamps-mode))
+  (org-roam-timestamps-timestamp-parent-file nil))
 
 
 (use-package adaptive-wrap
