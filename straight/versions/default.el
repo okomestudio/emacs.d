@@ -31,7 +31,7 @@
  ("doom-modeline" . "41dff2c9d9f6968f15afe7d710111b4340bc9b0d")
  ("el-get" . "05bb836e3dfac8ffe4b8a10ec332aa2f661523ce")
  ("eldoc" . "be58e7c1708abc399e28ea6eee13b3d871c8abf7")
- ("elfeed" . "162d7d545ed41c27967d108c04aa31f5a61c8e16")
+ ("elfeed" . "55fb162fa27e71b88effa59a83c57842e262b00f")
  ("elfeed-org" . "3242ec0519800a58f20480c8a6e3b3337d137084")
  ("elisp-refs" . "bf3cca8f74065b1b31036f461e3a093b162311bd")
  ("emacs-aio" . "da93523e235529fa97d6f251319d9e1d6fc24a41")
