@@ -21,18 +21,18 @@
 
    :prefix "M-g"
    :prefix-map consult-prefix-map
-   ("b" . consult-bookmark)
-   ("f" . consult-find)
    ("F" . consult-locate)
-   ("g" . consult-git-grep)
-   ("G" . consult-ripgrep)
-   ("i" . consult-imenu)
+   ("G" . consult-git-grep)
    ("I" . consult-imenu-multi)
-   ("l" . consult-line)
    ("L" . consult-line-multi)
-   ("m" . consult-mark)
    ("M" . consult-global-mark)
    ("M-g" . consult-goto-line)
+   ("b" . consult-bookmark)
+   ("f" . consult-find)
+   ("g" . consult-ripgrep)
+   ("i" . consult-imenu)
+   ("l" . consult-line)
+   ("m" . consult-mark)
    ("o" . consult-outline))
 
   :custom
