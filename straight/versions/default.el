@@ -161,7 +161,7 @@
  ("system-packages" . "c087d2c6e598f85fc2760324dce20104ea442fa3")
  ("systemd-mode" . "8742607120fbc440821acbc351fda1e8e68a8806")
  ("tablist" . "5f7b71a92bfb25418d7da86ad9c45f14b149496f")
- ("tesseract.el" . "35a3911e4fdf9061159aa1a4ae4f5c023ceedf46")
+ ("tesseract.el" . "58d3bd1d4a8e4eb7e0b16a0dad1f4e1fb252eb85")
  ("titlecase.el" . "eb8d23925fb8ccbd3b2e3804fb0a312ee227610b")
  ("tomelr" . "57cb24df521031a6d02f61091db82d292e4175df")
  ("transient" . "85ecbc66b68207275f81de4f9bd321474a6c8c61")

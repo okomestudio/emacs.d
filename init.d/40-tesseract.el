@@ -1,21 +1,21 @@
-;;; 40-tesseract.el --- Tesseract  -*- lexical-binding: t -*-
+;;; 40-tesseract.el --- tesseract  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;
-;; Configure Tesseract.
+;; Configure Tesseract and related utilities.
 ;;
 ;;; Code:
 
 (use-package tesseract
-  ;; :straight (:host github :repo "SebastianMeisel/tesseract.el")
-  :straight (:host github :repo "okomestudio/tesseract.el" :fork "okomestudio")
+  :if (eq system-type 'gnu/linux)
+  :straight (:host github :repo "SebastianMeisel/tesseract.el")
   :commands (tesseract-change-language)
   :bind
   ("C-x C-y" . ok-tesseract/ocr-clipboard-image)
-  
+
   :custom
   (doc-view-scale-internally nil)
   (tessearct/default-language "eng")
-  
+
   :ensure-system-package
   ("/usr/bin/tesseract" . "sudo apt install -y tesseract-ocr")
   ("/usr/share/tesseract-ocr/5/tessdata/eng.traineddata" . "sudo apt install -y tesseract-ocr-eng")
