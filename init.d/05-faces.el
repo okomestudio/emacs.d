@@ -160,7 +160,6 @@ If FONT-FAMILY-JA is non-nil, use it for Japanese characters."
 
 (use-package mixed-pitch
   :disabled ;; ... until the package gets patched.
-  :straight (:host github :repo "okomestudio/mixed-pitch" :fork "okomestudio")
   :hook (org-mode . mixed-pitch-mode)
   :custom (mixed-pitch-variable-pitch-cursor nil)
   :config
