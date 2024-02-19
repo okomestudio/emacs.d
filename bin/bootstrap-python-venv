@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-# Bootstrap virtual environment with missing Python packages.
+# Bootstrap virtual environment with Python packages for LSP.
 #
 
 VENV="${VIRTUAL_ENV:-$1}"
@@ -13,8 +13,19 @@ fi
 
 # pylsp
 if ! "${VENV}/bin/pylsp" ; then
-  "$PYTHON" -m pip install python-lsp-server[all] python-lsp-black pyls-isort
-  "$PYTHON" -m pip install flake8 flake8-docstrings pydocstyle[toml]
+  "$PYTHON" -m pip install python-lsp-server[all]
+  # "$PYTHON" -m pip install python-lsp-black pyls-isort
+  # "$PYTHON" -m pip install flake8 flake8-docstrings pydocstyle[toml]
+fi
+
+# ruff
+if ! "${VENV}/bin/ruff-lsp" ; then
+  "$PYTHON" -m pip install ruff-lsp python-lsp-ruff
+fi
+
+# pylsp-mypy
+if ! $PYTHON -c 'import pylsp_mypy'  ; then
+  "$PYTHON" -m pip install pylsp-mypy
 fi
 
 # pymacs and ropemacs

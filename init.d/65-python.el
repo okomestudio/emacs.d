@@ -139,8 +139,8 @@
                                         (buffer-string)))))
           (pyenv-mode-set python-version)
           (let ((virtual-env (pyenv-mode-full-path (pyenv-mode-version))))
-            ;; (setenv "VIRTUAL_ENV" (pyenv-mode-full-path (pyenv-mode-version)))
-            ;; (setenv "PYENV_VIRTUAL_ENV" (pyenv-mode-full-path (pyenv-mode-version)))
+            (setenv "VIRTUAL_ENV" (pyenv-mode-full-path (pyenv-mode-version)))
+            (setenv "PYENV_VIRTUAL_ENV" (pyenv-mode-full-path (pyenv-mode-version)))
             (setq lsp-ruff-lsp-ruff-path (file-name-concat virtual-env "bin/ruff"))
             (message (shell-command-to-string
                       (format "%s %s"
