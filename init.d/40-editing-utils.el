@@ -74,6 +74,7 @@
 ;;; SPELLING
 
 (use-package flyspell
+  :straight nil
   :bind
   (;
    :map text-mode-map
@@ -86,6 +87,7 @@
 
 
 (use-package ispell
+  :straight nil
   :custom
   (ispell-dictionary "en_US")
   (ispell-local-dictionary-alist
