@@ -18,7 +18,7 @@
   (put 'flycheck-textlint-config 'safe-local-variable #'stringp)
 
   :hook
-  (after-init . global-flycheck-mode))
+  (emacs-lisp-mode . flycheck-mode))
 
 
 (use-package flycheck-pos-tip
