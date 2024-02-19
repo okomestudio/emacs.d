@@ -10,9 +10,9 @@
   :bind
   (;; no globals
    :map python-mode-map
-   ("C-c b" . ok-python--format-python-code)
+   ("C-c b" . ok-python--format-python-code-with-ruff)
    :map python-ts-mode-map
-   ("C-c b" . ok-python--format-python-code))
+   ("C-c b" . ok-python--format-python-code-with-ruff))
 
   :custom
   (python-indent-guess-indent-offset-verbose nil)
@@ -21,18 +21,51 @@
                                               user-emacs-directory))
 
   ;; lsp
+  (lsp-diagnostics-provider :flycheck)
+  (lsp-lens-enable t)
+  (lsp-ui-doc-delay 2)
+  (lsp-ui-doc-enable t)
+  (lsp-ui-doc-show-with-cursor t)
+  (lsp-ui-doc-show-with-mouse nil)
+
+  ;; pylsp
   (lsp-pylsp-configuration-sources ["flake8"])
   (lsp-pylsp-plugins-flake8-enabled t)
   (lsp-pylsp-plugins-pycodestyle-enabled nil)
-  (lsp-pylsp-plugins-pydocstyle-enabled nil) ;; redundant with flake8?
+  (lsp-pylsp-plugins-pydocstyle-enabled nil)
   (lsp-pylsp-plugins-pyflakes-enabled nil)
   (lsp-pylsp-plugins-pylint-enabled nil)
+
+  ;; ruff-lsp
+  (lsp-ruff-lsp-log-level 'debug)
+  (lsp-ruff-lsp-show-notifications 'always)
+
+  :hook
+  (python-mode . (lambda () (setq-local devdocs-current-docs '("python~3.12"))))
+  (python-ts-mode . (lambda () (setq-local devdocs-current-docs '("python~3.12"))))
 
   :ensure-system-package (ipython . "pip install ipython")
 
   :config
-  (defun ok-python--format-python-code ()
-    "Format Python code."
+  (defun ok-python--format-python-code-with-ruff ()
+    (interactive)
+    (let ((this-file (buffer-file-name))
+          exit-code
+          output)
+      (with-temp-buffer
+        (setq exit-code (call-process "ruff" nil (current-buffer) nil
+                                      "format" this-file))
+        (setq output (buffer-string)))
+      (if (> exit-code 0)
+          (message "ERROR(ruff):\n%s" output)
+        (with-temp-buffer
+          (setq exit-code (call-process "ruff" nil (current-buffer) nil
+                                        "check" "--fix" "--select" "I" this-file))
+          (setq output (buffer-string)))
+        (if (> exit-code 0)
+            (message "ERROR(ruff):\n%s" output)))))
+
+  (defun ok-python-format-python-code-with-black-and-isort ()
     (interactive)
     (blacken-buffer)
     (py-isort-buffer))
@@ -46,15 +79,16 @@
   :straight (:host github :repo "okomestudio/python-sql-mode.el"))
 
 
+;; LINTING, FORMATTING, etc.
+
 (use-package blacken
+  :disabled ;; use Ruff
   :ensure-system-package (black . "pip install black")
   :preface (put 'blacken-line-length 'safe-local-variable #'integerp))
 
 
-(use-package cython-mode)
-
-
 (use-package py-isort
+  :disabled ;; use Ruff
   :straight
   (py-isort
    :host github :repo "paetzke/py-isort.el"
@@ -107,6 +141,7 @@
           (let ((virtual-env (pyenv-mode-full-path (pyenv-mode-version))))
             ;; (setenv "VIRTUAL_ENV" (pyenv-mode-full-path (pyenv-mode-version)))
             ;; (setenv "PYENV_VIRTUAL_ENV" (pyenv-mode-full-path (pyenv-mode-version)))
+            (setq lsp-ruff-lsp-ruff-path (file-name-concat virtual-env "bin/ruff"))
             (message (shell-command-to-string
                       (format "%s %s"
                               (expand-file-name "bin/bootstrap-python-venv"
@@ -125,12 +160,6 @@
 
 
 ;; HELP & DOCS
-
-(use-package devdocs
-  :hook
-  (python-mode . (lambda () (setq-local devdocs-current-docs '("python~3.12"))))
-  (python-ts-mode . (lambda () (setq-local devdocs-current-docs '("python~3.12")))))
-
 
 (use-package pydoc
   :bind
@@ -192,6 +221,10 @@
   (setq ropemacs-enable-shortcuts nil)
   (setq ropemacs-local-prefix "C-c C-a")
   (setq ropemacs-autoimport-modules '("os" "shutil" "typing")))
+
+;; MISC.
+
+(use-package cython-mode :disabled)
 
 ;; Local Variables:
 ;; nameless-aliases: (("" . "ok-python"))
