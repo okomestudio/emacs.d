@@ -1,7 +1,7 @@
-;;; 80-anki.el --- Anki  -*- lexical-binding: t -*-
+;;; 80-anki.el --- anki  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;
-;; Initialize Anki.
+;; Configure Anki and related utilities.
 ;;
 ;;; Code:
 
@@ -22,17 +22,16 @@
   (insert "*** Front\n")
   (insert "*** Back\n"))
 
+
 (use-package anki-editor
   ;; Emacs minor mode for making Anki cards with Org.
   :straight (:fork "orgtre")
-
+  :commands (anki-editor-note-at-point)
+  :ensure-system-package (curl . "sudo apt install -y curl")
   :custom
+  ;; (request-log-level 'debug) ;; for debugging
   (anki-editor-latex-style 'mathjax)
   (anki-editor-ignored-org-tags '("export" "noexport" "anki"))
-  (anki-editor-org-tags-as-anki-tags t)
-  ;; (request-log-level 'debug)
-
-  :ensure-system-package
-  (curl . "sudo apt install -y curl"))
+  (anki-editor-org-tags-as-anki-tags t))
 
 ;;; 80-anki.el ends here
