@@ -320,7 +320,7 @@ node."
 
 (use-package org-modern-indent
   :straight (:host github :repo "jdtsmith/org-modern-indent")
-  :init (add-hook 'org-indent-mode-hook #'org-modern-indent-mode 90)
+  :init (add-hook 'org-mode-hook #'org-modern-indent-mode 90)
   :hook
   (org-indent-mode . (lambda()
                 ;; See github.com/jdtsmith/org-modern-indent/issues/10
@@ -380,94 +380,6 @@ node."
   :config
   (add-to-list 'org-transclusion-extensions 'org-transclusion-indent-mode)
   (require 'org-transclusion-indent-mode))
-
-;; FONT FACE
-
-(defvar ok-org-fixed-pitch-faces '(font-lock-builtin-face
-                             font-lock-comment-delimiter-face
-                             font-lock-comment-face
-                             font-lock-constant-face
-                             font-lock-doc-face
-                             font-lock-function-name-face
-                             font-lock-keyword-face
-                             font-lock-negation-char-face
-                             font-lock-preprocessor-face
-                             font-lock-regexp-grouping-backslash
-                             font-lock-regexp-grouping-construct
-                             font-lock-string-face
-                             font-lock-type-face
-                             font-lock-variable-name-face
-                             org-block
-                             org-block-begin-line
-                             org-block-end-line
-                             org-checkbox
-                             org-code
-                             org-document-info-keyword
-                             org-drawer
-                             org-formula
-                             org-indent
-                             org-latex-and-related
-                             org-meta-line
-                             org-modern-bracket-line
-                             org-modern-tag
-                             org-property-value
-                             org-special-keyword
-                             ;; org-table
-                             org-verbatim)
-  "Fixed-pitch faces in Org mode.")
-
-(defvar ok-org--outline-faces '((org-level-1 . '(:height 1.24))
-                          (org-level-2 . '(:height 1.12))
-                          (org-level-3 . '(:height 1.00))
-                          (org-level-4 . '(:height 0.90))
-                          (org-level-5 . '(:height 0.90))
-                          (org-level-6 . '(:height 0.90))
-                          (org-level-7 . '(:height 0.90))
-                          (org-level-8 . '(:height 0.90))
-                          (org-document-title . '(:height 1.24)))
-  "Base outlines faces used in Org mode.")
-
-(with-eval-after-load 'org-modern-indent
-  (defun ok-org--get-text-scale-mode-height ()
-    (when (bound-and-true-p text-scale-mode)
-      (car (cdr (assoc :height (cdr (assoc 'default face-remapping-alist)))))))
-
-  (defun ok-org--remap-to-mixed-pitch ()
-    (face-remap-add-relative 'default :inherit 'variable-pitch)
-    (dolist (face ok-org-fixed-pitch-faces)
-      (face-remap-add-relative face :inherit 'fixed-pitch)))
-
-  (defun ok-org--handle-text-scale-mode ()
-    (let ((height (ok-org--get-text-scale-mode-height)))
-      (when height
-        (dolist (face (append ok-org-fixed-pitch-faces
-                              ok-org--outline-faces))
-          (if (consp face)
-              (setq face (car face)))
-          (face-remap-add-relative face :height height)))))
-
-  (add-hook 'org-modern-indent-mode-hook
-            (lambda ()
-              (ok-org--remap-to-mixed-pitch)
-              (ok-org--handle-text-scale-mode)
-              (force-window-update (current-buffer))) 91)
-
-  (dolist (it ok-org--outline-faces)
-    (let* ((face (car it))
-           (prop (cdr it))
-           (height (or (car (cdr (assoc :height prop)))
-                       (face-attribute face :height nil t)))
-           (foreground (face-attribute face :foreground nil t))
-           (weight (face-attribute face :weight nil t))
-           (inherit 'ok-face-outline))
-      (set-face-attribute face nil
-                          :height height
-                          :foreground foreground
-                          :weight weight
-                          :inherit inherit)))
-
-  (set-face-attribute 'org-drawer nil
-                      :foreground (face-attribute 'shadow :foreground)))
 
 ;; Local Variables:
 ;; nameless-aliases: (("" . "ok-org"))
