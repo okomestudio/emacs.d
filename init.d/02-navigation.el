@@ -44,6 +44,35 @@
   (after-init . (lambda () (winner-mode 1))))
 
 
+;; WINDOW SCROLLING
+
+(use-package mwheel
+  :straight nil
+  :custom
+  (mouse-wheel-progressive-speed nil)
+  (mouse-wheel-scroll-amount '(1 ((shift) . hscroll)
+                                 ((meta))
+                                 ((control meta) . global-text-scale)
+                                 ((control) . text-scale))))
+
+
+(use-package pixel-scroll
+  :straight nil
+  :hook (after-init . (lambda () (pixel-scroll-precision-mode +1)))
+  :custom
+  (pixel-scroll-precision-interpolation-factor 1.2)
+  (pixel-scroll-precision-large-scroll-height 1.0)
+  (pixel-scroll-precision-momentum-min-velocity 0.5)
+  (pixel-scroll-precision-momentum-seconds 0.5) ;; 1.75
+  (pixel-scroll-precision-momentum-tick 0.05)
+  (pixel-scroll-precision-interpolation-total-time 0.1)
+  (pixel-scroll-precision-interpolation-between-scroll 0.001))
+
+
+(use-package yascroll
+  :hook (after-init . (lambda () (global-yascroll-bar-mode 1))))
+
+
 ;; FILES
 
 (use-package recentf
