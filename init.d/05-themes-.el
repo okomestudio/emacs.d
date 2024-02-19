@@ -10,6 +10,15 @@
 
 
 (use-package flexoki-themes
+  :hook
+  (after-load-theme
+   . (lambda ()
+       ;; Recover mode line box border.
+       (let ((box-color (face-attribute 'mode-line :background)))
+         (set-face-attribute 'mode-line nil :box box-color)
+         (set-face-attribute 'mode-line-active nil :box box-color)
+         (set-face-attribute 'mode-line-inactive nil :box box-color))))
+
   :config
   (with-eval-after-load 'company
     (let ((mode (frame-parameter nil 'background-mode)))
