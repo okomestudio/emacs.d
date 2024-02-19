@@ -1,12 +1,13 @@
-;;; 20-vterm.el --- vterm  -*- lexical-binding: t -*-
+;;; 20-terminals.el --- terminals  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;
-;; Configure vterm related utilities.
+;; Configure terminals and related utilities.
 ;;
 ;;; Code:
 
 (use-package vterm
   ;; Emacs libvterm integration.
+  :if (eq system-type 'gnu/linux)
   :custom
   (vterm-always-compile-module t)
   (vterm-buffer-name-string "vterm %s")
@@ -29,8 +30,26 @@
                               buffer-face-mode-face 'fixed-pitch)
                   (buffer-face-mode t))))
 
-
 (use-package multi-vterm
   :after vterm)
 
-;;; 20-vterm.el ends here
+
+(use-package eat
+  ;; Emulate A Terminal, in a region, in a buffer and in Eshell.
+  :disabled
+  :straight
+  '(eat :type git
+        :host codeberg
+        :repo "akib/emacs-eat"
+        :files ("*.el" ("term" "term/*.el") "*.texi"
+                "*.ti" ("terminfo/e" "terminfo/e/*")
+                ("terminfo/65" "terminfo/65/*")
+                ("integration" "integration/*")
+                (:exclude ".dir-locals.el" "*-tests.el")))
+
+  :hook
+  (eshell-post-command . (lambda ()
+                           (sleep-for 0.2)
+                           (end-of-buffer))))
+
+;;; 20-terminals.el ends here
