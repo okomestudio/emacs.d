@@ -100,7 +100,7 @@
  ("markdown-mode" . "e096bb97a91fcd4dc2b46d8b6e093194b03b7364")
  ("melpa" . "ccd853a83f5acaeb74859fc2b5899693985c6ef7")
  ("minions" . "07caa8c30b12c35f3fe563a036f9823c4a6a5f01")
- ("mozc" . "93219c86d5a57b0f96494278b922de16d6b13b37")
+ ("mozc" . "204c9fd18a437689c5569161f26d0b6fb9ae8b24")
  ("multi-vterm" . "36746d85870dac5aaee6b9af4aa1c3c0ef21a905")
  ("multiple-cursors.el" . "6956e8e12ee191d7c80d042ae8ff495286fcbe38")
  ("mwim.el" . "b4f3edb4c0fb8f8b71cecbf8095c2c25a8ffbf85")
