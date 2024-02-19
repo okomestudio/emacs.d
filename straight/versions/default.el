@@ -59,7 +59,7 @@
  ("exec-path-from-shell" . "d95677ad608c214647b87bc20df1642763e3b400")
  ("f.el" . "4f03d7bb724a9049b0ab9ef86127694756f99656")
  ("flexoki-emacs-theme" . "9339a2a1a8052159916e9913b14ec062c0a3f506")
- ("flycheck" . "9854769249686cb23c79ec1fff0ac0735a0f7e81")
+ ("flycheck" . "400ea0d5bd05532aca6c2146a6006ea207fd03c3")
  ("flycheck-package" . "3a6aaed29ff61418c48c0251e1432c30748ae739")
  ("flycheck-pos-tip" . "dc57beac0e59669926ad720c7af38b27c3a30467")
  ("frame-cmds" . "5f845c06f1913ecda33c87b2b36b9e590a6f8870")
