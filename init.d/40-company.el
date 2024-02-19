@@ -1,5 +1,8 @@
 ;;; 40-company.el --- Company  -*- lexical-binding: t -*-
 ;;; Commentary:
+;;
+;; Configure company and related utilities.
+;;
 ;;; Code:
 
 (use-package company

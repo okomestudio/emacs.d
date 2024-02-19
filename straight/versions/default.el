@@ -15,7 +15,7 @@
  ("bookmark-plus" . "d0d3e45c4ac6c4cd725916373ba3fb2134a77750")
  ("cfrs" . "f3a21f237b2a54e6b9f8a420a9da42b4f0a63121")
  ("citeproc-el" . "c61c98b9d230ea28b2ca49498134803e1f8ea526")
- ("company-mode" . "2b114a528ec3f1939b1d154d2cc48ddc7defe8a8")
+ ("company-mode" . "0c0186cca8e7e9a12a44ffe42ad7037ffa6bfac7")
  ("company-quickhelp" . "5bda859577582cc42d16fc0eaf5f7c8bedfd9e69")
  ("company-restclient" . "e5a3ec54edb44776738c13e13e34c85b3085277b")
  ("compat" . "30579d440be2512e8deda077d0499186c29ffffa")
