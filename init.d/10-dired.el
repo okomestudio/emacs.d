@@ -7,6 +7,7 @@
 
 (use-package dired
   :straight nil
+  :config (require 'dired-x)
   :custom
   ;; (dired-omit-files "^\\.$\\|^\\.\\.$\\|\\.pyc$\\|\\.pyo$\\|\#$")
   (dired-listing-switches "-alh"))
