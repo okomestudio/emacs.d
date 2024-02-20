@@ -31,6 +31,7 @@
   (org-support-shift-select t)
   (org-tags-column 0)
   (org-todo-keywords '((sequence "TODO" "WIP" "|" "SKIP" "DONE")))
+
   :ensure-system-package
   (latex . "sudo apt install -y texlive texlive-latex-extra texlive-lang-cjk texlive-extra-utils texlive-luatex")
   (pdfcropmargins . "pip install pdfCropMargins")
@@ -83,28 +84,30 @@ node."
       (switch-to-buffer tmp-buffer)))
 
   ;; EMPHASIS
-  ;; Update regex for org emphasis; see, e.g.,
-  ;; https://stackoverflow.com/a/63805680/515392.
-  (setcar org-emphasis-regexp-components
-          (concat (string ?- ?—)
-                  "[:space:][:nonascii:]"
-                  (string ?\N{ZERO WIDTH SPACE}
-                          ?\[ ?\( ?{
-                          ?‘ ?“
-                          ?| ?│ )
-                  ""))
-  (setcar (nthcdr 1 org-emphasis-regexp-components)
-          (concat (string ?\] ?\) ?})
-                  "[:space:][:nonascii:]"
-                  (string ?\N{ZERO WIDTH SPACE}
-                          ?’ ?”
-                          ?| ?│
-                          ?. ?, ?? ?! ?\; ?:
-                          ?— ?- )
-                  ""))
-  (setcar (nthcdr 2 org-emphasis-regexp-components)
-          (concat "[:space:]"))
-  (org-set-emph-re 'org-emphasis-regexp-components org-emphasis-regexp-components)
+  (setq org-emphasis-regexp-components
+        `(;; pre match
+          ,(concat (string ?\[ ?\( ?{)
+                   "[:space:][:multibyte:]"
+                   (string ?\N{ZERO WIDTH SPACE}
+                           ?' ?‘ ?\" ?“
+                           ?| ?│
+                           ?— ?-))     ;; "-" must be the last char
+          ;; post match
+          ,(concat (string ?\] ?\) ?}) ;; "]" must be the first char
+                   "[:space:][:multibyte:]"
+                   (string ?\N{ZERO WIDTH SPACE}
+                           ?' ?’ ?\" ?”
+                           ?| ?│
+                           ?. ?, ?? ?! ?\; ?:
+                           ?s      ;; allow use like =def=s
+                           ?— ?-)) ;; "-" must be the last char
+          "[:space:]"              ;; forbidden border chars
+          "."                      ;; body "."
+          1))                      ;; max newlines
+  ;; See `org-emph-re' and `org-verbatim-re' for the final regexps
+  (org-set-emph-re 'org-emphasis-regexp-components
+                   org-emphasis-regexp-components)
+
   ;; LATEX PREVIEW
   ;; (setq org-latex-inputenc-alist '(("utf8" . "utf8x")))
   ;; (add-to-list 'org-latex-packages-alist '("" "unicode-math"))
