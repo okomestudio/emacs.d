@@ -13,7 +13,7 @@ fi
 
 # pylsp
 if ! "${VENV}/bin/pylsp" ; then
-  "$PYTHON" -m pip install python-lsp-server[all]
+  "$PYTHON" -m pip install python-lsp-server
   # "$PYTHON" -m pip install python-lsp-black pyls-isort
   # "$PYTHON" -m pip install flake8 flake8-docstrings pydocstyle[toml]
 fi
