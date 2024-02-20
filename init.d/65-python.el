@@ -102,7 +102,8 @@
 
 (use-package pyimport
   :straight
-  (:host github :repo "okomestudio/pyimport" :branch "project-awareness"
+  (:host github :repo "Wilfred/pyimport" :branch "master"
+         :fork (:host github :repo "okomestudio/pyimport" :branch "venv-support")
          :files ("*.el" ("bin/make-imports.py" . "bin/make-imports.py")))
   :ensure-system-package (pyflakes . "pip install pyflakes")
   :preface (put 'pyimport-develop-packages 'safe-local-variable #'listp))
