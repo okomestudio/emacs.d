@@ -141,7 +141,7 @@
  ("projectile" . "0163b335a18af0f077a474d4dc6b36e22b5e3274")
  ("pydoc" . "c9d8b5249c1b3814da062ed9976e4137d6e8d869")
  ("pyenv-mode" . "c93dc07e85494b4420e6c50160f38d6915c85684")
- ("pyimport" . "8877bdf155f7f52fdbbd68f2627cfbc1e553ffa7")
+ ("pyimport" . "8906357e0d2ce846dbd9f821e960e7f49f0694d7")
  ("python-sql-mode.el" . "00f2818340d26a2e2e2124b9dee3cb80378998cd")
  ("pythonic" . "8250de0c1bc27e46175d11cfc14e5dac308cc02e")
  ("queue" . "7ab8f23e770f64f6bd28a44c46c8becfc1af03d8")
