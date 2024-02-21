@@ -25,8 +25,6 @@
   (lsp-lens-enable t)
   (lsp-ui-doc-delay 2)
   (lsp-ui-doc-enable t)
-  (lsp-ui-doc-show-with-cursor t)
-  (lsp-ui-doc-show-with-mouse nil)
 
   ;; pylsp
   (lsp-pylsp-configuration-sources ["flake8"])
