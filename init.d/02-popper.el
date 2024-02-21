@@ -33,6 +33,7 @@
      compilation-mode
      help-mode
      helpful-mode
+     magit-process-mode
      magit-status-mode))
   (popper-display-control t)
   (popper-display-function #'display-buffer-pop-up-window)
