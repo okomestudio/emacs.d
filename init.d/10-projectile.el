@@ -14,6 +14,7 @@
   (projectile-auto-discover nil)
   (projectile-enable-caching nil)
   (projectile-git-fd-args "-H -0 -E .git -tf")
+  (projectile-ignored-projects '("~/.pyenv/"))
   (projectile-indexing-method 'alien)
   (projectile-mode-line-function '(lambda ()
                                     (format " [%s]" (projectile-project-name))))
