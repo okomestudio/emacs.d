@@ -77,6 +77,7 @@
 
 (use-package recentf
   :straight nil
+  :bind ("C-x r F" . recentf)
   :custom (recentf-mode t)
   :config (push "/\\.config/emacs/var/" recentf-exclude))
 
