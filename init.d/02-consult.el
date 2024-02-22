@@ -1,7 +1,7 @@
 ;;; 02-consult.el --- Consult  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;
-;; Consulting completing-read.
+;; Configure Consult and related utilities.
 ;;
 ;;; Code:
 
@@ -36,45 +36,48 @@
    ("o" . consult-outline))
 
   :custom
-  (consult-ripgrep-args (concat "rg"
-                                " --null"
-                                " --line-buffered"
-                                " --color=never"
-                                " --max-columns=1000"
-                                " --path-separator /"
-                                " --smart-case"
-                                " --no-heading"
-                                " --with-filename"
-                                " --line-number"
-                                " --search-zip"
-                                " --follow"))
-
-  :ensure-system-package
-  (locate . "sudo apt install -y locate")
+  (consult-ripgrep-args (string-join '("rg"
+                                       "--null"
+                                       "--line-buffered"
+                                       "--color=never"
+                                       "--max-columns" "1000"
+                                       "--path-separator" "/"
+                                       "--smart-case"
+                                       "--no-heading"
+                                       "--with-filename"
+                                       "--line-number"
+                                       "--search-zip"
+                                       "--hidden"
+                                       "--follow")
+                                     " "))
 
   :config
-  (consult-customize consult-theme
-                     :preview-key '(:debounce 0.2 any)))
+  (consult-customize consult-theme :preview-key '(:debounce 0.2 any)))
+
+
+(use-package consult
+  :if (eq system-type 'gnu/linux)
+  :straight nil
+  :ensure-system-package
+  (locate . "sudo apt install -y locate")
+  (rg . "sudo apt install -y ripgrep"))
 
 
 (use-package consult-company
   :disabled
   :after (consult company)
-
   :init
   (define-key company-mode-map [remap completion-at-point] #'consult-company))
 
 
 (use-package consult-flycheck
   :after (consult flycheck)
-
   :bind
   ("M-g c" . consult-flycheck))
 
 
 (use-package consult-flyspell
   :after (consult flyspell)
-
   :bind
   ("M-g s" . consult-flyspell))
 
@@ -85,7 +88,6 @@
 
 (use-package consult-projectile
   :after (consult projectile)
-
   :bind
   (([remap projectile-find-dir] . consult-projectile-find-dir)
    ([remap projectile-find-file] . consult-projectile-find-file)
