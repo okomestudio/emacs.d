@@ -1,0 +1,88 @@
+#!/usr/bin/env bash
+
+set -e
+
+here="$(pwd)"
+source_root="$VC_DIRLOCALS"
+source_dir="${here/$HOME/$source_root}"
+source_dirlocals="$source_dir/.dir-locals.el"
+target_dirlocals="$here/.dir-locals.el"
+readonly here source_root source_dir source_dirlocals target_dirlocals
+
+readonly scriptname="${0##*/}"
+
+
+function usage() {
+  cat <<USAGE >&2
+Usage: $scriptname [-hs]
+
+Use version-controlled .dir-locals.el from the repository specified by
+the VC_DIRLOCALS environment variable.
+
+  -h    Show help
+  -m    Version control .dir-locals.el and replace with symlink
+  -s    Create symlink to version-controlled .dir-locals.el
+
+USAGE
+  exit "${1:-1}"
+}
+
+
+function error() {
+  >&2 echo "$scriptname: $1"
+  >&2 echo "Try '$scriptname -h' for more information."
+  exit "${2:-1}"
+}
+
+
+function create_symlink() {
+  if [ -L "$target_dirlocals" ]; then
+    error "Symlink exists: $target_dirlocals"
+  elif [ -e "$target_dirlocals" ]; then
+    error "File exists: $target_dirlocals"
+  elif [ ! -e "$source_dirlocals" ]; then
+    error "Source file does not exist: $source_dirlocals"
+  fi
+
+  ln -s "$source_dirlocals" "$target_dirlocals"
+}
+
+
+function move_and_create_symlink() {
+  if [ ! -e "$target_dirlocals" ]; then
+    error "File does not exist: $target_dirlocals"
+  elif [ -L "$target_dirlocals" ]; then
+    error "Symlink exists: $target_dirlocals"
+  fi
+
+  if [ ! -d "$(dirname "$source_dirlocals")" ]; then
+    mkdir -p "$(dirname "$source_dirlocals")"
+  fi
+  mv "$target_dirlocals" "$source_dirlocals"
+
+  create_symlink
+}
+
+
+if [ "$0" = "${BASH_SOURCE[0]}" ]; then
+  if [ -z "$VC_DIRLOCALS" ]; then
+     error "Set VC_DIRLOCALS to the .dir-locals.el repository root"
+  fi
+
+  while getopts "hms" opt; do
+    case $opt in
+      h|\?)
+        if [ "$opt" = "h" ]; then usage 0; else usage; fi
+        ;;
+      m)
+        move_and_create_symlink; exit 0;
+        ;;
+      s)
+        create_symlink; exit 0;
+        ;;
+    esac
+  done
+  shift $((OPTIND - 1))
+
+  usage 0
+fi
