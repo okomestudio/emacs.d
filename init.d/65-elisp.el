@@ -15,8 +15,10 @@
    ("C-c b" . ok-elisp--format-elisp-buffer))
 
   :hook
-  (emacs-lisp-mode . (lambda () (require 'company) (company-mode)))
-  (emacs-lisp-mode . (lambda () (setq-local devdocs-current-docs '("lisp"))))
+  ((emacs-lisp-mode lisp-data-mode)
+   . (lambda () (require 'company) (company-mode)))
+  ((emacs-lisp-mode lisp-data-mode)
+   . (lambda () (setq-local devdocs-current-docs '("lisp"))))
 
   :config
   (defun ok-elisp--format-elisp-buffer ()
@@ -28,21 +30,23 @@
 
 
 (use-package aggressive-indent
-  :hook (emacs-lisp-mode . aggressive-indent-mode))
+  :hook ((emacs-lisp-mode lisp-data-mode) . aggressive-indent-mode))
 
 
 (use-package erefactor)
 
 
 (use-package eros
-  :hook (emacs-lisp-mode . eros-mode))
+  :hook ((emacs-lisp-mode lisp-data-mode) . eros-mode))
 
 
 (use-package flycheck-package
-  :hook (emacs-lisp-mode . flycheck-package-setup))
+  :hook ((emacs-lisp-mode lisp-data-mode) . flycheck-package-setup))
 
 
 (use-package ipretty
+  ;; Provides interactive functions to pretty-print the result of an
+  ;; expression
   :config (ipretty-mode 1))
 
 
@@ -54,28 +58,26 @@
 
 
 (use-package paredit
-  :hook (emacs-lisp-mode . (lambda ()
-                             (electric-pair-local-mode -1)
-                             (enable-paredit-mode))))
+  :hook ((emacs-lisp-mode lisp-data-mode) . (lambda ()
+                                              (electric-pair-local-mode -1)
+                                              (enable-paredit-mode))))
 
 
 ;; SYNTAX HIGHLIGHTING
 
 (use-package highlight-defined
-  :custom
-  (highlight-defined-face-use-itself t)
-
+  :custom (highlight-defined-face-use-itself t)
   :hook
   (help-mode . highlight-defined-mode)
-  (emacs-lisp-mode . highlight-defined-mode))
+  ((emacs-lisp-mode lisp-data-mode) . highlight-defined-mode))
 
 
 (use-package highlight-quoted
-  :hook (emacs-lisp-mode . highlight-quoted-mode))
+  :hook ((emacs-lisp-mode lisp-data-mode) . highlight-quoted-mode))
 
 
 (use-package highlight-sexp
-  :hook (emacs-lisp-mode . highlight-sexp-mode)
+  :hook ((emacs-lisp-mode lisp-data-mode) . highlight-sexp-mode)
   :config
   (let* ((mode (frame-parameter nil 'background-mode))
          (scale (if (string= mode "dark") 1.04 0.96))
