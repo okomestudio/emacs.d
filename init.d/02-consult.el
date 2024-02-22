@@ -48,6 +48,7 @@
                                        "--line-number"
                                        "--search-zip"
                                        "--hidden"
+                                       "--glob" "!.git"
                                        "--follow")
                                      " "))
 
