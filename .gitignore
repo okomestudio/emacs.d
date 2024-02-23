@@ -19,7 +19,8 @@
 .org-id-locations
 custom.el
 elpa/
-etc/
+etc/*
+!etc/tempel/
 init.d/*-user-*
 roam/
 straight/*

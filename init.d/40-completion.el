@@ -42,11 +42,6 @@
   (add-to-list 'completion-at-point-functions #'cape-keyword t))
 
 
-(use-package tempel
-  :bind (("M-+" . tempel-complete)
-         ("M-*" . tempel-insert)))
-
-
 (use-package tabnine
   ;; One-time `tabnine-install-binary' may be necessary.
   :disabled t                           ; Disabled till
@@ -63,6 +58,15 @@
          ("<tab>" . nil))
 
   :config (tabnine-start-process))
+
+
+;; TEMPLATING
+
+(use-package tempel
+  :bind (("M-+" . tempel-complete)
+         ("M-*" . tempel-insert))
+  :custom
+  (tempel-path `(,(no-littering-expand-etc-file-name "tempel/templates.el"))))
 
 
 ;; CORFU
