@@ -9,7 +9,8 @@
   ;; HTTP REST client.
   )
 
-(use-package company-restclient)
+(use-package company-restclient
+  :disabled)
 
 (use-package ob-restclient
   ;; An org-mode extension to restclient.el

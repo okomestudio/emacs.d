@@ -16,8 +16,6 @@
 
   :hook
   ((emacs-lisp-mode lisp-data-mode)
-   . (lambda () (require 'company) (company-mode)))
-  ((emacs-lisp-mode lisp-data-mode)
    . (lambda () (setq-local devdocs-current-docs '("lisp"))))
 
   :config
