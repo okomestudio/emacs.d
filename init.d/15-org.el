@@ -7,12 +7,13 @@
 
 (use-package org
   :bind
-  (;; no globals
+  (nil
    :map org-mode-map
-   ("C-c C-l" . 'org-insert-link)
-   ("C-c l" . 'org-store-link)
-   ("M-g i" . 'consult-org-heading)
-   ("M-q" . 'okutil-org-fill-or-unfill-paragraph))
+   ("C-c C-l" . org-insert-link)
+   ("C-c C-q" . org-set-tags-command)
+   ("C-c l" . org-store-link)
+   ("M-g i" . consult-org-heading)
+   ("M-q" . okutil-org-fill-or-unfill-paragraph))
 
   :custom
   (org-adapt-indentation nil)

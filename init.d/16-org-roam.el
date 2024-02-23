@@ -8,13 +8,13 @@
 (use-package org-roam
   :straight (:host github :repo "okomestudio/org-roam" :branch "okome" :fork "okomestudio")
   :bind
-  (;
-   ("C-c n c" . (lambda () (interactive) (org-capture nil "f")))
+  (("C-c n c" . (lambda () (interactive) (org-capture nil "f")))
    ("C-c n f" . org-roam-node-find)
    ("C-c n i" . org-roam-node-insert)
    ("C-c n l" . org-roam-buffer-toggle)
 
    :map org-mode-map
+   ("C-c C-q" . ok-org-roam-tag-add)
    ("C-c a" . org-roam-alias-add)
    ("C-M-i" . completion-at-point))
 
@@ -50,6 +50,13 @@
 
   :config
   (setq find-file-visit-truename t) ;; See 5.3 Setting up Org-roam
+
+  (defun ok-org-roam-tag-add (&optional r)
+    "Enable adding FILETAGS to `org-set-tags-command'."
+    (interactive)
+    (if (org-before-first-heading-p)
+        (call-interactively 'org-roam-tag-add)
+      (call-interactively 'org-set-tags-command)))
 
   (require 'org-roam-dailies)
   (org-roam-db-autosync-mode)
