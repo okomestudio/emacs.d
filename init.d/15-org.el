@@ -13,6 +13,7 @@
    ("C-c l" . 'org-store-link)
    ("M-g i" . 'consult-org-heading)
    ("M-q" . 'okutil-org-fill-or-unfill-paragraph))
+
   :custom
   (org-adapt-indentation nil)
   (org-blank-before-new-entry '((heading . nil) (plain-list-item . nil)))
@@ -35,10 +36,12 @@
   :ensure-system-package
   (latex . "sudo apt install -y texlive texlive-latex-extra texlive-lang-cjk texlive-extra-utils texlive-luatex")
   (pdfcropmargins . "pip install pdfCropMargins")
+
   :hook
   (org-mode . (lambda ()
                 (setq-local fill-column 80)
                 (turn-on-visual-line-mode)))
+
   :config
   ;; HELPER FUNCTIONS
   (defun org-ensure-all-headings-with-ids ()
@@ -239,9 +242,13 @@ node."
   :custom
   (org-export-with-broken-links t)
   (org-export-with-section-numbers nil)
+
   :config
-  (require 'ox-md)
   (require 'ox-gfm)
+  (require 'ox-hugo)
+  (require 'ox-md)
+
+  ;; SUBSTACK EXPORTER
 
   (defun ok-org--org-html-link (link desc info)
     (let* ((raw-link (org-element-property :raw-link link))
@@ -269,15 +276,44 @@ node."
                   (let ((f (concat (file-name-sans-extension buffer-file-name)
                                    ".html")))
                     (org-open-file (org-export-to-file 'substack f nil s v b))))))))
-
-    :translate-alist
-    '((link . ok-org--org-html-link))))
+    :translate-alist '((link . ok-org--org-html-link))))
 
 (use-package ox-gfm ;; GitHub-flavored markdown
   :after ox)
 
 (use-package ox-hugo
-  :after ox)
+  :after ox
+  :config
+  (defun ok-org--hugo-link (fun link desc info)
+    "Remove Org links to the item within the `org-roam' directory.
+These are rendered as relative link but has no meaning in the
+public web site. By tagging Hugo article by the file tag stored
+in `ox-hugo-no-self-link-tag', those links will be rendered by
+its plain text description."
+    ;; Get the file tags:
+    (let (tags)
+      (save-excursion
+        (goto-char (point-min))
+        (while (search-forward "#+FILETAGS:" nil t)
+          (save-excursion
+            (beginning-of-line)
+            (let* ((e (org-element-at-point))
+                   (type (org-element-type e))
+                   (key (org-element-property :key e))
+                   (value (org-element-property :value e)))
+              (if (and (eq type 'keyword)
+                       (equal key "FILETAGS"))
+                  (setq tags (append (string-split value ":" t) tags)))))))
+
+      (if (not (and (boundp 'ox-hugo-no-self-link-tag)
+                    (member ox-hugo-no-self-link-tag tags)))
+          (funcall fun link desc info)
+        (let ((type (org-element-property :type link)))
+          (if (string= type "id")
+              desc
+            (funcall fun link desc info))))))
+
+  (advice-add #'org-hugo-link :around #'ok-org--hugo-link))
 
 (use-package ox-md ;; markdown
   :straight nil
