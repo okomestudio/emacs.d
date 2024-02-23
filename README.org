@@ -1,3 +1,5 @@
 #+title: emacs.d
 
-Place the root of this repository at ~/.config/emacs.
+The Emacs configuration directory.
+
+Place this directory so that Emacs can find the ~init.el~ file. The auxiliary scripts used by Emacs is placed under the ~bin/~ directory.
