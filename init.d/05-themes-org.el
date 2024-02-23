@@ -36,6 +36,7 @@ Use when contrast with non-outline contenst is desired."
     org-block-end-line
     org-checkbox
     org-code
+    org-document-info
     org-document-info-keyword
     org-drawer
     org-formula
