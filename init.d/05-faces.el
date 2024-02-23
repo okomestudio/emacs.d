@@ -127,7 +127,7 @@ If FONT-FAMILY-JA is non-nil, use it for Japanese characters."
                      (ok-faces--setup-faces-for-frame)))
   :hook
   ;; Scale texts by mode; `text-scale-mode' affect the `default face.
-  (elfeed-search-mode . (lambda () (text-scale-set 0.0)))
+  (elfeed-search-mode . (lambda () (text-scale-set 1.0)))
   (elfeed-show-mode . (lambda () (text-scale-set 0.0)))
   (eww-mode . (lambda () (text-scale-set 0.0)))
   (org-mode
