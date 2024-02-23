@@ -10,10 +10,12 @@
 
 (use-package cape
   :hook ((prog-mode
+          text-mode
           conf-mode
           lsp-completion-mode) . ok-cape--set-super-capf)
 
-  :custom (cape-dabbrev-check-other-buffers nil)
+  :custom
+  (cape-dabbrev-check-other-buffers nil)
 
   :config
   (require 'tempel)
@@ -27,16 +29,16 @@
                           (if arg
                               arg
                             (car completion-at-point-functions))
+                          #'cape-file
                           #'tempel-complete
                           ;; #'tabnine-completion-at-point
-                          #'cape-dabbrev
-                          #'cape-file)
+                          #'cape-dabbrev)
                          :sort t
                          :exclusive 'no))))))
 
+  (add-to-list 'completion-at-point-functions #'cape-file t)
   (add-to-list 'completion-at-point-functions #'tempel-complete)
   ;; (add-to-list 'completion-at-point-functions #'tabnine-completion-at-point)
-  (add-to-list 'completion-at-point-functions #'cape-file t)
   (add-to-list 'completion-at-point-functions #'cape-tex t)
   (add-to-list 'completion-at-point-functions #'cape-dabbrev t)
   (add-to-list 'completion-at-point-functions #'cape-keyword t))
@@ -48,15 +50,12 @@
                                         ; `tabnine-util--infer-indentation-offset'
                                         ; error gets resolved
   :commands (tabnine-start-process)
-  :hook
-  (prog-mode . tabnine-mode)
-  (kill-emacs . tabnine-kill-process)
-
+  :hook ((prog-mode . tabnine-mode)
+         (kill-emacs . tabnine-kill-process))
   :bind (nil
          :map tabnine-completion-map
 	       ("TAB" . nil)
          ("<tab>" . nil))
-
   :config (tabnine-start-process))
 
 
@@ -74,29 +73,48 @@
 (use-package corfu
   :straight (corfu :type git :host github :repo "minad/corfu"
                    :branch "async" :files (:defaults "extensions/*"))
-  :bind
-  (nil
-   :map corfu-map
-   ("TAB" . corfu-insert)
-   ("<tab>" . corfu-insert)
-   ("RET" . nil)
-   ("<return>" . nil))
-
-  :hook (prog-mode . corfu-mode)
-
+  :hook (((conf-mode
+           prog-mode
+           text-mode) . corfu-mode))
   :custom
   (corfu-auto t)
   (corfu-auto-delay 0.2)
   (corfu-auto-prefix 1)
   (corfu-cycle t)
   (corfu-on-exact-match nil)
+  (corfu-preselect 'prompt)
+  (corfu-quit-no-match 'separator)
   (corfu-scroll-margin 5)
-  (tab-always-indent 'complete)
+
+  :init (global-corfu-mode)
 
   :config
+  (defun corfu-enable-in-minibuffer ()
+    "Enable Corfu in the minibuffer."
+    (when (local-variable-p 'completion-at-point-functions)
+      ;; (setq-local corfu-auto nil) ;; Enable/disable auto completion
+      (setq-local corfu-echo-delay nil ;; Disable automatic echo and popup
+                  corfu-popupinfo-delay nil)
+      (corfu-mode 1)))
+  (add-hook 'minibuffer-setup-hook #'corfu-enable-in-minibuffer)
+
   (with-eval-after-load 'lsp-mode
     ;; Override the default, `:capf'
-    (setq lsp-completion-provider :none)))
+    (setq lsp-completion-provider :none))
+
+  ;; For debugging; see the Corfu site README.
+  (when debug-on-error
+    (defun force-debug (func &rest args)
+      (condition-case e
+          (apply func args)
+        ((debug error) (signal (car e) (cdr e)))))
+    (advice-add #'corfu--post-command :around #'force-debug)))
+
+
+(use-package corfu-info
+  ;; `M-h' toggles the info on selected item.
+  :disabled                             ; use popupinfo
+  :straight nil)
 
 
 (use-package corfu-popupinfo
@@ -115,11 +133,21 @@
 (use-package orderless
   :custom
   (completion-styles '(orderless basic))
-  (completion-category-overrides nil)
   (completion-category-defaults nil)
+  (completion-category-overrides '((file (styles partial-completion))))
 
   :config
-  ;; See https://tinyurl.com/mrybypkn for an advanced example.
+  ;; See also https://tinyurl.com/mrybypkn for an advanced example.
+  (defun orderless-fast-dispatch (word index total)
+    (and (= index 0) (= total 1) (length< word 4)
+         `(orderless-regexp . ,(concat "^" (regexp-quote word)))))
+
+  (orderless-define-completion-style orderless-fast
+    (orderless-style-dispatchers '(orderless-fast-dispatch))
+    (orderless-matching-styles '(orderless-literal orderless-regexp)))
+
+  (setq completion-styles '(orderless-fast basic))
+
   (with-eval-after-load 'corfu
     (add-hook 'corfu-mode-hook
               (lambda ()

@@ -46,7 +46,6 @@
   (show-paren-context-when-offscreen t)
   (show-paren-delay 0)
   (size-indication-mode t)
-  (tab-always-indent t) ;; in indent.el
 
   ;; File related config
   (auto-save-default nil)
@@ -82,13 +81,16 @@
   (setq-default buffer-file-coding-system 'utf-8-unix)
   (set-default-coding-systems 'utf-8))
 
-
 (use-package autorevert
   :straight nil
   :custom
   (auto-revert-interval 0.01)
   (global-auto-revert-non-file-buffers t)
   :init (global-auto-revert-mode 1))
+
+(use-package indent
+  :straight nil
+  :custom ((tab-always-indent 'complete)))
 
 
 ;; COMMON ELISP LIBRARIES

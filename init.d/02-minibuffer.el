@@ -1,6 +1,14 @@
 ;;; 02-minibuffer.el --- Minibuffer  -*- lexical-binding: t -*-
 ;;; Commentary:
+;;
+;; Configure minibuffer and related utilities.
+;;
 ;;; Code:
+
+(use-package minibuffer
+  :straight nil
+  :custom ((completion-cycle-threshold 3)))
+
 
 (use-package vertico
   ;; VERTical Interactive COmpletion.
