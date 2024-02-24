@@ -3,6 +3,8 @@ org-mode
 (latex-equation "\\begin{equation}" r> n> "\\end{equation}")
 (latex-equation-star "\\begin{equation*}" r> n> "\\end{equation*}")
 
+(transclude "#+transclude: " r> " :level 2 :exclude-elements \"drawer keyword\"")
+
 (anki-note-basic "* Anki note :anki:
 :PROPERTIES:
 :VISIBILITY: folded
