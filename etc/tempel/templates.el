@@ -1,5 +1,8 @@
 org-mode
 
+(latex-equation "\\begin{equation}" r> n> "\\end{equation}")
+(latex-equation-star "\\begin{equation*}" r> n> "\\end{equation*}")
+
 (anki-note-basic "* Anki note :anki:
 :PROPERTIES:
 :VISIBILITY: folded
