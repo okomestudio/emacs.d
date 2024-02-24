@@ -69,6 +69,20 @@
   :init (which-key-mode +1))
 
 
+(use-package shell-help
+  ;; Show `command -h' help
+  :straight nil
+  :commands (shell-help)
+  :init
+  (defun shell-help (str)
+    (interactive (list (okutil-string-from-region-or-prompt "Shell command: ")))
+    (let ((buffer-stdout "*shell-help*")
+          (buffer-stderr "*shell-help-error*")
+          (cmd (string-join `(,str "-h") " ")))
+      (shell-command cmd buffer-stdout buffer-stderr)
+      (switch-to-buffer buffer-stdout))))
+
+
 (use-package sicp
   ;; "Structure and Interpretation of Computer Programs" as info
   )
