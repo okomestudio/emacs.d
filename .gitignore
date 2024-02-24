@@ -19,6 +19,7 @@
 .org-id-locations
 custom.el
 elpa/
+eln-cache/
 etc/*
 !etc/tempel/
 init.d/*-user-*
