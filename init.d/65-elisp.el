@@ -14,10 +14,6 @@
    :map lisp-data-mode-map
    ("C-c b" . ok-elisp--format-elisp-buffer))
 
-  :hook
-  ((emacs-lisp-mode lisp-data-mode)
-   . (lambda () (setq-local devdocs-current-docs '("lisp"))))
-
   :config
   (defun ok-elisp--format-elisp-buffer ()
     "Format Elisp buffer."

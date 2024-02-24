@@ -40,8 +40,48 @@
   ;;
   ;; Run devdocs-install to download select docs locally.
   ;;
-  :bind
-  (("C-h D" . devdocs-lookup)))
+  :bind (("C-h D" . devdocs-lookup))
+  :hook ((ansible
+          bash-ts-mode
+          css-ts-mode
+          dockerfile-ts-mode
+          emacs-lisp-mode
+          js-jsx-mode
+          js-ts-mode
+          json-ts-mode
+          lisp-data-mode
+          magit-mode
+          markdown-mode
+          mhtml-mode
+          python-mode
+          python-ts-mode
+          sql-mode
+          web-mode) . devdocs-set-current-docs-for-mode)
+  :config
+  (setq-default devdocs-current-docs-for-mode
+                '((ansible . ("ansible"))
+                  (bash-ts-mode . ("bash"))
+                  (css-ts-mode . ("css"))
+                  (dockerfile-ts-mode . ("docker"))
+                  (emacs-lisp-mode . ("lisp"))
+                  (js-jsx-mode . ("javascript" "axios" "react"))
+                  (js-ts-mode . ("javascript"))
+                  (json-ts-mode . ("jq"))
+                  (lisp-data-mode . ("lisp"))
+                  (magit-mode . ("git"))
+                  (markdown-mode . ("markdown"))
+                  (mhtml-mode . ("html"))
+                  (python-mode . ("python~3.12"))
+                  (python-ts-mode . ("python~3.12"))
+                  (sql-mode . ("postgresql~16" "sqlite"))
+                  (typescript-ts-mode
+                   . ("javascript" "axios" "typescript" "vite"))
+                  (web-mode . ("css" "html" "javascript" "react" "typescript"))))
+
+  (defun devdocs-set-current-docs-for-mode ()
+    "Set `devdocs-current-docs' for current major mode."
+    (setq-local devdocs-current-docs
+                (cdr (assoc major-mode devdocs-current-docs-for-mode)))))
 
 
 (use-package help-shortdoc-example

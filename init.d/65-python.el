@@ -38,10 +38,6 @@
   (lsp-ruff-lsp-log-level 'debug)
   (lsp-ruff-lsp-show-notifications 'always)
 
-  :hook
-  (python-mode . (lambda () (setq-local devdocs-current-docs '("python~3.12"))))
-  (python-ts-mode . (lambda () (setq-local devdocs-current-docs '("python~3.12"))))
-
   :ensure-system-package (ipython . "pip install ipython")
 
   :config

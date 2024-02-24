@@ -17,8 +17,6 @@
 
   :hook
   (json-ts-mode . (lambda ()
-                    (setq-local devdocs-current-docs '("jq"))))
-  (json-ts-mode . (lambda ()
                     (lsp-ensure-server 'json-ls)
                     (lsp-deferred)))
 

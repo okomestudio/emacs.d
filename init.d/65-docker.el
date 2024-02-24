@@ -10,7 +10,6 @@
 (use-package dockerfile-ts-mode
   :mode "Dockerfile\\'"
   :hook
-  (dockerfile-ts-mode . (lambda () (setq-local devdocs-current-docs '("docker"))))
   (dockerfile-ts-mode . (lambda ()
                           (lsp-ensure-server 'dockerfile-ls)
                           (lsp-deferred))))

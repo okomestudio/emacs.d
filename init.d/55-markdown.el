@@ -26,7 +26,6 @@
   (markdown-indent-on-enter t)
 
   :hook
-  (markdown-mode . (lambda () (setq-local devdocs-current-docs '("markdown"))))
   (markdown-mode . lsp))
 
 ;;; 55-markdown.el ends here

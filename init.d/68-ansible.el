@@ -7,7 +7,6 @@
 
 (use-package ansible ;; not derived from prog-mode
   :hook
-  (ansible . (lambda () (setq-local devdocs-current-docs '("ansible"))))
   (ansible . (lambda ()
                ;; NOTE: To only run ansible-ls, uncomment the following line:
                ;; (setq-local lsp-disabled-clients '(yamlls eslint))

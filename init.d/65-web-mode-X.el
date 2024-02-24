@@ -151,22 +151,6 @@ See http://blog.binchen.org/posts/effective-spell-check-in-emacs.html"
   (okutil-ensure-file-from-github "ternjs/tern/master/emacs/tern.el"))
 
 
-(use-package devdocs
-  :hook
-  (web-mode . (lambda () (setq-local devdocs-current-docs '("axios"
-                                                            "css"
-                                                            "dom"
-                                                            "html"
-                                                            "http"
-                                                            "javascript"
-                                                            "jinja~3.1"
-                                                            "jquery"
-                                                            "prettier"
-                                                            "react"
-                                                            "typescript"
-                                                            "vite")))))
-
-
 (use-package lsp-mode
   ;; Use ts-ls
   :hook

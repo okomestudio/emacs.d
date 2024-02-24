@@ -21,9 +21,7 @@
   :straight nil
   :interpreter "bash"
   :mode ("\\.?bash_.*\\'" "\\.?bashrc\\'")
-  :hook
-  (bash-ts-mode . flymake-mode)
-  (bash-ts-mode . (lambda () (setq-local devdocs-current-docs '("bash")))))
+  :hook (bash-ts-mode . flymake-mode))
 
 
 (use-package bats-mode

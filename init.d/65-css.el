@@ -7,8 +7,7 @@
 
 (use-package css-ts-mode
   :straight nil
-  :hook
-  (css-ts-mode . (lambda () (setq-local devdocs-current-docs '("css"))))
-  (css-ts-mode . lsp))
+  :hook (css-ts-mode . lsp)
+  :custom (css-indent-offset 2))
 
 ;;; 65-css.el ends here

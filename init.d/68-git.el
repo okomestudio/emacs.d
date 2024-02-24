@@ -6,7 +6,7 @@
 ;;; Code:
 
 (use-package magit ;; not derived from prog-mode
-  :hook (magit-mode . (lambda () (setq-local devdocs-current-docs '("git")))))
+  )
 
 (use-package magit-todos
   :after magit

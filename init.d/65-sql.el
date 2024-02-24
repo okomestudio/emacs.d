@@ -96,12 +96,6 @@
    "emacsmirror/emacswiki.org/master/sql-upcase.el"))
 
 
-(use-package devdocs
-  :hook
-  (sql-mode . (lambda () (setq-local devdocs-current-docs '("sqlite"
-                                                            "postgresql~16")))))
-
-
 (use-package lsp-mode
   :custom
   ;; (lsp-sqls-workspace-config-path "root")
