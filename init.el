@@ -8,6 +8,11 @@
 ;; Disable magic file name during init.
 (defconst ok--saved-file-name-handler-alist file-name-handler-alist)
 (setq file-name-handler-alist nil)
+(add-hook 'after-init-hook
+          (lambda ()
+            "Restore magic file name handers."
+            (setq file-name-handler-alist
+                  ok--saved-file-name-handler-alist)) 99)
 
 ;; Profiling
 (when ok-debug ;; set t to activate init profiler
@@ -47,8 +52,5 @@
 
   :config
   (init-loader-load (expand-file-name "init.d" user-emacs-directory)))
-
-;; Restore magic file name handers.
-(setq file-name-handler-alist ok--saved-file-name-handler-alist)
 
 ;;; init.el ends here
