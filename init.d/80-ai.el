@@ -1,18 +1,24 @@
-;;; 80-ai.el --- AI  -*- lexical-binding: t -*-
+;;; 80-ai.el --- ai  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;
-;; Initialize AI-related tools, including GPT clients.
+;; Configure AI and related tools, including GPT clients.
 ;;
 ;;; Code:
 
 (use-package chatgpt-shell
-  :straight (chatgpt-shell :host github :repo "xenodium/chatgpt-shell")
-
+  :straight (:host github :repo "xenodium/chatgpt-shell")
+  :autoload (chatgpt-shell-send-to-buffer)
+  :commands (ask-chatgpt)
   :custom
   (chatgpt-shell-model-version "gpt-3.5-turbo")
   (chatgpt-shell-openai-key (lambda ()
                               (auth-source-pick-first-password
-                               :host "api.openai.com"))))
+                               :host "api.openai.com")))
+  :config
+  (require 'okutil)
+  (defun ask-chatgpt (str)
+    (interactive (list (okutil-string-from-region-or-prompt "Ask ChatGPT: ")))
+    (chatgpt-shell-send-to-buffer str)))
 
 
 (use-package gptel

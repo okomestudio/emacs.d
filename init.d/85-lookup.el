@@ -5,11 +5,10 @@
 ;;
 ;;; Code:
 
-(use-package 85-lookup
+(use-package emacs
   :straight nil
-
   :bind
-  (;
+  (nil
    :prefix-map lookup-map
    :prefix-docstring "Keymap for lookup"
    :prefix "C-h C-l"
@@ -34,17 +33,7 @@
    ("a" . eww-search-amazon-ja)
    ("d" . eww-search-weblio)
    ("s" . eww-search-duckduckgo-ja)
-   ("w" . eww-search-wikipedia-ja))
-
-  :hook
-  (after-init
-   . (lambda ()
-       (defun ask-chatgpt (str)
-         (require 'okutil)
-         (interactive (list (okutil-string-from-region-or-prompt "Ask ChatGPT: ")))
-         (require 'chatgpt-shell)
-         (chatgpt-shell-send-to-buffer str)))))
-
+   ("w" . eww-search-wikipedia-ja)))
 
 ;; Dictionaries
 
