@@ -38,8 +38,11 @@
   ;;  (concat "\\`\\(?:[[:digit:]]\\{2\\}-\\)\\("
   ;;          (mapconcat #'identity '("foo" "bar") "\\|")
   ;;          "\\)\\.el\\'"))
+
+  ;; NOTE: regexp is case-insensitive
   (init-loader-default-regexp
-   "\\`\\(?:[[:digit:]]\\{2\\}-\\)\\([-[:alnum:]]+[^-][^X]\\).el\\'")
+   "\\`\\(?:[[:digit:]]\\{2\\}-\\)\\([a-z-]+[a-wyz-]\\).el\\'")
+
   (init-loader-show-log-after-init ok-debug)
 
   :config
