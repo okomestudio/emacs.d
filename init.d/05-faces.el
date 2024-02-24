@@ -130,11 +130,12 @@ If FONT-FAMILY-JA is non-nil, use it for Japanese characters."
   (elfeed-search-mode . (lambda () (text-scale-set 1.0)))
   (elfeed-show-mode . (lambda () (text-scale-set 0.0)))
   (eww-mode . (lambda () (text-scale-set 0.0)))
-  (org-mode
-   . (lambda ()
-       (text-scale-set 0.2)
-       (let ((factor (expt text-scale-mode-step text-scale-mode-amount)))
-         (plist-put org-format-latex-options :scale (* 3.33 factor)))))
+  (org-mode . (lambda ()
+                (text-scale-set 0.2)
+                (let ((factor (expt text-scale-mode-step
+                                    text-scale-mode-amount)))
+                  (plist-put org-format-latex-options
+                             :scale (* 4.0 factor)))))
   (prog-mode . (lambda () (text-scale-set 0.0)))
   (text-mode . (lambda () (text-scale-set 0.0)))
   (treemacs-mode . (lambda () (text-scale-set -0.4))))
