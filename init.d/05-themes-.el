@@ -138,6 +138,11 @@
 
 ;; MISC.
 
+(use-package olivetti
+  ;; Emacs minor mode to automatically balance window margins
+  )
+
+
 (use-package ansi-color
   :straight nil
   :hook
