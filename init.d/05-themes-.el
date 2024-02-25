@@ -94,7 +94,7 @@
   :config
   (doom-modeline-def-modeline 'lsp-full
     '(bar workspace-name window-number modals matches follow buffer-info remote-host buffer-position word-count parrot selection-info)
-    '(compilation objed-state persp-name battery grip irc mu4e gnus github debug repl minor-modes input-method indent-info buffer-encoding major-mode process vcs lsp misc-info time))
+    '(compilation objed-state persp-name battery grip irc mu4e gnus github debug repl minor-modes input-method indent-info buffer-encoding major-mode vcs lsp misc-info time))
 
   (dolist (mode '(python-ts-mode python-sql-ts-mode))
     (add-to-list 'doom-modeline-mode-alist `(,mode . lsp-full))))
