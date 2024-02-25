@@ -15,14 +15,14 @@ if [ ! -x "$PYTHON" ]; then
 fi
 
 # pylsp
-if ! "${VENV}/bin/pylsp" ; then
+if [ ! -x "${VENV}/bin/pylsp" ]; then
   "$PYTHON" -m pip install python-lsp-server
   # "$PYTHON" -m pip install python-lsp-black pyls-isort
   # "$PYTHON" -m pip install flake8 flake8-docstrings pydocstyle[toml]
 fi
 
 # ruff
-if ! "${VENV}/bin/ruff-lsp" ; then
+if [ ! -x "${VENV}/bin/ruff-lsp" ]; then
   "$PYTHON" -m pip install ruff-lsp python-lsp-ruff
 fi
 
