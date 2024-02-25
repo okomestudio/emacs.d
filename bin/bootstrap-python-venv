@@ -4,6 +4,9 @@
 #
 
 VENV="${VIRTUAL_ENV:-$1}"
+if [ -z "$VENV" ]; then
+  VENV="$(pyenv prefix)"
+fi
 PYTHON="${VENV}/bin/python"
 
 if [ ! -x "$PYTHON" ]; then
