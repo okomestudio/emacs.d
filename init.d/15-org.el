@@ -283,38 +283,7 @@ node."
   :after ox)
 
 (use-package ox-hugo
-  :after ox
-  :config
-  (defun ok-org--hugo-link (fun link desc info)
-    "Remove Org links to the item within the `org-roam' directory.
-These are rendered as relative link but has no meaning in the
-public web site. By tagging Hugo article by the file tag stored
-in `ox-hugo-no-self-link-tag', those links will be rendered by
-its plain text description."
-    ;; Get the file tags:
-    (let (tags)
-      (save-excursion
-        (goto-char (point-min))
-        (while (search-forward "#+FILETAGS:" nil t)
-          (save-excursion
-            (beginning-of-line)
-            (let* ((e (org-element-at-point))
-                   (type (org-element-type e))
-                   (key (org-element-property :key e))
-                   (value (org-element-property :value e)))
-              (if (and (eq type 'keyword)
-                       (equal key "FILETAGS"))
-                  (setq tags (append (string-split value ":" t) tags)))))))
-
-      (if (not (and (boundp 'ox-hugo-no-self-link-tag)
-                    (member ox-hugo-no-self-link-tag tags)))
-          (funcall fun link desc info)
-        (let ((type (org-element-property :type link)))
-          (if (string= type "id")
-              desc
-            (funcall fun link desc info))))))
-
-  (advice-add #'org-hugo-link :around #'ok-org--hugo-link))
+  :after ox)
 
 (use-package ox-md ;; markdown
   :straight nil
