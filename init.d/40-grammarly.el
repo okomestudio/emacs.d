@@ -53,14 +53,14 @@
                   (kill-region start end)
                   (insert-buffer-substring edit-buffer))
                 (let ((new-end (1- (+ start (buffer-size edit-buffer)))))
-                  (kill-buffer-and-window)
+                  (kill-buffer)
                   (set-buffer parent-buffer)
                   (goto-char new-end)))
 
               (defun grammarly-edit--abort ()
                 (interactive)
                 (save-buffer)
-                (kill-buffer-and-window)
+                (kill-buffer)
                 (set-buffer parent-buffer))
 
               (use-local-map (copy-keymap text-mode-map))
