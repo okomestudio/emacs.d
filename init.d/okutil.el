@@ -8,7 +8,6 @@
 
 (defun okutil-color-scale (color factor)
   "Scale COLOR lighter or darker by a numeric FACTOR.
-
 FACTOR is between 0.0 to 2.0, where 1.0 means unchanged.
 
 Example:
@@ -52,7 +51,6 @@ Example:
 
 (defun okutil-ensure-file-from-github (src &optional dest)
   "Ensure that a file hosted by GitHub gets downloaded and exists.
-
 SRC is the source path in GitHub, DEST is the local destination
 path for the downloaded file. See okutil-ensure-file-from-url for
 detail."
@@ -62,7 +60,6 @@ detail."
 
 (defun okutil-ensure-file-from-url (src &optional dest)
   "Ensure that file at URL gets downloaded and exists.
-
 SRC is the source URL, DEST is the local destination path for the
 downloaded file. If DEST is not given, the filename is inferred
 from the source path. If DEST is not an absolute path, the file
@@ -95,7 +92,6 @@ will be created in the my-lipdir directory."
 
 (defun okutil-hatena-visit-bookmark-comments (arg &optional url)
   "Visit the Hatena Bookmark comments page for the URL.
-
 If URL is not supplied, the function will attempt to yank one
 from kill ring. The page will be opened with eww or with an
 external browser if prefixed."
@@ -139,7 +135,6 @@ external browser if prefixed."
 
 (defun okutil-locate-dominating-files (file name)
   "Look upward from FIL in directory hierarchy to locate files named NAME.
-
 This extends the `locate-dominating-file` function not to stop at
 the first occurrence of NAME and continues looking upward in the
 directory tree."
@@ -173,7 +168,6 @@ directory tree."
 
 (defun okutil-parent-directory (path)
   "Get the parent directory of PATH.
-
 This function effectively removes the last component from PATH,
 regardless of the path pointing to a file or a directory. The
 returned directory always ends with a '/' character. The function
@@ -185,7 +179,6 @@ root)."
 
 (defun okutil-revert-buffer-no-confirm (&optional force-reverting)
   "Interactive call to 'revert-buffer'.
-
 Ignoring the auto-save file and not requesting for confirmation.
 When the current buffer is modified, the command refuses to
 revert it, unless you specify the optional argument:
@@ -205,7 +198,6 @@ FORCE-REVERTING to true."
 
 (defun okutil-string-from-region-or-prompt (prompt &optional initial history default inherit)
   "Read string from region, at-point, or PROMPT.
-
 See `read-string` for the meaning of INITIAL, HISTORY, DEFAULT, and INHERIT."
   (if (region-active-p)
       (prog1
@@ -225,6 +217,15 @@ See `read-string` for the meaning of INITIAL, HISTORY, DEFAULT, and INHERIT."
     ('(4) (browse-url url))
     (_ (eww url))))
 
+
+(defun okutil-execution-time (name &rest body)
+  "Measure execution time of BODY named NAME."
+  (message "IN EXECUTION TIME")
+  (let ((t0 (float-time)))
+    (unwind-protect
+        (progn body)
+      (message "%s ran in %f" name (- (float-time) t0)))))
+(put 'okutil-execution-time 'lisp-indent-function 1)
 
 (provide 'okutil)
 ;;; okutil.el ends here
