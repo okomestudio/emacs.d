@@ -7,9 +7,8 @@
 
 (require 'magit-todos)
 
-(defcustom greppu-keywords '(("." . ("TODO" "WIP")))
-  "Keywords used for scanning."
-  :type 'list)
+(defcustom greppu-keywords '(("." . hl-todo-keyword-faces))
+  "Keywords used for scanning.")
 
 (defcustom greppu-exclude-globs '(".git/")
   "Glob patterns to exclude from searches."
@@ -46,8 +45,38 @@
 
   ;; TODO: Don't inherit magit keymap; disable git-releated actions for
   ;; safety.
+  (hack-dir-local-variables-non-file-buffer)
 
-  (hack-dir-local-variables-non-file-buffer))
+  (make-local-variable 'hl-todo-keyword-faces)
+  (make-local-variable 'magit-todos-insert-after)
+  (make-local-variable 'magit-todos-keywords)
+  (make-local-variable 'magit-todos-scanner)
+  (setq-local magit-todos-insert-after
+              (customize-set-variable 'magit-todos-insert-after '(greppu)))
+  (setq-local magit-todos-scanner
+              (customize-set-variable 'magit-todos-scanner
+                                      #'magit-todos--scan-with-rg-greppu))
+
+  (let* ((project-name (or (and (project-current)
+                                (project-name (project-current)))
+                           "."))
+         (keywords (assoc-default project-name greppu-keywords)))
+    (when keywords
+      (setq-local hl-todo-keyword-faces
+                  (customize-set-variable 'hl-todo-keyword-faces keywords))
+      (setq-local magit-todos-keywords
+                  (customize-set-variable 'magit-todos-keywords
+                                          (mapcar (lambda (it)
+                                                    (cl-typecase it
+                                                      (string it)
+                                                      (cons (car it))))
+                                                  keywords))))
+    (setq-local magit-todos-section-heading
+                (format "GREPPU in '%s'" project-name))
+
+    (erase-buffer)
+    (magit-insert-section (greppu))
+    (magit-todos--insert-todos)))
 
 ;;;###autoload
 (defun greppu-scan ()
@@ -57,25 +86,11 @@
   ;; `magit--not-inside-repository-error'. Make it work?
   (let* ((project-name (or (and (project-current)
                                 (project-name (project-current)))
-                           "nil"))
+                           "."))
          (buffer (get-buffer-create (format "*GREPPU %s*" project-name))))
     (let ((inhibit-read-only t))
       (with-current-buffer buffer
-        (erase-buffer)
-        (greppu-mode)
-        (make-local-variable 'magit-todos-keywords)
-        (let ((keywords (or (cdr (assoc project-name greppu-keywords))
-                            (cdr (assoc "." greppu-keywords)))))
-          (when keywords
-            (customize-set-variable 'magit-todos-keywords keywords)))
-
-        (setq-local magit-todos-section-heading
-                    (format "GREPPU in '%s'" project-name))
-        (setq-local magit-todos-insert-after '(greppu))
-        (setq-local magit-todos-scanner #'magit-todos--scan-with-rg-greppu)
-
-        (magit-insert-section (greppu))
-        (magit-todos--insert-todos)))
+        (greppu-mode)))
     (display-buffer buffer)))
 
 (provide 'greppu)
