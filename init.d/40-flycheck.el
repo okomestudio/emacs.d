@@ -27,6 +27,16 @@
   (textlint . "~/.config/emacs/bin/prepare-textlint"))
 
 
+(use-package flycheck-aspell
+  :after (flycheck)
+  :hook (org-mode . (lambda () (require 'flycheck-aspell)))
+  :config
+  (flycheck-aspell-define-checker "org"
+                                  "Org" ("--add-filter" "url")
+                                  (org-mode))
+  (add-to-list 'flycheck-checkers 'org-aspell-dynamic))
+
+
 (use-package flycheck-pos-tip
   :custom (flycheck-pos-tip-timeout 60)
   :config (flycheck-pos-tip-mode))
