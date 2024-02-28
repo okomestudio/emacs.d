@@ -69,13 +69,12 @@
           (when keywords
             (customize-set-variable 'magit-todos-keywords keywords)))
 
+        (setq-local magit-todos-section-heading
+                    (format "GREPPU in '%s'" project-name))
         (setq-local magit-todos-insert-after '(greppu))
         (setq-local magit-todos-scanner #'magit-todos--scan-with-rg-greppu)
 
-        (magit-insert-section (greppu)
-          (insert (format "GREPPU in project '%s':\n\n" project-name)))
-
-        ;; TODO: Replace "TODOs" heading for the section.
+        (magit-insert-section (greppu))
         (magit-todos--insert-todos)))
     (display-buffer buffer)))
 
