@@ -11,6 +11,10 @@
   "Keywords used for scanning."
   :type 'list)
 
+(defcustom greppu-exclude-globs '(".git/")
+  "Glob patterns to exclude from searches."
+  :type '(repeat string))
+
 (defun greppu--search-regexp-pcre (search-regexp-pcre)
   "Intercept the generation of SEARCH-REGEXP-PCRE for `rg greppu'."
   (format ".*(%s).*" (string-join magit-todos-keywords-list "|")))
@@ -30,7 +34,7 @@
                                    "--ignore-case")
                                  (when magit-todos-exclude-globs
                                    (--map (list "--glob" (concat "!" it))
-                                          magit-todos-exclude-globs))
+                                          greppu-exclude-globs))
                                  (unless magit-todos-submodule-list
                                    (--map (list "--glob" (concat "!" it))
                                           (magit-list-module-paths)))
