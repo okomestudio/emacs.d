@@ -101,7 +101,7 @@
 
 
 (use-package greppu
-  :straight nil
+  :straight (:host github :repo "okomestudio/greppu.el")
   :commands (greppu-scan))
 
 ;;; 85-lookup.el ends here
