@@ -93,6 +93,7 @@
   (ispell-local-dictionary-alist
    '(("en_US" "[[:alpha:]]" "[^[:alpha:]]" "['’]" t ("-d" "en_US") nil utf-8)
      ("en_GB" "[[:alpha:]]" "[^[:alpha:]]" "['’]" t ("-d" "en_GB") nil utf-8)))
+  (ispell-program-name "/usr/bin/aspell")
 
   :preface
   (put 'ispell-dictionary 'safe-local-variable #'stringp))
