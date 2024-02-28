@@ -99,4 +99,9 @@
   ;; Type list-unicode-display to search for unicode chars.
   )
 
+
+(use-package greppu
+  :straight nil
+  :commands (greppu-scan))
+
 ;;; 85-lookup.el ends here
