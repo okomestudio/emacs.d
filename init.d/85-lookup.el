@@ -102,6 +102,8 @@
 
 (use-package greppu
   :straight (:host github :repo "okomestudio/greppu.el")
-  :commands (greppu-scan))
+  :commands (greppu-scan)
+  :preface
+  (put 'greppu-search-regexp-pcre 'safe-local-variable #'functionp))
 
 ;;; 85-lookup.el ends here
