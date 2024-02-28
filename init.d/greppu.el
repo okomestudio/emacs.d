@@ -8,15 +8,21 @@
 (require 'magit-todos)
 
 (defcustom greppu-keywords '(("." . hl-todo-keyword-faces))
-  "Keywords used for scanning.")
+  "Keywords used for scanning.
+Ether a list of keyword string or a list of cons (keyword . color).")
 
 (defcustom greppu-exclude-globs '(".git/")
   "Glob patterns to exclude from searches."
   :type '(repeat string))
 
-(defun greppu--search-regexp-pcre (search-regexp-pcre)
+(defcustom greppu-search-regexp-pcre #'identity
+  "Function to modify PCRE regexp for search.")
+
+;; functions
+
+(defun greppu-search-regexp-pcre-simple (search-regexp-pcre)
   "Intercept the generation of SEARCH-REGEXP-PCRE for `rg greppu'."
-  (format ".*(%s).*" (string-join magit-todos-keywords-list "|")))
+  (format ".*(%s).*" (string-join magit-todos-keywords "|")))
 
 (magit-todos-defscanner
   "rg greppu"
@@ -25,7 +31,7 @@
                       nil
                     (f-relative directory default-directory))
   :allow-exit-codes (0 1)
-  :command (let* ((search-regexp-pcre (greppu--search-regexp-pcre search-regexp-pcre))
+  :command (let* ((search-regexp-pcre (funcall greppu-search-regexp-pcre search-regexp-pcre))
                   (command (list "rg" "--no-heading" "--line-number"
                                  (when depth
                                    (list "--maxdepth" (1+ depth)))
@@ -40,11 +46,12 @@
                                  extra-args search-regexp-pcre directory)))
              command))
 
-(define-derived-mode greppu-mode magit-todos-list-mode "greppu"
+(define-derived-mode greppu-mode magit-status-mode "greppu"
   "Major mode for displaying grep results."
+  :interactive nil
 
-  ;; TODO: Don't inherit magit keymap; disable git-releated actions for
-  ;; safety.
+  ;; TODO: Don't inherit magit keymap; disable unsafe git-releated
+  ;; actions for safety.
   (hack-dir-local-variables-non-file-buffer)
 
   (make-local-variable 'hl-todo-keyword-faces)
