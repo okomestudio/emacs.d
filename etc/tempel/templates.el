@@ -1,3 +1,9 @@
+emacs-lisp-mode
+
+(locvar-nameless ";; Local Variables:
+;; nameless-aliases: ((\"\" . \"prefix\"))
+;; End:")
+
 org-mode
 
 (latex-equation "\\begin{equation}" r> n> "\\end{equation}")
