@@ -1,79 +1,67 @@
 ;;; 65-sql.el --- SQL  -*- lexical-binding: t -*-
 ;;; Commentary:
+;;
+;; Configure SQL and related utilities.
+;;
 ;;; Code:
 
 (use-package sql
-  :after sqlformat
-
-  :bind
-  (;
-   :map sql-mode-map
-   ("C-c b" . init-sql--beautify-sql))
-
-  :hook
-  (sql-interactive-mode . (lambda () (setq truncate-lines t)))
-  (sql-mode . (lambda () (init-sql--set-sqlformat-args)))
-
+  :bind (nil
+         :map sql-mode-map
+         ("C-c b" . ok-sqlformat-format-code))
+  :hook (sql-interactive-mode . (lambda () (setq-local truncate-lines t)))
+  :custom (sql-product 'ansi)
   :preface
-  (defun init-sql--set-sqlformat-args ()
-    "Set formatter dialect based on sql-dialect."
-    (cond ((string= sql-dialect 'mysql)
-           (setq sqlformat-args '("-vvv" "--dialect" "mysql")))
-          ((string= sql-dialect 'postgres)
-           (setq sqlformat-args '("-vvv" "--dialect" "postgres")))
-          ((string= sql-dialect 'sqlite)
-           (setq sqlformat-args '("-vvv" "--dialect" "sqlite" "-e" "CP02"
-                                  ;; "--show-lint-violations"
-                                  ;; "--ignore-local-config"
-                                  )))
-          (t (setq sqlformat-args '("-vvv" "--dialect" "ansi")))))
-
   (put 'sql-connection-alist 'safe-local-variable #'listp)
   (put 'sql-postgres-login-params 'safe-local-variable #'listp)
   (put 'sql-postgres-options 'safe-local-variable #'listp)
   (put 'sql-postgres-program 'safe-local-variable #'stringp)
 
   :config
-  (with-eval-after-load 'org
-    (defadvice org-edit-special (before org-edit-src-code activate)
-      "Intercept org-src-mode to set SQL product variant."
-      (let ((lang (nth 0 (org-babel-get-src-block-info))))
-        (cond
-         ((string= lang "sql")
-          (let ((engine (cdr (assoc :engine
-                                    (nth 2 (org-babel-get-src-block-info))))))
-            (cond ((string= engine "mysql") (sql-set-product 'mysql))
-                  ((or (string= engine "postgres")
-                       (string= engine "postgresql")) (sql-set-product 'postgres))
-                  (t (sql-set-product 'ansi)))))
-         ((string= lang "sqlite") (sql-set-product 'sqlite))
-         (t (sql-set-product 'ansi))))))
+  (require 'sqlformat)
 
-  (sql-set-product 'ansi))
-
-
-(use-package sqlformat
-  ;; The sqlfluff version of sqlformat.
-  :custom
-  (sqlformat-command 'sqlfluff)
-
-  :ensure-system-package
-  ("~/.pyenv/shims/sqlfluff" . "~/.pyenv/shims/pip3 install sqlfluff")
-
-  :preface
-  (defun init-sql--beautify-sql (beg end)
+  (defun ok-sqlformat-format-code (beg end)
     (interactive (if (use-region-p)
                      (list (region-beginning) (region-end))
                    (list (point-min) (point-max))))
     (save-excursion
       (sqlformat beg end)
-      (delete-trailing-whitespace))))
+      (delete-trailing-whitespace)))
+
+  (with-eval-after-load 'org
+    (defadvice org-edit-special (before org-edit-src-code activate)
+      "Intercept org-src-mode to set SQL product variant."
+      (sql-set-product
+       (pcase (nth 0 (org-babel-get-src-block-info))
+         ("sql" (pcase (cdr (assoc :engine
+                                   (nth 2 (org-babel-get-src-block-info))))
+                  ("mysql" 'mysql)
+                  ("postgres" 'postgres)
+                  ("postgresql" 'postgres)
+                  (_ 'ansi)))
+         ("sqlite" 'sqlite)
+         (_ 'ansi))))))
+
+
+(use-package sqlformat
+  ;; The sqlfluff version of sqlformat.
+  :hook (sql-mode . ok-set-sqlformat-args)
+  :custom (sqlformat-command 'sqlfluff)
+  :ensure-system-package ("sqlfluff" . "pip install sqlfluff")
+  :config
+  (defun ok-set-sqlformat-args ()
+    "Set formatter dialect based on sql-dialect."
+    (setq-local sqlformat-args
+                (pcase sql-dialect
+                  ('mysql '("-vvv" "--dialect" "mysql"))
+                  ('postgres '("-vvv" "--dialect" "postgres"))
+                  ('sqlite '("-vvv" "--dialect" "sqlite" "-e" "CP02"))
+                  (_ '("-vvv" "--dialect" "ansi"))))))
 
 
 (use-package sqlformat
   ;; The pgformatter version of sqlformat.
   :disabled
-
   :custom
   (sqlformat-command 'pgformatter)
   (sqlformat-args
@@ -81,30 +69,29 @@
      "-M" "-p" "\n[ ]*-- sqlfmt: off\n(?:.*)?-- sqlfmt: on\n"))
 
   :ensure-system-package
-  (pg_format . "sudo apt install pgformatter"))
+  (pg_format . "sudo apt install -y pgformatter"))
 
 
 (use-package sql-upcase
   :disabled
-  :ensure nil
-
+  :straight nil
   :hook ((sql-mode sql-interactive-mode) . sql-upcase-mode)
-
   :init
-  (require 'okutil)
-  (okutil-ensure-file-from-github
-   "emacsmirror/emacswiki.org/master/sql-upcase.el"))
+  (let* ((dest (expand-file-name "init.d/sql-upcase.el" user-emacs-directory))
+         (src-host "https://raw.githubusercontent.com")
+         (src-path "emacsmirror/emacswiki.org/master/sql-upcase.el")
+         (src-url (file-name-concat src-host src-path)))
+    (unless (file-exists-p dest)
+      (url-copy-file src-url dest))))
 
 
 (use-package lsp-mode
-  :custom
-  ;; (lsp-sqls-workspace-config-path "root")
-  (lsp-sqls-timeout 30)
-
-  :hook
-  (sql-mode . lsp-deferred) ;; uses 'sqls
-
+  :custom (lsp-sqls-timeout 30)
+  ;; :hook (sql-mode . lsp-deferred)       ; Uses `sqls'
   :ensure-system-package
   (sqls . "go install github.com/lighttiger2505/sqls@latest"))
 
+;; Local Variables:
+;; nameless-aliases: (("" . "prefix"))
+;; End:
 ;;; 65-sql.el ends here
