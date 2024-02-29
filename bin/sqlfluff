@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+prefix="$(pyenv prefix)"
+
+if [ ! -x "$prefix"/bin/sqlfluff ] ; then
+    "$prefix"/bin/pip install -U sqlfluff
+fi
+
+exec "$prefix"/bin/sqlfluff $@
