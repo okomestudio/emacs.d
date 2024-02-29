@@ -347,17 +347,19 @@ node."
 
 (use-package valign
   ;; Pixel-perfect visual alignment for Org and Markdown tables.
+  :hook (org-mode . valign--maybe-activate)
   :custom
   (valign-fancy-bar t)
   (valign-max-table-size 4000)
   (valign-signal-parse-error t)
-  :hook
-  (org-mode . (lambda ()
-                (when (<= (buffer-size) ok-org--valign-max-buffer-size)
-                  (valign-mode 1))))
-  :init
+
+  :config
   (defvar ok-org--valign-max-buffer-size 100000
-    "Default max-buffer-size above which valign-mode will not activate."))
+    "Default max-buffer-size above which `valign-mode' will not activate.")
+
+  (defun valign--maybe-activate ()
+    (when (<= (buffer-size) ok-org--valign-max-buffer-size)
+      (valign-mode 1))))
 
 ;; MISC.
 
