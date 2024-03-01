@@ -1,8 +1,12 @@
-;;; 10-lsp.el --- LSP  -*- lexical-binding: t -*-
+;;; 10-lsp.el --- lsp  -*- lexical-binding: t -*-
 ;;; Commentary:
+;;
+;; Configure LSP mode and related utilities.
+;;
 ;;; Code:
 
 (use-package lsp-mode
+  :straight (:host github :repo "okomestudio/lsp-mode" :branch "okome" :fork "okomestudio")
   :commands (lsp lsp-deferred)
   :custom
   (lsp-completion-enable t)
