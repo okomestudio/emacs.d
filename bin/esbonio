@@ -1,8 +1,15 @@
 #!/usr/bin/env bash
+#
+# esbonio runner.
+#
+# Used by esbonio LSP client; see the rst-mode use-package config.
+#
 
+prefix="$(pyenv prefix)"
 
-if ! $(pyenv prefix)/bin/esbonio ; then
-    pip install esbonio
+if ! "$prefix/bin/python" -c "import esbonio" ; then
+    "$prefix/bin/pip" install esbonio
+    "$prefix/bin/pip" install sphinx sphinx_autodoc_typehints
 fi
 
-exec esbonio $@
+exec "$prefix/bin/esbonio" $@
