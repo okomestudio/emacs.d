@@ -153,6 +153,7 @@ See http://blog.binchen.org/posts/effective-spell-check-in-emacs.html"
 
 (use-package lsp-mode
   ;; Use ts-ls
+  :straight nil
   :hook
   (web-mode . (lambda ()
                 (setq-local lsp-disabled-clients '(jsts-ls))
