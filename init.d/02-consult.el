@@ -83,10 +83,6 @@
   ("M-g s" . consult-flyspell))
 
 
-(use-package consult-lsp
-  :after (consult lsp))
-
-
 (use-package consult-projectile
   :after (consult projectile)
   :bind

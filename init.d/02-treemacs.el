@@ -75,13 +75,6 @@
 (use-package treemacs-projectile
   :after (treemacs projectile))
 
-
-(use-package lsp-treemacs
-  :after (lsp-mode)
-  :bind
-  (([f6] . lsp-treemacs-symbols)
-   ([f7] . lsp-treemacs-errors-list)))
-
 ;; Local Variables:
 ;; nameless-aliases: (("" . "ok"))
 ;; End:

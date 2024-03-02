@@ -70,4 +70,15 @@
   :config
   (set-face-background 'lsp-ui-doc-background "#eeeeee"))
 
+
+(use-package lsp-treemacs
+  :after (lsp-mode)
+  :bind
+  (([f6] . lsp-treemacs-symbols)
+   ([f7] . lsp-treemacs-errors-list)))
+
+
+(use-package consult-lsp
+  :after (consult lsp-mode))
+
 ;;; 10-lsp.el ends here
