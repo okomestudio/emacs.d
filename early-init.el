@@ -49,6 +49,9 @@
 ;; (add-to-list 'default-frame-alist (cons 'width 120))
 ;; (add-to-list 'default-frame-alist (cons 'height 40))
 
+;; Misc. configurations
+(setenv "LSP_USE_PLISTS" "true")
+
 ;; Ignore x session resources:
 (advice-add 'x-apply-session-resources :override 'ignore)
 
