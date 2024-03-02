@@ -1,4 +1,4 @@
-;;; 40-grammarly.el --- grammarly  -*- lexical-binding: t -*-
+;;; 10-lsp-grammarly.el --- lsp-grammarly  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;
 ;; Configure Grammarly and related utilities.
@@ -100,4 +100,4 @@
 ;; Local Variables:
 ;; nameless-aliases: (("" . "grammarly-edit"))
 ;; End:
-;;; 40-grammarly.el ends here
+;;; 10-lsp-grammarly.el ends here
