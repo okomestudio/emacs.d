@@ -26,11 +26,6 @@
 
 (use-package prettier-js
   :commands (prettier-js)
-  :ensure-system-package (prettier . "npm install -g prettier")
-  :config
-  (setq prettier-js-args '("--arrow-parens" "always"
-                           "--print-width" "88"
-                           "--single-quote"
-                           "--trailing-comma" "all")))
+  :ensure-system-package (prettier . "npm install -g prettier"))
 
 ;;; 65-javascript.el ends here
