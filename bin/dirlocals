@@ -19,6 +19,7 @@ Usage: $scriptname [-hs]
 Use version-controlled .dir-locals.el from the repository specified by
 the VC_DIRLOCALS environment variable.
 
+  -c    Create .dir-locals.el in current directory
   -h    Show help
   -m    Version control .dir-locals.el and replace with symlink
   -s    Create symlink to version-controlled .dir-locals.el
@@ -32,6 +33,15 @@ function error() {
   >&2 echo "$scriptname: $1"
   >&2 echo "Try '$scriptname -h' for more information."
   exit "${2:-1}"
+}
+
+
+function create_dir_locals() {
+  if [ -e "$target_dirlocals" ]; then
+    error "File exists: $target_dirlocals"
+  fi
+
+  echo "((nil . ((eval . (setq-local some-variable)))))" >> "$target_dirlocals"
 }
 
 
@@ -69,8 +79,11 @@ if [ "$0" = "${BASH_SOURCE[0]}" ]; then
      error "Set VC_DIRLOCALS to the .dir-locals.el repository root"
   fi
 
-  while getopts "hms" opt; do
+  while getopts "chms" opt; do
     case $opt in
+      c)
+        create_dir_locals; exit 0;
+        ;;
       h|\?)
         if [ "$opt" = "h" ]; then usage 0; else usage; fi
         ;;
