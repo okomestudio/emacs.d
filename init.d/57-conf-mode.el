@@ -1,5 +1,8 @@
 ;;; 57-conf-mode.el --- conf-mode  -*- lexical-binding: t -*-
 ;;; Commentary:
+;;
+;; Configure conf-mode and related utilities.
+;;
 ;;; Code:
 
 (use-package conf-mode
@@ -16,15 +19,17 @@
    "\\.conf\\'"))
 
 
-;; SSH CONFIG
-
-(use-package ssh-config-mode ;; doesn't actually derive from conf-mode
+(use-package git-modes
+  ;; Major modes for .git(attributes|config|ignore)
   )
 
 
-;; SYSTEMD
-
 (use-package systemd
   :mode ("\\.\\(service|timer\\)\\'" . systemd-mode))
+
+
+;; Config modes not derived from `conf-mode'
+
+(use-package ssh-config-mode)
 
 ;;; 57-conf-mode.el ends here
