@@ -1,16 +1,24 @@
-;;; 65-sql.el --- SQL  -*- lexical-binding: t -*-
+;;; 65-sql.el --- sql  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;
-;; Configure SQL and related utilities.
+;; Configure sql-mode and related utilities.
 ;;
 ;;; Code:
 
 (use-package sql
   :bind (nil
          :map sql-mode-map
-         ("C-c b" . ok-sqlformat-format-code))
-  :hook (sql-interactive-mode . (lambda () (setq-local truncate-lines t)))
-  :custom (sql-product 'ansi)
+         ("C-c b" . sql-format-code))
+  :hook ((sql-mode . lsp-deferred)      ; Uses `sqls`
+         (sql-interactive-mode . (lambda () (setq-local truncate-lines t))))
+
+  :ensure-system-package
+  (sqls . "go install github.com/lighttiger2505/sqls@latest")
+
+  :custom
+  (lsp-sqls-timeout 30)
+  (sql-product 'ansi)
+
   :preface
   (put 'sql-connection-alist 'safe-local-variable #'listp)
   (put 'sql-postgres-login-params 'safe-local-variable #'listp)
@@ -18,13 +26,12 @@
   (put 'sql-postgres-program 'safe-local-variable #'stringp)
 
   :config
-  (require 'sqlformat)
-
-  (defun ok-sqlformat-format-code (beg end)
+  (defun sql-format-code (beg end)
     (interactive (if (use-region-p)
                      (list (region-beginning) (region-end))
                    (list (point-min) (point-max))))
     (save-excursion
+      (sqlformat-args-set)
       (sqlformat beg end)
       (delete-trailing-whitespace)))
 
@@ -44,13 +51,25 @@
 
 
 (use-package sqlformat
-  ;; The sqlfluff version of sqlformat.
-  :hook (sql-mode . ok-set-sqlformat-args)
+  ;; Use `pgformatter'.
+  :disabled
+  :custom
+  (sqlformat-command 'pgformatter)
+  (sqlformat-args '("-f2" "-g" "-s4" "-U2"
+                    "-M" "-p" "\n[ ]*-- sqlfmt: off\n(?:.*)?-- sqlfmt: on\n"))
+  :ensure-system-package (pg_format . "sudo apt install -y pgformatter"))
+
+
+(use-package sqlformat
+  ;; Use `sqlfluff'.
+  :disabled
+  :autoload (sqlformat-args-set)
   :custom (sqlformat-command 'sqlfluff)
   :ensure-system-package ("sqlfluff" . "pip install sqlfluff")
+  ;; :hook (sql-mode . ok-set-sqlformat-args)
   :config
-  (defun ok-set-sqlformat-args ()
-    "Set formatter dialect based on sql-dialect."
+  (defun sqlformat-args-set ()
+    "Set formatter dialect."
     (setq-local sqlformat-args
                 (pcase sql-dialect
                   ('mysql '("-vvv" "--dialect" "mysql"))
@@ -60,16 +79,26 @@
 
 
 (use-package sqlformat
-  ;; The pgformatter version of sqlformat.
+  ;; Use `sqlformat'.
   :disabled
-  :custom
-  (sqlformat-command 'pgformatter)
-  (sqlformat-args
-   '("-f2" "-g" "-s4" "-U2"
-     "-M" "-p" "\n[ ]*-- sqlfmt: off\n(?:.*)?-- sqlfmt: on\n"))
+  :custom (sqlformat-command 'sqlformat)
+  :ensure-system-package ("sqlformat" . "pip install sqlparse"))
 
-  :ensure-system-package
-  (pg_format . "sudo apt install -y pgformatter"))
+
+(use-package sqlformat
+  ;; Use `sql-formatter'.
+  :autoload (sqlformat-args-set)
+  :custom (sqlformat-command 'sql-formatter)
+  :ensure-system-package (sql-formatter . "npm install -g sql-formatter")
+  :config
+  (defun sqlformat-args-set ()
+    "Set formatter variant from dialect."
+    (setq-local sqlformat-args
+                (pcase sql-dialect
+                  ('mysql '("-l" "mysql"))
+                  ('postgres '("-l" "postgresql"))
+                  ('sqlite '("-l" "sqlite"))
+                  (_ nil)))))
 
 
 (use-package sql-upcase
@@ -84,14 +113,7 @@
     (unless (file-exists-p dest)
       (url-copy-file src-url dest))))
 
-
-(use-package lsp-mode
-  :custom (lsp-sqls-timeout 30)
-  ;; :hook (sql-mode . lsp-deferred)       ; Uses `sqls'
-  :ensure-system-package
-  (sqls . "go install github.com/lighttiger2505/sqls@latest"))
-
 ;; Local Variables:
-;; nameless-aliases: (("" . "prefix"))
+;; nameless-aliases: (("" . "sql"))
 ;; End:
 ;;; 65-sql.el ends here
