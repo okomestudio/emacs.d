@@ -1,52 +1,36 @@
-;;; 65-json.el --- JSON  -*- lexical-binding: t -*-
+;;; 65-json.el --- json  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;
-;; Configure JSON related utilities.
+;; Configure json-ts-mode and related utilities.
 ;;
 ;;; Code:
 
 (use-package json-ts-mode
   :mode "\\.json\\(\\.j2\\)?\\'"
-  :bind
-  (;; no globals
-   :map json-ts-mode-map
-   ("C-c b" . ok-json--beautify-json-via-python))
-
-  :custom
-  (js-indent-level 4)
-
-  :hook
-  (json-ts-mode . (lambda ()
-                    (lsp-ensure-server 'json-ls)
-                    (lsp-deferred)))
-
+  :bind (nil
+         :map json-ts-mode-map
+         ("C-c b" . json-ts-mode-format-code))
+  :hook (json-ts-mode . lsp-deferred)
+  :custom (json-ts-mode-indent-offset 2)
   :config
-  (defun ok-json--beautify-json-via-python ()
-    "See, e.g., https://emacs.stackexchange.com/a/12152/599"
+  (defun json-ts-mode-format-code ()
     (interactive)
-    (save-excursion
-      (shell-command-on-region (point-min) (point-max)
-                               "python -m json.tool"
-                               (buffer-name) t)))
-
-  (defun ok-json--beautify-json-via-web-beautify ()
-    "Need to install `web-beautify'."
-    (interactive)
-    (save-excursion
-      (let ((web-beautify-args '("-f" "-"
-                                 "--end-with-newline"
-                                 "--keep-array-indentation"
-                                 "--no-preserve-newlines"
-                                 "--jslint-happy"
-                                 "--wrap-line-length" "88")))
-        (web-beautify-js)))))
+    (prettier-js)))
 
 
 (use-package jq-mode
-  ;; TODO: Enable jq-mode with jq in JSON but yq in YAML.
-  :ensure-system-package
-  (jq . "sudo apt install -y jq")
-  (yq . "pip install yq"))
+  :after json-ts-mode
+  :bind (nil
+         :map json-ts-mode-map
+         ("C-c C-j" . jq-interactively))
+  :ensure-system-package (jq . "sudo apt install -y jq")
+  :config
+  (defun jq-interactively-on-json (&rest r)
+    (when (derived-mode-p 'json-ts-mode)
+      (setq-local jq-interactive-command "jq"
+                  jq-interactive-font-lock-mode #'json-ts-mode
+                  jq-interactive-default-options "")))
+  (advice-add #'jq-interactively :before #'jq-interactively-on-json))
 
 ;; Local Variables:
 ;; nameless-aliases: (("" . "ok-json"))
