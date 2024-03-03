@@ -8,6 +8,10 @@
 (use-package vterm
   ;; Emacs libvterm integration.
   :if (eq system-type 'gnu/linux)
+  :bind (nil
+         :map vterm-mode-map
+         ("C-q" . vterm-send-next-key))
+  :hook (vterm-mode . ok-vterm-configure-buffer)
   :custom
   (vterm-always-compile-module t)
   (vterm-buffer-name-string "vterm %s")
@@ -23,12 +27,13 @@
   ("/usr/bin/cmake" . "sudo apt install -y cmake")
   ("/usr/bin/libtool" . "sudo apt install -y libtool-bin")
 
-  :hook
-  (vterm-mode . (lambda ()
-                  (setq-local global-hl-line-mode nil
-                              solaire-mode nil
-                              buffer-face-mode-face 'fixed-pitch)
-                  (buffer-face-mode t))))
+  :config
+  (defun ok-vterm-configure-buffer ()
+    (set (make-local-variable 'buffer-face-mode-face) 'fixed-pitch)
+    (setq-local global-hl-line-mode nil
+                solaire-mode nil)
+    (buffer-face-mode t)))
+
 
 (use-package multi-vterm
   :after vterm)
