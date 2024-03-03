@@ -25,16 +25,15 @@
                       :foreground (face-attribute 'default :foreground))
 
   (defun ok-elfeed-show-setup ()
-    ;; remove underline from zenkaku space
+    ;; Remove underline from zenkaku space
     (setq-local nobreak-char-display nil)
 
-    ;; adjust entry style via shr:
+    ;; Adjust entry style via shr:
     (setq-local shr-folding-mode nil
-                shr-indentation 5
+                shr-indentation 4
                 shr-max-image-proportion 0.8
-                shr-max-width 95
                 shr-use-fonts t
-                shr-width nil))
+                shr-width 80))
 
   (defun ok-elfeed-search-setup ()
     (setq-local nobreak-char-display nil)))

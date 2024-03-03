@@ -31,7 +31,7 @@
  ("el-get" . "05bb836e3dfac8ffe4b8a10ec332aa2f661523ce")
  ("eldoc" . "be58e7c1708abc399e28ea6eee13b3d871c8abf7")
  ("elfeed" . "55fb162fa27e71b88effa59a83c57842e262b00f")
- ("elfeed-org" . "3242ec0519800a58f20480c8a6e3b3337d137084")
+ ("elfeed-org" . "d62d23e25c5e3be3d70b7fbe1eaeb6e43f93a061")
  ("elisp-refs" . "541a064c3ce27867872cf708354a65d83baf2a6d")
  ("emacs-aio" . "da93523e235529fa97d6f251319d9e1d6fc24a41")
  ("emacs-ansible" . "d89ac0ee57742cca0f0e0a3453d9dcc521575690")
