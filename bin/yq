@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+#
+# Wraps yq to run in the global virtual environment so that it doesn't
+# have to be installed in every virtual environment.
+#
+
+prefix="$(pyenv root)/versions/$(pyenv global)"
+
+if ! "$prefix/bin/python" -c "import yq" ; then
+  "$prefix/bin/pip" install yq
+fi
+
+if read -t 0 _ ; then           # Tests if stdin has anything
+  cat - | exec "$prefix/bin/yq" $@
+else
+  exec "$prefix/bin/yq" $@
+fi

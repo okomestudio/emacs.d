@@ -29,4 +29,19 @@
          'yaml-mode-syntax-propertize-function)
     (setq font-lock-defaults '(yaml-font-lock-keywords))))
 
+
+(use-package jq-mode
+  :after yaml-ts-mode
+  :bind (nil
+         :map yaml-ts-mode-map
+         ("C-c C-j" . jq-interactively))
+  :config
+  (defun jq-interactively-on-yaml (&rest r)
+    (when (derived-mode-p 'yaml-ts-mode)
+      (setq-local jq-interactive-command (expand-file-name "bin/yq"
+                                                           user-emacs-directory)
+                  jq-interactive-font-lock-mode #'yaml-ts-mode
+                  jq-interactive-default-options "--yaml-roundtrip")))
+  (advice-add #'jq-interactively :before #'jq-interactively-on-yaml))
+
 ;;; 55-yaml.el ends here
