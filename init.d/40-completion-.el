@@ -1,8 +1,7 @@
 ;;; 40-completion-.el --- completion  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;
-;; Configure completion engines (Corf or Company) and related
-;; utilities.
+;; Configure Corfu and related utilities.
 ;;
 ;;; Code:
 
@@ -71,8 +70,7 @@
 ;; CORFU
 
 (use-package corfu
-  :straight (corfu :type git :host github :repo "minad/corfu"
-                   :branch "async" :files (:defaults "extensions/*"))
+  :straight (:host github :repo "minad/corfu" :files (:defaults "extensions/*"))
   :hook (((conf-mode
            prog-mode
            text-mode) . corfu-mode))
