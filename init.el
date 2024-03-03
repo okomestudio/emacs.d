@@ -34,6 +34,15 @@
 ;; Configure use-package, init-straight.el or init-package.el:
 (load (expand-file-name "init.d/init-straight.el" user-emacs-directory))
 
+(use-package no-littering
+  ;; Want to run this as early as possible.
+  :demand t
+  :custom
+  (no-littering-etc-directory (expand-file-name (convert-standard-filename "etc/")
+                                                user-emacs-directory))
+  (no-littering-var-directory (expand-file-name (convert-standard-filename "var/")
+                                                user-emacs-directory)))
+
 ;; Load more config files from init.d
 (use-package init-loader
   :demand t

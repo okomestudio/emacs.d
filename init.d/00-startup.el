@@ -5,15 +5,6 @@
 ;;
 ;;; Code:
 
-(use-package no-littering
-  :demand t
-
-  :custom
-  (no-littering-etc-directory (expand-file-name (convert-standard-filename "etc/")
-                                                user-emacs-directory))
-  (no-littering-var-directory (expand-file-name (convert-standard-filename "var/")
-                                                user-emacs-directory)))
-
 (use-package emacs
   :demand t
   :straight nil
