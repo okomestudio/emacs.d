@@ -37,6 +37,7 @@
   (put 'projectile-project-configure-cmd 'safe-local-variable #'stringp)
   (put 'projectile-project-install-cmd 'safe-local-variable #'stringp)
   (put 'projectile-project-package-cmd 'safe-local-variable #'stringp)
+  (put 'projectile-project-root 'safe-local-variable #'stringp)
   (put 'projectile-project-run-cmd 'safe-local-variable #'stringp)
   (put 'projectile-project-test-cmd 'safe-local-variable #'stringp)
 
