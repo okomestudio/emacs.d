@@ -6,6 +6,9 @@
 ;;; Code:
 
 (use-package elfeed
+  :hook ((elfeed-show-mode . ok-elfeed-show-setup)
+         (elfeed-search-update . ok-elfeed-search-setup))
+
   :custom
   (elfeed-curl-max-connections 16)
   (elfeed-search-title-max-width 100)
@@ -13,26 +16,28 @@
   (elfeed-search-trailing-width 30)
   (elfeed-show-unique-buffers nil)
 
-  :hook
-  (elfeed-show-mode . (lambda ()
-                        ;; remove underline from zenkaku space
-                        (setq-local nobreak-char-display nil)
-
-                        ;; adjust entry style via shr:
-                        (setq-local shr-folding-mode nil
-                                    shr-indentation 5
-                                    shr-max-image-proportion 0.8
-                                    shr-max-width 95
-                                    shr-use-fonts t
-                                    shr-width nil)))
-  (elfeed-search-update . (lambda ()
-                            (setq-local nobreak-char-display nil)))
-
   :config
+  (setq elfeed-log-level 'debug)
+
   (set-face-attribute 'elfeed-search-title-face nil
                       :foreground (face-attribute 'shadow :foreground))
   (set-face-attribute 'elfeed-search-unread-title-face nil
-                      :foreground (face-attribute 'default :foreground)))
+                      :foreground (face-attribute 'default :foreground))
+
+  (defun ok-elfeed-show-setup ()
+    ;; remove underline from zenkaku space
+    (setq-local nobreak-char-display nil)
+
+    ;; adjust entry style via shr:
+    (setq-local shr-folding-mode nil
+                shr-indentation 5
+                shr-max-image-proportion 0.8
+                shr-max-width 95
+                shr-use-fonts t
+                shr-width nil))
+
+  (defun ok-elfeed-search-setup ()
+    (setq-local nobreak-char-display nil)))
 
 
 (use-package elfeed-goodies
