@@ -1,7 +1,7 @@
-;;; 80-gnus.el --- gnus  -*- lexical-binding: t -*-
+;;; 80-email.el --- email  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;
-;; Configure Gnus.
+;; Configure email messaging (with Gnus).
 ;;
 ;;; Code:
 
@@ -56,16 +56,26 @@ is SMTP server, `port' is port, and `usr' is SMTP login username."
     (setq-local hydra-deactivate t)))
 
 
+(use-package nnfolder
+  :straight nil
+  :config
+  ;; NOTE: `nnfolder-directory' easily reverts to "~/Mail" if
+  ;; `etc/gnus/newsrc.eld' exists. Delete that file and initialize
+  ;; Gnus config once that happens.
+  (setq nnfolder-directory (no-littering-expand-var-file-name
+                            "message/Mail/archive")))
+
+
 (use-package gnus
   :straight nil
   :custom
   (gnus-directory (no-littering-expand-var-file-name "gnus/News/"))
   (gnus-default-directory (no-littering-expand-var-file-name "gnus/"))
   (gnus-home-directory (no-littering-expand-var-file-name "gnus/"))
+  (gnus-summary-line-format "%U%R%z%I%(%[%o: %-23,23f%]%) %s\\n")
 
   :config
-  (setq gnus-summary-insert-old-articles t
-        gnus-summary-line-format "%U%R%z%I%(%[%o: %-23,23f%]%) %s\\n"))
+  (setq gnus-summary-insert-old-articles t))
 
 
 (use-package gnus-group
@@ -131,4 +141,4 @@ _f_: forward
 ;; Local Variables:
 ;; nameless-aliases: (("" . "ok"))
 ;; End:
-;;; 80-gnus.el ends here
+;;; 80-email.el ends here
