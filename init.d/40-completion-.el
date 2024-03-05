@@ -154,6 +154,7 @@
 
 
 (use-package prescient
+  :autoload (prescient-persist-mode)
   :hook (corfu-mode . (lambda () (prescient-persist-mode 1)))
   :custom (prescient-aggressive-file-save t))
 
