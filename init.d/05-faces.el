@@ -97,27 +97,31 @@ If FONT-FAMILY-JA is non-nil, use it for Japanese characters."
   ;; the commonly used faces.
   )
 
-(use-package faces
-  :if (eq system-type 'gnu/linux)
-  :straight nil
-  :autoload (ok-faces--apply-font-rescale)
-  :ensure-system-package
-  ("/usr/share/fonts/opentype/ebgaramond/EBGaramond08-Regular.otf" . fonts-ebgaramond)
-  ("/usr/share/fonts/opentype/noto/NotoSansCJK-Regular.ttc" . fonts-noto-cjk)
-  ("/usr/share/fonts/truetype/aoyagi-kouzan-t/AoyagiKouzanT.ttf". fonts-aoyagi-kouzan-t)
-  ("/usr/share/fonts/truetype/bizud-gothic/BIZUDGothic-Regular.ttf" . fonts-morisawa-bizud-gothic)
-  ("/usr/share/fonts/truetype/hack/Hack-Regular.ttf" . fonts-hack)
-  ("/usr/share/fonts/truetype/vlgothic/VL-Gothic-Regular.ttf" . fonts-vlgothic)
-  :init
-  (dolist (element '(("Hack" . 1.00) ;; reference
-                     ("EB Garamond". 1.28)
-                     ("BIZ UDGothic" . 1.00)
-                     ("Noto Sans Mono CJK JP" . 1.18)
-                     ("Noto Sans CJK JP" . 1.00)
-                     ("Noto Serif CJK JP" . 1.00)
-                     ;; ("VL Gothic" . 1.225)
-                     ("AoyagiKouzanFontT". 1.00)))
-    (push element face-font-rescale-alist)))
+use-package faces
+:if (eq system-type 'gnu/linux)
+:straight nil
+:autoload (ok-faces--apply-font-rescale)
+
+;; FIXME(2024-03-05): The following method appears to have trouble
+;; installing missing fonts; revisit and see if explicit commands
+;; (i.e., "sudo apt install") is necessary.
+:ensure-system-package
+("/usr/share/fonts/opentype/ebgaramond/EBGaramond08-Regular.otf" . fonts-ebgaramond)
+("/usr/share/fonts/opentype/noto/NotoSansCJK-Regular.ttc" . fonts-noto-cjk)
+("/usr/share/fonts/truetype/aoyagi-kouzan-t/AoyagiKouzanT.ttf". fonts-aoyagi-kouzan-t)
+("/usr/share/fonts/truetype/bizud-gothic/BIZUDGothic-Regular.ttf" . fonts-morisawa-bizud-gothic)
+("/usr/share/fonts/truetype/hack/Hack-Regular.ttf" . fonts-hack)
+("/usr/share/fonts/truetype/vlgothic/VL-Gothic-Regular.ttf" . fonts-vlgothic)
+:init
+(dolist (element '(("Hack" . 1.00) ;; reference
+                   ("EB Garamond". 1.28)
+                   ("BIZ UDGothic" . 1.00)
+                   ("Noto Sans Mono CJK JP" . 1.18)
+                   ("Noto Sans CJK JP" . 1.00)
+                   ("Noto Serif CJK JP" . 1.00)
+                   ;; ("VL Gothic" . 1.225)
+                   ("AoyagiKouzanFontT". 1.00)))
+  (push element face-font-rescale-alist))
 
 (use-package faces
   :straight nil
