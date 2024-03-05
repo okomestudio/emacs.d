@@ -36,7 +36,7 @@
                                 #'org-roam-reflinks-section
                                 #'org-roam-unlinked-references-section))
   (org-roam-node-display-template (concat "​​​​​${my-node-entry:*}"
-                                          (propertize "${tags:16}" 'face 'org-tag)
+                                          (propertize "${my-node-tags:16}" 'face 'org-tag)
                                           " ${my-node-timestamp:*}"))
 
   :preface
@@ -140,6 +140,11 @@
 
     (cl-defmethod org-roam-node-my-node-entry ((node org-roam-node))
       (concat (org-roam-node-title node) (ok-org-roam--render-title-aux (ok-org-roam--get-title-aux node))))
+
+    (cl-defmethod org-roam-node-my-node-tags ((node org-roam-node))
+      (let ((tags (org-roam-node-tags node)))
+        (when tags
+          (format ":%s:" (string-join tags ":")))))
 
     (cl-defmethod org-roam-node-my-node-timestamp ((node org-roam-node))
       (require 'marginalia)
