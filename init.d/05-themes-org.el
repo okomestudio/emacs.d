@@ -5,6 +5,8 @@
 ;;
 ;;; Code:
 
+;; FIXME(2024-03-05): Need to install the font from
+;; github.com/okomestudio/fonts-urw-classico
 (defvar ok-faces-font-family-outline "URW Classico"
   "Font for outlines.")
 
