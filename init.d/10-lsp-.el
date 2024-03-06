@@ -9,9 +9,6 @@
   :straight (:host github :repo "okomestudio/lsp-mode" :branch "okome" :fork "okomestudio")
   :commands (lsp lsp-deferred)
   :hook (lsp-mode . lsp-enable-which-key-integration)
-  :ensure-system-package
-  (emacs-lsp-booster . "~/.config/emacs/bin/install-emacs-lsp-booster")
-
   :custom
   (lsp-completion-enable t)
   (lsp-diagnostics-provider :auto)
@@ -24,38 +21,15 @@
   (put 'lsp-disabled-clients 'safe-local-variable #'listp)
 
   :config
-  (setq lsp-headerline-arrow "➤")
+  (setq lsp-headerline-arrow "➤"))
 
-  ;; EMACS-LSP-BOOSTER (github.com/blahgeek/emacs-lsp-booster)
 
-  (defun lsp-booster--advice-json-parse (old-fn &rest args)
-    "Try to parse bytecode instead of json."
-    (or
-     (when (equal (following-char) ?#)
-       (let ((bytecode (read (current-buffer))))
-         (when (byte-code-function-p bytecode)
-           (funcall bytecode))))
-     (apply old-fn args)))
-  (advice-add (if (progn (require 'json)
-                         (fboundp 'json-parse-buffer))
-                  'json-parse-buffer
-                'json-read)
-              :around
-              #'lsp-booster--advice-json-parse)
-
-  (defun lsp-booster--advice-final-command (old-fn cmd &optional test?)
-    "Prepend emacs-lsp-booster command to lsp CMD."
-    (let ((orig-result (funcall old-fn cmd test?)))
-      (if (and (not test?) ;; for check lsp-server-present?
-               (not (file-remote-p default-directory)) ;; see lsp-resolve-final-command, it would add extra shell wrapper
-               lsp-use-plists
-               (not (functionp 'json-rpc-connection)) ;; native json-rpc
-               (executable-find "emacs-lsp-booster"))
-          (progn
-            (message "Using emacs-lsp-booster for %s!" orig-result)
-            (cons "emacs-lsp-booster" orig-result))
-        orig-result)))
-  (advice-add 'lsp-resolve-final-command :around #'lsp-booster--advice-final-command))
+(use-package lsp-booster
+  :straight nil
+  :commands (lsp-booster-mode)
+  :ensure-system-package
+  (emacs-lsp-booster . "~/.config/emacs/bin/install-emacs-lsp-booster")
+  :init (lsp-booster-mode))
 
 
 (use-package lsp-ui
