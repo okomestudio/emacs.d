@@ -13,9 +13,26 @@
 
   :config
   (defun ansible--prepare-lsp ()
-    (lsp-booster-mode -1)
+    ;; NOTE(2024-03-07): `emacs-lsp-booster' is not compatible with
+    ;; `ansible-ls' v1.2.1 (see
+    ;; github.com/blahgeek/emacs-lsp-booster/issues/18).
+    ;;
+    ;; This is fixed by ansible/ansible-language-server/pull/604,
+    ;; which is not released yet. Until the new release, either turn
+    ;; off `emacs-lsp-booster' or patch `ansible-ls'. To patch, clone
+    ;; github.com/ansible/ansible-language-server, build the server
+    ;; locally following
+    ;; ansible.readthedocs.io/projects/language-server/development/#building-server-locally,
+    ;; and replace the "out" directory, i.e.,
+    ;; "var/lsp/server/npm/\@ansible/ansible-language-server/lib/node_modules/\@ansible/ansible-language-server/out/"
+    ;; with the local build.
+
+    ;; Uncomment the following line to disable `emacs-lsp-booster':
+    ;; (lsp-booster-mode -1)
+
     ;; NOTE: To only run ansible-ls, uncomment the following line:
     (setq-local lsp-disabled-clients '(yamlls))
+
     (lsp-deferred)))
 
 (use-package poly-ansible
