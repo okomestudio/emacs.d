@@ -25,7 +25,7 @@
 
 
 (use-package lsp-booster
-  :straight nil
+  :straight (:host github :repo "okomestudio/lsp-booster.el")
   :commands (lsp-booster-mode)
   :ensure-system-package
   (emacs-lsp-booster . "~/.config/emacs/bin/install-emacs-lsp-booster")
