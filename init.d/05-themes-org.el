@@ -5,8 +5,6 @@
 ;;
 ;;; Code:
 
-;; FIXME(2024-03-05): Need to install the font from
-;; github.com/okomestudio/fonts-urw-classico
 (defvar ok-faces-font-family-outline "URW Classico"
   "Font for outlines.")
 
@@ -65,13 +63,20 @@ Use when contrast with non-outline contenst is desired."
     (org-document-title . '(:height 1.24)))
   "Base outlines faces used in Org mode.")
 
-(use-package faces
-  :straight nil
-  :init (push '("URW Classico" . 1.28) face-font-rescale-alist))
 
 (use-package org-faces
   :straight nil
   :after (org)
+  :ensure-system-package
+  ("~/.local/share/fonts/u/URWClassico-Regular.otf"
+   . "~/.config/emacs/bin/install-font \
+'https://github.com/okomestudio/fonts-urw-classico/raw/main/opentype/URWClassico-Bold.otf' \
+'https://github.com/okomestudio/fonts-urw-classico/raw/main/opentype/URWClassico-BoldItalic.otf' \
+'https://github.com/okomestudio/fonts-urw-classico/raw/main/opentype/URWClassico-Italic.otf' \
+'https://github.com/okomestudio/fonts-urw-classico/raw/main/opentype/URWClassico-Regular.otf'")
+
+  :init (push '("URW Classico" . 1.28) face-font-rescale-alist)
+
   :config
   (let ((fontset "fontset-urw classic")
         frame)

@@ -1,0 +1,36 @@
+#!/usr/bin/env bash
+#
+# Font downloader and installer.
+#
+#   $ install-font URL1 [URL2 ...]
+#
+# The script download font files from URLs and install locally.
+#
+
+tmpdir=/tmp/fonts
+targetdir=~/.local/share/fonts
+
+mkdir -p "$tmpdir"
+
+function cleanup () {
+  rmdir "$tmpdir"
+}
+
+trap cleanup EXIT
+
+
+# Download fonts from input URLs
+for url in "$@"; do
+  curl --fail --remote-name --location --output-dir "$tmpdir" "$url"
+done
+
+# Move them to the target font directory
+for file in "$tmpdir"/*; do
+  fbase=$(basename "$file")
+  prefix=$(echo "${fbase:0:1}" | tr '[:upper:]' '[:lower:]')
+  mkdir -p "$targetdir/$prefix"
+  mv "$file" "$targetdir/$prefix"
+done
+
+# Update the font cache
+fc-cache

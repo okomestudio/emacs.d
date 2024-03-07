@@ -101,17 +101,20 @@ If FONT-FAMILY-JA is non-nil, use it for Japanese characters."
   :if (eq system-type 'gnu/linux)
   :straight nil
   :autoload (ok-faces--apply-font-rescale)
-
-  ;; FIXME(2024-03-05): The following method appears to have trouble
-  ;; installing missing fonts; revisit and see if explicit commands
-  ;; (i.e., "sudo apt install") is necessary.
   :ensure-system-package
-  ("/usr/share/fonts/opentype/ebgaramond/EBGaramond08-Regular.otf" . fonts-ebgaramond)
-  ("/usr/share/fonts/opentype/noto/NotoSansCJK-Regular.ttc" . fonts-noto-cjk)
-  ("/usr/share/fonts/truetype/aoyagi-kouzan-t/AoyagiKouzanT.ttf". fonts-aoyagi-kouzan-t)
-  ("/usr/share/fonts/truetype/bizud-gothic/BIZUDGothic-Regular.ttf" . fonts-morisawa-bizud-gothic)
-  ("/usr/share/fonts/truetype/hack/Hack-Regular.ttf" . fonts-hack)
-  ("/usr/share/fonts/truetype/vlgothic/VL-Gothic-Regular.ttf" . fonts-vlgothic)
+  ("/usr/share/fonts/opentype/ebgaramond/EBGaramond08-Regular.otf"
+   . "sudo apt install -y fonts-ebgaramond")
+  ("/usr/share/fonts/opentype/noto/NotoSansCJK-Regular.ttc"
+   . "sudo apt install -y fonts-noto-cjk")
+  ("/usr/share/fonts/truetype/aoyagi-kouzan-t/AoyagiKouzanT.ttf"
+   . "sudo apt install -y fonts-aoyagi-kouzan-t")
+  ("/usr/share/fonts/truetype/bizud-gothic/BIZUDGothic-Regular.ttf"
+   . "sudo apt install -y fonts-morisawa-bizud-gothic")
+  ("/usr/share/fonts/truetype/hack/Hack-Regular.ttf"
+   . "sudo apt install -y fonts-hack")
+  ("/usr/share/fonts/truetype/vlgothic/VL-Gothic-Regular.ttf"
+   . "sudo apt install -y fonts-vlgothic")
+
   :init
   (dolist (element '(("Hack" . 1.00) ;; reference
                      ("EB Garamond". 1.28)
