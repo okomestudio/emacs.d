@@ -7,7 +7,9 @@
 
 (use-package lsp-ltex
   :commands (lsp-ltex-start lsp-ltex-restart)
-  :hook (text-mode . lsp-ltex-start)
+  :hook ((markdown-mode
+          org-mode
+          rst-mode) . lsp-ltex-start)
   :custom
   (lsp-ltex-version "16.0.0")
   (lsp-ltex-log-level "finest")
