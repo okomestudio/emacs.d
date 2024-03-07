@@ -6,15 +6,17 @@
 ;;; Code:
 
 (use-package ansible ;; not derived from prog-mode
-  :hook
-  (ansible . (lambda ()
-               ;; NOTE: To only run ansible-ls, uncomment the following line:
-               ;; (setq-local lsp-disabled-clients '(yamlls eslint))
-               (lsp-deferred)))
-
+  :hook (ansible . ansible--prepare-lsp)
   :preface
   (put 'lsp-ansible-python-interpreter-path 'safe-local-variable #'stringp)
-  (put 'lsp-ansible-validation-lint-arguments 'safe-local-variable #'stringp))
+  (put 'lsp-ansible-validation-lint-arguments 'safe-local-variable #'stringp)
+
+  :config
+  (defun ansible--prepare-lsp ()
+    (lsp-booster-mode -1)
+    ;; NOTE: To only run ansible-ls, uncomment the following line:
+    ;; (setq-local lsp-disabled-clients '(yamlls eslint))
+    (lsp-deferred)))
 
 (use-package poly-ansible
   ;; Combines yaml-mode and jinja2-mode for Ansible.
