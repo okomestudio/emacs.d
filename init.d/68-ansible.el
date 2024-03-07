@@ -15,7 +15,7 @@
   (defun ansible--prepare-lsp ()
     (lsp-booster-mode -1)
     ;; NOTE: To only run ansible-ls, uncomment the following line:
-    ;; (setq-local lsp-disabled-clients '(yamlls eslint))
+    (setq-local lsp-disabled-clients '(yamlls))
     (lsp-deferred)))
 
 (use-package poly-ansible
