@@ -44,10 +44,12 @@ is SMTP server, `port' is port, and `usr' is SMTP login username."
                      (plist-get smtp-server :server)
                      (plist-get smtp-server :port)
                      (plist-get smtp-server :user))))
-        (message-add-header x-message-smtp-method)
-        (message "Sending message for '%s' via '%s'"
-                 from x-message-smtp-method))
-      (message-send-and-exit)))
+        (when (yes-or-no-p (format "Send message via %s?"
+                                   x-message-smtp-method))
+          (message-add-header x-message-smtp-method)
+          (message "Sending message for '%s' via '%s'"
+                   from x-message-smtp-method)
+          (message-send-and-exit)))))
 
   (defun message--deactivate-hydra ()
     "Deactivate Hydra."
