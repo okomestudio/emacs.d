@@ -36,7 +36,8 @@
                                 #'org-roam-reflinks-section
                                 #'org-roam-unlinked-references-section))
   (org-roam-node-display-template (concat "​​​​​${my-node-entry:*}"
-                                          (propertize "${my-node-tags:16}" 'face 'org-tag)
+                                          ;; (propertize "${my-node-tags:16}" 'face 'org-tag)
+                                          (propertize "${tags:16}" 'face 'org-tag)
                                           " ${my-node-timestamp:*}"))
 
   :preface
