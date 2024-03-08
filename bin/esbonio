@@ -7,9 +7,9 @@
 
 prefix="$(pyenv prefix)"
 
-if ! "$prefix/bin/python" -c "import esbonio" ; then
-    "$prefix/bin/pip" install esbonio
-    "$prefix/bin/pip" install sphinx sphinx_autodoc_typehints
+if ! "$prefix/bin/python" -c "import esbonio" >/dev/null 2>&1 ; then
+    "$prefix/bin/pip" install esbonio >/dev/null 2>&1
+    "$prefix/bin/pip" install sphinx sphinx_autodoc_typehints >/dev/null 2>&1
 fi
 
 exec "$prefix/bin/esbonio" $@
