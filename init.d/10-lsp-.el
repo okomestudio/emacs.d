@@ -13,7 +13,7 @@
   (lsp-completion-enable t)
   (lsp-diagnostics-provider :auto)
   (lsp-keymap-prefix "C-c l")
-  (lsp-log-io nil) ;; set to t for debugging
+  (lsp-log-io ok-debug) ;; set to t for debugging
   (lsp-response-timeout 30)
   (lsp-use-plists t)
 
