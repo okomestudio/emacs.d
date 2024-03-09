@@ -21,7 +21,16 @@
   (put 'lsp-disabled-clients 'safe-local-variable #'listp)
 
   :config
-  (setq lsp-headerline-arrow "➤"))
+  (setq lsp-headerline-arrow "➤")
+
+  (defun lsp-workspace-shutdown-all ()
+    "Shut down all running LSP servers.
+The function returns LSP servers that have been shut down."
+    (interactive)
+    (let ((workspaces (lsp-workspaces)))
+      (dolist (workspace workspaces)
+        (lsp-workspace-shutdown workspace))
+      workspaces)))
 
 
 (use-package lsp-booster
