@@ -86,19 +86,24 @@
 
 
 (use-package sqlformat
-  ;; Use `sql-formatter'.
+  ;; Use `sql-formatter' (github.com/sql-formatter-org/sql-formatter)
   :autoload (sqlformat-args-set)
   :custom (sqlformat-command 'sql-formatter)
   :ensure-system-package (sql-formatter . "npm install -g sql-formatter")
   :config
   (defun sqlformat-args-set ()
     "Set formatter variant from dialect."
-    (setq-local sqlformat-args
-                (pcase sql-dialect
-                  ('mysql '("-l" "mysql"))
-                  ('postgres '("-l" "postgresql"))
-                  ('sqlite '("-l" "sqlite"))
-                  (_ nil)))))
+    (setq-local
+     sqlformat-args
+     (pcase sql-dialect
+       ('mysql '("-l" "mysql"))
+       ('postgres
+        `("-l" "postgresql"
+          "-c" ,(concat "{\"paramTypes\": {\"custom\": ["
+                        "{\"regex\": \"%\\\\([a-zA-Z0-9_]+\\\\)s\"}" ; Python string
+                        "]}}")))
+       ('sqlite '("-l" "sqlite"))
+       (_ nil)))))
 
 
 (use-package sql-upcase
