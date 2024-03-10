@@ -22,7 +22,13 @@
 
 
 (use-package gptel
-  :disabled)
+  :config
+  (gptel-make-anthropic
+      "Claude"
+    :stream t
+    :key (lambda ()
+           (auth-source-pick-first-password
+            :host "console.anthropic.com"))))
 
 
 (use-package org-ai
