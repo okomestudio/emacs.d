@@ -55,7 +55,7 @@
 
   ;; NOTE: regexp is case-insensitive
   (init-loader-default-regexp
-   "\\`\\(?:[[:digit:]]\\{2\\}-\\)\\([a-z-]+\\(-[a-wyz-]\\|[a-z][a-z-]\\)\\).el\\'")
+   "\\`\\(?:[[:digit:]]\\{2\\}-\\)\\([a-z-]*\\(-[a-wyz-]\\|[a-z][a-z-]\\)\\).el\\'")
 
   (init-loader-show-log-after-init ok-debug)
 
