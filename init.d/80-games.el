@@ -24,4 +24,10 @@
                     [0 1 0]
                     [1 0 0]]))
 
+;; Misc.
+
+(use-package fireplace)
+(use-package snow)
+(use-package xkcd)
+
 ;;; 80-games.el ends here
