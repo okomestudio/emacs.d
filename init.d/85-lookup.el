@@ -43,8 +43,8 @@
 
 
 (use-package powerthesaurus
-  ;; Powerthesaurus integration.
-  )
+  ;; Pull from doomelpa to avoid aggressive `transient' load issue (#41)
+  :straight (:host github :repo "doomelpa/powerthesaurus"))
 
 
 (use-package synosaurus
