@@ -41,22 +41,23 @@
   ;; Run devdocs-install to download select docs locally.
   ;;
   :bind (("C-h D" . devdocs-lookup))
-  :hook ((ansible
-          bash-ts-mode
-          css-ts-mode
-          dockerfile-ts-mode
-          emacs-lisp-mode
-          js-jsx-mode
-          js-ts-mode
-          json-ts-mode
-          lisp-data-mode
-          magit-mode
-          markdown-mode
-          mhtml-mode
-          python-mode
-          python-ts-mode
-          sql-mode
-          web-mode) . devdocs-set-current-docs-for-mode)
+  :hook (((ansible
+           bash-ts-mode
+           css-ts-mode
+           dockerfile-ts-mode
+           emacs-lisp-mode
+           js-jsx-mode
+           js-ts-mode
+           json-ts-mode
+           lisp-data-mode
+           magit-mode
+           markdown-mode
+           mhtml-mode
+           python-mode
+           python-ts-mode
+           web-mode) . devdocs-set-current-docs-for-mode)
+         ((sql-mode
+           hack-local-variables) . devdocs-set-current-docs-for-sql-mode))
   :config
   (setq-default devdocs-current-docs-for-mode
                 '((ansible . ("ansible"))
@@ -73,7 +74,6 @@
                   (mhtml-mode . ("html"))
                   (python-mode . ("python~3.12"))
                   (python-ts-mode . ("python~3.12"))
-                  (sql-mode . ("postgresql~16" "sqlite"))
                   (typescript-ts-mode
                    . ("javascript" "axios" "typescript" "vite"))
                   (web-mode . ("css" "html" "javascript" "react" "typescript"))))
@@ -81,7 +81,15 @@
   (defun devdocs-set-current-docs-for-mode ()
     "Set `devdocs-current-docs' for current major mode."
     (setq-local devdocs-current-docs
-                (cdr (assoc major-mode devdocs-current-docs-for-mode)))))
+                (cdr (assoc major-mode devdocs-current-docs-for-mode))))
+
+  (defun devdocs-set-current-docs-for-sql-mode ()
+    (when (derived-mode-p 'sql-mode)
+      (setq-local devdocs-current-docs
+                  (pcase sql-product
+                    ('postgres '("postgresql~16"))
+                    ('sqlite '("sqlite"))
+                    (_ '("postgresql~16" "sqlite")))))))
 
 
 (use-package help-shortdoc-example
