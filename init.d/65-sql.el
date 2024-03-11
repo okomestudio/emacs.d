@@ -99,7 +99,10 @@
        ('mysql '("-l" "mysql"))
        ('postgres
         `("-l" "postgresql"
-          "-c" ,(concat "{\"paramTypes\": {\"custom\": ["
+          "-c" ,(concat "{\"keywordCase\": \"upper\", "
+                        "\"dataTypeCase\": \"upper\", "
+                        "\"functionCase\": \"upper\", "
+                        "\"paramTypes\": {\"custom\": ["
                         "{\"regex\": \"%\\\\([a-zA-Z0-9_]+\\\\)s\"}" ; Python string
                         "]}}")))
        ('sqlite '("-l" "sqlite"))
