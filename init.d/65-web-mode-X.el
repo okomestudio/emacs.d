@@ -147,8 +147,7 @@ See http://blog.binchen.org/posts/effective-spell-check-in-emacs.html"
   (tern . "npm install -g tern")
 
   :init
-  (require 'okutil)
-  (okutil-ensure-file-from-github "ternjs/tern/master/emacs/tern.el"))
+  (ok-file-ensure-from-github "ternjs/tern/master/emacs/tern.el"))
 
 
 (use-package lsp-mode

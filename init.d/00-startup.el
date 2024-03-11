@@ -5,16 +5,19 @@
 ;;
 ;;; Code:
 
+(use-package ok
+  :demand t
+  :straight (:host github :repo "okomestudio/ok.el"))
+
+
 (use-package emacs
   :demand t
   :straight nil
-
-  :bind
-  (("<f5>" . 'okutil-revert-buffer-no-confirm)
-   ("C-S-o" . 'okutil-insert-newline-above)
-   ("C-c C-x SPC" . 'okutil-insert-zero-width-space)
-   ("C-o" . 'okutil-insert-newline-below)
-   ("M-q" . 'okutil-fill-or-unfill-paragraph))
+  :bind (("<f5>" . 'ok-buffer-revert-no-confirm)
+         ("C-S-o" . 'ok-edit-insert-newline-above)
+         ("C-c C-x SPC" . 'ok-edit-insert-zero-width-space)
+         ("C-o" . 'ok-edit-insert-newline-below)
+         ("M-q" . 'ok-edit-fill-or-unfill-paragraph))
 
   :custom
   (async-shell-command-buffer "new-buffer")
@@ -55,8 +58,6 @@
                         " - Emacs"))
 
   :init
-  (require 'okutil)
-
   (column-number-mode t)
   (global-so-long-mode +1) ;; mitigate perf on files with long lines
   (show-paren-mode +1)     ;; highlight matching parens

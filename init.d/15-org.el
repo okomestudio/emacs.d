@@ -6,15 +6,13 @@
 ;;; Code:
 
 (use-package org
-  :bind
-  (nil
-   :map org-mode-map
-   ("C-c C-l" . org-insert-link)
-   ("C-c C-q" . org-set-tags-command)
-   ("C-c l" . org-store-link)
-   ("M-g i" . consult-org-heading)
-   ("M-q" . okutil-org-fill-or-unfill-paragraph))
-
+  :bind (nil
+         :map org-mode-map
+         ("C-c C-l" . org-insert-link)
+         ("C-c C-q" . org-set-tags-command)
+         ("C-c l" . org-store-link)
+         ("M-g i" . consult-org-heading))
+  :hook (org-mode . ok-org-mode-hook)
   :custom
   (org-adapt-indentation nil)
   (org-blank-before-new-entry '((heading . nil) (plain-list-item . nil)))
@@ -38,12 +36,11 @@
   (latex . "sudo apt install -y texlive texlive-latex-extra texlive-lang-cjk texlive-extra-utils texlive-luatex")
   (pdfcropmargins . "pip install pdfCropMargins")
 
-  :hook
-  (org-mode . (lambda ()
-                (setq-local fill-column 80)
-                (turn-on-visual-line-mode)))
-
   :config
+  (defun ok-org-mode-hook ()
+    (setq-local fill-column 80)
+    (turn-on-visual-line-mode))
+
   ;; HELPER FUNCTIONS
   (defun org-ensure-all-headings-with-ids ()
     "Ensure all headings have IDs."

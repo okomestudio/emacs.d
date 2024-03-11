@@ -20,12 +20,11 @@ Set this within symlinked .dir-locals.el.")
 (defun ok-dir-locals--hack-dir-local-variables (orig-fun)
   "Advice ORIG-FUN, which is `hack-dir-local-variables'."
   (when ok-dir-locals-walk-upward
-    (require 'okutil)
     (let* ((dir-locals-file ".dir-locals.el")
            (orig-buffer-file-name (buffer-file-name))
-           (nesting (okutil-locate-dominating-files (or orig-buffer-file-name
-                                                        default-directory)
-                                                    dir-locals-file)))
+           (nesting (ok-file-locate-dominating-files (or orig-buffer-file-name
+                                                         default-directory)
+                                                     dir-locals-file)))
       (unwind-protect
           (dolist (name nesting)
             ;; make it look like a file higher up in the hierarchy is visited

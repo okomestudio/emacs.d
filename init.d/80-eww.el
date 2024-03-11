@@ -7,8 +7,6 @@
 
 (use-package eww
   :config
-  (require 'okutil)
-
   (defun init-eww--eww-set-start-at (url-regexp search-regexp)
     "When site matches URL-REGEXP, start displaying from line matching SEARCH-REGEXP.
 
@@ -36,39 +34,39 @@ See http://emacs.rubikitch.com/eww-weblio/ for reference."
     (eww-browse-url (format site-url (url-hexify-string str))))
 
   (defun eww-search-amazon-en (str)
-    (interactive (list (okutil-string-from-region-or-prompt "Amazon (US): ")))
+    (interactive (list (ok-prompt-or-string-from-region "Amazon (US): ")))
     (init-eww--make-query "https://amazon.com/s?k=%s" str))
 
   (defun eww-search-amazon-ja (str)
-    (interactive (list (okutil-string-from-region-or-prompt "Amazon (JP): ")))
+    (interactive (list (ok-prompt-or-string-from-region "Amazon (JP): ")))
     (init-eww--make-query "https://amazon.co.jp/s?k=%s" str))
 
   (defun eww-search-duckduckgo-en (str)
-    (interactive (list (okutil-string-from-region-or-prompt "DuckDuckGo (en): ")))
+    (interactive (list (ok-prompt-or-string-from-region "DuckDuckGo (en): ")))
     (init-eww--make-query "https://html.duckduckgo.com/html/?q=%s&kp=-2&kl=wt-wt&ks=s" str))
 
   (defun eww-search-duckduckgo-ja (str)
-    (interactive (list (okutil-string-from-region-or-prompt "DuckDuckGo (ja): ")))
+    (interactive (list (ok-prompt-or-string-from-region "DuckDuckGo (ja): ")))
     (init-eww--make-query "https://html.duckduckgo.com/html/?q=%s&kp=-2&kl=jp-jp&ks=s" str))
 
   (defun eww-search-goodreads (str)
-    (interactive (list (okutil-string-from-region-or-prompt "Goodreads: ")))
+    (interactive (list (ok-prompt-or-string-from-region "Goodreads: ")))
     (init-eww--make-query "https://goodreads.com/search?q=%s" str))
 
   (defun eww-search-weblio (str)
-    (interactive (list (okutil-string-from-region-or-prompt "Weblio: ")))
+    (interactive (list (ok-prompt-or-string-from-region "Weblio: ")))
     (init-eww--make-query "https://www.weblio.jp/content/%s" (upcase str)))
 
   (defun eww-search-wikipedia-en (str)
-    (interactive (list (okutil-string-from-region-or-prompt "Wikipedia (en): ")))
+    (interactive (list (ok-prompt-or-string-from-region "Wikipedia (en): ")))
     (init-eww--make-query "https://en.m.wikipedia.org/wiki/%s" str))
 
   (defun eww-search-wikipedia-ja (str)
-    (interactive (list (okutil-string-from-region-or-prompt "Wikipedia (ja): ")))
+    (interactive (list (ok-prompt-or-string-from-region "Wikipedia (ja): ")))
     (init-eww--make-query "https://ja.m.wikipedia.org/wiki/%s" str))
 
   (defun eww-search-justapedia-en (str)
-    (interactive (list (okutil-string-from-region-or-prompt "Justapedia (en): ")))
+    (interactive (list (ok-prompt-or-string-from-region "Justapedia (en): ")))
     (init-eww--make-query "https://justapedia.org/wiki/%s" str)))
 
 

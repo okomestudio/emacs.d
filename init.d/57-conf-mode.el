@@ -8,10 +8,8 @@
 (use-package conf-mode
   :disabled
   :straight nil
-
   ;; :init
-  ;; (require 'okutil)
-  ;; (okutil-ensure-file-from-url
+  ;; (ok-file-ensure-from-url
   ;;  "https://www.emacswiki.org/emacs/download/any-ini-mode.el")
 
   :mode

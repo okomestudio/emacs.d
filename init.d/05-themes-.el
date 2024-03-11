@@ -44,16 +44,15 @@
 (use-package spacemacs-theme
   :disabled
   :config
-  (require 'okutil)
   (let ((mode (frame-parameter nil 'background-mode)))
     (if (string= mode "light")
         (setq spacemacs-theme-custom-colors
               `((base . "#322938") ;; #655370 for light, true-color
 
                 ;; Make some colors slightly darker
-                (head3 . ,(okutil-color-scale "#67b11d" 0.80))
-                (head4 . ,(okutil-color-scale "#b1951d" 0.80))
-                (cyan . ,(okutil-color-scale "#21b8c7" 0.95)))))))
+                (head3 . ,(ok-face-color-scale "#67b11d" 0.80))
+                (head4 . ,(ok-face-color-scale "#b1951d" 0.80))
+                (cyan . ,(ok-face-color-scale "#21b8c7" 0.95)))))))
 
 
 ;; The following utility functions assume that one and only one theme gets
@@ -160,7 +159,7 @@
                         (let* ((mode (frame-parameter nil 'background-mode))
                                (scale (if (string= mode "dark") 1.03 0.97))
                                (bg (face-attribute 'default :background))
-                               (bg-hl (okutil-color-scale bg scale)))
+                               (bg-hl (ok-face-color-scale bg scale)))
                           (set-face-attribute 'hl-line nil :background bg-hl)))))
 
 

@@ -124,7 +124,7 @@
   :commands (shell-help)
   :init
   (defun shell-help (str)
-    (interactive (list (okutil-string-from-region-or-prompt "Shell command: ")))
+    (interactive (list (ok-prompt-or-string-from-region "Shell command: ")))
     (let ((buffer-stdout "*shell-help*")
           (buffer-stderr "*shell-help-error*")
           (cmd (string-join `(,str "-h") " ")))

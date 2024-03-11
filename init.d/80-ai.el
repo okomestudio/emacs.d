@@ -15,9 +15,8 @@
                               (auth-source-pick-first-password
                                :host "api.openai.com")))
   :config
-  (require 'okutil)
   (defun ask-chatgpt (str)
-    (interactive (list (okutil-string-from-region-or-prompt "Ask ChatGPT: ")))
+    (interactive (list (ok-prompt-or-string-from-region "Ask ChatGPT: ")))
     (chatgpt-shell-send-to-buffer str)))
 
 
