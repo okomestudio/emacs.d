@@ -8,8 +8,8 @@
 ;;; Code:
 
 (use-package polymode
-  :custom
-  (polymode-lsp-integration nil) ;; see https://github.com/polymode/polymode/issues/316
-  )
+  :init
+  ;; See https://github.com/polymode/polymode/issues/316
+  (setq-default polymode-lsp-integration nil))
 
 ;;; 40-polymode.el ends here
