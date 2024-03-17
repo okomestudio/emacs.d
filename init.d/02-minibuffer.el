@@ -20,18 +20,24 @@
 
 (use-package embark
   ;; Emacs Mini-Buffer Actions Rooted in Key maps.
-  ;;
-  ;; Offers a hook to add relevant actions on a target determined by context.
-  ;;
-  :after embark-consult)
+  :bind (("C-." . embark-act)
+         ("C-;" . embark-dwim)
+         ("C-h B" . embark-bindings)))
 
 
 (use-package embark-consult
-  ;; :demand t ; only necessary if you have the hook below
-
   ;; Use if you want to have consult previews as you move around an
   ;; auto-updating embark collect buffer.
   :hook (embark-collect-mode . consult-preview-at-point-mode))
+
+
+(use-package wgrep
+  ;; Writable grep buffer and apply the changes to files.
+  ;;
+  ;; After embark export (`C-.' and `E' in consult minibuffer), `C-x
+  ;; C-q' and `C-c C-p' to start editing. `C-c C-e' to apply changes.
+  ;; `C-c C-k' to discard.
+  )
 
 
 (use-package marginalia
