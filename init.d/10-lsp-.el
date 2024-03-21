@@ -6,7 +6,6 @@
 ;;; Code:
 
 (use-package lsp-mode
-  :straight (:host github :repo "okomestudio/lsp-mode" :branch "okome" :fork "okomestudio")
   :commands (lsp lsp-deferred)
   :hook (lsp-mode . lsp-enable-which-key-integration)
   :custom
