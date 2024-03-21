@@ -7,6 +7,15 @@
 
 (use-package eww
   :config
+  (defun eww-reddit-redirect(url)
+    "Redirect reddit.com to old.reddit.com automatically.
+See reddit.com/r/emacs/comments/1bcf8v3."
+    (replace-regexp-in-string "https://www.reddit.com"
+                              "https://old.reddit.com"
+                              url))
+
+  (setq eww-url-transformers '(eww-remove-tracking eww-reddit-redirect))
+
   (defun ok-eww--set-start-at (url-regexp search-regexp)
     "When site matches URL-REGEXP, start displaying from line matching SEARCH-REGEXP.
 See http://emacs.rubikitch.com/eww-weblio/ for reference."
