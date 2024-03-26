@@ -133,7 +133,7 @@
  ("org-roam-bibtex" . "f90ac12b7ae5ba7bcdebfe53796fd0417946e5e1")
  ("org-roam-timestamps" . "c4ff1e2f5b0905b5caa917249aab56ddc1de1ab3")
  ("org-roam-ui" . "5ac74960231db0bf7783c2ba7a19a60f582e91ab")
- ("org-transclusion" . "419d9c1954c05f4c8d02ca58b2fe151ff75e2583")
+ ("org-transclusion" . "7c1ffa971f4750ff4b1bc6bf5e4f35943025cbe3")
  ("osm" . "74bf96638c08b87c5a1621e4dcbb992b2851eb3b")
  ("ox-gfm" . "46faa67dbb3fb0cd7a76c3fe518f16e4195c22c7")
  ("ox-hugo" . "d6aefe7165bd842d7826931eb7f0e700e1bdb0db")
