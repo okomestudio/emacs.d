@@ -8,6 +8,7 @@
 (use-package lsp-mode
   :commands (lsp lsp-deferred)
   :hook (lsp-mode . lsp-enable-which-key-integration)
+  :ensure-system-package (semgrep . "pip install semgrep")
   :custom
   (lsp-completion-enable t)
   (lsp-diagnostics-provider :auto)
