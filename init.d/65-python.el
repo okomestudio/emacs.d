@@ -45,38 +45,41 @@
     (interactive)
     (let ((this-file (or (buffer-file-name)
                          (buffer-name)))
+          (saved-point (point))
           (output-buffer "*ruff*")
           (error-buffer "*ruff-error*")
           (command-format "ruff format --stdin-filename %s")
           (command-lint "ruff check --fix --select \"I\" --stdin-filename %s")
           (orig-content (buffer-string))
           exit-code)
-      (save-excursion
-        (setq exit-code
-              (shell-command-on-region (point-min)
-                                       (point-max)
-                                       (format command-format this-file)
-                                       output-buffer
-                                       t
-                                       error-buffer))
-        (if (> exit-code 0)
-            (progn
-              (replace-region-contents (point-min)
-                                       (point-max)
-                                       (lambda () orig-content))
-              (display-buffer error-buffer #'display-buffer-pop-up-window))
-          (setq exit-code
-                (shell-command-on-region (point-min)
-                                         (point-max)
-                                         (format command-lint this-file)
-                                         output-buffer
-                                         t
-                                         error-buffer))
-          (when (> exit-code 0)
+      (setq exit-code
+            (shell-command-on-region (point-min)
+                                     (point-max)
+                                     (format command-format this-file)
+                                     output-buffer
+                                     t
+                                     error-buffer))
+      (if (> exit-code 0)
+          (progn
             (replace-region-contents (point-min)
                                      (point-max)
                                      (lambda () orig-content))
-            (display-buffer error-buffer #'display-buffer-pop-up-window))))))
+            (display-buffer error-buffer #'display-buffer-pop-up-window))
+        (setq exit-code
+              (shell-command-on-region (point-min)
+                                       (point-max)
+                                       (format command-lint this-file)
+                                       output-buffer
+                                       t
+                                       error-buffer))
+        (when (> exit-code 0)
+          (replace-region-contents (point-min)
+                                   (point-max)
+                                   (lambda () orig-content))
+          (display-buffer error-buffer #'display-buffer-pop-up-window)))
+      ;; `save-execursion' does not work with destructive
+      ;; `shell-command-on-region'
+      (goto-char saved-point)))
 
   (defun ok-python-format-python-code-with-black-and-isort ()
     (interactive)
