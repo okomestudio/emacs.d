@@ -33,7 +33,7 @@
   (org-todo-keywords '((sequence "TODO" "WIP" "|" "SKIP" "DONE")))
 
   :ensure-system-package
-  (latex . "sudo apt install -y texlive texlive-latex-extra texlive-lang-cjk texlive-extra-utils texlive-luatex")
+  (latex . "sudo apt install -y texlive texlive-latex-extra texlive-lang-cjk texlive-extra-utils texlive-luatex texlive-science")
   (pdfcropmargins . "pip install pdfCropMargins")
 
   :config
