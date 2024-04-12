@@ -16,7 +16,7 @@
   (when (version< emacs-version minver)
     (error "The minimum Emacs version expected is %s" minver)))
 
-(defconst ok-debug t
+(defconst ok-debug nil
   "Global flag to activate all debug-related flag.")
 
 (setq debug-on-error ok-debug)

@@ -76,8 +76,8 @@
 (use-package autorevert
   :straight nil
   :custom
-  (auto-revert-interval 0.01)
-  (global-auto-revert-non-file-buffers t)
+  (auto-revert-avoid-polling t)
+  ;; (global-auto-revert-non-file-buffers t)
   :init (global-auto-revert-mode 1))
 
 (use-package indent
