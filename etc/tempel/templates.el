@@ -61,3 +61,8 @@ org-mode
 :END:
 *** Front
 *** Back" n)
+
+(locvar-org-ja "* Local variables :noexport:
+# Local Variables:
+# lsp-ltex-language: \"ja-JP\"
+# End:")
