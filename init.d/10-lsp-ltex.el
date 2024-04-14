@@ -15,6 +15,9 @@
   (lsp-ltex-log-level "finest")
   (lsp-ltex-trace-server "verbose")
 
+  :preface
+  (put 'lsp-ltex-language 'safe-local-variable #'stringp)
+
   :config
   (defvar lsp-ltex-aspell-dict "~/.aspell.en.pws")
 
