@@ -12,7 +12,7 @@
   :custom
   (ace-isearch-input-length 6)
   (ace-isearch-jump-delay 0.3)
-  (ace-isearch-function-from-isearch 'ace-isearch-consult-line-from-isearch)
+  (ace-isearch-function-from-isearch #'ace-isearch-consult-line-from-isearch)
   :hook (after-init . (lambda () (global-ace-isearch-mode +1))))
 
 
