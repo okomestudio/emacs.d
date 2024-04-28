@@ -17,7 +17,7 @@
   (elfeed-show-unique-buffers nil)
 
   :config
-  (setq elfeed-log-level 'info)
+  (setq elfeed-log-level 'info)  ; 'info or 'debug
 
   (set-face-attribute 'elfeed-search-title-face nil
                       :foreground (face-attribute 'shadow :foreground))
