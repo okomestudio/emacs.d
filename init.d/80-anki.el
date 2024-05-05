@@ -7,7 +7,7 @@
 
 (use-package anki-editor
   ;; Emacs minor mode for making Anki cards with Org.
-  :straight (:fork "orgtre")
+  :straight (:fork "anki-editor")
   :commands (anki-editor-note-at-point)
   :ensure-system-package (curl . "sudo apt install -y curl")
 
