@@ -36,6 +36,7 @@
       (delete-trailing-whitespace)))
 
   (with-eval-after-load 'org
+    ;; TODO: Replace to-be-obsoleted `defadvice' with `advice-add`.
     (defadvice org-edit-special (before org-edit-src-code activate)
       "Intercept org-src-mode to set SQL product variant."
       (sql-set-product
