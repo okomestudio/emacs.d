@@ -1,15 +1,21 @@
 ;;; init-straight.el --- Straight  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;
+;; Initialize Straight for use with `use-package'.
+;;
 ;; To upgrade a package and its dependencies:
 ;;
 ;;   M-x straight-pull-package-and-deps <package>
 ;;   M-x straight-freeze-version
 ;;
-;; Save the straight/versions/default.el file.
+;; The frozen versions will be saved to the
+;; straight/versions/default.el file. Put this file under version
+;; control.
 ;;
-;; Use the straight-visit-package and straight-visit-package-website functions
-;; to browse the package code base and the package website, respectively.
+;; The following utility functions may be useful:
+;;
+;;   - `straight-visit-package' to browse the package source code
+;;   - `straight-visit-package-website' to visit the package website
 ;;
 ;;; Code:
 
