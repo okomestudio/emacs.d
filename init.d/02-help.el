@@ -147,4 +147,10 @@
                    ;; `list-*' buffers appear to interfere with `font-lock-mode'
                    (font-lock-mode -1)))))
 
+
+(use-package casual-info
+  ;; Provide a keyboard-driven menu UI for the Info reader.
+  :bind (:map Info-mode-map ("C-/" . 'casual-info-tmenu))
+  :custom (casual-info-use-unicode-symbols t))
+
 ;;; 02-help.el ends here
