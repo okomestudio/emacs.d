@@ -12,6 +12,12 @@
 ;; straight/versions/default.el file. Put this file under version
 ;; control.
 ;;
+;; When Straight complains that a package is missing, run
+;;
+;;   M-x straight-pull-recipe-repositories
+;;
+;; to update recipe repositories.
+;;
 ;; The following utility functions may be useful:
 ;;
 ;;   - `straight-visit-package' to browse the package source code
