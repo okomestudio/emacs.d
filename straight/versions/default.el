@@ -124,7 +124,7 @@
  ("olivetti" . "1f8b3d5cb155f7497083001037a09a972befab21")
  ("openwith" . "1dc89670822966fab6e656f6519fdd7f01e8301a")
  ("orderless" . "61aed3e622f90ee8ace44a84a05abc1074567b74")
- ("org" . "0dd2c5ea399145fb716a1d070bf56c0495346639")
+ ("org" . "9447518c753834dba774692d68d3a58f4a07b1a2")
  ("org-contrib" . "ddafb2efcb10310ff80a171435ad06d065ccbfb7")
  ("org-modern" . "418b1adeec936e42abe1e3151633951055909ea4")
  ("org-modern-indent" . "85f95d093d9b2d8fb9e4a705529eac4e2a888e87")
