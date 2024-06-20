@@ -29,7 +29,7 @@
  ("corfu" . "d82bc357c9baccfaaca288526d128c895af61274")
  ("dash.el" . "1de9dcb83eacfb162b6d9a118a4770b1281bcd84")
  ("define-word" . "31a8c67405afa99d0e25e7c86a4ee7ef84a808fe")
- ("devdocs.el" . "f0436bc0e2077683438e838acdfc425337898175")
+ ("devdocs.el" . "c14d1306648d3ae09ee3a3b3f45592334943cfeb")
  ("docker.el" . "df141addfec256cfb943fa1823b4b2ad8f461fa9")
  ("doom-modeline" . "9816e6a9d1216daf8f1ad07a04e8e657e3c6656a")
  ("el-get" . "f220df34333fdb363b84b28f4ed4a5575341bf45")
