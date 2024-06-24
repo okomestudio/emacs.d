@@ -16,7 +16,7 @@
 
 
 (use-package mozc-posframe
-  :disabled
+  :disabled ;; since using posframe with mozc cause frequent crash
   :straight (mozc-posframe :host github :repo "derui/mozc-posframe")
   :config (mozc-posframe-register))
 
