@@ -123,7 +123,7 @@
  ("no-littering" . "f45335ede7c1246f922816610139face112e236b")
  ("nongnu-elpa" . "69e5a9b389738b8f090b96b909a213293cf8e46c")
  ("ob-typescript" . "abf36f1f3b2476e71c63721dc907d7e6914aef3d")
- ("ok.el" . "31b975bbbce905d2776c0262c3bac69d9387a6e2")
+ ("ok.el" . "c0ed6780eb74189c7252b61e805f7cb04f807479")
  ("olivetti" . "1f8b3d5cb155f7497083001037a09a972befab21")
  ("openwith" . "1dc89670822966fab6e656f6519fdd7f01e8301a")
  ("orderless" . "61aed3e622f90ee8ace44a84a05abc1074567b74")
