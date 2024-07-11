@@ -18,6 +18,10 @@
   ;;
   ;; This implements Org Src-like buffer to use Grammarly.
   ;;
+  ;; TODO: The behavior of the edit buffer is not nearly identical to
+  ;; that of org-mode. Improve, especially its `save-excursion'
+  ;; imitation.
+
   (defconst grammarly-edit-buffer-name-prefix "*Grammarly "
     "Buffer name prefix for Grammarly edit buffer.")
 
