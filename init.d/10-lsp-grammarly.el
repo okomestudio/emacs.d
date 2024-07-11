@@ -67,7 +67,8 @@
               (local-set-key (kbd "C-c '") #'grammarly-edit--commit-change)
               (local-set-key (kbd "C-x k") #'grammarly-edit--abort)
 
-              (setq-local lsp-headerline-breadcrumb-enable nil)
+              (setq-local lsp-disabled-clients '(ltex-ls)
+                          lsp-headerline-breadcrumb-enable nil)
               (lsp)
 
               (setq header-line-format
