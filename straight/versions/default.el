@@ -73,7 +73,7 @@
  ("gcmh" . "0089f9c3a6d4e9a310d0791cf6fa8f35642ecfd9")
  ("git-modes" . "3cc94974c09c43462dfbfbe20396a414352dbb92")
  ("gnu-elpa-mirror" . "5338f22d8cee40109a2616007b40b558e53eb0ae")
- ("go-translate" . "e5680e294f0e18d945c9f18ff7f4e6610c1ed50b")
+ ("go-translate" . "97468ed8ff5ae93e01e93d4018e7be1b711046a1")
  ("gptel" . "9a5a4a60d5aa0bad11f632135bacaf4bf592d56a")
  ("grammarly" . "45fb69f48b3fdcfcee990410cdd860f257cf4f54")
  ("graphviz-dot-mode" . "8ff793b13707cb511875f56e167ff7f980a31136")

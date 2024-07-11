@@ -14,7 +14,7 @@
    :prefix "C-h C-l"
    ("c" . ask-chatgpt)
    ("g" . eww-search-goodreads)
-   ("t" . gts-do-translate)
+   ("t" . gt-do-translate)
 
    :prefix-map lookup-english-map
    :prefix-docstring "Keymap for English lookup"
@@ -64,31 +64,19 @@
 ;; Translation
 
 (use-package go-translate
-  ;; A translation framework.
+  ;; Translator framework.
   :custom
-  (gts-split-width-threshold 120)
-  (gts-translate-list '(("en" "ja") ("ja" "en")))
-
-  :config
-  (setq deepl-authkey (plist-get (car (auth-source-search
-                                       :host "deepl.com"
-                                       :requires '(:authkey)))
-                                 :authkey))
-
-  (setq gts-custom-engines
-        (list (gts-google-engine :parser (gts-google-summary-parser))
-              (gts-google-rpc-engine :parser (gts-google-rpc-parser))
-              (gts-bing-engine)))
-
-  ;; If the auth key exists, add DeepL engine:
-  (unless (null deepl-authkey)
-    (push (gts-deepl-engine :auth-key deepl-authkey :pro nil)
-          gts-custom-engines))
-
-  (setq gts-default-translator (gts-translator
-                                :picker (gts-prompt-picker)
-                                :engines gts-custom-engines
-                                :render (gts-buffer-render))))
+  (gt-buffer-render-split-width-threshold 120)
+  (gt-debug-p nil)
+  (gt-langs '(en ja))
+  (gt-default-translator
+   (gt-translator
+    :taker (gt-taker :prompt t)
+    :engines (list (gt-deepl-engine)
+                   (gt-google-engine :parse (gt-google-summary-parser))
+                   (gt-google-rpc-engine :parse (gt-google-rpc-parser))
+                   (gt-bing-engine))
+    :render (gt-buffer-render))))
 
 
 ;; Misc.
