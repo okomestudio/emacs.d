@@ -103,18 +103,26 @@
 
 (use-package which-key
   ;; Displays available keybindings in popup.
-  :bind
-  (("C-h a k" . which-key-show-top-level))
+  :bind (("C-h a k" . which-key-show-top-level))
+
   :custom
   (which-key-idle-delay 0.5)
+  (which-key-idle-secondary-delay 0.05)
   (which-key-max-description-length nil)
   (which-key-min-column-description-width 0)
   (which-key-popup-type 'side-window)
-  (which-key-show-docstrings t)
-  (which-key-show-transient-maps t)
-  (which-key-side-window-location '(right bottom))
-  (which-key-side-window-max-width 0.8)
   (which-key-sort-order 'which-key-key-order-alpha)
+
+  ;; NOTE(2024-07-12): The following are disabled for now, since
+  ;; `which-key--update' consistently fails due to
+  ;; `(wrong-type-argument wholenump ...)'
+
+  ;; (which-key-show-docstrings t)
+  ;; (which-key-show-transient-maps t)
+  ;; (which-key-side-window-location '(right bottom))
+  ;; (which-key-side-window-location 'right)
+  ;; (which-key-side-window-max-width 0.8)
+
   :init (which-key-mode +1))
 
 
