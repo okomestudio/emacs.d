@@ -282,6 +282,14 @@ node."
 (use-package ox-hugo
   :after ox)
 
+(use-package ox-latex
+  :straight nil
+  :after ox
+  :custom
+  (org-latex-pdf-process
+   '("lualatex -interaction nonstopmode -shell-escape %f"
+     "lualatex -interaction nonstopmode -shell-escape %f")))
+
 (use-package ox-md ;; markdown
   :straight nil
   :after ox)
