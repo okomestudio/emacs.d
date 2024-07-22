@@ -1,6 +1,9 @@
 ;;; 02-atomic-chrome.el --- atomic-chrome  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;
+;; Atomic Chrome is a Chrome extension that allows using Emacs for
+;; bi-directional online editing.
+;;
 ;; Configure atomic-chrome and its related utilities.
 ;;
 ;; `M-x atomic-chrome-start-server' to start the server.
@@ -31,15 +34,16 @@
                   ("leetcode.com" . python-ts-mode)
                   ("ramdajs.com" . js-ts-mode)
                   ("typescriptlang.org" . typescript-ts-mode)
-                  ("w3schools.com" . js-ts-mode)))
+                  ("w3schools.com" . js-ts-mode)
+                  ("zettelkasten.de" . gfm-mode)))
   (setq atomic-chrome-default-major-mode 'python-ts-mode)
 
   (add-to-list 'atomic-chrome-create-file-strategy
-               ("~/github.com/tmp/leetcode"
-                :url ("leetcode.com" "repl.it")))
+               '("~/github.com/tmp/leetcode"
+                 :url ("leetcode.com" "repl.it")))
   (add-to-list 'atomic-chrome-create-file-strategy
-               ("~/github.com/tmp/medium"
-                :url ("medium.com")))
+               '("~/github.com/tmp/medium"
+                 :url ("medium.com")))
   (add-to-list 'atomic-chrome-create-file-strategy
                '("~/github.com/tmp/ts-scratch/src/"
                  :extension ("js" "ts" "tsx" "jsx" "cjs" "mjs"))))
