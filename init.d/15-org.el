@@ -134,17 +134,6 @@ node."
                  :latex-compiler ("dvilualatex -interaction nonstopmode --shell-escape -output-directory %o %f")
                  :image-converter ("dvisvgm %f -n -b min -c %S -o %O"))))
 
-(use-package org-indent
-  :straight nil
-  :after (org)
-  :hook (org-mode . (lambda () (org-indent-mode 1)))
-  :config
-  (advice-add #'org-indent-refresh-maybe :around
-              (lambda (fun &rest args)
-                "Refresh only when buffer is visible."
-                ;; This could speed up org-agenda in some cases.
-                (when (get-buffer-window (current-buffer) t)
-                  (apply fun args)))))
 
 ;; ORG BABEL
 
@@ -332,16 +321,38 @@ node."
   (org-mode . org-modern-mode)
   (org-agenda-finalize . org-modern-agenda))
 
+;; APPEARANCE - INDENTATION
+
+(use-package org-indent
+  :straight nil
+  :after (org)
+  :hook (org-mode . (lambda () (org-indent-mode 1)))
+  :config
+  (advice-add #'org-indent-refresh-maybe :around
+              (lambda (fun &rest args)
+                "Refresh only when buffer is visible."
+                ;; This could speed up org-agenda in some cases.
+                (when (get-buffer-window (current-buffer) t)
+                  (apply fun args)))))
+
+(use-package org-margin
+  :disabled ;; conflicts with `org-indent-mode'
+  :after org
+  :straight (:host github :repo "rougier/org-margin")
+  :hook (org-mode . (lambda () (org-margin-mode 1)))
+  :init
+  (use-package svg-lib))
+
 (use-package org-modern-indent
   :straight (:host github :repo "jdtsmith/org-modern-indent")
   :init (add-hook 'org-mode-hook #'org-modern-indent-mode 90)
   :hook
   (org-indent-mode . (lambda()
-                ;; See github.com/jdtsmith/org-modern-indent/issues/10
-                (require 'org-indent)
-                (if org-indent--text-line-prefixes
-                    (aset org-indent--text-line-prefixes
-                          0 (propertize " " 'face 'org-indent)))))
+                       ;; See github.com/jdtsmith/org-modern-indent/issues/10
+                       (require 'org-indent)
+                       (if org-indent--text-line-prefixes
+                           (aset org-indent--text-line-prefixes
+                                 0 (propertize " " 'face 'org-indent)))))
   :config
   (advice-add #'org-modern-indent--refresh-watch :around
               (lambda (fun beg end &rest r)
@@ -349,6 +360,8 @@ node."
                 ;; This could speed up org-agenda in some cases.
                 (when (get-buffer-window (current-buffer) t)
                   (apply fun beg end r)))))
+
+;;; APPEARANCE - TABLE
 
 (use-package valign
   ;; Pixel-perfect visual alignment for Org and Markdown tables.
