@@ -3,3 +3,18 @@
 The Emacs configuration directory.
 
 Place this directory so that Emacs can find the ~init.el~ file. The auxiliary scripts used by Emacs is placed under the ~bin/~ directory.
+
+* Convention
+** ~straight-use-package~
+
+The ~init.el~ is organized using ~use-package~ with ~straight~.
+
+*** Initializing built-in package
+
+Use ~:straight nil~ to avoid pulling the source:
+
+#+begin_src elisp
+  (use-package builtin-package
+    :straight nil
+    …)
+#+end_src
