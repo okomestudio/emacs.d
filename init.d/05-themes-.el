@@ -135,6 +135,31 @@
   :hook (prog-mode . (lambda () (rainbow-delimiters-mode 1))))
 
 
+;; INDENTATION
+
+(use-package indent-bars
+  :straight (indent-bars :type git :host github :repo "jdtsmith/indent-bars")
+  :hook ((python-ts-mode
+          yaml-ts-mode) . indent-bars-mode))
+
+(use-package highlight-indent-guides
+  :disabled
+  :custom
+  (highlight-indent-guides-auto-enabled nil)
+  (highlight-indent-guides-character ?\┆)
+  (highlight-indent-guides-delay 0)
+  (highlight-indent-guides-method 'character)
+  (highlight-indent-guides-responsive 'top)
+
+  :hook
+  (prog-mode . highlight-indent-guides-mode)
+
+  :config
+  (set-face-background 'highlight-indent-guides-character-face "light yellow")
+  (set-face-foreground 'highlight-indent-guides-character-face "light yellow")
+  (set-face-background 'highlight-indent-guides-top-character-face "light yellow")
+  (set-face-foreground 'highlight-indent-guides-top-character-face "gray"))
+
 ;; MISC.
 
 (use-package olivetti
@@ -161,25 +186,6 @@
                                (bg (face-attribute 'default :background))
                                (bg-hl (ok-face-color-scale bg scale)))
                           (set-face-attribute 'hl-line nil :background bg-hl)))))
-
-
-(use-package highlight-indent-guides
-  :disabled
-  :custom
-  (highlight-indent-guides-auto-enabled nil)
-  (highlight-indent-guides-character ?\┆)
-  (highlight-indent-guides-delay 0)
-  (highlight-indent-guides-method 'character)
-  (highlight-indent-guides-responsive 'top)
-
-  :hook
-  (prog-mode . highlight-indent-guides-mode)
-
-  :config
-  (set-face-background 'highlight-indent-guides-character-face "light yellow")
-  (set-face-foreground 'highlight-indent-guides-character-face "light yellow")
-  (set-face-background 'highlight-indent-guides-top-character-face "light yellow")
-  (set-face-foreground 'highlight-indent-guides-top-character-face "gray"))
 
 
 (use-package pos-tip
