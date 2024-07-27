@@ -10,4 +10,8 @@
   :hook
   (mhtml-mode . lsp))
 
+(use-package emmet-mode
+  ;; Add HTML/CSS abbreviation expansion.
+  :disabled)
+
 ;;; 65-html.el ends here
