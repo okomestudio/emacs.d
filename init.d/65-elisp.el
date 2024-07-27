@@ -44,6 +44,11 @@
   :config (ipretty-mode 1))
 
 
+(use-package macrostep
+  ;; Interactive macro-expander.
+  )
+
+
 (use-package nameless
   :hook (emacs-lisp-mode . nameless-mode)
   :custom
