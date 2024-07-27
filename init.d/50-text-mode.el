@@ -13,6 +13,15 @@
                      (save-excursion
                        (delete-trailing-whitespace))))))
 
+;;; CSV
+
+(use-package csv-mode)
+
+(use-package rainbow-csv
+  ;; Highlight CSV and TSV spreadsheet files in different rainbow colors.
+  :straight (indent-bars :type git :host github :repo "emacs-vs/rainbow-csv"))
+
+;;; TOML
 
 (use-package toml-ts-mode
   :straight nil
