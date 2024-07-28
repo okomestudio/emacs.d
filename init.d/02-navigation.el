@@ -9,14 +9,19 @@
 
 (use-package ace-isearch
   ;; A seamless bridge between isearch, ace-jump-mode, avy, and swoop.
+  :bind (;
+         :map isearch-mode-map
+         ("C-'" . 'ace-isearch-jump-during-isearch))
+
   :custom
   (ace-isearch-input-length 6)
   (ace-isearch-jump-delay 0.3)
+  (ace-isearch-function 'avy-goto-char)
   (ace-isearch-function-from-isearch #'ace-isearch-consult-line-from-isearch)
+
   :hook (after-init . (lambda () (global-ace-isearch-mode +1))))
 
-
-(use-package ace-jump-mode)
+(use-package avy)
 
 
 ;; WINDOWS AND FRAMES
