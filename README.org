@@ -18,3 +18,12 @@ Use ~:straight nil~ to avoid pulling the source:
     :straight nil
     …)
 #+end_src
+
+* Packages to check out
+
+- [[https://github.com/Wilfred/emacs-refactor][emr]] (Emacs Refactor)
+    - A framework for providing language-specific refactoring
+- [[https://github.com/emacsmirror/password-store][password-store]]
+    - Allows ~pass~ integration for managing credentials
+- [[https://github.com/m00natic/vlfi][vlf]]
+    - View large files
