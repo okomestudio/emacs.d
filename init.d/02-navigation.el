@@ -12,13 +12,11 @@
   :bind (;
          :map isearch-mode-map
          ("C-'" . 'ace-isearch-jump-during-isearch))
-
   :custom
   (ace-isearch-input-length 6)
   (ace-isearch-jump-delay 0.3)
   (ace-isearch-function 'avy-goto-char)
   (ace-isearch-function-from-isearch #'ace-isearch-consult-line-from-isearch)
-
   :hook (after-init . (lambda () (global-ace-isearch-mode +1))))
 
 (use-package avy)
@@ -27,24 +25,17 @@
 ;; WINDOWS AND FRAMES
 
 (use-package ace-window
-  :bind
-  ("M-O" . 'ace-window)
-
+  :bind ("M-O" . 'ace-window)
   :custom (aw-dispatch-always t))
 
-
 (use-package frame-cmds
-  :bind
-  ("M-o" . 'other-window-or-frame))
-
+  :bind ("M-o" . 'other-window-or-frame))
 
 (use-package winner
   ;; Undo or redo a change in window configuration.
   :straight nil
-  :bind
-  ("C-c <right>" . winner-redo)
-  ("C-c <left>". winner-undo)
-
+  :bind (("C-c <right>" . winner-redo)
+         ("C-c <left>". winner-undo))
   :hook
   (after-init . (lambda () (winner-mode 1))))
 
@@ -60,7 +51,6 @@
                                  ((control meta) . global-text-scale)
                                  ((control) . text-scale))))
 
-
 (use-package pixel-scroll
   :straight nil
   :hook (after-init . (lambda () (pixel-scroll-precision-mode +1)))
@@ -73,7 +63,6 @@
   (pixel-scroll-precision-interpolation-total-time 0.1)
   (pixel-scroll-precision-interpolation-between-scroll 0.001))
 
-
 (use-package yascroll
   :hook (after-init . (lambda () (global-yascroll-bar-mode 1))))
 
@@ -85,7 +74,6 @@
   :bind ("C-x r F" . recentf)
   :custom (recentf-mode t)
   :config (push "/\\.config/emacs/var/" recentf-exclude))
-
 
 (use-package save-place
   :straight nil
