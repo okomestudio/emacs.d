@@ -76,7 +76,7 @@
            text-mode) . corfu-mode))
   :custom
   (corfu-auto t)
-  (corfu-auto-delay 0.2)
+  (corfu-auto-delay 0.5)
   (corfu-auto-prefix 1)
   (corfu-cycle t)
   (corfu-on-exact-match nil)
