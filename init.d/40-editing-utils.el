@@ -5,12 +5,8 @@
 ;;
 ;;; Code:
 
-(use-package hippie-exp
-  ;; Expand the word before the point in various ways.
-  :straight nil
-  :bind
-  ([remap dabbrev-expand] . hippie-expand))
-
+(use-package expand-region
+  :bind ("C-=" . er/expand-region))
 
 (use-package mwim
   ;; Switch between the beginning/end of line or code line positioning.
@@ -97,5 +93,13 @@
 
   :preface
   (put 'ispell-dictionary 'safe-local-variable #'stringp))
+
+
+;;; MACRO AND EXPANSIONS
+
+(use-package hippie-exp
+  ;; Expand the word before the point in various ways.
+  :straight nil
+  :bind ([remap dabbrev-expand] . hippie-expand))
 
 ;;; 40-editing-utils.el ends here
