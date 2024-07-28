@@ -16,4 +16,19 @@
   :after magit
   :hook (magit-mode . (lambda () (magit-todos-mode 1))))
 
+(use-package blamer
+  ;; Git blame plugin.
+  :straight (:host github :repo "artawower/blamer.el")
+  :bind (("s-b" . blamer-show-posframe-commit-info))
+
+  :custom
+  (blamer-idle-time 0.3)
+  (blamer-min-offset 70)
+
+  :custom-face
+  (blamer-face ((t :foreground "#7a88cf"
+                   :background nil
+                   :height 100
+                   :italic t))))
+
 ;;; 68-git.el ends here
