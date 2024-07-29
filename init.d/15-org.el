@@ -10,6 +10,8 @@
          :map org-mode-map
          ("C-c C-l" . org-insert-link)
          ("C-c C-q" . org-set-tags-command)
+         ("C-c i h" . org-insert-heading)
+         ("C-c i l" . org-insert-item)
          ("C-c l" . org-store-link)
          ("M-g i" . consult-org-heading))
   :hook (org-mode . ok-org-mode-hook)
