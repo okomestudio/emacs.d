@@ -19,7 +19,7 @@
 
 (use-package rainbow-csv
   ;; Highlight CSV and TSV spreadsheet files in different rainbow colors.
-  :straight (indent-bars :type git :host github :repo "emacs-vs/rainbow-csv"))
+  :straight (rainbor-csv :type git :host github :repo "emacs-vs/rainbow-csv"))
 
 ;;; TOML
 
