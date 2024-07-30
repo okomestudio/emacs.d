@@ -10,8 +10,8 @@
          :map org-mode-map
          ("C-c C-l" . org-insert-link)
          ("C-c C-q" . org-set-tags-command)
-         ("C-c i h" . org-insert-heading)
-         ("C-c i l" . org-insert-item)
+         ("C-c i h" . org-insert-heading) ;; or use M-RET
+         ("C-c i l" . ok-org-insert-item)
          ("C-c l" . org-store-link)
          ("M-g i" . consult-org-heading))
   :hook (org-mode . ok-org-mode-hook)
@@ -44,6 +44,22 @@
     (turn-on-visual-line-mode))
 
   ;; HELPER FUNCTIONS
+  (defun ok-org-insert-item (begin end)
+    "See Section 14.44 at https://takaxp.github.io/init.html."
+    (interactive "r")
+    (unless mark-active
+      (setq begin (line-beginning-position))
+      (setq end (line-end-position)))
+    (let* ((bullet "  - ")
+           (len (string-width bullet)))
+      (goto-char begin)
+      (while (and (re-search-forward (concat "\\(^[ \t]*\\)") end t)
+                  (not (looking-at "[-\\+\\*][ \t]\\|[a-z0-9A-Z]*[\\.)][ \t]"))
+                  (not (equal (point) end)))
+        (replace-match (concat "\\1" bullet) nil nil)
+        (setq end (+ end len)))
+      (goto-char begin)))
+
   (defun org-ensure-all-headings-with-ids ()
     "Ensure all headings have IDs."
     (interactive)
