@@ -27,3 +27,11 @@ Use ~:straight nil~ to avoid pulling the source:
     - Allows ~pass~ integration for managing credentials
 - [[https://github.com/m00natic/vlfi][vlf]]
     - View large files
+
+* Reference init.el repositories
+
+My Emacs init.el has been inspired by numerous sources, some of which are listed here:
+
+  - The =reading-init-el= channel at emacs-jp.slack.com
+  - https://takaxp.github.io/init.html
+  - More to be added
