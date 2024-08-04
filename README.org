@@ -36,8 +36,9 @@ Most package initialization files are in the ~init.d~ directory. The ~init-loade
 
 * Reference init.el repositories
 
-My Emacs init.el has been inspired by numerous sources, some of which are listed here:
+My Emacs init.el has been inspired by numerous sources, some of which are listed here in no particular order:
 
   - The =reading-init-el= channel at emacs-jp.slack.com
+  - https://protesilaos.com/emacs/dotemacs
   - https://takaxp.github.io/init.html
   - More to be added
