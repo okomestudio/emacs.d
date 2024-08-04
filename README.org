@@ -9,7 +9,7 @@ Place this directory so that Emacs can find the ~init.el~ file. The auxiliary sc
 
 The ~init.el~ is organized using ~use-package~ with ~straight~.
 
-*** Initializing built-in package
+*** Initializing a built-in package
 
 Use ~:straight nil~ to avoid pulling the source:
 
@@ -19,12 +19,18 @@ Use ~:straight nil~ to avoid pulling the source:
     …)
 #+end_src
 
+** Use of ~init-loader~
+
+Most package initialization files are in the ~init.d~ directory. The ~init-loader~ packer allows the better management of package loading order by file name.
+
 * Packages to check out
 
 - [[https://github.com/Wilfred/emacs-refactor][emr]] (Emacs Refactor)
     - A framework for providing language-specific refactoring
 - [[https://github.com/emacsmirror/password-store][password-store]]
     - Allows ~pass~ integration for managing credentials
+- [[https://github.com/a13/reverse-im.el][reverse-im.el]]
+    - Overrides ~function-key-map~ for preferred input method(s) to translate input sequences to English, so we can use emacs binding while a non-default system layout is active
 - [[https://github.com/m00natic/vlfi][vlf]]
     - View large files
 
