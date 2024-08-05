@@ -114,7 +114,7 @@
   ;; Ensure environment variables look the same in the user's shell.
   ;;
   :if (or (memq window-system '(mac ns x)) (daemonp))
-  :config (exec-path-from-shell-initialize))
+  :init (exec-path-from-shell-initialize))
 
 
 (use-package keychain-environment
