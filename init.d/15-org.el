@@ -400,6 +400,8 @@ node."
 ;; MISC.
 
 (use-package org-contrib)
+
+(use-package org-cliplink)
 (use-package org-side-tree :disabled)
 (use-package org-web-tools :disabled)
 
