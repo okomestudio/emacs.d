@@ -3,6 +3,10 @@
 ;;
 ;; Configure Emacs themes. Visuals, colors, etc.
 ;;
+;; See:
+;;
+;;   - https://emacsthemes.com/
+;;
 ;;; Code:
 
 (defvar ok-themes-default-theme 'flexoki-themes-light
