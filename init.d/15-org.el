@@ -12,6 +12,7 @@
          ("C-c C-q" . org-set-tags-command)
          ("C-c i h" . org-insert-heading) ;; or use M-RET
          ("C-c i l" . ok-org-insert-item)
+         ("C-c i u" . org-cliplink)
          ("C-c l" . org-store-link)
          ("M-g i" . consult-org-heading))
   :hook (org-mode . ok-org-mode-hook)
