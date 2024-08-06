@@ -3,6 +3,8 @@
 ;;
 ;; Configure the RST mode and related utilities.
 ;;
+;; See https://docutils.sourceforge.io/docs/user/emacs.html
+;;
 ;;; Code:
 
 (with-eval-after-load 'lsp-mode
