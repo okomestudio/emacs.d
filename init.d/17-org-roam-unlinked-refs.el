@@ -59,6 +59,12 @@ used to control rendering."
          (end-of-line)
          (point)))))
 
+  (defun ok-org-roam-unlinked-references-file-glob-args ()
+    "Construct file glob arguments for ripgrep."
+    (mapconcat (lambda (glob) (concat "-g " glob))
+               (org-roam--list-files-search-globs org-roam-file-extensions)
+               " "))
+
   (defun ok-org-roam-unlinked-references-title-regex (titles)
     "Construct a ripgrep regex pattern from TITLES.
 The output expression should be sanitized for the shell use."
@@ -66,18 +72,13 @@ The output expression should be sanitized for the shell use."
             (mapconcat 'ok-org-roam-unlinked-references-apply-word-boundary-re titles "")))
 
   (defun ok-org-roam-unlinked-references-apply-word-boundary-re (title)
-    "Wrap TITLE with word boundary regex.
-The output expression should be sanitized for the shell use."
+    "Wrap TITLE with word boundary regex."
     (format ok-org-roam-unlinked-references-word-boundary-re
-            (mapconcat #'shell-quote-argument
-                       (split-string title "'")
-                       "'\"'\"'")))
+            (ok-org-roam-unlinked-references-sanitize-title title)))
 
-  (defun ok-org-roam-unlinked-references-file-glob-args ()
-    "Construct file glob arguments for ripgrep."
-    (mapconcat (lambda (glob) (concat "-g " glob))
-               (org-roam--list-files-search-globs org-roam-file-extensions)
-               " "))
+  (defun ok-org-roam-unlinked-references-sanitize-title (title)
+    "Sanitize TITLE for shell use."
+    (mapconcat #'shell-quote-argument (split-string title "'") "'\"'\"'"))
 
   (defun ok-org-roam-unlinked-references-section (node)
     "The unlinked references section for NODE.
@@ -209,31 +210,27 @@ References from FILE are excluded."
 
            ;; The list of substrings for negative matching:
            (lines-to-ignore '("begin_src +"
-                              "filetags:( [-_0-9A-Za-z]+)* "
-                              "header-args:"
+                              "filetags: "
+                              "header-args: "
                               "PYTHONDONTWRITEBYTECODE=1 "
-                              "transclude:")))
+                              "transclude: ")))
        (format "'\\[\\[id:[0-9a-f-]+\\]\\[[^][]*(%s)[^][]*\\]\\]|%s(%s)'"
                bounded-re
                (format nlb (string-join lines-to-ignore "|"))
                bounded-re))))
 
-  ;; TITLE TRANSFORMATION AND SANITIZATION
+  ;; TITLE SANITIZATION
   (advice-add
    'ok-org-roam-unlinked-references-apply-word-boundary-re
-   :override
-   (lambda (title)
+   :around
+   (lambda (orig-func title)
      (let* (;; Expand quote variants:
             (s (replace-regexp-in-string " ['\‘]\\(\\w\\)" " ['\‘]\\1" title))
             (s (replace-regexp-in-string "\\(\\w\\)['\’]" "\\1['\’]" s))
             (s (replace-regexp-in-string " [\"\“]\\(\\w\\)" " [\"\“]\\1" s))
             (s (replace-regexp-in-string "\\(\\w\\)[\"\”]" "\\1[\"\”]" s))
 
-            ;; Apply the original sanitization:
-            (s (format ok-org-roam-unlinked-references-word-boundary-re
-                       (mapconcat #'shell-quote-argument
-                                  (split-string s "'")
-                                  "'\"'\"'")))
+            (s (funcall orig-func s))
 
             ;; Some special chars needs unescaping after `shell-quotes':
             (s (replace-regexp-in-string "[\\][[]\\([^][]+\\)[\\][]]" "[\\1]" s)))
