@@ -211,8 +211,9 @@ References from FILE are excluded."
            (lines-to-ignore '("begin_src +"
                               "filetags:( [-_0-9A-Za-z]+)* "
                               "header-args:"
-                              "PYTHONDONTWRITEBYTECODE=1 ")))
-       (format "\"\\[\\[id:[0-9a-f-]+\\]\\[[^][]*(%s)[^][]*\\]\\]|%s(%s)\""
+                              "PYTHONDONTWRITEBYTECODE=1 "
+                              "transclude:")))
+       (format "'\\[\\[id:[0-9a-f-]+\\]\\[[^][]*(%s)[^][]*\\]\\]|%s(%s)'"
                bounded-re
                (format nlb (string-join lines-to-ignore "|"))
                bounded-re))))
@@ -222,21 +223,17 @@ References from FILE are excluded."
    'ok-org-roam-unlinked-references-apply-word-boundary-re
    :override
    (lambda (title)
-     (let* ((s title)
-
-            ;; Expand quote variants:
-            (s (replace-regexp-in-string " [\'\‘]\\(\\w\\)" " [\'\‘]\\1" s))
-            (s (replace-regexp-in-string "\\(\\w\\)[\'\’]" "\\1[\'\’]" s))
+     (let* (;; Expand quote variants:
+            (s (replace-regexp-in-string " ['\‘]\\(\\w\\)" " ['\‘]\\1" title))
+            (s (replace-regexp-in-string "\\(\\w\\)['\’]" "\\1['\’]" s))
             (s (replace-regexp-in-string " [\"\“]\\(\\w\\)" " [\"\“]\\1" s))
             (s (replace-regexp-in-string "\\(\\w\\)[\"\”]" "\\1[\"\”]" s))
 
             ;; Apply the original sanitization:
             (s (format ok-org-roam-unlinked-references-word-boundary-re
-                       (shell-quote-argument s)))
-            ;; (s (format ok-org-roam-unlinked-references-word-boundary-re
-            ;;            (mapconcat #'shell-quote-argument
-            ;;                       (split-string s "'")
-            ;;                       "'\"'\"'")))
+                       (mapconcat #'shell-quote-argument
+                                  (split-string s "'")
+                                  "'\"'\"'")))
 
             ;; Some special chars needs unescaping after `shell-quotes':
             (s (replace-regexp-in-string "[\\][[]\\([^][]+\\)[\\][]]" "[\\1]" s)))
