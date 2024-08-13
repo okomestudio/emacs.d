@@ -53,7 +53,11 @@
   ;;          (mapconcat #'identity '("foo" "bar") "\\|")
   ;;          "\\)\\.el\\'"))
 
-  ;; NOTE: regexp is case-insensitive
+  ;; NOTE: The regexp below is
+  ;;
+  ;;   - case-insensitive
+  ;;   - to skip loading the file with its name ending with `-X.el'
+  ;;
   (init-loader-default-regexp
    "\\`\\(?:[[:digit:]]\\{2\\}-\\)\\([a-z-]*\\(-[a-wyz-]\\|[a-z][a-z-]\\)\\).el\\'")
 
