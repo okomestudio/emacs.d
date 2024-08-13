@@ -35,7 +35,8 @@
   (org-roam-extract-new-file-path "topic/${id}/${slug}.org")
   (org-roam-mode-sections (list #'org-roam-backlinks-section
                                 #'org-roam-reflinks-section
-                                #'org-roam-unlinked-references-section))
+                                ;; #'org-roam-unlinked-references-section
+                                #'org-roam-plugin-ja-unlinked-references-section))
   (org-roam-node-display-template (concat "​​​​​${my-node-entry:*}"
                                           ;; (propertize "${my-node-tags:16}" 'face 'org-tag)
                                           (propertize "${tags:16}" 'face 'org-tag)
@@ -162,6 +163,11 @@
     (cl-defmethod org-roam-node-slug ((node org-roam-node))
       "Return the slug of NODE. Overridden to use hyphens instead of underscores."
       (string-to-org-slug (org-roam-node-title node)))))
+
+
+(use-package org-roam-plugin-ja
+  :straight (:host github :repo "okomestudio/org-roam-plugin-ja")
+  :demand t)
 
 
 (use-package org-roam-ui
