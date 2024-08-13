@@ -54,6 +54,10 @@
   :config
   (require 'ok-org-roam)
 
+  (use-package org-roam-plugin-ja
+    :straight (:host github :repo "okomestudio/org-roam-plugin-ja")
+    :demand t)
+
   (setq find-file-visit-truename t) ;; See 5.3 Setting up Org-roam
 
   (defun ok-org-roam-tag-add (&optional r)
@@ -163,11 +167,6 @@
     (cl-defmethod org-roam-node-slug ((node org-roam-node))
       "Return the slug of NODE. Overridden to use hyphens instead of underscores."
       (string-to-org-slug (org-roam-node-title node)))))
-
-
-(use-package org-roam-plugin-ja
-  :straight (:host github :repo "okomestudio/org-roam-plugin-ja")
-  :demand t)
 
 
 (use-package org-roam-ui
