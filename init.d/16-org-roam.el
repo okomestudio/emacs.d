@@ -58,7 +58,7 @@
     :straight (:host github :repo "okomestudio/org-roam-plugin-ja")
     :demand t)
 
-  (setq find-file-visit-truename t) ;; See 5.3 Setting up Org-roam
+  (setopt find-file-visit-truename t) ;; See 5.3 Setting up Org-roam
 
   (defun ok-org-roam-tag-add (&optional r)
     "Enable adding FILETAGS to `org-set-tags-command'."
