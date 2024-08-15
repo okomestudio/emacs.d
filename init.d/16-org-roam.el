@@ -6,8 +6,10 @@
 ;;; Code:
 
 (use-package org-roam
-  ;; :straight (:host github :repo "okomestudio/org-roam" :branch "okome" :fork "okomestudio")
-  :straight (:host github :repo "org-roam/org-roam" :files (:defaults "extensions/*"))
+  ;; :straight (:host github :repo "org-roam/org-roam" :files (:defaults "extensions/*"))
+  :straight (:host github :repo "okomestudio/org-roam" :fork "okomestudio"
+                   :branch "refactor-org-roam-unlinked-references-section"
+                   :files (:defaults "extensions/*"))
   :bind
   (("C-c n c" . (lambda () (interactive) (org-capture nil "f")))
    ("C-c n f" . org-roam-node-find)
@@ -35,8 +37,9 @@
   (org-roam-extract-new-file-path "topic/${id}/${slug}.org")
   (org-roam-mode-sections (list #'org-roam-backlinks-section
                                 #'org-roam-reflinks-section
-                                ;; #'org-roam-unlinked-references-section
-                                #'org-roam-plugin-ja-unlinked-references-section))
+                                #'org-roam-unlinked-references-section
+                                ;; #'org-roam-plugin-ja-unlinked-references-section
+                                ))
   (org-roam-node-display-template (concat "​​​​​${my-node-entry:*}"
                                           ;; (propertize "${my-node-tags:16}" 'face 'org-tag)
                                           (propertize "${tags:16}" 'face 'org-tag)

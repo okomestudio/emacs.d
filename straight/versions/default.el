@@ -141,7 +141,7 @@
  ("org-modern" . "bf2cec740dcf41fe8b4cc1ecc537c4fc4c7e9403")
  ("org-modern-indent" . "f2b859bc53107b2a1027b76dbf4aaebf14c03433")
  ("org-ref" . "7ab51359954648c20753f66039a33d3b4993eeed")
- ("org-roam" . "0b9fcbc97b65b349826e63bad89ca121a08fd2be")
+ ("org-roam" . "88246c0506e3a663482d783cca72d85f1d9f9776")
  ("org-roam-bibtex" . "d9b8a57cfca832e3e7c7f414bf93060acbf63573")
  ("org-roam-timestamps" . "c4ff1e2f5b0905b5caa917249aab56ddc1de1ab3")
  ("org-roam-ui" . "5ac74960231db0bf7783c2ba7a19a60f582e91ab")
