@@ -75,15 +75,14 @@ When called with the `\\[universal-argument]'
 `\\[universal-argument]' `\\[universal-argument]' prefix
 argument, the tag removal action gets triggered."
     (interactive "P")
-    (if (equal '(64) arg)
-        ;; Tag removal
-        (if (org-before-first-heading-p)
-            (call-interactively #'org-roam-tag-remove)
-          (call-interactively #'org-set-tags-command))
-      ;; Tag addition
-      (if (org-before-first-heading-p)
-          (call-interactively #'org-roam-tag-add)
-        (call-interactively #'org-set-tags-command))))
+    (call-interactively
+     (if (not (org-before-first-heading-p))
+         ;; For non-filetags tags, use `org-set-tags-command' for both
+         ;; addition and removal:
+         #'org-set-tags-command
+       (pcase arg
+         ('(64) #'org-roam-tag-remove)
+         (_ #'org-roam-tag-add)))))
 
   (defun ok-org-roam-alias-add-or-remove (&optional arg)
     "Add an Org Roam alias.
