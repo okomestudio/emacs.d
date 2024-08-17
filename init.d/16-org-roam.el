@@ -6,23 +6,28 @@
 ;;; Code:
 
 (use-package org-roam
-  ;; :straight (:host github :repo "org-roam/org-roam" :files (:defaults "extensions/*"))
-  :straight (:host github :repo "okomestudio/org-roam" :fork "okomestudio"
-                   :branch "refactor-org-roam-unlinked-references-section"
-                   :files (:defaults "extensions/*"))
-  :bind
-  (("C-c n c" . (lambda () (interactive) (org-capture nil "f")))
-   ("C-c n f" . org-roam-node-find)
-   ("C-c n i" . org-roam-node-insert)
-   ("C-c n l" . org-roam-buffer-toggle)
+  :straight (;; Pull from GitHub:
+             :host github
 
-   :map org-mode-map
-   ("C-c C-q" . ok-org-roam-tag-add)
-   ("C-c a" . org-roam-alias-add)
-   ("C-M-i" . completion-at-point))
+             ;; Use the official version:
+             ;; :repo "org-roam/org-roam"
 
-  :bind-keymap
-  ("C-c n d" . org-roam-dailies-map)
+             ;; Use the fork for development:
+             :repo "okomestudio/org-roam"
+             :fork "okomestudio"
+             :branch "refactor-org-roam-unlinked-references-section"
+
+             :files (:defaults "extensions/*"))
+  :bind (("C-c n c" . (lambda () (interactive) (org-capture nil "f")))
+         ("C-c n f" . org-roam-node-find)
+         ("C-c n i" . org-roam-node-insert)
+         ("C-c n l" . org-roam-buffer-toggle)
+
+         :map org-mode-map
+         ("C-c C-q" . ok-org-roam-tag-add-or-remove)
+         ("C-c a" . org-roam-alias-add)
+         ("C-M-i" . completion-at-point))
+  :bind-keymap ("C-c n d" . org-roam-dailies-map)
 
   :custom
   (org-roam-completion-everywhere nil)
@@ -63,12 +68,22 @@
 
   (setopt find-file-visit-truename t) ;; See 5.3 Setting up Org-roam
 
-  (defun ok-org-roam-tag-add (&optional r)
-    "Enable adding FILETAGS to `org-set-tags-command'."
-    (interactive)
-    (if (org-before-first-heading-p)
-        (call-interactively 'org-roam-tag-add)
-      (call-interactively 'org-set-tags-command)))
+  (defun ok-org-roam-tag-add-or-remove (&optional arg)
+    "Add an Org filetags or heading tag.
+
+When called with the `\\[universal-argument]'
+`\\[universal-argument]' `\\[universal-argument]' prefix
+argument, the tag removal action gets triggered."
+    (interactive "P")
+    (if (equal '(64) arg)
+        ;; Tag removal
+        (if (org-before-first-heading-p)
+            (call-interactively #'org-roam-tag-remove)
+          (call-interactively #'org-set-tags-command))
+      ;; Tag addition
+      (if (org-before-first-heading-p)
+          (call-interactively #'org-roam-tag-add)
+        (call-interactively #'org-set-tags-command))))
 
   (require 'org-roam-dailies)
   (org-roam-db-autosync-mode)
