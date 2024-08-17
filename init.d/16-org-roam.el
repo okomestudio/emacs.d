@@ -18,14 +18,14 @@
              :branch "refactor-org-roam-unlinked-references-section"
 
              :files (:defaults "extensions/*"))
+
   :bind (("C-c n c" . (lambda () (interactive) (org-capture nil "f")))
          ("C-c n f" . org-roam-node-find)
          ("C-c n i" . org-roam-node-insert)
          ("C-c n l" . org-roam-buffer-toggle)
-
          :map org-mode-map
          ("C-c C-q" . ok-org-roam-tag-add-or-remove)
-         ("C-c a" . org-roam-alias-add)
+         ("C-c a" . ok-org-roam-alias-add-or-remove)
          ("C-M-i" . completion-at-point))
   :bind-keymap ("C-c n d" . org-roam-dailies-map)
 
@@ -84,6 +84,16 @@ argument, the tag removal action gets triggered."
       (if (org-before-first-heading-p)
           (call-interactively #'org-roam-tag-add)
         (call-interactively #'org-set-tags-command))))
+
+  (defun ok-org-roam-alias-add-or-remove (&optional arg)
+    "Add an Org Roam alias.
+
+When called with the `\\[universal-argument]' prefix argument,
+the alias removal action gets triggered."
+    (interactive "P")
+    (call-interactively (pcase arg
+                          ('(4) #'org-roam-alias-remove)
+                          (_ #'org-roam-alias-add))))
 
   (require 'org-roam-dailies)
   (org-roam-db-autosync-mode)
