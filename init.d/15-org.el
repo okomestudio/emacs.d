@@ -21,6 +21,7 @@
   (org-blank-before-new-entry '((heading . nil) (plain-list-item . nil)))
   (org-ellipsis "⮷")
   (org-file-apps '(("\\.mp4\\'" . "vlc --repeat %s")))
+  (org-footnote-section nil)
   (org-hide-emphasis-markers t)
   (org-image-actual-width nil)
   (org-imenu-depth 6)
