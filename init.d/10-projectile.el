@@ -32,14 +32,14 @@
   (fdfind . "sudo apt install -y fd-find")
 
   :preface
-  (put 'projectile-project-compilation-cmd 'safe-local-variable #'stringp)
-  (put 'projectile-project-compilation-dir 'safe-local-variable #'stringp)
-  (put 'projectile-project-configure-cmd 'safe-local-variable #'stringp)
-  (put 'projectile-project-install-cmd 'safe-local-variable #'stringp)
-  (put 'projectile-project-package-cmd 'safe-local-variable #'stringp)
-  (put 'projectile-project-root 'safe-local-variable #'stringp)
-  (put 'projectile-project-run-cmd 'safe-local-variable #'stringp)
-  (put 'projectile-project-test-cmd 'safe-local-variable #'stringp)
+  (ok-safe-local-variable-add projectile-project-compilation-cmd stringp
+                              projectile-project-compilation-dir stringp
+                              projectile-project-configure-cmd stringp
+                              projectile-project-install-cmd stringp
+                              projectile-project-package-cmd stringp
+                              projectile-project-root stringp
+                              projectile-project-run-cmd stringp
+                              projectile-project-test-cmd stringp)
 
   :config
   (projectile-mode +1)

@@ -131,7 +131,7 @@
  ("nongnu-elpa" . "f031337c6ee125455a98e2de899a563388e5de19")
  ("nov.el" . "9b7bef950d68c2518710c480729d6bb6026e9489")
  ("ob-typescript" . "5fe1762f8d8692dd5b6f1697bedbbf4cae9ef036")
- ("ok.el" . "c0ed6780eb74189c7252b61e805f7cb04f807479")
+ ("ok.el" . "b498641249e7cb50fb1eba94f4d24da81cad44e4")
  ("olivetti" . "800a286862fd7aff2a91726e84606386e295106c")
  ("openwith" . "1dc89670822966fab6e656f6519fdd7f01e8301a")
  ("orderless" . "178b0c55f2cb49f27cd972f731ea45e5d3aea262")

@@ -20,10 +20,10 @@
   (sql-product 'ansi)
 
   :preface
-  (put 'sql-connection-alist 'safe-local-variable #'listp)
-  (put 'sql-postgres-login-params 'safe-local-variable #'listp)
-  (put 'sql-postgres-options 'safe-local-variable #'listp)
-  (put 'sql-postgres-program 'safe-local-variable #'stringp)
+  (ok-safe-local-variable-add sql-connection-alist listp
+                              sql-postgres-login-params listp
+                              sql-postgres-options listp
+                              sql-postgres-program stringp)
 
   :config
   (defun sql-format-code (beg end)

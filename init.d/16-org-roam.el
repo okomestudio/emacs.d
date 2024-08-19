@@ -51,13 +51,13 @@
                                           " ${my-node-timestamp:*}"))
 
   :preface
-  (put 'orb-preformat-keywords 'safe-local-variable #'listp)
-  (put 'org-roam-capture-templates 'safe-local-variable #'listp)
-  (put 'org-roam-dailies-capture-templates 'safe-local-variable #'listp)
-  (put 'org-roam-db-location 'safe-local-variable #'stringp)
-  (put 'org-roam-directory 'safe-local-variable #'stringp)
-  (put 'org-roam-mode-sections 'safe-local-variable #'listp)
-  (put 'org-roam-ui-port 'safe-local-variable #'integerp)
+  (ok-safe-local-variable-add orb-preformat-keywords listp
+                              org-roam-capture-templates listp
+                              org-roam-dailies-capture-templates listp
+                              org-roam-db-location stringp
+                              org-roam-directory stringp
+                              org-roam-mode-sections listp
+                              org-roam-ui-port integerp)
 
   :config
   (require 'ok-org-roam)
