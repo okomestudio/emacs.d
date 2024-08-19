@@ -1,7 +1,7 @@
 ;;; 16-org-roam.el --- org-roam  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;
-;; Configure Org Roam and related utilities.
+;; Initialize and configure Org Roam and the related utilities.
 ;;
 ;;; Code:
 
@@ -26,6 +26,7 @@
          :map org-mode-map
          ("C-c C-q" . ok-org-roam-tag-add-or-remove)
          ("C-c a" . ok-org-roam-alias-add-or-remove)
+         ("C-c r f" . ok-org-roam-ref-find)
          ("C-M-i" . completion-at-point))
   :bind-keymap ("C-c n d" . org-roam-dailies-map)
 
@@ -93,6 +94,22 @@ the alias removal action gets triggered."
     (call-interactively (pcase arg
                           ('(4) #'org-roam-alias-remove)
                           (_ #'org-roam-alias-add))))
+
+  (defun ok-org-roam-ref-find (&optional arg)
+    "Call the enhanced version of `org-roam-ref-find'.
+
+If the point is on a link and it is a cite link, then
+`org-roam-ref-find' is given the citekey as the initial string.
+Otherwise, it is the same as the vanilla version of
+`org-roam-ref-find'."
+    (interactive)
+    (let* ((link (org-element-lineage (org-element-context) '(link) t))
+           (type (org-element-property :type link))
+           (path (org-element-property :path link))
+           (ref (if (string= type "cite")
+                    (string-trim-left path "&")
+                  "")))
+      (org-roam-ref-find ref)))
 
   (require 'org-roam-dailies)
   (org-roam-db-autosync-mode)

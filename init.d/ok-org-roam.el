@@ -1,7 +1,8 @@
 ;;; ok-org-roam.el --- ok-org-roam  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;
-;; Okome Studio org-roam extensions.
+;; Okome Studio org-roam extensions. These utility functions are
+;; hosted here temporarily, until a more permanent location is found.
 ;;
 ;;; Code:
 

@@ -46,6 +46,17 @@
     (turn-on-visual-line-mode))
 
   ;; HELPER FUNCTIONS
+  (defun ok-org-link-get (&optional arg)
+    "Extract URL from org-mode link and add it to kill ring.
+
+See https://emacs.stackexchange.com/a/60555/599."
+    (interactive "P")
+    (let* ((link (org-element-lineage (org-element-context) '(link) t))
+           (type (org-element-property :type link))
+           (url (org-element-property :path link))
+           (url (concat type ":" url)))
+      (kill-new url)))
+
   (defun ok-org-insert-item (begin end)
     "See Section 14.44 at https://takaxp.github.io/init.html."
     (interactive "r")
