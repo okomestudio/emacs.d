@@ -61,10 +61,8 @@
                               org-roam-ui-port integerp)
 
   :config
-  (require 'ok-org-roam)
-
-  (use-package org-roam-plugin-ja
-    :straight (:host github :repo "okomestudio/org-roam-plugin-ja")
+  (use-package org-roam-plugin-ok
+    :straight (:host github :repo "okomestudio/org-roam-plugin-ok")
     :demand t)
 
   (setopt find-file-visit-truename t) ;; See 5.3 Setting up Org-roam
@@ -210,7 +208,7 @@ Otherwise, it is the same as the vanilla version of
 
     (cl-defmethod org-roam-node-slug ((node org-roam-node))
       "Return the slug of NODE. Overridden to use hyphens instead of underscores."
-      (string-to-org-slug (org-roam-node-title node)))))
+      (orp-string-to-org-slug (org-roam-node-title node)))))
 
 
 (use-package org-roam-ui
