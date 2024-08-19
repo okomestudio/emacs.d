@@ -1,7 +1,7 @@
 ;;; init.el --- Emacs startup configuration  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;
-;; Main init.el.
+;; This runs after `early-init.el'.
 ;;
 ;;; Code:
 
@@ -24,7 +24,8 @@
 
 (add-hook 'after-init-hook
           (lambda ()
-            (message "Emacs (pid:%d) started in %s" (emacs-pid) (emacs-init-time)))
+            (message "Emacs (pid:%d) started in %s"
+                     (emacs-pid) (emacs-init-time)))
           100)
 
 ;; custom.el
@@ -32,16 +33,16 @@
 (load custom-file 'noerror 'nomessage)
 
 ;; Configure use-package, init-straight.el or init-package.el:
-(load (expand-file-name "init.d/init-straight.el" user-emacs-directory))
+(load (locate-user-emacs-file "init.d/init-straight.el"))
 
 (use-package no-littering
   ;; Want to run this as early as possible.
   :demand t
   :custom
-  (no-littering-etc-directory (expand-file-name (convert-standard-filename "etc/")
-                                                user-emacs-directory))
-  (no-littering-var-directory (expand-file-name (convert-standard-filename "var/")
-                                                user-emacs-directory)))
+  (no-littering-etc-directory (locate-user-emacs-file
+                               (convert-standard-filename "etc/")))
+  (no-littering-var-directory (locate-user-emacs-file
+                               (convert-standard-filename "var/"))))
 
 ;; Load more config files from init.d
 (use-package init-loader
@@ -59,11 +60,12 @@
   ;;   - to skip loading the file with its name ending with `-X.el'
   ;;
   (init-loader-default-regexp
-   "\\`\\(?:[[:digit:]]\\{2\\}-\\)\\([a-z-]*\\(-[a-wyz-]\\|[a-z][a-z-]\\)\\).el\\'")
+   (concat "\\`\\(?:[[:digit:]]\\{2\\}-\\)"
+           "\\([a-z-]*\\(-[a-wyz-]\\|[a-z][a-z-]\\)\\).el\\'"))
 
   (init-loader-show-log-after-init ok-debug)
 
   :config
-  (init-loader-load (expand-file-name "init.d" user-emacs-directory)))
+  (init-loader-load (locate-user-emacs-file "init.d")))
 
 ;;; init.el ends here
