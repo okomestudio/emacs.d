@@ -145,16 +145,6 @@ Otherwise, it is the same as the vanilla version of
   (org-roam-timestamps-remember-timestamps t)
   (org-roam-timestamps-timestamp-parent-file nil))
 
-
-(use-package adaptive-wrap
-  :hook
-  (org-roam-mode . (lambda ()
-                     (turn-on-visual-line-mode)
-                     ;; Format org-roam buffer so that unlinked reference list
-                     ;; are easier to see.
-                     (setq-local adaptive-wrap-extra-indent 4)
-                     (adaptive-wrap-prefix-mode +1))))
-
 ;; Local Variables:
 ;; nameless-aliases: (("" . "ok-org-roam"))
 ;; End:
