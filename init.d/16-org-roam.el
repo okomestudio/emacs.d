@@ -10,12 +10,12 @@
              :host github
 
              ;; Use the official version:
-             ;; :repo "org-roam/org-roam"
+             :repo "org-roam/org-roam"
 
              ;; Use the fork for development:
-             :repo "okomestudio/org-roam"
-             :fork "okomestudio"
-             :branch "refactor-org-roam-unlinked-references-section"
+             ;; :repo "okomestudio/org-roam"
+             ;; :fork "okomestudio"
+             ;; :branch "refactor-org-roam-unlinked-references-section"
 
              :files (:defaults "extensions/*"))
 
@@ -43,13 +43,13 @@
   (org-roam-extract-new-file-path "topic/${id}/${slug}.org")
   (org-roam-mode-sections (list #'org-roam-backlinks-section
                                 #'org-roam-reflinks-section
-                                #'org-roam-unlinked-references-section
-                                ;; #'org-roam-plugin-ja-unlinked-references-section
+                                ;; #'org-roam-unlinked-references-section
+                                #'orp-ok-ja-unlinked-references-section
                                 ))
-  (org-roam-node-display-template (concat "​​​​​${my-node-entry:*}"
-                                          ;; (propertize "${my-node-tags:16}" 'face 'org-tag)
-                                          (propertize "${tags:16}" 'face 'org-tag)
-                                          " ${my-node-timestamp:*}"))
+  (org-roam-node-display-template (concat "​​​​​${orp-title:*} "
+                                          (propertize "${orp-tags}"
+                                                      'face 'org-tag)
+                                          " ${orp-timestamp:10}"))
 
   :preface
   (ok-safe-local-variable-add orb-preformat-keywords listp
@@ -110,105 +110,7 @@ Otherwise, it is the same as the vanilla version of
       (org-roam-ref-find ref)))
 
   (require 'org-roam-dailies)
-  (org-roam-db-autosync-mode)
-
-  ;; TITLE LISTING IN MINIBUFFER
-  (with-eval-after-load 'org-roam-node
-    (defvar ok-org-roam--file-node-cache '()
-      "Cache file nodes.")
-
-    (defun ok-org-roam--get-node-id-from-file (file)
-      (caar (org-roam-db-query `[:select nodes:id :from nodes
-                                         :where (and (= nodes:file ,file)
-                                                     (= nodes:level 0))])))
-
-    (defun ok-org-roam-file-node-cache-maybe-invalidate ()
-      (let ((file buffer-file-name))
-        (when (string= (file-name-extension file) "org")
-          (setf ok-org-roam--file-node-cache (assoc-delete-all file ok-org-roam--file-node-cache)))))
-
-    (add-hook 'after-save-hook #'ok-org-roam-file-node-cache-maybe-invalidate)
-
-    (defun ok-org-roam--get-node-from-file (file)
-      (let ((cached (assoc file ok-org-roam--file-node-cache)))
-        (if cached
-            (cdr (cdr cached))
-          (let ((node (org-roam-node-from-id (ok-org-roam--get-node-id-from-file file))))
-            (push `(,file . (,(float-time) . ,node)) ok-org-roam--file-node-cache)
-            node))))
-
-    (defun ok-org-roam-visit-parent-at-point (node)
-      "Visit parent of given NODE at point, if exists."
-      (interactive "P")
-      (let ((parent (cdr (assoc-string "PARENT"
-                                       (org-roam-node-properties
-                                        (if node
-                                            node
-                                          (org-roam-node-at-point)))))))
-        (if parent
-            (org-link-open-from-string parent)
-          (message "No parent found"))))
-
-    (defun ok-org-roam--get-parent-title (node)
-      (let ((parent (cdr (assoc-string "PARENT" (org-roam-node-properties node)))))
-        (when parent
-          ;; NOTE: This replacement may not be necessary, but some links are not
-          ;; rendered correctly in minibuffer without. For now, the slow down due
-          ;; to parsing is not significant.
-          (replace-regexp-in-string "\\[\\[\\(.+\\)\\]\\[\\([^]]+\\)\\]\\]"
-                                    "\\2"
-                                    parent))))
-
-    (defun ok-org-roam--get-title-aux (node)
-      (let* ((node-title (org-roam-node-title node))
-             (node-file-title (or (if (not (s-blank? (org-roam-node-file-title node)))
-                                      (org-roam-node-file-title node))
-                                  (file-name-nondirectory (org-roam-node-file node)))))
-        (if (string= node-title node-file-title)
-            (let ((p (ok-org-roam--get-parent-title node)))
-              (if p (list " ❬ " p)))
-          (if (member node-title (org-roam-node-aliases node))
-              (list " = " node-file-title)
-            (let ((p (ok-org-roam--get-parent-title (ok-org-roam--get-node-from-file (org-roam-node-file node)))))
-              (if p (list " ❬ " p) (list " ❬ " node-file-title)))))))
-
-    (defun ok-org-roam--render-title-aux (title-aux)
-      (if (not title-aux)
-          ""
-        (let ((sym (nth 0 title-aux))
-              (aux (nth 1 title-aux))
-              (face-sym `(;; symbol
-                          :foreground ,(face-attribute 'completions-annotations
-                                                       :foreground)))
-              (face-aux `(;; text
-                          :foreground ,(face-attribute 'completions-annotations
-                                                       :foreground)
-                          :slant italic)))
-          (concat (propertize sym 'face face-sym)
-                  (propertize aux 'face face-aux)))))
-
-    (cl-defmethod org-roam-node-my-node-entry ((node org-roam-node))
-      (concat (org-roam-node-title node) (ok-org-roam--render-title-aux (ok-org-roam--get-title-aux node))))
-
-    (cl-defmethod org-roam-node-my-node-tags ((node org-roam-node))
-      (let ((tags (org-roam-node-tags node)))
-        (when tags
-          (format ":%s:" (string-join tags ":")))))
-
-    (cl-defmethod org-roam-node-my-node-timestamp ((node org-roam-node))
-      (require 'marginalia)
-      (marginalia--time
-       (let ((node-mtime (cdr (assoc "MTIME" (org-roam-node-properties node))))
-             (inhibit-message t))
-         (if node-mtime
-             (progn
-               (require 'org-roam-timestamps)
-               (org-roam-timestamps-encode (car (split-string node-mtime))))
-           (org-roam-node-file-mtime node)))))
-
-    (cl-defmethod org-roam-node-slug ((node org-roam-node))
-      "Return the slug of NODE. Overridden to use hyphens instead of underscores."
-      (orp-string-to-org-slug (org-roam-node-title node)))))
+  (org-roam-db-autosync-mode))
 
 
 (use-package org-roam-ui
