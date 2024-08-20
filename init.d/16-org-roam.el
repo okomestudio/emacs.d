@@ -61,10 +61,6 @@
                               org-roam-ui-port integerp)
 
   :config
-  (use-package org-roam-plugin-ok
-    :straight (:host github :repo "okomestudio/org-roam-plugin-ok")
-    :demand t)
-
   (setopt find-file-visit-truename t) ;; See 5.3 Setting up Org-roam
 
   (defun ok-org-roam-tag-add-or-remove (&optional arg)
@@ -111,6 +107,12 @@ Otherwise, it is the same as the vanilla version of
 
   (require 'org-roam-dailies)
   (org-roam-db-autosync-mode))
+
+
+(use-package org-roam-plugin-ok
+  :straight (:host github :repo "okomestudio/org-roam-plugin-ok")
+  :after org-roam
+  :demand t)
 
 
 (use-package org-roam-ui
