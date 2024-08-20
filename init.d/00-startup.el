@@ -39,7 +39,7 @@
   (sentence-end-double-space nil) ;; in paragraphs.el
   (show-paren-context-when-offscreen t)
   (show-paren-delay 0)
-  (size-indication-mode t)
+  (size-indication-mode nil)
 
   ;; File related config
   (auto-save-default nil)
