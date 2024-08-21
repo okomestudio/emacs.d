@@ -410,6 +410,12 @@ node."
     (when (<= (buffer-size) ok-org--valign-max-buffer-size)
       (valign-mode 1))))
 
+;; THEME
+
+(use-package org-ok-theme
+  :straight (:host github :repo "okomestudio/org-ok-theme")
+  :demand t)
+
 ;; MISC.
 
 (use-package org-contrib)

@@ -5,6 +5,8 @@
 ;;
 ;;; Code:
 
+(require 'ok)
+
 (defvar ok-faces-font-family-fixed-pitch "Hack"
   "Font for the fixed pitch.
 This is also used as the default.")
@@ -31,56 +33,28 @@ This is also used as the default.")
       (add-hook 'server-after-make-frame-hook #'ok-faces--apply-if-gui)
     (ok-faces--apply-if-gui)))
 
-(defun ok-faces-text-scale-mode-height ()
-  "Get the default face height if `text-scale-mode' is active."
-  (when (bound-and-true-p text-scale-mode)
-    (car (cdr (assoc :height (cdr (assoc 'default face-remapping-alist)))))))
-
-(defun ok-faces--set-fontset-font-japanese (fontset font-family &optional frame)
-  "Modify FONTSET to use FONT-FAMILY for Japanese rendering."
-  (dolist (characters '(japanese-jisx0208
-                        japanese-jisx0208-1978
-                        japanese-jisx0212
-                        japanese-jisx0213-1
-                        japanese-jisx0213-2
-                        japanese-jisx0213-a
-                        japanese-jisx0213.2004-1
-                        jisx0201
-                        latin-jisx0201
-                        katakana-jisx0201
-                        katakana-sjis))
-    (set-fontset-font fontset characters (font-spec :family font-family) frame)))
-
-(defun ok-faces-font-exists-p (font)
-  "Return t if FONT exists, nil if not."
-  (if (find-font (font-spec :family font))
-      t
-    (message "WARNING: Font `%s' not found" font)))
-
-(defun ok-faces-create-fontset (fontset font-family font-family-ja &optional frame)
-  "Create FONTSET using FONT-FAMILY.
-If FONT-FAMILY-JA is non-nil, use it for Japanese characters."
-  (ok-faces-font-exists-p font-family)
-  (create-fontset-from-fontset-spec
-   (font-xlfd-name (font-spec :family font-family :registry fontset)))
-  (when (and font-family-ja
-             (ok-faces-font-exists-p font-family-ja))
-    (ok-faces--set-fontset-font-japanese fontset font-family-ja frame)))
-
 (defun ok-faces--setup-faces-for-frame (&optional frame)
   "Set up the faces for FRAME."
   ;; FONTSETS
   ;; Emacs comes with three fontsets: `fontset-startup',
   ;; `fontset-standard', and `fontset-default', the last of which is
   ;; the ultimate fallback.
-  (set-fontset-font "fontset-default" 'iso-8859-3
-                    (font-spec :family ok-faces-font-family-fixed-pitch) frame)
-  (ok-faces--set-fontset-font-japanese "fontset-default"
-                               ok-faces-font-family-fixed-pitch-ja frame)
-  (ok-faces-create-fontset "fontset-fixed pitch"
-                   ok-faces-font-family-fixed-pitch ok-faces-font-family-fixed-pitch-ja frame)
-  (ok-faces-create-fontset "fontset-variable pitch"
-                   ok-faces-font-family-variable-pitch ok-faces-font-family-variable-pitch-ja frame)
+  (set-fontset-font "fontset-default"
+                    'iso-8859-3
+                    (font-spec :family ok-faces-font-family-fixed-pitch)
+                    frame)
+  (ok-face-set-fontset-font "fontset-default"
+                            'ja
+                            ok-faces-font-family-fixed-pitch-ja
+                            frame)
+  (ok-face-fontset-create "fontset-fixed pitch"
+                          ok-faces-font-family-fixed-pitch
+                          :subsets `((ja ,ok-faces-font-family-fixed-pitch-ja))
+                          :frame frame)
+  (ok-face-fontset-create "fontset-variable pitch"
+                          ok-faces-font-family-variable-pitch
+                          :subset `((ja ,ok-faces-font-family-variable-pitch-ja))
+                          :frame frame)
 
   ;; STANDARD FACES
   (set-face-attribute 'default frame :height 120 :font "fontset-default" :fontset "fontset-default")
