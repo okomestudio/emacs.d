@@ -21,7 +21,7 @@
 
 (setopt debug-on-error ok-debug)
 (setq debug-on-message nil) ;; set regexp to trigger debugger
-(setopt byte-compile-warnings '(not obsolete)) ;; set t for development
+(setq byte-compile-warnings '(not obsolete)) ;; set t for development
 (setopt package-enable-at-startup nil)
 (setopt inhibit-default-init nil)
 

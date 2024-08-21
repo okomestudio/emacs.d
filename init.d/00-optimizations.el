@@ -6,7 +6,7 @@
   :straight nil
 
   :custom
-  (byte-compile-warnigns '(cl-functions))
+  (byte-compile-warnings '(cl-functions))
   (jit-lock-defer-time 0.05)
   (package-native-compile t)
 
