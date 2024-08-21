@@ -19,7 +19,7 @@
   (js-jsx-indent-level 2)
 
   :config
-  (setq js-indent-level 2)              ; Setting this in :custom
+  (setopt js-indent-level 2)            ; Setting this in :custom
                                         ; doens't get respected.
   )
 

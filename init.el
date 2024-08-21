@@ -29,7 +29,7 @@
           100)
 
 ;; custom.el
-(setq custom-file (locate-user-emacs-file "custom.el")) ;; or use `null-device'
+(setopt custom-file (locate-user-emacs-file "custom.el")) ;; or use `null-device'
 (load custom-file 'noerror 'nomessage)
 
 ;; Configure use-package, init-straight.el or init-package.el:

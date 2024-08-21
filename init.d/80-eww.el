@@ -14,7 +14,7 @@ See reddit.com/r/emacs/comments/1bcf8v3."
                               "https://old.reddit.com"
                               url))
 
-  (setq eww-url-transformers '(eww-remove-tracking eww-reddit-redirect))
+  (setopt eww-url-transformers '(eww-remove-tracking eww-reddit-redirect))
 
   (defun ok-eww--set-start-at (url-regexp search-regexp)
     "When site matches URL-REGEXP, start displaying from line matching SEARCH-REGEXP.

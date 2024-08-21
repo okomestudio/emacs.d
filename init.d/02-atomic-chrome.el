@@ -36,7 +36,7 @@
                   ("typescriptlang.org" . typescript-ts-mode)
                   ("w3schools.com" . js-ts-mode)
                   ("zettelkasten.de" . gfm-mode)))
-  (setq atomic-chrome-default-major-mode 'python-ts-mode)
+  (setopt atomic-chrome-default-major-mode 'python-ts-mode)
 
   (add-to-list 'atomic-chrome-create-file-strategy
                '("~/github.com/tmp/leetcode"

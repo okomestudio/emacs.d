@@ -143,7 +143,7 @@ node."
   ;; LATEX PREVIEW
   ;; (setq org-latex-inputenc-alist '(("utf8" . "utf8x")))
   ;; (add-to-list 'org-latex-packages-alist '("" "unicode-math"))
-  (setq org-preview-latex-default-process 'lualatexpdf)
+  (setopt org-preview-latex-default-process 'lualatexpdf)
   (add-to-list 'org-preview-latex-process-alist
                '(lualatexpdf
                  :programs ("lualatex" "dvisvgm")

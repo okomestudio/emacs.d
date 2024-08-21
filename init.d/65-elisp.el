@@ -82,7 +82,7 @@
          (scale (if (string= mode "dark") 1.04 0.96))
          (bg (face-attribute 'default :background))
          (bg-hl (ok-face-color-scale bg scale)))
-    (setq hl-sexp-background-color bg-hl)))
+    (setopt hl-sexp-background-color bg-hl)))
 
 
 ;; ELSA

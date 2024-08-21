@@ -21,9 +21,9 @@
 
   :hook
   (minibuffer-setup . (lambda ()
-                        (setq gc-cons-threshold most-positive-fixnum)))
+                        (setopt gc-cons-threshold most-positive-fixnum)))
   (minibuffer-exit . (lambda ()
-                       (setq gc-cons-threshold (* 32 1024 1024))))
+                       (setopt gc-cons-threshold (* 32 1024 1024))))
 
   :init
   ;; Suppress bidirectional parentheses algorithm for LTR only sessions:
