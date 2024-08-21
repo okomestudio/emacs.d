@@ -27,6 +27,8 @@ Most package initialization files are in the ~init.d~ directory. The ~init-loade
 
 - [[https://github.com/Wilfred/emacs-refactor][emr]] (Emacs Refactor)
     - A framework for providing language-specific refactoring
+- [[https://github.com/ahyatt/llm][llm]]
+    - A package abstracting llm capabilities
 - [[https://github.com/emacsmirror/password-store][password-store]]
     - Allows ~pass~ integration for managing credentials
 - [[https://github.com/a13/reverse-im.el][reverse-im.el]]
