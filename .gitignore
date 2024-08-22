@@ -17,6 +17,7 @@
 .lsp-session-*
 .mc-lists.el
 .org-id-locations
+chatgpt/
 custom.el
 elpa/
 eln-cache/
