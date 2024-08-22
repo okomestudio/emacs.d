@@ -1,0 +1,6 @@
+#!/usr/bin/env sh
+#
+# Org Babel pytest runner
+#
+
+PYTHONDONTWRITEBYTECODE=1 python -m pytest -s -v -p no:cacheprovider "$@"
