@@ -14,8 +14,6 @@
 ;;
 ;;; Code:
 
-;; TODO: Replace with chrome-emacs.
-
 (use-package atomic-chrome
   :straight (atomic-chrome
              :repo "KarimAziev/atomic-chrome"
