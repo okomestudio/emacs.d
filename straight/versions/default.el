@@ -144,7 +144,7 @@
  ("org-ref" . "7ab51359954648c20753f66039a33d3b4993eeed")
  ("org-roam" . "0b9fcbc97b65b349826e63bad89ca121a08fd2be")
  ("org-roam-bibtex" . "d9b8a57cfca832e3e7c7f414bf93060acbf63573")
- ("org-roam-plugin-ok" . "e8e5d93ed7e514cf1352593ff403f6b84ea9da67")
+ ("org-roam-plugin-ok" . "93de92886612fa5f05fd31b98e7c26acbbaea679")
  ("org-roam-timestamps" . "c4ff1e2f5b0905b5caa917249aab56ddc1de1ab3")
  ("org-roam-ui" . "5ac74960231db0bf7783c2ba7a19a60f582e91ab")
  ("org-transclusion" . "986707ff757a2002ed940b068e719cade8ae3c3f")
