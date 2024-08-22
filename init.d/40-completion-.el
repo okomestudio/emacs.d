@@ -131,21 +131,23 @@
 (use-package orderless
   :custom
   (completion-styles '(orderless basic))
-  (completion-category-defaults nil)
+  ;; (completion-category-defaults nil)
   (completion-category-overrides '((file (styles partial-completion))))
 
   :config
+  ;; orderless-fast completion style:
+  ;;
+  ;; Uncomment the following block to use this completion style.
+  ;;
   ;; See also https://tinyurl.com/mrybypkn for an advanced example.
-  (defun orderless-fast-dispatch (word index total)
-    (and (= index 0) (= total 1) (length< word 4)
-         `(orderless-regexp . ,(concat "^" (regexp-quote word)))))
-
-  (orderless-define-completion-style orderless-fast
-    (orderless-style-dispatchers '(orderless-fast-dispatch))
-    (orderless-matching-styles '(orderless-literal orderless-regexp)))
-
-  ;; Uncomment below to use the fast prefix version.
-  ;; (setq completion-styles '(orderless-fast basic))
+  ;; ---
+  ;; (defun ok-orderless-fast-dispatch (word index total)
+  ;;   (and (= index 0) (= total 1) (length< word 4)
+  ;;        `(orderless-regexp . ,(concat "^" (regexp-quote word)))))
+  ;; (orderless-define-completion-style orderless-fast
+  ;;   (orderless-style-dispatchers '(ok-orderless-fast-dispatch))
+  ;;   (orderless-matching-styles '(orderless-literal orderless-regexp)))
+  ;; (setopt completion-styles '(orderless-fast basic))
 
   (with-eval-after-load 'corfu
     (add-hook 'corfu-mode-hook
