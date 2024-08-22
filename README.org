@@ -33,6 +33,8 @@ Most package initialization files are in the ~init.d~ directory. The ~init-loade
     - Allows ~pass~ integration for managing credentials
 - [[https://github.com/a13/reverse-im.el][reverse-im.el]]
     - Overrides ~function-key-map~ for preferred input method(s) to translate input sequences to English, so we can use emacs binding while a non-default system layout is active
+- [[https://github.com/captainflasmr/selected-window-accent-mode][selected-window-accent-mode]]
+    - Accentuate the active window
 - [[https://github.com/m00natic/vlfi][vlf]]
     - View large files
 
