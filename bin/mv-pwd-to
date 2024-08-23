@@ -1,0 +1,6 @@
+#!/usr/bin/env sh
+#
+# Move the current working directory to another location
+#
+
+mv "$PWD" "$@"
