@@ -120,7 +120,7 @@
  ("markdown-mode" . "8aab017f4790f7a1e0d8403239cce989c88412f6")
  ("melpa" . "d8d2cc1084e9f592792885c19d0e132c739455b6")
  ("minions" . "4566325917791b878430526f42349a644b03089d")
- ("mozc" . "d2fc9c7d9269cc84b9a4a680cafc382a55e90f42")
+ ("mozc" . "456284ec02696ed6444a8b09610f4746a2714100")
  ("multi-vterm" . "36746d85870dac5aaee6b9af4aa1c3c0ef21a905")
  ("multiple-cursors.el" . "c870c18462461df19382ecd2f9374c8b902cd804")
  ("mwim.el" . "b4f3edb4c0fb8f8b71cecbf8095c2c25a8ffbf85")
