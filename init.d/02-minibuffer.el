@@ -45,7 +45,11 @@
 (use-package savehist
   ;; Save minibuffer history.
   :straight nil
-  :hook (minibuffer-setup . savehist-mode)
+
+  ;; NOTE: See which is more reliable
+  ;; :hook (minibuffer-setup . savehist-mode)
+  :init (savehist-mode 1)
+
   :config
   (with-eval-after-load 'org-roam
     (setopt savehist-additional-variables
