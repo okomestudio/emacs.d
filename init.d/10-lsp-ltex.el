@@ -1,14 +1,14 @@
 ;;; 10-lsp-ltex.el --- lsp-ltex  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;
-;; Configure LTEX LSP and related utilities.
+;; LTeX Language Server supports LanguageTool with support for LaTeX.
 ;;
 ;;; Code:
 
 (use-package lsp-ltex
   :commands (lsp-ltex-start lsp-ltex-restart)
   :hook ((markdown-mode
-          org-mode
+          ;; org-mode ;; let's not use ltex by default; can load manually with `lsp'
           rst-mode) . lsp-ltex-start)
   :custom
   (lsp-ltex-version "16.0.0")
