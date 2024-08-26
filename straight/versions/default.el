@@ -22,7 +22,7 @@
  ("chatgpt-shell" . "fce2b6d3609135f827da46dbb6d1f37d65a8b024")
  ("citeproc-el" . "cfa30b6c95c7465a05da98eccf273608880b22d7")
  ("compat" . "b988f4ec1ebcfed5aa76f16637343cdf8f9e5ee2")
- ("consult" . "3d7f3d2de22eacb125f56ae5b5af6411bbe00b46")
+ ("consult" . "0c3f53916ea0db0c472c0a0c620a85cc1b00caf2")
  ("consult-flycheck" . "754f5497d827f7d58009256a21af614cc44378a3")
  ("consult-flyspell" . "7011e6634598530ea2d874e7e7389dc1bb94e1ca")
  ("consult-lsp" . "68583913168bf66fd4d542b2517a2dcab19c447c")
