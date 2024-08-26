@@ -205,7 +205,7 @@
  ("valign" . "a8719acc4a241488a2270a8f7854d113c94a6e82")
  ("vertico" . "67c73b7ae3079e24b5369b54a740d79eb9d2b978")
  ("whole-line-or-region" . "f39fd03cf563ffdf57144a7586a5e845969fc641")
- ("with-editor" . "6c9a51b72fa7f454a5a123f738a6a067972eca4e")
+ ("with-editor" . "5dded4ece87fc8ddf46b8e864c36072a5bad98f8")
  ("xref" . "36020dab7ff71edeb6be31098f6e19c743c786c4")
  ("yaml-mode" . "7b5ce294fb15c2c8926fa476d7218aa415550a2a")
  ("yascroll" . "5df28032c0ff25dbb9aa6102d1efc0d05506b677"))
