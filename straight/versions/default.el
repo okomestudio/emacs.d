@@ -94,7 +94,7 @@
  ("ht.el" . "1c49aad1c820c86f7ee35bf9fff8429502f60fef")
  ("hydra" . "317e1de33086637579a7aeb60f77ed0405bf359b")
  ("imenu-list" . "76f2335ee6f2f066d87fe4e4729219d70c9bc70d")
- ("indent-bars" . "d4c5d33ebff72fe9a1a86a5063504db72bf8d7e2")
+ ("indent-bars" . "b72fa098d7c48d61fb4b508071bd77d054268f4e")
  ("init-loader" . "c4842b1f6695ce77daf94fd085456aeb37ed37e1")
  ("ipretty" . "042f5cc4e6f81d59115e8335c582bb5c571c2585")
  ("jeison" . "19a51770f24eaa7b538c7be6a8a5c25d154b641f")

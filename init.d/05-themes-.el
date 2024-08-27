@@ -143,6 +143,12 @@
 
 (use-package indent-bars
   :straight (indent-bars :type git :host github :repo "jdtsmith/indent-bars")
+  :custom
+  (indent-bars-color '(highlight :face-bg t :blend 0.2))
+  (indent-bars-treesit-support t)
+  (indent-bars-prefer-character "|") ;; see github.com/jdtsmith/indent-bars/issues/3
+  (indent-bars-width-frac 0.1)
+  (indent-bars-pad-frac 0.1)
   :hook ((python-ts-mode
           yaml-ts-mode) . indent-bars-mode))
 
