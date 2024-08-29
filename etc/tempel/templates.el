@@ -53,8 +53,7 @@ org-mode
 :PROPERTIES:
 :VISIBILITY: folded
 :ANKI_DECK: Default
-:ID:       " (org-id-uuid) n
-":END:
+:END:
 ** Note
 :PROPERTIES:
 :ANKI_NOTE_TYPE: Basic (and reversed card)
