@@ -1,7 +1,7 @@
 ;;; 40-editing-utils.el --- Editing  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;
-;; Configure editing related utilities.
+;; Text editing utilities.
 ;;
 ;;; Code:
 
@@ -23,9 +23,14 @@
   ;; Convert buffer text and decorations to HTML
   )
 
+(use-package ok
+  :bind (nil
+         :map prog-mode-map
+         ("C-M-;" . ok-edit-align-comments)))
+
 (use-package titlecase
   ;; Titlecase things.
-  :bind (;
+  :bind (nil
          :map text-mode-map
          ("M-c" . titlecase-dwim))
 
