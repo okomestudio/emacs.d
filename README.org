@@ -42,6 +42,8 @@ Most package initialization files are in the ~init.d~ directory. The ~init-loade
 
 Over the years, my Emacs init.el has been inspired by numerous sources, some of which are listed here in no particular order:
 
+  - https://github.com/abougouffa/minemacs
+      - See docs/EXTERNAL-TOOLS.md
   - https://github.com/freetonik/emacs-dotfiles/blob/master/init.el
   - https://github.com/jamescherti/minimal-emacs.d
   - https://github.com/kwpav/dotfiles/blob/master/emacs.org
