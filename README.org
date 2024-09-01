@@ -23,6 +23,15 @@ Use ~:straight nil~ to avoid pulling the source:
 
 Most package initialization files are in the ~init.d~ directory. The ~init-loader~ packer allows the better management of package loading order by file name.
 
+* Improving startup time
+
+In Linux systems, the startup time for the Emacs initialization in this repo is no more than 2 to 5 seconds. With the current paradigm, I haven’t been able to improve further, unless I’m willing to go without ~use-package~ and disable a few major features that I’d need to use.
+
+While the ~init.el~ in this repository is written primarily with readability and maintainability in mind, it pays well to be aware of improvement we can make with the startup time.
+
+  - [[https://emacs-jp.github.io/tips/startup-optimization][Emacs の起動時間を”“詰める”” | Emacs JP]]
+  - [[https://zenn.dev/zk_phi/books/cba129aacd4c1418ade4][Emacs の起動時間を""詰める""]] (free book version)
+
 * Packages to check out
 
 - [[https://github.com/Wilfred/emacs-refactor][emr]] (Emacs Refactor)
