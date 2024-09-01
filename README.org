@@ -35,6 +35,8 @@ Most package initialization files are in the ~init.d~ directory. The ~init-loade
     - Overrides ~function-key-map~ for preferred input method(s) to translate input sequences to English, so we can use emacs binding while a non-default system layout is active
 - [[https://github.com/captainflasmr/selected-window-accent-mode][selected-window-accent-mode]]
     - Accentuate the active window
+- [[https://github.com/WJCFerguson/textsize/][textsize]]
+    - Automatically choose a font point size for the Emacs default face based on the size and pixel pitch of the display
 - [[https://github.com/m00natic/vlfi][vlf]]
     - View large files
 
