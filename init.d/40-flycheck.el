@@ -19,23 +19,20 @@
   :preface
   (put 'flycheck-textlint-config 'safe-local-variable #'stringp))
 
-
 (use-package flycheck
   :if (eq system-type 'gnu/linux)
   :ensure-system-package
   (docutils . "pip install docutils")
   (textlint . "~/.config/emacs/bin/prepare-textlint"))
 
-
 (use-package flycheck-aspell
   :after (flycheck)
-  :hook (org-mode . (lambda () (require 'flycheck-aspell)))
-  :config
-  (flycheck-aspell-define-checker "org"
-                                  "Org" ("--add-filter" "url")
-                                  (org-mode))
-  (add-to-list 'flycheck-checkers 'org-aspell-dynamic))
+  :hook (org-mode . (lambda () (require 'flycheck-aspell))))
 
+(use-package flycheck-aspell-org
+  :straight (:host github :repo "okomestudio/flycheck-aspell-org")
+  :after (flycheck-aspell)
+  :demand t)
 
 (use-package flycheck-pos-tip
   :custom (flycheck-pos-tip-timeout 60)
