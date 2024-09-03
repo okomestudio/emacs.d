@@ -58,7 +58,11 @@
                               org-roam-db-location stringp
                               org-roam-directory stringp
                               org-roam-mode-sections listp
-                              org-roam-ui-port integerp)
+                              org-roam-ui-port integerp
+
+                              ;; For browsing source code
+                              elisp-lint-ignored-validators listp
+                              elisp-lint-indent-specs listp)
 
   :config
   (setopt find-file-visit-truename t) ;; See 5.3 Setting up Org-roam
