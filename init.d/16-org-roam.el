@@ -116,8 +116,11 @@ Otherwise, it is the same as the vanilla version of
 (use-package org-roam-plugin-ok
   :straight (:host github :repo "okomestudio/org-roam-plugin-ok")
   :after org-roam
-  :demand t)
-
+  :demand t
+  :init
+  (use-package ok-plural
+    :straight (:host github :repo "okomestudio/ok-plural.el")
+    :demand t))
 
 (use-package org-roam-ui
   :after org-roam
