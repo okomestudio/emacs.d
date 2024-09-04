@@ -152,7 +152,7 @@
   (with-eval-after-load 'corfu
     (add-hook 'corfu-mode-hook
               (lambda ()
-                (setq-local orderless-matching-styles '(orderless-flex))))))
+                (setq-local orderless-matching-styles '(orderless-literal))))))
 
 
 (use-package prescient
