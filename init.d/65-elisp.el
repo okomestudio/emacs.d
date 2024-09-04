@@ -12,14 +12,19 @@
          ("C-c b" . oe--format-elisp-buffer)
          :map lisp-data-mode-map
          ("C-c b" . oe--format-elisp-buffer))
-
+  :hook ((emacs-lisp-mode lisp-data-mode) . oe--set-completion-functions)
   :config
   (defun oe--format-elisp-buffer ()
     "Format Elisp buffer."
     (interactive)
     (save-excursion
       (indent-region (progn (beginning-of-buffer) (point))
-                     (progn (end-of-buffer) (point))))))
+                     (progn (end-of-buffer) (point)))))
+
+  (defun oe--set-completion-functions ()
+    ;; See github.com/jwiegley/use-package/issues/1077#issuecomment-2266642373
+    (setq-local completion-at-point-functions
+                (list (cape-capf-inside-code #'cape-elisp-symbol)))))
 
 (use-package aggressive-indent
   :hook ((emacs-lisp-mode lisp-data-mode) . aggressive-indent-mode))
