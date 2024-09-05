@@ -1,7 +1,7 @@
 ;;; faces.el --- faces  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;
-;; Configure font faces and related utilities.
+;; Font configuration.
 ;;
 ;;; Code:
 
@@ -11,7 +11,7 @@
   "Font for the fixed pitch.
 This is also used as the default.")
 
-(defvar ok-faces-font-family-fixed-pitch-ja "BIZ UDGothic" ;; "Noto Sans Mono CJK JP"
+(defvar ok-faces-font-family-fixed-pitch-ja "BIZ UDGothic"  ; "Noto Sans Mono CJK JP"
   "Font for the fixed pitch in Japanese.")
 
 (defvar ok-faces-font-family-variable-pitch "EB Garamond"
@@ -36,6 +36,7 @@ This is also used as the default.")
 (defun ok-faces--setup-faces-for-frame (&optional frame)
   "Set up the faces for FRAME."
   ;; FONTSETS
+  ;;
   ;; Emacs comes with three fontsets: `fontset-startup',
   ;; `fontset-standard', and `fontset-default', the last of which is
   ;; the ultimate fallback.
@@ -90,7 +91,7 @@ This is also used as the default.")
    . "sudo apt install -y fonts-vlgothic")
 
   :init
-  (dolist (element '(("Hack" . 1.00) ;; reference
+  (dolist (element '(("Hack" . 1.00)  ; reference
                      ("EB Garamond". 1.28)
                      ("BIZ UDGothic" . 1.00)
                      ("Noto Sans Mono CJK JP" . 1.18)
@@ -141,7 +142,7 @@ This is also used as the default.")
 ;; MISC.
 
 (use-package mixed-pitch
-  :disabled ;; ... until the package gets patched.
+  :disabled  ; ... until the package gets patched.
   :hook (org-mode . mixed-pitch-mode)
   :custom (mixed-pitch-variable-pitch-cursor nil)
   :config
