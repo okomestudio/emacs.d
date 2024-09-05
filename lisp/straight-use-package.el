@@ -1,4 +1,4 @@
-;;; init-straight.el --- Straight  -*- lexical-binding: t -*-
+;;; straight-use-package.el --- use-package with straight  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;
 ;; Initialize Straight for use with `use-package'.
@@ -25,11 +25,9 @@
 ;;
 ;;; Code:
 
-(defvar bootstrap-version
-  "Straight bootstrap version.")
-(let ((bootstrap-file (expand-file-name "straight/repos/straight.el/bootstrap.el"
-                                        user-emacs-directory))
-      (bootstrap-version 7))
+(let ((bootstrap-file (locate-user-emacs-file
+                       "straight/repos/straight.el/bootstrap.el"))
+      (bootstrap-version 7))  ; straight bootstrap version
   (unless (file-exists-p bootstrap-file)
     (with-current-buffer
 	      (url-retrieve-synchronously
@@ -40,15 +38,17 @@
       (eval-print-last-sexp)))
   (load bootstrap-file nil 'nomessage))
 
-(setopt straight-use-package-by-default t)
-(setopt use-package-always-defer t ;; use :demand t to override
-        use-package-compute-statistics ok-debug ;; for use-package-report
+(setopt straight-use-package-by-default t
+
+        use-package-always-defer t               ; use :demand t to override
+        use-package-compute-statistics ok-debug  ; for use-package-report
         use-package-enable-imenu-support t
         use-package-minimum-reported-time 0.001
-        use-package-verbose ok-debug)
-(setopt message-log-max t)
+        use-package-verbose ok-debug
+
+        message-log-max t)
 
 (straight-use-package 'use-package)
 (straight-use-package 'use-package-ensure-system-package)
 
-;;; init-straight.el ends here
+;;; straight-use-package.el ends here
