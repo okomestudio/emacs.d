@@ -1,7 +1,7 @@
-;;; 02-minibuffer.el --- Minibuffer  -*- lexical-binding: t -*-
+;;; minibuffer.el --- Minibuffer  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;
-;; Configure the minibuffer.
+;; The Minibuffer Configuration.
 ;;
 ;;; Code:
 
@@ -11,9 +11,8 @@
 
 (use-package vertico
   ;; VERTical Interactive COmpletion.
-  :custom
-  (vertico-count 20)
-  (vertico-cycle t)
+  :custom ((vertico-count 20)
+           (vertico-cycle t))
   :hook (after-init . vertico-mode))
 
 (use-package embark
@@ -56,4 +55,4 @@
             (append savehist-additional-variables
                     '(org-roam-ref-history)))))
 
-;;; 02-minibuffer.el ends here
+;;; minibuffer.el ends here
