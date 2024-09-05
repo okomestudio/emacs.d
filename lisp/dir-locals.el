@@ -1,7 +1,7 @@
-;;; 20-dir-locals.el --- dir-locals  -*- lexical-binding: t -*-
+;;; dir-locals.el --- .dir-locals.el  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;
-;; Configure dir-locals.el related utilities.
+;; The .dir-locals.el utilities.
 ;;
 ;;; Code:
 
@@ -65,7 +65,4 @@ Set this within symlinked .dir-locals.el.")
 (add-hook 'emacs-lisp-mode-hook #'ok-dir-locals--add-reload-hook)
 (add-hook 'lisp-data-mode-hook #'ok-dir-locals--add-reload-hook)
 
-;; Local Variables:
-;; nameless-aliases: (("" . "ok-dir-locals"))
-;; End:
-;;; 20-dir-locals.el ends here
+;;; dir-locals.el ends here
