@@ -1,4 +1,4 @@
-;;; 02-navigation.el --- Navigation  -*- lexical-binding: t -*-
+;;; navigation.el --- Navigation  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;
 ;; Navigation initialization.
@@ -87,4 +87,4 @@
   ;; Enhances vanilla Emacs bookmarks in many way.
   :defer 5)
 
-;;; 02-navigation.el ends here
+;;; navigation.el ends here
