@@ -1,4 +1,4 @@
-;;; 05-faces.el --- faces  -*- lexical-binding: t -*-
+;;; faces.el --- faces  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;
 ;; Configure font faces and related utilities.
@@ -155,7 +155,4 @@ This is also used as the default.")
   :straight (:host github :repo "hamano/locale-eaw")
   :config (eaw-fullwidth))
 
-;; Local Variables:
-;; nameless-aliases: (("" . "ok-faces"))
-;; End:
-;;; 05-faces.el ends here
+;;; faces.el ends here
