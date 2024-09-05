@@ -1,4 +1,4 @@
-;;; 15-org.el --- org  -*- lexical-binding: t -*-
+;;; org.el --- org  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;
 ;; Configure Org and related utilities.
@@ -429,4 +429,4 @@ node."
 ;; Local Variables:
 ;; nameless-aliases: (("" . "ok-org"))
 ;; End:
-;;; 15-org.el ends here
+;;; org.el ends here
