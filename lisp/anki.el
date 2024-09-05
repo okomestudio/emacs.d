@@ -1,4 +1,4 @@
-;;; 80-anki.el --- anki  -*- lexical-binding: t -*-
+;;; anki.el --- anki  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;
 ;; Anki (apps.ankiweb.net) is a tool for spaced repetition.
@@ -44,4 +44,4 @@
     (add-to-list 'org-default-properties "ANKI_NOTE_ID")
     (add-to-list 'org-default-properties "ANKI_NOTE_TYPE")))
 
-;;; 80-anki.el ends here
+;;; anki.el ends here
