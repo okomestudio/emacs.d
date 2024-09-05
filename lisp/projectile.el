@@ -1,4 +1,4 @@
-;;; 10-projectile.el --- Projectile  -*- lexical-binding: t -*-
+;;; projectile.el --- Projectile  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;
 ;; Configure Projectile.
@@ -51,4 +51,4 @@
                                  (projectile-switch-project)
                                  (other-window +1))))
 
-;;; 10-projectile.el ends here
+;;; projectile.el ends here
