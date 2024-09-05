@@ -1,7 +1,7 @@
-;;; 10-lsp-grammarly.el --- lsp-grammarly  -*- lexical-binding: t -*-
+;;; lsp-grammarly.el --- lsp-grammarly  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;
-;; Configure Grammarly and related utilities.
+;; LSP Grammarly.
 ;;
 ;;; Code:
 
@@ -102,7 +102,4 @@
       (mark-paragraph)
       (grammarly-edit--open (region-beginning) (region-end)))))
 
-;; Local Variables:
-;; nameless-aliases: (("" . "grammarly-edit"))
-;; End:
-;;; 10-lsp-grammarly.el ends here
+;;; lsp-grammarly.el ends here
