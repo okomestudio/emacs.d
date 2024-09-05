@@ -1,4 +1,4 @@
-;;; 05-themes.el --- Themes  -*- lexical-binding: t -*-
+;;; themes.el --- Themes  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;
 ;; Configure Emacs themes. Visuals, colors, etc.
@@ -224,4 +224,4 @@
 ;; Local Variables:
 ;; nameless-aliases: (("" . "ok-themes"))
 ;; End:
-;;; 05-themes.el ends here
+;;; themes.el ends here
