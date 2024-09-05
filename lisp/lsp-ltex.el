@@ -1,4 +1,4 @@
-;;; 10-lsp-ltex.el --- lsp-ltex  -*- lexical-binding: t -*-
+;;; lsp-ltex.el --- lsp-ltex  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;
 ;; LTeX Language Server supports LanguageTool with support for LaTeX.
@@ -52,7 +52,4 @@
     (lsp-ltex--update-dictionary)
     (lsp-workspace-restart (lsp--read-workspace))))
 
-;; Local Variables:
-;; nameless-aliases: (("" . "lsp-ltex"))
-;; End:
-;;; 10-lsp-ltex.el ends here
+;;; lsp-ltex.el ends here
