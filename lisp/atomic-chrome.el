@@ -1,10 +1,8 @@
-;;; 02-atomic-chrome.el --- atomic-chrome  -*- lexical-binding: t -*-
+;;; atomic-chrome.el --- Atomic Chrome  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;
 ;; Atomic Chrome is a Chrome extension that allows using Emacs for
 ;; bi-directional online editing.
-;;
-;; Configure atomic-chrome and its related utilities.
 ;;
 ;; `M-x atomic-chrome-start-server' to start the server.
 ;;
@@ -48,4 +46,4 @@
                '("~/github.com/tmp/ts-scratch/src/"
                  :extension ("js" "ts" "tsx" "jsx" "cjs" "mjs"))))
 
-;;; 02-atomic-chrome.el ends here
+;;; atomic-chrome.el ends here
