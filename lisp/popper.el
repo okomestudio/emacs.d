@@ -1,4 +1,4 @@
-;;; 02-popper.el --- Popper  -*- lexical-binding: t -*-
+;;; popper.el --- Popper  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;
 ;; A minor-mode to summon and dismiss buffers easily.
@@ -47,4 +47,4 @@
   (popper-mode +1)
   (popper-echo-mode +1))
 
-;;; 02-popper.el ends here
+;;; popper.el ends here
