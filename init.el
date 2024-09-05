@@ -32,8 +32,10 @@
 (setopt custom-file (locate-user-emacs-file "custom.el")) ;; or use `null-device'
 (load custom-file 'noerror 'nomessage)
 
-;; Configure use-package, init-straight.el or init-package.el:
-(load (locate-user-emacs-file "init.d/init-straight.el"))
+;; Configure use-package
+(load (locate-user-emacs-file
+       ;; "lisp/package.el"              ; with package
+       "lisp/straight-use-package.el"))  ; with straight-use-package
 
 (use-package no-littering
   ;; Want to run this as early as possible.
