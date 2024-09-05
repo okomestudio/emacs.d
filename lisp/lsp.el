@@ -7,16 +7,14 @@
 
 (use-package lsp-mode
   :commands (lsp lsp-deferred)
-  :hook (lsp-mode . lsp-enable-which-key-integration)
   :ensure-system-package (semgrep . "pip install semgrep")
-  :custom
-  (lsp-completion-enable t)
-  (lsp-diagnostics-provider :auto)
-  (lsp-keymap-prefix "C-c l")
-  (lsp-log-io ok-debug) ;; set to t for debugging
-  (lsp-response-timeout 30)
-  (lsp-use-plists t)
-
+  :custom ((lsp-completion-enable t)
+           (lsp-diagnostics-provider :auto)
+           (lsp-keymap-prefix "C-c l")
+           (lsp-log-io ok-debug) ;; set to t for debugging
+           (lsp-response-timeout 30)
+           (lsp-use-plists t))
+  :hook (lsp-mode . lsp-enable-which-key-integration)
   :preface
   (put 'lsp-disabled-clients 'safe-local-variable #'listp)
 
@@ -32,14 +30,12 @@ The function returns LSP servers that have been shut down."
         (lsp-workspace-shutdown workspace))
       workspaces)))
 
-
 (use-package lsp-booster
   :straight (:host github :repo "okomestudio/lsp-booster.el")
   :commands (lsp-booster-mode)
   :ensure-system-package
   (emacs-lsp-booster . "~/.config/emacs/bin/install-emacs-lsp-booster")
   :init (lsp-booster-mode))
-
 
 (use-package lsp-ui
   ;; UI integration for lsp-mode.
@@ -49,49 +45,43 @@ The function returns LSP servers that have been shut down."
   ;; https://github.com/emacs-lsp/lsp-ui/issues/751.
   ;;
   :commands lsp-ui-mode
-  :bind
-  (:map lsp-ui-mode-map
-        ("C-h ." . (lambda (arg)
-                     (interactive "P")
-                     (pcase arg
-                       ('(4) (progn
-                               (lsp-ui-doc-show)
-                               ))
-                       (_ (progn
-                            (if (lsp-ui-doc--visible-p)
-                                (lsp-ui-doc-focus-frame)
-                              (lsp-ui-doc-glance)))))))
-        :map lsp-ui-doc-frame-mode-map
-        ("q" . (lambda ()
-                 (interactive)
-                 (lsp-ui-doc-unfocus-frame)
-                 (lsp-ui-doc-hide))))
-
-  :custom
-  (lsp-ui-doc-border "black")
-  (lsp-ui-doc-delay 0.2)
-  (lsp-ui-doc-max-height 20)
-  (lsp-ui-doc-position 'at-point)
-  (lsp-ui-doc-show-with-cursor nil)
-  (lsp-ui-doc-show-with-mouse t)
-  (lsp-ui-doc-text-scale-level -1.0)
-  (lsp-ui-doc-use-childframe t)
-  (lsp-ui-doc-use-webkit nil)
-  (lsp-ui-sideline-delay 1.0)
-  (lsp-ui-sideline-show-code-actions t)
-  (lsp-ui-sideline-show-diagnostics t)
-  (lsp-ui-sideline-show-hover t)
-
+  :bind (;
+         :map lsp-ui-mode-map
+         ("C-h ." . (lambda (arg)
+                      (interactive "P")
+                      (pcase arg
+                        ('(4) (progn
+                                (lsp-ui-doc-show)
+                                ))
+                        (_ (progn
+                             (if (lsp-ui-doc--visible-p)
+                                 (lsp-ui-doc-focus-frame)
+                               (lsp-ui-doc-glance)))))))
+         :map lsp-ui-doc-frame-mode-map
+         ("q" . (lambda ()
+                  (interactive)
+                  (lsp-ui-doc-unfocus-frame)
+                  (lsp-ui-doc-hide))))
+  :custom ((lsp-ui-doc-border "black")
+           (lsp-ui-doc-delay 0.2)
+           (lsp-ui-doc-max-height 20)
+           (lsp-ui-doc-position 'at-point)
+           (lsp-ui-doc-show-with-cursor nil)
+           (lsp-ui-doc-show-with-mouse t)
+           (lsp-ui-doc-text-scale-level -1.0)
+           (lsp-ui-doc-use-childframe t)
+           (lsp-ui-doc-use-webkit nil)
+           (lsp-ui-sideline-delay 1.0)
+           (lsp-ui-sideline-show-code-actions t)
+           (lsp-ui-sideline-show-diagnostics t)
+           (lsp-ui-sideline-show-hover t))
   :config
   (set-face-background 'lsp-ui-doc-background "#eeeeee"))
 
-
 (use-package lsp-treemacs
   :after (lsp-mode)
-  :bind
-  (([f6] . lsp-treemacs-symbols)
-   ([f7] . lsp-treemacs-errors-list)))
-
+  :bind (([f6] . lsp-treemacs-symbols)
+         ([f7] . lsp-treemacs-errors-list)))
 
 (use-package consult-lsp
   :after (consult lsp-mode))
