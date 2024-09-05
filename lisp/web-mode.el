@@ -1,39 +1,31 @@
-;;; 65-web-mode.el --- web-mode  -*- lexical-binding: t -*-
+;;; web-mode.el --- web-mode  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;; Code:
 
 (use-package web-mode
-  :disabled
-  :custom
-  (web-mode-code-indent-offset 2)
-  (web-mode-css-indent-offset 2)
-  (web-mode-enable-auto-quoting nil)
-  (web-mode-enable-current-column-highlight t)
-  (web-mode-enable-current-element-highlight t)
-  (web-mode-markup-indent-offset 2)
-  (web-mode-script-padding 2)
-  (web-mode-style-padding 2)
-
-  :bind
-  (:map web-mode-map
-        ("C-c b" . (lambda () (interactive) (prettier-js))))
-
-  :hook
-  (web-mode . init-webmode--set-up-flycheck)
-
-  :mode
-  ("\\.css\\'"
-   "\\.html?\\'"
-   "\\.html?\\.j2\\'" ;; Jinja2 HTML template
-   "\\.jsx?\\'")
-
+  :custom ((web-mode-code-indent-offset 2)
+           (web-mode-css-indent-offset 2)
+           (web-mode-enable-auto-quoting nil)
+           (web-mode-enable-current-column-highlight t)
+           (web-mode-enable-current-element-highlight t)
+           (web-mode-markup-indent-offset 2)
+           (web-mode-script-padding 2)
+           (web-mode-style-padding 2))
+  :bind (;
+         :map web-mode-map
+         ("C-c b" . (lambda () (interactive) (prettier-js))))
+  :hook (web-mode . web-mode--set-up-flycheck)
+  :mode ("\\.css\\'"
+         "\\.html?\\'"
+         "\\.html?\\.j2\\'" ;; Jinja2 HTML template
+         "\\.jsx?\\'")
   :ensure-system-package
   (csslint . "npm install -g --save-dev csslint")
   (eslint . "npm install -g --save-dev eslint babel-eslint eslint-plugin-react")
   (tidy . "sudo apt install -y tidy")
 
   :config
-  (defun init-webmode--set-up-flycheck ()
+  (defun web-mode--set-up-flycheck ()
     "Customized web-mode-hoook."
     (add-node-modules-path)
     (require 'flycheck)
@@ -68,15 +60,15 @@
         (flycheck-add-mode checker 'web-mode)
         (flycheck-select-checker checker))))
 
-  (defun init-webmode--flyspell-predicate ()
+  (defun web-mode--flyspell-predicate ()
     "Predicate for flyspell.
 
-See http://blog.binchen.org/posts/effective-spell-check-in-emacs.html"
+See blog.binchen.org/posts/effective-spell-check-in-emacs.html"
     (cond
      ;; for HTML buffer:
      ((string= web-mode-content-type "html")
-      (let* ((f (get-text-property (- (point) 1) 'face))
-             rlt)
+      (let ((f (get-text-property (- (point) 1) 'face))
+            rlt)
         (cond
          ;; Check the words with these font faces, possibly.
          ;; This *blacklist* will be tweaked in next condition.
@@ -86,7 +78,7 @@ See http://blog.binchen.org/posts/effective-spell-check-in-emacs.html"
                          web-mode-constant-face
                          web-mode-doctype-face
                          web-mode-keyword-face
-                         web-mode-comment-face ;; focus on get html label right
+                         web-mode-comment-face  ; focus on get html label right
                          web-mode-function-name-face
                          web-mode-variable-name-face
                          web-mode-css-property-name-face
@@ -113,7 +105,7 @@ See http://blog.binchen.org/posts/effective-spell-check-in-emacs.html"
      ;; for JavaScript buffer:
      ((or (string= web-mode-content-type "javascript")
           (string= web-mode-content-type "jsx"))
-      (let* ((f (get-text-property (- (point) 1) 'face)))
+      (let ((f (get-text-property (- (point) 1) 'face)))
         ;; Only words with following font face will be checked (*whitelist*):
         (memq f '(js2-function-call
                   js2-function-param
@@ -125,7 +117,6 @@ See http://blog.binchen.org/posts/effective-spell-check-in-emacs.html"
   ;; (put 'web-mode 'flyspell-mode-predicate 'init-webmode--flyspell-predicate)
   )
 
-
 (use-package prettier-js ;; or use web-beautify (?)
   :ensure-system-package
   (prettier . "npm install -g prettier")
@@ -136,32 +127,26 @@ See http://blog.binchen.org/posts/effective-spell-check-in-emacs.html"
                            "--single-quote"
                            "--trailing-comma" "all")))
 
-
 (use-package tern
   :disabled
   :ensure nil
-  :custom
-  (tern-command '("tern" "--no-port-file"))
-
+  :custom (tern-command '("tern" "--no-port-file"))
   :ensure-system-package
   (tern . "npm install -g tern")
 
   :init
   (ok-file-ensure-from-github "ternjs/tern/master/emacs/tern.el"))
 
-
 (use-package lsp-mode
   ;; Use ts-ls
   :straight nil
-  :hook
-  (web-mode . (lambda ()
-                (setq-local lsp-disabled-clients '(jsts-ls))
-                (lsp-deferred)))
-
+  :hook (web-mode . (lambda ()
+                      (setq-local lsp-disabled-clients '(jsts-ls))
+                      (lsp-deferred)))
   :ensure-system-package
   (typescript-language-server . "npm install -g typescript-language-server typescript")
 
   :config
   (add-to-list 'lsp-language-id-configuration '(".*\\.html?\\.j2" . "html")))
 
-;;; 65-web-mode.el ends here
+;;; web-mode.el ends here
