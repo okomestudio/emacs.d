@@ -1,7 +1,7 @@
-;;; 10-lsp.el --- lsp  -*- lexical-binding: t -*-
+;;; lsp.el --- LSP  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;
-;; Configure LSP mode and related utilities.
+;; LSP configuration.
 ;;
 ;;; Code:
 
@@ -96,4 +96,4 @@ The function returns LSP servers that have been shut down."
 (use-package consult-lsp
   :after (consult lsp-mode))
 
-;;; 10-lsp.el ends here
+;;; lsp.el ends here
