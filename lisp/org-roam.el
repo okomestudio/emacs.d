@@ -1,4 +1,4 @@
-;;; 16-org-roam.el --- org-roam  -*- lexical-binding: t -*-
+;;; org-roam.el --- org-roam  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;
 ;; Initialize and configure Org Roam and the related utilities.
@@ -157,4 +157,4 @@ Otherwise, it is the same as the vanilla version of
 ;; Local Variables:
 ;; nameless-aliases: (("" . "ok-org-roam"))
 ;; End:
-;;; 16-org-roam.el ends here
+;;; org-roam.el ends here
