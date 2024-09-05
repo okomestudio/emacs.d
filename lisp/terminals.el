@@ -1,7 +1,7 @@
-;;; 20-terminals.el --- terminals  -*- lexical-binding: t -*-
+;;; terminals.el --- Terminals  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;
-;; Configure terminals and related utilities.
+;; Terminals configuration.
 ;;
 ;;; Code:
 
@@ -57,4 +57,4 @@
                            (sleep-for 0.2)
                            (end-of-buffer))))
 
-;;; 20-terminals.el ends here
+;;; terminals.el ends here
