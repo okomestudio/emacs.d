@@ -1,4 +1,4 @@
-;;; 02-treemacs.el --- treemacs  -*- lexical-binding: t -*-
+;;; treemacs.el --- treemacs  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;
 ;; Configure Treemacs and related utilities.
@@ -75,7 +75,4 @@
 (use-package treemacs-projectile
   :after (treemacs projectile))
 
-;; Local Variables:
-;; nameless-aliases: (("" . "ok"))
-;; End:
-;;; 02-treemacs.el ends here
+;;; treemacs.el ends here
