@@ -1,5 +1,8 @@
-;;; init-package.el --- Package  -*- lexical-binding: t -*-
+;;; package.el --- Package  -*- lexical-binding: t -*-
 ;;; Commentary:
+;;
+;; Configure `use-package' with `package'.
+;;
 ;;; Code:
 
 (require 'package)
@@ -9,7 +12,7 @@
                            ("melpa" . "https://melpa.org/packages/")
                            ("nongnu" . "https://elpa.nongnu.org/nongnu/")))
 
-(unless (bound-and-true-p package--initialized)
+(unless (bound-and-true-p package--initialize)
   (package-initialize))
 
 (unless (package-installed-p 'use-package)
@@ -22,4 +25,4 @@
 (eval-when-compile
   (require 'use-package))
 
-;;; init-package.el ends here
+;;; package.el ends here
