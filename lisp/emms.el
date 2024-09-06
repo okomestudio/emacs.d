@@ -1,4 +1,4 @@
-;;; 80-emms.el --- EMMS  -*- lexical-binding: t -*-
+;;; emms.el --- EMMS  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;
 ;; Music player for Emacs.
@@ -16,4 +16,4 @@
   :config
   (emms-all))
 
-;;; 80-emms.el ends here
+;;; emms.el ends here
