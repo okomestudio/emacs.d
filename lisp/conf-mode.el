@@ -1,7 +1,7 @@
 ;;; 57-conf-mode.el --- conf-mode  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;
-;; Configure conf-mode and related utilities.
+;; The conf-mode configuration.
 ;;
 ;;; Code:
 
