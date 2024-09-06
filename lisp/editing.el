@@ -1,7 +1,7 @@
-;;; editing-utils.el --- Editing  -*- lexical-binding: t -*-
+;;; editing.el --- Editing  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;
-;; Text editing utilities.
+;; Editing utilities configuration.
 ;;
 ;;; Code:
 
@@ -24,13 +24,13 @@
   )
 
 (use-package ok
-  :bind (nil
+  :bind (;
          :map prog-mode-map
          ("C-M-;" . ok-edit-align-comments)))
 
 (use-package titlecase
   ;; Titlecase things.
-  :bind (nil
+  :bind (;
          :map text-mode-map
          ("M-c" . titlecase-dwim))
 
@@ -61,7 +61,6 @@
   ;; Operate on current line if region undefined.
   )
 
-
 ;;; SPELLING
 
 (use-package flyspell
@@ -69,24 +68,21 @@
   :bind (;
          :map text-mode-map
          ("M-s M-s" . flyspell-auto-correct-previous-word))
-
-  :hook
-  ((prog-mode
-    shell-script-mode
-    text-mode) . flyspell-prog-mode))
+  :hook ((prog-mode
+          shell-script-mode
+          text-mode) . flyspell-prog-mode))
 
 (use-package ispell
   :straight nil
-  :custom
-  (ispell-dictionary "en_US")
-  (ispell-local-dictionary-alist
-   '(("en_US" "[[:alpha:]]" "[^[:alpha:]]" "['’]" t ("-d" "en_US") nil utf-8)
-     ("en_GB" "[[:alpha:]]" "[^[:alpha:]]" "['’]" t ("-d" "en_GB") nil utf-8)))
-  (ispell-program-name "/usr/bin/aspell")
-
+  :custom ((ispell-dictionary "en_US")
+           (ispell-local-dictionary-alist
+            '(("en_US" "[[:alpha:]]" "[^[:alpha:]]" "['’]" t
+               ("-d" "en_US") nil utf-8)
+              ("en_GB" "[[:alpha:]]" "[^[:alpha:]]" "['’]" t
+               ("-d" "en_GB") nil utf-8)))
+           (ispell-program-name "/usr/bin/aspell"))
   :preface
   (put 'ispell-dictionary 'safe-local-variable #'stringp))
-
 
 ;;; MACRO AND EXPANSIONS
 
@@ -95,4 +91,4 @@
   :straight nil
   :bind ([remap dabbrev-expand] . hippie-expand))
 
-;;; editing-utils.el ends here
+;;; editing.el ends here
