@@ -1,4 +1,4 @@
-;;; 40-editing-utils.el --- Editing  -*- lexical-binding: t -*-
+;;; editing-utils.el --- Editing  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;
 ;; Text editing utilities.
@@ -95,4 +95,4 @@
   :straight nil
   :bind ([remap dabbrev-expand] . hippie-expand))
 
-;;; 40-editing-utils.el ends here
+;;; editing-utils.el ends here
