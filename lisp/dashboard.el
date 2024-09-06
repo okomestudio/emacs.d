@@ -1,7 +1,7 @@
-;;; 85-dashboard.el --- Emacs Application Framework  -*- lexical-binding: t -*-
+;;; dashboard.el --- Dashboard  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;
-;; Configure Emacs Dashboard.
+;; Dashboard configuration.
 ;;
 ;;; Code:
 
@@ -54,4 +54,4 @@
 
   (dashboard-setup-startup-hook))
 
-;;; 85-dashboard.el ends here
+;;; dashboard.el ends here
