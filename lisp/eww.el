@@ -77,9 +77,7 @@ See http://emacs.rubikitch.com/eww-weblio/ for reference."
     (interactive (list (ok-prompt-or-string-from-region "Justapedia (en): ")))
     (ok-eww--make-query "https://justapedia.org/wiki/%s" str)))
 
-
 (use-package shr
-  :custom
-  (shr-use-xwidgets-for-media nil))
+  :custom (shr-use-xwidgets-for-media nil))
 
 ;;; eww.el ends here
