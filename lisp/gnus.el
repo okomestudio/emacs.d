@@ -7,14 +7,12 @@
 
 (use-package message
   :straight nil
-  :bind (nil
+  :bind (;
          :map message-mode-map
          ("C-c C-c" . message-send-and-exit-via-sender-email))
   :hook (message-setup . message--deactivate-hydra)
-  :custom
-  (message-auto-save-directory (no-littering-expand-var-file-name "message/"))
-  (message-directory (no-littering-expand-var-file-name "message/Mail/"))
-
+  :custom ((message-auto-save-directory (no-littering-expand-var-file-name "message/"))
+           (message-directory (no-littering-expand-var-file-name "message/Mail/")))
   :config
   (defcustom message-smtp-accounts nil
     "`alist' mapping from sender email address to SMTP server.
@@ -57,7 +55,6 @@ is SMTP server, `port' is port, and `usr' is SMTP login username."
     ;; some reason. This is a workaround.
     (setq-local hydra-deactivate t)))
 
-
 (use-package nnfolder
   :straight nil
   :config
@@ -67,22 +64,19 @@ is SMTP server, `port' is port, and `usr' is SMTP login username."
   (setq nnfolder-directory (no-littering-expand-var-file-name
                             "message/Mail/archive")))
 
-
 (use-package gnus
   :straight nil
-  :custom
-  (gnus-directory (no-littering-expand-var-file-name "gnus/News/"))
-  (gnus-default-directory (no-littering-expand-var-file-name "gnus/"))
-  (gnus-home-directory (no-littering-expand-var-file-name "gnus/"))
-  (gnus-summary-line-format "%U%R%z%I%(%[%o: %-23,23f%]%) %s\\n")
-
+  :custom ((gnus-directory (no-littering-expand-var-file-name "gnus/News/"))
+           (gnus-default-directory (no-littering-expand-var-file-name "gnus/"))
+           (gnus-home-directory (no-littering-expand-var-file-name "gnus/"))
+           (gnus-summary-line-format "%U%R%z%I%(%[%o: %-23,23f%]%) %s\\n"))
   :config
   (setq gnus-summary-insert-old-articles t))
 
-
 (use-package gnus-group
   :straight nil
-  :bind (:map gnus-group-mode-map ("." . hydra-gnus-group/body))
+  :bind (:map gnus-group-mode-map
+              ("." . hydra-gnus-group/body))
   :config
   (defhydra hydra-gnus-group (gnus-group-mode-map "." :color pink :hint nil)
     "
@@ -96,10 +90,10 @@ _g_: get new messages
     ("." nil "cancel")
     ("q" gnus-group-exit "quit" :color blue)))
 
-
 (use-package gnus-sum
   :straight nil
-  :bind (:map gnus-summary-mode-map ("." . hydra-gnus-summary/body))
+  :bind (:map gnus-summary-mode-map
+              ("." . hydra-gnus-summary/body))
   :config
   (defhydra hydra-gnus-summary (gnus-summary-mode-map "." :color pink :hint nil)
     "
@@ -122,10 +116,10 @@ _R_: reply        _M_: move
     ("." nil "cancel")
     ("q" gnus-summary-exit "quit" :color blue)))
 
-
 (use-package gnus-art
   :straight nil
-  :bind (:map gnus-article-mode-map ("." . hydra-gnus-article/body))
+  :bind (:map gnus-article-mode-map
+              ("." . hydra-gnus-article/body))
   :config
   (defhydra hydra-gnus-article (gnus-article-mode-map "." :color pink :hint nil)
     "
