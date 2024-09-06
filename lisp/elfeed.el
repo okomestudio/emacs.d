@@ -1,7 +1,7 @@
-;;; 80-elfeed.el --- elfeed  -*- lexical-binding: t -*-
+;;; elfeed.el --- elfeed  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;
-;; Configure Elfeed and related utilities.
+;; Elfeed configuration.
 ;;
 ;;; Code:
 
@@ -61,4 +61,4 @@
   (add-to-list 'emulation-mode-map-alists `((dummy-elfeed-goodies--mode) . ,dummy-elfeed-goodies--map))
   (define-key dummy-elfeed-goodies--map (kbd "M-v") 'scroll-down-command))
 
-;;; 80-elfeed.el ends here
+;;; elfeed.el ends here
