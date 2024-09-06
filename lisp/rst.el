@@ -1,7 +1,7 @@
-;;; 55-rst.el --- rst  -*- lexical-binding: t -*-
+;;; rst.el --- RST  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;
-;; Configure the RST mode and related utilities.
+;; The RST mode configuration.
 ;;
 ;; See https://docutils.sourceforge.io/docs/user/emacs.html
 ;;
@@ -12,13 +12,11 @@
   (lsp-register-client
    (make-lsp-client
     :new-connection
-		(lsp-stdio-connection `(,(expand-file-name "bin/esbonio"
-                                               user-emacs-directory)))
+		(lsp-stdio-connection `(,(locate-user-emacs-file "bin/esbonio")))
     :activation-fn (lsp-activate-on "rst")
     :server-id 'esbonio)))
-
 
 (use-package poly-rst
   :hook (rst-mode . lsp-deferred))
 
-;;; 55-rst.el ends here
+;;; rst.el ends here
