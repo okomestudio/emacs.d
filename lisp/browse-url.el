@@ -1,4 +1,4 @@
-;;; 70-browse-url.el --- browse-url  -*- lexical-binding: t -*-
+;;; browse-url.el --- browse-url  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;
 ;; Initialize browser-url.
@@ -20,4 +20,4 @@
       ('(4) (browse-url-default-browser url))
       (_ (eww-browse-url url)))))
 
-;;; 70-brose-url.el ends here
+;;; brose-url.el ends here
