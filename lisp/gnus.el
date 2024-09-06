@@ -1,7 +1,7 @@
-;;; 80-email.el --- email  -*- lexical-binding: t -*-
+;;; gnus.el --- Gnus  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;
-;; Configure email messaging (with Gnus).
+;; Gnus configuration for Email.
 ;;
 ;;; Code:
 
@@ -140,7 +140,4 @@ _f_: forward
     ("f" gnus-summary-mail-forward)
     ("." nil "cancel")))
 
-;; Local Variables:
-;; nameless-aliases: (("" . "ok"))
-;; End:
-;;; 80-email.el ends here
+;;; gnus.el ends here
