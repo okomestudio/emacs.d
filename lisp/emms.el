@@ -6,9 +6,8 @@
 ;;; Code:
 
 (use-package emms
-  :custom
-  (emms-player-list '(emms-player-mpv))
-  (emms-info-functions '(emms-info-native))
+  :custom ((emms-player-list '(emms-player-mpv))
+           (emms-info-functions '(emms-info-native)))
 
   :ensure-system-package
   (mpv . "sudo apt install mpv")
