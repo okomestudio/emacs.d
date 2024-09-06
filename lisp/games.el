@@ -1,7 +1,7 @@
-;;; 80-games.el --- Games  -*- lexical-binding: t -*-
+;;; games.el --- Games  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;
-;; Initialize games.
+;; Games configuration.
 ;;
 ;;; Code:
 
@@ -30,4 +30,4 @@
 (use-package snow)
 (use-package xkcd)
 
-;;; 80-games.el ends here
+;;; games.el ends here
