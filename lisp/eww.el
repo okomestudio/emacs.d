@@ -1,4 +1,4 @@
-;;; 80-eww.el --- EWW  -*- lexical-binding: t -*-
+;;; eww.el --- EWW  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;
 ;; Emacs's builtin web browser.
@@ -82,4 +82,4 @@ See http://emacs.rubikitch.com/eww-weblio/ for reference."
   :custom
   (shr-use-xwidgets-for-media nil))
 
-;;; 80-eww.el ends here
+;;; eww.el ends here
