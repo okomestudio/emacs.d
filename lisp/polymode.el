@@ -1,9 +1,9 @@
-;;; 40-polymode.el --- Polymode  -*- lexical-binding: t -*-
+;;; polymode.el --- Polymode  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;
 ;; Framework for Multiple Major Modes in Emacs.
 ;;
-;; Within an innermode region, M-n activates minor mode keymap.
+;; Within an innermode region, `M-n' activates minor mode keymap.
 ;;
 ;;; Code:
 
@@ -12,4 +12,4 @@
   ;; See https://github.com/polymode/polymode/issues/316
   (setq-default polymode-lsp-integration nil))
 
-;;; 40-polymode.el ends here
+;;; polymode.el ends here
