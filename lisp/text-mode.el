@@ -7,11 +7,12 @@
 
 (use-package text-mode
   :straight nil
-  :hook
-  (before-save . (lambda ()
-                   (when (derived-mode-p 'text-mode)
-                     (save-excursion
-                       (delete-trailing-whitespace))))))
+  :hook (before-save . text-mode-ok-clean-up-whitespaces)
+  :config
+  (defun text-mode-ok-clean-up-whitespaces ()
+    (when (derived-mode-p 'text-mode)
+      (save-excursion
+        (delete-trailing-whitespace)))))
 
 ;;; CSV
 
@@ -19,7 +20,10 @@
 
 (use-package rainbow-csv
   ;; Highlight CSV and TSV spreadsheet files in different rainbow colors.
-  :straight (rainbor-csv :type git :host github :repo "emacs-vs/rainbow-csv"))
+  :straight (rainbor-csv
+             :type git
+             :host github
+             :repo "emacs-vs/rainbow-csv"))
 
 ;;; TOML
 
