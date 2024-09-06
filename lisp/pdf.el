@@ -1,7 +1,7 @@
 ;;; pdf.el --- PDF  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;
-;; Initialize PDF utilities.
+;; PDF utility configuration.
 ;;
 ;;; Code:
 
