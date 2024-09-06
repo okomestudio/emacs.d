@@ -1,4 +1,4 @@
-;;; 80-ai.el --- ai  -*- lexical-binding: t -*-
+;;; ai.el --- ai  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;
 ;; Configure AI and related tools, including GPT clients.
@@ -43,4 +43,4 @@
   (org-ai-mode
    org-ai-global-mode))
 
-;;; 80-ai.el ends here
+;;; ai.el ends here
