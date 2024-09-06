@@ -1,7 +1,7 @@
 ;;; 50-text-mode.el --- text-mode  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;
-;; Configure text-mode and its derived modes.
+;; text-mode configuration.
 ;;
 ;;; Code:
 
