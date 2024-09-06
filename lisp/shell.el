@@ -1,4 +1,4 @@
-;;; 65-shell.el --- shell  -*- lexical-binding: t -*-
+;;; shell.el --- shell  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;
 ;; Configure the shell mode and related utilities.
@@ -33,4 +33,4 @@
 (use-package bats-mode
   :interpreter "bats")
 
-;;; 65-shell.el ends here
+;;; shell.el ends here

@@ -1,7 +1,7 @@
-;;; 65-python.el --- Python  -*- lexical-binding: t -*-
+;;; python.el --- Python  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;
-;; Configure Python and related utilities.
+;; Python mode configuration.
 ;;
 ;;; Code:
 
@@ -243,7 +243,4 @@
 
 (use-package cython-mode :disabled)
 
-;; Local Variables:
-;; nameless-aliases: (("" . "ok-python"))
-;; End:
-;;; 65-python.el ends here
+;;; python.el ends here

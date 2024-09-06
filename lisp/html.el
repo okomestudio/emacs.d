@@ -1,7 +1,7 @@
-;;; 65-html.el --- html  -*- lexical-binding: t -*-
+;;; html.el --- html  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;
-;; Configure HTML related utilities.
+;; HTML mode configuration.
 ;;
 ;;; Code:
 
@@ -14,4 +14,4 @@
   ;; Add HTML/CSS abbreviation expansion.
   :disabled)
 
-;;; 65-html.el ends here
+;;; html.el ends here

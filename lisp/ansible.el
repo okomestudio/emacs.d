@@ -1,4 +1,4 @@
-;;; 68-ansible.el --- ansible  -*- lexical-binding: t -*-
+;;; ansible.el --- ansible  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;
 ;; Configure Ansible and related utilities.
@@ -51,4 +51,4 @@
   :straight (:host github :repo "okomestudio/poly-ansible"
                    :branch "ts-mode" :fork "okomestudio"))
 
-;;; 68-ansible.el ends here
+;;; ansible.el ends here

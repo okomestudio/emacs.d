@@ -1,4 +1,4 @@
-;;; 65-plantuml.el --- plantuml  -*- lexical-binding: t -*-
+;;; plantuml.el --- plantuml  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;
 ;; Configure plantuml-mode and the related utilities.
@@ -43,4 +43,4 @@
           (write-region (point-min) (point-max) preview-file)))
       (shell-command (format "%s %s &" preview-command preview-file)))))
 
-;;; 65-plantuml.el ends here
+;;; plantuml.el ends here

@@ -1,4 +1,4 @@
-;;; 65-sql.el --- sql  -*- lexical-binding: t -*-
+;;; sql.el --- sql  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;
 ;; Configure sql-mode and related utilities.
@@ -122,7 +122,4 @@
     (unless (file-exists-p dest)
       (url-copy-file src-url dest))))
 
-;; Local Variables:
-;; nameless-aliases: (("" . "sql"))
-;; End:
-;;; 65-sql.el ends here
+;;; sql.el ends here

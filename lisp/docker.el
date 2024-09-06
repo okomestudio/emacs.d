@@ -1,4 +1,4 @@
-;;; 65-docker.el --- Docker  -*- lexical-binding: t -*-
+;;; docker.el --- Docker  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;
 ;; Configure Docker related utilities.
@@ -14,4 +14,4 @@
                           (lsp-ensure-server 'dockerfile-ls)
                           (lsp-deferred))))
 
-;;; 65-docker.el ends here
+;;; docker.el ends here

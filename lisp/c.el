@@ -1,4 +1,4 @@
-;;; 65-c.el --- C  -*- lexical-binding: t -*-
+;;; c.el --- C  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;; Code:
 
@@ -7,4 +7,4 @@
   :config
   (setopt c-basic-offset 2))
 
-;;; 65-c.el ends here
+;;; c.el ends here

@@ -1,7 +1,7 @@
-;;; 65-javascript.el --- javascript  -*- lexical-binding: t -*-
+;;; javascript.el --- JavaScript  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;
-;; Configure js-mode and related utilities.
+;; JavaScript mode configuration.
 ;;
 ;;; Code:
 
@@ -28,4 +28,4 @@
   :commands (prettier-js)
   :ensure-system-package (prettier . "npm install -g prettier"))
 
-;;; 65-javascript.el ends here
+;;; javascript.el ends here

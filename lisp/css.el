@@ -1,7 +1,7 @@
-;;; 65-css.el --- css  -*- lexical-binding: t -*-
+;;; css.el --- CSS  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;
-;; Configure CSS related utilities.
+;; CSS mode configuration.
 ;;
 ;;; Code:
 
@@ -10,4 +10,4 @@
   :hook (css-ts-mode . lsp)
   :custom (css-indent-offset 2))
 
-;;; 65-css.el ends here
+;;; css.el ends here

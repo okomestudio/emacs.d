@@ -1,4 +1,4 @@
-;;; 68-restclient.el --- restclient.el  -*- lexical-binding: t -*-
+;;; restclient.el --- restclient.el  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;
 ;; Configure restclient and related utilities.
@@ -16,4 +16,4 @@
   ;; An org-mode extension to restclient.el
   :disabled)
 
-;;; 68-restclient.el ends here
+;;; restclient.el ends here

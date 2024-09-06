@@ -1,4 +1,4 @@
-;;; 65-graphviz.el --- Graphviz  -*- lexical-binding: t -*-
+;;; graphviz.el --- Graphviz  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;
 ;; Configure Graphviz related utilities.
@@ -9,4 +9,4 @@
   :custom (graphviz-dot-indent-width 2)
   :ensure-system-package (dot . "sudo apt install -y graphviz"))
 
-;;; 65-graphviz.el ends here
+;;; graphviz.el ends here

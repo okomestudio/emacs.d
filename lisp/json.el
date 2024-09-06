@@ -1,4 +1,4 @@
-;;; 65-json.el --- json  -*- lexical-binding: t -*-
+;;; json.el --- json  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;
 ;; Configure json-ts-mode and related utilities.
@@ -32,7 +32,4 @@
                   jq-interactive-default-options "")))
   (advice-add #'jq-interactively :before #'jq-interactively-on-json))
 
-;; Local Variables:
-;; nameless-aliases: (("" . "ok-json"))
-;; End:
-;;; 65-json.el ends here
+;;; json.el ends here
