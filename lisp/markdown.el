@@ -1,7 +1,7 @@
-;;; 55-markdown.el --- Markdown  -*- lexical-binding: t -*-
+;;; markdown.el --- Markdown  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;
-;; Configure Markdown-related utilities.
+;; Markdown configuration.
 ;;
 ;; NOTE: tree-sitter support exists, but not as mature.
 ;;
@@ -28,4 +28,4 @@
   :hook
   (markdown-mode . lsp))
 
-;;; 55-markdown.el ends here
+;;; markdown.el ends here
