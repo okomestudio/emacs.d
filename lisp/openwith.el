@@ -1,4 +1,4 @@
-;;; 70-openwith.el --- openwith  -*- lexical-binding: t -*-
+;;; openwith.el --- openwith  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;
 ;; Configure openwith and the related utilities.
@@ -14,4 +14,4 @@
   (with-eval-after-load 'mm-util
     (add-to-list 'mm-inhibit-file-name-handlers 'openwith-file-handler)))
 
-;;; 70-openwith.el ends here
+;;; openwith.el ends here
