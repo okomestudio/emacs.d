@@ -1,7 +1,7 @@
-;;; 55-yaml.el --- yaml  -*- lexical-binding: t -*-
+;;; yaml.el --- YAML  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;
-;; Configure YAML and related utilities.
+;; YAML mode configuration.
 ;;
 ;;; Code:
 
@@ -44,4 +44,4 @@
                   jq-interactive-default-options "--yaml-roundtrip")))
   (advice-add #'jq-interactively :before #'jq-interactively-on-yaml))
 
-;;; 55-yaml.el ends here
+;;; yaml.el ends here
