@@ -46,27 +46,11 @@
   (no-littering-var-directory (locate-user-emacs-file
                                (convert-standard-filename "var/"))))
 
-;; Load more config files from init.d
+;; Load config files under init.d/
 (use-package init-loader
   :demand t
-  :custom
-  ;; Use this to load specific init.d file for debugging:
-  ;; (init-loader-default-regexp
-  ;;  (concat "\\`\\(?:[[:digit:]]\\{2\\}-\\)\\("
-  ;;          (mapconcat #'identity '("foo" "bar") "\\|")
-  ;;          "\\)\\.el\\'"))
-
-  ;; NOTE: The regexp below is
-  ;;
-  ;;   - case-insensitive
-  ;;   - to skip loading the file with its name ending with `-X.el'
-  ;;
-  (init-loader-default-regexp
-   (concat "\\`\\(?:[[:digit:]]\\{2\\}-\\)"
-           "\\([a-z-]*\\(-[a-wyz-]\\|[a-z][a-z-]\\)\\).el\\'"))
-
-  (init-loader-show-log-after-init ok-debug)
-
+  :custom ((init-loader-byte-compile nil)
+           (init-loader-show-log-after-init ok-debug))
   :config
   (init-loader-load (locate-user-emacs-file "init.d")))
 
