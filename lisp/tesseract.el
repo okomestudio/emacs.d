@@ -9,7 +9,6 @@
   "Image pasting shell command.")
 
 (use-package tesseract
-  :if (eq system-type 'gnu/linux)
   :straight (:host github :repo "SebastianMeisel/tesseract.el")
   :commands (tesseract-change-language)
   :bind ("C-x C-y" . tesseract-ok-ocr-clipboard-image)
