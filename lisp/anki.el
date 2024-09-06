@@ -14,8 +14,7 @@
 
 (use-package anki-editor
   :straight (:host github :repo "anki-editor/anki-editor")
-  :commands (anki-editor-note-at-point
-             anki-editor-push-note-at-point)
+  :commands (anki-editor-push-note-at-point)
   :ensure-system-package (curl . "sudo apt install -y curl")
   :custom ((anki-editor-latex-style 'mathjax)
 
