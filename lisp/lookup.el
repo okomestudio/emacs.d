@@ -1,4 +1,4 @@
-;;; 85-lookup.el --- Lookup  -*- lexical-binding: t -*-
+;;; lookup.el --- Lookup  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;
 ;; The collection of lookup utility exposed via a common key prefix.
@@ -94,4 +94,4 @@
   :preface
   (put 'greppu-search-regexp-pcre 'safe-local-variable #'functionp))
 
-;;; 85-lookup.el ends here
+;;; lookup.el ends here
