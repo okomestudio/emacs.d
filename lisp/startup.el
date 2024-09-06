@@ -54,7 +54,15 @@
                                            (expand-file-name buffer-file-name)))
                                          (t (buffer-name)))))
                                  " - Emacs")))
+
+  :hook (before-save . ok-delete-trailing-whitespace)
+
   :init
+  (defun ok-delete-trailing-whitespace ()
+    (when (derived-mode-p 'text-mode 'prog-mode)
+      (save-excursion
+        (delete-trailing-whitespace))))
+
   (column-number-mode t)
   (global-so-long-mode +1)  ; mitigate perf on files with long lines
   (show-paren-mode +1)      ; highlight matching parens

@@ -1,16 +1,11 @@
-;;; 60-prog-mode.el --- prog-mode  -*- lexical-binding: t -*-
+;;; prog-mode.el --- prog-mode  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;
 ;; `prog-mode' configuration.
 ;;
 ;;; Code:
 
-(use-package prog-mode
-  :straight nil
-  :hook
-  (before-save . (lambda ()
-                   (when (derived-mode-p 'prog-mode)
-                     (save-excursion
-                       (delete-trailing-whitespace))))))
+;; (use-package prog-mode
+;;   :straight nil)
 
-;;; 60-prog-mode.el ends here
+;;; prog-mode.el ends here

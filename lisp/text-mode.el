@@ -1,18 +1,12 @@
-;;; 50-text-mode.el --- text-mode  -*- lexical-binding: t -*-
+;;; text-mode.el --- text-mode  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;
 ;; text-mode configuration.
 ;;
 ;;; Code:
 
-(use-package text-mode
-  :straight nil
-  :hook (before-save . text-mode-ok-clean-up-whitespaces)
-  :config
-  (defun text-mode-ok-clean-up-whitespaces ()
-    (when (derived-mode-p 'text-mode)
-      (save-excursion
-        (delete-trailing-whitespace)))))
+;; (use-package text-mode
+;;   :straight nil)
 
 ;;; CSV
 
@@ -31,4 +25,4 @@
   :straight nil
   :custom (toml-ts-mode-indent-offset 4))
 
-;;; 50-text-mode.el ends here
+;;; text-mode.el ends here
