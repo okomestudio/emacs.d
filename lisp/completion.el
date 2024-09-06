@@ -1,7 +1,7 @@
-;;; 40-completion-.el --- completion  -*- lexical-binding: t -*-
+;;; completion-.el --- completion  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;
-;; Configure Corfu and related utilities.
+;; Completion with Corfu.
 ;;
 ;;; Code:
 
@@ -166,4 +166,4 @@
   :hook (corfu-mode . (lambda () (corfu-prescient-mode 1)))
   :custom (corfu-prescient-enable-filtering nil))
 
-;;; 40-completion-.el ends here
+;;; completion-.el ends here
