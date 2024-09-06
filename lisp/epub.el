@@ -1,4 +1,4 @@
-;;; 70-epub.el --- ePub  -*- lexical-binding: t -*-
+;;; epub.el --- ePub  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;
 ;; Initialize ePub utilities.
@@ -12,4 +12,4 @@
   ;;
   )
 
-;;; 70-epub.el ends here
+;;; epub.el ends here
