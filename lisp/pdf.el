@@ -1,4 +1,4 @@
-;;; 70-pdf.el --- PDF  -*- lexical-binding: t -*-
+;;; pdf.el --- PDF  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;
 ;; Initialize PDF utilities.
@@ -14,4 +14,4 @@
   (define-key pdf-view-mode-map (kbd "C-s") 'isearch-forward)
   (setq pdf-view-resize-factor 1.1))
 
-;;; 70-pdf.el ends here
+;;; pdf.el ends here
