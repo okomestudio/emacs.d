@@ -9,7 +9,7 @@
 
 (use-package elisp-mode
   :straight nil
-  :bind (                               ; No global key binding
+  :bind (;
          :map emacs-lisp-mode-map
          ("C-c b" . oe--format-elisp-buffer)
          :map lisp-data-mode-map
@@ -47,12 +47,6 @@
 (use-package macrostep
   ;; Interactive macro-expander.
   )
-
-(use-package nameless
-  ;; See `read-symbol-shorthands' for another, built-in approach.
-  :hook (emacs-lisp-mode . nameless-mode)
-  :custom ((nameless-global-aliases '())
-           (nameless-private-prefix t)))
 
 (use-package paredit
   :hook ((emacs-lisp-mode lisp-data-mode) . oe--enable-paredit)
