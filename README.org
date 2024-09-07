@@ -72,4 +72,5 @@ Over the years, my Emacs init.el has been inspired by numerous sources, some of 
   - https://protesilaos.com/emacs/dotemacs
   - https://sachachua.com/dotemacs/index.html
   - https://takaxp.github.io/init.html
+  - [[https://gist.github.com/axyz/76871b404df376271b521212fba8a621][axyz/early-init.el]]
   - The =reading-init-el= channel at emacs-jp.slack.com
