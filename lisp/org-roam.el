@@ -109,7 +109,8 @@ Otherwise, it is the same as the vanilla version of
       (org-roam-ref-find ref)))
 
   (require 'org-roam-dailies)
-  (org-roam-db-autosync-mode))
+  (org-roam-db-sync)
+  (org-roam-db-autosync-mode +1))
 
 (use-package org-roam-plugin-ok
   :straight (:host github :repo "okomestudio/org-roam-plugin-ok")
