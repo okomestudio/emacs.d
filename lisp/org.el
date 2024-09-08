@@ -253,87 +253,16 @@
   :preface
   (put 'org-agenda-custom-commands 'safe-local-variable #'listp))
 
-;; APPEARANCE
-
-(use-package org-modern
-  :custom ((org-modern-block-name t)  ; use `org-modern-indent'
-           (org-modern-checkbox '((?X . #("▢𐄂" 0 2 (composition ((2)))))
-                                  (?- . #("▢–" 0 2 (composition ((2)))))
-                                  (?\s . #("▢" 0 1 (composition ((1)))))))
-           (org-modern-hide-stars nil)
-           (org-modern-keyword "‣ ")
-           (org-modern-list '((?+ . "▷")
-                              (?- . "𑁋")  ; "–"
-                              (?* . "▶")))
-           (org-modern-priority t)
-           (org-modern-star '("◉" "🞛" "○" "▷"))
-           (org-modern-statistics t)
-           (org-modern-table nil)
-           (org-modern-tag t)
-           (org-modern-timestamp t)
-           (org-modern-todo t))
-  :hook ((org-mode . org-modern-mode)
-         (org-agenda-finalize . org-modern-agenda)))
-
-;; APPEARANCE - INDENTATION
-
-(defun ok-invoke-only-on-current-buffer-window (func &rest rest)
-  "Invoke FUNC only when buffer window is visible."
-  (when (get-buffer-window (current-buffer) t)
-    (apply func rest)))
-
-(use-package org-indent
-  :straight nil
-  :after (org)
-  :hook (org-mode . (lambda () (org-indent-mode 1)))
-  :config
-  (advice-add #'org-indent-refresh-maybe
-              :around #'ok-invoke-only-on-current-buffer-window))
-
-(use-package org-margin
-  :disabled  ; conflicts with `org-indent-mode'
-  :straight (:host github :repo "rougier/org-margin")
-  :after org
-  :hook (org-mode . (lambda () (org-margin-mode 1)))
-  :init (use-package svg-lib))
-
-(use-package org-modern-indent
-  :straight (:host github :repo "jdtsmith/org-modern-indent")
-  :hook (org-indent-mode . org-modern-indent-ok--fix-top-level-indent)
-  :init
-  (add-hook 'org-mode-hook #'org-modern-indent-mode 90)
-
-  :config
-  (advice-add #'org-modern-indent--refresh-watch
-              :around #'ok-invoke-only-on-current-buffer-window)
-
-  (defun org-modern-indent-ok--fix-top-level-indent ()
-    ;; See github.com/jdtsmith/org-modern-indent/issues/10
-    (if org-indent--text-line-prefixes
-        (aset org-indent--text-line-prefixes
-              0 (propertize " " 'face 'org-indent)))))
-
-;;; APPEARANCE - TABLE
-
-(use-package valign
-  ;; Pixel-perfect visual alignment for Org and Markdown tables.
-  :hook (org-mode . valign-ok--maybe-activate)
-  :custom ((valign-fancy-bar t)
-           (valign-max-table-size 4000)
-           (valign-signal-parse-error t))
-  :config
-  (defvar valign-ok--max-buffer-size 100000
-    "Default max-buffer-size above which `valign-mode' will not activate.")
-
-  (defun valign-ok--maybe-activate ()
-    (when (<= (buffer-size) valign-ok--max-buffer-size)
-      (valign-mode 1))))
-
 ;; THEME
 
 (use-package org-theme-ok
   :straight (:host github :repo "okomestudio/org-theme-ok")
-  :demand t)
+  :hook (org-mode . (lambda () (require 'org-theme-ok)))
+  :init
+  (use-package ok
+    :straight (:host github :repo "okomestudio/ok.el"))
+  (use-package org-modern-indent
+    :straight (:host github :repo "jdtsmith/org-modern-indent")))
 
 ;; MISC.
 
