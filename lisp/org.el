@@ -41,6 +41,17 @@
   (pdfcropmargins . "pip install pdfCropMargins")
 
   :config
+  ;; ENHANCE DEFAULT BEHAVIORS
+  (defun org-open-at-point--ad-prefix (orig-func &optional arg)
+    (pcase (car arg)
+      ;; With a prefix argument, open the linked file in the same window
+      (4 (let ((org-link-frame-setup
+                `((file . find-file) . ,org-link-frame-setup)))
+           (funcall orig-func arg)))
+      (_ (funcall orig-func arg))))
+
+  (advice-add #'org-open-at-point :around #'org-open-at-point--ad-prefix)
+
   ;; HELPER FUNCTIONS
   (defun ok-org--init-visuals ()
     (setq-local fill-column 80)
