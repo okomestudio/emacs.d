@@ -44,18 +44,18 @@ This is also used as the default.")
                     'iso-8859-3
                     (font-spec :family ok-faces-font-family-fixed-pitch)
                     frame)
-  (ok-face-set-fontset-font "fontset-default"
-                            'ja
-                            ok-faces-font-family-fixed-pitch-ja
-                            frame)
-  (ok-face-fontset-create "fontset-fixed pitch"
-                          ok-faces-font-family-fixed-pitch
-                          :subsets `((ja ,ok-faces-font-family-fixed-pitch-ja))
-                          :frame frame)
-  (ok-face-fontset-create "fontset-variable pitch"
-                          ok-faces-font-family-variable-pitch
-                          :subset `((ja ,ok-faces-font-family-variable-pitch-ja))
-                          :frame frame)
+  (ok-fontset-set-font "fontset-default"
+                       'ja
+                       ok-faces-font-family-fixed-pitch-ja
+                       frame)
+  (ok-fontset-create "fontset-fixed pitch"
+                     ok-faces-font-family-fixed-pitch
+                     :subsets `((ja ,ok-faces-font-family-fixed-pitch-ja))
+                     :frame frame)
+  (ok-fontset-create "fontset-variable pitch"
+                     ok-faces-font-family-variable-pitch
+                     :subset `((ja ,ok-faces-font-family-variable-pitch-ja))
+                     :frame frame)
 
   ;; STANDARD FACES
   (set-face-attribute 'default frame :height 120 :font "fontset-default" :fontset "fontset-default")

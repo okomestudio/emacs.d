@@ -320,8 +320,8 @@
 
 ;; THEME
 
-(use-package org-ok-theme
-  :straight (:host github :repo "okomestudio/org-ok-theme")
+(use-package org-theme-ok
+  :straight (:host github :repo "okomestudio/org-theme-ok")
   :demand t)
 
 ;; MISC.
