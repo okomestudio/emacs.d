@@ -71,7 +71,10 @@
   :straight nil
   :bind ("C-x r F" . recentf)
   :custom (recentf-mode t)
-  :config (push "/\\.config/emacs/var/" recentf-exclude))
+  :config
+  (push "/\\.config/emacs/var/" recentf-exclude)
+  (push "magit-diff.el" recentf-exclude)
+  (push "magit-status.el" recentf-exclude))
 
 (use-package save-place
   :straight nil
