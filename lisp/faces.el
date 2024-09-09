@@ -54,7 +54,7 @@ This is also used as the default.")
                      :frame frame)
   (ok-fontset-create "fontset-variable pitch"
                      ok-faces-font-family-variable-pitch
-                     :subset `((ja ,ok-faces-font-family-variable-pitch-ja))
+                     :subsets `((ja ,ok-faces-font-family-variable-pitch-ja))
                      :frame frame)
 
   ;; STANDARD FACES
