@@ -31,12 +31,6 @@
          ("C-M-i" . completion-at-point))
   :bind-keymap ("C-c n d" . org-roam-dailies-map)
   :custom ((org-roam-completion-everywhere nil)
-           (org-roam-dailies-capture-templates
-            '(("d" "default" entry "* %?\n<%<%Y-%m-%d %a %H:%M>>"
-               :target
-               (file+head "%<%Y-%m-%d>.org"
-                          "#+title: %<%Y-%m-%d>\n"))))
-           (org-roam-dailies-directory "journal/")
            (org-roam-database-connector 'sqlite-builtin)
            (org-roam-db-location (no-littering-expand-var-file-name
                                   "org-roam/roam/.roam.db"))
@@ -56,6 +50,7 @@
   (ok-safe-local-variable-add orb-preformat-keywords listp
                               org-roam-capture-templates listp
                               org-roam-dailies-capture-templates listp
+                              org-roam-dailies-directory stringp
                               org-roam-db-location stringp
                               org-roam-directory stringp
                               org-roam-mode-sections listp
@@ -109,13 +104,37 @@ Otherwise, it is the same as the vanilla version of
       (org-roam-ref-find ref)))
 
   (require 'org-roam-dailies)
+
   (org-roam-db-sync)
-  (org-roam-db-autosync-mode +1))
+  (org-roam-db-autosync-mode +1)
+
+  (require 'org-roam-plugin-ok)
+  (setq orp-ok-initialized t)
+
+  :init
+  ;; On an extended idle, try triggering `org-roam' to fill the node
+  ;; cache for speeding up lookup
+  (defun org-roam-on-idle-init ()
+    (message "Running org-roam-on-idle-init...")
+    (require 'org-roam)
+    (org-roam-node-list)
+
+    (require 'org-roam-plugin-ok)
+    (orp-ok-node-fill-caches))
+
+  (defvar orp-ok-initialized nil
+    "Non-nil if initialization has been run.")
+
+  (defun org-roam-init-on-idle ()
+    (message "Starting org-roam-init-on-idle...")
+    (when (not orp-ok-initialized)
+      (org-roam-on-idle-init))
+    (message "Finished org-roam-init-on-idle"))
+
+  (run-with-idle-timer 15 nil #'org-roam-init-on-idle))
 
 (use-package org-roam-plugin-ok
   :straight (:host github :repo "okomestudio/org-roam-plugin-ok")
-  :after org-roam
-  :demand t
   :init
   (use-package ok-plural
     :straight (:host github :repo "okomestudio/ok-plural.el")
