@@ -40,6 +40,9 @@
   (latex . "sudo apt install -y texlive texlive-latex-extra texlive-lang-cjk texlive-extra-utils texlive-luatex texlive-science")
   (pdfcropmargins . "pip install pdfCropMargins")
 
+  :preface
+  (ok-safe-local-variable-add org-tags-exclude-from-inheritance listp)
+
   :config
   ;; ENHANCE DEFAULT BEHAVIORS
   (defun org-open-at-point--ad-prefix (orig-func &optional arg)
