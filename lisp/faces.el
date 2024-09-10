@@ -105,8 +105,8 @@ This is also used as the default.")
   :straight nil
   :init
   (ok-faces--set-up-action (lambda ()
-                     ;; (ok-faces--apply-font-rescale)
-                     (ok-faces--setup-faces-for-frame)))
+                             ;; (ok-faces--apply-font-rescale)
+                             (ok-faces--setup-faces-for-frame)))
   :hook
   ;; Scale texts by mode; `text-scale-mode' affect the `default face.
   (elfeed-search-mode . (lambda () (text-scale-set 1.0)))
@@ -114,10 +114,11 @@ This is also used as the default.")
   (eww-mode . (lambda () (text-scale-set 0.0)))
   (org-mode . (lambda ()
                 (text-scale-set 0.2)
-                (let ((factor (expt text-scale-mode-step
-                                    text-scale-mode-amount)))
-                  (plist-put org-format-latex-options
-                             :scale (* 4.0 factor)))))
+                ;; (let ((factor (expt text-scale-mode-step
+                ;;                     text-scale-mode-amount)))
+                ;;   (plist-put org-format-latex-options
+                ;;              :scale (* 4.0 factor)))
+                ))
   (prog-mode . (lambda () (text-scale-set 0.0)))
   (text-mode . (lambda () (text-scale-set 0.0)))
   (treemacs-mode . (lambda () (text-scale-set -0.4))))
