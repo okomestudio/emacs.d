@@ -10,6 +10,7 @@
          :map org-mode-map
          ("C-c C-l" . org-insert-link)
          ("C-c C-q" . org-set-tags-command)
+         ("C-c C-x C-l" . math-preview-all)
          ("C-c i h" . org-insert-heading)  ; or use M-RET
          ("C-c i l" . ok-org-insert-item)
          ("C-c i u" . org-cliplink)
@@ -97,8 +98,7 @@
     (org-set-emph-re 'org-emphasis-regexp-components regexp-components)))
 
 (use-package math-preview
-  :bind (:map org-mode-map
-              ("C-c C-x C-l" . math-preview-all))
+  :commands (math-preview-all)
   :custom (math-preview-scale 0.8)
   :ensure-system-package
   (math-preview . "npm install -g git+https://gitlab.com/matsievskiysv/math-preview"))
