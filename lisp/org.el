@@ -29,16 +29,12 @@
            (org-list-indent-offset 2)
            (org-M-RET-may-split-line '((headline . nil)
                                        (default . t)))
-           (org-preview-latex-image-directory ".ltximg/")
            (org-return-follows-link t)
            (org-startup-folded nil)
            (org-startup-indented t)
            (org-support-shift-select t)
            (org-tags-column 0)
            (org-todo-keywords '((sequence "TODO" "WIP" "|" "SKIP" "DONE"))))
-  :ensure-system-package
-  (latex . "sudo apt install -y texlive texlive-latex-extra texlive-lang-cjk texlive-extra-utils texlive-luatex texlive-science")
-  (pdfcropmargins . "pip install pdfCropMargins")
 
   :preface
   (ok-safe-local-variable-add org-tags-exclude-from-inheritance listp)
@@ -98,34 +94,14 @@
            "."                       ; body "."
            1)))                      ; max newlines
     ;; See `org-emph-re' and `org-verbatim-re' for the final regexps
-    (org-set-emph-re 'org-emphasis-regexp-components regexp-components))
+    (org-set-emph-re 'org-emphasis-regexp-components regexp-components)))
 
-  ;; LATEX PREVIEW
-  (setopt org-preview-latex-default-process 'lualatexpdf)
-  ;; (setq org-latex-inputenc-alist '(("utf8" . "utf8x")))
-  ;; (add-to-list 'org-latex-packages-alist '("" "unicode-math"))
-  (add-to-list
-   'org-preview-latex-process-alist
-   '(lualatexpdf
-     :programs ("lualatex" "dvisvgm")
-     :description "pdf > svg"
-     :message "you need to install the programs: lualatex and dvisvgm."
-     :image-input-type "pdf"
-     :image-output-type "svg"
-     :image-size-adjust (1.7 . 1.5)
-     :latex-compiler ("lualatex -interaction nonstopmode --shell-escape -output-directory %o %f")
-     :image-converter ("pdfcropmargins -v -p 0 -a -5 %f -o /tmp/cropped.pdf ; dvisvgm -P /tmp/cropped.pdf -n -b min -c %S -o %O")))
-  (add-to-list
-   'org-preview-latex-process-alist
-   '(lualatexdvi
-     :programs ("lualatex" "dvisvgm")
-     :description "dvi > svg"
-     :message "you need to install the programs: lualatex and dvisvgm."
-     :image-input-type "dvi"
-     :image-output-type "svg"
-     :image-size-adjust (1.7 . 1.5)
-     :latex-compiler ("dvilualatex -interaction nonstopmode --shell-escape -output-directory %o %f")
-     :image-converter ("dvisvgm %f -n -b min -c %S -o %O"))))
+(use-package math-preview
+  :bind (:map org-mode-map
+              ("C-c C-x C-l" . math-preview-all))
+  :custom (math-preview-scale 0.8)
+  :ensure-system-package
+  (math-preview . "npm install -g git+https://gitlab.com/matsievskiysv/math-preview"))
 
 ;; ORG BABEL
 
