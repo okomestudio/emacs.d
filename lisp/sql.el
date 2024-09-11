@@ -1,23 +1,28 @@
-;;; sql.el --- sql  -*- lexical-binding: t -*-
+;;; sql.el --- SQL  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;
-;; Configure sql-mode and related utilities.
+;; SQL mode configuration.
+;;
+;; USAGE:
+;;
+;; In a buffer in which `sql-mode' is active, run
+;; `sql-set-sqli-buffer' interactively to connect to an existing
+;; database.
+;;
+;; Define known connections in `sql-connection-alist' in
+;; .dir-locals.el for convenience.
 ;;
 ;;; Code:
 
 (use-package sql
-  :bind (nil
-         :map sql-mode-map
-         ("C-c b" . sql-format-code))
-  :hook ((sql-mode . lsp-deferred)      ; Uses `sqls`
+  :bind (:map sql-mode-map
+              ("C-c b" . sql-format-code))
+  :hook ((sql-mode . lsp-deferred)      ; uses `sqls'
          (sql-interactive-mode . (lambda () (setq-local truncate-lines t))))
-
+  :custom ((lsp-sqls-timeout 30)
+           (sql-product 'ansi))
   :ensure-system-package
   (sqls . "go install github.com/lighttiger2505/sqls@latest")
-
-  :custom
-  (lsp-sqls-timeout 30)
-  (sql-product 'ansi)
 
   :preface
   (ok-safe-local-variable-add sql-connection-alist listp
@@ -36,60 +41,28 @@
       (delete-trailing-whitespace)))
 
   (with-eval-after-load 'org
-    ;; TODO: Replace to-be-obsoleted `defadvice' with `advice-add`.
-    (defadvice org-edit-special (before org-edit-src-code activate)
+    (defun org-edit-special-ok--set-sql-product ()
       "Intercept org-src-mode to set SQL product variant."
-      (sql-set-product
-       (pcase (nth 0 (org-babel-get-src-block-info))
-         ("sql" (pcase (cdr (assoc :engine
-                                   (nth 2 (org-babel-get-src-block-info))))
-                  ("mysql" 'mysql)
-                  ("postgres" 'postgres)
-                  ("postgresql" 'postgres)
-                  (_ 'ansi)))
-         ("sqlite" 'sqlite)
-         (_ 'ansi))))))
+      (let ((lang (nth 0 (org-babel-get-src-block-info))))
+        (when (member lang '("sql" "sqlite"))
+          (sql-set-product
+           (pcase lang
+             ("sql" (pcase (cdr (assoc :engine
+                                       (nth 2 (org-babel-get-src-block-info))))
+                      ("mysql" 'mysql)
+                      ("postgres" 'postgres)
+                      ("postgresql" 'postgres)
+                      (_ 'ansi)))
+             ("sqlite" 'sqlite)
+             (_ 'ansi))))))
 
-
-(use-package sqlformat
-  ;; Use `pgformatter'.
-  :disabled
-  :custom
-  (sqlformat-command 'pgformatter)
-  (sqlformat-args '("-f2" "-g" "-s4" "-U2"
-                    "-M" "-p" "\n[ ]*-- sqlfmt: off\n(?:.*)?-- sqlfmt: on\n"))
-  :ensure-system-package (pg_format . "sudo apt install -y pgformatter"))
-
-
-(use-package sqlformat
-  ;; Use `sqlfluff'.
-  :disabled
-  :autoload (sqlformat-args-set)
-  :custom (sqlformat-command 'sqlfluff)
-  :ensure-system-package ("sqlfluff" . "pip install sqlfluff")
-  ;; :hook (sql-mode . ok-set-sqlformat-args)
-  :config
-  (defun sqlformat-args-set ()
-    "Set formatter dialect."
-    (setq-local sqlformat-args
-                (pcase sql-dialect
-                  ('mysql '("-vvv" "--dialect" "mysql"))
-                  ('postgres '("-vvv" "--dialect" "postgres"))
-                  ('sqlite '("-vvv" "--dialect" "sqlite" "-e" "CP02"))
-                  (_ '("-vvv" "--dialect" "ansi"))))))
-
-
-(use-package sqlformat
-  ;; Use `sqlformat'.
-  :disabled
-  :custom (sqlformat-command 'sqlformat)
-  :ensure-system-package ("sqlformat" . "pip install sqlparse"))
-
+    (advice-add #'org-edit-special
+                :before #'org-edit-special-ok--set-sql-product)))
 
 (use-package sqlformat
   ;; Use `sql-formatter' (github.com/sql-formatter-org/sql-formatter)
-  :autoload (sqlformat-args-set)
   :custom (sqlformat-command 'sql-formatter)
+  :autoload (sqlformat-args-set)
   :ensure-system-package (sql-formatter . "npm install -g sql-formatter")
   :config
   (defun sqlformat-args-set ()
@@ -108,18 +81,5 @@
                         "]}}")))
        ('sqlite '("-l" "sqlite"))
        (_ nil)))))
-
-
-(use-package sql-upcase
-  :disabled
-  :straight nil
-  :hook ((sql-mode sql-interactive-mode) . sql-upcase-mode)
-  :init
-  (let* ((dest (expand-file-name "init.d/sql-upcase.el" user-emacs-directory))
-         (src-host "https://raw.githubusercontent.com")
-         (src-path "emacsmirror/emacswiki.org/master/sql-upcase.el")
-         (src-url (file-name-concat src-host src-path)))
-    (unless (file-exists-p dest)
-      (url-copy-file src-url dest))))
 
 ;;; sql.el ends here
