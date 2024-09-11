@@ -1,7 +1,7 @@
 ;;; startup.el --- Startup  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;
-;; Configure Emacs startup settings.
+;; Emacs startup settings.
 ;;
 ;;; Code:
 
@@ -14,7 +14,7 @@
   :demand t
   :bind (("<f5>" . 'ok-buffer-revert-no-confirm)
          ("C-S-o" . 'ok-edit-insert-newline-above)
-         ("C-c C-x SPC" . 'ok-edit-insert-zero-width-space)
+         ("C-c i SPC" . 'ok-edit-insert-zero-width-space)
          ("C-o" . 'ok-edit-insert-newline-below)
          ("M-q" . 'ok-edit-fill-or-unfill-paragraph))
   :custom ((async-shell-command-buffer "new-buffer")
