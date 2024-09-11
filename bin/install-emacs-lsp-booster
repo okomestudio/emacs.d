@@ -1,8 +1,10 @@
-#!/usr/bin/env bash
+#!/usr/bin/sh
+
+source=https://github.com/blahgeek/emacs-lsp-booster/releases/download/v0.2.1/emacs-lsp-booster_v0.2.1_x86_64-unknown-linux-musl.zip
 
 cd /tmp
 
-curl -L -O https://github.com/blahgeek/emacs-lsp-booster/releases/download/v0.2.0/emacs-lsp-booster_v0.2.0_x86_64-unknown-linux-musl.zip
+curl -L -O $source
 
 unzip emacs-lsp-booster_*.zip
 mv emacs-lsp-booster ~/.local/bin
