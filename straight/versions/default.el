@@ -105,7 +105,6 @@
  ("list-unicode-display" . "57b4384ebe0c5d10890ee0dfcf66d0b16e5f5060")
  ("locale-eaw" . "75849f68fac1848013e5f242c85357ec89d1b974")
  ("loop.el" . "9db6372791bbd0cf3fa907ed0ae3e6b7bcf6cc57")
- ("lsp-booster.el" . "780c1f693048de83460f4c1bfe981edd767a60ee")
  ("lsp-grammarly" . "6f4c52366d0aa9df0b7c79ef1c568dd555808fa5")
  ("lsp-ltex" . "49371b22e1e971d65680d2a02cb404a46e7710ef")
  ("lsp-mode" . "52987755175042b9569e32d72ae29eba119020d6")
