@@ -19,6 +19,8 @@
   :custom ((anki-editor-latex-style 'mathjax)
            (anki-editor-org-tags-as-anki-tags t)
            ;; (request-log-level 'debug)  ; for debugging
-           ))
+           )
+  :preface
+  (put 'anki-editor-ignored-org-tags 'safe-local-variable #'listp))
 
 ;;; anki.el ends here
