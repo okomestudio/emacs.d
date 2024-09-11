@@ -31,11 +31,12 @@ The function returns LSP servers that have been shut down."
       workspaces)))
 
 (use-package lsp-booster
-  :straight (:host github :repo "okomestudio/lsp-booster.el")
+  :straight (lsp-booster
+             :host github
+             :repo "okomestudio/lsp-booster.el"
+             :post-build (("make")))
   :commands (lsp-booster-mode)
-  :ensure-system-package
-  (emacs-lsp-booster . "~/.config/emacs/bin/install-emacs-lsp-booster")
-  :init (lsp-booster-mode))
+  :init (lsp-booster-mode 1))
 
 (use-package lsp-ui
   ;; UI integration for lsp-mode.
