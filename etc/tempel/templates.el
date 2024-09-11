@@ -1,5 +1,22 @@
 emacs-lisp-mode
 
+(elisp-begins-here ";;; replace-me.el --- Replace Me  -*- lexical-binding: t -*-
+;;; Commentary:
+;;; Code:
+")
+
+(elisp-copyright ";; Copyright (C) 2024 Taro Sato
+;;
+;; Author: Taro Sato <okomestudio@gmail.com>
+;; URL: https://github.com/okomestudio/
+;; Version: 0.1
+;; Keywords:
+;; Package-Requires: ((emacs "29.1"))
+")
+
+(elisp-ends-here "(provide 'replace-me)
+;;; replace-me ends here")
+
 (locvar-nameless ";; Local Variables:
 ;; nameless-aliases: ((\"\" . \"prefix\"))
 ;; End:")
