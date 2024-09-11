@@ -146,11 +146,9 @@
 (use-package pydoc
   :bind (;
          :map python-mode-map
-         ("C-h f" . pydoc-at-point)
-         ("C-h v" . pydoc-at-point)
+         ("C-h o" . pydoc-at-point)
          :map python-ts-mode-map
-         ("C-h f" . pydoc-at-point)
-         ("C-h v" . pydoc-at-point))
+         ("C-h o" . pydoc-at-point))
   :hook ((python-mode . (lambda () (require 'pydoc)))
          (python-ts-mode . (lambda () (require 'pydoc)))))
 
