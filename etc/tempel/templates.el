@@ -50,6 +50,8 @@ lisp-data-mode
 
 org-mode
 
+(begin "#+begin_" (s name) n> r> n "#+end_" name)
+
 (latex-equation "\\begin{equation}" r> n> "\\end{equation}")
 (latex-equation-star "\\begin{equation*}" r> n> "\\end{equation*}")
 
