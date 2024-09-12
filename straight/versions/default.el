@@ -108,7 +108,7 @@
  ("lsp-booster.el" . "1b9818a53e85b047853d4794b12f16431f6d7543")
  ("lsp-grammarly" . "6f4c52366d0aa9df0b7c79ef1c568dd555808fa5")
  ("lsp-ltex" . "49371b22e1e971d65680d2a02cb404a46e7710ef")
- ("lsp-mode" . "52987755175042b9569e32d72ae29eba119020d6")
+ ("lsp-mode" . "dd61303b2dc989a58f7dddd4c754f828a3f52107")
  ("lsp-treemacs" . "1d43e9e0307f84496a4a7ddf9dba481000391dbd")
  ("lsp-ui" . "00f1fecdfb41c30428734cf27e492f26f46627fb")
  ("macrostep" . "4939d88779761e8b5461b4cf73f86600172987db")
