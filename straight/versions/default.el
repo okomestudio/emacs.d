@@ -175,7 +175,6 @@
  ("pydoc" . "c9d8b5249c1b3814da062ed9976e4137d6e8d869")
  ("pyenv-mode" . "de0d750b9c3057fd7cecc72e6a290902a0475afe")
  ("pyimport" . "8906357e0d2ce846dbd9f821e960e7f49f0694d7")
- ("python-sql-mode.el" . "00f2818340d26a2e2e2124b9dee3cb80378998cd")
  ("pythonic" . "00f8cafe02bdac0f3e562ffe6881ce654c8eb588")
  ("queue" . "76556620881f8709035f9417697b3b69c9b5241a")
  ("rainbow-csv" . "aa09e2cc79d32f890177c6d0b0376c4aa2708d3e")
