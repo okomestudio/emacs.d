@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+#
+# semgrep runner.
+#
+# Used by semgrep LSP client; see the lsp-mode use-package config.
+#
+
+prefix="$(pyenv prefix)"
+
+if [ ! -x "$prefix/bin/semgrep" ]; then
+  "$prefix/bin/pip" install semgrep >/dev/null 2>&1
+fi
+
+exec "$prefix/bin/semgrep" $@
