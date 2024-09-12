@@ -1,7 +1,7 @@
 ;;; consult.el --- Consult  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;
-;; Search and navigation commands via Consulting `completing-read'.
+;; Consulting `completing-read' for search and navigation.
 ;;
 ;;; Code:
 
@@ -12,7 +12,8 @@
                "--visit" "README.org"
                "--funcall" "org-texinfo-export-to-texinfo")
               ("makeinfo" "consult.texi" "-o" "consult.info")
-              ("install-info" "consult.info" "dir")))
+              ;; ("install-info" "consult.info" "dir")
+              ))
   :bind (([remap electric-apropos] . consult-apropos)
          ;; ([remap apropos] . consult-apropos)
          ([remap switch-to-buffer-other-window] . consult-buffer-other-window)
