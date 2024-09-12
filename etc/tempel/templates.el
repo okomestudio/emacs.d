@@ -11,7 +11,7 @@ emacs-lisp-mode
 ;; URL: https://github.com/okomestudio/
 ;; Version: 0.1
 ;; Keywords:
-;; Package-Requires: ((emacs "29.1"))
+;; Package-Requires: ((emacs \"29.1\"))
 ")
 
 (elisp-ends-here "(provide 'replace-me)
