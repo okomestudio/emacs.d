@@ -5,24 +5,31 @@
 ;;
 ;;; Code:
 
+;; COMMON ELISP LIBRARIES
+
 (use-package ok
   :straight (:host github :repo "okomestudio/ok.el")
   :demand t)
+(use-package dash) ;; A modern list library for Emacs
+(use-package uuid)
+
+;; MAIN STARTUP CONFIG
 
 (use-package emacs
   :straight nil
   :demand t
-  :bind (("<f5>" . 'ok-buffer-revert-no-confirm)
-         ("C-S-o" . 'ok-edit-insert-newline-above)
-         ("C-c i SPC" . 'ok-edit-insert-zero-width-space)
-         ("C-o" . 'ok-edit-insert-newline-below)
-         ("M-q" . 'ok-edit-fill-or-unfill-paragraph))
+  :bind (("<f5>" . ok-buffer-revert-no-confirm)
+         ("C-S-o" . ok-edit-insert-newline-above)
+         ("C-c i SPC" . ok-edit-insert-zero-width-space)
+         ("C-o" . ok-edit-insert-newline-below)
+         ("C-x C-c". iconify-frame)
+         ("M-q" . ok-edit-fill-or-unfill-paragraph))
   :custom ((async-shell-command-buffer "new-buffer")
            (case-fold-search t)
            (compilation-scroll-output t)
            (confirm-kill-processes nil)
            (enable-recursive-minibuffers t)
-           (initial-major-mode #'lisp-interaction-mode)  ; `*scratch*' buffer
+           (initial-major-mode #'lisp-interaction-mode) ; `*scratch*' buffer
            (load-prefer-newer t)
            (next-error-message-highlight t)
            (tab-width 2)
@@ -33,7 +40,7 @@
            (word-wrap-by-category t)
 
            ;; Basic editing
-           (sentence-end-double-space nil)  ; in paragraphs.el
+           (sentence-end-double-space nil) ; in paragraphs.el
            (show-paren-context-when-offscreen t)
            (show-paren-delay 0)
            (size-indication-mode nil)
@@ -66,10 +73,10 @@
       (save-excursion
         (delete-trailing-whitespace))))
 
-  (column-number-mode t)
-  (global-so-long-mode +1)  ; mitigate perf on files with long lines
-  (show-paren-mode +1)      ; highlight matching parens
-  (subword-mode)
+  (column-number-mode 1)
+  (global-so-long-mode 1)     ; mitigate perf on files with long lines
+  (show-paren-mode 1)         ; highlight matching parens
+  (subword-mode 1)
   (tooltip-mode 1)
   (setq-default indent-tabs-mode nil)
 
@@ -85,19 +92,12 @@
 
 (use-package autorevert
   :straight nil
-  :custom ((auto-revert-avoid-polling t)
-           ;; (global-auto-revert-non-file-buffers t)
-           )
+  :custom ((auto-revert-avoid-polling t))
   :init (global-auto-revert-mode 1))
 
 (use-package indent
   :straight nil
   :custom ((tab-always-indent 'complete)))
-
-;; COMMON ELISP LIBRARIES
-
-(use-package dash) ;; A modern list library for Emacs
-(use-package uuid)
 
 ;; SHELL
 
