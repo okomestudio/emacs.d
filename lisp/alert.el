@@ -6,6 +6,7 @@
 ;;; Code:
 
 (use-package alert
+  :demand t
   :custom ((alert-default-style 'notifications))
   :config
   ;; Use `notify-move-time' with `cancel-timer' to suppress this alert
