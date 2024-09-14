@@ -55,7 +55,9 @@ org-mode
 (latex-equation "\\begin{equation}" r> n> "\\end{equation}")
 (latex-equation-star "\\begin{equation*}" r> n> "\\end{equation*}")
 
-(transclude "#+transclude: " r> " :level 2 :exclude-elements \"drawer keyword\"")
+(transclude-general "#+transclude: " r>
+                    " :level 2 :exclude-elements \"drawer keyword\"")
+(transclude-only-contents "#+transclude: " r> " :only-contents")
 
 (anki-note-basic "* Anki note :anki:
 :PROPERTIES:
