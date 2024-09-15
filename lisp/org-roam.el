@@ -108,37 +108,16 @@ Otherwise, it is the same as the vanilla version of
   (org-roam-db-sync)
   (org-roam-db-autosync-mode +1)
 
-  (require 'org-roam-plugin-ok)
-  (setq orp-ok-initialized t)
-
-  :init
-  ;; On an extended idle, try triggering `org-roam' to fill the node
-  ;; cache for speeding up lookup
-  (defun org-roam-on-idle-init ()
-    (message "Running org-roam-on-idle-init...")
-    (require 'org-roam)
-    (org-roam-node-list)
-
-    (require 'org-roam-plugin-ok)
-    (orp-ok-node-fill-caches))
-
-  (defvar orp-ok-initialized nil
-    "Non-nil if initialization has been run.")
-
-  (defun org-roam-init-on-idle ()
-    (message "Starting org-roam-init-on-idle...")
-    (when (not orp-ok-initialized)
-      (org-roam-on-idle-init))
-    (message "Finished org-roam-init-on-idle"))
-
-  (run-with-idle-timer 15 nil #'org-roam-init-on-idle))
+  (org-roam-plugin-ok-mode 1))
 
 (use-package org-roam-plugin-ok
   :straight (:host github :repo "okomestudio/org-roam-plugin-ok")
   :init
   (use-package ok-plural
     :straight (:host github :repo "okomestudio/ok-plural.el")
-    :demand t))
+    :demand t)
+
+  (org-roam-plugin-ok-on-idle-init-setup))
 
 (use-package org-roam-ui
   :after org-roam
