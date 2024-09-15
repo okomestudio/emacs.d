@@ -55,6 +55,14 @@ org-mode
 (latex-equation "\\begin{equation}" r> n> "\\end{equation}")
 (latex-equation-star "\\begin{equation*}" r> n> "\\end{equation*}")
 
+(src-pytest-runner "#+begin_src shell :var in=\"" p "\" :exports none :results output
+ob-pytest \"$in\"
+#+end_src" n)
+(src-python "#+begin_src python :no-web-ref " p n "
+#+end_src")
+(src-pytest "#+begin_src python :noweb yes :exports none :tangle " p n "
+#+end_src")
+
 (transclude-general "#+transclude: " r>
                     " :level 2 :exclude-elements \"drawer keyword\"")
 (transclude-only-contents "#+transclude: " r> " :only-contents")
