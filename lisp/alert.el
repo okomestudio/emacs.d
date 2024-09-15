@@ -12,12 +12,18 @@
   (defvar notify-move-time nil
     "Timer object for alert. Use `cancel-timer' to suppress the alert.")
 
-  (setq notify-move-time
-        (run-with-timer
-         2400 2400
-         (lambda ()
-           (alert "Move away from computer!"
-                  :title "MOVE!!"
-                  :severity 'high)))))
+  (defun start-alert ()
+    (run-with-timer 2400 2400
+                    (lambda ()
+                      (alert "Move away from computer!"
+                             :title "MOVE!!"
+                             :severity 'high))))
+
+  (defun restart-alert ()
+    (interactive)
+    (cancel-timer notify-move-time)
+    (setq notify-move-time (start-alert)))
+
+  (setq notify-move-time (start-alert)))
 
 ;;; alert.el ends here
