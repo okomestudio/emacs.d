@@ -60,8 +60,8 @@
               ("C-c b" . ruff-format-buffer)
               :map python-ts-mode-map
               ("C-c b" . ruff-format-buffer))
-  :hook (((python-mode
-           python-ts-mode) . ruff-format-on-save-mode)))
+  :hook ((python-mode
+          python-ts-mode) . ruff-format-on-save-mode))
 
 ;; VIRTUAL ENVS
 
@@ -97,19 +97,21 @@
 ;; TESTING
 
 (use-package python-pytest
-  :after (direnv)
   :bind (:map python-mode-map
-              ("C-c t" . python-pytest-dispatch)))
+              ("C-c t" . python-pytest-dispatch)
+              :map python-ts-mode-map
+              ("C-c t" . python-pytest-dispatch))
+  :hook ((python-mode
+          python-ts-mode) . (lambda () (require 'python-pytest))))
 
 ;; HELP & DOCS
 
 (use-package pydoc
-  :bind (;
-         :map python-mode-map
-         ("C-h o" . pydoc-at-point)
-         :map python-ts-mode-map
-         ("C-h o" . pydoc-at-point))
-  :hook ((python-mode . (lambda () (require 'pydoc)))
-         (python-ts-mode . (lambda () (require 'pydoc)))))
+  :bind (:map python-mode-map
+              ("C-h o" . pydoc-at-point)
+              :map python-ts-mode-map
+              ("C-h o" . pydoc-at-point))
+  :hook ((python-mode
+          python-ts-mode) . (lambda () (require 'pydoc))))
 
 ;;; python.el ends here
