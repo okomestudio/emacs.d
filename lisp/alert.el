@@ -9,10 +9,12 @@
   :demand t
   :custom ((alert-default-style 'notifications))
   :config
-  ;; Use `notify-move-time' with `cancel-timer' to suppress this alert
+  (defvar notify-move-time nil
+    "Timer object for alert. Use `cancel-timer' to suppress the alert.")
+
   (setq notify-move-time
         (run-with-timer
-         1800 1800
+         2400 2400
          (lambda ()
            (alert "Move away from computer!"
                   :title "MOVE!!"
