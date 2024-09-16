@@ -10,7 +10,8 @@
 (use-package ok
   :straight (:host github :repo "okomestudio/ok.el")
   :demand t)
-(use-package dash) ;; A modern list library for Emacs
+(use-package buttercup)  ; behavior-driven Lisp testing
+(use-package dash)       ; a modern list library
 (use-package uuid)
 
 ;; MAIN STARTUP CONFIG
