@@ -136,7 +136,6 @@
  ("nongnu-elpa" . "b3fcadf20c9f0da471ab0bdcd778bb66b39b43bc")
  ("nov.el" . "9b7bef950d68c2518710c480729d6bb6026e9489")
  ("ob-typescript" . "5fe1762f8d8692dd5b6f1697bedbbf4cae9ef036")
- ("ok-plural.el" . "0729c88d1cc4e4aeb5745643591714eb2b221cf3")
  ("ok.el" . "d52a789960e76480e4ac26aab3ce83dbc4271339")
  ("olivetti" . "800a286862fd7aff2a91726e84606386e295106c")
  ("openwith" . "1dc89670822966fab6e656f6519fdd7f01e8301a")
