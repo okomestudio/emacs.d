@@ -10,7 +10,7 @@
          :map org-mode-map
          ("C-c C-l" . org-insert-link)
          ("C-c C-q" . org-set-tags-command)
-         ("C-c C-x l" . math-preview-all)
+         ("C-c C-x l" . math-preview-ok-toggle)
          ("C-c i h" . org-insert-heading)  ; or use M-RET
          ("C-c i l" . ok-org-insert-item)
          ("C-c i u" . org-cliplink)
@@ -51,6 +51,13 @@
       (_ (funcall orig-func arg))))
 
   (advice-add #'org-open-at-point :around #'org-open-at-point--ad-prefix)
+
+  (defun math-preview-ok-toggle (&optional arg)
+    (interactive "P")
+    (call-interactively
+     (pcase arg
+       ('(4) #'math-preview-clear-all)
+       (_ #'math-preview-all))))
 
   ;; HELPER FUNCTIONS
   (defun ok-org--init-visuals ()
