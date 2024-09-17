@@ -13,12 +13,15 @@
          ("\\.md\\'" . gfm-mode)
          ("\\.markdown\\'" . gfm-mode)
          ("\\.lr\\'" . gfm-mode))
-  :bind (;
-         :map markdown-mode-map
-         ("C-c C-c v". markdown-export-and-preview))
+  :bind (:map markdown-mode-map
+              ("C-c C-c v". markdown-export-and-preview))
   :custom ((markdown-fontify-code-block-natively t)
            (markdown-header-scaling t)
            (markdown-indent-on-enter t))
-  :hook (markdown-mode . lsp))
+  :hook (markdown-mode . markdown-mode-ok--init)
+  :config
+  (defun markdown-mode-ok--init ()
+    (setq-local fill-column 90)
+    (lsp)))
 
 ;;; markdown.el ends here
