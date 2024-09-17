@@ -235,7 +235,7 @@
 ;; THEME
 
 (use-package org-theme-ok
-  :straight (:host github :repo "okomestudio/org-theme-ok")
+  :straight (:host github :repo "okomestudio/org-theme-ok.el")
   :init
   (use-package ok
     :straight (:host github :repo "okomestudio/ok.el"))

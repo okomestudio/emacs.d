@@ -24,7 +24,7 @@
   :hook (org-mode . (lambda () (require 'flycheck-aspell))))
 
 (use-package flycheck-aspell-org
-  :straight (:host github :repo "okomestudio/flycheck-aspell-org")
+  :straight (:host github :repo "okomestudio/flycheck-aspell-org.el")
   :after (flycheck-aspell)
   :demand t)
 
