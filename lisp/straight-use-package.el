@@ -51,4 +51,8 @@
 (straight-use-package 'use-package)
 (straight-use-package 'use-package-ensure-system-package)
 
+(use-package system-packages
+  :custom ((system-packages-use-sudo t)
+           (system-packages-package-manager 'apt)))
+
 ;;; straight-use-package.el ends here
