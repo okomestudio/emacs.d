@@ -160,7 +160,7 @@
              :host github
              :repo "okomestudio/do-this-now.el")
   :custom ((alert-default-style 'notifications)
-           (do-this-now-interval 30)
+           (do-this-now-interval 2400)
            (do-this-now-message "Move away from computer!")
            (do-this-now-title "MOVE!!"))
   :demand t)
