@@ -128,24 +128,6 @@
   :straight (:host github :repo "tarsius/keychain-environment")
   :config (keychain-refresh-environment))
 
-;; MISC.
-
-(use-package anzu
-  ;; Displays current and total matches information in the mode-line.
-  :hook (after-init . (lambda () (global-anzu-mode 1))))
-
-(use-package switch-buffer-functions
-  ;; Hook run when switching current buffer.
-  :disabled)
-
-(use-package system-packages
-  :custom ((system-packages-use-sudo t)
-           (system-packages-package-manager 'apt)))
-
-(use-package tramp
-  :straight nil
-  :custom (tramp-default-method "ssh"))
-
 ;; TREE-SITTER
 
 (use-package treesit
@@ -158,5 +140,29 @@
   :config
   (treesit-auto-add-to-auto-mode-alist 'all)
   (global-treesit-auto-mode))
+
+;; MISC.
+
+(use-package anzu
+  ;; Displays current and total matches information in the mode-line.
+  :hook (after-init . (lambda () (global-anzu-mode 1))))
+
+(use-package switch-buffer-functions
+  ;; Hook runs when switching current buffer.
+  :disabled)
+
+(use-package tramp
+  :straight nil
+  :custom (tramp-default-method "ssh"))
+
+(use-package do-this-now
+  :straight (do-this-now
+             :host github
+             :repo "okomestudio/do-this-now.el")
+  :custom ((alert-default-style 'notifications)
+           (do-this-now-interval 30)
+           (do-this-now-message "Move away from computer!")
+           (do-this-now-title "MOVE!!"))
+  :demand t)
 
 ;;; startup.el ends here
