@@ -10,7 +10,7 @@
          :map org-mode-map
          ("C-c C-l" . org-insert-link)
          ("C-c C-q" . org-set-tags-command)
-         ("C-c C-x C-l" . math-preview-all)
+         ("C-c C-x l" . math-preview-all)
          ("C-c i h" . org-insert-heading)  ; or use M-RET
          ("C-c i l" . ok-org-insert-item)
          ("C-c i u" . org-cliplink)
