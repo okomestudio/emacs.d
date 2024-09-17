@@ -114,8 +114,7 @@ Otherwise, it is the same as the vanilla version of
   :straight (:host github :repo "okomestudio/org-roam-plugin-ok")
   :init
   (use-package ok-plural
-    :straight (:host github :repo "okomestudio/ok-plural.el")
-    :demand t)
+    :straight (:host github :repo "okomestudio/ok-plural.el"))
 
   (org-roam-plugin-ok-on-idle-init-setup))
 
