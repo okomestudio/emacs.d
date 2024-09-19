@@ -106,17 +106,15 @@ Otherwise, it is the same as the vanilla version of
   (require 'org-roam-dailies)
 
   (org-roam-db-sync)
-  (org-roam-db-autosync-mode +1)
-
+  (org-roam-db-autosync-mode 1)
   (org-roam-plugin-ok-mode 1))
+
+(use-package ok-plural
+  :straight (ok-plural :host github :repo "okomestudio/ok-plural.el"))
 
 (use-package org-roam-plugin-ok
   :straight (:host github :repo "okomestudio/org-roam-plugin-ok")
-  :init
-  (use-package ok-plural
-    :straight (:host github :repo "okomestudio/ok-plural.el"))
-
-  (org-roam-plugin-ok-on-idle-init-setup))
+  :init (org-roam-plugin-ok-on-idle-init-setup))
 
 (use-package org-roam-ui
   :after org-roam
