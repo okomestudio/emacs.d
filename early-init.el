@@ -16,9 +16,7 @@
   (when (version< emacs-version minver)
     (error "The minimum Emacs version expected is %s" minver)))
 
-(defconst ok-debug nil
-  "Global flag to activate all debug-related flag.")
-
+(setopt ok-debug nil)
 (setopt debug-on-error ok-debug)
 (setq debug-on-message nil) ;; set regexp to trigger debugger
 (setq byte-compile-warnings '(not obsolete)) ;; set t for development
