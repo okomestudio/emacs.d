@@ -40,6 +40,8 @@ While the ~init.el~ in this repository is written primarily with readability and
 
 - [[https://github.com/Wilfred/emacs-refactor][emr]] (Emacs Refactor)
     - A framework for providing language-specific refactoring
+- [[https://codeberg.org/akib/emacs-iwindow][iwindow]]
+    - Interactively manipulate windows
 - [[https://github.com/ahyatt/llm][llm]]
     - A package abstracting llm capabilities
 - [[https://github.com/emacs-jp/migemo][migemo]]
