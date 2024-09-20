@@ -151,4 +151,6 @@ This is also used as the default.")
   :straight (:host github :repo "hamano/locale-eaw")
   :config (eaw-fullwidth))
 
+(use-package show-font)
+
 ;;; faces.el ends here
