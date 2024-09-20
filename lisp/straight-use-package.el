@@ -25,6 +25,10 @@
 ;;
 ;;; Code:
 
+;;; Need https://github.com/watchexec/watchexec for `watch-files' option
+(setopt straight-check-for-modifications '(watch-files)
+        straight-use-package-by-default t)
+
 (let ((bootstrap-file (locate-user-emacs-file
                        "straight/repos/straight.el/bootstrap.el"))
       (bootstrap-version 7))  ; straight bootstrap version
@@ -38,9 +42,7 @@
       (eval-print-last-sexp)))
   (load bootstrap-file nil 'nomessage))
 
-(setopt straight-use-package-by-default t
-
-        use-package-always-defer t               ; use :demand t to override
+(setopt use-package-always-defer t               ; use :demand t to override
         use-package-compute-statistics ok-debug  ; for use-package-report
         use-package-enable-imenu-support t
         use-package-minimum-reported-time 0.001
