@@ -21,7 +21,7 @@
            (ace-isearch-jump-delay 0.3)
            (ace-isearch-function #'avy-goto-char)
            (ace-isearch-function-from-isearch #'ace-isearch-consult-line-from-isearch))
-  :hook (after-init . (lambda () (global-ace-isearch-mode +1))))
+  :hook (on-first-input . (lambda () (global-ace-isearch-mode +1))))
 
 (use-package avy)
 
@@ -39,7 +39,7 @@
   :straight nil
   :bind (("C-c <right>" . winner-redo)
          ("C-c <left>". winner-undo))
-  :hook (after-init . (lambda () (winner-mode 1))))
+  :hook (on-first-buffer . (lambda () (winner-mode 1))))
 
 ;; WINDOW SCROLLING
 
@@ -53,7 +53,7 @@
 
 (use-package pixel-scroll
   :straight nil
-  :hook (after-init . (lambda () (pixel-scroll-precision-mode +1)))
+  :hook (on-first-input . (lambda () (pixel-scroll-precision-mode +1)))
   :custom ((pixel-scroll-precision-interpolation-factor 1.2)
            (pixel-scroll-precision-large-scroll-height 1.0)
            (pixel-scroll-precision-momentum-min-velocity 0.5)
@@ -63,7 +63,7 @@
            (pixel-scroll-precision-interpolation-between-scroll 0.001)))
 
 (use-package yascroll
-  :hook (after-init . (lambda () (global-yascroll-bar-mode 1))))
+  :hook (on-first-buffer . (lambda () (global-yascroll-bar-mode 1))))
 
 ;; FILES
 

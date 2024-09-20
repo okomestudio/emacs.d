@@ -13,7 +13,7 @@
   ;; VERTical Interactive COmpletion.
   :custom ((vertico-count 20)
            (vertico-cycle t))
-  :hook (after-init . vertico-mode))
+  :hook (on-first-input . vertico-mode))
 
 (use-package embark
   ;; Emacs Mini-Buffer Actions Rooted in Key maps.

@@ -10,8 +10,9 @@
 (use-package ok
   :straight (:host github :repo "okomestudio/ok.el")
   :demand t)
-(use-package buttercup)  ; behavior-driven Lisp testing
-(use-package dash)       ; a modern list library
+(use-package buttercup)     ; behavior-driven Lisp testing
+(use-package dash)          ; a modern list library
+(use-package on :demand t)  ; utility hooks to speed up startup
 (use-package uuid)
 
 ;; MAIN STARTUP CONFIG
@@ -145,7 +146,7 @@
 
 (use-package anzu
   ;; Displays current and total matches information in the mode-line.
-  :hook (after-init . (lambda () (global-anzu-mode 1))))
+  :hook (on-first-input . (lambda () (global-anzu-mode 1))))
 
 (use-package switch-buffer-functions
   ;; Hook runs when switching current buffer.
