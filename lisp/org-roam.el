@@ -107,6 +107,7 @@ Otherwise, it is the same as the vanilla version of
 
   (org-roam-db-sync)
   (org-roam-db-autosync-mode 1)
+  (org-roam-gt-mode 1)
   (org-roam-plugin-ok-mode 1))
 
 (use-package ok-plural
@@ -114,7 +115,44 @@ Otherwise, it is the same as the vanilla version of
 
 (use-package org-roam-plugin-ok
   :straight (:host github :repo "okomestudio/org-roam-plugin-ok")
+  :custom ((orp-ok-node-use-cache-in-memory t))
   :init (org-roam-plugin-ok-on-idle-init-setup))
+
+(use-package org-roam-gt
+  :straight (:host github :repo "dmgerman/org-roam-gt"
+                   :fork (:host github
+                                :repo "okomestudio/org-roam-gt" :branch "ok"))
+  :demand t
+  :config
+  ;; String format version
+  ;; (setq org-roam-gt-node-display-template
+  ;;       (concat "​​​​​${orp-title:*} "
+  ;;               (propertize "${orp-tags}" 'face 'org-tag)
+  ;;               " ${orp-timestamp:10}"))
+
+  ;; Function version
+  (setq org-roam-gt-node-display-template
+        (lambda (node)
+          (let* ((title (orp-ok-node--title node))
+                 (tags (or (orp-ok-node--tags node) ""))
+                 (scale 1.7)
+                 (total-width (frame-width))
+                 (timestamp-width 11)
+                 (title-and-tags-width (- total-width timestamp-width))
+                 (tags-width (1+ (length tags)))
+                 (max-title-width (- title-and-tags-width tags-width))
+                 (title-width (ok-string-multibyte-string-width title scale)))
+            (if (>= title-width max-title-width)
+                (put-text-property (length (ok-string-multibyte-substring
+                                            title 0 max-title-width scale))
+                                   (length title)
+                                   'invisible t title)
+              (setq title (concat title
+                                  (make-string (- max-title-width
+                                                  title-width) ?.))))
+            (concat title
+                    " " (propertize tags 'face 'org-tag)
+                    " " (orp-ok-node--timestamp node))))))
 
 (use-package org-roam-ui
   :after org-roam
