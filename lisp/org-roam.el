@@ -150,9 +150,10 @@ Otherwise, it is the same as the vanilla version of
               (setq title (concat title
                                   (make-string (- max-title-width
                                                   title-width) ?\ ))))
-            (concat title
-                    " " (propertize tags 'face 'org-tag)
-                    " " (orp-ok-node--timestamp node))))))
+            (cons (concat title
+                          " " (propertize tags 'face 'org-tag)
+                          " " (orp-ok-node--timestamp node))
+                  node)))))
 
 (use-package org-roam-ui
   :after org-roam
