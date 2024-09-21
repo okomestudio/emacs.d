@@ -31,6 +31,20 @@
 (use-package aggressive-indent
   :hook ((emacs-lisp-mode lisp-data-mode) . aggressive-indent-mode))
 
+(use-package elp
+  ;; Emacs Lisp Profiler.
+  ;;
+  ;; Run and specify the prefix of module name to profile
+  ;;
+  ;;   M-x elp-instrument-function
+  ;;
+  ;; Then, to show results, run
+  ;;
+  ;;   M-x elp-results
+  ;;
+  :straight nil
+  :custom ((elp-sort-by-function 'elp-sort-by-average-time)))
+
 (use-package erefactor)
 
 (use-package eros
