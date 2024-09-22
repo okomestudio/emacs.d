@@ -29,9 +29,9 @@ See the [[info:elisp#Key Binding Conventions][Key Binding Conventions]] section 
 
 * Improving startup time
 
-When using ~straight.el~, the startup time hugely depends on the presence of ~find-at-startup~ option in ~straight-check-for-modifications~. When there are many repos in the ~straight/repos~ directory, it takes a couple seconds just to scan it for modified files. To reduce the startup time, other option(s) should be specified for the custom variable (~watch-files~ needs ~watchexec~ to be available).
+In Linux systems, the startup time for this Emacs initialization takes 1.5 - 2.0 seconds.
 
-In Linux systems, the startup time for the Emacs initialization in this repo is no more than 2 seconds. With the current paradigm, I haven’t been able to improve further, unless I’m willing to go without ~use-package~ and disable a few major features that I’d need to use.
+The ~find-at-startup~ option is removed from  ~straight-check-for-modifications~; see ~lisp/traight-use-package.el~ for caveat.
 
 While the ~init.el~ in this repository is written primarily with readability and maintainability in mind, it pays well to be aware of improvement we can make with the startup time.
 

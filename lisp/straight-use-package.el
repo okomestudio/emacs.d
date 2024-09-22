@@ -23,6 +23,13 @@
 ;;   - `straight-visit-package' to browse the package source code
 ;;   - `straight-visit-package-website' to visit the package website
 ;;
+;; Depending on the `straight-check-for-modifications' setting, the
+;; explicit execution of
+;;
+;;   - M-x straight-rebuild-package
+;;
+;; on package modification may be necessary.
+;;
 ;;; Code:
 
 ;;; Need https://github.com/watchexec/watchexec for `watch-files' option
