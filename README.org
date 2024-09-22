@@ -54,6 +54,8 @@ While the ~init.el~ in this repository is written primarily with readability and
     - Overrides ~function-key-map~ for preferred input method(s) to translate input sequences to English, so we can use emacs binding while a non-default system layout is active
 - [[https://github.com/captainflasmr/selected-window-accent-mode][selected-window-accent-mode]]
     - Accentuate the active window
+- [[https://github.com/liushihao456/symbols-outline.el][symbols-outline.el]]
+    - Display symbols (functions, variables, etc) in a side window.
 - [[https://github.com/WJCFerguson/textsize/][textsize]]
     - Automatically choose a font point size for the Emacs default face based on the size and pixel pitch of the display
 - [[https://github.com/m00natic/vlfi][vlf]]
