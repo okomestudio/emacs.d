@@ -23,8 +23,9 @@
   :bind (("<f5>" . ok-buffer-revert-no-confirm)
          ("C-S-o" . ok-edit-insert-newline-above)
          ("C-c i SPC" . ok-edit-insert-zero-width-space)
+         ("C-c i s" . ok-edit-insert-section-delimiter)
          ("C-o" . ok-edit-insert-newline-below)
-         ("C-x C-c". iconify-frame)
+         ("C-x C-c". iconify-frame)  ; prevent accidental quit
          ("M-q" . ok-edit-fill-or-unfill-paragraph))
   :custom ((async-shell-command-buffer "new-buffer")
            (case-fold-search t)
