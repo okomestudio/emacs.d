@@ -14,7 +14,8 @@
 
 (use-package magit-todos
   :after magit
-  :hook (magit-mode . (lambda () (magit-todos-mode 1))))
+  :hook (magit-mode . (lambda () (magit-todos-mode 1)))
+  :config (add-to-list 'magit-todos-keywords-list "WIP"))
 
 (use-package blamer
   ;; Git blame plugin.
