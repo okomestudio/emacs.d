@@ -58,7 +58,7 @@ org-mode
 (src-pytest-runner "#+begin_src shell :var in=\"" p "\" :exports none :results output
 ob-pytest \"$in\"
 #+end_src" n)
-(src-python "#+begin_src python :no-web-ref " p n "
+(src-python "#+begin_src python :noweb-ref " p n "
 #+end_src")
 (src-pytest "#+begin_src python :noweb yes :exports none :tangle " p n "
 #+end_src")
