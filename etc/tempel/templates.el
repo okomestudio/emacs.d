@@ -55,13 +55,24 @@ org-mode
 (latex-equation "\\begin{equation}" r> n> "\\end{equation}")
 (latex-equation-star "\\begin{equation*}" r> n> "\\end{equation*}")
 
-(src-pytest-runner "#+begin_src shell :var in=\"" p "\" :exports none :results output
-ob-pytest \"$in\"
-#+end_src" n)
-(src-python "#+begin_src python :noweb-ref " p n "
-#+end_src")
-(src-pytest "#+begin_src python :noweb yes :exports none :tangle " p n "
-#+end_src")
+(begin-src-python
+ "#+begin_src python :noweb-ref " (s noweb-ref) n n
+ "#+end_src" n n
+ "* Unit tests" n
+ ":PROPERTIES:" n
+ ":VISIBILITY: folded" n
+ ":END:" n n
+ "#+begin_src shell :var in=\"" (s py) "\" :exports none :results output" n
+ "  ob-pytest \"$in\"" n
+ "#+end_src" n n
+ "#+begin_src python :noweb yes :exports none :tangle " py n
+ "  from typing import *" n n
+ "  import pytest" n n
+ "  <<" noweb-ref ">>" n n
+ "  class Test:" n
+ "      def test(self):" n
+ "          pass" n
+ "#+end_src")
 
 (transclude-general "#+transclude: " r>
                     " :level 2 :exclude-elements \"drawer keyword\"")
