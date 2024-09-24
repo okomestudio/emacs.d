@@ -66,6 +66,7 @@ org-mode
  "  ob-pytest \"$in\"" n
  "#+end_src" n n
  "#+begin_src python :noweb yes :exports none :tangle " py n
+ "  from __future__ import annotations" n
  "  from typing import *" n n
  "  import pytest" n n
  "  <<" noweb-ref ">>" n n
