@@ -72,49 +72,46 @@ org-mode
  "  class Test:" n
  "      def test(self):" n
  "          pass" n
- "#+end_src")
+ "#+end_src" n)
 
 (transclude-general "#+transclude: " r>
                     " :level 2 :exclude-elements \"drawer keyword\"")
 (transclude-only-contents "#+transclude: " r> " :only-contents")
 
-(anki-note-basic "* Anki note :anki:
-:PROPERTIES:
-:VISIBILITY: folded
-:ANKI_DECK: Default
-:ANKI_NOTE_TYPE: Basic
-:END:
-** Front
-** Back" n)
+(anki-note-basic
+ "* Anki note :anki:" n
+ ":PROPERTIES:" n
+ ":ANKI_DECK: Default" n
+ ":ANKI_NOTE_TYPE: Basic" n
+ ":END:" n
+ "** Front" n
+ "** Back" n)
 
-(anki-note-basic-reverse "* Anki note :anki:
-:PROPERTIES:
-:VISIBILITY: folded
-:ANKI_DECK: Default
-:ANKI_NOTE_TYPE: Basic (and reversed card)
-:END:
-** Front
-** Back" n)
+(anki-note-basic-reverse
+ "* Anki note :anki:" n
+ ":PROPERTIES:" n
+ ":ANKI_DECK: Default" n
+ ":ANKI_NOTE_TYPE: Basic (and reversed card)" n
+ ":END:" n
+ "** Front" n
+ "** Back" n)
 
-(anki-note-cloze "* Anki note :anki:
-:PROPERTIES:
-:VISIBILITY: folded
-:ANKI_DECK: Default
-:ANKI_NOTE_TYPE: Cloze
-:END:
-** Text" n)
+(anki-note-cloze
+ "* Anki note :anki:" n
+ ":PROPERTIES:" n
+ ":ANKI_DECK: Default" n
+ ":ANKI_NOTE_TYPE: Cloze" n
+ ":END:" n)
 
-(anki-note-list "* Anki notes :anki:
-:PROPERTIES:
-:VISIBILITY: folded
-:ANKI_DECK: Default
-:END:
-** Note
-:PROPERTIES:
-:ANKI_NOTE_TYPE: Basic (and reversed card)
-:END:
-*** Front
-*** Back" n)
+(anki-note-list
+ "* Anki notes :anki:" n
+ ":PROPERTIES:" n
+ ":ANKI_DECK: Default" n
+ ":END:" n
+ "** Note" n
+ ":PROPERTIES:" n
+ ":ANKI_NOTE_TYPE: Cloze" n
+ ":END:" n)
 
 (locvar-org-ja "* Local variables :noexport:
 # Local Variables:
