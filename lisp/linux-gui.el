@@ -1,4 +1,4 @@
-;;; gui-linux.el --- Linux GUI  -*- lexical-binding: t -*-
+;;; linux-gui.el --- Linux GUI  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;
 ;; Linux GUI configuration.
@@ -16,8 +16,8 @@
 (use-package emacs ;; for Wayland
   :if (and (eq system-type 'gnu/linux) (memq window-system '(pgtk)))
   :straight nil
-  :custom ((interprogram-cut-function #'gui-linux-copy)
-           (interprogram-paste-function #'gui-linux-paste)
+  :custom ((interprogram-cut-function #'linux-gui-copy)
+           (interprogram-paste-function #'linux-gui-paste)
            (save-interprogram-paste-before-kill t)
            (select-enable-clipboard t)
            (x-select-request-type nil))
@@ -35,21 +35,21 @@
   ;; get stuck, due to no content. To avoid this issue, run "wl-copy
   ;; foo" in shell before starting Emacs.
   ;;
-  (defvar gui-linux-copy-process nil
+  (defvar linux-gui-copy-process nil
     "Keep an instance of wl-copy process.")
 
-  (defun gui-linux-copy (text)
-    (setq gui-linux-copy-process (make-process :name "wl-copy"
+  (defun linux-gui-copy (text)
+    (setq linux-gui-copy-process (make-process :name "wl-copy"
                                                :buffer nil
                                                :command '("wl-copy" "-f" "-n")
                                                :connection-type 'pipe))
-    (process-send-string gui-linux-copy-process text)
-    (process-send-eof gui-linux-copy-process))
+    (process-send-string linux-gui-copy-process text)
+    (process-send-eof linux-gui-copy-process))
 
-  (defun gui-linux-paste ()
-    (if (and gui-linux-copy-process
-             (process-live-p gui-linux-copy-process))
+  (defun linux-gui-paste ()
+    (if (and linux-gui-copy-process
+             (process-live-p linux-gui-copy-process))
         nil  ; should return nil if we're the current paste owner
       (shell-command-to-string "wl-paste -n | tr -d \r"))))
 
-;;; gui-linux.el ends here
+;;; linux-gui.el ends here
