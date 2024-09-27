@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 
+# Maps priority -> lisp modules
 declare -A x
 x["00"]="optimizations startup"
 x["02"]="consult embark help minibuffer navigation treemacs"

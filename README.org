@@ -23,6 +23,14 @@ Use ~:straight nil~ to avoid pulling the source:
 
 Package initialization files are in the ~lisp/~ directory. The files actually loaded are symlinked in the ~init.d~ directory and loaded by the ~init-loader~ package. The files are sorted by file name and loaded in that  order.
 
+Run
+
+#+begin_src shell
+  init.d/symlinks.sh
+#+end_src
+
+to create symlinks under the ~init.d/~ directory.
+
 ** Key bindings
 
 See the [[info:elisp#Key Binding Conventions][Key Binding Conventions]] section of the GNU Emacs Lisp Reference Manual.
