@@ -1,1 +1,0 @@
-../lisp/anki.el
