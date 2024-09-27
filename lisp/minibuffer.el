@@ -15,13 +15,6 @@
            (vertico-cycle t))
   :hook (on-first-input . vertico-mode))
 
-(use-package embark
-  ;; Emacs Mini-Buffer Actions Rooted in Key maps.
-  :disabled
-  :bind (("C-." . embark-act)
-         ("C-;" . embark-dwim)
-         ("C-h B" . embark-bindings)))
-
 (use-package embark-consult
   ;; Use if you want to have consult previews as you move around an
   ;; auto-updating embark collect buffer.
