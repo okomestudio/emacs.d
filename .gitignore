@@ -23,7 +23,7 @@ elpa/
 eln-cache/
 etc/*
 !etc/tempel/
-init.d/*-user-*
+init.d/*.el
 roam/
 straight/*
 !straight/versions/
