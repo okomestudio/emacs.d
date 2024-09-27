@@ -6,7 +6,9 @@
 ;;; Code:
 
 (use-package org-excalidraw
-  :straight (:host github :repo "4honor/org-excalidraw")
+  :straight (:host github :repo "4honor/org-excalidraw"
+                   :fork (:host github :repo "okomestudio/org-excalidraw"
+                                :branch "custom-exec"))
   :commands (org-excalidraw-create-drawing)
   :hook (on-first-input . (lambda () (require 'org-excalidraw)))
   :ensure-system-package
