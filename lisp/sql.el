@@ -41,7 +41,7 @@
       (delete-trailing-whitespace)))
 
   (with-eval-after-load 'org
-    (defun org-edit-special-ok--set-sql-product ()
+    (defun org-edit-special-ok--set-sql-product (&rest r)
       "Intercept org-src-mode to set SQL product variant."
       (let ((lang (nth 0 (org-babel-get-src-block-info))))
         (when (member lang '("sql" "sqlite"))
