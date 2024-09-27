@@ -16,12 +16,12 @@
   (when (version< emacs-version minver)
     (error "The minimum Emacs version expected is %s" minver)))
 
-(setopt ok-debug nil)
-(setopt debug-on-error ok-debug)
-(setq debug-on-message nil) ;; set regexp to trigger debugger
-(setq byte-compile-warnings '(not obsolete)) ;; set t for development
-(setopt package-enable-at-startup nil)
-(setopt inhibit-default-init nil)
+(setopt ok-debug nil
+        debug-on-error ok-debug
+        package-enable-at-startup nil
+        inhibit-default-init nil)
+(setq debug-on-message nil                    ; set regexp to trigger debugger
+      byte-compile-warnings '(not obsolete))  ; set t for development
 
 ;; Reduce GC usage while initialization. 800 kb is the default (2021-08-01).
 ;; Note that the threshold while running is set by gcmh later in init and the
@@ -29,23 +29,23 @@
 (setopt gc-cons-threshold most-positive-fixnum)
 
 ;; UI:
-(setopt frame-inhibit-implied-resize t)
-(setopt inhibit-splash-screen nil)
-(setopt inhibit-startup-screen nil)
-(setopt initial-buffer-choice nil)
-(setopt native-comp-async-report-warnings-errors ok-debug)
-(setq native-comp-jit-compilation t)
-(setq redisplay-skip-fontification-on-input t)
-(setopt ring-bell-function 'ignore) ;; disable beeping (in C source code)
+(setopt frame-inhibit-implied-resize t
+        inhibit-splash-screen nil
+        inhibit-startup-screen nil
+        initial-buffer-choice nil
+        native-comp-async-report-warnings-errors ok-debug
+        ring-bell-function 'ignore)
+(setq native-comp-jit-compilation t
+      redisplay-skip-fontification-on-input t)
 
-(push '(menu-bar-lines . 0) default-frame-alist)
-(push '(tool-bar-lines . 0) default-frame-alist)
-(push '(vertical-scroll-bars) default-frame-alist)
+(dolist (it '((menu-bar-lines . 0)
+              (tool-bar-lines . 0)
+              ;; (width . 120)  ; default frame width
+              ;; (height . 40)  ; default frame height
+              (vertical-scroll-bars . nil)))
+  (push it default-frame-alist))
+
 (fringe-mode '(12 . 12))
-
-;; Adjust default frame size if desired:
-;; (add-to-list 'default-frame-alist (cons 'width 120))
-;; (add-to-list 'default-frame-alist (cons 'height 40))
 
 ;; Misc. configurations
 (setenv "LSP_USE_PLISTS" "true")
