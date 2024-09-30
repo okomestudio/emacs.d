@@ -58,7 +58,7 @@ This is also used as the default.")
                      :frame frame)
 
   ;; STANDARD FACES
-  (set-face-attribute 'default frame :height 120 :font "fontset-default" :fontset "fontset-default")
+  (set-face-attribute 'default frame :font "fontset-default" :fontset "fontset-default")
   (set-face-attribute 'bold frame :weight 'bold)
   (set-face-attribute 'italic frame :slant 'italic :underline nil)
   (set-face-attribute 'bold-italic frame :weight 'bold :slant 'italic)
@@ -125,26 +125,7 @@ This is also used as the default.")
   (unless (file-exists-p "~/.local/share/fonts/NFM.ttf")
     (nerd-icons-install-fonts +1)))
 
-
-(use-package all-the-icons
-  :disabled
-  :if (and (display-graphic-p)
-           (member system-type '(gnu gnu/linux gnu/kfreebsd)))
-  :config
-  (unless (file-exists-p "~/.local/share/fonts/all-the-icons.ttf")
-    (all-the-icons-install-fonts +1)))
-
 ;; MISC.
-
-(use-package mixed-pitch
-  :disabled  ; ... until the package gets patched.
-  :hook (org-mode . mixed-pitch-mode)
-  :custom (mixed-pitch-variable-pitch-cursor nil)
-  :config
-  (delete 'org-table mixed-pitch-fixed-pitch-faces)
-  (add-to-list 'mixed-pitch-fixed-pitch-faces 'font-lock-comment-face)
-  (add-to-list 'mixed-pitch-fixed-pitch-faces 'org-modern-bracket-line)
-  (add-to-list 'mixed-pitch-fixed-pitch-faces 'org-modern-tag))
 
 (use-package eaw
   ;; East Asian Ambiguous Width問題と絵文字の横幅問題の修正ロケール.
