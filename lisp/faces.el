@@ -14,10 +14,10 @@ This is also used as the default.")
 (defvar ok-faces-font-family-fixed-pitch-ja "BIZ UDGothic"  ; "Noto Sans Mono CJK JP"
   "Font for the fixed pitch in Japanese.")
 
-(defvar ok-faces-font-family-variable-pitch "EB Garamond"
+(defvar ok-faces-font-family-variable-pitch "EB Garamond"  ; "EB Garamond 08"
   "Font for the variable pitch.")
 
-(defvar ok-faces-font-family-variable-pitch-ja "Noto Serif CJK JP"
+(defvar ok-faces-font-family-variable-pitch-ja "Noto Serif CJK JP Medium"
   "Font for the variable pitch in Japanese.")
 
 ;; UTILITY FUNCTIONS
@@ -50,23 +50,30 @@ This is also used as the default.")
                        frame)
   (ok-fontset-create "fontset-fixed pitch"
                      ok-faces-font-family-fixed-pitch
-                     :subsets `((ja ,ok-faces-font-family-fixed-pitch-ja))
+                     :subsets `((ja ,(font-spec :family ok-faces-font-family-fixed-pitch-ja)))
                      :frame frame)
   (ok-fontset-create "fontset-variable pitch"
                      ok-faces-font-family-variable-pitch
-                     :subsets `((ja ,ok-faces-font-family-variable-pitch-ja))
+                     :subsets `((ja ,(font-spec :family ok-faces-font-family-variable-pitch-ja)))
                      :frame frame)
 
   ;; STANDARD FACES
-  (set-face-attribute 'default frame :font "fontset-default" :fontset "fontset-default")
+  (set-face-attribute 'default frame
+                      :family ok-faces-font-family-fixed-pitch
+                      ;; :font "fontset-default"
+                      :fontset "fontset-default")
   (set-face-attribute 'bold frame :weight 'bold)
   (set-face-attribute 'italic frame :slant 'italic :underline nil)
   (set-face-attribute 'bold-italic frame :weight 'bold :slant 'italic)
   (set-face-attribute 'underline frame :underline t)
-  (set-face-attribute 'fixed-pitch frame :font "fontset-fixed pitch" :fontset "fontset-fixed pitch")
-  ;; (set-face-attribute 'fixed-pitch-serif :height 240)
-  (set-face-attribute 'variable-pitch frame :font "fontset-variable pitch" :fontset "fontset-variable pitch")
-  ;; (set-face-attribute 'variable-pitch-text :height 240)
+  (set-face-attribute 'fixed-pitch frame
+                      :family ok-faces-font-family-fixed-pitch
+                      ;; :font "fontset-fixed pitch"
+                      :fontset "fontset-fixed pitch")
+  (set-face-attribute 'variable-pitch frame
+                      :family ok-faces-font-family-variable-pitch
+                      ;; :font "fontset-variable pitch"
+                      :fontset "fontset-variable pitch")
   (set-face-attribute 'shadow frame :inherit 'default)
   ;; See the Standard Faces section of Emacs manual for the rest of
   ;; the commonly used faces.
@@ -92,11 +99,11 @@ This is also used as the default.")
 
   :init
   (dolist (element '(("Hack" . 1.00)  ; reference
-                     ("EB Garamond". 1.28)
+                     ("EB Garamond". 1.6)  ; 1.28
                      ("BIZ UDGothic" . 1.00)
-                     ("Noto Sans Mono CJK JP" . 1.18)
-                     ("Noto Sans CJK JP" . 1.00)
-                     ("Noto Serif CJK JP" . 1.00)
+                     ("Noto Sans Mono CJK JP" . 1.18)  ; 1.18
+                     ("Noto Sans CJK JP" . 1.10)
+                     ("Noto Serif CJK JP" . 1.26)
                      ;; ("VL Gothic" . 1.225)
                      ("AoyagiKouzanFontT". 1.00)))
     (push element face-font-rescale-alist)))
@@ -112,7 +119,7 @@ This is also used as the default.")
   (elfeed-search-mode . (lambda () (text-scale-set 1.0)))
   (elfeed-show-mode . (lambda () (text-scale-set 0.0)))
   (eww-mode . (lambda () (text-scale-set 0.0)))
-  (org-mode . (lambda () (text-scale-set 0.2)))
+  (org-mode . (lambda () (text-scale-set 0.8)))
   (prog-mode . (lambda () (text-scale-set 0.0)))
   (text-mode . (lambda () (text-scale-set 0.0)))
   (treemacs-mode . (lambda () (text-scale-set -0.4))))
