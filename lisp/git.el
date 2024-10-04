@@ -15,7 +15,11 @@
 (use-package magit-todos
   :after magit
   :hook (magit-mode . (lambda () (magit-todos-mode 1)))
-  :config (add-to-list 'magit-todos-keywords-list "WIP"))
+  :config
+  (dolist (kw '("WIP"
+                "TODO [#A]" "TODO [#B]" "TODO [#C]"
+                "WIP [#A]" "WIP [#B]" "WIP [#C]"))
+    (add-to-list 'magit-todos-keywords-list kw)))
 
 (use-package blamer
   ;; Git blame plugin.
