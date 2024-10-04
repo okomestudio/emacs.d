@@ -200,6 +200,7 @@
  ("tesseract.el" . "58d3bd1d4a8e4eb7e0b16a0dad1f4e1fb252eb85")
  ("titlecase.el" . "eb8d23925fb8ccbd3b2e3804fb0a312ee227610b")
  ("tomelr" . "7cf1b1e61b9a1d3eccddfa14d37e9fa7c7ba4013")
+ ("transient" . "2d6fae0ca232c2423facbbbf8ece18c856e7d31d")
  ("treemacs" . "54ef590b7621032a76f8f3e307032fc13c802371")
  ("treesit-auto" . "016bd286a1ba4628f833a626f8b9d497882ecdf3")
  ("typoel" . "173ebe4fc7ac38f344b16e6eaf41f79e38f20d57")
