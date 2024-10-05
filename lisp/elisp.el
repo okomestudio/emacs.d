@@ -30,7 +30,9 @@
 
 (use-package aggressive-indent
   :hook ((emacs-lisp-mode
-          lisp-data-mode) . aggressive-indent-mode))
+          lisp-data-mode) . aggressive-indent-mode)
+  :preface
+  (ok-safe-local-variable-add aggressive-indent-mode booleanp))
 
 (use-package elp
   ;; Emacs Lisp Profiler.
