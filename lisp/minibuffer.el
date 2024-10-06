@@ -20,14 +20,6 @@
   ;; auto-updating embark collect buffer.
   :hook (embark-collect-mode . consult-preview-at-point-mode))
 
-(use-package wgrep
-  ;; Writable grep buffer and apply the changes to files.
-  ;;
-  ;; After embark export (`C-.' and `E' in consult minibuffer), `C-x
-  ;; C-q' and `C-c C-p' to start editing. `C-c C-e' to apply changes.
-  ;; `C-c C-k' to discard.
-  )
-
 (use-package marginalia
   ;; Marginalia in the minibuffer.
   :hook (vertico-mode . marginalia-mode))
