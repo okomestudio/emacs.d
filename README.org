@@ -48,6 +48,9 @@ While the ~init.el~ in this repository is written primarily with readability and
 
 * Packages to check out
 
+- [[https://github.com/Wilfred/deadgrep][deadgrep]]
+    - Fast, friendly searching with ripgrep and Emacs
+    - See ALTERNATIVES.md for a good summary of alternative tools
 - [[https://github.com/Wilfred/emacs-refactor][emr]] (Emacs Refactor)
     - A framework for providing language-specific refactoring
 - [[https://codeberg.org/akib/emacs-iwindow][iwindow]]
