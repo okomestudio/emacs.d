@@ -85,6 +85,8 @@
       (goto-char begin)))
 
   ;; EMPHASIS
+  ;;
+  ;; See https://stackoverflow.com/a/24540651/515392
   (let ((regexp-components
          `(;; pre match
            ,(concat (string ?\[ ?\( ?{)
@@ -92,41 +94,21 @@
                     (string ?\N{ZERO WIDTH SPACE}
                             ?' ?‘ ?\" ?“
                             ?| ?│
-                            ?— ?-))      ; "-" must be the last char
+                            ?— ?-))     ; "-" must be the last char
            ;; post match
-           ,(concat (string ?\] ?\) ?})  ; "]" must be the first char
+           ,(concat (string ?\] ?\) ?}) ; "]" must be the first char
                     "[:space:][:multibyte:]"
                     (string ?\N{ZERO WIDTH SPACE}
                             ?' ?’ ?\" ?”
                             ?| ?│
                             ?. ?, ?? ?! ?\; ?:
-                            ?s       ; allow use like =def=s
-                            ?— ?-))  ; "-" must be the last char
-           "[:space:]"               ; forbidden border chars
-           "."                       ; body "."
-           1)))                      ; max newlines
+                            ?s          ; allow use like =def=s
+                            ?— ?-))     ; "-" must be the last char
+           "[:space:]"                  ; forbidden border chars
+           "."                          ; body "."
+           1)))                         ; max newlines
     ;; See `org-emph-re' and `org-verbatim-re' for the final regexps
-    (org-set-emph-re 'org-emphasis-regexp-components regexp-components))
-
-  (defun my-insert-shell-prompt (_backend)
-    (org-babel-map-src-blocks nil         ; nil implies current buffer
-      (let (;; capture macro-defined variables
-            (lang lang)
-            (beg-body beg-body)
-            (end-body end-body)
-            ;; other variables
-            (shell-langs '("sh" "shell"))
-            (prefix "$ "))
-        (when (member lang shell-langs)
-          (goto-char beg-body)
-          (skip-chars-forward "\n\s-" end-body)
-          (while (< (point) end-body)
-            (insert prefix)
-            (end-of-line)
-            (skip-chars-forward "\n\s-" end-body))))))
-
-  (add-hook 'org-export-before-parsing-hook #'my-insert-shell-prompt)
-  )
+    (org-set-emph-re 'org-emphasis-regexp-components regexp-components)))
 
 (use-package math-preview
   :commands (math-preview-all)
