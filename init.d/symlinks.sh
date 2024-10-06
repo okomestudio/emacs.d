@@ -1,38 +1,116 @@
 #!/usr/bin/env bash
 
-# Maps priority -> lisp modules
-declare -A x
-x["00"]="optimizations startup"
-x["02"]="consult embark help minibuffer navigation treemacs"
-x["03"]="atomic-chrome"
-x["04"]="faces themes"
-x["10"]="ime projectile"
-x["12"]="lsp"
-x["13"]="lsp-grammarly lsp-ltex"
-x["14"]="org"
-x["15"]="org-roam"
-x["20"]="dir-locals terminals"
-x["40"]="completion editing flycheck git lookup polymode tesseract"
-x["50"]="text-mode"
-x["52"]="markdown rst yaml"
-x["54"]="conf-mode"
-x["60"]="prog-mode"
-x["62"]="c css docker elisp html javascript kotlin python rust scala shell sql"
-x["64"]="ansible excalidraw graphviz json plantuml restclient"
-x["70"]="browse-url epub openwith pdf"
-x["80"]="ai anki elfeed emms eww games gnus osm"
-x["88"]="dashboard"
-x["linux-00"]="linux-gui"
+set -e
 
-for i in "${!x[@]}"; do
-  for j in ${x[$i]}; do
-    source="../lisp/${j}.el"
-    if [[ $i = linux-* ]] && [[ $j = linux-* ]]; then
-      target=$i-${j#linux-}.el
-    else
-      target=$i-$j.el
-    fi
-    cmd="ln -s $source init.d/$target"
-    $cmd
+# Maps priority to the modules found in the lisp directory
+declare -A ptom
+ptom["00"]="optimizations startup"
+ptom["02"]="search"
+ptom["04"]="consult embark help minibuffer navigation treemacs"
+ptom["05"]="atomic-chrome"
+ptom["06"]="faces themes"
+ptom["10"]="ime projectile"
+ptom["12"]="lsp"
+ptom["13"]="lsp-grammarly lsp-ltex"
+ptom["14"]="org"
+ptom["15"]="org-roam"
+ptom["20"]="dir-locals terminals"
+ptom["40"]="completion editing flycheck git lookup polymode tesseract"
+ptom["50"]="text-mode"
+ptom["52"]="markdown rst yaml"
+ptom["54"]="conf-mode"
+ptom["60"]="prog-mode"
+ptom["62"]="c css docker elisp html javascript kotlin python rust scala shell sql"
+ptom["64"]="ansible excalidraw graphviz json plantuml restclient"
+ptom["70"]="browse-url epub openwith pdf"
+ptom["80"]="ai anki elfeed emms eww games gnus osm"
+ptom["88"]="dashboard"
+ptom["linux-00"]="linux-gui"
+
+# DO NOT MODIFY
+
+readonly scriptname="${0##*/}"
+
+
+function usage() {
+  cat <<USAGE >&2
+Usage: $scriptname [-dh]
+
+Create or remove symlinks under init.d/.
+
+  -d  Remove symlinks
+  -h  Show help
+
+USAGE
+  exit "${1:-1}"
+}
+
+
+function error() {
+  >&2 echo "$scriptname: $1"
+  >&2 echo "Try '$scriptname -h' for more information."
+  exit "${2:-1}"
+}
+
+
+function create_symlinks() {
+  for priority in "${!ptom[@]}"; do
+    for module in ${ptom[$priority]}; do
+      src="../lisp/${module}.el"
+      if [[ $priority = linux-* ]] && [[ $module = linux-* ]]; then
+        target=$priority-${module#linux-}.el
+      else
+        target=$priority-$module.el
+      fi
+      if [ ! -h "init.d/$target" ]; then
+        cmd="ln -s $src init.d/$target"
+        $cmd
+      fi
+    done
   done
-done
+}
+
+
+function delete_symlinks() {
+  for priority in "${!ptom[@]}"; do
+    for module in ${ptom[$priority]}; do
+      if [[ $priority = linux-* ]] && [[ $module = linux-* ]]; then
+        target=$priority-${module#linux-}.el
+      else
+        target=$priority-$module.el
+      fi
+      if [ -h "init.d/$target" ]; then
+        cmd="rm init.d/$target"
+        $cmd
+      fi
+    done
+  done
+}
+
+
+delete_mode=0
+
+function main() {
+  if [ "$delete_mode" = 1 ]; then
+    delete_symlinks
+  else
+    create_symlinks
+  fi
+}
+
+
+if [ "$0" = "${BASH_SOURCE[0]}" ]; then
+  while getopts "dh" opt; do
+    case $opt in
+      d)
+        delete_mode=1
+        ;;
+      h|\?)
+        if [ "$opt" = "h" ]; then usage 0; else usage; fi
+        ;;
+    esac
+  done
+  shift $((OPTIND - 1))
+
+  main "$@"
+fi
