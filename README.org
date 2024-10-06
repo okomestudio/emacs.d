@@ -56,6 +56,8 @@ While the ~init.el~ in this repository is written primarily with readability and
     - A package abstracting llm capabilities
 - [[https://github.com/emacs-jp/migemo][migemo]]
     - Provides incremental search with romanized Japanese
+- [[https://github.com/alphapapa/org-super-agenda][org-super-agenda]]
+    - Supercharge your Org daily/weekly agenda by grouping items
 - [[https://github.com/emacsmirror/password-store][password-store]]
     - Allows ~pass~ integration for managing credentials
 - [[https://github.com/a13/reverse-im.el][reverse-im.el]]
