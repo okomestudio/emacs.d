@@ -53,7 +53,16 @@
 ;; PRONUNCIATION
 
 (use-package hatsuon
-  :straight (:host github :repo "okomestudio/hatsuon.el" :branch "main"))
+  :straight (:host github :repo "okomestudio/hatsuon.el"
+                   :files (:defaults "extensions/*"))
+  :custom ((hatsuon-audio-cache-dir (no-littering-expand-var-file-name "hatsuon/cache/"))
+           (hatsuon-audio-url-getters '(hatsuon-mw-audio-url-getter
+                                        ;; hatsuon-wiktionary-audio-url-getter
+                                        ;; hatsuon-weblio-audio-url-getter
+                                        )))
+  :config
+  (require 'hatsuon-mw)
+  (require 'hatsuon-weblio))
 
 ;; TRANSLATION
 
