@@ -56,9 +56,10 @@ org-mode
 (latex-equation-star "\\begin{equation*}" r> n> "\\end{equation*}")
 
 (begin-src-python
+ "* Python source code" n n
  "#+begin_src python :noweb-ref " (s noweb-ref) n n
  "#+end_src" n n
- "* Unit tests" n
+ "** Unit tests" n
  ":PROPERTIES:" n
  ":VISIBILITY: folded" n
  ":END:" n n
