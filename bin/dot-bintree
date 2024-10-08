@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+#
+# Use with ob-dot to render binary trees in Org Babel.
+#
+# With this script, the node placement can be specified:
+#
+#   graph G {
+#     1 -- 2;
+#     2 -- 4 [side=R];
+#   }
+#
+# See forum.graphviz.org/t/binary-tree-force-lonely-node-to-be-left-or-right/1159/4
+# for the reason for bintree.gvpr.
+
+dot -Tdot "$1" | gvpr -c -f "$(dirname $0)/bintree.gvpr" | neato -n "${@:2}"

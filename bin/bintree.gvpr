@@ -1,0 +1,33 @@
+BEGIN{
+ int left_right, Right[], Left[];
+ float shiftFactor;
+ node_t Head, Tail;
+}
+BEG_G{
+  left_right=0;
+  if ((hasAttr($G, "rankdir")) && ($G.rankdir!="") && $G.rankdir=="@(LR|RL)") left_right = 1;
+  shiftFactor=1.1*72; // effectively sets the angle (eyeballed, no trig)
+}
+E{
+    Head=$.head;
+    Tail=$.tail;
+    // legal values for side: left(L|l) or right(R|r) or up(U|u) or down(D|d)
+    // current value testing is incomplete
+    // awkwardly written, but seemingly correct
+    if (Left[Tail]!=1 && (((!((hasAttr($, "side")) && ($.side!=""))) || Right[Tail]==1 || ((hasAttr($, "side")) && ($.side!="") && $.side=="@(L|l|D|d)")))){
+      print("// LEFT/UP");
+      Left[Tail]=1;
+      if (left_right==0)
+        Head.pos=(string)(Tail.X-(shiftFactor*(float)Head.width)) + "," + (string)Head.Y;
+      else
+        Head.pos=(string)Head.X + "," + (string)(Tail.Y-(shiftFactor*(float)Head.height)) ;
+    }else{
+      print("// RIGHT/DOWN");
+      Right[Tail]=1;
+      if (left_right==0)
+        Head.pos=(string)(Tail.X+(shiftFactor*(float)Head.width)) + "," + (string)Head.Y;
+      else
+        Head.pos=(string)Head.X + "," + (string)(Tail.Y+(shiftFactor*(float)Head.height)) ;
+    }
+  $.pos="";
+}
