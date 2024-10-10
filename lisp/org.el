@@ -6,8 +6,8 @@
 ;;; Code:
 
 (use-package org
-  :bind (;
-         :map org-mode-map
+  :bind (:map
+         org-mode-map
          ("C-c C-l" . org-insert-link)
          ("C-c C-q" . org-set-tags-command)
          ("C-c C-x l" . math-preview-ok-toggle)
