@@ -63,10 +63,7 @@ org-mode
  ":PROPERTIES:" n
  ":VISIBILITY: folded" n
  ":END:" n n
- "#+begin_src shell :var in=\"" (s py) "\" :exports none :results output" n
- "  ob-pytest \"$in\"" n
- "#+end_src" n n
- "#+begin_src python :noweb yes :exports none :tangle " py n
+ "#+begin_src python :noweb yes :exports none" n
  "  from __future__ import annotations" n
  "  from typing import *" n n
  "  import pytest" n n
