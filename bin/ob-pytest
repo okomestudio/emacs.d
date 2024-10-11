@@ -3,4 +3,4 @@
 # Org Babel pytest runner
 #
 
-PYTHONDONTWRITEBYTECODE=1 python -m pytest -s -v -p no:cacheprovider "$@"
+PYTHONDONTWRITEBYTECODE=1 python -m pytest -s -vv -p no:cacheprovider "$@"
