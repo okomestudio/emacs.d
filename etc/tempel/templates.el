@@ -55,14 +55,22 @@ org-mode
 (latex-equation "\\begin{equation}" r> n> "\\end{equation}")
 (latex-equation-star "\\begin{equation*}" r> n> "\\end{equation*}")
 
+;; "* Python source code" n n
+;; "** Unit tests" n
+;; (progn
+;;   (org-insert-heading nil nil (1+ (org-current-level)))
+;;   (insert "Unit tests :noexport:")) n
+;; (org-insert-heading nil nil )
+
 (begin-src-python
- "* Python source code" n n
- "#+begin_src python :noweb-ref " (s noweb-ref) n n
- "#+end_src" n n
- "** Unit tests" n
- ":PROPERTIES:" n
- ":VISIBILITY: folded" n
- ":END:" n n
+ (p "noweb-ref: " noweb-ref t)
+ "#+begin_src python :noweb-ref " noweb-ref n> n>
+ "#+end_src" n> n>
+ (dotimes (_ (1+ (org-current-level))) (insert "*"))
+ (insert " Unit tests :noexport:") n>
+ ":PROPERTIES:" n>
+ ":VISIBILITY: folded" n>
+ ":END:" n> n>
  "#+begin_src python :noweb yes :exports none" n
  "  from __future__ import annotations" n
  "  from typing import *" n n
@@ -71,7 +79,7 @@ org-mode
  "  class Test:" n
  "      def test(self):" n
  "          pass" n
- "#+end_src" n)
+ "#+end_src" n>)
 
 (transclude-general "#+transclude: " r>
                     " :level 2 :exclude-elements \"drawer keyword\"")
