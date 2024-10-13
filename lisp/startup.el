@@ -13,6 +13,7 @@
 (use-package buttercup)     ; behavior-driven Lisp testing
 (use-package dash)          ; a modern list library
 (use-package on :demand t)  ; utility hooks to speed up startup
+(use-package reformatter)   ; code formatter
 (use-package uuid)
 
 ;; MAIN STARTUP CONFIG

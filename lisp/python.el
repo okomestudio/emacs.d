@@ -7,6 +7,10 @@
 
 (use-package python
   :straight nil
+  :bind (:map python-mode-map
+              ("C-c b" . python-ok-format-buffer)
+              :map python-ts-mode-map
+              ("C-c b" . python-ok-format-buffer))
   :custom ((python-indent-guess-indent-offset-verbose nil)
            (python-indent-offset 4)
            (python-shell-interpreter (locate-user-emacs-file
@@ -28,12 +32,36 @@
            ;; ruff-lsp
            (lsp-ruff-lsp-log-level 'debug)
            (lsp-ruff-lsp-show-notifications 'always))
+  :hook (((python-mode python-ts-mode) . ruff-isort-format-on-save-mode)
+         ((python-mode python-ts-mode) . ruff-format-on-save-mode))
   :ensure-system-package
   (ipython . "pip install ipython")
 
   :config
   (add-hook 'python-base-mode-hook #'lsp-deferred 90)
-  (add-hook 'python-sql-base-mode-hook #'lsp-deferred 90))
+  (add-hook 'python-sql-base-mode-hook #'lsp-deferred 90)
+
+  ;;; Ruff formatter (github.com/scop/emacs-ruff-format is not yet mature)
+  (require 'reformatter)
+  (reformatter-define ruff-format
+    :program "ruff"
+    :args (list "format" "-v" "--stdin-filename"
+                (or (buffer-file-name) input-file))
+    :lighter " RuffFmt"
+    :group 'ruff-format)
+
+  ;; isort
+  (reformatter-define ruff-isort-format
+    :program "ruff"
+    :args (list "check" "--select" "I" "--fix" "--stdin-filename"
+                (or (buffer-file-name) input-file))
+    :lighter " RuffIsort"
+    :group 'ruff-format)
+
+  (defun python-ok-format-buffer ()
+    (interactive)
+    (ruff-isort-format-buffer)
+    (ruff-format-buffer)))
 
 (use-package python-sql-mode
   :straight (:host github :repo "okomestudio/python-sql-mode.el")
@@ -54,14 +82,6 @@
   (pyflakes . "pip install pyflakes")
   :preface
   (put 'pyimport-develop-packages 'safe-local-variable #'listp))
-
-(use-package ruff-format
-  :bind (:map python-mode-map
-              ("C-c b" . ruff-format-buffer)
-              :map python-ts-mode-map
-              ("C-c b" . ruff-format-buffer))
-  :hook ((python-mode
-          python-ts-mode) . ruff-format-on-save-mode))
 
 ;; VIRTUAL ENVS
 
