@@ -7,6 +7,7 @@
 
 (use-package dashboard
   :demand t
+  :bind ("C-c d" . dashboard-open)
   :custom ((dashboard-agenda-release-buffers t)
            (dashboard-center-content t)
            (dashboard-display-icons-p t)
