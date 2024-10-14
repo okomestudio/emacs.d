@@ -1,4 +1,4 @@
-;;; 57-conf-mode.el --- conf-mode  -*- lexical-binding: t -*-
+;;; conf-mode.el --- conf-mode  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;
 ;; The conf-mode configuration.
@@ -6,14 +6,7 @@
 ;;; Code:
 
 (use-package conf-mode
-  :disabled
-  :straight nil
-  ;; :init
-  ;; (ok-file-ensure-from-url
-  ;;  "https://www.emacswiki.org/emacs/download/any-ini-mode.el")
-
-  :mode ("\\.ini\\'"
-         "\\.conf\\'"))
+  :straight nil)
 
 (use-package git-modes
   ;; Major modes for .git(attributes|config|ignore)
@@ -26,4 +19,4 @@
 
 (use-package ssh-config-mode)
 
-;;; 57-conf-mode.el ends here
+;;; conf-mode.el ends here
