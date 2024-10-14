@@ -15,15 +15,14 @@
 (use-package anki-editor
   :straight (:host github :repo "anki-editor/anki-editor"
                    :fork (:host github :repo "okomestudio/anki-editor"
-                                :branch "ok"))
-  :commands (anki-editor-push-note-at-point)
-  :ensure-system-package (curl . "sudo apt install -y curl")
+                                :branch "ok-field-swap-as-property"))
   :custom ((anki-editor-latex-style 'mathjax)
            (anki-editor-org-tags-as-anki-tags t)
            (anki-editor-swap-two-fields '("Cloze"))
            ;; (request-log-level 'debug)  ; for debugging
            )
-  :preface
-  (put 'anki-editor-ignored-org-tags 'safe-local-variable #'listp))
+  :commands (anki-editor-push-note-at-point)
+  :ensure-system-package (curl . "sudo apt install -y curl")
+  :preface (put 'anki-editor-ignored-org-tags 'safe-local-variable #'listp))
 
 ;;; anki.el ends here
