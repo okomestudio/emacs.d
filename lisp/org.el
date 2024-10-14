@@ -84,31 +84,18 @@
         (setq end (+ end len)))
       (goto-char begin)))
 
-  ;; EMPHASIS
-  ;;
-  ;; See https://stackoverflow.com/a/24540651/515392
-  (let ((regexp-components
-         `(;; pre match
-           ,(concat (string ?\[ ?\( ?{)
-                    "[:space:][:multibyte:]"
-                    (string ?\N{ZERO WIDTH SPACE}
-                            ?' ?‘ ?\" ?“
-                            ?| ?│
-                            ?— ?-))     ; "-" must be the last char
-           ;; post match
-           ,(concat (string ?\] ?\) ?}) ; "]" must be the first char
-                    "[:space:][:multibyte:]"
-                    (string ?\N{ZERO WIDTH SPACE}
-                            ?' ?’ ?\" ?”
-                            ?| ?│
-                            ?. ?, ?? ?! ?\; ?:
-                            ?s          ; allow use like =def=s
-                            ?— ?-))     ; "-" must be the last char
-           "[:space:]"                  ; forbidden border chars
-           "."                          ; body "."
-           1)))                         ; max newlines
-    ;; See `org-emph-re' and `org-verbatim-re' for the final regexps
-    (org-set-emph-re 'org-emphasis-regexp-components regexp-components)))
+  (org-plugin-ok-mode 1))
+
+(use-package org-plugin-ok
+  :straight (:host github :repo "okomestudio/org-plugin-ok")
+  :after org
+  :demand t
+  :bind (:map
+         org-mode-map
+         ("C-c C-M-c" . op-ok-babel-run-pytest))
+  :config
+  (with-eval-after-load 'ox
+    (require 'op-ok-export-substack)))
 
 (use-package math-preview
   :commands (math-preview-all)
@@ -194,8 +181,7 @@
   :config
   (require 'ox-gfm)
   (require 'ox-hugo)
-  (require 'ox-md)
-  (require 'orp-ok-ox-substack))
+  (require 'ox-md))
 
 (use-package ox-gfm ;; GitHub-flavored markdown
   :after ox)

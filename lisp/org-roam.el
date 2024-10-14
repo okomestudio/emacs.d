@@ -123,9 +123,6 @@ Otherwise, it is the same as the vanilla version of
 (use-package org-roam-plugin-ok
   :straight (:host github :repo "okomestudio/org-roam-plugin-ok"
                    :files (:defaults "extensions/*"))
-  :bind (:map
-         org-mode-map
-         ("C-c C-M-c" . orp-ok-org-babel-run-pytest))
   :custom ((orp-ok-node-use-cache-in-memory t)
            (orp-ok-node-gt-use-cache-in-memory t))
   :init (org-roam-plugin-ok-on-idle-init-setup))
