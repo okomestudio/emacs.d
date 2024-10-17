@@ -1,4 +1,4 @@
-;;; rst.el --- RST  -*- lexical-binding: t -*-
+;;; rst.el --- ReStructuredText (RST)  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;
 ;; The RST mode configuration.
@@ -17,6 +17,10 @@
     :server-id 'esbonio)))
 
 (use-package poly-rst
-  :hook (rst-mode . lsp-deferred))
+  :hook ((rst-mode . lsp-deferred)
+         (rst-mode . rst-ok--init))
+  :config
+  (defun rst-ok--init ()
+    (setq-local fill-column 90)))
 
 ;;; rst.el ends here
