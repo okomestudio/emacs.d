@@ -90,7 +90,6 @@
  ("hatsuon.el" . "ad1c617830930af4d62d04e2357b312174a39aab")
  ("helm-bibtex" . "8b71b4f5ce62eeaf18067f57faaddc06449fbe1c")
  ("help-shortdoc-example.el" . "3444877d32e425397836245f1a64f2deee9121fe")
- ("helpful" . "4ba24cac9fb14d5fdc32582cd947572040e82b2c")
  ("highlight-defined" . "4420bdda419875dacb065468aafe273b2022580e")
  ("highlight-quoted" . "24103478158cd19fbcfb4339a3f1fa1f054f1469")
  ("highlight-sexp" . "403f32f76b6524fe6eac967b559a5fcc64901f7a")
