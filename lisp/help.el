@@ -120,7 +120,9 @@
   ;;
   ;; Run `devdocs-install' to download documents on select topics.
   ;;
-  :bind (("C-h D" . devdocs-lookup))
+  :bind (:map
+         help-map
+         ("D" . devdocs-lookup))
   :hook (((ansible
            bash-ts-mode
            css-ts-mode
@@ -135,9 +137,9 @@
            mhtml-mode
            python-mode
            python-ts-mode
-           web-mode) . devdocs--set-current-docs-for-mode)
+           web-mode) . devdocs-ok--set-current-docs-for-mode)
          ((sql-mode
-           hack-local-variables) . devdocs--set-current-docs-for-sql-mode))
+           hack-local-variables) . devdocs-ok--set-current-docs-for-sql-mode))
   :config
   (setq-default
    devdocs-current-docs-for-mode
@@ -158,12 +160,12 @@
      (typescript-ts-mode . ("javascript" "axios" "typescript" "vite"))
      (web-mode . ("css" "html" "javascript" "react" "typescript"))))
 
-  (defun devdocs--set-current-docs-for-mode ()
+  (defun devdocs-ok--set-current-docs-for-mode ()
     "Set `devdocs-current-docs' for current major mode."
     (setq-local devdocs-current-docs
                 (cdr (assoc major-mode devdocs-current-docs-for-mode))))
 
-  (defun devdocs--set-current-docs-for-sql-mode ()
+  (defun devdocs-ok--set-current-docs-for-sql-mode ()
     "Set `devdocs-current-docs' for SQL modes."
     (when (derived-mode-p 'sql-mode)
       (setq-local devdocs-current-docs
