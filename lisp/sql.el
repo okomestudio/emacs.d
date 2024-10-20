@@ -73,13 +73,18 @@
        ('mysql '("-l" "mysql"))
        ('postgres
         `("-l" "postgresql"
-          "-c" ,(concat "{\"keywordCase\": \"upper\", "
-                        "\"dataTypeCase\": \"upper\", "
-                        "\"functionCase\": \"upper\", "
-                        "\"paramTypes\": {\"custom\": ["
-                        "{\"regex\": \"%\\\\([a-zA-Z0-9_]+\\\\)s\"}" ; Python string
-                        "]}}")))
-       ('sqlite '("-l" "sqlite"))
+          "-c" ,(json-serialize
+                 '((keywordCase . "upper")
+                   (dataTypeCase . "upper")
+                   (functionCase . "upper")
+                   (paramTypes . (custom [(regex "%\\([a-zA-Z0-9_]+\\)s")]))))))
+       ('sqlite
+        `("-l" "sqlite"
+          "-c" ,(json-serialize
+                 '((keywordCase . "upper")
+                   (dataTypeCase . "upper")
+                   (functionCase . "upper")
+                   (paramTypes . (custom [(regex "\\?")]))))))
        (_ nil)))))
 
 ;;; sql.el ends here
