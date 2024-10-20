@@ -15,8 +15,13 @@
 ;;; Code:
 
 (use-package sql
-  :bind (:map sql-mode-map
-              ("C-c b" . sql-format-code))
+  :bind (:map
+         sql-mode-map
+         ("C-c b" . sql-format-code)
+         :map sql-interactive-mode-map
+         ("M-n" .	comint-next-input)
+         ("M-p"	.	comint-previous-input)
+         ("M-r"	. comint-history-isearch-backward-regexp))
   :hook ((sql-mode . lsp-deferred)      ; uses `sqls'
          (sql-interactive-mode . (lambda () (setq-local truncate-lines t))))
   :custom ((lsp-sqls-timeout 30)
