@@ -7,19 +7,37 @@
 
 (require 'ok)
 
+(use-package help
+  :straight nil
+  :bind (:prefix
+         "C-h w"
+         :prefix-map where-or-which-map
+         ("i" . where-is))
+  :custom (list-faces-sample-text (concat "abcdefghijklmn"
+                                          "ABCDEFGHIJKLMN"
+                                          "漢字 ひらがな カタカナ"))
+  :hook (help-mode . help-ok--disable-font-lock-mode-in-some-buffers)
+  :config
+  (defun help-ok--disable-font-lock-mode-in-some-buffers ()
+    (when (member (buffer-name (current-buffer))
+                  '("*Colors*" "*Faces*"))
+      ;; `list-*' buffers appear to interfere with `font-lock-mode'
+      (font-lock-mode -1))))
+
 (use-package helpful
   :bind (("C-c C-d" . helpful-at-point)
-         ("C-h F" . helpful-function)
-         ("C-h f" . helpful-callable)  ; for both functions and macros
-         ("C-h k" . helpful-key)
-         ("C-h l" . view-lossage)
-         ("C-h v" . helpful-variable)
-         ("C-h x" . helpful-command)))
+         :map help-map
+         ("F" . helpful-function)
+         ("f" . helpful-callable)  ; for both functions and macros
+         ("k" . helpful-key)
+         ("l" . view-lossage)
+         ("v" . helpful-variable)
+         ("x" . helpful-command)))
 
 (use-package apropos
   :straight nil
-  :bind (;
-         :prefix "C-h a"
+  :bind (:prefix
+         "C-h a"
          :prefix-map apropos-prefix-map
          ("a" . apropos)
          ("d" . apropos-documentation)
@@ -30,16 +48,11 @@
          ("C-v" . apropos-value))
   :custom (apropos-sort-by-scores t))
 
-(use-package help-shortdoc-example
-  ;; Display shortdoc examples to *Help* buffer.
-  :straight (:host github :repo "buzztaiki/help-shortdoc-example.el")
-  :config (help-shortdoc-example-mode 1))
-
-(use-package hydra)
-
 (use-package which-key
   ;; Displays available keybindings in popup.
-  :bind (("C-h a k" . which-key-show-top-level))
+  :bind ((:map
+          where-or-which-map
+          ("a" . which-key-show-top-level)))
   :hook (on-first-input . which-key-mode)
   :custom ((which-key-idle-delay 0.5)
            (which-key-idle-secondary-delay 0.05)
@@ -59,8 +72,22 @@
            ;; (which-key-side-window-max-width 0.8)
            ))
 
+(use-package casual-info
+  ;; Provide a keyboard-driven menu UI for the Info reader.
+  :bind (:map
+         Info-mode-map
+         ("C-/" . casual-info-tmenu))
+  :custom (casual-info-use-unicode-symbols t))
+
+(use-package help-shortdoc-example
+  ;; Display shortdoc examples to *Help* buffer.
+  :straight (:host github :repo "buzztaiki/help-shortdoc-example.el")
+  :config (help-shortdoc-example-mode 1))
+
+(use-package hydra)
+
 (use-package shell-help
-  ;; Show `command -h' help.
+  ;; Show `<command> --help' help.
   :straight nil
   :commands (shell-help)
   :init
