@@ -91,33 +91,27 @@
   :straight nil
   :commands (shell-help)
   :init
-  (defun shell-help (str)
+  (defun shell-help (cmd)
     (interactive (list (ok-prompt-or-string-from-region "Shell command: ")))
-    (let ((buffer-stdout "*shell-help*")
-          (buffer-stderr "*shell-help-error*")
-          (cmd (string-join `(,str "-h") " ")))
-      (shell-command cmd buffer-stdout buffer-stderr)
-      (switch-to-buffer buffer-stdout))))
-
-(use-package help
-  :straight nil
-  :custom (list-faces-sample-text (concat "abcdefghijklmn"
-                                          "ABCDEFGHIJKLMN"
-                                          "漢字 ひらがな カタカナ"))
-  :hook (help-mode . help--disable-font-lock-mode-in-some-buffers)
-  :config
-  (defun help--disable-font-lock-mode-in-some-buffers ()
-    (when (member (buffer-name (current-buffer))
-                  '("*Colors*" "*Faces*"))
-      ;; `list-*' buffers appear to interfere with `font-lock-mode'
-      (font-lock-mode -1))))
-
-(use-package casual-info
-  ;; Provide a keyboard-driven menu UI for the Info reader.
-  :bind (;
-         :map Info-mode-map
-         ("C-/" . casual-info-tmenu))
-  :custom (casual-info-use-unicode-symbols t))
+    (if (not (executable-find cmd))
+        (message "Command not found: %s" cmd)
+      (let ((buffer-stdout "*shell-help*")
+            (buffer-stderr "*shell-help-error*")
+            (postfilter (if (executable-find "batcat")
+                            "| batcat -f -l help -p --theme=ansi" ""))
+            status)
+        (when (catch 'success
+                (dolist (opt '("--help" "-help" "-h"))
+                  (setq status (shell-command (format "%s %s %s"
+                                                      cmd opt postfilter)
+                                              buffer-stdout
+                                              buffer-stderr))
+                  (if (= status 0)
+                      (throw 'success t)
+                    (switch-to-buffer buffer-stdout)
+                    (erase-buffer))))
+          (switch-to-buffer buffer-stdout)
+          (ansi-color-apply-on-region (point-min) (point-max)))))))
 
 ;;; Documentations
 
