@@ -122,7 +122,9 @@
   ;;
   :bind (:map
          help-map
-         ("D" . devdocs-lookup))
+         ("D" . devdocs-lookup)
+         :map devdocs-mode-map
+         ("v" . devdocs-ok-visit))
   :hook (((ansible
            bash-ts-mode
            css-ts-mode
@@ -141,6 +143,12 @@
          ((sql-mode
            hack-local-variables) . devdocs-ok--set-current-docs-for-sql-mode))
   :config
+  (defun devdocs-ok-visit ()
+    "Visit the current devdocs page with a web browser."
+    (interactive)
+    (devdocs-copy-url)
+    (browse-url-generic (current-kill 0)))
+
   (setq-default
    devdocs-current-docs-for-mode
    '((ansible . ("ansible"))

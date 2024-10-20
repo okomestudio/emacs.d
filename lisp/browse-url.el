@@ -7,12 +7,11 @@
 
 (use-package browse-url
   :straight nil
-  :after (eww)
-  :custom ((browse-url-browser-function 'ok-browse-url-browser-function)
+  :custom ((browse-url-browser-function 'browse-url-ok-browser-function)
            (browse-url-generic-program "xdg-open")
            (browse-url-handlers '(("localhost" . browse-url-generic))))
   :config
-  (defun ok-browse-url-browser-function (url &optional arg)
+  (defun browse-url-ok-browser-function (url &optional arg)
     (interactive "sURL: \nP")
     (pcase arg
       ('(4) (browse-url-default-browser url))
