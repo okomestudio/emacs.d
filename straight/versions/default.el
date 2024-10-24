@@ -6,7 +6,6 @@
  ("add-node-modules-path" . "841e93dfed50448da66c89a977c9182bb18796a1")
  ("aggressive-indent-mode" . "a437a45868f94b77362c6b913c5ee8e67b273c42")
  ("alert" . "c762380ff71c429faf47552a83605b2578656380")
- ("anki-editor" . "dc0111527b99445689ec043ae9a8a7d8504c4949")
  ("ansible-doc" . "86083a7bb2ed0468ca64e52076b06441a2f8e9e0")
  ("anzu" . "26fb50b429ee968eb944b0615dd0aed1dd66172c")
  ("atomic-chrome" . "7ae4397640c7a9f1c52edaef36710c47f7111c41")
