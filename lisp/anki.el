@@ -23,6 +23,7 @@
            )
   :commands (anki-editor-push-note-at-point)
   :ensure-system-package (curl . "sudo apt install -y curl")
-  :preface (put 'anki-editor-ignored-org-tags 'safe-local-variable #'listp))
+  :preface (ok-safe-local-variable-add anki-editor-ignored-org-tags listp
+                                       anki-editor-field-alias listp))
 
 ;;; anki.el ends here
