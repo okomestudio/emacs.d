@@ -124,3 +124,7 @@ org-mode
 # Local Variables:
 # lsp-ltex-language: \"ja-JP\"
 # End:")
+
+bash-ts-mode
+
+(template-bash (include-file "bash.sh"))

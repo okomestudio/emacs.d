@@ -59,7 +59,25 @@
   :bind (("M-+" . tempel-complete)
          ("M-*" . tempel-insert))
   :custom (tempel-path `(,(no-littering-expand-etc-file-name
-                           "tempel/templates.el"))))
+                           "tempel/templates.el")))
+  :config
+  (defun tempel-ok--include-file (elt)
+    (when (eq (car-safe elt) 'include-file)
+      (if-let ((filename (cadr elt))
+               (content
+                (with-current-buffer
+                    (find-file-noselect
+                     (expand-file-name
+                      filename (no-littering-expand-etc-file-name "tempel")))
+                  (save-restriction
+                    (widen)
+                    (buffer-substring-no-properties
+                     (point-min)
+                     (point-max))))))
+          content
+        (message "Template file %s not found" filename)
+        nil)))
+  (add-to-list 'tempel-user-elements #'tempel-ok--include-file))
 
 ;; CORFU
 
