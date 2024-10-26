@@ -9,7 +9,8 @@
   :straight nil
   :interpreter (("bash" . bash-ts-mode)
                 ("sh" . sh-mode))
-  :mode ((("\\.?bash_.*\\'" "\\.?bashrc\\'") . bash-ts-mode)
+  :mode (("\\.?bash_.*\\'" . bash-ts-mode)
+         ("\\.?bashrc\\'" . bash-ts-mode)
          (".*\\.sh\\'" . sh-mode))
   :hook ((bash-ts-mode . lsp-deferred)
          (sh-mode . flymake-mode))
