@@ -1,9 +1,11 @@
-;;; completion-.el --- completion  -*- lexical-binding: t -*-
+;;; completion-.el --- Completion  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;
 ;; Completion with Corfu.
 ;;
 ;;; Code:
+
+(require 'ok)
 
 ;; CAPE
 
@@ -11,12 +13,12 @@
   :hook ((prog-mode
           text-mode
           conf-mode
-          lsp-completion-mode) . ok-cape--set-super-capf)
+          lsp-completion-mode) . cape-ok--set-super-capf)
   :custom (cape-dabbrev-check-other-buffers nil)
   :config
   (require 'tempel)
 
-  (defun ok-cape--set-super-capf (&optional arg)
+  (defun cape-ok--set-super-capf (&optional arg)
     (setq-local completion-at-point-functions
                 (list (cape-capf-noninterruptible
                        (cape-capf-buster
@@ -39,31 +41,29 @@
   (add-to-list 'completion-at-point-functions #'cape-dabbrev t)
   (add-to-list 'completion-at-point-functions #'cape-keyword t))
 
-(use-package tabnine
-  ;; One-time `tabnine-install-binary' may be necessary.
-  :disabled t                           ; Disabled till
-                                        ; `tabnine-util--infer-indentation-offset'
-                                        ; error gets resolved
-  :commands (tabnine-start-process)
-  :bind (nil
-         :map tabnine-completion-map
-	       ("TAB" . nil)
-         ("<tab>" . nil))
-  :hook ((prog-mode . tabnine-mode)
-         (kill-emacs . tabnine-kill-process))
-  :config (tabnine-start-process))
-
 ;; TEMPLATING
 
 (use-package tempel
+  :straight (:host github :repo "minad/tempel" :files (:defaults "extensions/*")
+                   :fork (:repo "okomestudio/tempel"
+                                :branch "custom-element-function-with-st"))
   :bind (("M-+" . tempel-complete)
          ("M-*" . tempel-insert))
   :custom (tempel-path `(,(no-littering-expand-etc-file-name
                            "tempel/templates.el")))
   :config
-  (defun tempel-ok--include-file (elt)
+  (defun tempel-ok--include (elt st)
+    (when (eq (car-safe elt) 'i)
+      (if-let (template (alist-get (cadr elt) (tempel--templates)))
+          (cons 'l template)
+        (message "Template %s not found" (cadr elt))
+        nil)))
+  (add-to-list 'tempel-user-elements #'tempel-ok--include)
+
+  (defun tempel-ok--include-file (elt st)
     (when (eq (car-safe elt) 'include-file)
       (if-let ((filename (cadr elt))
+               (params (caddr elt))
                (content
                 (with-current-buffer
                     (find-file-noselect
@@ -74,7 +74,12 @@
                     (buffer-substring-no-properties
                      (point-min)
                      (point-max))))))
-          content
+          (let (pars k v)
+            (dolist (param params)
+              (setq k (car param))
+              (setq v (alist-get (cdr param) (cdr st)))
+              (setq pars (append pars `((,k . ,(if v v (cdr param)))))))
+            (ok-string-format content pars))
         (message "Template file %s not found" filename)
         nil)))
   (add-to-list 'tempel-user-elements #'tempel-ok--include-file))
@@ -116,11 +121,6 @@
           (apply func args)
         ((debug error) (signal (car e) (cdr e)))))
     (advice-add #'corfu--post-command :around #'force-debug)))
-
-(use-package corfu-info
-  ;; `M-h' toggles the info on selected item.
-  :disabled  ; use popupinfo
-  :straight nil)
 
 (use-package corfu-popupinfo
   :straight nil
@@ -168,4 +168,4 @@
   :hook (corfu-mode . (lambda () (corfu-prescient-mode 1)))
   :custom (corfu-prescient-enable-filtering nil))
 
-;;; completion-.el ends here
+;;; completion.el ends here
