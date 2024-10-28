@@ -14,7 +14,7 @@ ptom["12"]="lsp"
 ptom["13"]="lsp-grammarly lsp-ltex"
 ptom["14"]="org"
 ptom["15"]="org-roam"
-ptom["20"]="dir-locals terminals"
+ptom["20"]="auth-source dir-locals terminals"
 ptom["40"]="completion editing flycheck git lookup polymode tesseract"
 ptom["50"]="text-mode"
 ptom["52"]="markdown rst yaml"
@@ -27,7 +27,7 @@ ptom["80"]="ai anki elfeed emms eww games gnus osm"
 ptom["88"]="dashboard"
 ptom["linux-00"]="linux-gui"
 
-# DO NOT MODIFY
+# DO NOT MODIFY BELOW
 
 readonly scriptname="${0##*/}"
 
