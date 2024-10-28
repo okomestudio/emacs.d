@@ -4,7 +4,7 @@ emacs-lisp-mode
  ";;; " module ".el --- " module "  -*- lexical-binding: t -*-" n)
 
 (template-copyright
- (include-file "elisp-copyright.el" ((module . module))))
+ (include-file "elisp-copyright.el"))
 
 (template-commentary
  ";;; Commentary:" n
