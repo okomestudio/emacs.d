@@ -63,7 +63,6 @@
   (defun tempel-ok--include-file (elt fields)
     (when (eq (car-safe elt) 'include-file)
       (if-let ((filename (cadr elt))
-               (params (caddr elt))
                (content
                 (with-current-buffer
                     (find-file-noselect
@@ -75,10 +74,10 @@
                      (point-min)
                      (point-max))))))
           (let (pars k v)
-            (dolist (param params)
-              (setq k (car param))
-              (setq v (alist-get (cdr param) fields))
-              (setq pars (append pars `((,k . ,(if v v (cdr param)))))))
+            (dolist (item fields)
+              (setq k (car item))
+              (setq v (alist-get (cdr item) fields))
+              (setq pars (append pars `((,k . ,(if v v (cdr item)))))))
             (ok-string-format content pars))
         (message "Template file %s not found" filename)
         nil)))
