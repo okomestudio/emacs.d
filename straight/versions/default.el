@@ -86,7 +86,7 @@
  ("grammarly" . "b82fcaa4580b59e52e7840d0b698c35a58d21f91")
  ("graphviz-dot-mode" . "8ff793b13707cb511875f56e167ff7f980a31136")
  ("greppu.el" . "c98af30f217d25ff45f27c3c500ee3a38eae4726")
- ("hatsuon.el" . "7b9fe96907788539fab5f72f14a6d3ec5e62cae2")
+ ("hatsuon.el" . "ce256783ec1880be0996855e85328ae08883243d")
  ("helm-bibtex" . "8b71b4f5ce62eeaf18067f57faaddc06449fbe1c")
  ("help-shortdoc-example.el" . "3444877d32e425397836245f1a64f2deee9121fe")
  ("helpful" . "cb85dd027577126303467c2d137dfbeb6492b506")
