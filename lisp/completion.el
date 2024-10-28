@@ -52,7 +52,7 @@
   :custom (tempel-path `(,(no-littering-expand-etc-file-name
                            "tempel/templates.el")))
   :config
-  (defun tempel-ok--include (elt st)
+  (defun tempel-ok--include (elt)
     (when (eq (car-safe elt) 'i)
       (if-let (template (alist-get (cadr elt) (tempel--templates)))
           (cons 'l template)
@@ -60,7 +60,7 @@
         nil)))
   (add-to-list 'tempel-user-elements #'tempel-ok--include)
 
-  (defun tempel-ok--include-file (elt st)
+  (defun tempel-ok--include-file (elt fields)
     (when (eq (car-safe elt) 'include-file)
       (if-let ((filename (cadr elt))
                (params (caddr elt))
@@ -77,7 +77,7 @@
           (let (pars k v)
             (dolist (param params)
               (setq k (car param))
-              (setq v (alist-get (cdr param) (cdr st)))
+              (setq v (alist-get (cdr param) fields))
               (setq pars (append pars `((,k . ,(if v v (cdr param)))))))
             (ok-string-format content pars))
         (message "Template file %s not found" filename)
