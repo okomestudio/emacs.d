@@ -67,8 +67,8 @@
            ;; NOTE(2024-07-12): The following are disabled for now,
            ;; since `which-key--update' consistently fails due to
            ;; `(wrong-type-argument wholenump ...)'
+           ;; (which-key-show-docstrings t)
 
-           (which-key-show-docstrings t)
            (which-key-show-transient-maps t)
            (which-key-side-window-location '(right bottom))
            ;; (which-key-side-window-location 'right)
