@@ -134,4 +134,6 @@ _f_: forward
     ("f" gnus-summary-mail-forward)
     ("." nil "cancel")))
 
+(load (no-littering-expand-etc-file-name "gnus/init"))
+
 ;;; gnus.el ends here
