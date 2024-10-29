@@ -8,7 +8,7 @@
 (use-package auth-source
   :straight nil
   :custom ((auth-sources `(,(no-littering-expand-var-file-name
-                             "auth-source/authinfo.gpg")))
+                             "auth-source/.authinfo.gpg")))
            (authinfo-hidden (format "\\(%s\\)"
                                     (mapconcat 'identity
                                                '("api_key"
