@@ -14,7 +14,7 @@
          ("\\.markdown\\'" . gfm-mode)
          ("\\.lr\\'" . gfm-mode))
   :bind (:map markdown-mode-map
-              ("C-c C-c v". markdown-export-and-preview))
+              ("C-c C-c v" . markdown-export-and-preview))
   :custom ((markdown-fontify-code-block-natively t)
            (markdown-header-scaling t)
            (markdown-indent-on-enter t))
