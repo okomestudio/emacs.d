@@ -125,7 +125,9 @@ Otherwise, it is the same as the vanilla version of
                    :files (:defaults "extensions/*"))
   :custom ((orp-ok-node-use-cache-in-memory t)
            (orp-ok-node-gt-use-cache-in-memory t))
-  :init (org-roam-plugin-ok-on-idle-init-setup))
+  :init
+  (load (no-littering-expand-etc-file-name "org-roam/init"))
+  (org-roam-plugin-ok-on-idle-init-setup))
 
 (use-package org-roam-ui
   :after org-roam
