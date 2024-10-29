@@ -35,4 +35,24 @@
   (defun elfeed-ok-search-setup ()
     (setq-local nobreak-char-display nil)))
 
+(use-package elfeed-org
+  :custom ((rmh-elfeed-org-files `(,(no-littering-expand-var-file-name
+                                     "elfeed/elfeed.org"))))
+  :init
+  ;; `elfeed-org' seems very expensive, so we want to lazy load. See
+  ;; the `elfeed-org' function source to ensure that we take care of
+  ;; the nested advice.
+  (defvar elfeed-org-ok--initialized nil)
+
+  (defun elfeed-org-ok--init (&rest _)
+    (unless elfeed-org-ok--initialized
+      (elfeed-org)
+      ;; The advice added with `elfeed-org' won't run during this
+      ;; initial call, so manually trigger `configure-elfeed'.
+      (rmh-elfeed-org-process rmh-elfeed-org-files
+                              rmh-elfeed-org-tree-id)
+      (setq elfeed-org-ok--initialized t)))
+
+  (advice-add #'elfeed :before #'elfeed-org-ok--init))
+
 ;;; elfeed.el ends here
