@@ -14,7 +14,7 @@
            (elfeed-search-trailing-width 30)
            (elfeed-show-unique-buffers nil))
   :config
-  (load (no-littering-expand-etc-file-name "elfeed/elfeed-init"))
+  (load (no-littering-expand-etc-file-name "elfeed/init"))
 
   (setq elfeed-log-level 'info)  ; 'info or 'debug
 
@@ -38,7 +38,7 @@
     (setq-local nobreak-char-display nil)))
 
 (use-package elfeed-org
-  :custom ((rmh-elfeed-org-files `(,(no-littering-expand-var-file-name
+  :custom ((rmh-elfeed-org-files `(,(no-littering-expand-etc-file-name
                                      "elfeed/elfeed.org"))))
   :init
   ;; `elfeed-org' seems very expensive, so we want to lazy load. See
