@@ -14,6 +14,8 @@
            (elfeed-search-trailing-width 30)
            (elfeed-show-unique-buffers nil))
   :config
+  (load (no-littering-expand-etc-file-name "elfeed/elfeed-init"))
+
   (setq elfeed-log-level 'info)  ; 'info or 'debug
 
   (set-face-attribute 'elfeed-search-title-face nil
