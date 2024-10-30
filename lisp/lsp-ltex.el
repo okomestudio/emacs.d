@@ -1,23 +1,31 @@
 ;;; lsp-ltex.el --- lsp-ltex  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;
-;; LTeX Language Server supports LanguageTool with support for LaTeX.
+;; LTeX Language Server client configuration.
+;;
+;; `lsp-ltex' supports LanguageTool with support for LaTeX.
 ;;
 ;;; Code:
 
 (use-package lsp-ltex
   :commands (lsp-ltex-start lsp-ltex-restart)
-  :hook ((markdown-mode
-          ;; org-mode ;; let's not use ltex by default; can load manually with `lsp'
+  :hook ((gfm-mode
+          markdown-mode
+          ;; let's not use ltex by default; can load manually with `lsp'
+          ;; org-mode
           rst-mode) . lsp-ltex-start)
-  :custom
-  (lsp-ltex-version "16.0.0")
-  (lsp-ltex-log-level "finest")
-  (lsp-ltex-trace-server "verbose")
-
-  :preface
-  (put 'lsp-ltex-language 'safe-local-variable #'stringp)
-
+  :custom ((lsp-ltex-active-modes '(bibtex-mode
+                                    context-mode
+                                    gfm-mode
+                                    latex-mode
+                                    markdown-mode
+                                    org-mode
+                                    rst-mode
+                                    text-mode))
+           (lsp-ltex-log-level "finest")
+           (lsp-ltex-trace-server "verbose")
+           (lsp-ltex-version "16.0.0"))
+  :preface (ok-safe-local-variable-add lsp-ltex-language stringp)
   :config
   (defvar lsp-ltex-aspell-dict "~/.aspell.en.pws")
 
@@ -27,14 +35,14 @@
                              (buffer-string)))))
 
   (defun lsp-ltex--update-dictionary ()
-    (setq-local lsp-ltex-dictionary `(:en-US ,(lsp-ltex--load-dict-from-file lsp-ltex-aspell-dict)))
+    (setq-local lsp-ltex-dictionary
+                `(:en-US ,(lsp-ltex--load-dict-from-file lsp-ltex-aspell-dict)))
     (lsp-register-custom-settings '(("ltex.dictionary" lsp-ltex-dictionary))))
 
   (defun lsp-ltex--maybe-recheck (_)
     "Refresh LTEX dictionary of aspell dict update."
     (when (bound-and-true-p lsp-mode)
       (lsp-ltex-restart)))
-
   (advice-add #'ispell-pdict-save :after #'lsp-ltex--maybe-recheck)
 
   (defun lsp-ltex-start ()
