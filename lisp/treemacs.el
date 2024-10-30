@@ -43,18 +43,6 @@
   (setq treemacs--project-follow-delay 1.0
         treemacs--project-follow-timer nil))
 
-(use-package treemacs-nerd-icons
-  :disabled ;; NOTE(2023-12-29): Disabled since char alignment is poor
-  :config (treemacs-load-theme "nerd-icons"))
-
-(use-package treemacs-all-the-icons
-  :disabled ;; NOTE(2023-05-11): Disabled due to formatting issue
-  :after (all-the-icons)
-  :custom (all-the-icons-scale-factor 1.0)
-  :config
-  (treemacs-load-theme "all-the-icons")
-  (treemacs-resize-icons 20))
-
 (use-package treemacs-icons-dired
   :hook (dired-mode . treemacs-icons-dired-enable-once))
 
