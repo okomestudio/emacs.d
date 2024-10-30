@@ -37,13 +37,13 @@
   (setopt atomic-chrome-default-major-mode 'python-ts-mode)
 
   (add-to-list 'atomic-chrome-create-file-strategy
-               '("~/github.com/tmp/leetcode"
-                 :url ("leetcode.com" "repl.it")))
+               '("~/tmp/atomic-chrome/"
+                 :url ("github.com"
+                       "leetcode.com"
+                       "medium.com"
+                       "repl.it")))
   (add-to-list 'atomic-chrome-create-file-strategy
-               '("~/github.com/tmp/medium"
-                 :url ("medium.com")))
-  (add-to-list 'atomic-chrome-create-file-strategy
-               '("~/github.com/tmp/ts-scratch/src/"
-                 :extension ("js" "ts" "tsx" "jsx" "cjs" "mjs"))))
+               '("~/tmp/atomic-chrome/"
+                 :extension ("cjs" "js" "jsx" "mjs" "ts" "tsx"))))
 
 ;;; atomic-chrome.el ends here
