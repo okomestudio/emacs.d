@@ -100,6 +100,8 @@
            (corfu-scroll-margin 5))
   :init (global-corfu-mode)
   :config
+  (set-face-underline 'corfu-current t)
+
   (defun corfu-enable-in-minibuffer ()
     "Enable Corfu in the minibuffer."
     (when (local-variable-p 'completion-at-point-functions)
