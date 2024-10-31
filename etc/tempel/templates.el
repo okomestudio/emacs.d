@@ -45,6 +45,9 @@ lisp-data-mode
 
 org-mode
 
+(page "(p. " p ")")
+(pages "(pp. " p "–" p ")")
+
 (begin "#+begin_" (s name) n> r> n "#+end_" name)
 
 (latex-equation "\\begin{equation}" r> n> "\\end{equation}")
