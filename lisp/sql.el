@@ -75,6 +75,12 @@
     (setq-local
      sqlformat-args
      (pcase sql-dialect
+       ('ansi
+        `("-l" "sql"
+          "-c" ,(json-serialize
+                 '((keywordCase . "upper")
+                   (dataTypeCase . "upper")
+                   (functionCase . "upper")))))
        ('mysql '("-l" "mysql"))
        ('postgres
         `("-l" "postgresql"
