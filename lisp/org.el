@@ -87,7 +87,8 @@
   (org-plugin-ok-mode 1))
 
 (use-package org-plugin-ok
-  :straight (:host github :repo "okomestudio/org-plugin-ok")
+  :straight (:host github :repo "okomestudio/org-plugin-ok"
+                   :files (:defaults "extensions/*"))
   :after org
   :demand t
   :bind (:map
@@ -95,7 +96,7 @@
          ("C-c C-M-c" . op-ok-babel-run-pytest))
   :config
   (with-eval-after-load 'ox
-    (require 'op-ok-export-substack)))
+    (require 'ox-substack)))
 
 (use-package math-preview
   :commands (math-preview-all)
