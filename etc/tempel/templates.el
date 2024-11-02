@@ -45,8 +45,8 @@ lisp-data-mode
 
 org-mode
 
-(page "(p. " p ")")
-(pages "(pp. " p "–" p ")")
+(page "(p. " (deactivate-input-method) p ")")
+(pages "(pp. " (deactivate-input-method) p "–" p ")")
 
 (begin "#+begin_" (s name) n> r> n "#+end_" name)
 
