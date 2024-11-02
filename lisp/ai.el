@@ -6,7 +6,6 @@
 ;;; Code:
 
 (use-package chatgpt-shell
-  :straight (:host github :repo "xenodium/chatgpt-shell")
   :autoload (chatgpt-shell-send-to-buffer)
   :commands (ask-chatgpt)
   :custom ((chatgpt-shell-model-version "gpt-3.5-turbo")
