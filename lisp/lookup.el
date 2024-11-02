@@ -5,34 +5,32 @@
 ;;
 ;;; Code:
 
-(use-package emacs
-  :straight nil
-  :bind (;
-         :prefix-map lookup-map
-         :prefix-docstring "Keymap for lookup"
-         :prefix "C-h C-l"
-         ("c" . ask-chatgpt)
-         ("g" . eww-search-goodreads)
-         ("t" . gt-do-translate)
+(with-eval-after-load 'help
+  (bind-keys :prefix-map lookup-map
+             :prefix-docstring "Keymap for lookup"
+             :prefix "C-h C-l"
+             ("c" . ask-chatgpt)
+             ("g" . eww-search-goodreads)
+             ("t" . gt-do-translate)
 
-         :prefix-map lookup-english-map
-         :prefix-docstring "Keymap for English lookup"
-         :prefix "C-h C-l e"
-         ("a" . eww-search-amazon-en)
-         ("d" . define-word-at-point)
-         ("h" . hatsuon-play-audio)
-         ("j" . eww-search-justapedia-en)
-         ("p" . powerthesaurus-lookup-dwim)
-         ("s" . eww-search-duckduckgo-en)
-         ("w" . eww-search-wikipedia-en)
+             :prefix-map lookup-english-map
+             :prefix-docstring "Keymap for English lookup"
+             :prefix "C-h C-l e"
+             ("a" . eww-search-amazon-en)
+             ("d" . define-word-at-point)
+             ("h" . hatsuon-play-audio)
+             ("j" . eww-search-justapedia-en)
+             ("p" . powerthesaurus-lookup-dwim)
+             ("s" . eww-search-duckduckgo-en)
+             ("w" . eww-search-wikipedia-en)
 
-         :prefix-map lookup-japanese-map
-         :prefix-docstring "Keymap for Japanese lookup"
-         :prefix "C-h C-l j"
-         ("a" . eww-search-amazon-ja)
-         ("d" . eww-search-weblio)
-         ("s" . eww-search-duckduckgo-ja)
-         ("w" . eww-search-wikipedia-ja)))
+             :prefix-map lookup-japanese-map
+             :prefix-docstring "Keymap for Japanese lookup"
+             :prefix "C-h C-l j"
+             ("a" . eww-search-amazon-ja)
+             ("d" . eww-search-weblio)
+             ("s" . eww-search-duckduckgo-ja)
+             ("w" . eww-search-wikipedia-ja)))
 
 ;; DICTIONARIES
 
