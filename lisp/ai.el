@@ -5,6 +5,8 @@
 ;;
 ;;; Code:
 
+(require 'ok)
+
 (use-package chatgpt-shell
   :autoload (chatgpt-shell-send-to-buffer)
   :commands (ask-chatgpt)
@@ -19,8 +21,7 @@
 
 (use-package gptel
   :config
-  (gptel-make-anthropic
-      "Claude"
+  (gptel-make-anthropic "Claude"
     :stream t
     :key (lambda ()
            (auth-source-pick-first-password
@@ -31,7 +32,7 @@
            (org-ai-image-directory "~/tmp/org-ai/")
            (org-ai-sd-directory "~/tmp/org-ai/"))
   :hook ((org-mode . org-ai-mode)
-         (org-mode . org-ai-ok--update-images-directory)
+         (org-mode . org-ai-ok--update-image-directory)
          (org-mode . org-ai-ok--update-sd-directory))
   :commands (org-ai-mode org-ai-global-mode)
   :config
@@ -42,7 +43,7 @@
   (defalias 'org-ai-ok--update-image-directory
     (apply-partially #'org-ai-ok--set-output-directory
                      'org-ai-image-directory "~/tmp/org-ai"))
-  (defalias 'org-ai-ok--update--sd-directory
+  (defalias 'org-ai-ok--update-sd-directory
     (apply-partially #'org-ai-ok--set-output-directory
                      'org-ai-sd-directory "~/tmp/org-ai")))
 
