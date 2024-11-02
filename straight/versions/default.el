@@ -142,6 +142,7 @@
  ("openwith" . "1dc89670822966fab6e656f6519fdd7f01e8301a")
  ("orderless" . "49d1fdfb80b55699a00b11bc916ad29c0447039b")
  ("org" . "d51dc4aa29f793f598a258c4dcbe8b05ae975605")
+ ("org-ai" . "5adfde1bc7db9026747fbfae4c154eeac4ef8e59")
  ("org-cliplink" . "13e0940b65d22bec34e2de4bc8cba1412a7abfbc")
  ("org-contrib" . "ccd4212866fb1be70d1f15a41264c45a281901ad")
  ("org-excalidraw" . "0fc2c6d9519ebd357b539f576b9d802065ceb227")

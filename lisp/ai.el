@@ -27,12 +27,23 @@
             :host "console.anthropic.com"))))
 
 (use-package org-ai
-  :disabled
   :custom ((org-ai-default-chat-model "gpt-3.5-turbo")
-           (org-ai-image-directory "~/Downloads/org-ai/")
-           (org-ai-sd-directory "~/Downloads/org-ai/"))
-  :hook (org-mode . org-ai-mode)
-  :commands (org-ai-mode
-             org-ai-global-mode))
+           (org-ai-image-directory "~/tmp/org-ai/")
+           (org-ai-sd-directory "~/tmp/org-ai/"))
+  :hook ((org-mode . org-ai-mode)
+         (org-mode . org-ai-ok--update-images-directory)
+         (org-mode . org-ai-ok--update-sd-directory))
+  :commands (org-ai-mode org-ai-global-mode)
+  :config
+  (defun org-ai-ok--set-output-directory (sym default &rest r)
+    (set sym (or (and buffer-file-name
+                      (file-name-directory buffer-file-name))
+                 default)))
+  (defalias 'org-ai-ok--update-image-directory
+    (apply-partially #'org-ai-ok--set-output-directory
+                     'org-ai-image-directory "~/tmp/org-ai"))
+  (defalias 'org-ai-ok--update--sd-directory
+    (apply-partially #'org-ai-ok--set-output-directory
+                     'org-ai-sd-directory "~/tmp/org-ai")))
 
 ;;; ai.el ends here
