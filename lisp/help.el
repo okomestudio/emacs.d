@@ -74,12 +74,11 @@
            ;; (which-key-side-window-location 'right)
            (which-key-side-window-max-width 0.8)))
 
-(use-package casual-info
-  ;; Provide a keyboard-driven menu UI for the Info reader.
-  :bind (:map
-         Info-mode-map
-         ("C-/" . casual-info-tmenu))
-  :custom (casual-info-use-unicode-symbols t))
+(use-package casual
+  ;; Provide a keyboard-driven menu UI
+  :bind (:map Info-mode-map ("C-/" . casual-info-tmenu))
+  :custom (casual-info-use-unicode-symbols t)
+  :config (require 'casual-info))
 
 (use-package help-shortdoc-example
   ;; Display shortdoc examples to *Help* buffer.
