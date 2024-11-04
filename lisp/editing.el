@@ -44,18 +44,9 @@
   ;; Typographical utility (e.g., smart quotation).
   :hook (org-mode . typo-mode))
 
-(use-package undo-tree
-  ;; Treat undo history as a tree.
-  :bind (;
-         :map undo-tree-map
-         ("C-/" . undo-tree-undo)
-         ("C-?" . undo-tree-redo)
-         :map undo-tree-mode-map
-         ("C-/" . undo-tree-undo)
-         ("C-?" . undo-tree-redo))
-
-  :custom (undo-tree-auto-save-history nil)
-  :init (global-undo-tree-mode))
+(use-package vundo
+  :bind (("C-/" . undo)
+         ("C-?" . undo-redo)))
 
 (use-package whole-line-or-region
   ;; Operate on current line if region undefined.
