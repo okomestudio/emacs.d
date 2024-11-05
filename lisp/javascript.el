@@ -9,7 +9,7 @@
   :straight nil
   :bind (:map
          js-ts-mode-map
-         ("C-c b" . (lambda () (interactive) (prettier-js))))
+         ("C-c b" . prettier-js))
   :custom (js-jsx-indent-level 2)
   :mode (("\\.js\\'" . js-ts-mode)
          ("\\.jsx\\'" . js-ts-mode)  ; equivalent to `js-jsx-mode'
@@ -24,8 +24,5 @@
   (defun js-ok--init ()
     (setq-local fill-column 90)
     (lsp-deferred)))
-
-(use-package prettier-js
-  :ensure-system-package (prettier . "npm install -g prettier"))
 
 ;;; javascript.el ends here

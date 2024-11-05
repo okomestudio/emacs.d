@@ -5,12 +5,13 @@
 ;;
 ;;; Code:
 
-(use-package css-ts-mode
+(use-package css-mode
   :straight nil
   :bind (:map
          css-ts-mode-map
-         ("C-c b" . (lambda () (interactive) (prettier-js))))
+         ("C-c b" . prettier-js))
   :custom (css-indent-offset 2)
+  :mode (("\\.css\\'" . css-ts-mode))
   :hook (css-ts-mode . lsp))
 
 ;;; css.el ends here
