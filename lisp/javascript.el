@@ -1,31 +1,27 @@
 ;;; javascript.el --- JavaScript  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;
-;; JavaScript mode configuration.
+;; The JavaScript mode configuration.
 ;;
 ;;; Code:
 
 (use-package js
   :straight nil
-  :bind (nil
-         :map js-ts-mode-map
+  :bind (:map
+         js-ts-mode-map
          ("C-c b" . (lambda () (interactive) (prettier-js))))
+  :custom (js-jsx-indent-level 2)
   :mode (("\\.js\\'" . js-ts-mode)
-         ("\\.jsx\\'" . js-ts-mode)     ; js-jsx-mode is equivalent
+         ("\\.jsx\\'" . js-ts-mode)  ; equivalent to `js-jsx-mode'
          ("\\.tsx?\\'" . typescript-ts-mode))
   :hook ((js-ts-mode
           typescript-ts-mode) . lsp-deferred)
-  :custom
-  (js-jsx-indent-level 2)
-
   :config
-  (setopt js-indent-level 2)            ; Setting this in :custom
-                                        ; doens't get respected.
-  )
-
+  ;; Setting the following custom variable in :custom does not get
+  ;; respected...
+  (setopt js-indent-level 2))
 
 (use-package prettier-js
-  :commands (prettier-js)
   :ensure-system-package (prettier . "npm install -g prettier"))
 
 ;;; javascript.el ends here
