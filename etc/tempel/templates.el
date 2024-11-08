@@ -46,7 +46,10 @@ lisp-data-mode
 org-mode
 
 (solution (org-insert-heading nil nil (1+ (org-current-level)))
-          "Solution" n> n>)
+          "Solution" n
+          ":PROPERTIES:" n
+          ":VISIBILITY: folded" n
+          ":END:" n n)
 
 (page "(p. " (deactivate-input-method) p ")")
 (pages "(pp. " (deactivate-input-method) p "–" p ")")
