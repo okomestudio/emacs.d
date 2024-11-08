@@ -5,13 +5,16 @@
 ;;
 ;;; Code:
 
+(require 'ok)
+
 (use-package org
   :bind (:map
          org-mode-map
+         ("C-S-o" . org-ok-insert-newline-above)
          ("C-c C-l" . org-insert-link)
          ("C-c C-q" . org-set-tags-command)
          ("C-c C-x l" . math-preview-ok-toggle)
-         ("C-c i h" . org-insert-heading)  ; or use M-RET
+         ("C-c i h" . org-insert-heading) ; or use M-RET
          ("C-c i l" . ok-org-insert-item)
          ("C-c i u" . org-cliplink)
          ("C-c l" . org-store-link)
@@ -46,6 +49,24 @@
 
   :config
   ;; ENHANCE DEFAULT BEHAVIORS
+  (defun org-ok-insert-newline-above-heading ()
+    "Insert an empty line before the heading of the current section."
+    (interactive)
+    (save-mark-and-excursion
+      (org-previous-visible-heading 1)
+      (org-return)))
+
+  (defun org-ok-insert-newline-above (&optional arg)
+    "Insert a newline before the current line or the current heading.
+Without a prefix argument, a newline is inserted before the
+current line. With a prefix argument, a newline is inserted
+before the heading of the current section."
+    (interactive "P")
+    (call-interactively
+     (pcase (car arg)
+       (4 #'org-ok-insert-newline-above-heading)
+       (_ #'ok-edit-insert-newline-above))))
+
   (defun org-open-at-point--ad-prefix (orig-func &optional arg)
     (pcase (car arg)
       ;; With a prefix argument, open the linked file in the same window
