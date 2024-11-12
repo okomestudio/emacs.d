@@ -6,6 +6,7 @@
 ;;; Code:
 
 (use-package magit  ; not derived from prog-mode
+  ;; TODO: Bind `magit-find-file'
   )
 
 (use-package magit-file-icons

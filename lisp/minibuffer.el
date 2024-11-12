@@ -11,6 +11,8 @@
 
 (use-package vertico
   ;; VERTical Interactive COmpletion.
+  :bind (:map vertico-map
+              ("?" . minibuffer-completion-help))
   :custom ((vertico-count 20)
            (vertico-cycle t))
   :hook (on-first-input . vertico-mode))
@@ -22,6 +24,8 @@
 
 (use-package marginalia
   ;; Marginalia in the minibuffer.
+  :bind (:map minibuffer-local-map
+              ("M-A" . marginalia-cycle))
   :hook (vertico-mode . marginalia-mode))
 
 (use-package nerd-icons-completion
