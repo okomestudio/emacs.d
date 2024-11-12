@@ -32,6 +32,10 @@ emacs-lisp-mode
  n n n
  (i template-ends))
 
+gfm-mode
+
+(readme (include-file "readme.md"))
+
 lisp-data-mode
 
 (projectile-cmds
