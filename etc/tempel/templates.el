@@ -6,7 +6,7 @@ emacs-lisp-mode
  ";; End:" n)
 
 (template-begins
- ";;; " module ".el --- " module "  -*- lexical-binding: t -*-" n)
+ ";;; " (s module) ".el --- " (s module) "  -*- lexical-binding: t -*-" n)
 
 (template-copyright
  (include-file "elisp-copyright.el"))
@@ -19,8 +19,8 @@ emacs-lisp-mode
  ";;; Code:" n)
 
 (template-ends
- "(provide '" module ")" n
- ";;; " module ".el ends here" n)
+ "(provide '" (s module) ")" n
+ ";;; " (s module) ".el ends here" n)
 
 (template
  (p "module: " module t)
