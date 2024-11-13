@@ -10,8 +10,18 @@
            (flycheck-rst-executable (locate-user-emacs-file "bin/rst2pseudoxml")))
   :hook (((emacs-lisp-mode lisp-data-mode) . flycheck-mode)
          (org-mode . flycheck-mode))
-  :preface
-  (put 'flycheck-textlint-config 'safe-local-variable #'stringp))
+  :preface (put 'flycheck-textlint-config 'safe-local-variable #'stringp)
+  :config
+  (flycheck-define-checker write-good
+    "The write-good prose checker."
+    :command ("write-good" "--parse" source-inplace)
+    :standard-input nil
+    :error-patterns ((warning
+                      line-start
+                      (file-name) ":" line ":" column ":" (message)
+                      line-end))
+    :modes (gfm-mode markdown-mode org-mode text-mode))
+  (add-to-list 'flycheck-checkers 'write-good))
 
 (use-package flycheck
   :if (eq system-type 'gnu/linux)
@@ -26,10 +36,13 @@
 (use-package flycheck-aspell-org
   :straight (:host github :repo "okomestudio/flycheck-aspell-org.el")
   :after (flycheck-aspell)
-  :demand t)
+  :demand t
+  :config
+  (flycheck-add-next-checker 'org-aspell-dynamic 'write-good))
 
 (use-package flycheck-pos-tip
   :custom (flycheck-pos-tip-timeout 60)
   :config (flycheck-pos-tip-mode))
 
+(provide 'flycheck)
 ;;; flycheck.el ends here
