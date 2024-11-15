@@ -44,9 +44,6 @@
 ;; TEMPLATING
 
 (use-package tempel
-  :straight (:host github :repo "minad/tempel" :files (:defaults "extensions/*")
-                   :fork (:repo "okomestudio/tempel"
-                                :branch "custom-element-function-with-st"))
   :bind (("M-+" . tempel-complete)
          ("M-*" . tempel-insert))
   :custom (tempel-path `(,(no-littering-expand-etc-file-name
