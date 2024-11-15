@@ -57,8 +57,8 @@
 
         message-log-max t)
 
-(straight-use-package 'use-package)
-(straight-use-package 'use-package-ensure-system-package)
+(require 'use-package)
+(require 'use-package-ensure-system-package)
 
 (use-package system-packages
   :custom ((system-packages-use-sudo t)
