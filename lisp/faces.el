@@ -139,6 +139,10 @@ This is also used as the default.")
   :straight (:host github :repo "hamano/locale-eaw")
   :config (eaw-fullwidth))
 
-(use-package show-font)
+(use-package show-font
+  :config
+  (setopt show-font-character-sample
+          (concat show-font-character-sample
+                  "ひらがな カタカナ 漢字 ―/ダッシュ ー/長音")))
 
 ;;; faces.el ends here
