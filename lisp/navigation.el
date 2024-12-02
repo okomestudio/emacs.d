@@ -88,6 +88,7 @@
 
 (use-package bookmark+
   ;; Enhances vanilla Emacs bookmarks in many way.
-  :defer 5)
+  :defer 5
+  :custom ((bookmark-save-flag 1))) ;; save more frequently, not just on Emacs quit
 
 ;;; navigation.el ends here
