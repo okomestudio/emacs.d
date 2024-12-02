@@ -25,7 +25,7 @@
 
 (use-package avy)
 
-;; WINDOWS AND FRAMES
+;;; WINDOWS AND FRAMES
 
 (use-package ace-window
   :bind ("M-O" . ace-window)
@@ -41,7 +41,7 @@
          ("C-c <left>". winner-undo))
   :hook (on-first-buffer . (lambda () (winner-mode 1))))
 
-;; WINDOW SCROLLING
+;; Scrolling
 
 (use-package mwheel
   :straight nil
@@ -65,7 +65,36 @@
 (use-package yascroll
   :hook (on-first-buffer . (lambda () (global-yascroll-bar-mode 1))))
 
-;; FILES
+;; Configuration
+
+(use-package activities
+  :bind (("C-x C-a C-n" . activities-new)
+         ("C-x C-a C-d" . activities-define)
+         ("C-x C-a C-a" . activities-resume)
+         ("C-x C-a C-s" . activities-suspend)
+         ("C-x C-a C-k" . activities-kill)
+         ("C-x C-a RET" . activities-switch)
+         ("C-x C-a b" . activities-switch-buffer)
+         ("C-x C-a g" . activities-revert)
+         ("C-x C-a l" . activities-list))
+  :init
+  (activities-mode)
+  (activities-tabs-mode)
+  ;; Prevent `edebug' default bindings from interfering.
+  (setq edebug-inhibit-emacs-lisp-mode-bindings t))
+
+;;; TABS
+
+(use-package centaur-tabs
+  :bind (("C-<prior>" . centaur-tabs-backward)
+         ("C-<next>" . centaur-tabs-forward))
+  :custom ((centaur-tabs-style "chamfer")
+           (centaur-tabs-set-icons t)
+           (centaur-tabs-icon-type 'nerd-icons))
+  :config
+  (centaur-tabs-mode t))
+
+;;; FILES
 
 (use-package recentf
   :straight nil
@@ -80,11 +109,11 @@
   :straight nil
   :init (save-place-mode 1))
 
-;; IMENU
+;;; IMENU
 
 (use-package imenu-list)
 
-;; BOOKMARK
+;;; BOOKMARK
 
 (use-package bookmark+
   ;; Enhances vanilla Emacs bookmarks in many way.
