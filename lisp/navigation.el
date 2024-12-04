@@ -68,6 +68,7 @@
 ;; Configuration
 
 (use-package activities
+  :disabled
   :bind (("C-x C-a C-n" . activities-new)
          ("C-x C-a C-d" . activities-define)
          ("C-x C-a C-a" . activities-resume)
