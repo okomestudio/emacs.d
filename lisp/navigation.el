@@ -93,7 +93,8 @@
            (centaur-tabs-set-icons t)
            (centaur-tabs-icon-type 'nerd-icons))
   :config
-  (centaur-tabs-mode t))
+  (centaur-tabs-mode t)
+  (centaur-tabs-group-by-projectile-project))
 
 ;;; FILES
 
