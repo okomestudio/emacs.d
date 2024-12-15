@@ -83,6 +83,11 @@
   :preface
   (put 'pyimport-develop-packages 'safe-local-variable #'listp))
 
+;; TODO(2024-12-15): Try for docstring formatting:
+;;
+;;   - github.com/DanielNoord/pydocstringformatter
+;;   - github.com/PyCQA/docformatter
+
 ;; VIRTUAL ENVS
 
 (use-package pyenv-mode
