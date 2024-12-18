@@ -8,53 +8,58 @@
 (use-package vterm
   ;; Emacs libvterm integration.
   :if (eq system-type 'gnu/linux)
-  :bind (nil
-         :map vterm-mode-map
-         ("C-q" . vterm-send-next-key))
-  :hook (vterm-mode . ok-vterm-configure-buffer)
-  :custom
-  (vterm-always-compile-module t)
-  (vterm-buffer-name-string "vterm %s")
-  (vterm-max-scrollback 5000)
-  (vterm-module-cmake-args "-DUSE_SYSTEM_LIBVTERM=no")
-  (vterm-timer-delay 0.02)
+  :bind (:map vterm-mode-map
+              ("C-q" . vterm-send-next-key))
+  :custom ((vterm-always-compile-module t)
+           (vterm-buffer-name-string "vterm %s")
+           (vterm-max-scrollback 5000)
+           (vterm-module-cmake-args "-DUSE_SYSTEM_LIBVTERM=no")
+           (vterm-timer-delay 0.02)
 
-  ;; Need to unset this to let the shell's pyenv manage venvs:
-  (vterm-environment '("PYENV_VERSION="))
-
+           ;; Need to unset this to let the shell's pyenv manage venvs:
+           (vterm-environment '("PYENV_VERSION=")))
   :ensure-system-package
   ("/usr/include/vterm.h" . "sudo apt install -y libvterm-dev")
   ("/usr/bin/cmake" . "sudo apt install -y cmake")
   ("/usr/bin/libtool" . "sudo apt install -y libtool-bin")
-
+  :hook (vterm-mode . vterm-ok-buffer-configure)
   :config
-  (defun ok-vterm-configure-buffer ()
+  (defun vterm-ok-buffer-configure ()
     (set (make-local-variable 'buffer-face-mode-face) 'fixed-pitch)
     (setq-local global-hl-line-mode nil
                 solaire-mode nil)
     (buffer-face-mode t)))
 
-
 (use-package multi-vterm
   :after vterm)
 
-
 (use-package eat
   ;; Emulate A Terminal, in a region, in a buffer and in Eshell.
-  :disabled
-  :straight
-  '(eat :type git
-        :host codeberg
-        :repo "akib/emacs-eat"
-        :files ("*.el" ("term" "term/*.el") "*.texi"
-                "*.ti" ("terminfo/e" "terminfo/e/*")
-                ("terminfo/65" "terminfo/65/*")
-                ("integration" "integration/*")
-                (:exclude ".dir-locals.el" "*-tests.el")))
-
-  :hook
-  (eshell-post-command . (lambda ()
-                           (sleep-for 0.2)
-                           (end-of-buffer))))
+  ;;
+  ;; Eat input modes:
+  ;;
+  ;; Semi-char mode is the default. To input exception keys, prefix
+  ;; with `C-q'. Also, `C-c C-c' sends `C-c', and `C-c C-k' kills the
+  ;; terminal program.
+  ;;
+  ;; In char mode, Eat forwards all supported keys to terminals. Type
+  ;; `C-c M-d' to switch to this mode, and `C-M-m' or `M-<RET>' to
+  ;; switch back to semi-char mode.
+  ;;
+  ;; In Emacs mode, the buffer acts like a regular Emacs buffer. Type
+  ;; `C-c C-e' to switch to this mode, and `C-c C-j' to switch back to
+  ;; semi-char mode or `C-c M-d' to char mode.
+  ;;
+  :straight (eat :type git
+                 :host codeberg
+                 :repo "akib/emacs-eat"
+                 :files ("*.el" ("term" "term/*.el") "*.texi"
+                         "*.ti" ("terminfo/e" "terminfo/e/*")
+                         ("terminfo/65" "terminfo/65/*")
+                         ("integration" "integration/*")
+                         (:exclude ".dir-locals.el" "*-tests.el")))
+  :hook (eshell-post-command . (lambda ()
+                                 (sleep-for 0.2)
+                                 (end-of-buffer))))
 
 ;;; terminals.el ends here
