@@ -9,6 +9,7 @@ The list of Emacs packages to potentially check out:
 - [[https://codeberg.org/akib/emacs-iwindow][iwindow]] - Interactively manipulate windows
 - [[https://github.com/ahyatt/llm][llm]] - A package abstracting llm capabilities
 - [[https://github.com/emacs-jp/migemo][migemo]] - Provides incremental search with romanized Japanese
+- [[https://github.com/alphapapa/org-make-toc][org-make-toc]] - Automatic tables of contents for Org-mode files
 - [[https://github.com/alphapapa/org-super-agenda][org-super-agenda]] - Supercharge your Org daily/weekly agenda by grouping items
 - [[https://github.com/emacsmirror/password-store][password-store]] - Allows ~pass~ integration for managing credentials
 - [[https://github.com/a13/reverse-im.el][reverse-im.el]] - Overrides ~function-key-map~ for preferred input method(s) to translate input sequences to English, so we can use emacs binding while a non-default system layout is active
