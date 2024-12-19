@@ -48,6 +48,9 @@
   :custom (synosaurus-choose-method 'default)
   :ensure-system-package (wn . "sudo apt install -y wordnet"))
 
+(use-package urbandict.el
+  :straight (:host github :repo "okomestudio/urbandict.el"))
+
 ;; PRONUNCIATION
 
 (use-package hatsuon
