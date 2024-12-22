@@ -2,14 +2,30 @@
 
 The Emacs configuration directory.
 
-Place this directory so that Emacs can find the ~init.el~ file. The auxiliary scripts used by Emacs is placed under the ~bin/~ directory.
+** Repository structure
 
-* Convention
-** ~straight-use-package~
+Clone the root of this version-controlled repository to a place where Emacs can find the =init.el= file, e.g. =~/.config/emacs=.
 
-The ~init.el~ is organized using ~use-package~ with ~straight~.
+  - =bin/= - Scripts used by Emacs; add this to the ~PATH~ environment variable
+  - =etc/= - Startup and configuration files for Emacs packages
+      - =etc/tempel/= - Used by tempel, storing templates
+  - =init.d/= - Symlinks to Elisp package sources stored under =lisp=
+  - =lisp/= - Elisp package sources
+  - =straight= - Used by ~straight~
+      - =straight/repos/= - Store package repositories of source code
+      - =straight/versions/= - Store version pinning info
+  - =tree-sitter/= - Tree-sitter files
+  - =var/= - Emacs package data files
 
-*** Initializing a built-in package
+** =init.el= architecture
+
+The Emacs startup starts by loading =early-init.el= and then =init.el=. This section describes the architecture of the =init.el= file.
+
+*** Use of ~straight-use-package~
+
+The =init.el= makes heavy use of ~use-package~ with ~stright~, configured in =lisp/straight-use-package.el=.
+
+**** Initializing a built-in package
 
 Use ~:straight nil~ to avoid pulling the source:
 
@@ -19,11 +35,11 @@ Use ~:straight nil~ to avoid pulling the source:
     …)
 #+end_src
 
-** Use of ~init-loader~
+*** Use of ~init-loader~
 
-Package initialization files are in the ~lisp/~ directory. The files actually loaded are symlinked in the ~init.d~ directory and loaded by the ~init-loader~ package. The files are sorted by file name and loaded in that  order.
+The package initialization source files are in the ~lisp/~ directory. The files actually loaded by ~init-loader~ are symlinked in the ~init.d~ directory. The files symlinked are loaded in the order of their symlink name.
 
-Run
+Run the script
 
 #+begin_src shell
   init.d/symlinks.sh
@@ -35,13 +51,14 @@ to create symlinks under the ~init.d/~ directory.
 
 See the [[info:elisp#Key Binding Conventions][Key Binding Conventions]] section of the GNU Emacs Lisp Reference Manual.
 
-* Improving startup time
+** Miscellaneous topics
+*** Improving startup time
 
-In Linux systems, the startup time for this Emacs initialization takes 1.5 - 2.0 seconds.
+In a typical Linux system that I use, the startup time is about 1.5 - 2.0 seconds.
 
-The ~find-at-startup~ option is removed from  ~straight-check-for-modifications~; see ~lisp/traight-use-package.el~ for caveat.
+The ~find-at-startup~ option is removed from ~straight-check-for-modifications~; see ~lisp/traight-use-package.el~ for caveat.
 
-While the ~init.el~ in this repository is written primarily with readability and maintainability in mind, it pays well to be aware of improvement we can make with the startup time.
+While the ~init.el~ in this repository is written primarily with readability and maintainability in mind, it pays well to be aware of improvement we can make with the startup time. The following resources were useful:
 
   - [[https://emacs-jp.github.io/tips/startup-optimization][Emacs の起動時間を”“詰める”” | Emacs JP]]
   - [[https://zenn.dev/zk_phi/books/cba129aacd4c1418ade4][Emacs の起動時間を""詰める""]] (free book version)
