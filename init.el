@@ -14,8 +14,8 @@
             (setq file-name-handler-alist
                   ok--saved-file-name-handler-alist)) 99)
 
-;; Profiling
-(when ok-debug ;; set t to activate init profiler
+;; Profiling init.el
+(when ok-debug  ; profiler active when debug mode is active
   (profiler-start 'cpu+mem)
   (defun init--tear-down-profiler ()
     (profiler-report)
@@ -28,23 +28,21 @@
                      (emacs-pid) (emacs-init-time)))
           100)
 
-;; custom.el
+;; Disable custom.el
 (setopt custom-file (locate-user-emacs-file "custom.el"))  ; or `null-device'
 (load custom-file 'noerror 'nomessage)
 
-;; Configure use-package
+;; Configure `use-package'
 (load (locate-user-emacs-file
-       ;; "lisp/package.el"              ; with package
-       "lisp/straight-use-package.el"))  ; with straight-use-package
+       "lisp/straight-use-package.el"))  ; or use "lisp/package.el"
 
 (use-package no-littering
   ;; Want to run this as early as possible.
   :demand t
-  :custom
-  (no-littering-etc-directory (locate-user-emacs-file
-                               (convert-standard-filename "etc/")))
-  (no-littering-var-directory (locate-user-emacs-file
-                               (convert-standard-filename "var/"))))
+  :custom ((no-littering-etc-directory
+            (locate-user-emacs-file (convert-standard-filename "etc/")))
+           (no-littering-var-directory
+            (locate-user-emacs-file (convert-standard-filename "var/")))))
 
 ;; Load config files under init.d/
 (use-package init-loader
