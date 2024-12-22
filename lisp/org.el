@@ -252,9 +252,21 @@ before the heading of the current section."
 (use-package org-side-tree :disabled)
 (use-package org-web-tools :disabled)
 
+(use-package org-download
+  ;; Drag and drop images to Emacs org-mode.
+  :bind (:map
+         org-mode-map
+         ("C-c i c" . org-download-clipboard)
+         ("C-c i i" . org-download-yank))
+  :custom ((org-download-method 'directory)
+           (org-download-image-dir nil)
+           (org-download-heading-lvl nil)
+           (org-download-timestamp ""))
+  :hook (org-mode . org-download-enable))
+
 (use-package org-transclusion
-  :bind (;
-         :map org-mode-map
+  :bind (:map
+         org-mode-map
          :prefix "C-c C-n"
          :prefix-map ok-org-transclusion-map
          ("A" . org-transclusion-add-all)
