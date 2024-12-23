@@ -3,4 +3,6 @@
 # Org Babel pytest runner
 #
 
+# Prevent __pycache__ directory to be created on running pytest code.
+# See https://github.com/pytest-dev/pytest/issues/200 for detail
 PYTHONDONTWRITEBYTECODE=1 python -m pytest -s -vv -p no:cacheprovider "$@"
