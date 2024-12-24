@@ -6,7 +6,7 @@ set -e
 declare -A ptom
 ptom["00"]="optimizations startup"
 ptom["02"]="search"
-ptom["04"]="consult embark help minibuffer navigation treemacs"
+ptom["04"]="consult embark subsys-help minibuffer navigation treemacs"
 ptom["05"]="atomic-chrome"
 ptom["06"]="faces themes"
 ptom["10"]="ime projectile"
@@ -72,19 +72,7 @@ function create_symlinks() {
 
 
 function delete_symlinks() {
-  for priority in "${!ptom[@]}"; do
-    for module in ${ptom[$priority]}; do
-      if [[ $priority = linux-* ]] && [[ $module = linux-* ]]; then
-        target=$priority-${module#linux-}.el
-      else
-        target=$priority-$module.el
-      fi
-      if [ -h "init.d/$target" ]; then
-        cmd="rm init.d/$target"
-        $cmd
-      fi
-    done
-  done
+  find "init.d/" -type l -exec rm {} \;
 }
 
 
