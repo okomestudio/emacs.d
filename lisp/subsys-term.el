@@ -1,9 +1,11 @@
-;;; terminals.el --- Terminals  -*- lexical-binding: t -*-
+;;; subsys-term.el --- Terminal Subsystem  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;
-;; Terminals configuration.
+;; Set up terminal subsystem.
 ;;
 ;;; Code:
+
+;;; vterm - Emacs libvterm integration
 
 (use-package vterm
   ;; Emacs libvterm integration.
@@ -33,6 +35,8 @@
 (use-package multi-vterm
   :after vterm)
 
+;;; EAT - Emulate A Terminal
+
 (use-package eat
   ;; Emulate A Terminal, in a region, in a buffer and in Eshell.
   ;;
@@ -58,8 +62,13 @@
                          ("terminfo/65" "terminfo/65/*")
                          ("integration" "integration/*")
                          (:exclude ".dir-locals.el" "*-tests.el")))
+  :bind (:map
+         eat-semi-char-mode-map
+         ("M-o" . other-window-or-frame) ; need explicit definition; otherwise reset
+         )
   :hook (eshell-post-command . (lambda ()
                                  (sleep-for 0.2)
                                  (end-of-buffer))))
 
-;;; terminals.el ends here
+(provide 'subsys-term)
+;;; subsys-term.el ends here
