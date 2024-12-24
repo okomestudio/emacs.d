@@ -1,7 +1,7 @@
-;;; help.el --- help  -*- lexical-binding: t -*-
+;;; subsys-help.el --- Help Subsystem  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;
-;; Help and documentations.
+;; Set up the help and documentation subsystem.
 ;;
 ;;; Code:
 
@@ -9,10 +9,6 @@
 
 (use-package help
   :straight nil
-  :bind (:prefix
-         "C-h w"
-         :prefix-map where-or-which-map
-         ("i" . where-is))
   :custom (list-faces-sample-text (concat "abcdefghijklmn"
                                           "ABCDEFGHIJKLMN"
                                           "漢字 ひらがな カタカナ"))
@@ -53,9 +49,13 @@
 
 (use-package which-key
   ;; Displays available keybindings in popup.
-  :bind ((:map
-          where-or-which-map
-          ("a" . which-key-show-top-level)))
+  :bind (:prefix-map
+         where-or-which-map
+         :prefix "C-h w"
+         ("i" . where-is)
+
+         :map help-map
+         ("A" . which-key-show-top-level))
   :hook (on-first-input . which-key-mode)
   :custom ((which-key-idle-delay 0.5)
            (which-key-idle-secondary-delay 0.05)
@@ -156,7 +156,7 @@
      (bash-ts-mode . ("bash"))
      (css-ts-mode . ("css"))
      (dockerfile-ts-mode . ("docker"))
-     (emacs-lisp-mode . ("lisp"))
+     (emacs-lisp-mode . ("elisp"))
      (js-jsx-mode . ("javascript" "axios" "react"))
      (js-ts-mode . ("javascript"))
      (json-ts-mode . ("jq"))
@@ -187,4 +187,5 @@
   ;; "Structure and Interpretation of Computer Programs" as info.
   )
 
-;;; help.el ends here
+(provide 'subsys-help)
+;;; subsys-help.el ends here
