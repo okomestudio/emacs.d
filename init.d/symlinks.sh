@@ -23,7 +23,7 @@ ptom["60"]="prog-mode formatter"
 ptom["62"]="c css docker elisp html javascript kotlin python rust scala shell sql"
 ptom["64"]="ansible excalidraw graphviz json plantuml restclient"
 ptom["70"]="browse-url epub openwith pdf"
-ptom["80"]="ai anki elfeed emms eww games gnus osm"
+ptom["80"]="ai anki elfeed emms eww subsys-game gnus osm"
 ptom["88"]="dashboard"
 ptom["linux-00"]="linux-gui"
 
