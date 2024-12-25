@@ -1,23 +1,25 @@
-;;; ai.el --- AI  -*- lexical-binding: t -*-
+;;; subsys-llm.el --- LLM Subsystem  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;
-;; AI configuration.
+;; Set up LLM subsystem.
 ;;
 ;;; Code:
 
 (require 'ok)
 
 (use-package chatgpt-shell
-  :autoload (chatgpt-shell-send-to-buffer)
-  :commands (ask-chatgpt)
-  :custom ((chatgpt-shell-model-version "gpt-3.5-turbo")
-           (chatgpt-shell-openai-key (lambda ()
+  :custom ((chatgpt-shell-openai-key (lambda ()
                                        (auth-source-pick-first-password
                                         :host "api.openai.com"))))
+  :autoload (chatgpt-shell-send-to-buffer)
+  :commands (ask-chatgpt)
   :config
   (defun ask-chatgpt (str)
     (interactive (list (ok-prompt-or-string-from-region "Ask ChatGPT: ")))
-    (chatgpt-shell-send-to-buffer str)))
+    (chatgpt-shell-send-to-buffer str))
+
+  (setopt chatgpt-shell-root-path
+          (no-littering-expand-var-file-name "chatgpt-shell")))
 
 (use-package gptel
   :config
@@ -40,11 +42,14 @@
     (set sym (or (and buffer-file-name
                       (file-name-directory buffer-file-name))
                  default)))
+
   (defalias 'org-ai-ok--update-image-directory
     (apply-partially #'org-ai-ok--set-output-directory
                      'org-ai-image-directory "~/tmp/org-ai"))
+
   (defalias 'org-ai-ok--update-sd-directory
     (apply-partially #'org-ai-ok--set-output-directory
                      'org-ai-sd-directory "~/tmp/org-ai")))
 
-;;; ai.el ends here
+(provide 'subsys-llm)
+;;; subsys-llm.el ends here
