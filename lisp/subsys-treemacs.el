@@ -1,7 +1,7 @@
-;;; treemacs.el --- Treemacs  -*- lexical-binding: t -*-
+;;; subsys-treemacs.el --- Treemacs Subsystem  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;
-;; Treemacs configuration.
+;; Set up Treemacs subsystem.
 ;;
 ;;; Code:
 
@@ -66,10 +66,15 @@ See https://gist.github.com/shegeley/cadcb16137fffd911f34ed6aaf673f54."
 (use-package treemacs-icons-dired
   :hook (dired-mode . treemacs-icons-dired-enable-once))
 
+;; NOTE (2024-12-25): A fancy icon set is available but each of
+;; `treemacs-nerd-icons' (char alignment is poor) or
+;; `treemacs-all-the-icons' (formatting is poor) has some issue.
+
 (use-package treemacs-magit
   :after (treemacs magit))
 
 (use-package treemacs-projectile
   :after (treemacs projectile))
 
-;;; treemacs.el ends here
+(provide 'subsys-treemacs)
+;;; subsys-treemacs.el ends here
