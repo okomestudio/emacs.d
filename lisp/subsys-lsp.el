@@ -90,5 +90,8 @@ The function returns LSP servers that have been shut down."
 (use-package consult-lsp
   :after (consult lsp-mode))
 
+(load (locate-user-emacs-file "lisp/init-lsp-grammarly.el"))
+(load (locate-user-emacs-file "lisp/init-lsp-ltex.el"))
+
 (provide 'subsys-lsp)
 ;;; subsys-lsp.el ends here

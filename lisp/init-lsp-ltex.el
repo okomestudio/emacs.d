@@ -1,19 +1,13 @@
-;;; lsp-ltex.el --- lsp-ltex  -*- lexical-binding: t -*-
+;;; init-lsp-ltex.el --- lsp-ltex  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;
-;; LTeX Language Server client configuration.
+;; Set up LTeX Language Server client.
 ;;
 ;; `lsp-ltex' supports LanguageTool with support for LaTeX.
 ;;
 ;;; Code:
 
 (use-package lsp-ltex
-  :commands (lsp-ltex-start lsp-ltex-restart)
-  :hook ((gfm-mode
-          markdown-mode
-          ;; let's not use ltex by default; can load manually with `lsp'
-          ;; org-mode
-          rst-mode) . lsp-ltex-start)
   :custom ((lsp-ltex-active-modes '(bibtex-mode
                                     context-mode
                                     gfm-mode
@@ -25,6 +19,12 @@
            (lsp-ltex-log-level "finest")
            (lsp-ltex-trace-server "verbose")
            (lsp-ltex-version "16.0.0"))
+  :hook ((gfm-mode
+          markdown-mode
+          ;; let's not use ltex by default; can load manually with `lsp'
+          ;; org-mode
+          rst-mode) . lsp-ltex-start)
+  :commands (lsp-ltex-start lsp-ltex-restart)
   :preface (ok-safe-local-variable-add lsp-ltex-language stringp)
   :config
   (defvar lsp-ltex-aspell-dict "~/.aspell.en.pws")
@@ -60,4 +60,5 @@
     (lsp-ltex--update-dictionary)
     (lsp-workspace-restart (lsp--read-workspace))))
 
-;;; lsp-ltex.el ends here
+(provide 'init-lsp-ltex)
+;;; init-lsp-ltex.el ends here

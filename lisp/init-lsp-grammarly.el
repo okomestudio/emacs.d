@@ -1,18 +1,14 @@
-;;; lsp-grammarly.el --- lsp-grammarly  -*- lexical-binding: t -*-
+;;; init-lsp-grammarly.el --- lsp-grammarly  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;
-;; LSP Grammarly.
+;; Set up LSP Grammarly.
 ;;
 ;;; Code:
 
 (use-package lsp-grammarly
-  :bind (nil
-         :map text-mode-map
-         ("C-c g" . grammarly-edit-open))
-
-  :custom
-  (lsp-grammarly-auto-activate nil)
-
+  :bind (:map text-mode-map
+              ("C-c g" . grammarly-edit-open))
+  :custom ((lsp-grammarly-auto-activate nil))
   :config
   ;; GRAMMARLY EDIT BUFFER
   ;;
@@ -102,4 +98,5 @@
       (mark-paragraph)
       (grammarly-edit--open (region-beginning) (region-end)))))
 
-;;; lsp-grammarly.el ends here
+(provide 'init-lsp-grammarly)
+;;; init-lsp-grammarly.el ends here
