@@ -1,24 +1,22 @@
-;;; lsp.el --- LSP  -*- lexical-binding: t -*-
+;;; subsys-lsp.el --- LSP Subsystem  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;
-;; LSP configuration.
+;; Set up LSP subsystem.
 ;;
 ;;; Code:
 
 (use-package lsp-mode
-  :commands (lsp lsp-deferred)
-  :ensure-system-package (semgrep . "pip install semgrep")
   :custom ((lsp-completion-enable t)
            (lsp-diagnostics-provider :auto)
            (lsp-keymap-prefix "C-c l")
-           (lsp-log-io ok-debug) ;; set to t for debugging
+           (lsp-log-io ok-debug)  ; set to t for debugging
            (lsp-response-timeout 30)
            (lsp-enable-snippet nil)
            (lsp-use-plists t))
+  :commands (lsp lsp-deferred)
+  :ensure-system-package (semgrep . "pip install semgrep")
   :hook (lsp-mode . lsp-enable-which-key-integration)
-  :preface
-  (put 'lsp-disabled-clients 'safe-local-variable #'listp)
-
+  :preface (put 'lsp-disabled-clients 'safe-local-variable #'listp)
   :config
   (setq lsp-headerline-arrow "➤")
 
@@ -32,10 +30,9 @@ The function returns LSP servers that have been shut down."
       workspaces)))
 
 (use-package lsp-booster
-  :straight (lsp-booster
-             :host github
-             :repo "okomestudio/lsp-booster.el"
-             :post-build (("make")))
+  :straight (lsp-booster :host github
+                         :repo "okomestudio/lsp-booster.el"
+                         :post-build (("make")))
   :commands (lsp-booster-mode)
   :init (lsp-booster-mode 1))
 
@@ -46,24 +43,11 @@ The function returns LSP servers that have been shut down."
   ;; Pressing an arrow key or tab goes out of that state. See
   ;; https://github.com/emacs-lsp/lsp-ui/issues/751.
   ;;
-  :commands lsp-ui-mode
-  :bind (;
-         :map lsp-ui-mode-map
-         ("C-h ." . (lambda (arg)
-                      (interactive "P")
-                      (pcase arg
-                        ('(4) (progn
-                                (lsp-ui-doc-show)
-                                ))
-                        (_ (progn
-                             (if (lsp-ui-doc--visible-p)
-                                 (lsp-ui-doc-focus-frame)
-                               (lsp-ui-doc-glance)))))))
+  :bind (:map
+         lsp-ui-mode-map
+         ("C-h ." . lsp-ui-ok--toggle-doc)
          :map lsp-ui-doc-frame-mode-map
-         ("q" . (lambda ()
-                  (interactive)
-                  (lsp-ui-doc-unfocus-frame)
-                  (lsp-ui-doc-hide))))
+         ("q" . lsp-ui-ok--doc-quit))
   :custom ((lsp-ui-doc-border "black")
            (lsp-ui-doc-delay 0.2)
            (lsp-ui-doc-max-height 20)
@@ -77,7 +61,25 @@ The function returns LSP servers that have been shut down."
            (lsp-ui-sideline-show-code-actions t)
            (lsp-ui-sideline-show-diagnostics t)
            (lsp-ui-sideline-show-hover t))
+  :commands lsp-ui-mode
   :config
+  (defun lsp-ui-ok--toggle-doc (arg)
+    "Toggle LSP UI help."
+    (interactive "P")
+    (pcase arg
+      ('(4) (progn
+              (lsp-ui-doc-show)))
+      (_ (progn
+           (if (lsp-ui-doc--visible-p)
+               (lsp-ui-doc-focus-frame)
+             (lsp-ui-doc-glance))))))
+
+  (defun lsp-ui-ok--doc-quit ()
+    "Quick LSP UI help."
+    (interactive)
+    (lsp-ui-doc-unfocus-frame)
+    (lsp-ui-doc-hide))
+
   (set-face-background 'lsp-ui-doc-background "#eeeeee"))
 
 (use-package lsp-treemacs
@@ -88,4 +90,5 @@ The function returns LSP servers that have been shut down."
 (use-package consult-lsp
   :after (consult lsp-mode))
 
-;;; lsp.el ends here
+(provide 'subsys-lsp)
+;;; subsys-lsp.el ends here
