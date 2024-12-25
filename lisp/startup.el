@@ -27,7 +27,7 @@
          ("C-c i s" . ok-edit-insert-section-delimiter)
          ("C-o" . ok-edit-insert-newline-below)
          ("C-x C-c". iconify-frame)  ; prevent accidental quit
-         ("M-q" . ok-edit-fill-or-unfill-paragraph))
+         ("M-q" . ok-edit-fill-or-unfill-paragraph)) ; TODO: Use `prog-fill-reindent-defun'?
   :custom ((async-shell-command-buffer "new-buffer")
            (case-fold-search t)
            (compilation-scroll-output t)
