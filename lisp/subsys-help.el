@@ -49,6 +49,7 @@
 
 (use-package which-key
   ;; Displays available keybindings in popup.
+  :straight nil
   :bind (:prefix-map
          where-or-which-map
          :prefix "C-h w"
