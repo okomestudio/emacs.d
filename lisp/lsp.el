@@ -13,6 +13,7 @@
            (lsp-keymap-prefix "C-c l")
            (lsp-log-io ok-debug) ;; set to t for debugging
            (lsp-response-timeout 30)
+           (lsp-enable-snippet nil)
            (lsp-use-plists t))
   :hook (lsp-mode . lsp-enable-which-key-integration)
   :preface
