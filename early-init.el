@@ -19,7 +19,8 @@
 (setopt ok-debug nil
         debug-on-error ok-debug
         package-enable-at-startup nil
-        inhibit-default-init nil)
+        inhibit-default-init nil
+        pgtk-wait-for-event-timeout 0)
 (setq debug-on-message nil                    ; set regexp to trigger debugger
       byte-compile-warnings '(not obsolete))  ; set t for development
 
