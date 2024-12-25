@@ -1,7 +1,7 @@
-;;; auth-source.el --- auth-source  -*- lexical-binding: t -*-
+;;; subsys-auth.el --- Auth Subsystem  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;
-;; The auth-source configuration.
+;; Set up the auth subsystem.
 ;;
 ;;; Code:
 
@@ -20,4 +20,5 @@
                                                  "password")
                                                "\\|")))))
 
-;;; auth-source.el ends here
+(provide 'subsys-auth)
+;;; subsys-auth.el ends here
