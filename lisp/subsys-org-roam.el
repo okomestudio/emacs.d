@@ -1,7 +1,7 @@
-;;; org-roam.el --- org-roam  -*- lexical-binding: t -*-
+;;; subsys-org-roam.el --- Org Roam Subsystem  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;
-;; Org Roam initialization.
+;; Set up Org Roam subsystem.
 ;;
 ;;; Code:
 
@@ -154,4 +154,5 @@ Otherwise, it is the same as the vanilla version of
            (org-roam-timestamps-timestamp-parent-file nil))
   :config (org-roam-timestamps-mode))
 
-;;; org-roam.el ends here
+(provide 'subsys-org-roam)
+;;; subsys-org-roam.el ends here

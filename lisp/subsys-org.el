@@ -1,7 +1,7 @@
-;;; org.el --- Org Mode  -*- lexical-binding: t -*-
+;;; subsys-org.el --- Org Subsystem  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;
-;; `org-mode' initialization.
+;; Set up the Org subsystem.
 ;;
 ;;; Code:
 
@@ -277,4 +277,5 @@ before the heading of the current section."
   (add-to-list 'org-transclusion-extensions 'org-transclusion-indent-mode)
   (require 'org-transclusion-indent-mode))
 
-;;; org.el ends here
+(provide 'subsys-org)
+;;; subsys-org.el ends here
