@@ -1,7 +1,7 @@
-;;; elfeed-goodies.el --- Elfeed Goodies  -*- lexical-binding: t -*-
+;;; init-elfeed-goodies.el --- Elfeed Goodies Setup  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;
-;; Elfeed Goodies configuration.
+;; Set up Elfeed Goodies.
 ;;
 ;;; Code:
 
@@ -26,4 +26,5 @@
                `((dummy-elfeed-goodies--mode) . ,dummy-elfeed-goodies--map))
   (define-key dummy-elfeed-goodies--map (kbd "M-v") 'scroll-down-command))
 
-;;; elfeed-goodies.el ends here
+(provide 'init-elfeed-goodies)
+;;; init-elfeed-goodies.el ends here

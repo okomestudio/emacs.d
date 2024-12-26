@@ -1,18 +1,18 @@
-;;; elfeed.el --- elfeed  -*- lexical-binding: t -*-
+;;; subsys-elfeed.el --- Elfeed Subsystem  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;
-;; Elfeed configuration.
+;; Set up the Elfeed subsystem.
 ;;
 ;;; Code:
 
 (use-package elfeed
-  :hook ((elfeed-show-mode . elfeed-ok-show-setup)
-         (elfeed-search-update . elfeed-ok-search-setup))
   :custom ((elfeed-curl-max-connections 16)
            (elfeed-search-title-max-width 100)
            (elfeed-search-title-min-width 16)
            (elfeed-search-trailing-width 30)
            (elfeed-show-unique-buffers nil))
+  :hook ((elfeed-show-mode . elfeed-ok-show-setup)
+         (elfeed-search-update . elfeed-ok-search-setup))
   :config
   (load (no-littering-expand-etc-file-name "elfeed/init"))
 
@@ -57,4 +57,5 @@
 
   (advice-add #'elfeed :before #'elfeed-org-ok--init))
 
-;;; elfeed.el ends here
+(provide 'subsys-elfeed)
+;;; subsys-elfeed.el ends here
