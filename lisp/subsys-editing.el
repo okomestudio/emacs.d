@@ -1,7 +1,7 @@
-;;; editing.el --- Editing  -*- lexical-binding: t -*-
+;;; subsys-editing.el --- Editing Subsystem  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;
-;; Editing utilities configuration.
+;; Set up the editing subsystem.
 ;;
 ;;; Code:
 
@@ -30,10 +30,9 @@
 
 (use-package titlecase
   ;; Titlecase things.
-  :bind (;
-         :map text-mode-map
+  :bind (:map
+         text-mode-map
          ("M-c" . titlecase-dwim))
-
   :custom
   (titlecase-skip-words-regexps
    '("\\b[[:upper:]]+\\b"
@@ -138,4 +137,5 @@ But don't look beyond what's visible on the screen."
   :straight nil
   :bind ([remap dabbrev-expand] . hippie-expand))
 
-;;; editing.el ends here
+(provide 'subsys-editing)
+;;; subsys-editing.el ends here

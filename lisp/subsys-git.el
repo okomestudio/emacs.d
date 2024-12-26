@@ -1,7 +1,7 @@
-;;; git.el --- Git  -*- lexical-binding: t -*-
+;;; subsys-git.el --- Git Subsystem  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;
-;; Git configuration.
+;; Set up the Git subsystem.
 ;;
 ;;; Code:
 
@@ -33,4 +33,5 @@
                                 :height 100
                                 :italic t))))
 
-;;; git.el ends here
+(provide 'subsys-git)
+;;; subsys-git.el ends here
