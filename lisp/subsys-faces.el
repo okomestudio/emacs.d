@@ -1,7 +1,7 @@
-;;; faces.el --- faces  -*- lexical-binding: t -*-
+;;; subsys-faces.el --- Faces Subsystem  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;
-;; Font configuration.
+;; Set up the font subsystem.
 ;;
 ;;; Code:
 
@@ -145,4 +145,5 @@ This is also used as the default.")
           (concat show-font-character-sample
                   "ひらがな カタカナ 漢字 ―/ダッシュ ー/長音")))
 
-;;; faces.el ends here
+(provide 'subsys-faces)
+;;; subsys-faces.el ends here

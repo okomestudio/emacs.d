@@ -1,7 +1,7 @@
-;;; faces-inactive.el --- faces  -*- lexical-binding: t -*-
+;;; subsy-faces.el --- Faces Subsystem  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;
-;; Font configuration.
+;; Set up the font subsystem.
 ;;
 ;;; Code:
 
@@ -25,4 +25,5 @@
   (add-to-list 'mixed-pitch-fixed-pitch-faces 'org-modern-bracket-line)
   (add-to-list 'mixed-pitch-fixed-pitch-faces 'org-modern-tag))
 
-;;; faces-inactive.el ends here
+(provide 'subsys-faces)
+;;; subsys-faces.el ends here
