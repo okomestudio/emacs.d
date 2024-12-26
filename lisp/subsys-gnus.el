@@ -1,15 +1,14 @@
-;;; gnus.el --- Gnus  -*- lexical-binding: t -*-
+;;; subsys-gnus.el --- Gnus Subsystem  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;
-;; Gnus configuration for Email.
+;; Set up the Gnus subsystem.
 ;;
 ;;; Code:
 
 (use-package message
   :straight nil
-  :bind (;
-         :map message-mode-map
-         ("C-c C-c" . message-send-and-exit-via-sender-email))
+  :bind (:map message-mode-map
+              ("C-c C-c" . message-send-and-exit-via-sender-email))
   :hook (message-setup . message--deactivate-hydra)
   :custom ((message-auto-save-directory (no-littering-expand-var-file-name "message/"))
            (message-directory (no-littering-expand-var-file-name "message/Mail/")))
@@ -136,4 +135,5 @@ _f_: forward
 
 (load (no-littering-expand-etc-file-name "gnus/init"))
 
-;;; gnus.el ends here
+(provide 'subsys-gnus)
+;;; subsys-gnus.el ends here
