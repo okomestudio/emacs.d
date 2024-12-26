@@ -1,7 +1,7 @@
-;;; flycheck.el --- flycheck  -*- lexical-binding: t -*-
+;;; subsys-flycheck.el --- Flycheck Subsystem  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;
-;; Flycheck configuration.
+;; Set up the Flycheck subsystem.
 ;;
 ;;; Code:
 
@@ -44,5 +44,5 @@
   :custom (flycheck-pos-tip-timeout 60)
   :config (flycheck-pos-tip-mode))
 
-(provide 'flycheck)
-;;; flycheck.el ends here
+(provide 'subsys-flycheck)
+;;; subsys-flycheck.el ends here
