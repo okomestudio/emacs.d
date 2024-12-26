@@ -17,11 +17,6 @@
            (vertico-cycle t))
   :hook (on-first-input . vertico-mode))
 
-(use-package embark-consult
-  ;; Use if you want to have consult previews as you move around an
-  ;; auto-updating embark collect buffer.
-  :hook (embark-collect-mode . consult-preview-at-point-mode))
-
 (use-package marginalia
   ;; Marginalia in the minibuffer.
   :bind (:map minibuffer-local-map
