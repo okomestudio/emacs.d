@@ -1,7 +1,7 @@
-;;; yaml.el --- YAML  -*- lexical-binding: t -*-
+;;; maj-yaml.el --- YAML Major Mode  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;
-;; YAML mode configuration.
+;; Set up the YAML major mode.
 ;;
 ;;; Code:
 
@@ -29,8 +29,8 @@
 
 (use-package jq-mode
   :after yaml-ts-mode
-  :bind (;
-         :map yaml-ts-mode-map
+  :bind (:map
+         yaml-ts-mode-map
          ("C-c C-j" . jq-interactively))
   :config
   (defun jq-interactively-on-yaml (&rest r)
@@ -40,4 +40,5 @@
                   jq-interactive-default-options "--yaml-roundtrip")))
   (advice-add #'jq-interactively :before #'jq-interactively-on-yaml))
 
-;;; yaml.el ends here
+(provide 'maj-yaml)
+;;; maj-yaml.el ends here

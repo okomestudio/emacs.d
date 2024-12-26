@@ -1,7 +1,7 @@
-;;; text-mode.el --- text-mode  -*- lexical-binding: t -*-
+;;; maj-text-mode.el --- Text Major Mode  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;
-;; text-mode configuration.
+;; Set up the Text major mode.
 ;;
 ;;; Code:
 
@@ -14,10 +14,9 @@
 
 (use-package rainbow-csv
   ;; Highlight CSV and TSV spreadsheet files in different rainbow colors.
-  :straight (rainbor-csv
-             :type git
-             :host github
-             :repo "emacs-vs/rainbow-csv"))
+  :straight (rainbor-csv :type git
+                         :host github
+                         :repo "emacs-vs/rainbow-csv"))
 
 ;;; TOML
 
@@ -25,4 +24,5 @@
   :straight nil
   :custom (toml-ts-mode-indent-offset 4))
 
-;;; text-mode.el ends here
+(provide 'maj-text-mode)
+;;; maj-text-mode.el ends here
