@@ -1,7 +1,7 @@
-;;; dired.el --- Dired  -*- lexical-binding: t -*-
+;;; init-dired.el --- Dired Setup  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;
-;; Dired configuration.
+;; Set up dired.
 ;;
 ;;; Code:
 
@@ -12,4 +12,5 @@
            ;; (dired-omit-files "^\\.$\\|^\\.\\.$\\|\\.pyc$\\|\\.pyo$\\|\#$")
            ))
 
-;;; dired.el ends here
+(provide 'init-dired)
+;;; init-dired.el ends here
