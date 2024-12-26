@@ -1,7 +1,7 @@
-;;; secrets.el --- Secrets  -*- lexical-binding: t -*-
+;;; init-secrets.el --- Secrets Setup  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;
-;; Secrets management.
+;; Set up the Secrets management.
 ;;
 ;; For this example of using this with KeepassXC, see
 ;; https://ph-uhl.com/emacs-password-management-on-linux/.
@@ -42,4 +42,5 @@ COLLECTION."
                :session secrets-service item-path secrets-interface-item
                "GetSecret" :object-path secrets-session-path)))))))
 
-;;; secrets.el ends here
+(provide 'init-secrets)
+;;; init-secrets.el ends here
