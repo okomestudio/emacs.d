@@ -1,7 +1,7 @@
-;;; python-inactive.el --- Python  -*- lexical-binding: t -*-
+;;; maj-python.el --- Python Major Mode  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;
-;; Python mode configuration.
+;; Set up the Python major mode.
 ;;
 ;;; Code:
 
@@ -72,4 +72,5 @@
 
 (use-package cython-mode)
 
-;;; python-inactive.el ends here
+(provide 'maj-python)
+;;; maj-python.el ends here

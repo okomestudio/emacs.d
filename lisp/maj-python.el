@@ -1,16 +1,17 @@
-;;; python.el --- Python  -*- lexical-binding: t -*-
+;;; maj-python.el --- Python Major Mode  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;
-;; Python mode configuration.
+;; Set up the Python major mode.
 ;;
 ;;; Code:
 
 (use-package python
   :straight nil
-  :bind (:map python-mode-map
-              ("C-c b" . python-ok-format-buffer)
-              :map python-ts-mode-map
-              ("C-c b" . python-ok-format-buffer))
+  :bind (:map
+         python-mode-map
+         ("C-c b" . python-ok-format-buffer)
+         :map python-ts-mode-map
+         ("C-c b" . python-ok-format-buffer))
   :custom ((python-indent-guess-indent-offset-verbose nil)
            (python-indent-offset 4)
            (python-shell-interpreter (locate-user-emacs-file
@@ -70,14 +71,13 @@
 ;; LINTING, FORMATTING, etc.
 
 (use-package pyimport
-  :straight (pyimport
-             :host github
-             :repo "Wilfred/pyimport"
-             :branch "master"
-             :fork (:host github
-                          :repo "okomestudio/pyimport"
-                          :branch "venv-support")
-             :files ("*.el" ("bin/make-imports.py" . "bin/make-imports.py")))
+  :straight (pyimport :host github
+                      :repo "Wilfred/pyimport"
+                      :branch "master"
+                      :fork (:host github
+                                   :repo "okomestudio/pyimport"
+                                   :branch "venv-support")
+                      :files ("*.el" ("bin/make-imports.py" . "bin/make-imports.py")))
   :ensure-system-package
   (pyflakes . "pip install pyflakes")
   :preface
@@ -132,11 +132,13 @@
 ;; HELP & DOCS
 
 (use-package pydoc
-  :bind (:map python-mode-map
-              ("C-h o" . pydoc-at-point)
-              :map python-ts-mode-map
-              ("C-h o" . pydoc-at-point))
+  :bind (:map
+         python-mode-map
+         ("C-h o" . pydoc-at-point)
+         :map python-ts-mode-map
+         ("C-h o" . pydoc-at-point))
   :hook ((python-mode
           python-ts-mode) . (lambda () (require 'pydoc))))
 
-;;; python.el ends here
+(provide 'maj-python)
+;;; maj-python.el ends here
