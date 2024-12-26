@@ -1,7 +1,7 @@
-;;; minibuffer.el --- Minibuffer  -*- lexical-binding: t -*-
+;;; subsys-minibuffer.el --- Minibuffer Subsystem  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;
-;; The Minibuffer Configuration.
+;; Set up the Minibuffer subsystem.
 ;;
 ;;; Code:
 
@@ -45,4 +45,5 @@
             (append savehist-additional-variables
                     '(org-roam-ref-history)))))
 
-;;; minibuffer.el ends here
+(provide 'subsys-minibuffer)
+;;; subsys-minibuffer.el ends here
