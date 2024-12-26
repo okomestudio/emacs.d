@@ -1,7 +1,7 @@
-;;; completion-.el --- Completion  -*- lexical-binding: t -*-
+;;; subsys-completion-.el --- Completion Subsystem  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;
-;; Completion with Corfu.
+;; Set up the completion subsystem with Corfu.
 ;;
 ;;; Code:
 
@@ -166,4 +166,5 @@
   :hook (corfu-mode . (lambda () (corfu-prescient-mode 1)))
   :custom (corfu-prescient-enable-filtering nil))
 
-;;; completion.el ends here
+(provide 'subsys-completion)
+;;; subsys-completion.el ends here

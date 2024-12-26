@@ -1,7 +1,7 @@
-;;; completion-inactive.el --- completion-inactive  -*- lexical-binding: t -*-
+;;; init-tabnine.el --- Tabnine Setup  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;
-;; Inactive modules for completion.
+;; Set up tabnine.
 ;;
 ;;; Code:
 
@@ -21,4 +21,5 @@
   ;; `M-h' toggles the info on selected item.
   :straight nil)
 
-;;; completion-inactive.el ends here
+(provide 'init-tabnine)
+;;; init-tabnine.el ends here

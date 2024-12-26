@@ -1,7 +1,7 @@
-;;; completion-company.el --- Completion with Company  -*- lexical-binding: t -*-
+;;; subsys-company.el --- Company Subsystem  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;
-;; Completion setup with `company'.
+;; Set up Company subsystem.
 ;;
 ;;; Code:
 
@@ -87,4 +87,5 @@
   :init
   (add-to-list 'company-backends 'company-web-html))
 
-;;; completion-company.el ends here
+(provide 'subsys-company)
+;;; subsys-company.el ends here
