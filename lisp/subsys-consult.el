@@ -1,5 +1,7 @@
-;;; consult.el --- Consult  -*- lexical-binding: t -*-
+;;; subsys-consult.el --- Consult Subsystem  -*- lexical-binding: t -*-
 ;;; Commentary:
+;;
+;; Set up the Consult subsystem.
 ;;
 ;; Consulting `completing-read' for search and navigation.
 ;;
@@ -19,8 +21,8 @@
          ([remap switch-to-buffer-other-window] . consult-buffer-other-window)
          ([remap switch-to-buffer] . consult-buffer)
 
-         :prefix "M-g"
          :prefix-map consult-prefix-map
+         :prefix "M-g"
          ("F" . consult-locate)
          ("G" . consult-git-grep)
          ("I" . consult-imenu-multi)
@@ -92,7 +94,8 @@
     (funcall orig-func)
     (run-hooks 'projectile-after-switch-project-hook))
 
-  (advice-add #'consult-projectile-switch-project
-              :around #'consult-projectile-switch-project-ad))
+  (advice-add #'consult-projectile-switch-project :around
+              #'consult-projectile-switch-project-ad))
 
-;;; consult.el ends here
+(provide 'subsys-consult)
+;;; subsys-consult.el ends here

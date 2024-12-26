@@ -1,5 +1,7 @@
-;;; lookup.el --- Lookup  -*- lexical-binding: t -*-
+;;; subsys-lookup.el --- Lookup Subsystem  -*- lexical-binding: t -*-
 ;;; Commentary:
+;;
+;; Set up the lookup subsystem.
 ;;
 ;; The collection of lookup utility exposed via a common key prefix.
 ;;
@@ -100,4 +102,5 @@
   :preface
   (put 'greppu-search-regexp-pcre 'safe-local-variable #'functionp))
 
-;;; lookup.el ends here
+(provide 'subsys-lookup)
+;;; subsys-lookup.el ends here
