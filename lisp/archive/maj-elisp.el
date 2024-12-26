@@ -1,4 +1,4 @@
-;;; elisp-inactive.el --- Elisp (Inactive)  -*- lexical-binding: t -*-
+;;; maj-elisp.el --- Elisp Major Mode  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;; Code:
 
@@ -17,4 +17,5 @@
   :custom ((nameless-global-aliases '())
            (nameless-private-prefix t)))
 
-;;; elisp-inactive.el ends here
+(provide 'maj-elisp)
+;;; maj-elisp.el ends here
