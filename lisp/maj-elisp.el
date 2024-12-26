@@ -1,7 +1,7 @@
-;;; elisp.el --- Elisp  -*- lexical-binding: t -*-
+;;; maj-elisp.el --- Elisp Major Mode  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;
-;; Emacs Lisp initialization.
+;; Set up the Emacs Lisp major mode.
 ;;
 ;;; Code:
 
@@ -9,10 +9,11 @@
 
 (use-package elisp-mode
   :straight nil
-  :bind (:map emacs-lisp-mode-map
-              ("C-c b" . elisp-mode-ok--format)
-              :map lisp-data-mode-map
-              ("C-c b" . elisp-mode-ok--format))
+  :bind (:map
+         emacs-lisp-mode-map
+         ("C-c b" . elisp-mode-ok--format)
+         :map lisp-data-mode-map
+         ("C-c b" . elisp-mode-ok--format))
   :hook ((emacs-lisp-mode
           lisp-data-mode) . elisp-mode-ok--set-completion-functions)
   :config
@@ -105,4 +106,5 @@
   ;; For discovering elisp functions based on examples.
   )
 
-;;; elisp.el ends here
+(provide 'maj-elisp)
+;;; maj-elisp.el ends here
