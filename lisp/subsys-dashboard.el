@@ -1,7 +1,7 @@
-;;; dashboard.el --- Dashboard  -*- lexical-binding: t -*-
+;;; subsys-dashboard.el --- Dashboard Subsystem  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;
-;; Dashboard configuration.
+;; Set up the dashboard subsystem.
 ;;
 ;;; Code:
 
@@ -55,4 +55,5 @@
 
   (dashboard-setup-startup-hook))
 
-;;; dashboard.el ends here
+(provide 'subsys-dashboard)
+;;; subsys-dashboard.el ends here

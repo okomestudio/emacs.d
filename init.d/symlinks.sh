@@ -24,7 +24,7 @@ ptom["62"]="c css docker elisp html javascript kotlin python rust scala shell sq
 ptom["64"]="ansible excalidraw graphviz json plantuml restclient"
 ptom["70"]="browse-url epub openwith pdf"
 ptom["80"]="subsys-llm subsys-elfeed emms eww subsys-game gnus osm"
-ptom["88"]="dashboard"
+ptom["88"]="subsys-dashboard"
 ptom["linux-00"]="linux-gui"
 
 # DO NOT MODIFY BELOW
