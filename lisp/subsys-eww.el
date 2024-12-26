@@ -1,7 +1,7 @@
-;;; eww.el --- EWW  -*- lexical-binding: t -*-
+;;; subsys-eww.el --- EWW Subsystem  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;
-;; Emacs's builtin web browser.
+;; Set up the EWW subsystem.
 ;;
 ;;; Code:
 
@@ -80,4 +80,5 @@ See http://emacs.rubikitch.com/eww-weblio/ for reference."
 (use-package shr
   :custom (shr-use-xwidgets-for-media nil))
 
-;;; eww.el ends here
+(provide 'subsys-eww)
+;;; subsys-eww.el ends here
