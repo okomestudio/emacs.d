@@ -1,7 +1,7 @@
-;;; projectile.el --- Projectile  -*- lexical-binding: t -*-
+;;; subsys-projectile.el --- Projectile Subsystem  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;
-;; Projectile configuration.
+;; Set up the projectile subsystem.
 ;;
 ;;; Code:
 
@@ -48,4 +48,5 @@
                                  (projectile-switch-project)
                                  (other-window +1))))
 
-;;; projectile.el ends here
+(provide 'subsys-projectile)
+;;; subsys-projectile.el ends here

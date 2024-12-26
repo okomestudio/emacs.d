@@ -6,10 +6,10 @@ set -e
 declare -A ptom
 ptom["00"]="optimizations startup"
 ptom["02"]="search"
-ptom["04"]="subsys-consult embark subsys-help subsys-minibuffer navigation subsys-treemacs"
+ptom["04"]="subsys-consult embark subsys-help subsys-minibuffer subsys-navigation subsys-treemacs"
 ptom["05"]="atomic-chrome"
 ptom["06"]="faces themes"
-ptom["10"]="subsys-ime projectile"
+ptom["10"]="subsys-ime subsys-projectile"
 ptom["12"]="subsys-lsp"
 ptom["13"]="writing-en"
 ptom["14"]="subsys-org"

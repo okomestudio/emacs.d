@@ -1,7 +1,7 @@
-;;; navigation.el --- Navigation  -*- lexical-binding: t -*-
+;;; subsys-navigation.el --- Navigation Subsystem  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;
-;; Navigation initialization.
+;; Set up the navigation subsystem.
 ;;
 ;; NOTE:
 ;;
@@ -14,9 +14,8 @@
 
 (use-package ace-isearch
   ;; A seamless bridge between isearch, ace-jump-mode, avy, and swoop.
-  :bind (;
-         :map isearch-mode-map
-         ("C-'" . ace-isearch-jump-during-isearch))
+  :bind (:map isearch-mode-map
+              ("C-'" . ace-isearch-jump-during-isearch))
   :custom ((ace-isearch-input-length 6)
            (ace-isearch-jump-delay 0.3)
            (ace-isearch-function #'avy-goto-char)
@@ -122,4 +121,5 @@
   :defer 5
   :custom ((bookmark-save-flag 1))) ;; save more frequently, not just on Emacs quit
 
-;;; navigation.el ends here
+(provide 'subsys-navigation)
+;;; subsys-navigation.el ends here
