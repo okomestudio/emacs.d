@@ -1,4 +1,4 @@
-;;; anki.el --- Anki  -*- lexical-binding: t -*-
+;;; init-anki-editor.el --- Anki Editor  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;
 ;; Anki (apps.ankiweb.net) is a tool for spaced repetition.
@@ -26,4 +26,5 @@
   :preface (ok-safe-local-variable-add anki-editor-ignored-org-tags listp
                                        anki-editor-field-alias listp))
 
-;;; anki.el ends here
+(provide 'init-anki-editor)
+;;; init-anki-editor.el ends here
