@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+#
+# Bootstrap a Python virtual environment with pyright.
+#
+
+venv="${VIRTUAL_ENV:-$1}"
+if [ -z "$venv" ]; then
+  venv="$(pyenv prefix)"
+fi
+python_bin="${venv}/bin/python"
+
+if [ ! -x "$python_bin" ]; then
+  echo "Python not found at $python_bin"
+  exit 1
+fi
+
+if [ ! -x "${venv}/bin/pyright" ]; then
+  "$python_bin" -m pip install pyright
+fi

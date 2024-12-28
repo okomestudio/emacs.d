@@ -14,34 +14,12 @@
          ("C-c b" . python-ok-format-buffer))
   :custom ((python-indent-guess-indent-offset-verbose nil)
            (python-indent-offset 4)
-           (python-shell-interpreter (locate-user-emacs-file
-                                      "bin/python-shell-interpreter"))
-           ;; lsp
-           (lsp-diagnostics-provider :flycheck)
-           (lsp-lens-enable t)
-           (lsp-ui-doc-delay 2)
-           (lsp-ui-doc-enable t)
-
-           ;; pylsp
-           (lsp-pylsp-plugins-flake8-enabled nil)
-           (lsp-pylsp-plugins-pycodestyle-enabled nil)
-           (lsp-pylsp-plugins-pydocstyle-enabled nil)
-           (lsp-pylsp-plugins-pyflakes-enabled nil)
-           (lsp-pylsp-plugins-pylint-enabled nil)
-           (lsp-pylsp-plugins-ruff-enabled t)
-
-           ;; ruff-lsp
-           (lsp-ruff-lsp-log-level 'debug)
-           (lsp-ruff-lsp-show-notifications 'always))
+           (python-shell-interpreter
+            (locate-user-emacs-file "bin/python-shell-interpreter")))
   :hook (((python-mode python-ts-mode) . ruff-isort-format-on-save-mode)
          ((python-mode python-ts-mode) . ruff-format-on-save-mode))
-  :ensure-system-package
-  (ipython . "pip install ipython")
-
+  :ensure-system-package (ipython . "pip install ipython")
   :config
-  (add-hook 'python-base-mode-hook #'lsp-deferred 90)
-  (add-hook 'python-sql-base-mode-hook #'lsp-deferred 90)
-
   ;;; Ruff formatter (github.com/scop/emacs-ruff-format is not yet mature)
   (require 'reformatter)
   (reformatter-define ruff-format
@@ -68,27 +46,7 @@
   :straight (:host github :repo "okomestudio/python-sql-mode.el")
   :commands (python-sql-mode python-sql-ts-mode))
 
-;; LINTING, FORMATTING, etc.
-
-(use-package pyimport
-  :straight (pyimport :host github
-                      :repo "Wilfred/pyimport"
-                      :branch "master"
-                      :fork (:host github
-                                   :repo "okomestudio/pyimport"
-                                   :branch "venv-support")
-                      :files ("*.el" ("bin/make-imports.py" . "bin/make-imports.py")))
-  :ensure-system-package
-  (pyflakes . "pip install pyflakes")
-  :preface
-  (put 'pyimport-develop-packages 'safe-local-variable #'listp))
-
-;; TODO(2024-12-15): Try for docstring formatting:
-;;
-;;   - github.com/DanielNoord/pydocstringformatter
-;;   - github.com/PyCQA/docformatter
-
-;; VIRTUAL ENVS
+;;; VIRTUAL ENVS
 
 (use-package pyenv-mode
   :straight (:host github :repo "pythonic-emacs/pyenv-mode")
@@ -109,15 +67,78 @@
                                  (buffer-string)))))
           (pyenv-mode-set python-version)
           (let ((virtual-env (pyenv-mode-full-path (pyenv-mode-version))))
-            (setenv "VIRTUAL_ENV" (pyenv-mode-full-path (pyenv-mode-version)))
-            (setenv "PYENV_VIRTUAL_ENV" (pyenv-mode-full-path (pyenv-mode-version)))
-            (setq lsp-ruff-lsp-ruff-path (file-name-concat virtual-env
-                                                           "bin/ruff"))
-            (message (shell-command-to-string
-                      (format "%s %s"
-                              (locate-user-emacs-file
-                               "bin/bootstrap-python-venv")
-                              virtual-env)))))))))
+            (setenv "VIRTUAL_ENV" virtual-env)
+            (setenv "PYENV_VIRTUAL_ENV" virtual-env)))))))
+
+;;; LSP
+
+(use-package lsp-mode
+  ;; Enable for lsp-pylsp.
+  :disabled
+  :custom ((lsp-diagnostics-provider :flycheck)
+           (lsp-lens-enable t)
+           (lsp-ui-doc-delay 2)
+           (lsp-ui-doc-enable t)
+
+           ;; pylsp
+           (lsp-pylsp-plugins-flake8-enabled nil)
+           (lsp-pylsp-plugins-pycodestyle-enabled nil)
+           (lsp-pylsp-plugins-pydocstyle-enabled nil)
+           (lsp-pylsp-plugins-pyflakes-enabled nil)
+           (lsp-pylsp-plugins-pylint-enabled nil)
+           (lsp-pylsp-plugins-ruff-enabled t)
+
+           ;; ruff
+           (lsp-ruff-log-level 'debug)
+           (lsp-ruff-show-notifications 'always)
+           (lsp-ruff-python-path "python3"))
+  :config
+  (defun lsp-pylsp-ok--start ()
+    (message (shell-command-to-string
+              (locate-user-emacs-file "bin/bootstrap-pylsp")))
+    (message (shell-command-to-string
+              (locate-user-emacs-file "bin/bootstrap-ruff")))
+    (setq-local lsp-disabled-clients '(lsp-pyright))
+    (lsp-deferred))
+  (add-hook 'python-base-mode-hook #'lsp-pylsp-ok--start 90)
+  (add-hook 'python-sql-base-mode-hook #'lsp-pylsp-ok--start 90))
+
+(use-package lsp-pyright
+  ;; Enable for lsp-pyright.
+  :custom ((lsp-diagnostics-provider :flycheck)
+           (lsp-lens-enable t)
+           (lsp-ui-doc-delay 2)
+           (lsp-ui-doc-enable t)
+           (lsp-pyright-langserver-command "pyright"))
+  :init
+  (defun lsp-pyright-ok--start ()
+    (message (shell-command-to-string
+              (locate-user-emacs-file "bin/bootstrap-pyright")))
+    (require 'lsp-pyright)
+    (setq-local lsp-disabled-clients '(pylsp ruff))
+    (lsp-deferred))
+  (add-hook 'python-base-mode-hook #'lsp-pyright-ok--start 90)
+  (add-hook 'python-sql-base-mode-hook #'lsp-pyright-ok--start 90))
+
+;;; LINTING, FORMATTING, etc.
+
+(use-package pyimport
+  :straight (pyimport :host github
+                      :repo "Wilfred/pyimport"
+                      :branch "master"
+                      :fork (:host github
+                                   :repo "okomestudio/pyimport"
+                                   :branch "venv-support")
+                      :files ("*.el" ("bin/make-imports.py" . "bin/make-imports.py")))
+  :ensure-system-package
+  (pyflakes . "pip install pyflakes")
+  :preface
+  (put 'pyimport-develop-packages 'safe-local-variable #'listp))
+
+;; TODO(2024-12-15): Try for docstring formatting:
+;;
+;;   - github.com/DanielNoord/pydocstringformatter
+;;   - github.com/PyCQA/docformatter
 
 ;; TESTING
 
