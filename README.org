@@ -54,7 +54,7 @@ See the [[info:elisp#Key Binding Conventions][Key Binding Conventions]] section 
 ** Miscellaneous topics
 *** Improving startup time
 
-In a typical Linux system that I use, the startup time is about 1.5 - 2.0 seconds.
+In a typical Linux system that I use, the startup time is about 1.5 - 2.0 seconds on the first launch and 1.0 - 1.5 seconds thereafter.
 
 The ~find-at-startup~ option is removed from ~straight-check-for-modifications~; see ~lisp/traight-use-package.el~ for caveat.
 
