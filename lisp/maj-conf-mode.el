@@ -1,7 +1,7 @@
-;;; conf-mode.el --- conf-mode  -*- lexical-binding: t -*-
+;;; maj-conf-mode.el --- Conf Major Mode  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;
-;; The conf-mode configuration.
+;; Set up the Conf major mode.
 ;;
 ;;; Code:
 
@@ -15,8 +15,9 @@
 (use-package systemd
   :mode ("\\.\\(service|timer\\)\\'" . systemd-mode))
 
-;; Config modes not derived from `conf-mode'
+;;; Config modes not derived from `conf-mode'
 
 (use-package ssh-config-mode)
 
-;;; conf-mode.el ends here
+(provide 'maj-conf-mode)
+;;; maj-conf-mode.el ends here

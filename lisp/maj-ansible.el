@@ -1,16 +1,17 @@
-;;; ansible.el --- ansible  -*- lexical-binding: t -*-
+;;; maj-ansible.el --- Ansible Major Mode  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;
-;; Configure Ansible and related utilities.
+;; Set up the Ansible major mode.
 ;;
 ;;; Code:
+
+(require 'ok)
 
 (use-package ansible ;; not derived from prog-mode
   :hook (ansible . ansible--prepare-lsp)
   :preface
-  (put 'lsp-ansible-python-interpreter-path 'safe-local-variable #'stringp)
-  (put 'lsp-ansible-validation-lint-arguments 'safe-local-variable #'stringp)
-
+  (ok-safe-local-variable-add lsp-ansible-python-interpreter-path stringp
+                              lsp-ansible-validation-lint-arguments stringp)
   :config
   (defun ansible--prepare-lsp ()
     ;; NOTE(2024-03-07): `emacs-lsp-booster' is not compatible with
@@ -51,4 +52,5 @@
   :straight (:host github :repo "okomestudio/poly-ansible"
                    :branch "ts-mode" :fork "okomestudio"))
 
-;;; ansible.el ends here
+(provide 'maj-ansible)
+;;; maj-ansible.el ends here
