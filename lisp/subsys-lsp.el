@@ -8,14 +8,13 @@
 (use-package lsp-mode
   :custom ((lsp-completion-enable t)
            (lsp-diagnostics-provider :auto)
+           (lsp-enable-snippet nil)
            (lsp-keymap-prefix "C-c l")
            (lsp-lens-place-position 'above-line)
            (lsp-log-io ok-debug)  ; set to t for debugging
            (lsp-response-timeout 30)
-           (lsp-enable-snippet nil)
            (lsp-use-plists t))
   :commands (lsp lsp-deferred)
-  :ensure-system-package (semgrep . "pip install semgrep")
   :hook (lsp-mode . lsp-enable-which-key-integration)
   :preface (put 'lsp-disabled-clients 'safe-local-variable #'listp)
   :config
@@ -29,6 +28,11 @@ The function returns LSP servers that have been shut down."
       (dolist (workspace workspaces)
         (lsp-workspace-shutdown workspace))
       workspaces)))
+
+(use-package lsp-mode
+  ;; semgrep
+  :custom ((lsp-semgrep-languages nil))
+  :ensure-system-package (semgrep . "pip install semgrep"))
 
 (use-package lsp-booster
   :straight (lsp-booster :host github
