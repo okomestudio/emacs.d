@@ -9,6 +9,7 @@
   :custom ((lsp-completion-enable t)
            (lsp-diagnostics-provider :auto)
            (lsp-keymap-prefix "C-c l")
+           (lsp-lens-place-position 'above-line)
            (lsp-log-io ok-debug)  ; set to t for debugging
            (lsp-response-timeout 30)
            (lsp-enable-snippet nil)
