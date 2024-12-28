@@ -1,7 +1,7 @@
-;;; dir-locals.el --- .dir-locals.el  -*- lexical-binding: t -*-
+;;; subsys-dir-locals.el --- .dir-locals.el Subsystem  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;
-;; The .dir-locals.el utilities.
+;; Set up the .dir-locals.el subsystem.
 ;;
 ;;; Code:
 
@@ -65,4 +65,5 @@ Set this within symlinked .dir-locals.el.")
 (add-hook 'emacs-lisp-mode-hook #'ok-dir-locals--add-reload-hook)
 (add-hook 'lisp-data-mode-hook #'ok-dir-locals--add-reload-hook)
 
-;;; dir-locals.el ends here
+(provide 'subsys-dir-locals)
+;;; subsys-dir-locals.el ends here

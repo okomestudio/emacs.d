@@ -1,7 +1,7 @@
-;;; search.el --- Search  -*- lexical-binding: t -*-
+;;; subsys-text-match.el --- Text Match Subsystem  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;
-;; Search utility.
+;; Set up the text match subsystem.
 ;;
 ;;; Code:
 
@@ -28,5 +28,5 @@
   ;;   - `C-c C-k' discards changes
   )
 
-(provide 'search)
-;;; search.el ends here
+(provide 'subsys-text-match)
+;;; subsys-text-match.el ends here

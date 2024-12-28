@@ -1,15 +1,15 @@
-;;; popper.el --- Popper  -*- lexical-binding: t -*-
+;;; subsys-buffer.el --- Buffer Subsystem  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;
-;; A minor-mode to summon and dismiss buffers easily.
+;; Set up the buffer subsystem.
 ;;
 ;;; Code:
 
 (use-package popper
+  ;; A minor-mode to summon and dismiss buffers easily.
   :bind (("C-~"   . popper-toggle)
          ("C-`"   . popper-cycle)
          ("C-M-`" . popper-toggle-type))
-
   :custom ((popper-reference-buffers
             '("\\*Async Shell Command\\*\\'"
               "\\*Async-native-compile-log\\*\\'"
@@ -45,4 +45,5 @@
   (popper-mode +1)
   (popper-echo-mode +1))
 
-;;; popper.el ends here
+(provide 'subsys-buffer)
+;;; subsys-buffer.el ends here

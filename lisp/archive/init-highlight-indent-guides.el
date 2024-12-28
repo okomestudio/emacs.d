@@ -1,4 +1,4 @@
-;;; themes-inactive.el --- Themes  -*- lexical-binding: t -*-
+;;; init-highlight-indent-guides.el --- highlight-indent-guides Setup  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;; Code:
 
@@ -15,4 +15,5 @@
   (set-face-background 'highlight-indent-guides-top-character-face "light yellow")
   (set-face-foreground 'highlight-indent-guides-top-character-face "gray"))
 
-;;; themes-inactive.el ends here
+(provide 'init-highlight-indent-guides)
+;;; init-highlight-indent-guides.el ends here
