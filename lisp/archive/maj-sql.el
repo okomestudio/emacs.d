@@ -1,7 +1,7 @@
-;;; sql-inactive.el --- SQL  -*- lexical-binding: t -*-
+;;; maj-sql.el --- SQL Major Mode  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;
-;; SQL mode configuration.
+;; Set up the SQL major mode.
 ;;
 ;;; Code:
 
@@ -45,4 +45,5 @@
     (unless (file-exists-p dest)
       (url-copy-file src-url dest))))
 
-;;; sql-inactive.el ends here
+(provide 'maj-sql)
+;;; maj-sql.el ends here

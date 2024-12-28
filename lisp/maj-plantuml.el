@@ -1,7 +1,7 @@
-;;; plantuml.el --- plantuml  -*- lexical-binding: t -*-
+;;; maj-plantuml.el --- PlantUML Major Mode  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;
-;; Configure plantuml-mode and the related utilities.
+;; Set up the PlantUML major mode.
 ;;
 ;;; Code:
 
@@ -17,12 +17,10 @@
   (with-eval-after-load 'ob-plantuml
     (setopt org-plantuml-jar-path plantuml-jar-path)))
 
-
 (use-package image-mode
   :straight nil
-  :bind (nil
-         :map image-mode-map
-         ("C-c o" . image-preview-with-external-app))
+  :bind (:map image-mode-map
+              ("C-c o" . image-preview-with-external-app))
   :config
   (defun image-preview-with-external-app ()
     (interactive)
@@ -43,4 +41,5 @@
           (write-region (point-min) (point-max) preview-file)))
       (shell-command (format "%s %s &" preview-command preview-file)))))
 
-;;; plantuml.el ends here
+(provide 'maj-plantuml)
+;;; maj-plantuml.el ends here

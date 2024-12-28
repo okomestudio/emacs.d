@@ -1,14 +1,14 @@
-;;; json.el --- json  -*- lexical-binding: t -*-
+;;; maj-json.el --- JSON Major Mode  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;
-;; Configure json-ts-mode and related utilities.
+;; Set up the JSON major mode.
 ;;
 ;;; Code:
 
 (use-package json-ts-mode
   :mode "\\.json\\(\\.j2\\)?\\'"
-  :bind (nil
-         :map json-ts-mode-map
+  :bind (:map
+         json-ts-mode-map
          ("C-c b" . json-ts-mode-format-code))
   :hook (json-ts-mode . lsp-deferred)
   :custom (json-ts-mode-indent-offset 2)
@@ -17,11 +17,10 @@
     (interactive)
     (prettier-js)))
 
-
 (use-package jq-mode
   :after json-ts-mode
-  :bind (nil
-         :map json-ts-mode-map
+  :bind (:map
+         json-ts-mode-map
          ("C-c C-j" . jq-interactively))
   :ensure-system-package (jq . "sudo apt install -y jq")
   :config
@@ -32,4 +31,5 @@
                   jq-interactive-default-options "")))
   (advice-add #'jq-interactively :before #'jq-interactively-on-json))
 
-;;; json.el ends here
+(provide 'maj-json)
+;;; maj-json.el ends here

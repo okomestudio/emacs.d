@@ -1,7 +1,7 @@
-;;; graphviz.el --- Graphviz  -*- lexical-binding: t -*-
+;;; maj-graphviz.el --- Graphviz Major Mode  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;
-;; Configure Graphviz related utilities.
+;; Set up the Graphviz major mode.
 ;;
 ;;; Code:
 
@@ -9,4 +9,5 @@
   :custom (graphviz-dot-indent-width 2)
   :ensure-system-package (dot . "sudo apt install -y graphviz"))
 
-;;; graphviz.el ends here
+(provide 'maj-graphviz)
+;;; maj-graphviz.el ends here

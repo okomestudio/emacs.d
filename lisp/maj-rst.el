@@ -1,7 +1,7 @@
-;;; rst.el --- ReStructuredText (RST)  -*- lexical-binding: t -*-
+;;; maj-rst.el --- ReStructuredText (RST) Major Mode  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;
-;; The RST mode configuration.
+;; Set up the RST major mode.
 ;;
 ;; See https://docutils.sourceforge.io/docs/user/emacs.html
 ;;
@@ -23,4 +23,5 @@
   (defun rst-ok--init ()
     (setq-local fill-column 90)))
 
-;;; rst.el ends here
+(provide 'maj-rst)
+;;; maj-rst.el ends here

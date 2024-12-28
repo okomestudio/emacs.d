@@ -1,7 +1,7 @@
-;;; sql.el --- SQL  -*- lexical-binding: t -*-
+;;; maj-sql.el --- SQL Major Mode  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;
-;; SQL mode configuration.
+;; Set up the SQL major mode.
 ;;
 ;; USAGE:
 ;;
@@ -98,4 +98,5 @@
                    (paramTypes . (custom [(regex "\\?")]))))))
        (_ nil)))))
 
-;;; sql.el ends here
+(provide 'maj-sql)
+;;; maj-sql.el ends here

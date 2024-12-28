@@ -1,7 +1,7 @@
-;;; javascript.el --- JavaScript  -*- lexical-binding: t -*-
+;;; maj-javascript.el --- JavaScript Major Mode  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;
-;; The JavaScript mode configuration.
+;; Set up the JavaScript major mode.
 ;;
 ;;; Code:
 
@@ -25,4 +25,5 @@
     (setq-local fill-column 90)
     (lsp-deferred)))
 
-;;; javascript.el ends here
+(provide 'maj-javascript)
+;;; maj-javascript.el ends here

@@ -1,7 +1,7 @@
-;;; markdown.el --- Markdown  -*- lexical-binding: t -*-
+;;; maj-markdown.el --- Markdown Major Mode  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;
-;; Markdown configuration.
+;; Set up the markdown major mode.
 ;;
 ;; NOTE: tree-sitter support exists, but not as mature.
 ;;
@@ -24,4 +24,5 @@
     (setq-local fill-column 90)
     (lsp)))
 
-;;; markdown.el ends here
+(provide 'maj-markdown)
+;;; maj-markdown.el ends here

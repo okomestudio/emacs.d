@@ -1,7 +1,7 @@
-;;; css.el --- CSS  -*- lexical-binding: t -*-
+;;; maj-css.el --- CSS Major Mode  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;
-;; The CSS mode configuration.
+;; Set up the CSS major mode.
 ;;
 ;;; Code:
 
@@ -14,4 +14,5 @@
   :mode (("\\.css\\'" . css-ts-mode))
   :hook (css-ts-mode . lsp))
 
-;;; css.el ends here
+(provide 'maj-css)
+;;; maj-css.el ends here
