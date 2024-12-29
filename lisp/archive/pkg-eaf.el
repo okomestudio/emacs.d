@@ -1,4 +1,4 @@
-;;; init-eaf.el --- Emacs Application Framework Setup  -*- lexical-binding: t -*-
+;;; pkg-eaf.el --- Emacs Application Framework Setup  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;
 ;; Set up the Emacs Application Framework.
@@ -18,5 +18,5 @@
   (require 'eaf-browser)
   (require 'eaf-pdf-viewer))
 
-(provide 'init-eaf)
-;;; init-eaf.el ends here
+(provide 'pkg-eaf)
+;;; pkg-eaf.el ends here

@@ -1,4 +1,4 @@
-;;; init-lsp-bridge.el --- lsp-bridge  -*- lexical-binding: t -*-
+;;; pkg-lsp-bridge.el --- lsp-bridge  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;
 ;; Set up lsp-bridge.
@@ -19,5 +19,5 @@
                         :build (:not compile))
   :init (global-lsp-bridge-mode))
 
-(provide 'init-lsp-bridge)
-;;; init-lsp-bridge.el ends here
+(provide 'pkg-lsp-bridge)
+;;; pkg-lsp-bridge.el ends here

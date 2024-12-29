@@ -1,4 +1,4 @@
-;;; init-web-mode.el --- web-mode  -*- lexical-binding: t -*-
+;;; pkg-web-mode.el --- web-mode  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;; Code:
 
@@ -149,5 +149,5 @@ See blog.binchen.org/posts/effective-spell-check-in-emacs.html"
   :config
   (add-to-list 'lsp-language-id-configuration '(".*\\.html?\\.j2" . "html")))
 
-(provide 'init-web-mode)
-;;; init-web-mode.el ends here
+(provide 'pkg-web-mode)
+;;; pkg-web-mode.el ends here

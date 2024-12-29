@@ -1,4 +1,4 @@
-;;; init-secrets.el --- Secrets Setup  -*- lexical-binding: t -*-
+;;; pkg-secrets.el --- Secrets Setup  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;
 ;; Set up the Secrets management.
@@ -42,5 +42,5 @@ COLLECTION."
                :session secrets-service item-path secrets-interface-item
                "GetSecret" :object-path secrets-session-path)))))))
 
-(provide 'init-secrets)
-;;; init-secrets.el ends here
+(provide 'pkg-secrets)
+;;; pkg-secrets.el ends here

@@ -1,4 +1,4 @@
-;;; init-webkit.el --- webkit Setup  -*- lexical-binding: t -*-
+;;; pkg-webkit.el --- webkit Setup  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;
 ;; Set up WebKit, aka a fully fledged browser inside Emacs.
@@ -17,5 +17,5 @@
                     :files (:defaults "*.js" "*.css" "*.so")
                     :pre-build ("make")))
 
-(provide 'init-webkit)
-;;; init-webkit.el ends here
+(provide 'pkg-webkit)
+;;; pkg-webkit.el ends here

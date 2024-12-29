@@ -1,4 +1,4 @@
-;;; init-lsp-grammarly.el --- lsp-grammarly  -*- lexical-binding: t -*-
+;;; pkg-lsp-grammarly.el --- lsp-grammarly  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;
 ;; Set up LSP Grammarly.
@@ -98,5 +98,5 @@
       (mark-paragraph)
       (grammarly-edit--open (region-beginning) (region-end)))))
 
-(provide 'init-lsp-grammarly)
-;;; init-lsp-grammarly.el ends here
+(provide 'pkg-lsp-grammarly)
+;;; pkg-lsp-grammarly.el ends here

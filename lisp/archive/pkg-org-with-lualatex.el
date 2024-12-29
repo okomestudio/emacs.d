@@ -1,4 +1,4 @@
-;;; init-org-with-lualatex.el --- Org with LuaLaTeX
+;;; pkg-org-with-lualatex.el --- Org with LuaLaTeX
 ;;; Commentary:
 ;;
 ;; `org-mode' with LuaLaTeX initialization.
@@ -46,5 +46,5 @@
             '("lualatex -interaction nonstopmode -shell-escape %f"
               "lualatex -interaction nonstopmode -shell-escape %f"))))
 
-(provide 'init-org-with-lualatex)
-;;; init-org-with-lualatex.el ends here
+(provide 'pkg-org-with-lualatex)
+;;; pkg-org-with-lualatex.el ends here

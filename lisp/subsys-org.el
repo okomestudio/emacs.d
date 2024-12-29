@@ -277,7 +277,7 @@ before the heading of the current section."
   (add-to-list 'org-transclusion-extensions 'org-transclusion-indent-mode)
   (require 'org-transclusion-indent-mode))
 
-(load (locate-user-emacs-file "lisp/init-anki-editor.el"))
+(load (locate-user-emacs-file "lisp/pkg-anki-editor.el"))
 
 (provide 'subsys-org)
 ;;; subsys-org.el ends here

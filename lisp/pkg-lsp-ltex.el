@@ -1,4 +1,4 @@
-;;; init-lsp-ltex.el --- lsp-ltex  -*- lexical-binding: t -*-
+;;; pkg-lsp-ltex.el --- lsp-ltex  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;
 ;; Set up LTeX Language Server client.
@@ -60,5 +60,5 @@
     (lsp-ltex--update-dictionary)
     (lsp-workspace-restart (lsp--read-workspace))))
 
-(provide 'init-lsp-ltex)
-;;; init-lsp-ltex.el ends here
+(provide 'pkg-lsp-ltex)
+;;; pkg-lsp-ltex.el ends here

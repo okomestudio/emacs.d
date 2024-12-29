@@ -1,4 +1,4 @@
-;;; init-tabnine.el --- Tabnine Setup  -*- lexical-binding: t -*-
+;;; pkg-tabnine.el --- Tabnine Setup  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;
 ;; Set up tabnine.
@@ -21,5 +21,5 @@
   ;; `M-h' toggles the info on selected item.
   :straight nil)
 
-(provide 'init-tabnine)
-;;; init-tabnine.el ends here
+(provide 'pkg-tabnine)
+;;; pkg-tabnine.el ends here

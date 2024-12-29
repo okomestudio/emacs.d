@@ -1,4 +1,4 @@
-;;; init-dired.el --- Dired Setup  -*- lexical-binding: t -*-
+;;; pkg-dired.el --- Dired Setup  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;
 ;; Set up dired.
@@ -12,5 +12,5 @@
            ;; (dired-omit-files "^\\.$\\|^\\.\\.$\\|\\.pyc$\\|\\.pyo$\\|\#$")
            ))
 
-(provide 'init-dired)
-;;; init-dired.el ends here
+(provide 'pkg-dired)
+;;; pkg-dired.el ends here
