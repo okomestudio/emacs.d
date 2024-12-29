@@ -1,7 +1,7 @@
-;;; straight-use-package.el --- use-package with straight  -*- lexical-binding: t -*-
+;;; init-straight.el --- Straight Initialization  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;
-;; Initialize Straight for use with `use-package'.
+;; Initialize `straight' for use with `use-package'.
 ;;
 ;; To upgrade a package and its dependencies:
 ;;
@@ -64,4 +64,5 @@
   :custom ((system-packages-use-sudo t)
            (system-packages-package-manager 'apt)))
 
-;;; straight-use-package.el ends here
+(provide 'init-straight)
+;;; init-straight.el ends here

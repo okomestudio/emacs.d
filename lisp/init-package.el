@@ -1,7 +1,7 @@
-;;; package.el --- Package  -*- lexical-binding: t -*-
+;;; init-package.el --- Package Initialization  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;
-;; Configure `use-package' with `package'.
+;; Initialize with `package'.
 ;;
 ;;; Code:
 
@@ -25,4 +25,5 @@
 (eval-when-compile
   (require 'use-package))
 
-;;; package.el ends here
+(provide 'init-package)
+;;; init-package.el ends here

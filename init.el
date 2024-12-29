@@ -5,7 +5,7 @@
 ;;
 ;;; Code:
 
-;; Disable magic file name during init.
+;; Disable magic file name during init
 (defconst ok--saved-file-name-handler-alist file-name-handler-alist)
 (setq file-name-handler-alist nil)
 (add-hook 'after-init-hook
@@ -14,7 +14,7 @@
             (setq file-name-handler-alist
                   ok--saved-file-name-handler-alist)) 99)
 
-;; Profiling init.el
+;; Profile `init.el'
 (when ok-debug  ; profiler active when debug mode is active
   (profiler-start 'cpu+mem)
   (defun init--tear-down-profiler ()
@@ -28,23 +28,22 @@
                      (emacs-pid) (emacs-init-time)))
           100)
 
-;; Disable custom.el
+;; Disable `custom.el'
 (setopt custom-file (locate-user-emacs-file "custom.el"))  ; or `null-device'
 (load custom-file 'noerror 'nomessage)
 
-;; Configure `use-package'
-(load (locate-user-emacs-file
-       "lisp/straight-use-package.el"))  ; or use "lisp/package.el"
+;; Use `init-straight.el' or `init-package.el'
+(load (locate-user-emacs-file "lisp/init-straight.el"))
 
 (use-package no-littering
-  ;; Want to run this as early as possible.
+  ;; Run this as early as possible.
   :demand t
   :custom ((no-littering-etc-directory
             (locate-user-emacs-file (convert-standard-filename "etc/")))
            (no-littering-var-directory
             (locate-user-emacs-file (convert-standard-filename "var/")))))
 
-;; Load config files under init.d/
+;; Load config files under `init.d/'
 (use-package init-loader
   :demand t
   :custom ((init-loader-byte-compile nil)
