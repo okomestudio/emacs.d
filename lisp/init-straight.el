@@ -32,9 +32,16 @@
 ;;
 ;;; Code:
 
-;;; Need https://github.com/watchexec/watchexec for `watch-files' option
-(setopt straight-check-for-modifications '(watch-files)
-        straight-use-package-by-default t)
+;; The modification check by `straight' is minimized by
+;;
+;;   - removing the `find-at-startup' option
+;;   - using the `watch-files' option
+;;
+;; For the latter, github.com/watchexec/watchexec is required.
+;;
+(setopt straight-check-for-modifications '(watch-files))
+
+(setopt straight-use-package-by-default t)
 
 (let ((bootstrap-file (locate-user-emacs-file
                        "straight/repos/straight.el/bootstrap.el"))

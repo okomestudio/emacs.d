@@ -11,7 +11,7 @@ Clone the root of this version-controlled repository to a place where Emacs can 
       - =etc/tempel/= - Used by tempel, storing templates
   - =init.d/= - Symlinks to Elisp package sources stored under =lisp=
   - =lisp/= - Elisp package sources
-  - =straight= - Used by ~straight~
+  - =straight/= - Used by ~straight~
       - =straight/repos/= - Store package repositories of source code
       - =straight/versions/= - Store version pinning info
   - =tree-sitter/= - Tree-sitter files
@@ -23,7 +23,7 @@ The Emacs startup starts by loading =early-init.el= and then =init.el=. This sec
 
 *** Use of ~straight-use-package~
 
-The =init.el= makes heavy use of ~use-package~ with ~stright~, configured in =lisp/straight-use-package.el=.
+The =init.el= makes heavy use of ~use-package~ with ~straight~, configured in =lisp/straight-use-package.el=.
 
 **** Initializing a built-in package
 
@@ -37,15 +37,12 @@ Use ~:straight nil~ to avoid pulling the source:
 
 *** Use of ~init-loader~
 
-The package initialization source files are in the ~lisp/~ directory. The files actually loaded by ~init-loader~ are symlinked in the ~init.d~ directory. The files symlinked are loaded in the order of their symlink name.
-
-Run the script
+The package initialization source files are in the =lisp/= directory. The files actually loaded by ~init-loader~ are symlinked in the =init.d/= directory. The files symlinked are loaded in the order of their symlink name. Use =init.d/symlinks.sh= to manage symlinks in =init.d/=:
 
 #+begin_src shell
-  init.d/symlinks.sh
+  init.d/symlinks.sh     # create sysmlinks
+  init.d/symlinks.sh -d  # delete all symlinks
 #+end_src
-
-to create symlinks under the ~init.d/~ directory.
 
 ** Key bindings
 
@@ -54,11 +51,9 @@ See the [[info:elisp#Key Binding Conventions][Key Binding Conventions]] section 
 ** Miscellaneous topics
 *** Improving startup time
 
-In a typical Linux system that I use, the startup time is about 1.5 - 2.0 seconds on the first launch and 1.0 - 1.5 seconds thereafter.
+In a typical Linux system that I use, the startup time is about 1.5 - 2.0 seconds on the first launch and 1.0 - 1.5 seconds thereafter. This =init.el= is written for readability and maintainability, but I use a few strategies to minimize and time package loading appropriately, by using the ~on~ package, for example.
 
-The ~find-at-startup~ option is removed from ~straight-check-for-modifications~; see ~lisp/traight-use-package.el~ for caveat.
+The following resources may be useful for the tips on
 
-While the ~init.el~ in this repository is written primarily with readability and maintainability in mind, it pays well to be aware of improvement we can make with the startup time. The following resources were useful:
-
-  - [[https://emacs-jp.github.io/tips/startup-optimization][Emacs の起動時間を”“詰める”” | Emacs JP]]
-  - [[https://zenn.dev/zk_phi/books/cba129aacd4c1418ade4][Emacs の起動時間を""詰める""]] (free book version)
+  - [[https://emacs-jp.github.io/tips/startup-optimization][Emacs の起動時間を“詰める” | Emacs JP]]
+  - [[https://zenn.dev/zk_phi/books/cba129aacd4c1418ade4][Emacs の起動時間を"詰める"]] (free book version)
