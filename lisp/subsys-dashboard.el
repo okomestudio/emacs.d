@@ -38,6 +38,9 @@
            (dashboard-set-navigator t))
   :config
   ;; `apps' - frequently used apps
+  ;;
+  ;; TODO(2024-12-31): Fix shortcut to apps.
+  ;;
   (defcustom dashboard-app-list
     '(("Elfeed (elfeed)" (elfeed))
       ("Tetris (tetris)" (tetrisk)))
