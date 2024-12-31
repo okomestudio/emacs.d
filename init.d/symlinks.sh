@@ -4,7 +4,7 @@ set -e
 
 # Maps priority to the modules found in the lisp directory
 declare -A ptom
-ptom["00"]="optimizations startup"
+ptom["00"]="optimizations subsys-startup"
 ptom["02"]="subsys-text-match"
 ptom["04"]="subsys-consult subsys-embark subsys-help subsys-minibuffer subsys-navigation subsys-treemacs"
 ptom["05"]="subsys-os-integration"

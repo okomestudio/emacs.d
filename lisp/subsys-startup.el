@@ -1,7 +1,7 @@
-;;; startup.el --- Startup  -*- lexical-binding: t -*-
+;;; subsys-startup.el --- Startup Subsystem  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;
-;; Emacs startup settings.
+;; Set up Emacs startup subsystem.
 ;;
 ;;; Code:
 
@@ -169,4 +169,5 @@
            (do-this-now-title "MOVE!!"))
   :demand t)
 
-;;; startup.el ends here
+(require 'subsys-startup)
+;;; subsys-startup.el ends here
