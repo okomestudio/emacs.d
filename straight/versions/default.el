@@ -127,7 +127,7 @@
  ("marginalia" . "006a7cd0a14dd651dcff65ed96c0d52d2067b8c1")
  ("markdown-mode" . "8aab017f4790f7a1e0d8403239cce989c88412f6")
  ("math-preview" . "a2ca3c175468ceaf02bab6cdfd8ef016bda2b98d")
- ("melpa" . "7c56ab6116df74ecb68f7d63c0bb7ecc87c03606")
+ ("melpa" . "c1a84e4999dfbb3caf5ed83ec680e623573687a5")
  ("minions" . "4566325917791b878430526f42349a644b03089d")
  ("mozc" . "990c417cd4d97f0603840a477a43ba73b4a96f1b")
  ("multi-vterm" . "36746d85870dac5aaee6b9af4aa1c3c0ef21a905")

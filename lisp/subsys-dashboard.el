@@ -17,9 +17,14 @@
                               (projects . 3)
                               (bookmarks . 3)
                               (registers . 3)
-                              (agenda . 5)
-                              ;; (vocab)
-                              ))
+                              (apps . 4)
+                              (agenda . 5)))
+           (dashboard-item-shortcuts '((agenda . "a")
+                                       (apps . "t")
+                                       (bookmarks . "m")
+                                       (projects . "p")
+                                       (recents . "r")
+                                       (registers . "e")))
            (dashboard-item-names
             '(("Recent Files:" . "Recent Files (C-x r F):")
               ("Projects:" . "Projects (C-c p p):")
@@ -32,6 +37,33 @@
            (dashboard-set-init-info t)
            (dashboard-set-navigator t))
   :config
+  ;; `apps' - frequently used apps
+  (defcustom dashboard-app-list
+    '(("Elfeed (elfeed)" (elfeed))
+      ("Tetris (tetris)" (tetrisk)))
+    "List of apps to show in dashboard.
+Each item is (name form).")
+
+  (defun dashboard-apps-gen (list-size)
+    (dashboard-insert-heading
+     "Apps:"
+     nil
+     (nerd-icons-octicon "nf-oct-apps"
+                         :height 1.2
+                         :v-adjust 0.0
+                         :face 'dashboard-heading))
+    (dashboard-insert-section
+     ""
+     dashboard-app-list
+     list-size
+     'apps
+     (dashboard-get-shortcut 'apps)
+     `(lambda (&rest _) ,(cadr el))
+     (car el)))
+  ;; (add-to-list 'dashboard-item-shortcuts '(apps . "b"))
+  (add-to-list 'dashboard-item-generators '(apps . dashboard-apps-gen))
+
+  ;; `vocab' - word of the day custom widget
   (use-package wotd)
 
   (defun dashboard-vocab-gen (list-size)
@@ -53,6 +85,7 @@
 
   (add-to-list 'dashboard-item-generators '(vocab . dashboard-vocab-gen))
 
+  ;; Start the hook:
   (dashboard-setup-startup-hook))
 
 (provide 'subsys-dashboard)
