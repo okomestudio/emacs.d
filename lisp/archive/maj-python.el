@@ -39,6 +39,28 @@
               (shell-command-to-string (locate-user-emacs-file
                                         "bin/bootstrap-python-venv"))))))
 
+(use-package pyenv-mode
+  :straight (:host github :repo "pythonic-emacs/pyenv-mode")
+  :hook ((python-base-mode
+          python-sql-base-mode) . pyenv-mode-ok-projectile-set)
+  :config
+  (defun pyenv-mode-ok-projectile-set ()
+    (unless (featurep 'pyenv-mode)
+      (pyenv-mode 1))
+    (let* ((project-root-dir (projectile-project-root))
+           (python-version-file (expand-file-name ".python-version"
+                                                  project-root-dir)))
+      (if (not (file-exists-p python-version-file))
+          (pyenv-mode-unset)
+        (let ((python-version (s-trim
+                               (with-temp-buffer
+                                 (insert-file-contents python-version-file)
+                                 (buffer-string)))))
+          (pyenv-mode-set python-version)
+          (let ((virtual-env (pyenv-mode-full-path (pyenv-mode-version))))
+            (setenv "VIRTUAL_ENV" virtual-env)
+            (setenv "PYENV_VIRTUAL_ENV" virtual-env)))))))
+
 (use-package pymacs
   :straight (pymacs
              :host github

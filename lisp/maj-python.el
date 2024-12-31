@@ -48,27 +48,30 @@
 
 ;;; VIRTUAL ENVS
 
-(use-package pyenv-mode
-  :straight (:host github :repo "pythonic-emacs/pyenv-mode")
-  :hook ((python-base-mode
-          python-sql-base-mode) . pyenv-mode-ok-projectile-set)
+(use-package pet
+  :demand t
+  :ensure-system-package
+  ((dasel . "go install github.com/tomwright/dasel/v2/cmd/dasel@master")
+   ;; (tomljson . "go install github.com/pelletier/go-toml/v2/cmd/tomljson@latest")
+   ;; (yq . "sudo apt install -y yq")
+   (sqlite3 . "sudo apt install -y sqlite3"))
   :config
-  (defun pyenv-mode-ok-projectile-set ()
-    (unless (featurep 'pyenv-mode)
-      (pyenv-mode 1))
-    (let* ((project-root-dir (projectile-project-root))
-           (python-version-file (expand-file-name ".python-version"
-                                                  project-root-dir)))
-      (if (not (file-exists-p python-version-file))
-          (pyenv-mode-unset)
-        (let ((python-version (s-trim
-                               (with-temp-buffer
-                                 (insert-file-contents python-version-file)
-                                 (buffer-string)))))
-          (pyenv-mode-set python-version)
-          (let ((virtual-env (pyenv-mode-full-path (pyenv-mode-version))))
-            (setenv "VIRTUAL_ENV" virtual-env)
-            (setenv "PYENV_VIRTUAL_ENV" virtual-env)))))))
+  (defun pet-ok--init ()
+    (setq-local python-shell-interpreter (pet-executable-find "python")
+                python-shell-virtualenv-root (pet-virtualenv-root))
+
+    ;; (pet-flycheck-setup)
+    ;; (flycheck-mode)
+
+    (setq-local lsp-pyright-python-executable-cmd python-shell-interpreter
+                lsp-pyright-venv-path python-shell-virtualenv-root)
+
+    (setq-local python-pytest-executable (pet-executable-find "pytest"))
+
+    (when-let ((ruff-executable (pet-executable-find "ruff")))
+      (setq-local ruff-format-command ruff-executable)
+      (ruff-format-on-save-mode)))
+  (add-hook 'python-base-mode-hook #'pet-ok--init -10))
 
 ;;; LSP
 
@@ -112,8 +115,8 @@
            (lsp-pyright-langserver-command "pyright"))
   :init
   (defun lsp-pyright-ok--start ()
-    (message (shell-command-to-string
-              (locate-user-emacs-file "bin/bootstrap-pyright")))
+    ;; (message (shell-command-to-string
+    ;;           (locate-user-emacs-file "bin/bootstrap-pyright")))
     (require 'lsp-pyright)
     (setq-local lsp-disabled-clients '(pylsp ruff))
     (lsp-deferred))
@@ -143,10 +146,11 @@
 ;; TESTING
 
 (use-package python-pytest
-  :bind (:map python-mode-map
-              ("C-c t" . python-pytest-dispatch)
-              :map python-ts-mode-map
-              ("C-c t" . python-pytest-dispatch))
+  :bind (:map
+         python-mode-map
+         ("C-c t" . python-pytest-dispatch)
+         :map python-ts-mode-map
+         ("C-c t" . python-pytest-dispatch))
   :hook ((python-mode
           python-ts-mode) . (lambda () (require 'python-pytest))))
 

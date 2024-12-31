@@ -116,15 +116,16 @@
   ;; Invoke direnv to obtain the environment for the current file, then update
   ;; the emacs variables process-environment and exec-path.
   ;;
+  :disabled
   :ensure-system-package (direnv . "sudo apt install -y direnv")
   :config (direnv-mode))
 
+(use-package envrc
+  :hook ((change-major-mode-after-body . envrc-mode)))
+
 (use-package exec-path-from-shell
   ;; Make Emacs use the PATH set up by the user's shell.
-  ;;
-  ;; Ensure environment variables look the same in the user's shell.
-  ;;
-  :if (or (memq window-system '(mac ns x)) (daemonp))
+  :if (or (memq window-system '(mac ns pgtk x)) (daemonp))
   :init (exec-path-from-shell-initialize))
 
 (use-package keychain-environment
