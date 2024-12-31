@@ -4,6 +4,7 @@ The list of Emacs packages to potentially check out:
 
 - [[https://github.com/FrostyX/current-window-only][current-window-only]] - Open things only in the current window. No other windows, no splits
 - [[https://github.com/Wilfred/deadgrep][deadgrep]] - Fast, friendly searching with ripgrep and Emacs; see ALTERNATIVES.md for a good summary of alternative tools
+- [[https://github.com/dgutov/diff-hl][diff-hl]] - Highlighting uncommitted changes
 - [[https://github.com/KeyWeeUsr/emacs-syncthing][emacs-syncthing]] - Emacs client for Syncthing
 - [[https://github.com/Wilfred/emacs-refactor][emr]] (Emacs Refactor) - A framework for providing language-specific refactoring
 - [[https://codeberg.org/akib/emacs-iwindow][iwindow]] - Interactively manipulate windows
