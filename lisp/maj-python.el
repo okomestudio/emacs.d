@@ -49,14 +49,20 @@
 ;;; VIRTUAL ENVS
 
 (use-package pet
-  :demand t
   :ensure-system-package
   ((dasel . "go install github.com/tomwright/dasel/v2/cmd/dasel@master")
    ;; (tomljson . "go install github.com/pelletier/go-toml/v2/cmd/tomljson@latest")
    ;; (yq . "sudo apt install -y yq")
    (sqlite3 . "sudo apt install -y sqlite3"))
-  :config
+  :init
   (defun pet-ok--init ()
+    (require 'pet)
+
+    ;; Unless we clear and set venv path here, the environment
+    ;; variable may be pointing to the path picked up when Emacs
+    ;; launched.
+    (setenv "VIRTUAL_ENV" (pet-python-version-path))
+
     (setq-local python-shell-interpreter (pet-executable-find "python")
                 python-shell-virtualenv-root (pet-virtualenv-root))
 
@@ -70,8 +76,12 @@
 
     (when-let ((ruff-executable (pet-executable-find "ruff")))
       (setq-local ruff-format-command ruff-executable)
-      (ruff-format-on-save-mode)))
-  (add-hook 'python-base-mode-hook #'pet-ok--init -10))
+      (ruff-format-on-save-mode))
+
+    (require 'lsp-pyright)
+    (lsp-pyright-ok--start))
+  (add-hook 'python-base-mode-hook #'pet-ok--init -10)
+  (add-hook 'python-sql-base-mode-hook #'pet-ok--init -10))
 
 ;;; LSP
 
@@ -113,15 +123,12 @@
            (lsp-ui-doc-delay 2)
            (lsp-ui-doc-enable t)
            (lsp-pyright-langserver-command "pyright"))
-  :init
+  :config
   (defun lsp-pyright-ok--start ()
     ;; (message (shell-command-to-string
     ;;           (locate-user-emacs-file "bin/bootstrap-pyright")))
-    (require 'lsp-pyright)
     (setq-local lsp-disabled-clients '(pylsp ruff))
-    (lsp-deferred))
-  (add-hook 'python-base-mode-hook #'lsp-pyright-ok--start 90)
-  (add-hook 'python-sql-base-mode-hook #'lsp-pyright-ok--start 90))
+    (lsp-deferred)))
 
 ;;; LINTING, FORMATTING, etc.
 
