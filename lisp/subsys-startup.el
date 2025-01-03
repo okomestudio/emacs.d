@@ -126,6 +126,7 @@
 (use-package exec-path-from-shell
   ;; Make Emacs use the PATH set up by the user's shell.
   :if (or (memq window-system '(mac ns pgtk x)) (daemonp))
+  :custom ((exec-path-from-shell-arguments nil))
   :init (exec-path-from-shell-initialize))
 
 (use-package keychain-environment
@@ -170,5 +171,5 @@
            (do-this-now-title "MOVE!!"))
   :demand t)
 
-(require 'subsys-startup)
+(provide 'subsys-startup)
 ;;; subsys-startup.el ends here

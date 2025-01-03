@@ -138,7 +138,7 @@
  ("nerd-icons-completion" . "8e5b995eb2439850ab21ba6062d9e6942c82ab9c")
  ("nerd-icons-corfu" . "41110180ceab9d0edaa856d19633b2b3fdf82e75")
  ("nerd-icons.el" . "4bd9795f1f3f47cb874e10ff5c3845e037f0b3e2")
- ("no-littering" . "2b397c550c8cb2eb141371696e048f9b076b4412")
+ ("no-littering" . "0c119d46cce5c018e162fae4b36fd95ef26a76ac")
  ("nongnu-elpa" . "d141240b3c2cf746396f8b328bb92116e844b1dd")
  ("nov.el" . "9b7bef950d68c2518710c480729d6bb6026e9489")
  ("ob-typescript" . "5fe1762f8d8692dd5b6f1697bedbbf4cae9ef036")
