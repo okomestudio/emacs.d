@@ -11,21 +11,22 @@ Clone the root of this version-controlled repository to a place where Emacs can 
       - =etc/tempel/= - Used by tempel, storing templates
   - =init.d/= - Symlinks to Elisp package sources stored under =lisp=
   - =lisp/= - Elisp package sources
+      - =lisp/archive/= - Unused code archive kept for reference
   - =straight/= - Used by ~straight~
       - =straight/repos/= - Store package repositories of source code
       - =straight/versions/= - Store version pinning info
   - =tree-sitter/= - Tree-sitter files
   - =var/= - Emacs package data files
 
-** =init.el= architecture
+*** =init.el= architecture
 
-The Emacs startup starts by loading =early-init.el= and then =init.el=. This section describes the architecture of the =init.el= file.
+The Emacs starts by loading =early-init.el= and then =init.el=. This section describes the architecture of the =init.el= file.
 
-*** Use of ~straight-use-package~
+**** Use of ~straight-use-package~
 
-The =init.el= makes heavy use of ~use-package~ with ~straight~, configured in =lisp/straight-use-package.el=.
+The =init.el= makes heavy use of ~use-package~ with ~straight~, configured in =lisp/init-straight.el=.
 
-**** Initializing a built-in package
+***** Initializing built-in package
 
 Use ~:straight nil~ to avoid pulling the source:
 
@@ -35,13 +36,15 @@ Use ~:straight nil~ to avoid pulling the source:
     …)
 #+end_src
 
-*** Use of ~init-loader~
+**** Use of ~init-loader~
 
-The package initialization source files are in the =lisp/= directory. The files actually loaded by ~init-loader~ are symlinked in the =init.d/= directory. The files symlinked are loaded in the order of their symlink name. Use =init.d/symlinks.sh= to manage symlinks in =init.d/=:
+The Elisp sources are in the =lisp/= directory. Those actually loaded by ~init-loader~ are symlinked in the =init.d/= directory, in (mostly) ASCII order.
+
+To set up symlinks, use =init.d/symlinks.sh=:
 
 #+begin_src shell
-  init.d/symlinks.sh     # create sysmlinks
-  init.d/symlinks.sh -d  # delete all symlinks
+  ./init.d/symlinks.sh     # create all sysmlinks
+  ./init.d/symlinks.sh -d  # delete all symlinks
 #+end_src
 
 ** Key bindings
@@ -51,9 +54,7 @@ See the [[info:elisp#Key Binding Conventions][Key Binding Conventions]] section 
 ** Miscellaneous topics
 *** Improving startup time
 
-In a typical Linux system that I use, the startup time is about 1.5 - 2.0 seconds on the first launch and 1.0 - 1.5 seconds thereafter. This =init.el= is written for readability and maintainability, but I use a few strategies to minimize and time package loading appropriately, by using the ~on~ package, for example.
-
-The following resources may be useful for the tips on
+In a typical Linux system that I use, the startup time is about 1.5 - 2.0 seconds on the first launch and 1.0 - 1.5 seconds thereafter. The =init.el= is written for readability and maintainability, but a few strategies are maintained to minimize package loading time. The following resources may offer useful tips (in Japanese):
 
   - [[https://emacs-jp.github.io/tips/startup-optimization][Emacs の起動時間を“詰める” | Emacs JP]]
   - [[https://zenn.dev/zk_phi/books/cba129aacd4c1418ade4][Emacs の起動時間を"詰める"]] (free book version)

@@ -124,6 +124,12 @@
 
 (use-package exec-path-from-shell
   ;; Make Emacs use the PATH set up by the user's shell.
+  ;;
+  ;; NOTE: The startup time will be substantially longer depending on
+  ;; how much work gets done within startup shells (.bashrc,
+  ;; .bash_profile, etc.). Make sure to keep them efficient once you
+  ;; start seeing the warning from this package at startup.
+  ;;
   :if (or (memq window-system '(mac ns pgtk x)) (daemonp))
   :custom ((exec-path-from-shell-arguments nil))
   :init (exec-path-from-shell-initialize))
