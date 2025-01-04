@@ -1,7 +1,7 @@
 ;;; optimizations.el --- Optimizations  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;
-;; Emacs optimizations.
+;; Set up optimizations for Emacs.
 ;;
 ;;; Code:
 
@@ -45,4 +45,17 @@
   :custom ((gcmh-high-cons-threshold ok-gc-high-cons-threshold)
            (gcmh-idle-delay 5)))
 
+(use-package on
+  ;; Hooks for faster Emacs startup.
+  ;;
+  ;;   - `on-first-input-hook'
+  ;;   - `on-first-file-hook'
+  ;;   - `on-first-buffer-hook'
+  ;;   - `on-switch-buffer-hook'
+  ;;   - `on-switch-window-hook'
+  ;;   - `on-switch-frame-hook'
+  ;;
+  :demand t)
+
+(provide 'optimization)
 ;;; optimizations.el ends here
