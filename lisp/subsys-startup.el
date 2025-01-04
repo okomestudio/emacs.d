@@ -158,10 +158,6 @@
   ;; Displays current and total matches information in the mode-line.
   :hook (on-first-input . (lambda () (global-anzu-mode 1))))
 
-(use-package switch-buffer-functions
-  ;; Hook runs when switching current buffer.
-  :disabled)
-
 (use-package tramp
   :straight nil
   :custom (tramp-default-method "ssh"))
