@@ -18,6 +18,15 @@ Clone the root of this version-controlled repository to a place where Emacs can 
   - =tree-sitter/= - Tree-sitter files
   - =var/= - Emacs package data files
 
+*** Elisp file naming convention in =lisp/=
+
+- =init-*.el= - configures a package manager.
+- =linux-gui.el= - configures GUI sub-components in Linux.
+- =maj-*.el= - configures a major mode and the related features used within it.
+- =optimizations.el= - sets up various optimizations for Emacs.
+- =subsys-*.el= - configures an Emacs subsystem not neatly implemented as a major mode.
+- =themes-*.el= - configures themes.
+
 *** =init.el= architecture
 
 The Emacs starts by loading =early-init.el= and then =init.el=. This section describes the architecture of the =init.el= file.
