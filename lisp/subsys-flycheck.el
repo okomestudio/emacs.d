@@ -10,7 +10,16 @@
            (flycheck-rst-executable (locate-user-emacs-file "bin/rst2pseudoxml")))
   :hook (((emacs-lisp-mode lisp-data-mode) . flycheck-mode)
          (org-mode . flycheck-mode))
-  :preface (put 'flycheck-textlint-config 'safe-local-variable #'stringp)
+  :preface (put 'flycheck-textlint-config 'safe-local-variable #'stringp))
+
+(use-package flycheck
+  :if (eq system-type 'gnu/linux)
+  :ensure-system-package
+  (docutils . "pip install docutils")
+  (textlint . "~/.config/emacs/bin/prepare-textlint"))
+
+(use-package flycheck                   ; for write-good
+  :ensure-system-package (write-good . "npm install -g write-good")
   :config
   (flycheck-define-checker write-good
     "The write-good prose checker."
@@ -22,12 +31,6 @@
                       line-end))
     :modes (gfm-mode markdown-mode org-mode text-mode))
   (add-to-list 'flycheck-checkers 'write-good))
-
-(use-package flycheck
-  :if (eq system-type 'gnu/linux)
-  :ensure-system-package
-  (docutils . "pip install docutils")
-  (textlint . "~/.config/emacs/bin/prepare-textlint"))
 
 (use-package flycheck-aspell
   :after (flycheck)

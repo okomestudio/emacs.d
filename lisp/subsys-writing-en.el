@@ -6,8 +6,8 @@
 ;;; Code:
 
 (use-package writegood-mode
-  :hook ((org-mode . writegood-mode))
-  :ensure-system-package (write-good . "npm install -g write-good"))
+  :disabled                             ; use flycheck integration
+  :hook ((org-mode . writegood-mode)))
 
 (provide 'subsys-writing-en)
 ;;; subsys-writing-en.el ends here
