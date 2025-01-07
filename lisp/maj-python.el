@@ -61,7 +61,7 @@
     ;; Unless we clear and set venv path here, the environment
     ;; variable may be pointing to the path picked up when Emacs
     ;; launched.
-    (setenv "VIRTUAL_ENV" (pet-python-version-path))
+    (setenv "VIRTUAL_ENV" (file-name-directory (pet-python-version-path)))
 
     (setq-local python-shell-interpreter (pet-executable-find "python")
                 python-shell-virtualenv-root (pet-virtualenv-root))
