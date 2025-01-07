@@ -16,8 +16,8 @@
            (python-indent-offset 4)
            (python-shell-interpreter
             (locate-user-emacs-file "bin/python-shell-interpreter")))
-  :hook (((python-mode python-ts-mode) . ruff-isort-format-on-save-mode)
-         ((python-mode python-ts-mode) . ruff-format-on-save-mode))
+  ;; :hook (((python-mode python-ts-mode) . ruff-isort-format-on-save-mode)
+  ;;        ((python-mode python-ts-mode) . ruff-format-on-save-mode))
   :ensure-system-package (ipython . "pip install ipython")
   :config
   ;;; Ruff formatter (github.com/scop/emacs-ruff-format is not yet mature)
