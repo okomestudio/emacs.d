@@ -23,7 +23,7 @@
   :config
   (flycheck-define-checker write-good
     "The write-good prose checker."
-    :command ("write-good" "--parse" source-inplace)
+    :command ("write-good" "--no-thereIs" "--parse" source-inplace)
     :standard-input nil
     :error-patterns ((warning
                       line-start
