@@ -8,11 +8,9 @@
 (require 'ok)
 
 (use-package org-roam
-  :straight (;; Pull from GitHub:
+  :straight (org-roam
              :host github
-
-             ;; Use the official version:
-             :repo "org-roam/org-roam"
+             :repo "org-roam/org-roam"  ; official version
 
              ;; Use the fork for development:
              ;; :repo "okomestudio/org-roam"
@@ -20,8 +18,7 @@
              ;; :branch "refactor-org-roam-unlinked-references-section"
 
              :files (:defaults "extensions/*"))
-  :bind (("C-c n c" . (lambda () (interactive) (org-capture nil "f")))
-         ("C-c n f" . org-roam-node-find)
+  :bind (("C-c n f" . org-roam-node-find)
          ("C-c n i" . org-roam-node-insert)
          ("C-c n l" . org-roam-buffer-toggle)
          :map org-mode-map
@@ -121,8 +118,9 @@ Otherwise, it is the same as the vanilla version of
   :demand t)
 
 (use-package org-roam-plugin-ok
-  :straight (:host github :repo "okomestudio/org-roam-plugin-ok"
-                   :files (:defaults "extensions/*"))
+  :straight (org-roam-plugin-ok :host github
+                                :repo "okomestudio/org-roam-plugin-ok"
+                                :files (:defaults "extensions/*"))
   :custom ((orp-ok-node-use-cache-in-memory t)
            (orp-ok-node-gt-use-cache-in-memory t))
   :init

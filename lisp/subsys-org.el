@@ -23,7 +23,6 @@
          :prefix-docstring "Keymap for org-mode help"
          :prefix "C-h O"
          ("e" . org-entities-help))
-  :hook (org-mode . ok-org--init-visuals)
   :custom ((org-adapt-indentation nil)
            (org-blank-before-new-entry '((heading . nil)
                                          (plain-list-item . nil)))
@@ -43,10 +42,8 @@
            (org-support-shift-select t)
            (org-tags-column 0)
            (org-todo-keywords '((sequence "TODO" "WIP" "|" "SKIP" "DONE"))))
-
-  :preface
-  (ok-safe-local-variable-add org-tags-exclude-from-inheritance listp)
-
+  :hook (org-mode . ok-org--init-visuals)
+  :preface (ok-safe-local-variable-add org-tags-exclude-from-inheritance listp)
   :config
   ;; ENHANCE DEFAULT BEHAVIORS
   (defun org-ok-insert-newline-above-heading ()
