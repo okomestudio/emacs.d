@@ -41,7 +41,7 @@ function create_dir_locals() {
     error "File exists: $target_dirlocals"
   fi
 
-  echo "((nil . ((eval . (setq-local some-variable)))))" >> "$target_dirlocals"
+  echo "((nil . ((eval . (setq-local some-variable nil)))))" >> "$target_dirlocals"
 }
 
 
