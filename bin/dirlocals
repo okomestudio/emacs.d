@@ -3,7 +3,7 @@
 set -e
 
 here="$(pwd)"
-source_root="$VC_DIRLOCALS"
+source_root="$SYMLINKTO_TREE"
 source_dir="${here/$HOME/$source_root}"
 source_dirlocals="$source_dir/.dir-locals.el"
 target_dirlocals="$here/.dir-locals.el"
@@ -17,12 +17,15 @@ function usage() {
 Usage: $scriptname [-hs]
 
 Use version-controlled .dir-locals.el from the repository specified by
-the VC_DIRLOCALS environment variable.
+the SYMLINKTO_TREE environment variable.
 
   -c    Create .dir-locals.el in current directory
   -h    Show help
   -m    Version control .dir-locals.el and replace with symlink
   -s    Create symlink to version-controlled .dir-locals.el
+
+See https://github.com/okomestudio/symlinkto for the directory
+structure under SYMLINKTO_TREE.
 
 USAGE
   exit "${1:-1}"
@@ -75,8 +78,8 @@ function move_and_create_symlink() {
 
 
 if [ "$0" = "${BASH_SOURCE[0]}" ]; then
-  if [ -z "$VC_DIRLOCALS" ]; then
-     error "Set VC_DIRLOCALS to the .dir-locals.el repository root"
+  if [ -z "$SYMLINKTO_TREE" ]; then
+     error "Set SYMLINKTO_TREE to the .dir-locals.el repository root"
   fi
 
   while getopts "chms" opt; do
