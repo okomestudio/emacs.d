@@ -14,23 +14,22 @@
          ("C-c b" . python-ok-format-buffer))
   :custom ((python-indent-guess-indent-offset-verbose nil)
            (python-indent-offset 4)
-           (python-shell-interpreter
-            (locate-user-emacs-file "bin/python-shell-interpreter")))
-  ;; :hook (((python-mode python-ts-mode) . ruff-isort-format-on-save-mode)
-  ;;        ((python-mode python-ts-mode) . ruff-format-on-save-mode))
+           (python-shell-interpreter (locate-user-emacs-file
+                                      "bin/python-shell-interpreter")))
   :ensure-system-package (ipython . "pip install ipython")
   :config
-  ;;; Ruff formatter (github.com/scop/emacs-ruff-format is not yet mature)
+  ;; Code formatting with Ruff.
   (require 'reformatter)
   (reformatter-define ruff-format
+    ;; Provides `ruff-format-buffer' and `ruff-format-on-save-mode'.
     :program "ruff"
     :args (list "format" "-v" "--stdin-filename"
                 (or (buffer-file-name) input-file))
     :lighter " RuffFmt"
     :group 'ruff-format)
 
-  ;; isort
   (reformatter-define ruff-isort-format
+    ;; Provides `ruff-isort-format-buffer' and `ruff-isort-format-on-save-mode'.
     :program "ruff"
     :args (list "check" "--select" "I" "--fix" "--stdin-filename"
                 (or (buffer-file-name) input-file))
@@ -66,19 +65,23 @@
     (setq-local python-shell-interpreter (pet-executable-find "python")
                 python-shell-virtualenv-root (pet-virtualenv-root))
 
+    ;; Flycheck
     ;; (pet-flycheck-setup)
     ;; (flycheck-mode)
 
-    (setq-local lsp-pyright-python-executable-cmd python-shell-interpreter
-                lsp-pyright-venv-path python-shell-virtualenv-root)
-
+    ;; Pytest
     (setq-local python-pytest-executable (pet-executable-find "pytest"))
 
+    ;; Ruff
     (when-let ((ruff-executable (pet-executable-find "ruff")))
       (setq-local ruff-format-command ruff-executable)
+      (ruff-isort-format-on-save-mode)
       (ruff-format-on-save-mode))
 
+    ;; lsp-pyright
     (require 'lsp-pyright)
+    (setq-local lsp-pyright-python-executable-cmd python-shell-interpreter
+                lsp-pyright-venv-path python-shell-virtualenv-root)
     (lsp-pyright-ok--start))
   (add-hook 'python-base-mode-hook #'pet-ok--init -10)
   (add-hook 'python-sql-base-mode-hook #'pet-ok--init -10))
@@ -122,7 +125,9 @@
            (lsp-lens-enable t)
            (lsp-ui-doc-delay 2)
            (lsp-ui-doc-enable t)
-           (lsp-pyright-langserver-command "pyright"))
+           (lsp-pyright-auto-import-completions t)
+           (lsp-pyright-langserver-command "pyright")
+           (lsp-pyright-log-level "debug"))
   :config
   (defun lsp-pyright-ok--start ()
     ;; (message (shell-command-to-string
