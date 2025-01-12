@@ -60,29 +60,30 @@
     ;; Unless we clear and set venv path here, the environment
     ;; variable may be pointing to the path picked up when Emacs
     ;; launched.
-    (setenv "VIRTUAL_ENV" nil)  ; (file-name-directory (pet-python-version-path))
+    (setenv "VIRTUAL_ENV" nil) ; (file-name-directory (pet-python-version-path))
 
-    (setq-local python-shell-interpreter (pet-executable-find "python")
-                python-shell-virtualenv-root (pet-virtualenv-root))
+    (setq-local python-shell-virtualenv-root (pet-virtualenv-root))
+    (when python-shell-virtualenv-root
+      (setq-local python-shell-interpreter (pet-executable-find "python"))
 
-    ;; Flycheck
-    ;; (pet-flycheck-setup)
-    ;; (flycheck-mode)
+      ;; Flycheck
+      ;; (pet-flycheck-setup)
+      ;; (flycheck-mode)
 
-    ;; Pytest
-    (setq-local python-pytest-executable (pet-executable-find "pytest"))
+      ;; Pytest
+      (setq-local python-pytest-executable (pet-executable-find "pytest"))
 
-    ;; Ruff
-    (when-let ((ruff-executable (pet-executable-find "ruff")))
-      (setq-local ruff-format-command ruff-executable)
-      (ruff-isort-format-on-save-mode)
-      (ruff-format-on-save-mode))
+      ;; Ruff
+      (when-let ((ruff-executable (pet-executable-find "ruff")))
+        (setq-local ruff-format-command ruff-executable)
+        (ruff-isort-format-on-save-mode)
+        (ruff-format-on-save-mode))
 
-    ;; lsp-pyright
-    (require 'lsp-pyright)
-    (setq-local lsp-pyright-python-executable-cmd python-shell-interpreter
-                lsp-pyright-venv-path python-shell-virtualenv-root)
-    (lsp-pyright-ok--start))
+      ;; lsp-pyright
+      (require 'lsp-pyright)
+      (setq-local lsp-pyright-python-executable-cmd python-shell-interpreter
+                  lsp-pyright-venv-path python-shell-virtualenv-root)
+      (lsp-pyright-ok--start)))
   (add-hook 'python-base-mode-hook #'pet-ok--init -10)
   (add-hook 'python-sql-base-mode-hook #'pet-ok--init -10))
 
@@ -130,8 +131,8 @@
            (lsp-pyright-log-level "debug"))
   :config
   (defun lsp-pyright-ok--start ()
-    ;; (message (shell-command-to-string
-    ;;           (locate-user-emacs-file "bin/bootstrap-pyright")))
+    (message (shell-command-to-string
+              (locate-user-emacs-file "bin/bootstrap-pyright")))
     (setq-local lsp-disabled-clients '(pylsp ruff))
     (lsp-deferred)))
 
