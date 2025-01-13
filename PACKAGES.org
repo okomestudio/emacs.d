@@ -17,4 +17,5 @@ The list of Emacs packages to potentially check out:
 - [[https://github.com/captainflasmr/selected-window-accent-mode][selected-window-accent-mode]] - Accentuate the active window
 - [[https://github.com/liushihao456/symbols-outline.el][symbols-outline.el]] - Display symbols (functions, variables, etc) in a side window.
 - [[https://github.com/WJCFerguson/textsize/][textsize]] - Automatically choose a font point size for the Emacs default face based on the size and pixel pitch of the display
+- [[https://github.com/jdtsmith/ultra-scroll][ultra-scroll]] - A smooth-scrolling package
 - [[https://github.com/m00natic/vlfi][vlf]] - View large files
