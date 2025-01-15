@@ -44,7 +44,7 @@
 
 (use-package mwheel
   :straight nil
-  :custom ((mouse-wheel-progressive-speed nil)
+  :custom ((mouse-wheel-progressive-speed t)
            (mouse-wheel-scroll-amount '(1 ((shift) . hscroll)
                                           ((meta))
                                           ((control meta) . global-text-scale)
@@ -52,14 +52,22 @@
 
 (use-package pixel-scroll
   :straight nil
-  :hook (on-first-input . (lambda () (pixel-scroll-precision-mode +1)))
-  :custom ((pixel-scroll-precision-interpolation-factor 1.2)
-           (pixel-scroll-precision-large-scroll-height 1.0)
-           (pixel-scroll-precision-momentum-min-velocity 0.5)
-           (pixel-scroll-precision-momentum-seconds 0.5) ;; 1.75
-           (pixel-scroll-precision-momentum-tick 0.05)
+  ;; :hook (on-first-input . (lambda () (pixel-scroll-precision-mode +1)))
+  :custom ((pixel-scroll-precision-interpolation-between-scroll 0.001)
+           (pixel-scroll-precision-interpolation-factor 2.0)
            (pixel-scroll-precision-interpolation-total-time 0.1)
-           (pixel-scroll-precision-interpolation-between-scroll 0.001)))
+           (pixel-scroll-precision-large-scroll-height 15) ; 1.0
+           (pixel-scroll-precision-momentum-min-velocity 10.0)
+           (pixel-scroll-precision-momentum-seconds 1.75)
+           (pixel-scroll-precision-momentum-tick 0.01)
+           (pixel-scroll-precision-use-momentum t)))
+
+(use-package ultra-scroll
+  :straight (ultra-scroll :host github
+                          :repo "jdtsmith/ultra-scroll")
+  :custom ((scroll-conservatively 101)
+           (scroll-margin 0))
+  :hook (on-first-input . (lambda () (ultra-scroll-mode 1))))
 
 (use-package yascroll
   :hook (on-first-buffer . (lambda () (global-yascroll-bar-mode 1))))
