@@ -63,7 +63,7 @@
            (which-key-max-description-length nil)
            (which-key-min-column-description-width 0)
            (which-key-popup-type 'side-window)
-           (which-key-sort-order 'which-key-key-order-alpha)
+           (which-key-sort-order 'which-key-description-order)
 
            ;; NOTE(2024-07-12): The following are disabled for now,
            ;; since `which-key--update' consistently fails due to
@@ -74,6 +74,9 @@
            (which-key-side-window-location '(right bottom))
            ;; (which-key-side-window-location 'right)
            (which-key-side-window-max-width 0.8)))
+
+(use-package which-key-posframe
+  :hook (on-first-input . which-key-posframe-mode))
 
 (use-package casual
   ;; Provide a keyboard-driven menu UI
