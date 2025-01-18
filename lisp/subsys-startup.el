@@ -109,17 +109,9 @@
   ;; Add node_modules/.bin to exec-path.
   )
 
-(use-package direnv
-  ;; direnv integration.
-  ;;
-  ;; Invoke direnv to obtain the environment for the current file, then update
-  ;; the emacs variables process-environment and exec-path.
-  ;;
-  :disabled
-  :ensure-system-package (direnv . "sudo apt install -y direnv")
-  :config (direnv-mode))
-
 (use-package envrc
+  :mode (("\\.envrc\\..*\\'" . envrc-file-mode))
+  :ensure-system-package (direnv . "sudo apt install -y direnv")
   :hook ((change-major-mode-after-body . envrc-mode)))
 
 (use-package exec-path-from-shell
