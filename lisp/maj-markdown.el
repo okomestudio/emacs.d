@@ -22,6 +22,7 @@
   :config
   (defun markdown-mode-ok--init ()
     (setq-local fill-column 90)
+    (turn-on-visual-line-mode)
     (lsp)))
 
 (provide 'maj-markdown)
