@@ -17,6 +17,9 @@
            (vertico-cycle t))
   :hook (on-first-input . vertico-mode))
 
+(use-package vertico-posframe
+  :hook (on-first-input . (lambda () (vertico-posframe-mode 1))))
+
 (use-package marginalia
   ;; Marginalia in the minibuffer.
   :bind (:map minibuffer-local-map
