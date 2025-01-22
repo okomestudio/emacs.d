@@ -18,6 +18,8 @@
   :hook (on-first-input . vertico-mode))
 
 (use-package vertico-posframe
+  :custom ((vertico-posframe-border-width 5)
+           (vertico-posframe-min-width 75))
   :hook (on-first-input . (lambda () (vertico-posframe-mode 1))))
 
 (use-package marginalia
