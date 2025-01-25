@@ -63,7 +63,7 @@ See the [[info:elisp#Key Binding Conventions][Key Binding Conventions]] section 
 ** Miscellaneous topics
 *** Improving startup time
 
-In a typical Linux system that I use, the startup time is about 1.5 - 2.0 seconds on the first launch and 1.0 - 1.5 seconds thereafter. The =init.el= is written for readability and maintainability, but a few strategies are maintained to minimize package loading time. The following resources may offer useful tips (in Japanese):
+In a typical Linux system that I use, the startup time is about 1.5 - 2.0 seconds on the first launch and 1.0 - 1.5 seconds thereafter. The =init.el= is written for readability and maintainability, but a few strategies are maintained to minimize package loading time. The following resources may offer useful tips:
 
-  - [[https://emacs-jp.github.io/tips/startup-optimization][Emacs の起動時間を“詰める” | Emacs JP]]
-  - [[https://zenn.dev/zk_phi/books/cba129aacd4c1418ade4][Emacs の起動時間を"詰める"]] (free book version)
+  - [[https://emacs-jp.github.io/tips/startup-optimization][Emacs の起動時間を“詰める” | Emacs JP]] (in Japanese)
+  - [[https://github.com/jamescherti/minimal-emacs.d][jamescherti/minimal-emacs.d: minimal-emacs.d - Better Vanilla Emacs Defaults and Optimized Startup]]

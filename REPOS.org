@@ -8,6 +8,7 @@ Over the years, my Emacs init.el has been inspired by numerous sources, some of 
   - [[https://github.com/freetonik/emacs-dotfiles/blob/master/init.el][freetonik]]
   - [[https://github.com/jamescherti/minimal-emacs.d][jamescherti]]
   - [[https://github.com/kwpav/dotfiles/blob/master/emacs.org][kwpav]]
+  - [[https://github.com/jamescherti/minimal-emacs.d][minimal-emacs.d]]
   - [[https://gitlab.com/nathanfurnal/dotemacs/-/blob/master/init.el][nathanfurnal]]
   - [[https://github.com/progfolio/.emacs.d/][progfolio]]
   - [[https://protesilaos.com/emacs/dotemacs][protesilaos]]
