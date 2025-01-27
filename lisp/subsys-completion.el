@@ -34,12 +34,13 @@
                          :sort t
                          :exclusive 'no))))))
 
-  (add-to-list 'completion-at-point-functions #'cape-file t)
-  (add-to-list 'completion-at-point-functions #'tempel-complete)
-  ;; (add-to-list 'completion-at-point-functions #'tabnine-completion-at-point)
-  (add-to-list 'completion-at-point-functions #'cape-tex t)
-  (add-to-list 'completion-at-point-functions #'cape-dabbrev t)
-  (add-to-list 'completion-at-point-functions #'cape-keyword t))
+  (add-hook 'completion-at-point-functions #'cape-file)
+  (add-hook 'completion-at-point-functions #'tempel-complete)
+  ;; (add-hook 'completion-at-point-functions #'tabnine-completion-at-point)
+  (add-hook 'completion-at-point-functions #'cape-tex)
+  (add-hook 'completion-at-point-functions #'cape-dabbrev)
+  (add-hook 'completion-at-point-functions #'cape-keyword)
+  (add-hook 'completion-at-point-functions #'cape-elisp-block))
 
 ;; TEMPLATING
 
@@ -95,8 +96,8 @@
            (corfu-preselect 'prompt)
            (corfu-quit-no-match 'separator)
            (corfu-scroll-margin 5))
-  :init (global-corfu-mode)
   :config
+  (global-corfu-mode)
   (set-face-underline 'corfu-current t)
 
   (defun corfu-enable-in-minibuffer ()
@@ -133,7 +134,7 @@
 
 (use-package orderless
   :custom ((completion-styles '(orderless basic))
-           ;; (completion-category-defaults nil)
+           (completion-category-defaults nil) ; can comment this line out for defaults
            (completion-category-overrides
             '((file (styles partial-completion)))))
   :config
