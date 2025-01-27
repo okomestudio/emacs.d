@@ -29,8 +29,7 @@
           100)
 
 ;; Disable `custom.el'
-(setopt custom-file (locate-user-emacs-file "custom.el"))  ; or `null-device'
-(load custom-file 'noerror 'nomessage)
+(setopt custom-file null-device)
 
 ;; Use `init-straight.el' or `init-package.el'
 (load (locate-user-emacs-file "lisp/init-straight.el"))
