@@ -108,7 +108,7 @@
 (use-package recentf
   :straight nil
   :bind ("C-x r F" . recentf)
-  :custom (recentf-mode t)
+  :hook (after-init . recentf-mode)
   :config
   (push "/\\.config/emacs/var/" recentf-exclude)
   (push "magit-diff.el" recentf-exclude)
@@ -116,7 +116,7 @@
 
 (use-package save-place
   :straight nil
-  :init (save-place-mode 1))
+  :hook (after-init . save-place-mode))
 
 ;;; IMENU
 

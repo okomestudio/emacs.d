@@ -97,7 +97,7 @@
 (use-package autorevert
   :straight nil
   :custom ((auto-revert-avoid-polling t))
-  :init (global-auto-revert-mode 1))
+  :hook (after-init . global-auto-revert-mode))
 
 (use-package indent
   :straight nil
