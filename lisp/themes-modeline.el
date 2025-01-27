@@ -1,7 +1,7 @@
-;;; themes-modeline.el --- Modeline  -*- lexical-binding: t -*-
+;;; themes-modeline.el --- Modeline Theme  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;
-;; Modeline.
+;; Set up modeline theme.
 ;;
 ;;; Code:
 
@@ -9,20 +9,19 @@
   ;; A fancy and fast mode-line inspired by minimalism design.
   :custom ((doom-modeline-buffer-encoding nil)
            (doom-modeline-buffer-file-name-style 'buffer-name)
+           (doom-modeline-check-simple-format t)
            (doom-modeline-height 1)
            (doom-modeline-minor-modes t)
            (doom-modeline-vcs-max-length 12)
            (mode-line-percent-position nil)
            (doom-modeline-checker-simple-format t))
-  :hook
-  (after-load-theme . (lambda ()
-                        (if (member (car custom-enabled-themes)
-                                    '(flexoki-themes-dark
-                                      flexoki-themes-light))
-                            (doom-modeline-mode +1)
-                          (if (default-value 'doom-modeline-mode)
-                              (doom-modeline-mode -1)))))
-
+  :hook (after-load-theme
+         . (lambda ()
+             (if (member (car custom-enabled-themes)
+                         '(flexoki-themes-dark flexoki-themes-light))
+                 (doom-modeline-mode +1)
+               (if (default-value 'doom-modeline-mode)
+                   (doom-modeline-mode -1)))))
   :config
   (doom-modeline-def-modeline 'lsp-full
     '(bar workspace-name window-number modals matches follow buffer-info remote-host buffer-position word-count parrot selection-info)
@@ -42,4 +41,5 @@
   :custom (minions-direct '(projectile-mode))
   :hook (after-load-theme . (lambda () (minions-mode 1))))
 
+(provide 'themes-modeline)
 ;;; themes-modeline.el ends here

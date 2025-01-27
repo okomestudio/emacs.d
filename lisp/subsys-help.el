@@ -80,8 +80,10 @@
 
 (use-package casual
   ;; Provide a keyboard-driven menu UI
-  :bind (:map Info-mode-map ("C-/" . casual-info-tmenu))
-  :custom (casual-info-use-unicode-symbols t)
+  :bind (:map Info-mode-map
+              ("C-/" . casual-info-tmenu))
+  :custom ((casual-info-use-unicode-symbols t)
+           (casual-lib-use-unicode t))
   :config (require 'casual-info))
 
 (use-package help-shortdoc-example
