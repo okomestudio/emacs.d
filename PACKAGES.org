@@ -10,7 +10,6 @@ The list of Emacs packages to potentially check out:
 - [[https://codeberg.org/akib/emacs-iwindow][iwindow]] - Interactively manipulate windows
 - [[https://github.com/ahyatt/llm][llm]] - A package abstracting llm capabilities
 - [[https://github.com/emacs-jp/migemo][migemo]] - Provides incremental search with romanized Japanese
-- [[https://github.com/milanglacier/minuet-ai.el][minuet-ai.el]] - Code completion as-you-type from popular LLMs
 - [[https://github.com/alphapapa/org-make-toc][org-make-toc]] - Automatic tables of contents for Org-mode files
 - [[https://github.com/alphapapa/org-super-agenda][org-super-agenda]] - Supercharge your Org daily/weekly agenda by grouping items
 - [[https://github.com/emacsmirror/password-store][password-store]] - Allows ~pass~ integration for managing credentials
@@ -19,3 +18,18 @@ The list of Emacs packages to potentially check out:
 - [[https://github.com/liushihao456/symbols-outline.el][symbols-outline.el]] - Display symbols (functions, variables, etc) in a side window.
 - [[https://github.com/WJCFerguson/textsize/][textsize]] - Automatically choose a font point size for the Emacs default face based on the size and pixel pitch of the display
 - [[https://github.com/m00natic/vlfi][vlf]] - View large files
+
+** UX/UI
+
+- [[https://github.com/hkjels/mini-ontop.el][mini-ontop.el]] - Prevent windows from jumping on minibuffer activation
+- [[https://github.com/neeasade/stillness-mode.el][stillness-mode.el]] - Make your windows stay still
+
+** Org
+
+- [[https://github.com/yibie/org-luhmann][org-luhmann]] - Luhmann's numbering system for org-mode
+- [[https://github.com/yibie/org-numbering][org-numbering]] - A flexible and customizable numbering system for Org mode headings, supporting various international numbering schemes
+
+** Programming
+
+- [[https://github.com/milanglacier/minuet-ai.el][minuet-ai.el]] - Code completion as-you-type from popular LLMs
+- [[https://github.com/jamescherti/outline-indent.el][outline-indent.el]] - Fold text based on indentation, c.f., origami & yafolding
