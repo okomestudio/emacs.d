@@ -24,6 +24,10 @@ The list of Emacs packages to potentially check out:
 - [[https://github.com/hkjels/mini-ontop.el][mini-ontop.el]] - Prevent windows from jumping on minibuffer activation
 - [[https://github.com/neeasade/stillness-mode.el][stillness-mode.el]] - Make your windows stay still
 
+** Editing
+
+- [[https://github.com/victorhge/iedit][iedit]] - Modify multiple occurrences simultaneously
+
 ** Org
 
 - [[https://github.com/yibie/org-luhmann][org-luhmann]] - Luhmann's numbering system for org-mode
