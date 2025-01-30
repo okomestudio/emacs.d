@@ -105,8 +105,10 @@ before the heading of the current section."
   (org-plugin-ok-mode 1))
 
 (use-package org-plugin-ok
-  :straight (:host github :repo "okomestudio/org-plugin-ok"
-                   :files (:defaults "extensions/*"))
+  :straight (org-plugin-ok :host github
+                           :repo "okomestudio/org-plugin-ok"
+                           :branch "folgezettel"
+                           :files (:defaults "extensions/*"))
   :after org
   :demand t
   :bind (:map

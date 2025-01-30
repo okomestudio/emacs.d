@@ -157,7 +157,6 @@
  ("org-excalidraw" . "0fc2c6d9519ebd357b539f576b9d802065ceb227")
  ("org-modern" . "bf2cec740dcf41fe8b4cc1ecc537c4fc4c7e9403")
  ("org-modern-indent" . "f2b859bc53107b2a1027b76dbf4aaebf14c03433")
- ("org-plugin-ok" . "ebc11b9af061c2560807e98d3f5156c1d49d2e9e")
  ("org-ref" . "47c6a5e73f1a7e1e105641217dffc88bb80ed1cb")
  ("org-roam" . "425d53d56d0d338c781741df87824b1bfe7f88bc")
  ("org-roam-bibtex" . "d9b8a57cfca832e3e7c7f414bf93060acbf63573")
