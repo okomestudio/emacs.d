@@ -31,6 +31,7 @@
            (case-fold-search t)
            (compilation-scroll-output t)
            (confirm-kill-processes nil)
+           (cursor-type 'box)
            (enable-recursive-minibuffers t)
            (initial-major-mode #'lisp-interaction-mode) ; `*scratch*' buffer
            (load-prefer-newer t)
