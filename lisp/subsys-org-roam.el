@@ -110,6 +110,11 @@ Otherwise, it is the same as the vanilla version of
 (use-package ok-plural
   :straight (ok-plural :host github :repo "okomestudio/ok-plural.el"))
 
+(use-package org-roam-fz
+  ;; :demand t
+  :straight (org-roam-fz :host github :repo "okomestudio/org-roam-fz")
+  :hook (org-mode . org-roam-fz-mode))
+
 (use-package org-roam-gt
   ;; See github.com/org-roam/org-roam/issues/2474
   :straight (:host github :repo "dmgerman/org-roam-gt"
