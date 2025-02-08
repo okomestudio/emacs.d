@@ -84,6 +84,9 @@
 (use-package on
   ;; Hooks for faster Emacs startup.
   ;;
+  ;; The following hooks are made available to tune the timing of
+  ;; feature activation:
+  ;;
   ;;   - `on-first-input-hook'
   ;;   - `on-first-file-hook'
   ;;   - `on-first-buffer-hook'

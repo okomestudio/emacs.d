@@ -16,7 +16,7 @@
   (when (version< emacs-version minver)
     (error "The minimum Emacs version expected is %s" minver)))
 
-(setopt ok-debug nil
+(setopt ok-debug nil                    ; global switch for debugging
         debug-on-error ok-debug
 
         confirm-kill-processes t
