@@ -111,7 +111,6 @@ Otherwise, it is the same as the vanilla version of
   :straight (ok-plural :host github :repo "okomestudio/ok-plural.el"))
 
 (use-package org-roam-fz
-  ;; :demand t
   :straight (org-roam-fz :host github :repo "okomestudio/org-roam-fz")
   :hook (org-mode . org-roam-fz-mode))
 
