@@ -7,18 +7,7 @@
 
 (use-package magit  ; not derived from prog-mode
   ;; TODO: Bind `magit-find-file'
-  :custom ((magit-format-file-function #'magit-format-file-with-nerd-icon))
-  :config
-  (defun magit-format-file-with-nerd-icon (_kind file face &optional status orig)
-    "Use in place of `magit-format-file-default'."
-    (require 'nerd-icons)
-    (propertize
-     (let ((icon (nerd-icons-icon-for-file file)))
-       (concat (and status (format "%-11s" status))
-               (if orig
-                   (format "%s -> %s %s" orig icon file)
-                 (format "%s %s" icon file))))
-     'font-lock-face face)))
+  :custom ((magit-format-file-function #'magit-format-file-nerd-icons)))
 
 (use-package magit-todos
   :after magit
