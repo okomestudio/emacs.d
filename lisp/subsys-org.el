@@ -104,6 +104,8 @@ before the heading of the current section."
 
   (org-plugin-ok-mode 1))
 
+(use-package org-contrib)
+
 (use-package org-plugin-ok
   :straight (org-plugin-ok :host github
                            :repo "okomestudio/org-plugin-ok"
@@ -243,25 +245,39 @@ before the heading of the current section."
     :straight (:host github :repo "jdtsmith/org-modern-indent"))
   (require 'org-theme-ok))
 
-;; MISC.
-
-(use-package org-contrib)
-
-(use-package org-cliplink)
-(use-package org-side-tree :disabled)
-(use-package org-web-tools :disabled)
+;; CLIPBOARD
+(use-package org-cliplink
+  :after org-download
+  :bind (:map
+         org-mode-map
+         ("C-c i u" . org-ok-clipboard-smartyank))
+  :config
+  (defun org-ok-clipboard-smartyank ()
+    "Yank a link with page title or an image from the URL in clipboard.
+This dispatches yanking to the following functions based on the
+clipboard content:
+- `org-cliplink' if it is a URL pointing to a web page
+- `org-download-yank' if it is a URL pointing to an image
+- `org-download-clipboard' if it is an image binary"
+    (interactive)
+    (let ((to-be-yanked (org-cliplink-clipboard-content)))
+      (if (string-match-p "^https?:.*" to-be-yanked)
+          (if (string-match-p ".*\\.\\(gif\\|jpe?g\\|png\\|webp\\)$" to-be-yanked)
+              (org-download-yank)
+            (org-cliplink))
+        (org-download-clipboard)))))
 
 (use-package org-download
   ;; Drag and drop images to Emacs org-mode.
-  :bind (:map
-         org-mode-map
-         ("C-c i c" . org-download-clipboard)
-         ("C-c i i" . org-download-yank))
   :custom ((org-download-method 'directory)
            (org-download-image-dir nil)
            (org-download-heading-lvl nil)
            (org-download-timestamp ""))
   :hook (org-mode . org-download-enable))
+
+;; MISC.
+(use-package org-side-tree :disabled)
+(use-package org-web-tools :disabled)
 
 (use-package org-transclusion
   :bind (:map
