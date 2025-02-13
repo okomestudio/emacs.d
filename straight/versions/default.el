@@ -101,7 +101,6 @@
  ("ht.el" . "1c49aad1c820c86f7ee35bf9fff8429502f60fef")
  ("hydra" . "317e1de33086637579a7aeb60f77ed0405bf359b")
  ("imenu-list" . "76f2335ee6f2f066d87fe4e4729219d70c9bc70d")
- ("indent-bars" . "e28f3321a00159cff640ac2a7eb452b5a8a2e364")
  ("inheritenv" . "b9e67cc20c069539698a9ac54d0e6cc11e616c6f")
  ("init-loader" . "c4842b1f6695ce77daf94fd085456aeb37ed37e1")
  ("ipretty" . "042f5cc4e6f81d59115e8335c582bb5c571c2585")

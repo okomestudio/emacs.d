@@ -13,12 +13,20 @@
 
 ;;; Textlint
 (use-package flycheck
+  :custom ((flycheck-textlint-config "default"))
   :ensure-system-package (textlint . "~/.config/emacs/bin/prepare-textlint")
   :preface (ok-safe-local-variable-add flycheck-textlint-config stringp)
   :config
   (defun flycheck-locate-config-file-textlint (filename checker)
     (when (eq checker 'textlint)
       (let* ((conf-dir (convert-standard-filename "~/.config/textlint"))
+             (filename (if (string= filename "default")
+                           (if (save-excursion
+                                 (beginning-of-line)
+                                 (re-search-forward "[ぁ-んァ-ン一-龯]" nil t))
+                               "ja.default.json"
+                             "en.default.json")
+                         filename))
              (path1 (expand-file-name filename conf-dir))
              (path2 (concat path1 ".json"))
              (path (or (and (file-exists-p path1) path1)
