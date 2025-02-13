@@ -3,9 +3,14 @@
 ;;
 ;; Set up the JSON major mode.
 ;;
+;; NOTE(2025-02-13): `json-ts-mode' complains that tree-sitter library
+;; is missing. It doesn't automatically download, so you may need to
+;; build and install manually (github.com/casouri/tree-sitter-module).
+;;
 ;;; Code:
 
 (use-package json-ts-mode
+  :straight nil
   :mode "\\.json\\(\\.j2\\)?\\'"
   :bind (:map
          json-ts-mode-map
