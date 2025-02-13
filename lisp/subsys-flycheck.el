@@ -9,40 +9,40 @@
   :custom ((flycheck-python-mypy-executable (locate-user-emacs-file "bin/mypy"))
            (flycheck-rst-executable (locate-user-emacs-file "bin/rst2pseudoxml")))
   :hook (((emacs-lisp-mode lisp-data-mode) . flycheck-mode)
-         (org-mode . flycheck-mode))
-  :preface (put 'flycheck-textlint-config 'safe-local-variable #'stringp))
+         (org-mode . flycheck-mode)))
 
+;;; Textlint
 (use-package flycheck
-  :if (eq system-type 'gnu/linux)
-  :ensure-system-package
-  (docutils . "pip install docutils")
-  (textlint . "~/.config/emacs/bin/prepare-textlint"))
-
-(use-package flycheck                   ; for write-good
-  :ensure-system-package (write-good . "npm install -g write-good")
+  :ensure-system-package (textlint . "~/.config/emacs/bin/prepare-textlint")
+  :preface (ok-safe-local-variable-add flycheck-textlint-config stringp)
   :config
-  (flycheck-define-checker write-good
-    "The write-good prose checker."
-    :command ("write-good" "--no-thereIs" "--parse" source-inplace)
-    :standard-input nil
-    :error-patterns ((warning
-                      line-start
-                      (file-name) ":" line ":" column ":" (message)
-                      line-end))
-    :modes (gfm-mode markdown-mode org-mode text-mode))
-  (add-to-list 'flycheck-checkers 'write-good))
+  (defun flycheck-locate-config-file-textlint (filename checker)
+    (when (eq checker 'textlint)
+      (let* ((conf-dir (convert-standard-filename "~/.config/textlint"))
+             (path1 (expand-file-name filename conf-dir))
+             (path2 (concat path1 ".json"))
+             (path (or (and (file-exists-p path1) path1)
+                       (and (file-exists-p path2) path2))))
+        (when path
+          path))))
 
+  (push #'flycheck-locate-config-file-textlint flycheck-locate-config-file-functions)
+  (push '(org-mode . "@textlint/text") flycheck-textlint-plugin-alist))
+
+;;; Aspell
 (use-package flycheck-aspell
   :after (flycheck)
   :hook (org-mode . (lambda () (require 'flycheck-aspell))))
 
 (use-package flycheck-aspell-org
-  :straight (:host github :repo "okomestudio/flycheck-aspell-org.el")
+  :straight (flycheck-aspell-org
+             :host github
+             :repo "okomestudio/flycheck-aspell-org.el")
   :after (flycheck-aspell)
   :demand t
-  :config
-  (flycheck-add-next-checker 'org-aspell-dynamic 'write-good))
+  :config (flycheck-add-next-checker 'org-aspell-dynamic 'textlint))
 
+;;; Misc.
 (use-package flycheck-pos-tip
   :custom (flycheck-pos-tip-timeout 60)
   :config (flycheck-pos-tip-mode))
