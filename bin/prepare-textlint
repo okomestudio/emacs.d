@@ -1,45 +1,59 @@
 #!/usr/bin/env bash
 
-npm install -g textlint
-npm install -g @textlint-ja/textlint-rule-no-filler
-npm install -g @textlint-ja/textlint-rule-no-insert-dropping-sa
-npm install -g @textlint-ja/textlint-rule-no-synonyms sudachi-synonyms-dictionary
-npm install -g @textlint/ast-node-types
+packages=(
+	textlint
+	@textlint-ja/textlint-rule-no-filler
+	@textlint-ja/textlint-rule-no-insert-dropping-sa
+	@textlint-ja/textlint-rule-no-synonyms sudachi-synonyms-dictionary
+	@textlint/ast-node-types
+	textlint-rule-first-sentence-length
+	textlint-rule-general-novel-style-ja
+	textlint-rule-ginger
+	textlint-rule-ja-hiragana-fukushi
+	textlint-rule-ja-hiragana-hojodoushi
+	textlint-rule-ja-hiragana-keishikimeishi
+	textlint-rule-ja-joyo-or-jinmeiyo-kanji
+	textlint-rule-ja-kyoiku-kanji
+	textlint-rule-ja-no-abusage
+	textlint-rule-ja-no-inappropriate-words
+	textlint-rule-ja-no-mixed-period
+	textlint-rule-ja-no-orthographic-variants
+	textlint-rule-ja-no-redundant-expression
+	textlint-rule-ja-no-weak-phrase
+	textlint-rule-ja-unnatural-alphabet
+	textlint-rule-jis-charset
+	textlint-rule-joyo-kanji
+	textlint-rule-max-appearence-count-of-words
+	textlint-rule-max-kanji-continuous-len
+	textlint-rule-max-ten
+	textlint-rule-no-double-negative-ja
+	textlint-rule-no-doubled-conjunction
+	textlint-rule-no-doubled-conjunctive-particle-ga
+	textlint-rule-no-doubled-joshi
+	textlint-rule-no-dropping-the-ra
+	textlint-rule-no-hankaku-kana
+	textlint-rule-no-hoso-kinshi-yogo
+	textlint-rule-no-mix-dearu-desumasu
+	textlint-rule-no-mixed-zenkaku-and-hankaku-alphabet
+	textlint-rule-prefer-tari-tari
+	textlint-rule-preset-ja-spacing
+	textlint-rule-preset-ja-technical-writing
+	textlint-rule-preset-jtf-style
+	textlint-rule-rousseau
+	textlint-rule-sentence-length
+	textlint-rule-use-si-units
+	textlint-rule-write-good
+)
+
+for package in "${packages[@]}"; do
+	npm install -g "$package"
+done
+
+# NOTE(2025-02-12): date-fns in textlint-plugin-org needs to be
+# patched. The package is installed with special handling.
 npm install -g textlint-plugin-org
-npm install -g textlint-rule-first-sentence-length
-npm install -g textlint-rule-general-novel-style-ja
-npm install -g textlint-rule-ginger
-npm install -g textlint-rule-ja-hiragana-fukushi
-npm install -g textlint-rule-ja-hiragana-hojodoushi
-npm install -g textlint-rule-ja-hiragana-keishikimeishi
-npm install -g textlint-rule-ja-joyo-or-jinmeiyo-kanji
-npm install -g textlint-rule-ja-kyoiku-kanji
-npm install -g textlint-rule-ja-no-abusage
-npm install -g textlint-rule-ja-no-inappropriate-words
-npm install -g textlint-rule-ja-no-mixed-period
-npm install -g textlint-rule-ja-no-orthographic-variants
-npm install -g textlint-rule-ja-no-redundant-expression
-npm install -g textlint-rule-ja-no-weak-phrase
-npm install -g textlint-rule-ja-unnatural-alphabet
-npm install -g textlint-rule-jis-charset
-npm install -g textlint-rule-joyo-kanji
-npm install -g textlint-rule-max-appearence-count-of-words
-npm install -g textlint-rule-max-kanji-continuous-len
-npm install -g textlint-rule-max-ten
-npm install -g textlint-rule-no-double-negative-ja
-npm install -g textlint-rule-no-doubled-conjunction
-npm install -g textlint-rule-no-doubled-conjunctive-particle-ga
-npm install -g textlint-rule-no-doubled-joshi
-npm install -g textlint-rule-no-dropping-the-ra
-npm install -g textlint-rule-no-hankaku-kana
-npm install -g textlint-rule-no-hoso-kinshi-yogo
-npm install -g textlint-rule-no-mix-dearu-desumasu
-npm install -g textlint-rule-no-mixed-zenkaku-and-hankaku-alphabet
-npm install -g textlint-rule-prefer-tari-tari
-npm install -g textlint-rule-preset-ja-spacing
-npm install -g textlint-rule-preset-ja-technical-writing
-npm install -g textlint-rule-preset-jtf-style
-npm install -g textlint-rule-rousseau
-npm install -g textlint-rule-sentence-length
-npm install -g textlint-rule-use-si-units
-npm install -g traverse
+(
+  # Without this downgrade, the old version of date-fns used by the
+  # package will experience: github.com/date-fns/date-fns/issues/3675
+	cd "$(npm root -g)/textlint-plugin-org" && npm install date-fns@2.30.0
+)
