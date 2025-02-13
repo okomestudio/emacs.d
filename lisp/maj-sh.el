@@ -28,6 +28,14 @@
   :if (eq system-type 'gnu/linux)
   :ensure-system-package (shellcheck . "sudo apt install -y shellcheck"))
 
+(use-package shfmt
+  ;; Reformat shell script.
+  :bind (:map
+         bash-ts-mode-map
+         ("C-c b" . shfmt-buffer))
+  :hook ((bash-ts-mode . shfmt-on-save-mode))
+  :ensure-system-package (shfmt . "go install mvdan.cc/sh/v3/cmd/shfmt@latest"))
+
 (use-package bats-mode
   :interpreter "bats")
 
