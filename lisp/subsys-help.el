@@ -7,6 +7,13 @@
 
 (require 'ok)
 
+;;; Info
+(use-package info
+  :straight nil
+  :config
+  (push (no-littering-expand-etc-file-name "info/") Info-directory-list))
+
+;;; Help
 (use-package help
   :straight nil
   :custom (list-faces-sample-text (concat "abcdefghijklmn"
