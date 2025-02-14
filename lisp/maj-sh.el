@@ -33,6 +33,7 @@
   :bind (:map
          bash-ts-mode-map
          ("C-c b" . shfmt-buffer))
+  :custom ((shfmt-arguments '("-i" "2")))
   :hook ((bash-ts-mode . shfmt-on-save-mode))
   :ensure-system-package (shfmt . "go install mvdan.cc/sh/v3/cmd/shfmt@latest"))
 
