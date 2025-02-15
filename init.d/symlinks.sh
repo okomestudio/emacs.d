@@ -6,7 +6,7 @@ set -e
 declare -A ptom
 ptom["00"]="optimizations subsys-startup"
 ptom["02"]="subsys-text-match"
-ptom["04"]="subsys-consult subsys-embark subsys-help subsys-minibuffer subsys-navigation subsys-treemacs"
+ptom["04"]="subsys-consult subsys-embark subsys-help subsys-buffer subsys-minibuffer subsys-navigation subsys-treemacs"
 ptom["05"]="subsys-os-integration"
 ptom["06"]="subsys-faces themes"
 ptom["10"]="subsys-ime subsys-projectile"
@@ -31,7 +31,6 @@ ptom["linux-00"]="linux-gui"
 
 readonly scriptname="${0##*/}"
 
-
 function usage() {
   cat <<USAGE >&2
 Usage: $scriptname [-dh]
@@ -45,13 +44,11 @@ USAGE
   exit "${1:-1}"
 }
 
-
 function error() {
   >&2 echo "$scriptname: $1"
   >&2 echo "Try '$scriptname -h' for more information."
   exit "${2:-1}"
 }
-
 
 function create_symlinks() {
   for priority in "${!ptom[@]}"; do
@@ -70,11 +67,9 @@ function create_symlinks() {
   done
 }
 
-
 function delete_symlinks() {
   find "init.d/" -type l -exec rm {} \;
 }
-
 
 delete_mode=0
 
@@ -86,16 +81,15 @@ function main() {
   fi
 }
 
-
 if [ "$0" = "${BASH_SOURCE[0]}" ]; then
   while getopts "dh" opt; do
     case $opt in
-      d)
-        delete_mode=1
-        ;;
-      h|\?)
-        if [ "$opt" = "h" ]; then usage 0; else usage; fi
-        ;;
+    d)
+      delete_mode=1
+      ;;
+    h | \?)
+      if [ "$opt" = "h" ]; then usage 0; else usage; fi
+      ;;
     esac
   done
   shift $((OPTIND - 1))
