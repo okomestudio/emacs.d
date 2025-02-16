@@ -280,6 +280,8 @@ clipboard content:
 (use-package org-web-tools :disabled)
 
 (use-package org-transclusion
+  :straight (org-transclusion
+             :host github :repo "okomestudio/org-transclusion" :branch "id-and-target")
   :bind (:map
          org-mode-map
          :prefix "C-c C-n"
@@ -288,6 +290,7 @@ clipboard content:
          ("D" . org-transclusion-remove-all)
          ("a" . org-transclusion-add)
          ("t" . org-transclusion-mode))
+  :preface (ok-safe-local-variable-add system-time-locale stringp)
   :config
   (add-to-list 'org-transclusion-extensions 'org-transclusion-indent-mode)
   (require 'org-transclusion-indent-mode))

@@ -164,7 +164,6 @@
  ("org-roam-timestamps" . "c4ff1e2f5b0905b5caa917249aab56ddc1de1ab3")
  ("org-roam-ui" . "5ac74960231db0bf7783c2ba7a19a60f582e91ab")
  ("org-theme-ok.el" . "d6694c3e140538097f64585dbc3eaa6482b8881e")
- ("org-transclusion" . "95e7a58d53df80b9baa7d328c9b2598e34b21980")
  ("osm" . "17dfc017cdb0cf21325a9e636fd23e912aea84b3")
  ("ox-gfm" . "4f774f13d34b3db9ea4ddb0b1edc070b1526ccbb")
  ("ox-hugo" . "98421a1298adc6d80ce21b3cb5c951af818b27bf")
