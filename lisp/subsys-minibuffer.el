@@ -19,7 +19,8 @@
 
 (use-package vertico-posframe
   :custom ((vertico-posframe-border-width 5)
-           (vertico-posframe-min-width 75))
+           (vertico-posframe-min-width 75)
+           (vertico-posframe-poshandler #'posframe-poshandler-frame-bottom-center))
   :hook (on-first-input . (lambda () (vertico-posframe-mode 1))))
 
 (use-package marginalia
