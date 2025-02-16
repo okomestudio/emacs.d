@@ -65,11 +65,20 @@
                          (:exclude ".dir-locals.el" "*-tests.el")))
   :bind (("C-S-t" . eat-ok-interactively)
          :map eat-semi-char-mode-map
-         ("M-o" . other-window-or-frame)) ; need explicit definition; otherwise reset
-  :hook (eshell-post-command . (lambda ()
-                                 (sleep-for 0.2)
-                                 (end-of-buffer)))
+         ("M-o" . other-window-or-frame)) ; without explicit
+                                          ; definition, it binds to
+                                          ; another function
+  :hook ((eat-exec . eat-ok--rename-buffer)
+         (eshell-post-command . (lambda ()
+                                  (sleep-for 0.2)
+                                  (end-of-buffer))))
   :config
+  (defun eat-ok--rename-buffer (&rest _)
+    "Rename EAT buffer based on the parent directory name."
+    (rename-buffer (format "*eat-%s*"
+                           (car (last (file-name-split default-directory)
+                                      2)))))
+
   (defun eat-ok-interactively (arg)
     "When prefixed, call `eat-project'; without prefix, call `eat'."
     (interactive "P")
