@@ -127,6 +127,8 @@ org-mode
  ":VISIBILITY: folded" n
  ":END:" n n)
 
+(target "<<" r> ">>")
+
 (transclude-general
  "#+transclude: " r>
  " :level 2 :exclude-elements \"drawer keyword\"")
