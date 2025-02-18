@@ -7,9 +7,9 @@
 
 (use-package popper
   ;; A minor-mode to summon and dismiss buffers easily.
-  :bind (("C-~"   . popper-toggle)
-         ("C-`"   . popper-cycle)
-         ("C-M-`" . popper-toggle-type))
+  :bind (("C-'" . popper-toggle)
+         ("C-S-'" . popper-cycle)
+         ("C-M-'" . popper-toggle-type))
   :custom ((popper-reference-buffers
             '("\\*Async Shell Command\\*\\'"
               "\\*Async-native-compile-log\\*\\'"
@@ -40,7 +40,6 @@
                                     win
                                     (* 2 (floor (frame-height) 5))
                                     (floor (frame-height) 3)))))
-
   :init
   (popper-mode +1)
   (popper-echo-mode +1))

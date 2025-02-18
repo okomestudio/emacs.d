@@ -45,6 +45,12 @@
   :hook (org-mode . ok-org--init-visuals)
   :preface (ok-safe-local-variable-add org-tags-exclude-from-inheritance listp)
   :config
+  ;; Unset the keybindings to disable org-agenda shortcuts and
+  ;; fallback to popper:
+  (keymap-unset org-mode-map "C-'" t)
+  (keymap-unset org-mode-map "C-S-'" t)
+  (keymap-unset org-mode-map "C-M-'" t)
+
   ;; ENHANCE DEFAULT BEHAVIORS
   (defun org-ok-insert-newline-above-heading ()
     "Insert an empty line before the heading of the current section."
