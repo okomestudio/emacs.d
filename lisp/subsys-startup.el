@@ -25,7 +25,8 @@
          ("C-c i SPC" . ok-edit-insert-zero-width-space)
          ("C-c i s" . ok-edit-insert-section-delimiter)
          ("C-o" . ok-edit-insert-newline-below)
-         ("C-x C-c". iconify-frame)  ; prevent accidental quit
+         ("C-x 4 c" . clone-indirect-buffer-other-window)
+         ("C-x C-c". iconify-frame) ; minimize instead of quit accidentally
          ("M-q" . ok-edit-fill-or-unfill-paragraph)) ; TODO: Use `prog-fill-reindent-defun'?
   :custom ((async-shell-command-buffer "new-buffer")
            (case-fold-search t)
@@ -65,12 +66,8 @@
                                            (expand-file-name buffer-file-name)))
                                          (t (buffer-name)))))
                                  " - Emacs")))
-
   :hook (before-save . ok-delete-trailing-whitespace)
-
-  :preface
-  (put 'eval 'safe-local-variable #'listp)
-
+  :preface (put 'eval 'safe-local-variable #'listp)
   :init
   (defun ok-delete-trailing-whitespace ()
     (when (derived-mode-p 'text-mode 'prog-mode)
