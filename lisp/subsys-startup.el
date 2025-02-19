@@ -129,19 +129,6 @@
   :straight (:host github :repo "tarsius/keychain-environment")
   :config (keychain-refresh-environment))
 
-;; TREE-SITTER
-
-(use-package treesit
-  :straight nil
-  :demand t)
-
-(use-package treesit-auto
-  :demand t
-  :custom (treesit-auto-install 'prompt)
-  :config
-  (treesit-auto-add-to-auto-mode-alist 'all)
-  (global-treesit-auto-mode))
-
 ;; MISC.
 
 (use-package anzu
