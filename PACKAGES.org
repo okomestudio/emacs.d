@@ -32,6 +32,7 @@ The list of Emacs packages to potentially check out:
 
 - [[https://github.com/yibie/org-luhmann][org-luhmann]] - Luhmann's numbering system for org-mode
 - [[https://github.com/yibie/org-numbering][org-numbering]] - A flexible and customizable numbering system for Org mode headings, supporting various international numbering schemes
+- [[https://github.com/chenyanming/shrface][shrface]] - Extend eww/nov with org-mode features, archive web pages to org files with shr
 
 ** Programming
 
