@@ -39,7 +39,10 @@
                                          ;; #'org-roam-unlinked-references-section
                                          #'orp-ok-ja-unlinked-references-section
                                          ))
-           (org-roam-node-display-template (concat "​​​​​${orp-title:*} "
+           ;; NOTE: When `org-roam-gt' is in use, see
+           ;; `org-roam-gt-node-display-template' in
+           ;; `orp-ok-node-gt.el' for the function version:
+           (org-roam-node-display-template (concat "${orp-title:*} "
                                                    (propertize "${orp-tags}"
                                                                'face 'org-tag)
                                                    " ${orp-timestamp:10}")))
