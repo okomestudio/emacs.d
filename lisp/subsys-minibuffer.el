@@ -13,15 +13,25 @@
   ;; VERTical Interactive COmpletion.
   :bind (:map vertico-map
               ("?" . minibuffer-completion-help))
-  :custom ((vertico-count 20)
+  :custom ((vertico-count 16)
            (vertico-cycle t))
-  :hook (on-first-input . vertico-mode))
+  :hook ((on-first-input . vertico-mode)
+         (on-first-input . vertico-multiform-mode)))
 
 (use-package vertico-posframe
   :custom ((vertico-posframe-border-width 5)
            (vertico-posframe-min-width 75)
-           (vertico-posframe-poshandler #'posframe-poshandler-frame-bottom-center))
-  :hook (on-first-input . (lambda () (vertico-posframe-mode 1))))
+           (vertico-posframe-parameters '((left-fringe . 8))))
+  :hook (on-first-input . vertico-posframe-mode)
+  :config
+  (dolist
+      (item
+       '((t (:not posframe))
+         (org-roam-node-find
+          posframe
+          (vertico-count . 32)
+          (vertico-posframe-poshandler . posframe-poshandler-frame-center))))
+    (push item vertico-multiform-commands)))
 
 (use-package marginalia
   ;; Marginalia in the minibuffer.
