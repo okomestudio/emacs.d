@@ -1,6 +1,12 @@
 #!/usr/bin/env sh
 #
-# Move the current working directory to another location
+# Move the current working directory to another location.
+#
+# This script uses the mv command, setting the source to the current
+# working directory ($PWD) so that only the destination directory
+# needs to be specified.
 #
 
-mv "$PWD" "$@"
+[ -d "$1" ] &&
+  mv "$PWD" "$1" ||
+  >&2 echo "ERROR: Destination must be an existing directory"
