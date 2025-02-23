@@ -271,7 +271,7 @@ clipboard content:
           (if (string-match-p ".*\\.\\(gif\\|jpe?g\\|png\\|webp\\)$" to-be-yanked)
               (org-download-yank)
             (org-cliplink))
-        (org-download-clipboard)))))
+        (org-download-clipboard (format-time-string "fig-%Y%m%dT%H%M%S.png"))))))
 
 (use-package org-download
   ;; Drag and drop images to Emacs org-mode.
