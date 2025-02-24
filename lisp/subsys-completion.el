@@ -46,7 +46,10 @@
 
 (use-package tempel
   :bind (("M-+" . tempel-complete)
-         ("M-*" . tempel-insert))
+         ("M-*" . tempel-insert)
+         :map tempel-map
+         ("M-}" . tempel-next)
+         ("M-{" . tempel-previous))
   :custom (tempel-path `(,(no-littering-expand-etc-file-name
                            "tempel/templates.el")))
   :config
