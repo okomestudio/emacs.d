@@ -28,13 +28,6 @@
            (sql-product 'ansi))
   :ensure-system-package
   (sqls . "go install github.com/lighttiger2505/sqls@latest")
-
-  :preface
-  (ok-safe-local-variable-add sql-connection-alist listp
-                              sql-postgres-login-params listp
-                              sql-postgres-options listp
-                              sql-postgres-program stringp)
-
   :config
   (defun sql-format-code (beg end)
     (interactive (if (use-region-p)

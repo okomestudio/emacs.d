@@ -126,9 +126,7 @@ But don't look beyond what's visible on the screen."
                ("-d" "en_US") nil utf-8)
               ("en_GB" "[[:alpha:]]" "[^[:alpha:]]" "['’]" t
                ("-d" "en_GB") nil utf-8)))
-           (ispell-program-name "/usr/bin/aspell"))
-  :preface
-  (put 'ispell-dictionary 'safe-local-variable #'stringp))
+           (ispell-program-name "/usr/bin/aspell")))
 
 ;;; MACRO AND EXPANSIONS
 

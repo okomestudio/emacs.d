@@ -15,7 +15,6 @@
 (use-package flycheck
   :custom ((flycheck-textlint-config "default"))
   :ensure-system-package (textlint . "~/.config/emacs/bin/prepare-textlint")
-  :preface (ok-safe-local-variable-add flycheck-textlint-config stringp)
   :config
   (defun flycheck-locate-config-file-textlint (filename checker)
     (when (eq checker 'textlint)

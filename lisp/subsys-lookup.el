@@ -98,9 +98,7 @@
 
 (use-package greppu
   :straight (:host github :repo "okomestudio/greppu.el")
-  :commands (greppu-scan)
-  :preface
-  (put 'greppu-search-regexp-pcre 'safe-local-variable #'functionp))
+  :commands (greppu-scan))
 
 (provide 'subsys-lookup)
 ;;; subsys-lookup.el ends here

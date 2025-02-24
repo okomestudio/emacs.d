@@ -43,7 +43,6 @@
            (org-tags-column 0)
            (org-todo-keywords '((sequence "TODO" "WIP" "|" "SKIP" "DONE"))))
   :hook (org-mode . ok-org--init-visuals)
-  :preface (ok-safe-local-variable-add org-tags-exclude-from-inheritance listp)
   :config
   ;; Unset the keybindings to disable org-agenda shortcuts and
   ;; fallback to popper:
@@ -238,9 +237,7 @@ before the heading of the current section."
            (org-agenda-include-diary t)
            (org-agenda-inhibit-startup t)
            (org-agenda-start-on-weekday 0)
-           (org-agenda-use-tag-inheritance t))  ; set nil to speed up parsing
-  :preface
-  (put 'org-agenda-custom-commands 'safe-local-variable #'listp))
+           (org-agenda-use-tag-inheritance t))) ; set nil to speed up parsing
 
 ;; THEME
 
@@ -296,7 +293,6 @@ clipboard content:
          ("D" . org-transclusion-remove-all)
          ("a" . org-transclusion-add)
          ("t" . org-transclusion-mode))
-  :preface (ok-safe-local-variable-add system-time-locale stringp)
   :config
   (add-to-list 'org-transclusion-extensions 'org-transclusion-indent-mode)
   (require 'org-transclusion-indent-mode))

@@ -46,20 +46,6 @@
                                                    (propertize "${orp-tags}"
                                                                'face 'org-tag)
                                                    " ${orp-timestamp:10}")))
-  :preface
-  (ok-safe-local-variable-add orb-preformat-keywords listp
-                              org-roam-capture-templates listp
-                              org-roam-dailies-capture-templates listp
-                              org-roam-dailies-directory stringp
-                              org-roam-db-location stringp
-                              org-roam-directory stringp
-                              org-roam-mode-sections listp
-                              org-roam-ui-port integerp
-
-                              ;; For browsing source code
-                              elisp-lint-ignored-validators listp
-                              elisp-lint-indent-specs listp)
-
   :config
   (setopt find-file-visit-truename t)  ; see "5.3 Setting up Org-roam"
 
@@ -149,8 +135,7 @@ Otherwise, it is the same as the vanilla version of
 
 (use-package org-ref
   ;; For citations, cross-references, bibliographies.
-  :custom (bibtex-completion-pdf-field "file")
-  :preface (put 'bibtex-completion-bibliography 'safe-local-variable #'listp))
+  :custom (bibtex-completion-pdf-field "file"))
 
 (use-package org-roam-timestamps
   :after org-roam

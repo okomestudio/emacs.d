@@ -13,8 +13,6 @@ Set this within symlinked .dir-locals.el.")
 (defvar ok-dir-locals-walk-upward t
   "If non-nil, look for .dir-locals.el up in the directory tree.")
 
-(put 'default-directory-symlinked 'safe-local-variable #'stringp)
-
 ;; Patch `hack-dir-local-variables' so that all .dir-locals.el files
 ;; are looked for upward in the directory tree.
 (defun ok-dir-locals--hack-dir-local-variables (orig-fun)
