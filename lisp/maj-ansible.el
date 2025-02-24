@@ -9,9 +9,6 @@
 
 (use-package ansible ;; not derived from prog-mode
   :hook (ansible . ansible--prepare-lsp)
-  :preface
-  (ok-safe-local-variable-add lsp-ansible-python-interpreter-path stringp
-                              lsp-ansible-validation-lint-arguments stringp)
   :config
   (defun ansible--prepare-lsp ()
     ;; NOTE(2024-03-07): `emacs-lsp-booster' is not compatible with

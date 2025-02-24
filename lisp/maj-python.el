@@ -147,9 +147,7 @@
                                    :branch "venv-support")
                       :files ("*.el" ("bin/make-imports.py" . "bin/make-imports.py")))
   :ensure-system-package
-  (pyflakes . "pip install pyflakes")
-  :preface
-  (put 'pyimport-develop-packages 'safe-local-variable #'listp))
+  (pyflakes . "pip install pyflakes"))
 
 ;; TODO(2024-12-15): Try for docstring formatting:
 ;;

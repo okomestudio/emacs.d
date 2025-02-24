@@ -25,19 +25,8 @@
             `(,(locate-user-emacs-file "straight/repos/")
               (,(expand-file-name "github.com/"
                                   (getenv "HOME")) . 2))))
-  :ensure-system-package
-  (ag . "sudo apt install -y silversearcher-ag")
-  (fdfind . "sudo apt install -y fd-find")
-
-  :preface
-  (ok-safe-local-variable-add projectile-project-compilation-cmd stringp
-                              projectile-project-compilation-dir stringp
-                              projectile-project-configure-cmd stringp
-                              projectile-project-install-cmd stringp
-                              projectile-project-package-cmd stringp
-                              projectile-project-root stringp
-                              projectile-project-run-cmd stringp
-                              projectile-project-test-cmd stringp)
+  :ensure-system-package ((ag . "sudo apt install -y silversearcher-ag")
+                          (fdfind . "sudo apt install -y fd-find"))
   :config
   (projectile-mode +1)
 

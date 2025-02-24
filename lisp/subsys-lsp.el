@@ -16,7 +16,6 @@
            (lsp-use-plists t))
   :commands (lsp lsp-deferred)
   :hook (lsp-mode . lsp-enable-which-key-integration)
-  :preface (put 'lsp-disabled-clients 'safe-local-variable #'listp)
   :config
   (setq lsp-headerline-arrow "➤")
 

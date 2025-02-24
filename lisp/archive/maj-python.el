@@ -14,9 +14,7 @@
 
 (use-package blacken
   :ensure-system-package
-  (black . "pip install black")
-  :preface
-  (put 'blacken-line-length 'safe-local-variable #'integerp))
+  (black . "pip install black"))
 
 (use-package py-isort
   :straight (py-isort

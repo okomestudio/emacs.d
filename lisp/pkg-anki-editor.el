@@ -22,9 +22,7 @@
            ;; (request-log-level 'debug)  ; for debugging
            )
   :commands (anki-editor-push-note-at-point)
-  :ensure-system-package (curl . "sudo apt install -y curl")
-  :preface (ok-safe-local-variable-add anki-editor-ignored-org-tags listp
-                                       anki-editor-field-alias listp))
+  :ensure-system-package (curl . "sudo apt install -y curl"))
 
 (provide 'pkg-anki-editor)
 ;;; pkg-anki-editor.el ends here

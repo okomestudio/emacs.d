@@ -25,7 +25,6 @@
           ;; org-mode
           rst-mode) . lsp-ltex-start)
   :commands (lsp-ltex-start lsp-ltex-restart)
-  :preface (ok-safe-local-variable-add lsp-ltex-language stringp)
   :config
   (defvar lsp-ltex-aspell-dict "~/.aspell.en.pws")
 

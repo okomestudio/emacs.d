@@ -5,6 +5,9 @@
 ;;
 ;;; Code:
 
+;;; PRIVATE INITIALIZATION
+(load (no-littering-expand-etc-file-name "emacs/init"))
+
 ;; COMMON ELISP LIBRARIES
 
 (use-package ok
@@ -67,7 +70,6 @@
                                          (t (buffer-name)))))
                                  " - Emacs")))
   :hook (before-save . ok-delete-trailing-whitespace)
-  :preface (put 'eval 'safe-local-variable #'listp)
   :init
   (defun ok-delete-trailing-whitespace ()
     (when (derived-mode-p 'text-mode 'prog-mode)
