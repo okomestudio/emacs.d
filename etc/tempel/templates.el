@@ -111,6 +111,9 @@ org-mode
 
 (latex-equation-star "\\begin{equation*}" r> n> "\\end{equation*}")
 
+(list-item "- " p n>)
+(list-item-with-description "- " p " :: " p n>)
+
 (locvar-org-ja
  "* Local variables :noexport:" n
  "# Local Variables:" n
