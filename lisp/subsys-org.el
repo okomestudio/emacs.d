@@ -285,7 +285,12 @@ clipboard content:
 
 (use-package org-transclusion
   :straight (org-transclusion
-             :host github :repo "okomestudio/org-transclusion" :branch "id-and-target")
+             :host github
+             :repo "nobiot/org-transclusion" ; "okomestudio/org-transclusion"
+
+             ;; NOTE: Try the feature branch for
+             ;; github.com/nobiot/org-transclusion/issues/271
+             :branch "feat/transient") ; "id-and-target"
   :bind (:map
          org-mode-map
          :prefix "C-c C-n"
