@@ -12,7 +12,7 @@
    (convert-standard-filename
     (expand-file-name  "var/eln-cache/" user-emacs-directory))))
 
-(let ((minver "29.1"))
+(let ((minver "30.1"))
   (when (version< emacs-version minver)
     (error "The minimum Emacs version expected is %s" minver)))
 
