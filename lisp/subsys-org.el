@@ -107,20 +107,20 @@ before the heading of the current section."
         (setq end (+ end len)))
       (goto-char begin)))
 
-  (org-plugin-ok-mode 1))
+  (org-ok-mode 1))
 
 (use-package org-contrib)
 
-(use-package org-plugin-ok
-  :straight (org-plugin-ok :host github
-                           :repo "okomestudio/org-plugin-ok"
-                           :branch "folgezettel"
-                           :files (:defaults "extensions/*"))
+(use-package org-ok
+  :straight (org-ok :host github
+                    :repo "okomestudio/org-ok"
+                    :branch "master"
+                    :files (:defaults "extensions/*"))
   :after org
   :demand t
   :bind (:map
          org-mode-map
-         ("C-c C-M-c" . op-ok-babel-run-pytest))
+         ("C-c C-M-c" . org-ok-babel-run-pytest))
   :config
   (with-eval-after-load 'ox
     (require 'ox-substack)))
