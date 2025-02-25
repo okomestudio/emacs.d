@@ -39,7 +39,7 @@
 (use-package minions
   ;; A minor-mode menu for the mode line.
   :custom (minions-direct '(projectile-mode))
-  :hook (after-load-theme . (lambda () (minions-mode 1))))
+  :hook (after-load-theme . minions-mode))
 
 (provide 'themes-modeline)
 ;;; themes-modeline.el ends here

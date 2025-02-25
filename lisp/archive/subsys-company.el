@@ -46,7 +46,7 @@
 
 (use-package company-posframe
   :disabled
-  :hook (company-mode . (lambda () (company-posframe-mode 1))))
+  :hook (company-mode . company-posframe-mode))
 
 ;; COMPANY BACKENDS
 

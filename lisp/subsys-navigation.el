@@ -14,13 +14,14 @@
 
 (use-package ace-isearch
   ;; A seamless bridge between isearch, ace-jump-mode, avy, and swoop.
-  :bind (:map isearch-mode-map
-              ("C-'" . ace-isearch-jump-during-isearch))
+  :bind (:map
+         isearch-mode-map
+         ("C-'" . ace-isearch-jump-during-isearch))
   :custom ((ace-isearch-input-length 6)
            (ace-isearch-jump-delay 0.3)
            (ace-isearch-function #'avy-goto-char)
            (ace-isearch-function-from-isearch #'ace-isearch-consult-line-from-isearch))
-  :hook (on-first-input . (lambda () (global-ace-isearch-mode +1))))
+  :hook (on-first-input . global-ace-isearch-mode))
 
 (use-package avy)
 
@@ -38,7 +39,7 @@
   :straight nil
   :bind (("C-c <right>" . winner-redo)
          ("C-c <left>". winner-undo))
-  :hook (on-first-buffer . (lambda () (winner-mode 1))))
+  :hook (on-first-buffer . winner-mode))
 
 ;; Scrolling
 
@@ -52,7 +53,7 @@
 
 (use-package pixel-scroll
   :straight nil
-  ;; :hook (on-first-input . (lambda () (pixel-scroll-precision-mode +1)))
+  ;; :hook (on-first-input . pixel-scroll-precision-mode)
   :custom ((pixel-scroll-precision-interpolation-between-scroll 0.001)
            (pixel-scroll-precision-interpolation-factor 2.0)
            (pixel-scroll-precision-interpolation-total-time 0.1)
@@ -67,10 +68,10 @@
                           :repo "jdtsmith/ultra-scroll")
   :custom ((scroll-conservatively 101)
            (scroll-margin 0))
-  :hook (on-first-input . (lambda () (ultra-scroll-mode 1))))
+  :hook (on-first-input . ultra-scroll-mode))
 
 (use-package yascroll
-  :hook (on-first-buffer . (lambda () (global-yascroll-bar-mode 1))))
+  :hook (on-first-buffer . global-yascroll-bar-mode))
 
 ;; Configuration
 

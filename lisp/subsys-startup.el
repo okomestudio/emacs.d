@@ -135,7 +135,7 @@
 
 (use-package anzu
   ;; Displays current and total matches information in the mode-line.
-  :hook (on-first-input . (lambda () (global-anzu-mode 1))))
+  :hook (on-first-input . global-anzu-mode))
 
 (use-package tramp
   :straight nil

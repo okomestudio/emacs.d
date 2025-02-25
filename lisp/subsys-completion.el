@@ -162,12 +162,12 @@
 
 (use-package prescient
   :autoload (prescient-persist-mode)
-  :hook (corfu-mode . (lambda () (prescient-persist-mode 1)))
+  :hook (corfu-mode . prescient-persist-mode)
   :custom (prescient-aggressive-file-save t))
 
 (use-package corfu-prescient
   :after corfu
-  :hook (corfu-mode . (lambda () (corfu-prescient-mode 1)))
+  :hook (corfu-mode . corfu-prescient-mode)
   :custom (corfu-prescient-enable-filtering nil))
 
 (provide 'subsys-completion)

@@ -11,7 +11,7 @@
 
 (use-package magit-todos
   :after magit
-  :hook (magit-mode . (lambda () (magit-todos-mode 1)))
+  :hook (magit-mode . magit-todos-mode)
   :config
   (dolist (kw '("WIP"
                 "TODO [#A]" "TODO [#B]" "TODO [#C]"

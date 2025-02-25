@@ -72,7 +72,7 @@
 (use-package hl-line
   ;; Highlight the current line.
   :straight nil
-  :hook ((on-first-input . (lambda () (global-hl-line-mode 1)))
+  :hook ((on-first-input . global-hl-line-mode)
          (after-load-theme . hl-line-ok--adjust))
   :config
   (require 'ok)

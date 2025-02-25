@@ -30,7 +30,7 @@
 (use-package pyenv
   :straight (:host github :repo "aiguofer/pyenv.el")
   :custom (pyenv-show-active-python-in-modeline t)
-  :hook ((after-init . (lambda () (global-pyenv-mode)))
+  :hook ((after-init . global-pyenv-mode)
          (projectile-after-switch-project
           . (lambda (&rest args)
               (pyenv-use-corresponding)
