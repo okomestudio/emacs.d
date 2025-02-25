@@ -79,13 +79,6 @@ before the heading of the current section."
 
   (advice-add #'org-open-at-point :around #'org-open-at-point--ad-prefix)
 
-  (defun math-preview-ok-toggle (&optional arg)
-    (interactive "P")
-    (call-interactively
-     (pcase arg
-       ('(4) #'math-preview-clear-all)
-       (_ #'math-preview-all))))
-
   ;; HELPER FUNCTIONS
   (defun ok-org--init-visuals ()
     (setq-local fill-column 80)
@@ -107,6 +100,7 @@ before the heading of the current section."
         (setq end (+ end len)))
       (goto-char begin)))
 
+  (require 'math-preview)
   (org-ok-mode 1))
 
 (use-package org-contrib)
@@ -126,10 +120,17 @@ before the heading of the current section."
     (require 'ox-substack)))
 
 (use-package math-preview
-  :commands (math-preview-all)
   :custom (math-preview-scale 0.8)
+  :commands (math-preview-all math-preview-ok-toggle)
   :ensure-system-package
-  (math-preview . "npm install -g git+https://gitlab.com/matsievskiysv/math-preview"))
+  (math-preview . "npm install -g git+https://gitlab.com/matsievskiysv/math-preview")
+  :config
+  (defun math-preview-ok-toggle (&optional arg)
+    (interactive "P")
+    (call-interactively
+     (pcase arg
+       ('(4) #'math-preview-clear-all)
+       (_ #'math-preview-all)))))
 
 ;; ORG BABEL
 
