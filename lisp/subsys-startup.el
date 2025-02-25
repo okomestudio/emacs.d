@@ -6,7 +6,7 @@
 ;;; Code:
 
 ;;; PRIVATE INITIALIZATION
-(load (no-littering-expand-etc-file-name "emacs/init"))
+(load (ok-expand-etc "emacs/init"))
 
 ;; COMMON ELISP LIBRARIES
 

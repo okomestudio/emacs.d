@@ -22,9 +22,8 @@
               projectile-root-top-down
               projectile-root-top-down-recurring))
            (projectile-project-search-path
-            `(,(locate-user-emacs-file "straight/repos/")
-              (,(expand-file-name "github.com/"
-                                  (getenv "HOME")) . 2))))
+            `(,(ok-expand-user-emacs-file "straight" "repos/")
+              (,(expand-file-name "github.com/" (getenv "HOME")) . 2))))
   :ensure-system-package ((ag . "sudo apt install -y silversearcher-ag")
                           (fdfind . "sudo apt install -y fd-find"))
   :config

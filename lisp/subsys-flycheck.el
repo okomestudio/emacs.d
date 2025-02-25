@@ -6,8 +6,8 @@
 ;;; Code:
 
 (use-package flycheck
-  :custom ((flycheck-python-mypy-executable (locate-user-emacs-file "bin/mypy"))
-           (flycheck-rst-executable (locate-user-emacs-file "bin/rst2pseudoxml")))
+  :custom ((flycheck-python-mypy-executable (ok-expand-bin "mypy"))
+           (flycheck-rst-executable (ok-expand-bin "rst2pseudoxml")))
   :hook (((emacs-lisp-mode lisp-data-mode) . flycheck-mode)
          (org-mode . flycheck-mode)))
 

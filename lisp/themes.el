@@ -12,7 +12,7 @@
 (defvar themes-default-theme 'flexoki-themes-light
   "Default theme at startup.")
 
-(load (locate-user-emacs-file "lisp/themes-flexoki"))
+(load (ok-expand-lisp "themes-flexoki"))
 
 ;; The following utility functions assume that one and only one theme
 ;; gets loaded at any time.
@@ -102,7 +102,7 @@
     ;; (add-hook 'after-init-hook (lambda () (load-theme theme t)))
     (load-theme theme t)))
 
-(load (locate-user-emacs-file "lisp/themes-modeline.el"))
+(load (ok-expand-lisp "themes-modeline.el"))
 
 (themes--initialize themes-default-theme)
 

@@ -19,7 +19,7 @@
     (chatgpt-shell-send-to-buffer str))
 
   (setopt chatgpt-shell-root-path
-          (no-littering-expand-var-file-name "chatgpt-shell")))
+          (ok-expand-var "chatgpt-shell")))
 
 (use-package gptel
   :config

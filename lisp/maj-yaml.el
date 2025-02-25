@@ -35,7 +35,7 @@
   :config
   (defun jq-interactively-on-yaml (&rest r)
     (when (derived-mode-p 'yaml-ts-mode)
-      (setq-local jq-interactive-command (locate-user-emacs-file "bin/yq")
+      (setq-local jq-interactive-command (ok-expand-bin "yq")
                   jq-interactive-font-lock-mode #'yaml-ts-mode
                   jq-interactive-default-options "--yaml-roundtrip")))
   (advice-add #'jq-interactively :before #'jq-interactively-on-yaml))

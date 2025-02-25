@@ -32,22 +32,39 @@
 (setopt custom-file null-device)
 
 ;; Use `init-straight.el' or `init-package.el'
-(load (locate-user-emacs-file "lisp/init-straight.el"))
+(load (convert-standard-filename
+       (locate-user-emacs-file "lisp/init-straight.el")))
 
 (use-package no-littering
   ;; Run this as early as possible.
   :demand t
   :custom ((no-littering-etc-directory
-            (locate-user-emacs-file (convert-standard-filename "etc/")))
+            (convert-standard-filename (locate-user-emacs-file "etc/")))
            (no-littering-var-directory
-            (locate-user-emacs-file (convert-standard-filename "var/")))))
+            (convert-standard-filename (locate-user-emacs-file "var/"))))
+  :config
+  (defun ok-expand-user-emacs-file (&rest components)
+    "Expand the path by concatenating COMPONENTS to `user-emacs-directory'."
+    (convert-standard-filename
+     (locate-user-emacs-file (apply #'file-name-concat components))))
+
+  (defun ok-expand-bin (file)
+    "Expand the path to FILE in Emacs's bin/ directory."
+    (ok-expand-user-emacs-file "bin" file))
+
+  (defun ok-expand-lisp (file)
+    "Expand the path to FILE in Emacs's lisp/ directory."
+    (ok-expand-user-emacs-file "lisp" file))
+
+  ;; Define aliases for shorter names.
+  (defalias 'ok-expand-etc #'no-littering-expand-etc-file-name)
+  (defalias 'ok-expand-var #'no-littering-expand-var-file-name))
 
 ;; Load config files under `init.d/'
 (use-package init-loader
   :demand t
   :custom ((init-loader-byte-compile nil)
            (init-loader-show-log-after-init ok-debug))
-  :config
-  (init-loader-load (locate-user-emacs-file "init.d")))
+  :config (init-loader-load (ok-expand-user-emacs-file "init.d")))
 
 ;;; init.el ends here
