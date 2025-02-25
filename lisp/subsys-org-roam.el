@@ -35,7 +35,7 @@
            (org-roam-mode-sections (list #'org-roam-backlinks-section
                                          #'org-roam-reflinks-section
                                          ;; #'org-roam-unlinked-references-section
-                                         #'orp-ok-ja-unlinked-references-section
+                                         #'org-roam-ok-ja-unlinked-references-section
                                          ))
            ;; NOTE: When `org-roam-gt' is in use, see
            ;; `org-roam-gt-node-display-template' in
