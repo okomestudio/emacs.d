@@ -28,6 +28,10 @@ The list of Emacs packages to potentially check out:
 
 - [[https://github.com/victorhge/iedit][iedit]] - Modify multiple occurrences simultaneously
 
+** Optimiaztion
+
+- [[https://github.com/jamescherti/compile-angel.el][compile-angel.el]] - Auto byte/native-compile all Elisp files (alternative to: auto-compile)
+
 ** Org
 
 - [[https://github.com/yibie/org-luhmann][org-luhmann]] - Luhmann's numbering system for org-mode
