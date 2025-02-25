@@ -94,7 +94,7 @@ Otherwise, it is the same as the vanilla version of
   (org-roam-db-sync)
   (org-roam-db-autosync-mode 1)
   (org-roam-gt-mode 1)
-  (org-roam-plugin-ok-mode 1))
+  (org-roam-ok-mode 1))
 
 (use-package ok-plural
   :straight (ok-plural :host github :repo "okomestudio/ok-plural.el"))
@@ -110,15 +110,16 @@ Otherwise, it is the same as the vanilla version of
                                 :repo "okomestudio/org-roam-gt" :branch "ok"))
   :demand t)
 
-(use-package org-roam-plugin-ok
-  :straight (org-roam-plugin-ok :host github
-                                :repo "okomestudio/org-roam-plugin-ok"
-                                :files (:defaults "extensions/*"))
-  :custom ((orp-ok-node-use-cache-in-memory t)
-           (orp-ok-node-gt-use-cache-in-memory t))
+(use-package org-roam-ok
+  :straight (org-roam-ok :host github
+                         :repo "okomestudio/org-roam-ok"
+                         :branch "master"
+                         :files (:defaults "extensions/*"))
+  :custom ((org-roam-ok-node-use-cache-in-memory t)
+           (org-roam-ok-node-gt-use-cache-in-memory t))
   :init
   (load (no-littering-expand-etc-file-name "org-roam/init"))
-  (org-roam-plugin-ok-on-idle-init-setup))
+  (org-roam-ok-on-idle-init-setup))
 
 (use-package org-roam-ui
   :after org-roam
