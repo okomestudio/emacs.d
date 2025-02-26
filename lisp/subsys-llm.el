@@ -26,8 +26,15 @@
   (gptel-make-anthropic "Claude"
     :stream t
     :key (lambda ()
-           (auth-source-pick-first-password
-            :host "console.anthropic.com"))))
+           (auth-source-pick-first-password :host "console.anthropic.com")))
+
+  (gptel-make-openai "DeepSeek"
+    :host "api.deepseek.com"
+    :endpoint "/chat/completions"
+    :stream t
+    :key (lambda ()
+           (auth-source-pick-first-password :host "api.deepseek.com"))
+    :models '(deepseek-chat deepseek-coder)))
 
 (use-package org-ai
   :custom ((org-ai-default-chat-model "gpt-3.5-turbo")
