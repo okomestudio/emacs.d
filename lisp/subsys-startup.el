@@ -76,7 +76,7 @@
       (save-excursion
         (delete-trailing-whitespace))))
 
-  (global-completion-preview-mode 1)  ; TODO(2024-12-25): try for a while
+  (global-completion-preview-mode -1)  ; favor corfu
   (column-number-mode 1)
   (global-so-long-mode 1)     ; mitigate perf on files with long lines
   (show-paren-mode 1)         ; highlight matching parens
