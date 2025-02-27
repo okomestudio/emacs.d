@@ -12,7 +12,9 @@
 ;;; THEME LOADER
 
 (defcustom themes-default nil
-  "Default theme.")
+  "Default theme."
+  :type 'symbol
+  :group 'ok)
 
 (defun themes--prepare-load (theme)
   "Prepare THEME to load at Emacs startup."
@@ -20,11 +22,9 @@
       (progn
         (defun load-theme--when-run-as-daemon (frame)
           (with-selected-frame frame
-            (load (ok-expand-lisp "themes-modeline.el"))
             (load-theme theme t)))
         (add-hook 'after-make-frame-functions #'load-theme--when-run-as-daemon))
     (defun load-theme--after-init ()
-      (load (ok-expand-lisp "themes-modeline.el"))
       (load-theme theme t))
     (add-hook 'after-init-hook #'load-theme--after-init)))
 
@@ -38,6 +38,10 @@
   (run-hooks 'after-load-theme-hook))
 
 (advice-add #'load-theme :around #'load-theme--ad)
+
+;;; MODELINE (loaded with after-load-theme hook)
+
+(load (ok-expand-lisp "themes-modeline.el"))
 
 ;;; MINOR THEME ADJUSTMENTS
 

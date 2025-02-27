@@ -15,13 +15,7 @@
            (doom-modeline-vcs-max-length 12)
            (mode-line-percent-position nil)
            (doom-modeline-checker-simple-format t))
-  :hook (after-load-theme
-         . (lambda ()
-             (if (member (car custom-enabled-themes)
-                         '(flexoki-themes-dark flexoki-themes-light))
-                 (doom-modeline-mode +1)
-               (if (default-value 'doom-modeline-mode)
-                   (doom-modeline-mode -1)))))
+  :hook (after-load-theme . doom-modeline-mode)
   :config
   (doom-modeline-def-modeline 'lsp-full
     '(bar workspace-name window-number modals matches follow buffer-info remote-host buffer-position word-count parrot selection-info)
@@ -29,12 +23,6 @@
 
   (dolist (mode '(python-ts-mode python-sql-ts-mode))
     (add-to-list 'doom-modeline-mode-alist `(,mode . lsp-full))))
-
-(use-package doom-nano-modeline
-  :disabled
-  :requires (nano-theme)
-  :straight (:host github :repo "ronisbr/doom-nano-modeline")
-  :config (doom-nano-modeline-mode 1))
 
 (use-package minions
   ;; A minor-mode menu for the mode line.
