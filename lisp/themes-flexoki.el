@@ -6,6 +6,9 @@
 ;;; Code:
 
 (use-package flexoki-themes
+  :straight (flexoki-themes :host github
+                            :repo "okomestudio/flexoki-emacs-theme"
+                            :branch "solaire")
   :hook
   (after-load-theme
    . (lambda ()
