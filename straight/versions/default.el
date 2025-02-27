@@ -56,7 +56,7 @@
  ("emacs-request" . "c22e3c23a6dd90f64be536e176ea0ed6113a5ba6")
  ("emacs-scala-mode" . "5d7cf21c37e345c49f921fe5111a49fd54efd1e0")
  ("emacs-shfmt" . "78a96e66d2685672de3d0b7d627cd57a3b0caaf2")
- ("emacs-solaire-mode" . "8ccdceeb9298b3c4e35f630914f467bf164f39ad")
+ ("emacs-solaire-mode" . "c9334666bd208f3322e6118d30eba1b2438e2bb9")
  ("emacs-uuid" . "1519bfeb0e31602b840bc8dd35d7c7e732c159fe")
  ("emacs-web-server" . "3982c55e9061475038a3ccd61aecb2de3d407cec")
  ("emacs-websocket" . "40c208eaab99999d7c1e4bea883648da24c03be3")
