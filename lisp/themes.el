@@ -46,14 +46,18 @@
 ;;; MINOR THEME ADJUSTMENTS
 
 (use-package solaire-mode
-  ;; Distinguish "real" buffers from "unreal" buffers.
+  ;; Distinguish "real" buffers from "unreal" buffers by element
+  ;; color.
   :custom (solaire-mode-real-buffer-fn 'solaire-mode-ok--real-buffer-p)
   :hook (after-load-theme . solaire-global-mode)
   :config
   (defun solaire-mode-ok--real-buffer-p ()
-    (cond ((string-prefix-p "*elfeed" (buffer-name)) t)
+    "Return non-nil for a real buffer, nil otherwise."
+    (cond ((derived-mode-p '(dashboard-mode)) t)
+          ((string-prefix-p "*elfeed" (buffer-name)) t)
           ((string-prefix-p "*Colors*" (buffer-name)) nil)
-          (t (solaire-mode-real-buffer-p)))))
+          (t (solaire-mode-real-buffer-p)) ; fallback to the default
+          )))
 
 (use-package rainbow-delimiters
   ;; Highlights delimiters such as parentheses, brackets or braces according to
