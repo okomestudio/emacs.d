@@ -1,5 +1,8 @@
 ;;; themes-flexoki.el --- Flexoki Themes  -*- lexical-binding: t -*-
 ;;; Commentary:
+;;
+;; See https://github.com/crmsnbleyd/flexoki-emacs-theme.
+;;
 ;;; Code:
 
 (use-package flexoki-themes
@@ -27,4 +30,7 @@
       (when (string= mode "light")
         (set-face-attribute 'company-tooltip nil :background "#eeeeee")))))
 
+(setopt themes-default 'flexoki-themes-light)
+
+(provide 'themes-flexoki)
 ;;; themes-flexoki.el ends here

@@ -6,4 +6,7 @@
   :straight (:host github :repo "rougier/nano-theme")
   :custom (nano-window-divider-show t))
 
+(setopt themes-default 'nano-light)
+
+(provide 'themes-nano)
 ;;; themes-nano.el ends here
