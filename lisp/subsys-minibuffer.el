@@ -19,7 +19,7 @@
          (on-first-input . vertico-multiform-mode)))
 
 (use-package vertico-posframe
-  :custom ((vertico-posframe-border-width 5)
+  :custom ((vertico-posframe-border-width 3)
            (vertico-posframe-min-width 75)
            (vertico-posframe-parameters '((left-fringe . 8))))
   :hook (on-first-input . vertico-posframe-mode)
