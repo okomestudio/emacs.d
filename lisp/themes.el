@@ -7,7 +7,7 @@
 ;;
 ;;; Code:
 
-(load (ok-expand-lisp "themes-flexoki"))   ; switches theme
+(load (ok-expand-lisp "themes-kanagawa"))   ; switches theme
 
 ;;; THEME LOADER
 
@@ -76,6 +76,18 @@
            (indent-bars-width-frac 0.1)
            (indent-bars-pad-frac 0.1))
   :hook (prog-mode . indent-bars-mode))
+
+;;; WINDOW DIVIDERS
+
+(setopt window-divider-default-bottom-width 1
+        window-divider-default-right-width 3)
+
+;; Set all dividers to the same foreground colors.
+(let ((fg (face-attribute 'window-divider :foreground)))
+  (set-face-attribute 'window-divider-first-pixel nil :foreground fg)
+  (set-face-attribute 'window-divider-last-pixel nil :foreground fg))
+
+(window-divider-mode 1)
 
 ;;; MISC.
 
