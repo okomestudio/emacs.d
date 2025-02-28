@@ -33,7 +33,9 @@
       (when (string= mode "light")
         (set-face-attribute 'company-tooltip nil :background "#eeeeee")))))
 
-(setopt themes-default 'flexoki-themes-light)
+(setopt themes-default 'flexoki-themes-light
+        window-divider-default-bottom-width 1
+        window-divider-default-right-width 1)
 
 (provide 'themes-flexoki)
 ;;; themes-flexoki.el ends here
