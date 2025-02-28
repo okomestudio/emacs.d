@@ -7,7 +7,7 @@
 ;;
 ;;; Code:
 
-(load (ok-expand-lisp "themes-kanagawa"))   ; switches theme
+(load (ok-expand-lisp "themes-spacemacs"))   ; change this to switch themes
 
 ;;; THEME LOADER
 
@@ -78,9 +78,6 @@
   :hook (prog-mode . indent-bars-mode))
 
 ;;; WINDOW DIVIDERS
-
-(setopt window-divider-default-bottom-width 1
-        window-divider-default-right-width 3)
 
 ;; Set all dividers to the same foreground colors.
 (let ((fg (face-attribute 'window-divider :foreground)))

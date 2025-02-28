@@ -14,7 +14,9 @@
                 (head4 . ,(ok-face-color-scale "#b1951d" 0.80))
                 (cyan . ,(ok-face-color-scale "#21b8c7" 0.95)))))))
 
-(setopt themes-default 'spacemacs-light)
+(setopt themes-default 'spacemacs-light
+        window-divider-default-bottom-width 1
+        window-divider-default-right-width 1)
 
 (provide 'themes-spacemacs)
 ;;; themes-spacemacs.el ends here
