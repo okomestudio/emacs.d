@@ -28,9 +28,6 @@
       (font-lock-mode -1))))
 
 (use-package helpful
-  ;; TODO: Remove after github.com/Wilfred/helpful/pull/344 gets merged:
-  :straight (:host github :repo "yaaama/helpful" :branch "fix-listp-error")
-
   :bind (("C-c C-d" . helpful-at-point)
          :map help-map
          ("F" . helpful-function)
