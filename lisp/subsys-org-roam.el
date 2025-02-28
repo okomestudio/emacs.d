@@ -49,7 +49,10 @@
   (require 'org-roam-dailies)
   (org-roam-db-sync)
   (org-roam-db-autosync-mode 1)
+
+  (require 'org-roam-gt)
   (org-roam-gt-mode 1)
+
   (org-roam-ok-mode 1))
 
 (use-package ok-plural
@@ -61,12 +64,11 @@
 
 (use-package org-roam-gt
   ;; See github.com/org-roam/org-roam/issues/2474
-  :straight (org-roam-gt :host github
-                         :repo "dmgerman/org-roam-gt"
-                         :fork (:host github
-                                      :repo "okomestudio/org-roam-gt"
-                                      :branch "ok"))
-  :demand t)
+  :straight
+  (org-roam-gt
+   :host github
+   :repo "dmgerman/org-roam-gt"
+   :fork (:host github :repo "okomestudio/org-roam-gt" :branch "ok")))
 
 (use-package org-roam-ok
   :straight (org-roam-ok :host github
