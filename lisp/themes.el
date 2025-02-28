@@ -5,9 +5,11 @@
 ;;
 ;; See: https://emacsthemes.com for options.
 ;;
+;; TODO(2025-02-28): Allow multiple themes to be installed and switched?
+;;
 ;;; Code:
 
-(load (ok-expand-lisp "themes-spacemacs"))   ; change this to switch themes
+(load (ok-expand-lisp "themes-flexoki"))   ; change this to switch themes
 
 ;;; THEME LOADER
 
@@ -104,16 +106,34 @@
   ;; Highlight the current line.
   :straight nil
   :hook ((on-first-input . global-hl-line-mode)
-         (after-load-theme . hl-line-ok--adjust))
+         (after-load-theme . hl-line-ok--background-init)
+         (solaire-mode . hl-line-ok--background-solaire-mode))
   :config
-  (require 'ok)
+  (defun hl-line-ok--background (&optional face)
+    (require 'ok)
+    (ok-face-color-scale (face-attribute face :background)
+                         (pcase (frame-parameter nil 'background-mode)
+                           ('dark 1.03)
+                           ('light 0.97))))
 
-  (defun hl-line-ok--adjust ()
-    (let* ((mode (frame-parameter nil 'background-mode))
-           (scale (if (string= mode "dark") 1.03 0.97))
-           (bg (face-attribute 'default :background))
-           (bg-hl (ok-face-color-scale bg scale)))
-      (set-face-attribute 'hl-line nil :background bg-hl))))
+  (defun hl-line-ok--background-init ()
+    "Initialize `hl-line' face using the `default' face."
+    (set-face-attribute 'hl-line nil
+                        :background (hl-line-ok--background 'default)))
+
+  (defun hl-line-ok--background-solaire-mode ()
+    "Toggle `hl-line' face attributes based on `solaire-mode' status."
+    (if solaire-mode
+        (let ((bg (hl-line-ok--background 'solaire-default-face)))
+          (setq-local
+           hl-line-ok--background-solaire-mode-cookie
+           (face-remap-add-relative 'hl-line `(:background ,bg))))
+      (when (and (buffer-local-boundp
+                  'hl-line-ok--background-solaire-mode-cookie
+                  (current-buffer))
+                 hl-line-ok--background-solaire-mode-cookie)
+        (face-remap-remove-relative hl-line-ok--background-solaire-mode-cookie)
+        (setq-local hl-line-ok--background-solaire-mode-cookie nil)))))
 
 (use-package pos-tip
   ;; Show tooltip at point.
