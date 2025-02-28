@@ -73,6 +73,7 @@
  ("exec-path-from-shell" . "4896a797252fbfdac32fb77508500ac7d220f717")
  ("expand-region.el" . "351279272330cae6cecea941b0033a8dd8bcc4e8")
  ("f.el" . "931b6d0667fe03e7bf1c6c282d6d8d7006143c52")
+ ("flexoki-emacs-theme" . "4ca5d80bc4f33b5ace8950f0c00069539835fab4")
  ("flycheck" . "b9db1379dcc3e59238dc1fdd7db368c66e8734ba")
  ("flycheck-aspell" . "18381a09fb2d6b91dd95fc24b9517459c774617e")
  ("flycheck-aspell-org.el" . "8f0ae4f89a22144117bdab72fb46e0cfcee16f5e")
