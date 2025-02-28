@@ -242,12 +242,15 @@ before the heading of the current section."
 
 ;; THEME
 
+(use-package org-modern-indent
+  :straight (org-modern-indent :host github :repo "jdtsmith/org-modern-indent"))
+
 (use-package org-theme-ok
-  :straight (:host github :repo "okomestudio/org-theme-ok.el")
-  :init
-  (use-package org-modern-indent
-    :straight (:host github :repo "jdtsmith/org-modern-indent"))
-  (require 'org-theme-ok))
+  :straight (org-theme-ok :host github :repo "okomestudio/org-theme-ok.el")
+  :after org-modern-indent
+  :preface
+  (add-hook 'after-load-theme-hook
+            (lambda (&rest _) (require 'org-theme-ok)) 80))
 
 ;; CLIPBOARD
 (use-package org-cliplink
