@@ -2,43 +2,43 @@
 
 The list of Emacs packages to potentially check out:
 
-- [[https://github.com/FrostyX/current-window-only][current-window-only]] - Open things only in the current window. No other windows, no splits
 - [[https://github.com/Wilfred/deadgrep][deadgrep]] - Fast, friendly searching with ripgrep and Emacs; see ALTERNATIVES.md for a good summary of alternative tools
-- [[https://github.com/dgutov/diff-hl][diff-hl]] - Highlighting uncommitted changes
 - [[https://github.com/KeyWeeUsr/emacs-syncthing][emacs-syncthing]] - Emacs client for Syncthing
-- [[https://github.com/Wilfred/emacs-refactor][emr]] (Emacs Refactor) - A framework for providing language-specific refactoring
-- [[https://codeberg.org/akib/emacs-iwindow][iwindow]] - Interactively manipulate windows
-- [[https://github.com/ahyatt/llm][llm]] - A package abstracting llm capabilities
+- [[https://github.com/ahyatt/llm][llm]] - A package abstracting LLM capabilities
 - [[https://github.com/emacs-jp/migemo][migemo]] - Provides incremental search with romanized Japanese
-- [[https://github.com/alphapapa/org-make-toc][org-make-toc]] - Automatic tables of contents for Org-mode files
-- [[https://github.com/alphapapa/org-super-agenda][org-super-agenda]] - Supercharge your Org daily/weekly agenda by grouping items
 - [[https://github.com/emacsmirror/password-store][password-store]] - Allows ~pass~ integration for managing credentials
-- [[https://github.com/a13/reverse-im.el][reverse-im.el]] - Overrides ~function-key-map~ for preferred input method(s) to translate input sequences to English, so we can use emacs binding while a non-default system layout is active
-- [[https://github.com/captainflasmr/selected-window-accent-mode][selected-window-accent-mode]] - Accentuate the active window
 - [[https://github.com/liushihao456/symbols-outline.el][symbols-outline.el]] - Display symbols (functions, variables, etc) in a side window.
-- [[https://github.com/WJCFerguson/textsize/][textsize]] - Automatically choose a font point size for the Emacs default face based on the size and pixel pitch of the display
 - [[https://github.com/m00natic/vlfi][vlf]] - View large files
 
 ** UX/UI
 
+- [[https://github.com/FrostyX/current-window-only][current-window-only]] - Open things only in the current window. No other windows, no splits
+- [[https://github.com/dgutov/diff-hl][diff-hl]] - Highlighting uncommitted changes
+- [[https://codeberg.org/akib/emacs-iwindow][iwindow]] - Interactively manipulate windows
 - [[https://github.com/hkjels/mini-ontop.el][mini-ontop.el]] - Prevent windows from jumping on minibuffer activation
+- [[https://github.com/captainflasmr/selected-window-accent-mode][selected-window-accent-mode]] - Accentuate the active window
 - [[https://github.com/neeasade/stillness-mode.el][stillness-mode.el]] - Make your windows stay still
+- [[https://github.com/WJCFerguson/textsize/][textsize]] - Automatically choose a font point size for the Emacs default face based on the size and pixel pitch of the display
 
 ** Editing
 
 - [[https://github.com/victorhge/iedit][iedit]] - Modify multiple occurrences simultaneously
+- [[https://github.com/a13/reverse-im.el][reverse-im.el]] - Overrides ~function-key-map~ for preferred input method(s) to translate input sequences to English, so we can use Emacs binding while a non-default system layout is active
 
-** Optimiaztion
+** Optimization
 
 - [[https://github.com/jamescherti/compile-angel.el][compile-angel.el]] - Auto byte/native-compile all Elisp files (alternative to: auto-compile)
 
 ** Org
 
 - [[https://github.com/yibie/org-luhmann][org-luhmann]] - Luhmann's numbering system for org-mode
+- [[https://github.com/alphapapa/org-make-toc][org-make-toc]] - Automatic tables of contents for Org-mode files
 - [[https://github.com/yibie/org-numbering][org-numbering]] - A flexible and customizable numbering system for Org mode headings, supporting various international numbering schemes
+- [[https://github.com/alphapapa/org-super-agenda][org-super-agenda]] - Supercharge your Org daily/weekly agenda by grouping items
 - [[https://github.com/chenyanming/shrface][shrface]] - Extend eww/nov with org-mode features, archive web pages to org files with shr
 
 ** Programming
 
+- [[https://github.com/Wilfred/emacs-refactor][emr]] (Emacs Refactor) - A framework for providing language-specific refactoring
 - [[https://github.com/milanglacier/minuet-ai.el][minuet-ai.el]] - Code completion as-you-type from popular LLMs
 - [[https://github.com/jamescherti/outline-indent.el][outline-indent.el]] - Fold text based on indentation, c.f., origami & yafolding
