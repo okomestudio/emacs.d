@@ -9,16 +9,15 @@
   :straight (flexoki-themes :host github
                             :repo "okomestudio/flexoki-emacs-theme"
                             :branch "solaire")
-  :hook
-  (after-load-theme
-   . (lambda ()
-       ;; Recover mode line box border.
-       (let ((box-color (face-attribute 'mode-line :background)))
-         (set-face-attribute 'mode-line nil :box box-color)
-         (set-face-attribute 'mode-line-active nil :box box-color)
-         (set-face-attribute 'mode-line-inactive nil :box box-color))))
-
+  :hook (after-load-theme . flexoki-themes-ok--recover-modeline-box-border)
   :config
+  (defun flexoki-themes-ok--recover-modeline-box-border ()
+    "Recover modeline box border."
+    (let ((box-color (face-attribute 'mode-line :background)))
+      (set-face-attribute 'mode-line nil :box box-color)
+      (set-face-attribute 'mode-line-active nil :box box-color)
+      (set-face-attribute 'mode-line-inactive nil :box box-color)))
+
   (with-eval-after-load 'corfu
     (let ((mode (frame-parameter nil 'background-mode)))
       (when (string= mode "light")
