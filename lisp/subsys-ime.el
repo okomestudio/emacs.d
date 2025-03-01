@@ -9,9 +9,7 @@
   :custom ((default-input-method "japanese-mozc")
            (mozc-candidate-style 'posframe)  ; echo-area/overlay/posframe
            (mozc-leim-title "[あ]"))
-  :commands (toggle-input-method)
-  :ensure-system-package
-  ("/usr/bin/mozc_emacs_helper" . "sudo apt install -y emacs-mozc-bin"))
+  :commands (toggle-input-method))
 
 (use-package mozc
   :if (and (eq system-type 'gnu/linux) (memq window-system '(pgtk)))
