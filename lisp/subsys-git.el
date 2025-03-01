@@ -7,7 +7,8 @@
 
 (use-package magit  ; not derived from prog-mode
   ;; TODO: Bind `magit-find-file'
-  :custom ((magit-format-file-function #'magit-format-file-nerd-icons)))
+  :custom ((magit-diff-refine-hunk t)
+           (magit-format-file-function #'magit-format-file-nerd-icons)))
 
 (use-package magit-todos
   :after magit
