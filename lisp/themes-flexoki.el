@@ -29,6 +29,28 @@
   ;;     (when (string= mode "light")
   ;;       (set-face-attribute 'company-tooltip nil :background "#eeeeee"))))
 
+  (with-eval-after-load 'mozc
+    ;; Make it look like `corfu'.
+    (let* ((face-base 'corfu-default)
+           (face-current 'corfu-current)
+           (face-annotations 'corfu-annotations)
+           (background (face-attribute face-base :background)))
+      (set-face-attribute 'mozc-cand-overlay-even-face nil
+                          :background background :inherit face-base)
+      (set-face-attribute 'mozc-cand-overlay-odd-face nil
+                          :background background :inherit face-base)
+      (set-face-attribute 'mozc-cand-overlay-footer-face nil
+                          :background background :inherit face-base)
+      (set-face-attribute 'mozc-cand-overlay-focused-face nil
+                          :foreground (face-attribute face-current :foreground)
+                          :background (face-attribute face-current :background)
+                          :inherit face-current)
+      (with-eval-after-load 'mozc-posframe
+        (set-face-attribute 'mozc-cand-overlay-description-face nil
+                            :foreground (face-attribute face-annotations :foreground)
+                            :background (face-attribute face-annotations :background)
+                            :inherit face-annotations))))
+
   (with-eval-after-load 'vertico
     (let ((background (face-attribute 'default :background)))
       (set-face-attribute 'vertico-current nil :background background))))
