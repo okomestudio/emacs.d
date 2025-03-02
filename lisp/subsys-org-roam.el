@@ -45,15 +45,9 @@
                                                                'face 'org-tag)
                                                    " ${orp-timestamp:10}")))
   :config
-  (setopt find-file-visit-truename t)  ; see "5.3 Setting up Org-roam"
-  (require 'org-roam-dailies)
+  (org-roam-ok-enhance)
   (org-roam-db-sync)
-  (org-roam-db-autosync-mode 1)
-
-  (require 'org-roam-gt)
-  (org-roam-gt-mode 1)
-
-  (org-roam-ok-mode 1))
+  (org-roam-db-autosync-mode 1))
 
 (use-package ok-plural
   :straight (ok-plural :host github :repo "okomestudio/ok-plural.el"))
@@ -76,7 +70,8 @@
                          :branch "master"
                          :files (:defaults "extensions/*"))
   :custom ((org-roam-ok-node-use-cache-in-memory t)
-           (org-roam-ok-node-gt-use-cache-in-memory t))
+           (org-roam-ok-node-gt-use-cache-in-memory t)
+           (org-roam-ok-on-idle-delay 5))
   :init
   (load (ok-expand-etc "org-roam/init"))
   (org-roam-ok-on-idle-init-setup))
