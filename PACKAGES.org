@@ -25,6 +25,10 @@ The list of Emacs packages to potentially check out:
 - [[https://github.com/victorhge/iedit][iedit]] - Modify multiple occurrences simultaneously
 - [[https://github.com/a13/reverse-im.el][reverse-im.el]] - Overrides ~function-key-map~ for preferred input method(s) to translate input sequences to English, so we can use Emacs binding while a non-default system layout is active
 
+*** Japanese input
+
+- [[https://github.com/emacs-jp/migemo][migemo]] - Provide Japanese increment search with romanized Japanese
+
 ** Optimization
 
 - [[https://github.com/jamescherti/compile-angel.el][compile-angel.el]] - Auto byte/native-compile all Elisp files (alternative to: auto-compile)
