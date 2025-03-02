@@ -134,6 +134,19 @@
 
 (use-package hydra)
 
+;;; KEYSTROKES
+;;
+;; See emacs.stackexchange.com/a/81581/599 for options:
+;;
+;; - github.com/chuntaro/emacs-keypression
+;; - gitlab.com/marcowahl/keystrokes
+;; - www.emacswiki.org/emacs/ShowKey
+;; - github.com/tarsius/keycast
+;; - github.com/lewang/command-log-mode
+
+(use-package keycast)
+(use-package command-log-mode :demand t)
+
 ;;; DEVDOCS
 
 (use-package devdocs
