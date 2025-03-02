@@ -7,13 +7,18 @@
 
 (require 'ok)
 
-;;; Info
+;;; INFO
+
 (use-package info
   :straight nil
-  :config
-  (push (ok-expand-etc "info/") Info-directory-list))
+  :config (push (ok-expand-etc "info/") Info-directory-list))
 
-;;; Help
+(use-package sicp
+  ;; "Structure and Interpretation of Computer Programs" as info.
+  )
+
+;;; HELP
+
 (use-package help
   :straight nil
   :custom (list-faces-sample-text (concat "abcdefghijklmn"
@@ -51,51 +56,11 @@
          ("C-v" . apropos-value))
   :custom (apropos-sort-by-scores t))
 
-(use-package which-key
-  ;; Displays available keybindings in popup.
-  :straight nil
-  :bind (:prefix-map
-         where-or-which-map
-         :prefix "C-h w"
-         ("i" . where-is)
-
-         :map help-map
-         ("A" . which-key-show-top-level))
-  :hook (on-first-input . which-key-mode)
-  :custom ((which-key-idle-delay 0.5)
-           (which-key-idle-secondary-delay 0.05)
-           (which-key-max-description-length nil)
-           (which-key-min-column-description-width 0)
-           (which-key-popup-type 'side-window)
-           (which-key-sort-order 'which-key-description-order)
-
-           ;; NOTE(2024-07-12): The following are disabled for now,
-           ;; since `which-key--update' consistently fails due to
-           ;; `(wrong-type-argument wholenump ...)'
-           ;; (which-key-show-docstrings t)
-
-           (which-key-show-transient-maps t)
-           (which-key-side-window-location '(right bottom))
-           ;; (which-key-side-window-location 'right)
-           (which-key-side-window-max-width 0.8)))
-
-(use-package which-key-posframe
-  :hook (on-first-input . which-key-posframe-mode))
-
-(use-package casual
-  ;; Provide a keyboard-driven menu UI
-  :bind (:map Info-mode-map
-              ("C-/" . casual-info-tmenu))
-  :custom ((casual-info-use-unicode-symbols t)
-           (casual-lib-use-unicode t))
-  :config (require 'casual-info))
-
 (use-package help-shortdoc-example
   ;; Display shortdoc examples to *Help* buffer.
-  :straight (:host github :repo "buzztaiki/help-shortdoc-example.el")
+  :straight (help-shortdoc-example :host github
+                                   :repo "buzztaiki/help-shortdoc-example.el")
   :config (help-shortdoc-example-mode 1))
-
-(use-package hydra)
 
 (use-package shell-help
   ;; Show `<command> --help' help.
@@ -124,7 +89,52 @@
           (switch-to-buffer buffer-stdout)
           (ansi-color-apply-on-region (point-min) (point-max)))))))
 
-;;; Documentations
+;;; WHICH-KEY
+(use-package which-key
+  ;; Displays available keybindings in popup.
+  :straight nil
+  :bind (:prefix-map
+         where-or-which-map
+         :prefix "C-h w"
+         ("i" . where-is)
+
+         :map help-map
+         ("A" . which-key-show-top-level))
+  :custom ((which-key-idle-delay 0.5)
+           (which-key-idle-secondary-delay 0.05)
+           (which-key-max-description-length nil)
+           (which-key-min-column-description-width 0)
+           (which-key-popup-type 'side-window)
+           (which-key-sort-order 'which-key-description-order)
+
+           ;; NOTE(2024-07-12): The following are disabled for now,
+           ;; since `which-key--update' consistently fails due to
+           ;; `(wrong-type-argument wholenump ...)'
+           ;; (which-key-show-docstrings t)
+
+           (which-key-show-transient-maps t)
+           (which-key-side-window-location '(right bottom))
+           ;; (which-key-side-window-location 'right)
+           (which-key-side-window-max-width 0.8))
+  :hook (on-first-input . which-key-mode))
+
+(use-package which-key-posframe
+  :hook (on-first-input . which-key-posframe-mode))
+
+;;; TRANSIENT UTILITIES
+
+(use-package casual
+  ;; Provide a keyboard-driven menu UI
+  :bind (:map
+         Info-mode-map
+         ("C-/" . casual-info-tmenu))
+  :custom ((casual-info-use-unicode-symbols t)
+           (casual-lib-use-unicode t))
+  :config (require 'casual-info))
+
+(use-package hydra)
+
+;;; DEVDOCS
 
 (use-package devdocs
   ;; Emacs viewer for DevDocs. See https://devdocs.io.
@@ -192,10 +202,6 @@
                     ('postgres '("postgresql~16"))
                     ('sqlite '("sqlite"))
                     (_ '("postgresql~16" "sqlite")))))))
-
-(use-package sicp
-  ;; "Structure and Interpretation of Computer Programs" as info.
-  )
 
 (provide 'subsys-help)
 ;;; subsys-help.el ends here
