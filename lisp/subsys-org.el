@@ -294,6 +294,7 @@ clipboard content:
              ;; NOTE: Try the feature branch for
              ;; github.com/nobiot/org-transclusion/issues/271
              :branch "feat/transient") ; "id-and-target"
+  :after (org)
   :bind (:map
          org-mode-map
          :prefix "C-c C-n"
