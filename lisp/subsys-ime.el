@@ -8,7 +8,7 @@
 (use-package mozc
   :custom ((default-input-method "japanese-mozc")
            (mozc-candidate-style 'posframe)  ; echo-area/overlay/posframe
-           (mozc-leim-title "[あ]"))
+           (mozc-leim-title "🇯🇵"))
   :commands (toggle-input-method))
 
 (use-package mozc
