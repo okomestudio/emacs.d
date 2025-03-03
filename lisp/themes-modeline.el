@@ -15,7 +15,7 @@
            (doom-modeline-vcs-max-length 12)
            (mode-line-percent-position nil)
            (doom-modeline-checker-simple-format t))
-  :hook (after-load-theme . doom-modeline-mode)
+  :hook (enable-theme-functions . (lambda (_) (doom-modeline-mode)))
   :config
   (doom-modeline-def-modeline 'lsp-full
     '(bar workspace-name window-number modals matches follow buffer-info remote-host buffer-position word-count parrot selection-info)
@@ -27,7 +27,7 @@
 (use-package minions
   ;; A minor-mode menu for the mode line.
   :custom (minions-direct '(projectile-mode))
-  :hook (after-load-theme . minions-mode))
+  :hook (enable-theme-functions . (lambda (_) (minions-mode))))
 
 (provide 'themes-modeline)
 ;;; themes-modeline.el ends here

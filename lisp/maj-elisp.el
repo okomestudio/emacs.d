@@ -87,14 +87,20 @@
           lisp-data-mode) . highlight-quoted-mode))
 
 (use-package highlight-sexp
-  :hook ((emacs-lisp-mode
-          lisp-data-mode) . highlight-sexp-mode)
+  :hook (((emacs-lisp-mode
+           lisp-data-mode) . highlight-sexp-mode)
+         (enable-theme-functions . highlight-sexp-ok--refresh))
   :config
-  (let* ((mode (frame-parameter nil 'background-mode))
-         (scale (if (string= mode "dark") 1.04 0.96))
-         (bg (face-attribute 'default :background))
-         (bg-hl (ok-face-color-scale bg scale)))
-    (setopt hl-sexp-background-color bg-hl)))
+  (defun highlight-sexp-ok--refresh (theme)
+    (let* ((mode (frame-parameter nil 'background-mode))
+           (scale (if (string= mode "dark") 1.04 0.96))
+           (bg (face-attribute 'default :background))
+           (bg-hl (ok-face-color-scale bg scale)))
+      (setopt hl-sexp-background-color bg-hl)
+
+      ;; When the minor mode is active, refresh:
+      (when (and (boundp 'highlight-sexp-mode) highlight-sexp-mode)
+        (highlight-sexp-mode)))))
 
 ;; HELP & DOCUMENTATION
 

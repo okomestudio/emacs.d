@@ -5,43 +5,50 @@
 ;;
 ;; See: https://emacsthemes.com for options.
 ;;
-;; TODO(2025-02-28): Allow multiple themes to be installed and switched?
-;;
 ;;; Code:
 
-(load (ok-expand-lisp "themes-flexoki"))   ; change this to switch themes
-
-;;; THEME LOADER
-
-(defcustom themes-default nil
+(defcustom themes-default 'spacemacs-light
   "Default theme."
   :type 'symbol
   :group 'ok)
 
-(defun themes--prepare-load (theme)
-  "Prepare THEME to load at Emacs startup."
+;;; THEME LOADER
+
+(dolist (theme-file '("themes-doom"
+                      "themes-flexoki"
+                      "themes-kanagawa"
+                      "themes-nano"
+                      "themes-spacemacs"))
+  (load (ok-expand-lisp theme-file)))
+
+(defun themes--prepare-enable (theme)
+  "Prepare THEME to be enabled at Emacs startup."
   (if (daemonp)
       (progn
-        (defun load-theme--when-run-as-daemon (frame)
+        (defun enable-theme--when-run-as-daemon (frame)
           (with-selected-frame frame
-            (load-theme theme t)))
-        (add-hook 'after-make-frame-functions #'load-theme--when-run-as-daemon))
-    (defun load-theme--after-init ()
-      (load-theme theme t))
-    (add-hook 'after-init-hook #'load-theme--after-init)))
+            (themes-ok-enable theme)))
+        (add-hook 'after-make-frame-functions #'enable-theme--when-run-as-daemon))
+    (defun enable-theme--after-init ()
+      (themes-ok-enable theme))
+    (add-hook 'after-init-hook #'enable-theme--after-init)))
 
-(defvar after-load-theme-hook nil
-  "Hooks to run after `load-theme'.")
+;; Enhance `enable-theme'
 
-(defun load-theme--ad (orig-fun &rest _)
-  "Disable all themes before ORIG-FUN and run after-load hooks."
+(defun themes-ok-enable (theme)
+  "Disable all enabled themes before `enable-theme' FUN on THEME.
+NOTE(2025-03-03): It is important to use `load-theme' with the enable
+option to enable a theme non-interactively. `enable-theme' does not work
+when used non-interactively."
+  (interactive
+   (list (intern (completing-read
+                  "Enable custom theme: "
+                  obarray (lambda (sym)
+                            (get sym 'theme-settings)) t))))
   (mapc #'disable-theme custom-enabled-themes)
-  (apply orig-fun _)
-  (run-hooks 'after-load-theme-hook))
+  (load-theme theme t))
 
-(advice-add #'load-theme :around #'load-theme--ad)
-
-;;; MODELINE (loaded with after-load-theme hook)
+;;; MODELINE
 
 (load (ok-expand-lisp "themes-modeline.el"))
 
@@ -51,7 +58,7 @@
   ;; Distinguish "real" buffers from "unreal" buffers by element
   ;; color.
   :custom (solaire-mode-real-buffer-fn 'solaire-mode-ok--real-buffer-p)
-  :hook (after-load-theme . solaire-global-mode)
+  :hook (after-init . solaire-global-mode)
   :config
   (defun solaire-mode-ok--real-buffer-p ()
     "Return non-nil for a real buffer, nil otherwise."
@@ -110,7 +117,7 @@
   ;; Highlight the current line.
   :straight nil
   :hook ((on-first-input . global-hl-line-mode)
-         (after-load-theme . hl-line-ok--background-init)
+         (enable-theme-functions . hl-line-ok--background-init)
          (solaire-mode . hl-line-ok--background-solaire-mode))
   :config
   (defun hl-line-ok--background (&optional face)
@@ -120,7 +127,7 @@
                            ('dark 1.03)
                            ('light 0.97))))
 
-  (defun hl-line-ok--background-init ()
+  (defun hl-line-ok--background-init (theme)
     "Initialize `hl-line' face using the `default' face."
     (set-face-attribute 'hl-line nil
                         :background (hl-line-ok--background 'default)))
@@ -145,7 +152,7 @@
            (pos-tip-border-width 5)
            (pos-tip-internal-border-width 5)))
 
-(themes--prepare-load themes-default)
+(themes--prepare-enable themes-default)
 
 (provide 'themes)
 ;;; themes.el ends here

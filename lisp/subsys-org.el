@@ -249,8 +249,7 @@ before the heading of the current section."
   :straight (org-theme-ok :host github :repo "okomestudio/org-theme-ok.el")
   :after org-modern-indent
   :preface
-  (add-hook 'after-load-theme-hook
-            (lambda (&rest _) (require 'org-theme-ok)) 80))
+  (add-hook 'enable-theme-functions (lambda (_) (require 'org-theme-ok)) 80))
 
 ;; CLIPBOARD
 (use-package org-cliplink
