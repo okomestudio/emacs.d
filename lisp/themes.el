@@ -73,11 +73,15 @@
                          :host github
                          :repo "jdtsmith/indent-bars")
   :custom ((indent-bars-color '(highlight :face-bg t :blend 0.2))
+           (indent-bars-no-descend-lists nil)
            (indent-bars-treesit-support t)
            (indent-bars-prefer-character "|")  ; github.com/jdtsmith/indent-bars/issues/3
            (indent-bars-width-frac 0.1)
            (indent-bars-pad-frac 0.1))
-  :hook (prog-mode . indent-bars-mode))
+  :hook ((prog-mode . indent-bars-mode)
+         ((emacs-lisp-mode
+           lisp-data-mode) . (lambda () (setq-local
+                                         indent-bars-no-descend-lists t)))))
 
 ;;; WINDOW DIVIDERS
 
