@@ -139,14 +139,16 @@
   :custom (tramp-default-method "ssh"))
 
 (use-package do-this-now
-  :straight (do-this-now
-             :host github
-             :repo "okomestudio/do-this-now.el")
-  :custom ((alert-default-style 'notifications)
+  :straight (do-this-now :host github
+                         :repo "okomestudio/do-this-now.el")
+  :custom ((alert-default-style 'libnotify)
+           (do-this-now-debug t)
+           (do-this-now-idle-interval 600)
            (do-this-now-interval 2400)
-           (do-this-now-message "Move away from computer!")
+           (do-this-now-message (format "Move away from computer! (PID: %s)"
+                                        (emacs-pid)))
            (do-this-now-title "MOVE!!"))
-  :demand t)
+  :hook (after-init . do-this-now-mode))
 
 (provide 'subsys-startup)
 ;;; subsys-startup.el ends here

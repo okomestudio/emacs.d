@@ -33,7 +33,7 @@
  ("dash.el" . "1de9dcb83eacfb162b6d9a118a4770b1281bcd84")
  ("define-word" . "31a8c67405afa99d0e25e7c86a4ee7ef84a808fe")
  ("devdocs.el" . "98518166efe18c2f2dd9a1c4c89430b83fdbbe3c")
- ("do-this-now.el" . "a3ddddd359f3270feb965d500f682aed9c425b78")
+ ("do-this-now.el" . "92fad56012be383505ce8a0407c21ca68f17bd47")
  ("docker.el" . "d5255a65b7240d0038cc417f301b43df05a27922")
  ("doom-modeline" . "1505c13564b83e44d3187611e326a48b742cad3a")
  ("el-get" . "ec5cba8d965980b2c47a8a11dce30dd5e845ed2a")
