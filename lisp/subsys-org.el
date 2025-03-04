@@ -132,7 +132,7 @@ before the heading of the current section."
        ('(4) #'math-preview-clear-all)
        (_ #'math-preview-all)))))
 
-;; ORG BABEL
+;;; ORG BABEL
 
 (use-package ob-core
   :straight nil
@@ -200,7 +200,7 @@ before the heading of the current section."
   :commands (org-babel-execute:typescript)
   :config (add-to-list 'org-babel-load-languages '(typescript . t)))
 
-;; ORG EXPORT
+;;; ORG EXPORT
 
 (use-package ox
   :straight nil
@@ -229,7 +229,7 @@ before the heading of the current section."
   :straight nil
   :after ox)
 
-;; ORG AGENDA
+;;; ORG AGENDA
 
 (use-package org-agenda
   :straight nil
@@ -240,18 +240,19 @@ before the heading of the current section."
            (org-agenda-start-on-weekday 0)
            (org-agenda-use-tag-inheritance t))) ; set nil to speed up parsing
 
-;; THEME
+;;; APPEARANCE & THEME
 
 (use-package org-modern-indent
+  ;; NOTE(2025-03-03): Not on any package repository, so need manual
+  ;; install here.
   :straight (org-modern-indent :host github :repo "jdtsmith/org-modern-indent"))
 
 (use-package org-theme-ok
   :straight (org-theme-ok :host github :repo "okomestudio/org-theme-ok.el")
-  :after org-modern-indent
-  :preface
-  (add-hook 'enable-theme-functions (lambda (_) (require 'org-theme-ok)) 80))
+  :hook (org-mode . org-theme-ok-mode))
 
-;; CLIPBOARD
+;;; CLIPBOARD
+
 (use-package org-cliplink
   :after org-download
   :bind (:map
@@ -282,6 +283,7 @@ clipboard content:
   :hook (org-mode . org-download-enable))
 
 ;; MISC.
+
 (use-package org-side-tree :disabled)
 (use-package org-web-tools :disabled)
 
