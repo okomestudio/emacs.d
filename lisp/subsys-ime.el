@@ -7,7 +7,11 @@
 
 (use-package mozc
   :custom ((default-input-method "japanese-mozc")
+
+           ;; NOTE(2025-03-03): `posframe' would be best, but it
+           ;; frequently crashed with cairo. `overlay' runs sluggish.
            (mozc-candidate-style 'posframe)  ; echo-area/overlay/posframe
+
            (mozc-leim-title "🇯🇵"))
   :commands (toggle-input-method))
 
