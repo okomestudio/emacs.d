@@ -33,10 +33,46 @@
         (ace-isearch-mode -1)
       (ace-isearch-mode 1))))
 
+(use-package mozc-cand-posframe
+  :straight (mozc-cand-posframe :host github :repo "akirak/mozc-posframe")
+  :after mozc
+  :init (require 'mozc-cand-posframe))
+
 (use-package mozc-posframe
+  :disabled
   :straight (mozc-posframe :host github :repo "derui/mozc-posframe")
   :after mozc
-  :hook (mozc-mode . mozc-posframe-initialize))
+  :hook ((mozc-mode . mozc-posframe-initialize)
+         (enable-theme-functions . mozc-posframe-ok--theme))
+  :config
+  (defun mozc-posframe-ok--theme (theme)
+    (when (and (boundp 'corfu-mode) corfu-mode)
+      (let* ((face-base 'corfu-default)
+             (face-current 'corfu-current)
+             (face-annotations 'corfu-annotations)
+             (foreground (face-attribute face-base :foreground))
+             (background (face-attribute face-base :background)))
+        (set-face-attribute 'mozc-cand-overlay-even-face nil
+                            :foreground foreground
+                            :background background
+                            :inherit face-base)
+        (set-face-attribute 'mozc-cand-overlay-odd-face nil
+                            :foreground foreground
+                            :background background
+                            :inherit face-base)
+        (set-face-attribute 'mozc-cand-overlay-footer-face nil
+                            :foreground foreground
+                            :background background
+                            :inherit face-base)
+        (set-face-attribute 'mozc-cand-overlay-focused-face nil
+                            :foreground (face-attribute face-current :foreground)
+                            :background (face-attribute face-current :background)
+                            :inherit face-current)
+        (with-eval-after-load 'mozc-posframe
+          (set-face-attribute 'mozc-cand-overlay-description-face nil
+                              :foreground (face-attribute face-annotations :foreground)
+                              :background (face-attribute face-annotations :background)
+                              :inherit face-annotations))))))
 
 (provide 'subsys-ime)
 ;;; subsys-ime.el ends here
