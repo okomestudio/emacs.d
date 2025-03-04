@@ -58,7 +58,7 @@
 (use-package hatsuon
   :straight (:host github :repo "okomestudio/hatsuon.el"
                    :files (:defaults "extensions/*"))
-  :custom ((hatsuon-audio-cache-dir (ok-expand-var "hatsuon/cache/"))
+  :custom ((hatsuon-audio-cache-dir (ok-file-expand-var "hatsuon/cache/"))
            (hatsuon-audio-url-getters
             '(
               ;; hatsuon-mw-audio-url-getter

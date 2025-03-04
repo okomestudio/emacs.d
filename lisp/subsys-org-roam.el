@@ -29,8 +29,8 @@
   :bind-keymap ("C-c n d" . org-roam-dailies-map)
   :custom ((org-roam-completion-everywhere nil)
            (org-roam-database-connector 'sqlite-builtin)
-           (org-roam-db-location (ok-expand-var "org-roam/roam/.roam.db"))
-           (org-roam-directory (ok-expand-var "org-roam/roam/"))
+           (org-roam-db-location (ok-file-expand-var "org-roam/roam/.roam.db"))
+           (org-roam-directory (ok-file-expand-var "org-roam/roam/"))
            (org-roam-extract-new-file-path "topic/${id}/${slug}.org")
            (org-roam-mode-sections (list #'org-roam-backlinks-section
                                          #'org-roam-reflinks-section
@@ -73,7 +73,7 @@
            (org-roam-ok-node-gt-use-cache-in-memory t)
            (org-roam-ok-on-idle-delay 5))
   :init
-  (load (ok-expand-etc "org-roam/init"))
+  (load (ok-file-expand-etc "org-roam/init"))
   (org-roam-ok-on-idle-init-setup))
 
 (use-package org-roam-ui

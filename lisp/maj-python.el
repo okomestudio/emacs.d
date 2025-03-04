@@ -14,7 +14,7 @@
          ("C-c b" . python-ok-format-buffer))
   :custom ((python-indent-guess-indent-offset-verbose nil)
            (python-indent-offset 4)
-           (python-shell-interpreter (ok-expand-bin "python-shell-interpreter")))
+           (python-shell-interpreter (ok-file-expand-bin "python-shell-interpreter")))
   :ensure-system-package (ipython . "pip install ipython")
   :config
   ;; Code formatting with Ruff.
@@ -110,8 +110,8 @@
            (lsp-ruff-python-path "python3"))
   :config
   (defun lsp-pylsp-ok--start ()
-    (message (shell-command-to-string (ok-expand-bin "bootstrap-pylsp")))
-    (message (shell-command-to-string (ok-expand-bin "bootstrap-ruff")))
+    (message (shell-command-to-string (ok-file-expand-bin "bootstrap-pylsp")))
+    (message (shell-command-to-string (ok-file-expand-bin "bootstrap-ruff")))
     (setq-local lsp-disabled-clients '(lsp-pyright))
     (lsp-deferred))
   (add-hook 'python-base-mode-hook #'lsp-pylsp-ok--start 90)
@@ -128,7 +128,7 @@
            (lsp-pyright-log-level "debug"))
   :config
   (defun lsp-pyright-ok--start ()
-    (message (shell-command-to-string (ok-expand-bin "bootstrap-pyright")))
+    (message (shell-command-to-string (ok-file-expand-bin "bootstrap-pyright")))
     (setq-local lsp-disabled-clients '(pylsp ruff))
     (lsp-deferred)))
 

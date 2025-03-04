@@ -12,7 +12,7 @@
   (lsp-register-client
    (make-lsp-client
     :new-connection
-		(lsp-stdio-connection `(,(ok-expand-bin "esbonio")))
+		(lsp-stdio-connection `(,(ok-file-expand-bin "esbonio")))
     :activation-fn (lsp-activate-on "rst")
     :server-id 'esbonio)))
 

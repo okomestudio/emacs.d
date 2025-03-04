@@ -6,13 +6,10 @@
 ;;; Code:
 
 ;;; PRIVATE INITIALIZATION
-(load (ok-expand-etc "emacs/init"))
+(load (ok-file-expand-etc "emacs/init"))
 
 ;; COMMON ELISP LIBRARIES
 
-(use-package ok
-  :straight (:host github :repo "okomestudio/ok.el")
-  :demand t)
 (use-package buttercup)     ; behavior-driven Lisp testing
 (use-package dash)          ; a modern list library
 (use-package reformatter)   ; code formatter

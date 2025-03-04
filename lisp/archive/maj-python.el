@@ -34,7 +34,7 @@
          (projectile-after-switch-project
           . (lambda (&rest args)
               (pyenv-use-corresponding)
-              (shell-command-to-string (ok-expand-bin "bootstrap-python-venv"))))))
+              (shell-command-to-string (ok-file-expand-bin "bootstrap-python-venv"))))))
 
 (use-package pyenv-mode
   :straight (:host github :repo "pythonic-emacs/pyenv-mode")
@@ -64,7 +64,7 @@
              :repo "Pymacs2/Pymacs"
              :post-build  ; see what install-pymacs.sh does:
              (("pip" "install" "-U" "pyopenssl")
-              `("pip" "install" "-e" ,(ok-expand-user-emacs-file
+              `("pip" "install" "-e" ,(ok-file-expand-user-emacs-file
                                        "straight/repos/Pymacs/"))))
   :ensure-system-package
   ("/usr/share/doc/python3-dev" . "sudo apt install -y python3-dev")
@@ -77,7 +77,7 @@
              :files nil
              :post-build
              (("pip" "install" "-U" "rope")
-              `("pip" "install" "-e" ,(ok-expand-user-emacs-file
+              `("pip" "install" "-e" ,(ok-file-expand-user-emacs-file
                                        "straight/repos/ropemacs/"))))
   :bind (("C-x p l" . (lambda ()
                         (interactive)

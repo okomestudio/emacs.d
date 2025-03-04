@@ -11,7 +11,7 @@
 
 (use-package info
   :straight nil
-  :config (push (ok-expand-etc "info/") Info-directory-list))
+  :config (push (ok-file-expand-etc "info/") Info-directory-list))
 
 (use-package sicp
   ;; "Structure and Interpretation of Computer Programs" as info.

@@ -14,7 +14,7 @@
   :hook ((elfeed-show-mode . elfeed-ok-show-setup)
          (elfeed-search-update . elfeed-ok-search-setup))
   :config
-  (load (ok-expand-etc "elfeed/init"))
+  (load (ok-file-expand-etc "elfeed/init"))
 
   (setq elfeed-log-level 'info)  ; 'info or 'debug
 
@@ -38,7 +38,7 @@
     (setq-local nobreak-char-display nil)))
 
 (use-package elfeed-org
-  :custom ((rmh-elfeed-org-files `(,(ok-expand-etc "elfeed/elfeed.org"))))
+  :custom ((rmh-elfeed-org-files `(,(ok-file-expand-etc "elfeed/elfeed.org"))))
   :init
   ;; `elfeed-org' seems very expensive, so we want to lazy load. See
   ;; the `elfeed-org' function source to ensure that we take care of
