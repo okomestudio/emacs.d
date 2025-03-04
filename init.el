@@ -47,13 +47,13 @@
   :custom ((no-littering-etc-directory (ok-file-expand-user-emacs-file "etc/"))
            (no-littering-var-directory (ok-file-expand-user-emacs-file "var/")))
   :config
-  (defun ok-file-expand-bin (file)
+  (defun ok-file-expand-bin (&rest components)
     "Expand the path to FILE in Emacs's bin/ directory."
-    (ok-file-expand-user-emacs-file "bin" file))
+    (apply #'ok-file-expand-user-emacs-file `("bin" ,@components)))
 
-  (defun ok-file-expand-lisp (file)
+  (defun ok-file-expand-lisp (&rest components)
     "Expand the path to FILE in Emacs's lisp/ directory."
-    (ok-file-expand-user-emacs-file "lisp" file))
+    (apply #'ok-file-expand-user-emacs-file `("lisp" ,@components)))
 
   ;; Define aliases for shorter names.
   (defalias 'ok-file-expand-etc #'no-littering-expand-etc-file-name)
