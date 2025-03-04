@@ -7,50 +7,16 @@
 ;;
 ;;; Code:
 
-(defcustom themes-default 'spacemacs-light
-  "Default theme."
-  :type 'symbol
-  :group 'ok)
+(require 'ok)
 
-;;; THEME LOADER
+(ok-theme-prepare-enable-on-startup 'spacemacs-light)
 
-(dolist (theme-file '("themes-doom"
-                      "themes-flexoki"
-                      "themes-kanagawa"
-                      "themes-nano"
-                      "themes-spacemacs"))
-  (load (ok-expand-lisp theme-file)))
-
-(defun themes--prepare-enable (theme)
-  "Prepare THEME to be enabled at Emacs startup."
-  (if (daemonp)
-      (progn
-        (defun enable-theme--when-run-as-daemon (frame)
-          (with-selected-frame frame
-            (themes-ok-enable theme)))
-        (add-hook 'after-make-frame-functions #'enable-theme--when-run-as-daemon))
-    (defun enable-theme--after-init ()
-      (themes-ok-enable theme))
-    (add-hook 'after-init-hook #'enable-theme--after-init)))
-
-;; Enhance `enable-theme'
-
-(defun themes-ok-enable (theme)
-  "Disable all enabled themes before `enable-theme' FUN on THEME.
-NOTE(2025-03-03): It is important to use `load-theme' with the enable
-option to enable a theme non-interactively. `enable-theme' does not work
-when used non-interactively."
-  (interactive
-   (list (intern (completing-read
-                  "Enable custom theme: "
-                  obarray (lambda (sym)
-                            (get sym 'theme-settings)) t))))
-  (mapc #'disable-theme custom-enabled-themes)
-  (load-theme theme t))
+(dolist (theme '("doom" "flexoki" "kanagawa" "nano" "spacemacs"))
+  (load (ok-file-expand-lisp "themes/" (format "themes-%s" theme))))
 
 ;;; MODELINE
 
-(load (ok-expand-lisp "themes-modeline.el"))
+(load (ok-file-expand-lisp "themes-modeline.el"))
 
 ;;; MINOR THEME ADJUSTMENTS
 
@@ -151,8 +117,6 @@ when used non-interactively."
   :custom ((pos-tip-background-color "#dddddd")
            (pos-tip-border-width 5)
            (pos-tip-internal-border-width 5)))
-
-(themes--prepare-enable themes-default)
 
 (provide 'themes)
 ;;; themes.el ends here
