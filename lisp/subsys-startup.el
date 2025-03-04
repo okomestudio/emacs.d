@@ -58,14 +58,14 @@
            (make-backup-files nil)
            (require-final-newline nil)
 
-           ;; Frame
-           (frame-title-format '((:eval
+           ;; Frame title (i.e., desktop window title)
+           (frame-title-format `((:eval
                                   (list (cond
                                          ((buffer-file-name)
                                           (abbreviate-file-name
                                            (expand-file-name buffer-file-name)))
                                          (t (buffer-name)))))
-                                 " - Emacs")))
+                                 ,(format " - Emacs (%d)" (emacs-pid)))))
   :hook (before-save . ok-delete-trailing-whitespace)
   :init
   (defun ok-delete-trailing-whitespace ()
