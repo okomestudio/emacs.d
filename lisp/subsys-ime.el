@@ -6,6 +6,13 @@
 ;;; Code:
 
 (use-package mozc
+  :straight (mozc :host github
+                  :repo "google/mozc"
+
+                  ;; NOTE(2025-03-04): Pin to a commit to avoid
+                  ;; divergence of submodules refs to cause dirty
+                  ;; repo.
+                  :commit "14afac9728dd3f04e3d73633f4fa925d38589368")
   :custom ((default-input-method "japanese-mozc")
 
            ;; NOTE(2025-03-03): `posframe' would be best, but it
