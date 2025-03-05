@@ -97,8 +97,9 @@
 (use-package which-key
   ;; Displays available keybindings in popup.
   :straight nil
-  :bind (:prefix-map
-         where-or-which-map
+  :bind (("C-h C-h" . nil) ;; clear, otherwise will bind to `help-for-help'
+
+         :prefix-map where-or-which-map
          :prefix "C-h w"
          ("i" . where-is)
 
