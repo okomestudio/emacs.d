@@ -145,7 +145,9 @@
 ;; - github.com/lewang/command-log-mode
 
 (use-package keycast)
-(use-package command-log-mode :demand t)
+(use-package command-log-mode
+  :custom ((command-log-mode-auto-show t))
+  :demand t)
 
 ;;; DEVDOCS
 
