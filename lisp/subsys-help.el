@@ -90,6 +90,10 @@
           (ansi-color-apply-on-region (point-min) (point-max)))))))
 
 ;;; WHICH-KEY
+
+(use-package which-key-posframe
+  :hook (on-first-input . which-key-posframe-mode))
+
 (use-package which-key
   ;; Displays available keybindings in popup.
   :straight nil
@@ -99,27 +103,46 @@
          ("i" . where-is)
 
          :map help-map
-         ("A" . which-key-show-top-level))
+         ("A" . which-key-show-top-level)
+
+         :map which-key-C-h-map
+         ("s" . which-key-ok--change-sort-order))
   :custom ((which-key-idle-delay 0.5)
            (which-key-idle-secondary-delay 0.05)
-           (which-key-max-description-length nil)
+           (which-key-max-description-length 79)
            (which-key-min-column-description-width 0)
            (which-key-popup-type 'side-window)
-           (which-key-sort-order 'which-key-description-order)
+           (which-key-separator ": ")
 
-           ;; NOTE(2024-07-12): The following are disabled for now,
-           ;; since `which-key--update' consistently fails due to
-           ;; `(wrong-type-argument wholenump ...)'
-           ;; (which-key-show-docstrings t)
+           ;; NOTE(2025-03-05): Use "d" option within the mode buffer
+           ;; to toggle docstring. When the window width is small,
+           ;; `which-key--update' consistently fails due to an error
+           ;; `(wrong-type-argument wholenump ...)'.
+           (which-key-show-docstrings nil)
 
            (which-key-show-transient-maps t)
            (which-key-side-window-location '(right bottom))
            ;; (which-key-side-window-location 'right)
-           (which-key-side-window-max-width 0.8))
-  :hook (on-first-input . which-key-mode))
+           (which-key-side-window-max-width 0.8)
+           (which-key-sort-order 'which-key-description-order))
+  :hook (on-first-input . which-key-mode)
+  :config
+  ;; Enable changing sort order.
+  (setq which-key-C-h-map-prompt
+        (concat which-key-C-h-map-prompt
+                ", \\[which-key-ok--change-sort-order]"
+                which-key-separator
+                "change sort order"))
 
-(use-package which-key-posframe
-  :hook (on-first-input . which-key-posframe-mode))
+  (defun which-key-ok--change-sort-order (&rest _)
+    "Toggle `which-key-sort-order'."
+    (interactive)
+    (setopt which-key-sort-order
+            (pcase which-key-sort-order
+              ('which-key-description-order 'which-key-key-order)
+              (_ 'which-key-description-order)))
+    (which-key-reload-key-sequence)
+    (which-key--create-buffer-and-show (which-key--current-prefix))))
 
 ;;; TRANSIENT UTILITIES
 
