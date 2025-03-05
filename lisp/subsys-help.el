@@ -19,8 +19,17 @@
 
 ;;; HELP
 
+(use-package elisp-for-python
+  :straight (elisp-for-python :host github
+                              :repo "kickingvegas/elisp-for-python"))
+
 (use-package help
   :straight nil
+  :bind (:prefix
+         "C-h V"
+         :prefix-map help-view-other-doc
+         ("p" . help-ok-view-doc-elisp-for-python)
+         ("s" . help-ok-view-doc-emacsql))
   :custom (list-faces-sample-text (concat "abcdefghijklmn"
                                           "ABCDEFGHIJKLMN"
                                           "漢字 ひらがな カタカナ"))
@@ -30,7 +39,26 @@
     (when (member (buffer-name (current-buffer))
                   '("*Colors*" "*Faces*"))
       ;; `list-*' buffers appear to interfere with `font-lock-mode'
-      (font-lock-mode -1))))
+      (font-lock-mode -1)))
+
+  ;; Dynamically generate document accessor functions
+  (let ((docs
+         `((emacsql
+            . ,(ok-file-expand-user-emacs-file
+                "straight" "repos" "emacsql" "README.md"))
+           (elisp-for-python
+            . ,(ok-file-expand-user-emacs-file
+                "straight" "repos" "elisp-for-python" "README.org")))))
+    (dolist (doc docs)
+      (let ((sym (symbol-name (car doc)))
+            (file (cdr doc)))
+        (defalias (intern (concat "help-ok-view-doc-" sym))
+          (lambda ()
+            (interactive)
+            (if (file-exists-p file)
+                (find-file-other-window file)
+              (message "File not found: %s" file)))
+          (format "View `%s' README." sym))))))
 
 (use-package helpful
   :bind (("C-c C-d" . helpful-at-point)
