@@ -142,7 +142,6 @@
   :straight (do-this-now :host github
                          :repo "okomestudio/do-this-now.el")
   :custom ((alert-default-style 'libnotify)
-           (do-this-now-debug t)
            (do-this-now-idle-interval 600)
            (do-this-now-interval 2400)
            (do-this-now-message (format "Move away from computer! (PID: %s)"
