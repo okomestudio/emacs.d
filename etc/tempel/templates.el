@@ -120,9 +120,17 @@ org-mode
  "# lsp-ltex-language: \"ja-JP\"" n
  "# End:" n)
 
-(page "(p. " (deactivate-input-method) p ")")
+(paren-page
+ (p "Page: " page t)
+ (zenkaku "(p. " "（") (s page) (zenkaku ")" "頁）"))
 
-(pages "(pp. " (deactivate-input-method) p "–" p ")")
+(paren-pages
+ (p "Page start: " start t) (p "Page end: " end t)
+ (zenkaku "(pp. " "（") (s start) "-" (s end) (zenkaku ")" "頁）"))
+
+(paren-timing
+ (p "Time (e.g., hh:mm:ss): " hhmmss t)
+ (zenkaku "(" "（") (s hhmmss) (zenkaku ")" "）"))
 
 (solution
  (org-insert-heading nil nil (1+ (org-current-level))) "Solution" n

@@ -81,7 +81,15 @@
             (ok-string-format content pars))
         (message "Template file %s not found" filename)
         nil)))
-  (add-to-list 'tempel-user-elements #'tempel-ok--include-file))
+  (add-to-list 'tempel-user-elements #'tempel-ok--include-file)
+
+  (defun tempel-ok--zenkaku (elt)
+    (when (eq (car-safe elt) 'zenkaku)
+      (if-let ((han (cadr elt))
+               (zen (caddr elt)))
+          (if (member current-input-method '("japanese-mozc")) zen han)
+        (message "Bad arguments: %s" elt))))
+  (add-to-list 'tempel-user-elements #'tempel-ok--zenkaku))
 
 ;; CORFU
 

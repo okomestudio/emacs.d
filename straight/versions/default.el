@@ -225,7 +225,7 @@
  ("system-packages" . "9e9dcf5262f3afc365689ced300fa069b44eebf6")
  ("systemd-mode" . "8742607120fbc440821acbc351fda1e8e68a8806")
  ("tablist" . "fcd37147121fabdf003a70279cf86fbe08cfac6f")
- ("tempel" . "40a85c3dc9a7f073e36fb05b835814a4e68fa5b3")
+ ("tempel" . "12a2072ce97d7489296dbb950da946b77d215506")
  ("tesseract.el" . "58d3bd1d4a8e4eb7e0b16a0dad1f4e1fb252eb85")
  ("themes" . "ff26f26ea3d761375f5fc4070438fbd0f3473d33")
  ("titlecase.el" . "eb8d23925fb8ccbd3b2e3804fb0a312ee227610b")
