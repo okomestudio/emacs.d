@@ -1,7 +1,7 @@
-;;; subsys-ime.el --- IME Subsystem  -*- lexical-binding: t -*-
+;;; subsys-ime.el --- Input Method Subsystem  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;
-;; Set up IME subsystem.
+;; Set up the input method subsystem.
 ;;
 ;;; Code:
 
