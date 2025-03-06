@@ -5,12 +5,14 @@
 ;;
 ;;; Code:
 
-(use-package doom-themes)
+(require 'ok)
 
-(load-theme 'doom-one t t)
-(load-theme 'doom-one-light t t)
-(load-theme 'doom-opera t t)
-(load-theme 'doom-opera-light t t)
+(use-package doom-themes
+  :config
+  (load-theme 'doom-one t t)
+  (load-theme 'doom-one-light t t)
+  (load-theme 'doom-opera t t)
+  (load-theme 'doom-opera-light t t))
 
 (provide 'doom-nano)
 ;;; themes-doom.el ends here

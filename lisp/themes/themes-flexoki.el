@@ -5,6 +5,8 @@
 ;;
 ;;; Code:
 
+(require 'ok)
+
 (use-package flexoki-themes
   :hook ((enable-theme-functions . flexoki-themes-ok--prepare)
          (enable-theme-functions . flexoki-themes-ok--modeline-box-border))
@@ -38,10 +40,10 @@
           (set-face-attribute 'vertico-current nil :background background)))
 
       (setopt window-divider-default-bottom-width 1
-              window-divider-default-right-width 1))))
+              window-divider-default-right-width 1)))
 
-(load-theme 'flexoki-themes-dark t t)
-(load-theme 'flexoki-themes-light t t)
+  (load-theme 'flexoki-themes-dark t t)
+  (load-theme 'flexoki-themes-light t t))
 
 (provide 'themes-flexoki)
 ;;; themes-flexoki.el ends here

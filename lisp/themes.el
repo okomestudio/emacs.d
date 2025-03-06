@@ -3,16 +3,25 @@
 ;;
 ;; Set up themes, visuals, colors, etc.
 ;;
-;; See: https://emacsthemes.com for options.
+;; Use the following commands to switch themes.
+;;
+;;   - `ok-theme-prepare' to load desired theme feature
+;;   - `ok-theme-enable' to enable a theme
+;;
+;; See https://emacsthemes.com for available custom themes.
 ;;
 ;;; Code:
 
 (require 'ok)
 
-(ok-theme-prepare-enable-on-startup 'spacemacs-light)
+(setopt ok-theme-custom-themes
+        '((doom-themes . "lisp/themes/themes-doom")
+          (flexoki-themes . "lisp/themes/themes-flexoki")
+          (kanagawa-themes . "lisp/themes/themes-kanagawa")
+          (nano-theme . "lisp/themes/themes-nano")
+          (spacemacs-theme . "lisp/themes/themes-spacemacs")))
 
-(dolist (theme '("doom" "flexoki" "kanagawa" "nano" "spacemacs"))
-  (load (ok-file-expand-lisp "themes/" (format "themes-%s" theme))))
+(ok-theme-prepare-enable-on-startup 'spacemacs-light 'spacemacs-theme)
 
 ;;; MODELINE
 

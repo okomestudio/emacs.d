@@ -21,10 +21,10 @@
                  ;; Make some colors slightly darker
                  (head3 . ,(ok-face-color-scale "#67b11d" 0.80))
                  (head4 . ,(ok-face-color-scale "#b1951d" 0.80))
-                 (cyan . ,(ok-face-color-scale "#21b8c7" 0.95)))))))))
+                 (cyan . ,(ok-face-color-scale "#21b8c7" 0.95))))))))
 
-(load-theme 'spacemacs-dark t t)
-(load-theme 'spacemacs-light t t)
+  (load-theme 'spacemacs-dark t t)
+  (load-theme 'spacemacs-light t t))
 
 (provide 'themes-spacemacs)
 ;;; themes-spacemacs.el ends here

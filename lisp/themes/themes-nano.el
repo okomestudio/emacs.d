@@ -5,12 +5,14 @@
 ;;
 ;;; Code:
 
+(require 'ok)
+
 (use-package nano-theme
   :straight (nano-theme :host github :repo "rougier/nano-theme")
-  :custom (nano-window-divider-show t))
-
-(load-theme 'nano-dark t t)
-(load-theme 'nano-light t t)
+  :custom (nano-window-divider-show t)
+  :config
+  (load-theme 'nano-dark t t)
+  (load-theme 'nano-light t t))
 
 (provide 'themes-nano)
 ;;; themes-nano.el ends here

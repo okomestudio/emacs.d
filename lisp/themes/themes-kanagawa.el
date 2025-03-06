@@ -5,11 +5,13 @@
 ;;
 ;;; Code:
 
-(use-package kanagawa-themes)
+(require 'ok)
 
-(load-theme 'kanagawa-dragon t t)
-(load-theme 'kanagawa-lotus t t)
-(load-theme 'kanagawa-wave t t)
+(use-package kanagawa-themes
+  :config
+  (load-theme 'kanagawa-dragon t t)
+  (load-theme 'kanagawa-lotus t t)
+  (load-theme 'kanagawa-wave t t))
 
 (provide 'themes-kanagawa)
 ;;; themes-kanagawa.el ends here
