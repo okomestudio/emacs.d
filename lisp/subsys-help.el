@@ -29,7 +29,8 @@
          "C-h V"
          :prefix-map help-view-other-doc
          ("p" . help-ok-view-doc-elisp-for-python)
-         ("s" . help-ok-view-doc-emacsql))
+         ("s" . help-ok-view-doc-emacsql)
+         ("t" . help-ok-view-doc-tempel))
   :custom (list-faces-sample-text (concat "abcdefghijklmn"
                                           "ABCDEFGHIJKLMN"
                                           "漢字 ひらがな カタカナ"))
@@ -44,11 +45,11 @@
   ;; Dynamically generate document accessor functions
   (let ((docs
          `((emacsql
-            . ,(ok-file-expand-user-emacs-file
-                "straight" "repos" "emacsql" "README.md"))
+            . ,(ok-file-expand-straight-repos "emacsql" "README.md"))
            (elisp-for-python
-            . ,(ok-file-expand-user-emacs-file
-                "straight" "repos" "elisp-for-python" "README.org")))))
+            . ,(ok-file-expand-straight-repos "elisp-for-python" "README.org"))
+           (tempel
+            . ,(ok-file-expand-straight-repos "tempel" "README.org")))))
     (dolist (doc docs)
       (let ((sym (symbol-name (car doc)))
             (file (cdr doc)))

@@ -55,6 +55,10 @@
     "Expand the path to FILE in Emacs's lisp/ directory."
     (apply #'ok-file-expand-user-emacs-file `("lisp" ,@components)))
 
+  (defun ok-file-expand-straight-repos (&rest components)
+    "Expand the path to FILE in Emacs's straight/repos directory."
+    (apply #'ok-file-expand-user-emacs-file `("straight" "repos" ,@components)))
+
   ;; Define aliases for shorter names.
   (defalias 'ok-file-expand-etc #'no-littering-expand-etc-file-name)
   (defalias 'ok-file-expand-var #'no-littering-expand-var-file-name))
