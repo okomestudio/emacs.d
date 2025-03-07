@@ -119,7 +119,28 @@
                   (current-buffer))
                  hl-line-ok--background-solaire-mode-cookie)
         (face-remap-remove-relative hl-line-ok--background-solaire-mode-cookie)
-        (setq-local hl-line-ok--background-solaire-mode-cookie nil)))))
+        (setq-local hl-line-ok--background-solaire-mode-cookie nil))))
+
+  (defun hl-line-ok--ad-disable-hl-line (fun &rest rest)
+    "Disable `hl-line-mode' with `face-at-point'.
+When `describe-face' is invoked interactively, the user is interested in
+the face at point. When `hl-line-mode' is active, however, the face will
+always point to `hl-line'. This advice temporarily disables
+`hl-line-mode' so that the underlying face can be picked up by default."
+    (let (result)
+      (cond ((and (boundp 'global-hl-line-mode) global-hl-line-mode)
+             (progn
+               (global-hl-line-mode -1)
+               (setq result (apply fun rest))
+               (global-hl-line-mode 1)))
+            ((and (boundp 'hl-line-mode) hl-line-mode)
+             (progn
+               (hl-line-mode -1)
+               (setq result (apply fun rest))
+               (hl-line-mode 1)))
+            (t (setq result (apply fun rest))))
+      result))
+  (advice-add #'face-at-point :around #'hl-line-ok--ad-disable-hl-line))
 
 (use-package pos-tip
   ;; Show tooltip at point.
