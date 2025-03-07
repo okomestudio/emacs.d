@@ -111,9 +111,12 @@
   :bind ("C-x r F" . recentf)
   :hook (after-init . recentf-mode)
   :config
-  (push "/\\.config/emacs/var/" recentf-exclude)
-  (push "magit-diff.el" recentf-exclude)
-  (push "magit-status.el" recentf-exclude))
+  ;; Add regexp predicates for exclusion.
+  (dolist (pred '("/\\.config/emacs/var/"
+                  "magit-diff.el"
+                  "magit-status.el"
+                  ".*\\.elc$"))
+    (push pred recentf-exclude)))
 
 (use-package save-place
   :straight nil
