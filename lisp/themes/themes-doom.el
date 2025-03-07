@@ -8,6 +8,9 @@
 (require 'ok)
 
 (use-package doom-themes
+  :straight (doom-themes :host github
+                         :repo "doomemacs/themes"
+                         :commit "88126db5e63d816533d0372cb99246b842cac74e")
   :config
   (load-theme 'doom-one t t)
   (load-theme 'doom-one-light t t)

@@ -5,9 +5,10 @@
 ;;
 ;;; Code:
 
-(require 'ok)
-
 (use-package kanagawa-themes
+  :straight (kanagawa-themes :host github
+                             :repor "Fabiokleis/kanagawa-emacs"
+                             :commit "1d34a95c0f639b035481b5506089bc209769bab6")
   :config
   (load-theme 'kanagawa-dragon t t)
   (load-theme 'kanagawa-lotus t t)

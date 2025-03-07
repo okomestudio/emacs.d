@@ -8,6 +8,9 @@
 (require 'ok)
 
 (use-package flexoki-themes
+  :straight (flexoki-themes :host github
+                            :repo "crmsnbleyd/flexoki-emacs-theme"
+                            :commit "4ca5d80bc4f33b5ace8950f0c00069539835fab4")
   :hook ((enable-theme-functions . flexoki-themes-ok--prepare)
          (enable-theme-functions . flexoki-themes-ok--modeline-box-border))
   :config

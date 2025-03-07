@@ -5,6 +5,9 @@
 (require 'ok)
 
 (use-package spacemacs-theme
+  :straight (spacemacs-themes :host github
+                              :repo "nashamri/spacemacs-theme"
+                              :commit "6c74684c4d55713c8359bedf1936e429918a8c33")
   :hook (before-enable-theme-functions . spacemacs-theme-ok--prepare)
   :config
   (defun spacemacs-theme-ok--prepare (theme)
