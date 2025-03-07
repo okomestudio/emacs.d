@@ -41,7 +41,20 @@
 
 (use-package typo
   ;; Typographical utility (e.g., smart quotation).
-  :hook (org-mode . typo-mode))
+  :hook (org-mode . typo-mode)
+  :config
+  (define-typo-cycle typo-cycle-dashes
+    "Cycle through various dashes."
+    ;; Add two-em dash and horizontal bar.
+    ("-"                                ; HYPHEN-MINUS
+     "–"                                ; EN DASH
+     "—"                                ; EM DASH
+     "−"                                ; MINUS SIGN
+     "‐"                                ; HYPHEN
+     "‑"                                ; NON-BREAKING HYPHEN
+     "⸺"                                ; TWO-EM DASH
+     "―"                                ; HORIZONTAL BAR
+     )))
 
 (use-package vundo
   :bind (("C-/" . undo)
