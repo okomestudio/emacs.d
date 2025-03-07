@@ -58,20 +58,19 @@
 
 (use-package org-roam-gt
   ;; See github.com/org-roam/org-roam/issues/2474
-  :straight
-  (org-roam-gt
-   :host github
-   :repo "dmgerman/org-roam-gt"
-   :fork (:host github :repo "okomestudio/org-roam-gt" :branch "ok")))
+  :straight (org-roam-gt :host github
+                         :repo "dmgerman/org-roam-gt"
+                         :fork (:host github
+                                      :repo "okomestudio/org-roam-gt"
+                                      :branch "ok")))
 
 (use-package org-roam-ok
   :straight (org-roam-ok :host github
                          :repo "okomestudio/org-roam-ok"
-                         :branch "master"
                          :files (:defaults "extensions/*"))
   :custom ((org-roam-ok-node-use-cache-in-memory t)
            (org-roam-ok-node-gt-use-cache-in-memory t)
-           (org-roam-ok-on-idle-delay 5))
+           (org-roam-ok-on-idle-delay 3))
   :init
   (load (ok-file-expand-etc "org-roam/init"))
   (org-roam-ok-on-idle-init-setup))
