@@ -84,7 +84,25 @@
                        (gt-google-engine :parse (gt-google-summary-parser))
                        (gt-google-rpc-engine :parse (gt-google-rpc-parser))
                        (gt-bing-engine))
-             :render (gt-buffer-render)))))
+             :render (gt-buffer-render))))
+  :config
+  ;; Implement the at-point hendler for Org links.
+  (cl-defmethod gt-thing-at-point ((_ (eql 'org-link)) (_ (eql 'org-mode)))
+    (let* ((link (org-element-context))
+           (beg (org-element-property :contents-begin link))
+           (end (org-element-property :contents-end link))
+           (desc (buffer-substring beg end))
+           bds)
+      (push (cons beg end) bds)))
+
+  (setq gt-preset-translators
+        `((org-mode . ,(gt-translator
+                        :taker (gt-taker :text 'org-link)
+                        :engines (gt-google-engine)
+                        :render (gt-insert-render
+                                 :rfmt (lambda (res)
+                                         (format " (%s)" res))
+                                 :sface nil))))))
 
 ;; MISC.
 
