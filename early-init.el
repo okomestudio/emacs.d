@@ -6,6 +6,9 @@
 ;;
 ;;; Code:
 
+;; Disable `package.el' early, as we use `straight.el'.
+(setopt package-enable-at-startup nil)
+
 ;; Redirect native compilation cache if possible.
 (when (fboundp 'startup-redirect-eln-cache)
   (startup-redirect-eln-cache
@@ -22,7 +25,6 @@
         confirm-kill-processes t
         inhibit-default-init nil
         native-comp-async-query-on-exit t
-        package-enable-at-startup nil
         pgtk-wait-for-event-timeout 0)
 (setq debug-on-message nil                    ; set regexp to trigger debugger
       byte-compile-warnings '(not obsolete))  ; set t for development
