@@ -258,6 +258,7 @@ before the heading of the current section."
   :bind (:map
          org-mode-map
          ("C-c i u" . org-ok-clipboard-smartyank))
+  :custom ((org-cliplink-max-length nil))
   :config
   (defun org-ok-clipboard-smartyank ()
     "Yank a link with page title or an image from the URL in clipboard.
