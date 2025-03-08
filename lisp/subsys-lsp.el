@@ -41,7 +41,7 @@ The function returns LSP servers that have been shut down."
                          :repo "okomestudio/lsp-booster.el"
                          :post-build (("make")))
   :commands (lsp-booster-mode)
-  :init (lsp-booster-mode 1))
+  :hook (on-init-ui . lsp-booster-mode))
 
 (use-package lsp-ui
   ;; UI integration for lsp-mode.
