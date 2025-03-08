@@ -77,19 +77,25 @@ delete_mode=0
 function main() {
   if [ "$delete_mode" = 1 ]; then
     delete_symlinks
+  elif [ "$refresh_mode" = 1 ]; then
+    delete_symlinks
+    create_symlinks
   else
     create_symlinks
   fi
 }
 
 if [ "$0" = "${BASH_SOURCE[0]}" ]; then
-  while getopts "dh" opt; do
+  while getopts "dhr" opt; do
     case $opt in
     d)
       delete_mode=1
       ;;
     h | \?)
       if [ "$opt" = "h" ]; then usage 0; else usage; fi
+      ;;
+    r)
+      refresh_mode=1
       ;;
     esac
   done

@@ -12,6 +12,7 @@ Clone the root of this version-controlled repository to a place where Emacs can 
   - =init.d/= - Symlinks to Elisp package sources stored under =lisp=
   - =lisp/= - Elisp package sources
       - =lisp/archive/= - Unused code archive kept for reference
+      - =lisp/themes/= - Theme package config files
   - =straight/= - Used by ~straight~
       - =straight/repos/= - Store package repositories of source code
       - =straight/versions/= - Store version pinning info
@@ -49,11 +50,10 @@ Use ~:straight nil~ to avoid pulling the source:
 
 The Elisp sources are in the =lisp/= directory. Those actually loaded by ~init-loader~ are symlinked in the =init.d/= directory, in (mostly) ASCII order.
 
-To set up symlinks, use =init.d/symlinks.sh=:
+To set up symlinks, run =init.d/symlinks.sh=:
 
 #+begin_src shell
-  ./init.d/symlinks.sh     # create all sysmlinks
-  ./init.d/symlinks.sh -d  # delete all symlinks
+  ./init.d/symlinks.sh -r  # refresh all symlinks
 #+end_src
 
 ** Key bindings
