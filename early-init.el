@@ -19,7 +19,7 @@
   (when (version< emacs-version minver)
     (error "The minimum Emacs version expected is %s" minver)))
 
-(setopt ok-debug nil                    ; global switch for debugging
+(setopt ok-debug t ;nil                    ; global switch for debugging
         debug-on-error ok-debug
 
         confirm-kill-processes t
@@ -58,5 +58,26 @@
 
 ;; Ignore x session resources:
 (advice-add 'x-apply-session-resources :override 'ignore)
+
+;; Disable magic file name during `init.el'
+(defconst ok--saved-file-name-handler-alist file-name-handler-alist)
+(setq file-name-handler-alist nil)
+(add-hook 'after-init-hook
+          (lambda ()
+            "Restore `file-name-handler-alist'."
+            (setq file-name-handler-alist ok--saved-file-name-handler-alist)
+            (unintern 'ok--saved-file-name-handler-alist obarray))
+          98)
+
+;; Profile `init.el'.
+(when ok-debug  ; activate profiler in debug mode
+  (profiler-start 'cpu+mem)
+  (add-hook 'after-init-hook
+            (lambda ()
+              (message "Emacs (PID:%d) started in %s"
+                       (emacs-pid) (emacs-init-time))
+              (profiler-report)
+              (profiler-stop))
+            99))
 
 ;;; early-init.el ends here
