@@ -8,10 +8,6 @@
 ;; Disable `custom.el'
 (setopt custom-file null-device)
 
-;; Use `init-straight.el' or `init-package.el'
-(load (convert-standard-filename
-       (locate-user-emacs-file "lisp/init-straight.el")))
-
 (use-package ok
   ;; Elisp utilities for Okome Studio. Loaded early so that they can
   ;; be used in `init.el'

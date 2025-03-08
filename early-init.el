@@ -19,7 +19,7 @@
   (when (version< emacs-version minver)
     (error "The minimum Emacs version expected is %s" minver)))
 
-(setopt ok-debug t ;nil                    ; global switch for debugging
+(setopt ok-debug nil                    ; global switch for debugging
         debug-on-error ok-debug
 
         confirm-kill-processes t
@@ -79,5 +79,8 @@
               (profiler-report)
               (profiler-stop))
             99))
+
+;; Configure package manager. (`init-straight.el' or `init-package.el')
+(load (locate-user-emacs-file "lisp/init-straight.el"))
 
 ;;; early-init.el ends here
