@@ -6,7 +6,6 @@
 ;;; Code:
 
 (use-package dashboard
-  :demand t
   :bind ("C-c d" . dashboard-open)
   :custom ((dashboard-agenda-release-buffers t)
            (dashboard-center-content t)
@@ -17,10 +16,10 @@
                               (projects . 3)
                               (bookmarks . 3)
                               (registers . 3)
-                              (apps . 4)
+                              ;; (apps . 4)
                               (agenda . 5)))
            (dashboard-item-shortcuts '((agenda . "a")
-                                       (apps . "t")
+                                       ;; (apps . "t")
                                        (bookmarks . "m")
                                        (projects . "p")
                                        (recents . "r")
@@ -36,60 +35,58 @@
            (dashboard-set-heading-icons t)
            (dashboard-set-init-info t)
            (dashboard-set-navigator t))
+  :init (dashboard-setup-startup-hook)
   :config
   ;; `apps' - frequently used apps
-  ;;
-  ;; TODO(2024-12-31): Fix shortcut to apps.
-  ;;
-  (defcustom dashboard-app-list
-    '(("Elfeed (elfeed)" (elfeed))
-      ("Tetris (tetris)" (tetrisk)))
-    "List of apps to show in dashboard.
+  (when nil
+    ;; TODO(2024-12-31): Fix shortcut to apps.
+    (defcustom dashboard-app-list
+      '(("Elfeed (elfeed)" (elfeed))
+        ("Tetris (tetris)" (tetrisk)))
+      "List of apps to show in dashboard.
 Each item is (name form).")
 
-  (defun dashboard-apps-gen (list-size)
-    (dashboard-insert-heading
-     "Apps:"
-     nil
-     (nerd-icons-octicon "nf-oct-apps"
-                         :height 1.2
-                         :v-adjust 0.0
-                         :face 'dashboard-heading))
-    (dashboard-insert-section
-     ""
-     dashboard-app-list
-     list-size
-     'apps
-     (dashboard-get-shortcut 'apps)
-     `(lambda (&rest _) ,(cadr el))
-     (car el)))
-  ;; (add-to-list 'dashboard-item-shortcuts '(apps . "b"))
-  (add-to-list 'dashboard-item-generators '(apps . dashboard-apps-gen))
+    (defun dashboard-apps-gen (list-size)
+      (dashboard-insert-heading
+       "Apps:"
+       nil
+       (nerd-icons-octicon "nf-oct-apps"
+                           :height 1.2
+                           :v-adjust 0.0
+                           :face 'dashboard-heading))
+      (dashboard-insert-section
+       ""
+       dashboard-app-list
+       list-size
+       'apps
+       (dashboard-get-shortcut 'apps)
+       `(lambda (&rest _) ,(cadr el))
+       (car el)))
+    ;; (add-to-list 'dashboard-item-shortcuts '(apps . "b"))
+    (push '(apps . dashboard-apps-gen) dashboard-item-generators))
 
   ;; `vocab' - word of the day custom widget
-  (use-package wotd)
+  (when t
+    (use-package wotd)
 
-  (defun dashboard-vocab-gen (list-size)
-    (dashboard-insert-heading "Word of the Day:"
-                              nil
-                              (nerd-icons-faicon "nf-fa-wordpress"
-                                                 :height 1.2
-                                                 :v-adjust 0.0
-                                                 :face 'dashboard-heading))
-    (save-excursion
-      (let ((wotd-buffer-name "*Word of the Day: free-dictionary*"))
-        (wotd-select 'free-dictionary)
-        (switch-to-buffer wotd-buffer-name)
-        (mark-whole-buffer)
-        (copy-region-as-kill nil nil t)
-        (kill-buffer wotd-buffer-name)))
-    (insert "\n")
-    (yank))
+    (defun dashboard-vocab-gen (list-size)
+      (dashboard-insert-heading "Word of the Day:"
+                                nil
+                                (nerd-icons-faicon "nf-fa-wordpress"
+                                                   :height 1.2
+                                                   :v-adjust 0.0
+                                                   :face 'dashboard-heading))
+      (save-excursion
+        (let ((wotd-buffer-name "*Word of the Day: free-dictionary*"))
+          (wotd-select 'free-dictionary)
+          (switch-to-buffer wotd-buffer-name)
+          (mark-whole-buffer)
+          (copy-region-as-kill nil nil t)
+          (kill-buffer wotd-buffer-name)))
+      (insert "\n")
+      (yank))
 
-  (add-to-list 'dashboard-item-generators '(vocab . dashboard-vocab-gen))
-
-  ;; Start the hook:
-  (dashboard-setup-startup-hook))
+    (push '(vocab . dashboard-vocab-gen) dashboard-item-generators)))
 
 (provide 'subsys-dashboard)
 ;;; subsys-dashboard.el ends here
