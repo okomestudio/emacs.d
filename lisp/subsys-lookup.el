@@ -56,25 +56,23 @@
 ;; PRONUNCIATION
 
 (use-package hatsuon
-  :straight (:host github :repo "okomestudio/hatsuon.el"
-                   :files (:defaults "extensions/*"))
+  :disabled ;; use `go-translate'
+  :straight (hatsuon :host github
+                     :repo "okomestudio/hatsuon.el"
+                     :files (:defaults "extensions/*"))
   :custom ((hatsuon-audio-cache-dir (ok-file-expand-var "hatsuon/cache/"))
            (hatsuon-audio-url-getters
-            '(
-              ;; hatsuon-mw-audio-url-getter
-              ;; hatsuon-wiktionary-audio-url-getter
-              ;; hatsuon-weblio-audio-url-getter
-              hatsuon-wordnik-audio-url-getter
-              )))
-  :config
-  ;; (require 'hatsuon-mw)
-  ;; (require 'hatsuon-weblio)
-  (require 'hatsuon-wordnik))
+            '(hatsuon-wordnik-audio-url-getter)))
+  :config (require 'hatsuon-wordnik))
 
 ;; TRANSLATION
 
 (use-package go-translate
   ;; Translator framework.
+  ;;
+  ;; For audio pronunciation, use "y" shortcut (`gt-do-speak') within
+  ;; the `gt-buffer'.
+  ;;
   :custom ((gt-buffer-render-split-width-threshold 120)
            (gt-debug-p nil)
            (gt-langs '(en ja))
