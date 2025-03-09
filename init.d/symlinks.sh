@@ -25,7 +25,7 @@ ptom["62"]="maj-c maj-css maj-docker maj-elisp maj-html maj-javascript maj-kotli
 ptom["64"]="maj-ansible subsys-drawing maj-graphviz maj-json maj-plantuml subsys-http"
 ptom["70"]="subsys-doc-viewer"
 ptom["80"]="subsys-llm subsys-elfeed subsys-audio subsys-eww subsys-game subsys-gnus subsys-map"
-ptom["88"]="subsys-dashboard"
+ptom["88"]="maj-dashboard"
 ptom["linux-00"]="linux-gui"
 
 # DO NOT MODIFY BELOW
@@ -40,6 +40,7 @@ Create or remove symlinks under init.d/.
 
   -d  Remove symlinks
   -h  Show help
+  -r  Refresh (remove and create) symlinks
 
 USAGE
   exit "${1:-1}"
