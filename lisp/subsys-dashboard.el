@@ -35,7 +35,7 @@
            (dashboard-set-heading-icons t)
            (dashboard-set-init-info t)
            (dashboard-set-navigator t))
-  :init (dashboard-setup-startup-hook)
+  :init (when (not ok-debug) (dashboard-setup-startup-hook))
   :config
   ;; `apps' - frequently used apps
   (when nil
@@ -66,7 +66,7 @@ Each item is (name form).")
     (push '(apps . dashboard-apps-gen) dashboard-item-generators))
 
   ;; `vocab' - word of the day custom widget
-  (when t
+  (when nil
     (use-package wotd)
 
     (defun dashboard-vocab-gen (list-size)
