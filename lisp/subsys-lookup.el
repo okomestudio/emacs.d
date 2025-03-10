@@ -96,13 +96,20 @@
       (push (cons beg end) bds)))
 
   (setq gt-preset-translators
-        `((org-mode . ,(gt-translator
-                        :taker (gt-taker :text 'org-link)
-                        :engines (gt-google-engine)
-                        :render (gt-insert-render
-                                 :rfmt (lambda (res)
-                                         (format " (%s)" res))
-                                 :sface nil))))))
+        `((org-google . ,(gt-translator
+                          :taker (gt-taker :text 'org-link)
+                          :engines (gt-google-engine)
+                          :render (gt-insert-render
+                                   :rfmt (lambda (res)
+                                           (format " (%s)" res))
+                                   :sface nil)))
+          (org-deepl . ,(gt-translator
+                         :taker (gt-taker :text 'org-link)
+                         :engines (gt-deepl-engine)
+                         :render (gt-insert-render
+                                  :rfmt (lambda (res)
+                                          (format " (%s)" res))
+                                  :sface nil))))))
 
 ;; MISC.
 
