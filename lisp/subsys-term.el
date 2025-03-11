@@ -75,9 +75,9 @@
   :config
   (defun eat-ok--rename-buffer (&rest _)
     "Rename EAT buffer based on the parent directory name."
-    (rename-buffer (format "*eat-%s*"
-                           (car (last (file-name-split default-directory)
-                                      2)))))
+    (rename-buffer
+     (format "*eat-%s*" (car (last (file-name-split default-directory) 2)))
+     t))
 
   (defun eat-ok-interactively (arg)
     "When prefixed, call `eat-project'; without prefix, call `eat'."
