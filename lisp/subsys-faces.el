@@ -98,10 +98,10 @@ This is also used as the default.")
    . "sudo apt install -y fonts-vlgothic")
 
   :init
-  (dolist (element '(("Hack" . 1.00)  ; reference
-                     ("EB Garamond". 1.6)  ; 1.28
+  (dolist (element '(("Hack" . 1.00)      ; reference
+                     ("EB Garamond". 1.6) ; 1.28
                      ("BIZ UDGothic" . 1.00)
-                     ("Noto Sans Mono CJK JP" . 1.18)  ; 1.18
+                     ("Noto Sans Mono CJK JP" . 1.18) ; 1.18
                      ("Noto Sans CJK JP" . 1.10)
                      ("Noto Serif CJK JP" . 1.26)
                      ;; ("VL Gothic" . 1.225)
