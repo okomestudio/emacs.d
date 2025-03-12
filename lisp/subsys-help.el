@@ -29,7 +29,8 @@
          "C-h V"
          :prefix-map help-view-other-doc
          ("p" . help-ok-view-doc-elisp-for-python)
-         ("s" . help-ok-view-doc-emacsql)
+         ("s" . help-ok-view-doc-straight)
+         ("q" . help-ok-view-doc-emacsql)
          ("t" . help-ok-view-doc-tempel))
   :custom (list-faces-sample-text (concat "abcdefghijklmn"
                                           "ABCDEFGHIJKLMN"
@@ -48,6 +49,8 @@
             . ,(ok-file-expand-straight-repos "emacsql" "README.md"))
            (elisp-for-python
             . ,(ok-file-expand-straight-repos "elisp-for-python" "README.org"))
+           (straight
+            . ,(ok-file-expand-straight-repos "straight.el" "README.md"))
            (tempel
             . ,(ok-file-expand-straight-repos "tempel" "README.org")))))
     (dolist (doc docs)
