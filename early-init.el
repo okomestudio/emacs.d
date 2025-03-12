@@ -36,8 +36,7 @@
 
 ;; UI:
 (setopt frame-inhibit-implied-resize t
-        inhibit-splash-screen nil
-        inhibit-startup-screen nil
+        inhibit-startup-screen t
         initial-buffer-choice nil
         native-comp-async-report-warnings-errors ok-debug
         ring-bell-function 'ignore)
