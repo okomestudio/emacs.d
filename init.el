@@ -36,6 +36,9 @@
   (defalias 'ok-file-expand-etc #'no-littering-expand-etc-file-name)
   (defalias 'ok-file-expand-var #'no-littering-expand-var-file-name))
 
+;;; Private initialization
+(load (ok-file-expand-etc "emacs/init") t)
+
 ;; Load config files under `init.d/'
 (use-package init-loader
   :demand t

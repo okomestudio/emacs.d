@@ -5,9 +5,6 @@
 ;;
 ;;; Code:
 
-;;; PRIVATE INITIALIZATION
-(load (ok-file-expand-etc "emacs/init"))
-
 ;; COMMON ELISP LIBRARIES
 
 (use-package buttercup)     ; behavior-driven Lisp testing
