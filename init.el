@@ -41,6 +41,7 @@
 
 ;; Load config files under `init.d/'
 (use-package init-loader
+  :straight (init-loader :host github :repo "emacs-jp/init-loader" :fork t)
   :demand t
   :custom ((init-loader-byte-compile nil)
            (init-loader-show-log-after-init ok-debug))

@@ -102,7 +102,6 @@
  ("imenu-list" . "76f2335ee6f2f066d87fe4e4729219d70c9bc70d")
  ("indent-bars" . "2722d503af53a38aba02b1ad00b244862a4f690f")
  ("inheritenv" . "b9e67cc20c069539698a9ac54d0e6cc11e616c6f")
- ("init-loader" . "c4842b1f6695ce77daf94fd085456aeb37ed37e1")
  ("ipretty" . "042f5cc4e6f81d59115e8335c582bb5c571c2585")
  ("jeison" . "19a51770f24eaa7b538c7be6a8a5c25d154b641f")
  ("jinja2-mode" . "03e5430a7efe1d163a16beaf3c82c5fd2c2caee1")
