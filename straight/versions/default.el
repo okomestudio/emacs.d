@@ -165,7 +165,7 @@
  ("org-roam-bibtex" . "b065198f2c3bc2a47ae520acd2b1e00e7b0171e6")
  ("org-roam-fz" . "defedca2ab1d829ff1652e78e523fb21d634f31c")
  ("org-roam-gt" . "5bd97a5eb00d9d3b63dbc186dd8ba10441177ce1")
- ("org-roam-ok" . "ffe7fe012aae839879fc98c37c30e6b1ecc32e45")
+ ("org-roam-ok" . "af591051745e91cfc2baa4470bc4bc0d51723ef3")
  ("org-roam-timestamps" . "c4ff1e2f5b0905b5caa917249aab56ddc1de1ab3")
  ("org-roam-ui" . "5ac74960231db0bf7783c2ba7a19a60f582e91ab")
  ("org-theme-ok.el" . "097ccebfc716c04333bcfb69b9597d91d78f96ba")

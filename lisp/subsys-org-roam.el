@@ -50,12 +50,25 @@
   (org-roam-db-sync)
   (org-roam-db-autosync-mode 1))
 
-(use-package ok-plural
-  :straight (ok-plural :host github :repo "okomestudio/ok-plural.el"))
+(use-package org-roam-ui
+  :after org-roam
+  :custom ((org-roam-ui-follow t)
+           (org-roam-ui-sync-theme t)
+           (org-roam-ui-update-on-save t)))
 
-(use-package org-roam-fz
-  :straight (org-roam-fz :host github :repo "okomestudio/org-roam-fz")
-  :hook (org-mode . org-roam-fz-mode))
+;;; OK-SPECIFIC ENHANCEMENT
+
+(use-package org-roam-timestamps
+  ;; Add timestamps to `org-roam' notes.
+  :after org-roam
+  :custom ((org-roam-timestamps-minimum-gap 86400)
+           (org-roam-timestamps-remember-timestamps t)
+           (org-roam-timestamps-timestamp-parent-file nil))
+  :config (org-roam-timestamps-mode))
+
+(use-package ok-plural
+  ;; Required by `org-roam-ok'.
+  :straight (ok-plural :host github :repo "okomestudio/ok-plural.el"))
 
 (use-package org-roam-gt
   ;; See github.com/org-roam/org-roam/issues/2474
@@ -76,11 +89,7 @@
   (load (ok-file-expand-etc "org-roam/init"))
   (org-roam-ok-on-idle-init-setup))
 
-(use-package org-roam-ui
-  :after org-roam
-  :custom ((org-roam-ui-follow t)
-           (org-roam-ui-sync-theme t)
-           (org-roam-ui-update-on-save t)))
+;;; BIBLIOGRAPHIC REFERENCE MANAGEMENT
 
 (use-package org-roam-bibtex
   :after org-roam
@@ -93,12 +102,12 @@
   ;; For citations, cross-references, bibliographies.
   :custom (bibtex-completion-pdf-field "file"))
 
-(use-package org-roam-timestamps
-  :after org-roam
-  :custom ((org-roam-timestamps-minimum-gap 86400)
-           (org-roam-timestamps-remember-timestamps t)
-           (org-roam-timestamps-timestamp-parent-file nil))
-  :config (org-roam-timestamps-mode))
+;;; MISC.
+
+(use-package org-roam-fz
+  ;; Folgezettel utility.
+  :straight (org-roam-fz :host github :repo "okomestudio/org-roam-fz")
+  :hook (org-mode . org-roam-fz-mode))
 
 (provide 'subsys-org-roam)
 ;;; subsys-org-roam.el ends here
