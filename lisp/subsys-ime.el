@@ -13,13 +13,15 @@
                   ;; divergence of submodules refs to cause dirty
                   ;; repo.
                   :commit "14afac9728dd3f04e3d73633f4fa925d38589368")
-  :custom ((default-input-method "japanese-mozc")
+  :custom `((default-input-method "japanese-mozc")
 
-           ;; NOTE(2025-03-03): `posframe' would be best, but it
-           ;; frequently crashed with cairo. `overlay' runs sluggish.
-           (mozc-candidate-style 'posframe)  ; echo-area/overlay/posframe
-
-           (mozc-leim-title "🇯🇵"))
+            ;; NOTE(2025-03-03): `posframe' would be best, but it
+            ;; frequently crashed with cairo. `overlay' runs sluggish.
+            ;; `echo-area' is sufficient and stable.
+            (mozc-candidate-style ,(if (display-graphic-p)
+                                       'posframe
+                                     'echo-area))
+            (mozc-leim-title "🇯🇵"))
   :commands (toggle-input-method))
 
 (use-package mozc
@@ -42,6 +44,7 @@
 
 (use-package mozc-cand-posframe
   :straight (mozc-cand-posframe :host github :repo "akirak/mozc-posframe")
+  :if (display-graphic-p)
   :after mozc
   :init (require 'mozc-cand-posframe))
 
