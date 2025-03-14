@@ -17,21 +17,27 @@
   :ensure-system-package (textlint . "~/.config/emacs/bin/prepare-textlint")
   :config
   (defun flycheck-locate-config-file-textlint (filename checker)
+    "Pick the correct `textlint' config file.
+FILENAME can be set as a buffer local variable per document using
+`flycheck-textlint-config'. When FILENAME is an absolute path and
+exists, it will be used. Otherwise, the language is auto-detected and
+the .json extension is postfixed to FILENAME before it will be searched
+for in ~/.config/textlint."
     (when (eq checker 'textlint)
-      (let* ((conf-dir (convert-standard-filename "~/.config/textlint"))
-             (filename (if (string= filename "default")
-                           (if (save-excursion
-                                 (beginning-of-line)
-                                 (re-search-forward "[ぁ-んァ-ン一-龯]" nil t))
-                               "ja.default.json"
-                             "en.default.json")
-                         filename))
-             (path1 (expand-file-name filename conf-dir))
-             (path2 (concat path1 ".json"))
-             (path (or (and (file-exists-p path1) path1)
-                       (and (file-exists-p path2) path2))))
-        (when path
-          path))))
+      (if (file-exists-p (expand-file-name filename))
+          (expand-file-name filename)
+        (let ((conf-dir (expand-file-name "~/.config/textlint")))
+          (if (file-exists-p (expand-file-name filename conf-dir))
+              (expand-file-name filename conf-dir)
+            (let* ((lang (if (save-excursion
+                               (beginning-of-buffer)
+                               (re-search-forward "[ぁ-んァ-ン一-龯]" nil t))
+                             "ja" "en"))
+                   (filename (expand-file-name
+                              (format "%s.%s.json" lang filename)
+                              conf-dir)))
+              (when (file-exists-p filename)
+                filename)))))))
 
   (push #'flycheck-locate-config-file-textlint flycheck-locate-config-file-functions)
   (push '(org-mode . "@textlint/text") flycheck-textlint-plugin-alist))
