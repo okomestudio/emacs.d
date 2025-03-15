@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+# Prevent fcitx5 from stealing input method with the lucid X toolkit.
+# This is not necessary for pgtk.
+unset XMODIFIERS
+
+exec ~/.local/emacs/bin/emacs "$@"
