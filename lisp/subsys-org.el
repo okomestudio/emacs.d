@@ -42,7 +42,6 @@
            (org-support-shift-select t)
            (org-tags-column 0)
            (org-todo-keywords '((sequence "TODO" "WIP" "|" "SKIP" "DONE"))))
-  :hook (org-mode . ok-org--init-visuals)
   :config
   ;; Unset the keybindings to disable org-agenda shortcuts and
   ;; fallback to popper:
@@ -50,29 +49,19 @@
   (keymap-unset org-mode-map "C-S-'" t)
   (keymap-unset org-mode-map "C-M-'" t)
 
-  ;; ENHANCE DEFAULT BEHAVIORS
-  (defun org-ok-insert-newline-above-heading ()
-    "Insert an empty line before the heading of the current section."
-    (interactive)
-    (save-mark-and-excursion
-      (org-previous-visible-heading 1)
-      (org-return)))
-
   (defun org-ok-insert-newline-above (&optional arg)
     "Insert a newline before the current line or the current heading.
-Without a prefix argument, a newline is inserted before the
-current line. With a prefix argument, a newline is inserted
-before the heading of the current section."
+Without the prefix argument, a newline is inserted before the current
+line. With the prefix argument, a newline is inserted before the heading
+of the current section."
     (interactive "P")
-    (call-interactively
-     (pcase (car arg)
-       (4 #'org-ok-insert-newline-above-heading)
-       (_ #'ok-edit-insert-newline-above))))
-
-  ;; HELPER FUNCTIONS
-  (defun ok-org--init-visuals ()
-    (setq-local fill-column 80)
-    (turn-on-visual-line-mode))
+    (call-interactively (pcase (car arg)
+                          (4 (lambda ()
+                               (interactive)
+                               (save-mark-and-excursion
+                                 (org-previous-visible-heading 1)
+                                 (org-return))))
+                          (_ #'ok-edit-insert-newline-above))))
 
   (defun ok-org-insert-item (begin end)
     "See Section 14.44 at https://takaxp.github.io/init.html."
