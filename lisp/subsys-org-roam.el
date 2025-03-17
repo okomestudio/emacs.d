@@ -11,18 +11,15 @@
   :straight (org-roam
              :host github
              :repo "org-roam/org-roam"  ; official version
-
-             ;; Use the fork for development:
-             ;; :repo "okomestudio/org-roam"
-             ;; :fork "okomestudio"
-             ;; :branch "refactor-org-roam-unlinked-references-section"
-
+             ;; (:fork t
+             ;;  :branch "refactor-org-roam-unlinked-references-section")
              :files (:defaults "extensions/*"))
   :bind (("C-c n c" . org-roam-ok-capture-create-from-ref)
          ("C-c n f" . org-roam-node-find)
          ("C-c n i" . org-roam-node-insert)
          ("C-c n l" . org-roam-buffer-toggle)
          :map org-mode-map
+         ("C-c b i" . org-ref-insert-link)
          ("C-M-i" . completion-at-point)
          ("C-c C-q" . org-roam-ok-node-tag-add-or-remove)
          ("C-c a" . org-roam-ok-node-alias-add-or-remove)
