@@ -17,6 +17,7 @@
 .lsp-session-*
 .mc-lists.el
 .org-id-locations
+bin/emacs-lsp-booster
 chatgpt/
 custom.el
 elpa/
