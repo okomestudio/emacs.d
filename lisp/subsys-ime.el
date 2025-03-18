@@ -33,8 +33,14 @@
 
 (use-package mozc-isearch
   :straight (mozc-isearch :host github :repo "iRi-E/mozc-el-extensions")
-  :hook (isearch-mode . mozc-isearch-ok--fix-ace-isearch)
-  :init (require 'mozc-isearch)
+  :hook (;; NOTE(2025-03-18): This is an optimization to remove
+         ;; initialization with `after-init-hook', which gets set up
+         ;; when the `mozc-isearch' feature is required:
+         (on-first-input . (lambda ()
+                             (require 'mozc-isearch)
+                             (mozc-isearch-workaround-setup)))
+
+         (isearch-mode . mozc-isearch-ok--fix-ace-isearch))
   :config
   (defun mozc-isearch-ok--fix-ace-isearch (&rest _)
     "Disable `ace-isearch-mode' when `mozc' is active."
@@ -76,7 +82,7 @@
   :straight (mozc-posframe :host github :repo "derui/mozc-posframe"
                            :fork (:branch "ok"))
   :if (display-graphic-p)
-  :hook ((after-init . mozc-posframe-initialize)
+  :hook ((on-first-input . mozc-posframe-initialize)
          (enable-theme-functions . mozc-posframe-ok--theme))
   :config
   (defun mozc-posframe-ok--theme (theme)
