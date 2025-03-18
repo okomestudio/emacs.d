@@ -47,24 +47,42 @@
 
 (use-package mozc-cand-posframe
   ;; For `posframe', this package may be the simplest option.
+  :disabled
   :straight (mozc-cand-posframe :host github :repo "akirak/mozc-posframe")
   :if (display-graphic-p)
   :after mozc
-  :init (require 'mozc-cand-posframe))
+  :hook ((enable-theme-functions . mozc-posframe-ok--theme))
+  :init (require 'mozc-cand-posframe)
+  :config
+  (defun mozc-posframe-ok--theme (theme)
+    (require 'corfu)
+    (let* ((face-base 'corfu-default)
+           (face-current 'corfu-current)
+           (foreground (face-attribute face-base :foreground))
+           (background (face-attribute face-base :background)))
+      (dolist (face '(mozc-cand-posframe-normal-face
+                      mozc-cand-posframe-footer-face))
+        (set-face-attribute face nil
+                            :foreground foreground
+                            :background background
+                            :inherit face-base))
+      (set-face-attribute 'mozc-cand-posframe-focused-face nil
+                          :foreground (face-attribute face-current :foreground)
+                          :background (face-attribute face-current :background)
+                          :inherit face-current))))
 
 (use-package mozc-posframe
   ;; This might work, but not out of box.
-  :disabled
-  :straight (mozc-posframe :host github :repo "derui/mozc-posframe")
-  :after mozc
-  :hook ((mozc-mode . mozc-posframe-initialize)
+  :straight (mozc-posframe :host github :repo "derui/mozc-posframe"
+                           :fork (:branch "ok"))
+  :if (display-graphic-p)
+  :hook ((after-init . mozc-posframe-initialize)
          (enable-theme-functions . mozc-posframe-ok--theme))
   :config
   (defun mozc-posframe-ok--theme (theme)
     (require 'corfu)
     (let* ((face-base 'corfu-default)
            (face-current 'corfu-current)
-           (face-annotations 'corfu-annotations)
            (foreground (face-attribute face-base :foreground))
            (background (face-attribute face-base :background)))
       (dolist (face '(mozc-cand-overlay-even-face
