@@ -35,7 +35,15 @@
            (dashboard-set-heading-icons t)
            (dashboard-set-init-info t)
            (dashboard-set-navigator t))
-  :init (when (not ok-debug) (dashboard-setup-startup-hook))
+  :init
+  ;; Set `open-on-startup' to non-nil if `dashboard' should be open at
+  ;; the startup. This is disabled by default, as this add about 3 sec
+  ;; to initialization, by far that slowest of all startup operations.
+  ;; Use `dashboard-open' for easy access.
+  (let ((open-on-startup nil))
+    (when (and open-on-startup (not ok-debug))
+      (dashboard-setup-startup-hook)))
+
   :config
   ;; `apps' - frequently used apps
   (when nil
