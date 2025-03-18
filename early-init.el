@@ -66,7 +66,7 @@
             "Restore `file-name-handler-alist'."
             (setq file-name-handler-alist ok--saved-file-name-handler-alist)
             (unintern 'ok--saved-file-name-handler-alist obarray))
-          98)
+          97)
 
 ;; Profile `init.el'.
 (when ok-debug  ; activate profiler in debug mode
@@ -77,7 +77,18 @@
                        (emacs-pid) (emacs-init-time))
               (profiler-report)
               (profiler-stop))
-            99))
+            98))
+
+;; Compute the running time of all functions in `after-init-hook'.
+;; `emacs-init-time' underestimates the total startup time, when
+;; time-consuming operations are delayed to `after-init-hook'. Use
+;; this metric to actually reduce the experienced startup time.
+(add-hook 'after-init-hook
+          (lambda ()
+            (message "after-init-hook took %f sec"
+                     (float-time
+                      (time-subtract (current-time) after-init-time))))
+          99)
 
 ;; Configure package manager. (`init-straight.el' or `init-package.el')
 (load (locate-user-emacs-file "lisp/init-straight.el"))
