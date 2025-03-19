@@ -15,5 +15,7 @@
            (web-mode-script-padding 2)
            (web-mode-style-padding 2)))
 
+(use-package lorem-ipsum)
+
 (provide 'maj-web-mode)
 ;;; maj-web-mode.el ends here
