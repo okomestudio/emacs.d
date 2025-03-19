@@ -35,6 +35,7 @@ The list of Emacs packages to potentially check out:
 
 ** Org
 
+- [[https://github.com/mclear-tools/consult-notes][consult-notes]] - Consult to search notes
 - [[https://github.com/yibie/org-luhmann][org-luhmann]] - Luhmann's numbering system for org-mode
 - [[https://github.com/alphapapa/org-make-toc][org-make-toc]] - Automatic tables of contents for Org-mode files
 - [[https://github.com/yibie/org-numbering][org-numbering]] - A flexible and customizable numbering system for Org mode headings, supporting various international numbering schemes
