@@ -220,6 +220,9 @@ of the current section."
 
 ;;; APPEARANCE & THEME
 
+(use-package org-expose-emphasis-markers
+  :hook (org-mode . org-expose-emphasis-markers-mode))
+
 (use-package org-modern-indent
   ;; NOTE(2025-03-03): Not on any package repository, so need manual
   ;; install here.
