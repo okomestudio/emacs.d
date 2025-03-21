@@ -8,21 +8,21 @@
 (require 'ok)
 
 (use-package org
-  :bind (:map
-         org-mode-map
-         ("C-S-o" . org-ok-insert-newline-above)
-         ("C-c C-l" . org-insert-link)
-         ("C-c C-q" . org-set-tags-command)
-         ("C-c C-x l" . math-preview-ok-toggle)
-         ("C-c i h" . org-insert-heading) ; or use M-RET
-         ("C-c i l" . ok-org-insert-item)
-         ("C-c i u" . org-cliplink)
-         ("C-c l" . org-store-link)
-         ("M-g i" . consult-org-heading)
-         :prefix-map org-mode-help-map
-         :prefix-docstring "Keymap for org-mode help"
-         :prefix "C-h O"
-         ("e" . org-entities-help))
+  :bind ( :map org-mode-map
+          ("C-S-o" . org-ok-insert-newline-above)
+          ("C-c C-l" . org-insert-link)
+          ("C-c C-q" . org-set-tags-command)
+          ("C-c C-x l" . math-preview-ok-toggle)
+          ("C-c i h" . org-insert-heading) ; or use M-RET
+          ("C-c i l" . ok-org-insert-item)
+          ("C-c i u" . org-cliplink)
+          ("C-c l" . org-store-link)
+          ("M-g i" . consult-org-heading)
+
+          :prefix-map org-mode-help-map
+          :prefix-docstring "Keymap for org-mode help"
+          :prefix "C-h O"
+          ("e" . org-entities-help))
   :custom ((org-adapt-indentation nil)
            (org-blank-before-new-entry '((heading . nil)
                                          (plain-list-item . nil)))
@@ -91,9 +91,8 @@ of the current section."
                     :files (:defaults "extensions/*"))
   :after org
   :demand t
-  :bind (:map
-         org-mode-map
-         ("C-c C-M-c" . org-ok-babel-run-pytest))
+  :bind ( :map org-mode-map
+          ("C-c C-M-c" . org-ok-babel-run-pytest))
   :config
   (with-eval-after-load 'ox
     (require 'ox-substack)))
@@ -235,9 +234,8 @@ of the current section."
 
 (use-package org-cliplink
   :after org-download
-  :bind (:map
-         org-mode-map
-         ("C-c i u" . org-ok-clipboard-smartyank))
+  :bind ( :map org-mode-map
+          ("C-c i u" . org-ok-clipboard-smartyank))
   :custom ((org-cliplink-max-length nil))
   :config
   (defun org-ok-clipboard-smartyank ()
@@ -277,14 +275,13 @@ clipboard content:
              ;; github.com/nobiot/org-transclusion/issues/271
              :branch "feat/transient") ; "id-and-target"
   :after (org)
-  :bind (:map
-         org-mode-map
-         :prefix "C-c C-n"
-         :prefix-map ok-org-transclusion-map
-         ("A" . org-transclusion-add-all)
-         ("D" . org-transclusion-remove-all)
-         ("a" . org-transclusion-add)
-         ("t" . org-transclusion-mode))
+  :bind ( :map org-mode-map
+          :prefix "C-c C-n"
+          :prefix-map ok-org-transclusion-map
+          ("A" . org-transclusion-add-all)
+          ("D" . org-transclusion-remove-all)
+          ("a" . org-transclusion-add)
+          ("t" . org-transclusion-mode))
   :config
   (add-to-list 'org-transclusion-extensions 'org-transclusion-indent-mode)
   (require 'org-transclusion-indent-mode))

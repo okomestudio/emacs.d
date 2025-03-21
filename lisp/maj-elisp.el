@@ -9,11 +9,10 @@
 
 (use-package elisp-mode
   :straight nil
-  :bind (:map
-         emacs-lisp-mode-map
-         ("C-c b" . elisp-mode-ok--format)
-         :map lisp-data-mode-map
-         ("C-c b" . elisp-mode-ok--format))
+  :bind ( :map emacs-lisp-mode-map
+          ("C-c b" . elisp-mode-ok--format)
+          :map lisp-data-mode-map
+          ("C-c b" . elisp-mode-ok--format))
   :hook ((emacs-lisp-mode
           lisp-data-mode) . elisp-mode-ok--set-completion-functions)
   :config
