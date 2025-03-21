@@ -29,6 +29,10 @@ The list of Emacs packages to potentially check out:
 
 - [[https://github.com/emacs-jp/migemo][migemo]] - Provide Japanese increment search with romanized Japanese
 
+** LSP
+
+- [[https://github.com/swyddfa/esbonio.el][esbonio.el]] - Integrating the esbonio language server (for Sphinx)
+
 ** Optimization
 
 - [[https://github.com/jamescherti/compile-angel.el][compile-angel.el]] - Auto byte/native-compile all Elisp files (alternative to: auto-compile)
