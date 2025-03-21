@@ -5,7 +5,6 @@ The list of Emacs packages to potentially check out:
 - [[https://github.com/Wilfred/deadgrep][deadgrep]] - Fast, friendly searching with ripgrep and Emacs; see ALTERNATIVES.md for a good summary of alternative tools
 - [[https://github.com/KeyWeeUsr/emacs-syncthing][emacs-syncthing]] - Emacs client for Syncthing
 - [[https://github.com/ahyatt/llm][llm]] - A package abstracting LLM capabilities
-- [[https://github.com/emacs-jp/migemo][migemo]] - Provides incremental search with romanized Japanese
 - [[https://github.com/emacsmirror/password-store][password-store]] - Allows ~pass~ integration for managing credentials
 - [[https://github.com/liushihao456/symbols-outline.el][symbols-outline.el]] - Display symbols (functions, variables, etc) in a side window.
 - [[https://github.com/m00natic/vlfi][vlf]] - View large files
@@ -48,6 +47,7 @@ The list of Emacs packages to potentially check out:
 
 ** Programming
 
+- [[https://github.com/jamescherti/flymake-bashate.el][flymake-bashate.el]] - A Flymake backend for real-time style checking for Bash shell scripts
 - [[https://github.com/Wilfred/emacs-refactor][emr]] (Emacs Refactor) - A framework for providing language-specific refactoring
 - [[https://github.com/milanglacier/minuet-ai.el][minuet-ai.el]] - Code completion as-you-type from popular LLMs
 - [[https://github.com/jamescherti/outline-indent.el][outline-indent.el]] - Fold text based on indentation, c.f., origami & yafolding
