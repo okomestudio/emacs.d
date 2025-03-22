@@ -108,7 +108,7 @@
 (use-package envrc
   :mode (("\\.envrc\\..*\\'" . envrc-file-mode))
   :ensure-system-package (direnv . "sudo apt install -y direnv")
-  :hook ((change-major-mode-after-body . envrc-mode)))
+  :hook (on-first-buffer . envrc-global-mode))
 
 (use-package exec-path-from-shell
   ;; Make Emacs use the PATH set up by the user's shell.
