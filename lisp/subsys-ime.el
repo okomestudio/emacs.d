@@ -13,6 +13,7 @@
                   ;; divergence of submodules refs to cause dirty
                   ;; repo.
                   :commit "14afac9728dd3f04e3d73633f4fa925d38589368")
+  :bind (("C-z" . toggle-input-method) ("C-\\" . nil))
   :custom ((default-input-method "japanese-mozc")
 
            ;; NOTE(2025-03-12): `posframe' would be best, but it
