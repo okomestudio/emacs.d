@@ -23,12 +23,14 @@
     (interactive)
     (hs-life-goes-on
      (save-excursion
-       (forward-sexp)
+       ;; Move to a structure where `hs-already-hidden-p' can be used
+       ;; to inspect the current toggle status.
+       (forward-thing (cond ((derived-mode-p '(emacs-lisp-mode)) 'sexp)
+                            (t 'defun)))
        (if (hs-already-hidden-p) (hs-show-all) (hs-hide-all)))))
 
   (defun hs-ok-toggle-hiding--ad (fun &rest _)
     "Advise `indent-for-tab-command' to add hiding toggle behavior."
-    ;; (declare (debug t))
     (if (and (boundp 'hs-minor-mode) (null hs-minor-mode))
         (apply fun _)
       (pcase (hs-already-hidden-p)
