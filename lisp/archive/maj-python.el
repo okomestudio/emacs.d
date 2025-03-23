@@ -5,6 +5,32 @@
 ;;
 ;;; Code:
 
+;;; LSP
+
+(use-package lsp-mode
+  ;; Set up `lsp-pylsp' for use.
+  :disabled
+  :custom ((lsp-diagnostics-provider :flycheck)
+           (lsp-lens-enable t)
+           (lsp-ui-doc-delay 2)
+           (lsp-ui-doc-enable t)
+
+           ;; pylsp
+           (lsp-pylsp-plugins-flake8-enabled nil)
+           (lsp-pylsp-plugins-pycodestyle-enabled nil)
+           (lsp-pylsp-plugins-pydocstyle-enabled nil)
+           (lsp-pylsp-plugins-pyflakes-enabled nil)
+           (lsp-pylsp-plugins-pylint-enabled nil)
+           (lsp-pylsp-plugins-ruff-enabled t))
+  :config
+  (defun lsp-pylsp-ok--start ()
+    (message (shell-command-to-string (ok-file-expand-bin "bootstrap-pylsp")))
+    (message (shell-command-to-string (ok-file-expand-bin "bootstrap-ruff")))
+    (setq-local lsp-disabled-clients '(lsp-pyright))
+    (lsp-deferred)))
+
+;;; Linting, formatting, etc.
+
 (use-package python
   :config
   (defun python-ok-format-code ()
@@ -13,19 +39,30 @@
     (py-isort-buffer)))
 
 (use-package blacken
-  :ensure-system-package
-  (black . "pip install black"))
+  :ensure-system-package (black . "pip install black"))
 
 (use-package py-isort
   :straight (py-isort
              :host github
              :repo "paetzke/py-isort.el"
              ;; For https://github.com/paetzke/py-isort.el/pull/21
-             :fork (:host github
-                          :repo "okomestudio/py-isort.el"
-                          :branch "ts/provide-default-settings-path"))
-  :ensure-system-package
-  (isort . "pip install isort"))
+             :fork ( :host github
+                     :repo "okomestudio/py-isort.el"
+                     :branch "ts/provide-default-settings-path" ))
+  :ensure-system-package (isort . "pip install isort"))
+
+(use-package pyimport
+  :straight
+  (pyimport :host github
+            :repo "Wilfred/pyimport"
+            :branch "master"
+            :fork ( :host github
+                    :repo "okomestudio/pyimport"
+                    :branch "venv-support" )
+            :files ("*.el" ("bin/make-imports.py" . "bin/make-imports.py")))
+  :ensure-system-package (pyflakes . "pip install pyflakes"))
+
+;;; Virtual env management
 
 (use-package pyenv
   :straight (:host github :repo "aiguofer/pyenv.el")
@@ -58,11 +95,13 @@
             (setenv "VIRTUAL_ENV" virtual-env)
             (setenv "PYENV_VIRTUAL_ENV" virtual-env)))))))
 
+;;; Pymacs
+
 (use-package pymacs
   :straight (pymacs
              :host github
              :repo "Pymacs2/Pymacs"
-             :post-build  ; see what install-pymacs.sh does:
+             :post-build            ; see what install-pymacs.sh does:
              (("pip" "install" "-U" "pyopenssl")
               `("pip" "install" "-e" ,(ok-file-expand-user-emacs-file
                                        "straight/repos/Pymacs/"))))

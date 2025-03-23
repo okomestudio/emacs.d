@@ -16,7 +16,7 @@
            (web-mode-style-padding 2)))
 
 (use-package reformatter
-  ;; Django template HTML formatter.
+  ;; Django template HTML formatters.
   ;;
   ;; To active per-project basis, have the following line in
   ;; .dir-locals.el:
