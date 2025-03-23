@@ -23,7 +23,11 @@
   ;;
   ;;   (define-key web-mode-map (kbd "C-c b") #'djhtml-format-buffer)
   ;;
-  :ensure-system-package (djhtml . "pip install djhtml")
+  ;; (Or use `djlint-format-buffer'.)
+  ;;
+  :ensure-system-package
+  (djhtml . "pip install djhtml")
+  (djlint . "pip install djlint")
   :config
   (reformatter-define djhtml-format
     ;; Provides `djhtml-format-buffer' and `djhtml-format-on-save-mode'.
@@ -32,7 +36,26 @@
     :stdin t
     :stdout t
     :lighter " DJHTML"
-    :group 'djhtml-format))
+    :group 'djhtml-format)
+
+  (reformatter-define djlint-format
+    ;; Provides `djlint-format-buffer' and `djlint-format-on-save-mode'.
+    :program (locate-user-emacs-file "bin/djlint")
+    :args '("--reformat"
+            "--blank-line-after-tag" "load,extends"
+            "--close-void-tags"
+            "--format-css"
+            "--format-js"
+            "--ignore" "H006,H030,H031,T002"
+            "--include" "H017,H035"
+            "--indent" "2"
+            "--max-line-length" "119"
+            "--profile" "django"
+            "-")
+    :stdin t
+    :stdout t
+    :lighter " DJLINT"
+    :group 'djlint-format))
 
 (use-package lorem-ipsum)
 

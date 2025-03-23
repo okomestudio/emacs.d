@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+#
+# djlint runner.
+#
+
+prefix=~/.pyenv/versions/"$(pyenv global)"
+
+if [[ ! -x "$prefix"/bin/djlint ]]; then
+  "$prefix"/bin/pip install djlint
+fi
+
+exec "$prefix"/bin/djlint "$@"
