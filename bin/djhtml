@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+#
+# djhtml runner.
+#
+
+prefix=~/.pyenv/versions/"$(pyenv global)"
+
+if [[ ! -x "$prefix"/bin/djhtml ]]; then
+  "$prefix"/bin/pip install djhtml
+fi
+
+exec "$prefix"/bin/djhtml "$@"
