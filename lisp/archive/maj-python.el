@@ -5,30 +5,6 @@
 ;;
 ;;; Code:
 
-;;; LSP
-
-(use-package lsp-mode
-  ;; Set up `lsp-pylsp' for use.
-  :disabled
-  :custom ((lsp-diagnostics-provider :flycheck)
-           (lsp-lens-enable t)
-           (lsp-ui-doc-delay 2)
-           (lsp-ui-doc-enable t)
-
-           ;; pylsp
-           (lsp-pylsp-plugins-flake8-enabled nil)
-           (lsp-pylsp-plugins-pycodestyle-enabled nil)
-           (lsp-pylsp-plugins-pydocstyle-enabled nil)
-           (lsp-pylsp-plugins-pyflakes-enabled nil)
-           (lsp-pylsp-plugins-pylint-enabled nil)
-           (lsp-pylsp-plugins-ruff-enabled t))
-  :config
-  (defun lsp-pylsp-ok--start ()
-    (message (shell-command-to-string (ok-file-expand-bin "bootstrap-pylsp")))
-    (message (shell-command-to-string (ok-file-expand-bin "bootstrap-ruff")))
-    (setq-local lsp-disabled-clients '(lsp-pyright))
-    (lsp-deferred)))
-
 ;;; Linting, formatting, etc.
 
 (use-package python

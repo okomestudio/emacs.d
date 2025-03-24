@@ -77,18 +77,56 @@
         (ruff-isort-format-on-save-mode)
         (ruff-format-on-save-mode))
 
-      ;; lsp-pyright
-      (setq-local lsp-disabled-clients '(pylsp))
-      (require 'lsp-pyright)
-      (require 'lsp-ruff)
-      (setq-local lsp-pyright-python-executable-cmd python-shell-interpreter
-                  lsp-pyright-venv-path python-shell-virtualenv-root)
+      ;; LSP
+      (pcase 'pyright
+        ('pylsp
+         (require 'lsp-mode)
+         (setq-local lsp-enabled-clients '(pylsp)
+                     lsp-disabled-clients '(pyright ruff))
+         (lsp-pylsp-ok--install-pylsp-if-missing))
+
+        ('pyright
+         (require 'lsp-mode)
+         (require 'lsp-pyright)
+         (require 'lsp-ruff)
+         (setq-local lsp-enabled-clients '(pyright)
+                     lsp-disabled-clients '(pylsp ruff)
+                     lsp-pyright-python-executable-cmd python-shell-interpreter
+                     lsp-pyright-venv-path python-shell-virtualenv-root)
+         (lsp-pyright-ok--install-pyright-if-missing)))
       (lsp-deferred)))
 
   (add-hook 'python-base-mode-hook #'pet-ok--init -10)
   (add-hook 'python-sql-base-mode-hook #'pet-ok--init -10))
 
 ;;; LSP
+
+(use-package lsp-mode
+  ;; Enable for `lsp-ruff'.
+  :custom ((lsp-ruff-log-level "debug")
+           (lsp-ruff-show-notifications "always")
+           (lsp-ruff-python-path "python3")))
+
+(use-package lsp-mode
+  ;; Enable for `lsp-pylsp'.
+  :custom ((lsp-diagnostics-provider :flycheck)
+           (lsp-lens-enable t)
+           (lsp-ui-doc-delay 2)
+           (lsp-ui-doc-enable t)
+
+           (lsp-pylsp-plugins-flake8-enabled nil)
+           (lsp-pylsp-server-command "pylsp")
+           (lsp-pylsp-plugins-pycodestyle-enabled nil)
+           (lsp-pylsp-plugins-pydocstyle-enabled nil)
+           (lsp-pylsp-plugins-pyflakes-enabled nil)
+           (lsp-pylsp-plugins-pylint-enabled nil)
+           (lsp-pylsp-plugins-ruff-enabled nil))
+  :config
+  (defun lsp-pylsp-ok--install-pylsp-if-missing ()
+    (unless (file-exists-p
+             (file-name-concat python-shell-virtualenv-root "bin" "pylsp"))
+      (shell-command (format "%s/bin/python -m pip install python-lsp-server"
+                             python-shell-virtualenv-root)))))
 
 (use-package lsp-pyright
   ;; Enable for lsp-pyright.
@@ -97,19 +135,27 @@
            (lsp-ui-doc-delay 2)
            (lsp-ui-doc-enable t)
 
+           (lsp-log-io nil)
+           (lsp-print-performance nil)
+           (lsp-report-if-no-buffer nil)
+           (lsp-ui-doc-enable nil)
+           (lsp-message-project-root-warning nil)
+
+
            ;; See github.com/astral-sh/ruff-lsp/issues/384#issuecomment-1941556771
            (lsp-pyright-disable-organize-imports t) ; use ruff
-           (lsp-pyright-type-checking-mode "off") ; use mypy
+           (lsp-pyright-type-checking-mode "off")   ; use mypy
            ;; (lsp-pyright-ignore "*") ; use ruff
 
            (lsp-pyright-auto-import-completions t)
            (lsp-pyright-langserver-command "pyright")
-           (lsp-pyright-log-level "debug")))
-
-(use-package lsp-ruff
-  :custom ((lsp-ruff-log-level 'debug)
-           (lsp-ruff-show-notifications 'always)
-           (lsp-ruff-python-path "python3")))
+           (lsp-pyright-log-level "debug"))
+  :config
+  (defun lsp-pyright-ok--install-pyright-if-missing ()
+    (unless (file-exists-p
+             (file-name-concat lsp-pyright-venv-path "bin" "pyright"))
+      (shell-command (format "%s -m pip install pyright"
+                             lsp-pyright-python-executable-cmd)))))
 
 ;;; LINTING, FORMATTING, etc.
 ;; TODO(2024-12-15): Try for docstring formatting:

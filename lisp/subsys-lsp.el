@@ -54,11 +54,10 @@ The function returns LSP servers that have been shut down."
   ;; Pressing an arrow key or tab goes out of that state. See
   ;; https://github.com/emacs-lsp/lsp-ui/issues/751.
   ;;
-  :bind (:map
-         lsp-ui-mode-map
-         ("C-h ." . lsp-ui-ok--toggle-doc)
-         :map lsp-ui-doc-frame-mode-map
-         ("q" . lsp-ui-ok--doc-quit))
+  :bind ( :map lsp-ui-mode-map
+          ("C-h ." . lsp-ui-ok--toggle-doc)
+          :map lsp-ui-doc-frame-mode-map
+          ("q" . lsp-ui-ok--doc-quit) )
   :custom ((lsp-ui-doc-border "black")
            (lsp-ui-doc-delay 0.2)
            (lsp-ui-doc-max-height 20)
