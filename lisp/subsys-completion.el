@@ -13,43 +13,46 @@
   :hook ((prog-mode
           text-mode
           conf-mode
-          lsp-completion-mode) . cape-ok--set-super-capf)
+          lsp-completion-mode) . cape-ok--capf-set)
   :custom (cape-dabbrev-check-other-buffers nil)
   :config
   (require 'tempel)
 
-  (defun cape-ok--set-super-capf (&optional arg)
-    (setq-local completion-at-point-functions
-                (list (cape-capf-noninterruptible
+  ;; `cape-capf-super' combines multiple capfs into one function to
+  ;; speed up candidate lookup.
+  (setq cape-ok--capf (cape-capf-noninterruptible
                        (cape-capf-buster
                         (cape-capf-properties
                          (cape-capf-super
-                          (if arg
-                              arg
-                            (car completion-at-point-functions))
+                          ;; (car completion-at-point-functions)
                           #'cape-file
                           #'tempel-complete
                           ;; #'tabnine-completion-at-point
                           #'cape-dabbrev)
                          :sort t
-                         :exclusive 'no))))))
+                         :exclusive 'no))))
+  (defun cape-ok--capf (&rest _) (apply cape-ok--capf _))
+  (defun cape-ok--capf-set ()
+    "Set CAPFs for the standard text/prog modes."
+    (add-hook 'completion-at-point-functions #'cape-ok--capf -99 t))
 
-  (add-hook 'completion-at-point-functions #'cape-file)
-  (add-hook 'completion-at-point-functions #'tempel-complete)
+  ;; Add the basic capfs with lower priorities here:
+  (add-hook 'completion-at-point-functions #'cape-file 92)
+  (add-hook 'completion-at-point-functions #'tempel-complete 93)
   ;; (add-hook 'completion-at-point-functions #'tabnine-completion-at-point)
-  (add-hook 'completion-at-point-functions #'cape-tex)
-  (add-hook 'completion-at-point-functions #'cape-dabbrev)
-  (add-hook 'completion-at-point-functions #'cape-keyword)
-  (add-hook 'completion-at-point-functions #'cape-elisp-block))
+  (add-hook 'completion-at-point-functions #'cape-tex 95)
+  (add-hook 'completion-at-point-functions #'cape-dabbrev 96)
+  (add-hook 'completion-at-point-functions #'cape-keyword 97)
+  (add-hook 'completion-at-point-functions #'cape-elisp-block 98))
 
 ;; TEMPLATING
 
 (use-package tempel
-  :bind (("M-+" . tempel-complete)
-         ("M-*" . tempel-insert)
-         :map tempel-map
-         ("M-}" . tempel-next)
-         ("M-{" . tempel-previous))
+  :bind ( ("M-+" . tempel-complete)
+          ("M-*" . tempel-insert)
+          :map tempel-map
+          ("M-}" . tempel-next)
+          ("M-{" . tempel-previous) )
   :custom (tempel-path `(,(ok-file-expand-etc "tempel/templates.el")))
   :config
   (defun tempel-ok--include (elt)
@@ -94,7 +97,9 @@
 ;; CORFU
 
 (use-package corfu
-  :straight (:host github :repo "minad/corfu" :files (:defaults "extensions/*"))
+  :straight (corfu :host github
+                   :repo "minad/corfu"
+                   :files (:defaults "extensions/*"))
   :hook ((conf-mode
           prog-mode
           text-mode) . corfu-mode)
