@@ -81,7 +81,7 @@
                          :files (:defaults "extensions/*"))
   :custom ((org-roam-ok-node-use-cache-in-memory t)
            (org-roam-ok-node-gt-use-cache-in-memory t)
-           (org-roam-ok-on-idle-delay 3))
+           (org-roam-ok-on-idle-delay nil))
   :init
   (load (ok-file-expand-etc "org-roam/init"))
   (org-roam-ok-on-idle-init-setup))
