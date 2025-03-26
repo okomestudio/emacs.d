@@ -10,20 +10,21 @@
 (use-package org-roam
   :straight (org-roam
              :host github
-             :repo "org-roam/org-roam"  ; official version
+             :repo "org-roam/org-roam"
              ;; (:fork t
              ;;  :branch "refactor-org-roam-unlinked-references-section")
              :files (:defaults "extensions/*"))
-  :bind (("C-c n c" . org-roam-ok-capture-create-from-ref)
-         ("C-c n f" . org-roam-node-find)
-         ("C-c n i" . org-roam-node-insert)
-         ("C-c n l" . org-roam-buffer-toggle)
-         :map org-mode-map
-         ("C-c b i" . org-ref-insert-link)
-         ("C-M-i" . completion-at-point)
-         ("C-c C-q" . org-roam-ok-node-tag-add-or-remove)
-         ("C-c a" . org-roam-ok-node-alias-add-or-remove)
-         ("C-c r f" . org-roam-ok-node-ref-find))
+  :bind ( ("C-c n c" . org-roam-ok-capture-create-from-ref)
+          ("C-c n f" . org-roam-node-find)
+          ("C-c n i" . org-roam-node-insert)
+          ("C-c n l" . org-roam-buffer-toggle)
+
+          :map org-mode-map
+          ("C-c b i" . org-ref-insert-link)
+          ("C-M-i" . completion-at-point)
+          ("C-c C-q" . org-roam-ok-node-tag-add-or-remove)
+          ("C-c a" . org-roam-ok-node-alias-add-or-remove)
+          ("C-c r f" . org-roam-ok-node-ref-find) )
   :bind-keymap ("C-c n d" . org-roam-dailies-map)
   :custom ((org-roam-completion-everywhere nil)
            (org-roam-database-connector 'sqlite-builtin)
@@ -42,6 +43,12 @@
                                                    (propertize "${orp-tags}"
                                                                'face 'org-tag)
                                                    " ${orp-timestamp:10}")))
+  :init
+  (pcase-dolist (`(,key ,doc) '(("C-c n" "org-roam")
+                                ("C-c n d" "org-roam-dailies")))
+    (with-eval-after-load 'which-key
+      (which-key-add-key-based-replacements key doc)))
+
   :config
   (org-roam-ok-enhance)
   (org-roam-db-sync)

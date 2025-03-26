@@ -78,13 +78,13 @@
   :bind ("M-g s" . consult-flyspell))
 
 (use-package consult-projectile
-  :after (consult projectile)
-  :bind (([remap projectile-find-dir] . consult-projectile-find-dir)
-         ([remap projectile-find-file] . consult-projectile-find-file)
-         ([remap projectile-switch-project] . consult-projectile-switch-project)
+  :after (projectile)
+  :bind ( ([remap projectile-find-dir] . consult-projectile-find-dir)
+          ([remap projectile-find-file] . consult-projectile-find-file)
+          ([remap projectile-switch-project] . consult-projectile-switch-project)
 
-         :map projectile-command-map
-         ("A" . consult-projectile))
+          :map projectile-command-map
+          ("A" . consult-projectile) )
   :config
   ;; Advise `consult-projectile-switch-project' to trigger project
   ;; switch hooks. These projectile hooks won't trigger unless

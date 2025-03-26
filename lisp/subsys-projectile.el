@@ -6,16 +6,16 @@
 ;;; Code:
 
 (use-package projectile
-  :bind-keymap (("s-p" . projectile-command-map)  ; "s-" is "super"
-                ("C-c p" . projectile-command-map))
+  :after project                        ; ensures the overriding of `C-x p'
+  :bind-keymap ("C-x p" . projectile-command-map)
   :custom ((projectile-auto-discover nil)
            (projectile-enable-caching nil)
            (projectile-git-fd-args "-H -0 -E .git -tf")
            (projectile-ignored-projects '("~/" "~/.pyenv/"))
            (projectile-indexing-method 'alien)
            (projectile-mode-line-function
-            '(lambda ()
-               (format " [%s]" (projectile-project-name))))
+            (lambda ()
+              (format " [%s]" (projectile-project-name))))
            (projectile-project-root-functions
             '(projectile-root-local
               projectile-root-bottom-up
@@ -28,13 +28,16 @@
                           (fdfind . "sudo apt install -y fd-find"))
   :config
   (projectile-mode +1)
-
-  ;; Doing this in :bind doesn't appear to work:
-  (keymap-global-set "C-x 4 p" (lambda ()
-                                 (interactive)
-                                 (other-window -1)
-                                 (projectile-switch-project)
-                                 (other-window +1))))
+  (pcase-dolist
+      (`(,key ,doc) '(("C-x p" "projectile")
+                      ("C-x p 4" "projectile-other-window")
+                      ("C-x p 5" "projectile-other-frame")
+                      ("C-x p s" "projectile-search")
+                      ("C-x p c" "projectile-command")
+                      ("C-x p x" "projectile-run")
+                      ("C-x p x 4" "projectile-run-other-window")))
+    (with-eval-after-load 'which-key
+      (which-key-add-key-based-replacements key doc))))
 
 (provide 'subsys-projectile)
 ;;; subsys-projectile.el ends here

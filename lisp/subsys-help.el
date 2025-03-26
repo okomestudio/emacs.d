@@ -25,13 +25,12 @@
 
 (use-package help
   :straight nil
-  :bind (:prefix
-         "C-h V"
-         :prefix-map help-view-other-doc
-         ("p" . help-ok-view-doc-elisp-for-python)
-         ("s" . help-ok-view-doc-straight)
-         ("q" . help-ok-view-doc-emacsql)
-         ("t" . help-ok-view-doc-tempel))
+  :bind ( :prefix "C-h V"
+          :prefix-map help-view-other-doc
+          ("p" . help-ok-view-doc-elisp-for-python)
+          ("s" . help-ok-view-doc-straight)
+          ("q" . help-ok-view-doc-emacsql)
+          ("t" . help-ok-view-doc-tempel) )
   :custom (list-faces-sample-text (concat "abcdefghijklmn"
                                           "ABCDEFGHIJKLMN"
                                           "漢字 ひらがな カタカナ"))
@@ -65,27 +64,26 @@
           (format "View `%s' README." sym))))))
 
 (use-package helpful
-  :bind (("C-c C-d" . helpful-at-point)
-         :map help-map
-         ("F" . helpful-function)
-         ("f" . helpful-callable)  ; for both functions and macros
-         ("k" . helpful-key)
-         ("l" . view-lossage)
-         ("v" . helpful-variable)
-         ("x" . helpful-command)))
+  :bind ( ("C-c C-d" . helpful-at-point)
+          :map help-map
+          ("F" . helpful-function)
+          ("f" . helpful-callable)  ; for both functions and macros
+          ("k" . helpful-key)
+          ("l" . view-lossage)
+          ("v" . helpful-variable)
+          ("x" . helpful-command) ))
 
 (use-package apropos
   :straight nil
-  :bind (:prefix
-         "C-h a"
-         :prefix-map apropos-prefix-map
-         ("a" . apropos)
-         ("d" . apropos-documentation)
-         ("f" . apropos-command)
-         ("i" . info-apropos)
-         ("l" . apropos-library)
-         ("v" . apropos-variable)
-         ("C-v" . apropos-value))
+  :bind ( :prefix "C-h a"
+          :prefix-map apropos-prefix-map
+          ("a" . apropos)
+          ("d" . apropos-documentation)
+          ("f" . apropos-command)
+          ("i" . info-apropos)
+          ("l" . apropos-library)
+          ("v" . apropos-variable)
+          ("C-v" . apropos-value) )
   :custom (apropos-sort-by-scores t))
 
 (use-package help-shortdoc-example
@@ -129,17 +127,17 @@
 (use-package which-key
   ;; Displays available keybindings in popup.
   :straight nil
-  :bind (("C-h C-h" . nil) ;; clear, otherwise will bind to `help-for-help'
+  :bind ( ("C-h C-h" . nil) ;; clear, otherwise will bind to `help-for-help'
 
-         :prefix-map where-or-which-map
-         :prefix "C-h w"
-         ("i" . where-is)
+          :prefix-map where-or-which-map
+          :prefix "C-h w"
+          ("i" . where-is)
 
-         :map help-map
-         ("A" . which-key-show-top-level)
+          :map help-map
+          ("A" . which-key-show-top-level)
 
-         :map which-key-C-h-map
-         ("s" . which-key-ok--change-sort-order))
+          :map which-key-C-h-map
+          ("s" . which-key-ok--change-sort-order) )
   :custom ((which-key-idle-delay 0.5)
            (which-key-idle-secondary-delay 0.05)
            (which-key-max-description-length 79)
@@ -175,15 +173,30 @@
               ('which-key-description-order 'which-key-key-order)
               (_ 'which-key-description-order)))
     (which-key-reload-key-sequence)
-    (which-key--create-buffer-and-show (which-key--current-prefix))))
+    (which-key--create-buffer-and-show (which-key--current-prefix)))
+
+  (pcase-dolist
+      (`(,key ,doc) '(("C-c i" "ok-edit")
+                      ("C-x 8 e" "emoji")
+                      ("C-x 8" "char")
+                      ("C-x C-a" "edebug")
+                      ("C-x RET" "char-coding")
+                      ("C-x X" "edebug")
+                      ("C-x a" "abbrev")
+                      ("C-x n" "narrow")
+                      ("C-x p" "project")
+                      ("C-x r" "register")
+                      ("C-x t" "tab")
+                      ("C-x w" "window")))
+    (with-eval-after-load 'which-key
+      (which-key-add-key-based-replacements key doc))))
 
 ;;; TRANSIENT UTILITIES
 
 (use-package casual
   ;; Provide a keyboard-driven menu UI
-  :bind (:map
-         Info-mode-map
-         ("C-/" . casual-info-tmenu))
+  :bind ( :map Info-mode-map
+          ("C-/" . casual-info-tmenu) )
   :custom ((casual-info-use-unicode-symbols t)
            (casual-lib-use-unicode t))
   :config (require 'casual-info))
@@ -212,11 +225,10 @@
   ;;
   ;; Run `devdocs-install' to download documents on select topics.
   ;;
-  :bind (:map
-         help-map
-         ("D" . devdocs-lookup)
-         :map devdocs-mode-map
-         ("v" . devdocs-ok-visit))
+  :bind ( :map help-map
+          ("D" . devdocs-lookup)
+          :map devdocs-mode-map
+          ("v" . devdocs-ok-visit) )
   :hook (((ansible
            bash-ts-mode
            css-ts-mode
