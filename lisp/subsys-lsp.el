@@ -55,9 +55,9 @@ The function returns LSP servers that have been shut down."
   ;; https://github.com/emacs-lsp/lsp-ui/issues/751.
   ;;
   :bind ( :map lsp-ui-mode-map
-          ("C-h ." . lsp-ui-ok--toggle-doc)
+          ("C-h o" . lsp-ui-ok-doc-show)
           :map lsp-ui-doc-frame-mode-map
-          ("q" . lsp-ui-ok--doc-quit) )
+          ("q" . lsp-ui-ok-doc-quit) )
   :custom ((lsp-ui-doc-delay 0.2)
            (lsp-ui-doc-max-height 20)
            (lsp-ui-doc-position 'at-point)
@@ -71,24 +71,27 @@ The function returns LSP servers that have been shut down."
            (lsp-ui-sideline-show-diagnostics t)
            (lsp-ui-sideline-show-hover t))
   :hook ((enable-theme-functions . lsp-ui-ok--theme))
-  :commands lsp-ui-mode
   :config
-  (defun lsp-ui-ok--toggle-doc (arg)
+  (defun lsp-ui-ok-doc-show (arg)
     "Toggle LSP UI help."
     (interactive "P")
     (pcase arg
-      ('(4) (progn
-              (lsp-ui-doc-show)))
-      (_ (progn
-           (if (lsp-ui-doc--visible-p)
-               (lsp-ui-doc-focus-frame)
-             (lsp-ui-doc-glance))))))
+      ('(4) (lsp-ui-doc-show))
+      (_ (if (lsp-ui-doc--visible-p)
+             (lsp-ui-doc-focus-frame)
+           (lsp-ui-doc-glance)))))
 
-  (defun lsp-ui-ok--doc-quit ()
+  (defun lsp-ui-ok-doc-quit ()
     "Quick LSP UI help."
     (interactive)
     (lsp-ui-doc-unfocus-frame)
     (lsp-ui-doc-hide))
+
+  ;; Add the repeat map so that the popup doc can be focused with `C-x
+  ;; o o'.
+  (defvar lsp-ui-mode-repeat-map (make-sparse-keymap))
+  (put #'lsp-ui-ok-doc-show 'repeat-map 'lsp-ui-mode-repeat-map)
+  (define-key lsp-ui-mode-repeat-map "o" #'lsp-ui-ok-doc-show)
 
   (defun lsp-ui-ok--theme (theme)
     (setopt lsp-ui-doc-border (face-attribute 'border :foreground nil 'default))
