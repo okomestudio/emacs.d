@@ -24,15 +24,16 @@
   )
 
 (use-package ok
-  :bind (;
-         :map prog-mode-map
-         ("C-M-;" . ok-edit-align-comments)))
+  :bind ( :map prog-mode-map
+          ("C-M-;" . ok-edit-align-comments) ))
+
+(use-package repeat
+  :hook (on-first-input . repeat-mode))
 
 (use-package titlecase
   ;; Titlecase things.
-  :bind (:map
-         text-mode-map
-         ("M-c" . titlecase-dwim))
+  :bind ( :map text-mode-map
+          ("M-c" . titlecase-dwim) )
   :custom
   (titlecase-skip-words-regexps
    '("\\b[[:upper:]]+\\b"
@@ -43,22 +44,23 @@
   ;; Typographical utility (e.g., smart quotation).
   :hook (org-mode . typo-mode)
   :config
-  (define-typo-cycle typo-cycle-dashes
-    "Cycle through various dashes."
-    ;; Add two-em dash and horizontal bar.
-    ("-"                                ; HYPHEN-MINUS
-     "–"                                ; EN DASH
-     "—"                                ; EM DASH
-     "−"                                ; MINUS SIGN
-     "‐"                                ; HYPHEN
-     "‑"                                ; NON-BREAKING HYPHEN
-     "⸺"                                ; TWO-EM DASH
-     "―"                                ; HORIZONTAL BAR
-     )))
+  (define-typo-cycle
+   typo-cycle-dashes
+   "Cycle through various dashes."
+   ;; Add two-em dash and horizontal bar.
+   ("-"                                ; HYPHEN-MINUS
+    "–"                                ; EN DASH
+    "—"                                ; EM DASH
+    "−"                                ; MINUS SIGN
+    "‐"                                ; HYPHEN
+    "‑"                                ; NON-BREAKING HYPHEN
+    "⸺"                                ; TWO-EM DASH
+    "―"                                ; HORIZONTAL BAR
+    )))
 
 (use-package vundo
-  :bind (("C-/" . undo)
-         ("C-?" . undo-redo)))
+  :bind ( ("C-/" . undo)
+          ("C-?" . undo-redo) ))
 
 (use-package whole-line-or-region
   ;; Operate on current line if region undefined.
@@ -68,9 +70,8 @@
 
 (use-package flyspell
   :straight nil
-  :bind (;
-         :map flyspell-mode-map
-         ("C-;" . flyspell-auto-correct-previous-word))  ; or `M-s M-s'?
+  :bind ( :map flyspell-mode-map
+          ("C-;" . flyspell-auto-correct-previous-word) )  ; or `M-s M-s'?
   :hook ((prog-mode
           shell-script-mode
           text-mode) . flyspell-prog-mode)
