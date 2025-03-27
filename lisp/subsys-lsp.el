@@ -58,8 +58,7 @@ The function returns LSP servers that have been shut down."
           ("C-h ." . lsp-ui-ok--toggle-doc)
           :map lsp-ui-doc-frame-mode-map
           ("q" . lsp-ui-ok--doc-quit) )
-  :custom ((lsp-ui-doc-border "black")
-           (lsp-ui-doc-delay 0.2)
+  :custom ((lsp-ui-doc-delay 0.2)
            (lsp-ui-doc-max-height 20)
            (lsp-ui-doc-position 'at-point)
            (lsp-ui-doc-show-with-cursor nil)
@@ -71,6 +70,7 @@ The function returns LSP servers that have been shut down."
            (lsp-ui-sideline-show-code-actions t)
            (lsp-ui-sideline-show-diagnostics t)
            (lsp-ui-sideline-show-hover t))
+  :hook ((enable-theme-functions . lsp-ui-ok--theme))
   :commands lsp-ui-mode
   :config
   (defun lsp-ui-ok--toggle-doc (arg)
@@ -90,7 +90,10 @@ The function returns LSP servers that have been shut down."
     (lsp-ui-doc-unfocus-frame)
     (lsp-ui-doc-hide))
 
-  (set-face-background 'lsp-ui-doc-background "#eeeeee"))
+  (defun lsp-ui-ok--theme (theme)
+    (setopt lsp-ui-doc-border (face-attribute 'border :foreground nil 'default))
+    (set-face-background 'lsp-ui-doc-background
+                         (face-attribute 'default :background))))
 
 (use-package lsp-treemacs
   :after (lsp-mode)
