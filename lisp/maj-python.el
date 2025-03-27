@@ -68,6 +68,9 @@
       ;; (pet-flycheck-setup)
       ;; (flycheck-mode)
 
+      ;; Pydoc
+      (setq-local pydoc-python-command (pet-executable-find "python"))
+
       ;; Pytest
       (setq-local python-pytest-executable (pet-executable-find "pytest"))
 
@@ -177,9 +180,9 @@
 
 (use-package pydoc
   :bind ( :map python-mode-map
-          ("C-h o" . pydoc-at-point)
+          ("C-h ." . pydoc-at-point-no-jedi)
           :map python-ts-mode-map
-          ("C-h o" . pydoc-at-point) )
+          ("C-h ." . pydoc-at-point-no-jedi) )
   :hook ((python-mode
           python-ts-mode) . (lambda () (require 'pydoc))))
 
