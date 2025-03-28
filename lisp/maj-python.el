@@ -151,7 +151,7 @@
            ;; (lsp-pyright-ignore "*") ; use ruff
 
            (lsp-pyright-auto-import-completions t)
-           (lsp-pyright-langserver-command "pyright")
+           (lsp-pyright-langserver-command "basedpyright") ; or "pyright"
            (lsp-pyright-log-level "debug"))
   :config
   (defun lsp-pyright-ok--install-pyright-if-missing ()
