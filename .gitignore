@@ -14,6 +14,7 @@
 # Ignore in emacs.d
 **/site-lisp/*.el
 .cache
+.chatgpt-shell.el
 .lsp-session-*
 .mc-lists.el
 .org-id-locations
