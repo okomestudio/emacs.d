@@ -11,6 +11,10 @@
 
 ;;; EDITING
 
+(use-package elec-pair
+  :straight nil
+  :hook (prog-mode . electric-pair-local-mode))
+
 (use-package hideshow
   :straight nil
   :bind ( :map hs-minor-mode-map

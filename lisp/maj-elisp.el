@@ -68,10 +68,17 @@
   )
 
 (use-package paredit
+  ;; Parentheses editing.
   :hook ((emacs-lisp-mode
           lisp-data-mode) . paredit-ok--enable-paredit)
   :config
+  (setq paredit-comment-prefix-margin "; ")
+
   (defun paredit-ok--enable-paredit ()
+    (setq-local comment-column 30)
+
+    ;; Turn off `electric-pair-mode' to avoid conflict with
+    ;; `paredit-mode':
     (electric-pair-local-mode -1)
     (enable-paredit-mode)))
 
