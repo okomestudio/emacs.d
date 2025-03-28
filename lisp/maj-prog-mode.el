@@ -6,7 +6,8 @@
 ;;; Code:
 
 (use-package prog-mode
-  :straight nil)
+  :straight nil
+  :hook (after-save . executable-make-buffer-file-executable-if-script-p))
 
 ;;; EDITING
 
@@ -15,7 +16,7 @@
   :bind ( :map hs-minor-mode-map
           ("<backtab>" . hs-ok-toggle-hiding-all)
           ("C-c @ C-a" . hs-show-all)
-          ("C-c @ C-t" . hs-hide-all))
+          ("C-c @ C-t" . hs-hide-all) )
   :hook (prog-mode . hs-minor-mode)
   :config
   (defun hs-ok-toggle-hiding-all ()
@@ -51,7 +52,7 @@
 
 (use-package lisp
   :straight nil
-  :bind (;; The following work in many prog modes, but defined in lisp.el:
+  :bind (; The following work in many prog modes, but defined in lisp.el:
          ("C-x n d" . narrow-to-defun)
          ("C-x n w" . widen)))
 
