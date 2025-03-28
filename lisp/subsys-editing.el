@@ -66,6 +66,16 @@
   ;; Operate on current line if region undefined.
   )
 
+;;; UNDO/REDO
+
+(use-package undo-fu-session
+  :hook (on-first-input . undo-fu-session-global-mode))
+
+(use-package vundo
+  :bind ( ("C-c C-/" . vundo)
+          ("C-/" . undo)
+          ("C-?" . undo-redo) ))
+
 ;;; SPELLING
 
 (use-package flyspell
