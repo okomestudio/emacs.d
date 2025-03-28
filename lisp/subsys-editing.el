@@ -63,6 +63,10 @@
 
 ;;; UNDO/REDO
 
+(use-package point-undo
+  :bind ( ("M-[" . point-undo)
+          ("M-]" . point-redo) ))
+
 (use-package undo-fu-session
   :hook (on-first-input . undo-fu-session-global-mode))
 
