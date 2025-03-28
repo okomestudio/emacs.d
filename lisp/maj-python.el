@@ -179,12 +179,18 @@
 ;; HELP & DOCS
 
 (use-package pydoc
+  :straight (pydoc :host github :repo "statmobile/pydoc"
+                   :fork ( :branch "all-names" )
+                   :files (:defaults "extensions/*"))
   :bind ( :map python-mode-map
           ("C-h ." . pydoc-at-point-no-jedi)
           :map python-ts-mode-map
           ("C-h ." . pydoc-at-point-no-jedi) )
+  :custom (pydoc-module-getter-functions '(pydoc-module-getters-all-names))
   :hook ((python-mode
-          python-ts-mode) . (lambda () (require 'pydoc))))
+          python-ts-mode) . (lambda () (require 'pydoc)))
+  :config
+  (require 'pydoc-module-getters))
 
 (provide 'maj-python)
 ;;; maj-python.el ends here
