@@ -45,22 +45,17 @@
   :hook (org-mode . typo-mode)
   :config
   (define-typo-cycle
-   typo-cycle-dashes
-   "Cycle through various dashes."
-   ;; Add two-em dash and horizontal bar.
-   ("-"                                ; HYPHEN-MINUS
-    "–"                                ; EN DASH
-    "—"                                ; EM DASH
-    "−"                                ; MINUS SIGN
-    "‐"                                ; HYPHEN
-    "‑"                                ; NON-BREAKING HYPHEN
-    "⸺"                                ; TWO-EM DASH
-    "―"                                ; HORIZONTAL BAR
-    )))
-
-(use-package vundo
-  :bind ( ("C-/" . undo)
-          ("C-?" . undo-redo) ))
+      typo-cycle-dashes
+    "Cycle through various dashes."
+    ("-"        ; HYPHEN-MINUS
+     "–"        ; EN DASH
+     "—"        ; EM DASH
+     "−"        ; MINUS SIGN
+     "‐"        ; HYPHEN
+     "‑"        ; NON-BREAKING HYPHEN
+     "⸺"        ; TWO-EM DASH (added)
+     "―"        ; HORIZONTAL BAR (added)
+     )))
 
 (use-package whole-line-or-region
   ;; Operate on current line if region undefined.
