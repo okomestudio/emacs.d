@@ -37,6 +37,8 @@
     :models '(deepseek-chat deepseek-coder)))
 
 (use-package org-ai
+  :bind ( :map org-ai-mode-map
+          ("C-c r" . nil) )   ; prevent hijacking the key used for `org-ref'
   :custom ((org-ai-default-chat-model "gpt-3.5-turbo")
            (org-ai-image-directory "~/tmp/org-ai/")
            (org-ai-sd-directory "~/tmp/org-ai/"))

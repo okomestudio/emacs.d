@@ -20,11 +20,11 @@
           ("C-c n l" . org-roam-buffer-toggle)
 
           :map org-mode-map
-          ("C-c b i" . org-ref-insert-link)
           ("C-M-i" . completion-at-point)
           ("C-c C-q" . org-roam-ok-node-tag-add-or-remove)
           ("C-c a" . org-roam-ok-node-alias-add-or-remove)
-          ("C-c r f" . org-roam-ok-node-ref-find) )
+          ("C-c r f" . org-roam-ok-node-ref-find)
+          ("C-c r i" . org-ref-insert-link) )
   :bind-keymap ("C-c n d" . org-roam-dailies-map)
   :custom ((org-roam-completion-everywhere nil)
            (org-roam-database-connector 'sqlite-builtin)
@@ -45,7 +45,8 @@
                                                    " ${orp-timestamp:10}")))
   :init
   (pcase-dolist (`(,key ,doc) '(("C-c n" "org-roam")
-                                ("C-c n d" "org-roam-dailies")))
+                                ("C-c n d" "org-roam-dailies")
+                                ("C-c r" "org-ref")))
     (with-eval-after-load 'which-key
       (which-key-add-key-based-replacements key doc)))
 
