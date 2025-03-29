@@ -30,5 +30,8 @@
                                 :height 100
                                 :italic t))))
 
+(use-package git-gutter
+  :hook (on-first-buffer . global-git-gutter-mode))
+
 (provide 'subsys-git)
 ;;; subsys-git.el ends here
