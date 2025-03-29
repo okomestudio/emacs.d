@@ -176,8 +176,7 @@
     (which-key--create-buffer-and-show (which-key--current-prefix)))
 
   (pcase-dolist
-      (`(,key ,doc) '(("C-c i" "ok-edit")
-                      ("C-x 8 e" "emoji")
+      (`(,key ,doc) '(("C-x 8 e" "emoji")
                       ("C-x 8" "char")
                       ("C-x C-a" "edebug")
                       ("C-x RET" "char-coding")

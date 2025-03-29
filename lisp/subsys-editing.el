@@ -24,8 +24,17 @@
   )
 
 (use-package ok
-  :bind ( :map prog-mode-map
-          ("C-M-;" . ok-edit-align-comments) ))
+  :bind ( ("C-S-o" . ok-edit-insert-newline-above)
+          ("C-c i SPC" . ok-edit-insert-zero-width-space)
+          ("C-c i s" . ok-edit-insert-section-delimiter)
+          ("C-o" . ok-edit-insert-newline-below)
+          ("M-q" . ok-edit-fill-or-unfill-paragraph) ; TODO: Use `prog-fill-reindent-defun'?
+
+          :map prog-mode-map
+          ("C-M-;" . ok-edit-align-comments) )
+  :config
+  (with-eval-after-load 'which-key
+    (which-key-add-key-based-replacements "C-c i" "ok-edit")))
 
 (use-package repeat
   :hook (on-first-input . repeat-mode))

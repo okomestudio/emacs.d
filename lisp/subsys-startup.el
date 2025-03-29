@@ -17,16 +17,12 @@
 (use-package emacs
   :straight nil
   :demand t
-  :bind (("<f5>" . ok-buffer-revert-no-confirm)
-         ("C-S-o" . ok-edit-insert-newline-above)
-         ("C-c i SPC" . ok-edit-insert-zero-width-space)
-         ("C-c i s" . ok-edit-insert-section-delimiter)
-         ("C-o" . ok-edit-insert-newline-below)
-         ("C-x 4 c" . clone-indirect-buffer-other-window)
-         ("C-x C-c". iconify-frame) ; minimize instead of
-                                    ; `save-buffers-kill-terminal' to
-                                    ; avoid accidental quit
-         ("M-q" . ok-edit-fill-or-unfill-paragraph)) ; TODO: Use `prog-fill-reindent-defun'?
+  :bind ( ("<f5>" . ok-buffer-revert-no-confirm)
+          ("C-x 4 c" . clone-indirect-buffer-other-window)
+
+          ;; Minimize instead of `save-buffers-kill-terminal' to avoid
+          ;; accidental quit
+          ("C-x C-c". iconify-frame) )
   :custom ((async-shell-command-buffer "new-buffer")
            (case-fold-search t)
            (compilation-scroll-output t)
@@ -72,7 +68,7 @@
       (save-excursion
         (delete-trailing-whitespace))))
 
-  (global-completion-preview-mode -1)  ; favor corfu
+  (global-completion-preview-mode -1) ; favor corfu
   (column-number-mode 1)
   (global-so-long-mode 1)     ; mitigate perf on files with long lines
   (show-paren-mode 1)         ; highlight matching parens
