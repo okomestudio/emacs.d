@@ -28,6 +28,10 @@ The list of Emacs packages to potentially check out:
 
 - [[https://github.com/emacs-jp/migemo][migemo]] - Provide Japanese increment search with romanized Japanese
 
+** Lookup
+
+- [[https://github.com/jd/google-maps.el][google-maps.el]] - Google Maps support (needs an API key)
+
 ** LSP
 
 - [[https://github.com/swyddfa/esbonio.el][esbonio.el]] - Integrating the esbonio language server (for Sphinx)
