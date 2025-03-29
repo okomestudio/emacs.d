@@ -7,6 +7,7 @@
 
 (use-package treesit
   :straight nil
+  :custom (treesit-font-lock-level 4) ; usually 3 is enough
   :demand t)
 
 (use-package treesit-auto
