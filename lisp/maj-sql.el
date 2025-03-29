@@ -15,17 +15,16 @@
 ;;; Code:
 
 (use-package sql
-  :bind (:map
-         sql-mode-map
-         ("C-c b" . sql-format-code)
-         :map sql-interactive-mode-map
-         ("M-n" .	comint-next-input)
-         ("M-p"	.	comint-previous-input)
-         ("M-r"	. comint-history-isearch-backward-regexp))
-  :hook ((sql-mode . lsp-deferred)      ; uses `sqls'
-         (sql-interactive-mode . (lambda () (setq-local truncate-lines t))))
+  :bind ( :map sql-mode-map
+          ("C-c b" . sql-format-code)
+          :map sql-interactive-mode-map
+          ("M-n" .	comint-next-input)
+          ("M-p"	.	comint-previous-input)
+          ("M-r"	. comint-history-isearch-backward-regexp) )
   :custom ((lsp-sqls-timeout 30)
            (sql-product 'ansi))
+  :hook ((sql-mode . lsp-deferred) ; uses `sqls'
+         (sql-interactive-mode . (lambda () (setq-local truncate-lines t))))
   :ensure-system-package
   (sqls . "go install github.com/lighttiger2505/sqls@latest")
   :config
