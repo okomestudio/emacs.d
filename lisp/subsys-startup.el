@@ -5,20 +5,24 @@
 ;;
 ;;; Code:
 
-;; COMMON ELISP LIBRARIES
+;;; COMMON ELISP LIBRARIES
 
 (use-package buttercup)     ; behavior-driven Lisp testing
 (use-package dash)          ; a modern list library
 (use-package reformatter)   ; code formatter
 (use-package uuid)
 
-;; MAIN STARTUP CONFIG
+;;; MAIN STARTUP CONFIG
 
 (use-package emacs
   :straight nil
   :demand t
   :bind ( ("<f5>" . ok-buffer-revert-no-confirm)
           ("C-x 4 c" . clone-indirect-buffer-other-window)
+
+          ;; These are bound by default, but made explicit for reminder:
+          ("M-!" . shell-command)
+          ("M-|" . shell-command-on-region)
 
           ;; Minimize instead of `save-buffers-kill-terminal' to avoid
           ;; accidental quit
@@ -95,7 +99,7 @@
   :straight nil
   :custom ((tab-always-indent 'complete)))
 
-;; SHELL
+;;; SHELL
 
 (use-package add-node-modules-path
   ;; Add node_modules/.bin to exec-path.
@@ -123,7 +127,7 @@
   :straight (:host github :repo "tarsius/keychain-environment")
   :config (keychain-refresh-environment))
 
-;; MISC.
+;;; MISC.
 
 (use-package anzu
   ;; Displays current and total matches information in the mode-line.
