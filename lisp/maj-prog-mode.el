@@ -70,9 +70,16 @@
     (indent-tabs-mode 1)))
 
 ;;; FORMATTING
+
 (use-package prettier-js
   :commands (prettier-js)
   :ensure-system-package (prettier . "npm install -g prettier"))
+
+;;; MISC.
+
+(use-package quickrun
+  ;; Run command quickly.
+  )
 
 (provide 'maj-prog-mode)
 ;;; maj-prog-mode.el ends here
