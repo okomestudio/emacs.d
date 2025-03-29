@@ -7,9 +7,9 @@
 
 (use-package popper
   ;; A minor-mode to summon and dismiss buffers easily.
-  :bind (("C-'" . popper-toggle)
-         ("C-S-'" . popper-cycle)
-         ("C-M-'" . popper-toggle-type))
+  :bind ( ("C-'" . popper-toggle)
+          ("C-\"" . popper-cycle)
+          ("C-M-'" . popper-toggle-type) )
   :custom ((popper-reference-buffers
             '("\\*Async Shell Command\\*\\'"
               "\\*Async-native-compile-log\\*\\'"
@@ -32,7 +32,8 @@
               help-mode
               helpful-mode
               magit-process-mode
-              magit-status-mode))
+              magit-status-mode
+              woman-mode))
            (popper-display-control t)
            (popper-display-function #'display-buffer-pop-up-window)
            (popper-window-height (lambda (win)
@@ -41,8 +42,8 @@
                                     (* 2 (floor (frame-height) 5))
                                     (floor (frame-height) 3)))))
   :init
-  (popper-mode +1)
-  (popper-echo-mode +1))
+  (popper-mode 1)
+  (popper-echo-mode 1))
 
 (provide 'subsys-buffer)
 ;;; subsys-buffer.el ends here
