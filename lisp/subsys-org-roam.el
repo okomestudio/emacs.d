@@ -14,17 +14,17 @@
              ;; (:fork t
              ;;  :branch "refactor-org-roam-unlinked-references-section")
              :files (:defaults "extensions/*"))
-  :bind ( ("C-c n c" . org-roam-ok-capture-create-from-ref)
-          ("C-c n f" . org-roam-node-find)
+  :bind ( ("C-c n f" . org-roam-node-find)
           ("C-c n i" . org-roam-node-insert)
           ("C-c n l" . org-roam-buffer-toggle)
+          ("C-c r c" . org-roam-ok-capture-create-from-ref)
+          ("C-c r f" . org-roam-ok-node-ref-find)
+          ("C-c r i" . org-ref-insert-link)
 
           :map org-mode-map
           ("C-M-i" . completion-at-point)
           ("C-c C-q" . org-roam-ok-node-tag-add-or-remove)
-          ("C-c a" . org-roam-ok-node-alias-add-or-remove)
-          ("C-c r f" . org-roam-ok-node-ref-find)
-          ("C-c r i" . org-ref-insert-link) )
+          ("C-c a" . org-roam-ok-node-alias-add-or-remove) )
   :bind-keymap ("C-c n d" . org-roam-dailies-map)
   :custom ((org-roam-completion-everywhere nil)
            (org-roam-database-connector 'sqlite-builtin)
