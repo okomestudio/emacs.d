@@ -195,7 +195,6 @@
  ("prettier-emacs" . "e9b73e81d3e1642aec682195f127a42dfb0b5774")
  ("project" . "093f42a1b612eaae0d2bdd475663c14973fe0325")
  ("projectile" . "30c55d19b9488dcddc9195c9acb7f625d472d96d")
- ("pydoc" . "c9d8b5249c1b3814da062ed9976e4137d6e8d869")
  ("python-sql-mode.el" . "231cc7f71998a82769d51cc70092f497800b7d62")
  ("queue" . "8df1334d54d4735d2f821790422a850dfaaa08ef")
  ("rainbow-csv" . "aa09e2cc79d32f890177c6d0b0376c4aa2708d3e")
