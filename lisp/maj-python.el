@@ -69,7 +69,8 @@
       ;; (flycheck-mode)
 
       ;; Pydoc
-      (setq-local pydoc-python-command (pet-executable-find "python"))
+      (setq-local pydoc-python-command (pet-executable-find "python")
+                  pydoc-command (concat pydoc-python-command " -m pydoc"))
 
       ;; Pytest
       (setq-local python-pytest-executable (pet-executable-find "pytest"))
