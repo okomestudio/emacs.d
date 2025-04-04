@@ -14,9 +14,8 @@
 
 (use-package ace-isearch
   ;; A seamless bridge between isearch, ace-jump-mode, avy, and swoop.
-  :bind (:map
-         isearch-mode-map
-         ("C-'" . ace-isearch-jump-during-isearch))
+  :bind ( :map isearch-mode-map
+          ("C-'" . ace-isearch-jump-during-isearch) )
   :custom ((ace-isearch-input-length 6)
            (ace-isearch-jump-delay 0.7)
            (ace-isearch-function #'avy-goto-char)
@@ -32,7 +31,7 @@
   :custom (aw-dispatch-always t))
 
 (use-package frame-cmds
-  :bind ("M-o" . other-window-or-frame))
+  :bind ("M-o" . next-window-any-frame))
 
 (use-package winner
   ;; Undo or redo a change in window configuration.
