@@ -42,6 +42,11 @@
 
 ;; Scrolling
 
+(use-package emacs
+  :straight nil
+  :custom ((scroll-conservatively 10)
+           (scroll-margin 15)))
+
 (use-package mwheel
   :straight nil
   :custom ((mouse-wheel-progressive-speed t)
@@ -63,8 +68,8 @@
            (pixel-scroll-precision-use-momentum t)))
 
 (use-package ultra-scroll
-  :straight (ultra-scroll :host github
-                          :repo "jdtsmith/ultra-scroll")
+  :disabled
+  :straight (ultra-scroll :host github :repo "jdtsmith/ultra-scroll")
   :custom ((scroll-conservatively 101)
            (scroll-margin 0))
   :hook (on-first-input . ultra-scroll-mode))
