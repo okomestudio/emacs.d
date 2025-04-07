@@ -27,26 +27,6 @@
     (treemacs)
     (pop-global-mark))
 
-  (defun treemacs-ok-toggle-maybe ()
-    "Auto-toggle Treemacs in prog-mode and text-mode.
-See https://gist.github.com/shegeley/cadcb16137fffd911f34ed6aaf673f54."
-    (if (eq last-command 'treemacs)
-        (set-frame-parameter
-         (selected-frame) 'treemacs-forced-p
-         (not (frame-parameter (selected-frame) 'treemacs-forced-p)))
-      (unless (frame-parameter (selected-frame) 'treemacs-forced-p)
-        (if (seq-find
-             (lambda (x)
-               (with-current-buffer (window-buffer x)
-                 (derived-mode-p 'text-mode 'prog-mode)))
-             (window-list))
-            (unless (eq (treemacs-current-visibility) 'visible)
-              (save-selected-window (treemacs)))
-          (and (eq (treemacs-current-visibility) 'visible)
-               (not (minibufferp))
-               (delete-window (treemacs-get-local-window)))))))
-  ;; (add-hook 'window-configuration-change-hook #'treemacs-ok-toggle-maybe)
-
   (treemacs-filewatch-mode t)
   (treemacs-follow-mode t)
   (treemacs-hide-gitignored-files-mode t)
