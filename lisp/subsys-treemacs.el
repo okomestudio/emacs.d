@@ -27,19 +27,19 @@
     (treemacs)
     (pop-global-mark))
 
-  (treemacs-filewatch-mode t)
-  (treemacs-follow-mode t)
-  (treemacs-hide-gitignored-files-mode t)
+  (treemacs-filewatch-mode 1)
+  (treemacs-follow-mode 1)
+  (treemacs-hide-gitignored-files-mode 1)
   (treemacs-fringe-indicator-mode 'always)
-  (when treemacs-python-executable
-    (treemacs-git-commit-diff-mode t))
 
+  (when treemacs-python-executable
+    (treemacs-git-commit-diff-mode 1))
   (pcase (cons (not (null (executable-find "git")))
                (not (null treemacs-python-executable)))
     (`(t . t) (treemacs-git-mode 'deferred))
     (`(t . _) (treemacs-git-mode 'simple)))
 
-  (treemacs-project-follow-mode t)
+  (treemacs-project-follow-mode 1)
   (setq treemacs--project-follow-delay 1.0
         treemacs--project-follow-timer nil))
 
