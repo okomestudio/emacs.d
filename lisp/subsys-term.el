@@ -10,9 +10,8 @@
 (use-package vterm
   ;; Emacs libvterm integration.
   :if (eq system-type 'gnu/linux)
-  :bind (:map
-         vterm-mode-map
-         ("C-q" . vterm-send-next-key))
+  :bind ( :map vterm-mode-map
+          ("C-q" . vterm-send-next-key) )
   :custom ((vterm-always-compile-module t)
            (vterm-buffer-name-string "vterm %s")
            (vterm-max-scrollback 5000)
@@ -63,11 +62,11 @@
                          ("terminfo/65" "terminfo/65/*")
                          ("integration" "integration/*")
                          (:exclude ".dir-locals.el" "*-tests.el")))
-  :bind (("C-S-t" . eat-ok-interactively)
-         :map eat-semi-char-mode-map
-         ("M-o" . other-window-or-frame)) ; without explicit
-                                          ; definition, it binds to
-                                          ; another function
+  :bind ( ("C-S-t" . eat-ok-interactively)
+          :map eat-semi-char-mode-map
+          ("M-o" . other-window-or-frame)) ; without explicit
+                                           ; definition, it binds to
+                                           ; another function
   :hook ((eat-exec . eat-ok--rename-buffer)
          (eshell-post-command . (lambda ()
                                   (sleep-for 0.2)
