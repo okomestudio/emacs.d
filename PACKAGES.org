@@ -61,3 +61,8 @@ The list of Emacs packages to potentially check out:
 ** Writing
 
 - [[https://github.com/jamescherti/quick-sdcv.el][quick-sdcv.el]] - Offline dictionary using the sdcv
+
+
+** Shell & terminal
+
+- [[https://github.com/eval-exec/eee.el][eee.el]] - Launch TUI commands in an external terminal asynchronously
