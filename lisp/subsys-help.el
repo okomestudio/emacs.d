@@ -17,6 +17,10 @@
   ;; "Structure and Interpretation of Computer Programs" as info.
   )
 
+(use-package emacs-lisp-elements
+  :straight (emacs-lisp-elements :host github
+                                 :repo "protesilaos/emacs-lisp-elements"))
+
 ;;; HELP
 
 (use-package elisp-for-python
