@@ -14,6 +14,8 @@
 ;;
 ;;; Code:
 
+(require 'ok)
+
 (use-package sql
   :bind ( :map sql-mode-map
           ("C-c b" . sql-format-code)
@@ -23,7 +25,8 @@
           ("M-r"	. comint-history-isearch-backward-regexp) )
   :custom ((lsp-sqls-timeout 30)
            (sql-product 'ansi))
-  :hook ((sql-mode . lsp-deferred) ; uses `sqls'
+  :hook ((find-file . sql-ok--update-connection-alist)
+         (sql-mode . lsp-deferred) ; uses `sqls'
          (sql-interactive-mode . (lambda () (setq-local truncate-lines t))))
   :ensure-system-package
   (sqls . "go install github.com/lighttiger2505/sqls@latest")
@@ -36,6 +39,15 @@
       (sqlformat-args-set)
       (sqlformat beg end)
       (delete-trailing-whitespace)))
+
+  (defun sql-ok--update-connection-alist ()
+    "Update `sql-connection-alist' with `sql-connection-alist-items' if defined."
+    (when (boundp 'sql-connection-alist-items)
+      (let ((items sql-connection-alist-items))
+        (make-local-variable 'sql-connection-alist)
+        (dolist (item items)
+          (add-to-list 'sql-connection-alist
+                       (ok-eval-form-recursively item))))))
 
   (with-eval-after-load 'org
     (defun org-edit-special-ok--set-sql-product (&rest r)
