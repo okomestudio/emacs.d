@@ -22,7 +22,7 @@
           :prefix-map org-mode-help-map
           :prefix-docstring "Keymap for org-mode help"
           :prefix "C-h O"
-          ("e" . org-entities-help))
+          ("e" . org-entities-help) )
   :custom ((org-adapt-indentation nil)
            (org-blank-before-new-entry '((heading . nil)
                                          (plain-list-item . nil)))
@@ -41,7 +41,8 @@
            (org-startup-indented t)
            (org-support-shift-select t)
            (org-tags-column 0)
-           (org-todo-keywords '((sequence "TODO" "WIP" "|" "SKIP" "DONE"))))
+           (org-todo-keywords '((sequence "TODO" "WIP" "|" "SKIP" "DONE")))
+           (org-use-speed-commands t))
   :config
   ;; Unset the keybindings to disable org-agenda shortcuts and
   ;; fallback to popper:
