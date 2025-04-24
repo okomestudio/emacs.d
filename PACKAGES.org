@@ -48,6 +48,7 @@ The list of Emacs packages to potentially check out:
 - [[https://github.com/alphapapa/org-make-toc][org-make-toc]] - Automatic tables of contents for Org-mode files
 - [[https://github.com/yibie/org-numbering][org-numbering]] - A flexible and customizable numbering system for Org mode headings, supporting various international numbering schemes
 - [[https://github.com/alphapapa/org-super-agenda][org-super-agenda]] - Supercharge your Org daily/weekly agenda by grouping items
+- [[https://github.com/takaxp/org-tree-slide][org-tree-slide]] - A presentation tool for org-mode based on the visibility of outline tree
 - [[https://github.com/chenyanming/shrface][shrface]] - Extend eww/nov with org-mode features, archive web pages to org files with shr
 
 ** Programming
