@@ -59,36 +59,38 @@
 (advice-add 'x-apply-session-resources :override 'ignore)
 
 ;; Disable magic file name during `init.el'
-(defconst ok--saved-file-name-handler-alist file-name-handler-alist)
-(setq file-name-handler-alist nil)
-(add-hook 'after-init-hook
+(letrec ((saved-file-name-handler-alist file-name-handler-alist)
+         (restore-file-name-handler-alist
           (lambda ()
             "Restore `file-name-handler-alist'."
-            (setq file-name-handler-alist ok--saved-file-name-handler-alist)
-            (unintern 'ok--saved-file-name-handler-alist obarray))
-          97)
+            (setq file-name-handler-alist saved-file-name-handler-alist)
+            (remove-hook 'after-init-hook restore-file-name-handler-alist))))
+  (setq file-name-handler-alist nil)
+  (add-hook 'after-init-hook restore-file-name-handler-alist 97))
 
 ;; Profile `init.el'.
-(when ok-debug  ; activate profiler in debug mode
-  (profiler-start 'cpu+mem)
-  (add-hook 'after-init-hook
+(when ok-debug
+  (letrec ((profile-init
             (lambda ()
               (message "Emacs (PID:%d) started in %s"
                        (emacs-pid) (emacs-init-time))
               (profiler-report)
-              (profiler-stop))
-            98))
+              (profiler-stop)
+              (remove-hook 'after-init-hook profile-init))))
+    (profiler-start 'cpu+mem)
+    (add-hook 'after-init-hook profile-init 98)))
 
 ;; Compute the running time of all functions in `after-init-hook'.
 ;; `emacs-init-time' underestimates the total startup time, when
 ;; time-consuming operations are delayed to `after-init-hook'. Use
 ;; this metric to actually reduce the experienced startup time.
-(add-hook 'after-init-hook
+(letrec ((time-after-init-hook
           (lambda ()
             (message "after-init-hook took %f sec"
                      (float-time
-                      (time-subtract (current-time) after-init-time))))
-          99)
+                      (time-subtract (current-time) after-init-time)))
+            (remove-hook 'after-init-hook time-after-init-hook))))
+  (add-hook 'after-init-hook time-after-init-hook 99))
 
 ;; Configure package manager. (`init-straight.el' or `init-package.el')
 (load (locate-user-emacs-file "lisp/init-straight.el"))
