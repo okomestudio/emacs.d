@@ -123,6 +123,13 @@
           (switch-to-buffer buffer-stdout)
           (ansi-color-apply-on-region (point-min) (point-max)))))))
 
+(use-package man-index
+  ;; Quickly navigate to keywords within a man page.
+  :straight (man-index :type git :host codeberg :repo "imarko/man-index")
+  :after man
+  :bind ( :map Man-mode-map
+          ("i" . man-index) ))
+
 ;;; WHICH-KEY
 
 (use-package which-key-posframe
