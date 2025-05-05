@@ -5,9 +5,6 @@
 ;;
 ;;; Code:
 
-(use-package expand-region
-  :bind ("C-=" . er/expand-region))
-
 (use-package mwim
   ;; Switch between the beginning/end of line or code line positioning.
   :bind (("C-a" . 'mwim-beginning)
@@ -166,6 +163,16 @@ But don't look beyond what's visible on the screen."
   ;; Expand the word before the point in various ways.
   :straight nil
   :bind ([remap dabbrev-expand] . hippie-expand))
+
+;;; REGION
+
+(use-package expand-region
+  :bind ("C-M-SPC" . er/expand-region))
+
+(use-package selected
+  :commands selected-minor-mode
+  :bind ( :map selected-keymap
+          ("q" . selected-off) ))
 
 (provide 'subsys-editing)
 ;;; subsys-editing.el ends here
