@@ -31,7 +31,16 @@
                                 :italic t))))
 
 (use-package git-gutter
-  :hook (on-first-buffer . global-git-gutter-mode))
+  :hook (on-first-buffer . global-git-gutter-mode)
+  :config
+  (dolist (face '(git-gutter:separator
+                  git-gutter:modified
+                  git-gutter:added
+                  git-gutter:deleted
+                  git-gutter:unchanged))
+    (set-face-attribute face nil
+                        :height (round (* 0.8
+                                          (face-attribute 'default :height))))))
 
 (provide 'subsys-git)
 ;;; subsys-git.el ends here
