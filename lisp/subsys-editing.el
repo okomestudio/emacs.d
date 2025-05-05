@@ -54,13 +54,13 @@
       typo-cycle-dashes
     "Cycle through various dashes."
     ("-"        ; HYPHEN-MINUS
+     "⸺"        ; TWO-EM DASH (added)
+     "―"        ; HORIZONTAL BAR (added)
      "–"        ; EN DASH
      "—"        ; EM DASH
      "−"        ; MINUS SIGN
      "‐"        ; HYPHEN
      "‑"        ; NON-BREAKING HYPHEN
-     "⸺"        ; TWO-EM DASH (added)
-     "―"        ; HORIZONTAL BAR (added)
      )))
 
 (use-package whole-line-or-region
