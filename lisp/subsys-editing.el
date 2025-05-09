@@ -7,14 +7,14 @@
 
 (use-package mwim
   ;; Switch between the beginning/end of line or code line positioning.
-  :bind (("C-a" . 'mwim-beginning)
-         ("C-e" . 'mwim-end)))
+  :bind ( ("C-a" . mwim-beginning)
+          ("C-e" . mwim-end) ))
 
 (use-package multiple-cursors
-  :bind (("C-S-c C-S-c" . mc/edit-lines)
-         ("C->" . mc/mark-next-symbol-like-this)
-         ("C-<" . mc/mark-previous-symbol-like-this)
-         ("C-S-c C-<" . mc/mark-all-like-this)))
+  :bind ( ("C-S-c C-S-c" . mc/edit-lines)
+          ("C->" . mc/mark-next-symbol-like-this)
+          ("C-<" . mc/mark-previous-symbol-like-this)
+          ("C-S-c C-<" . mc/mark-all-like-this) ))
 
 (use-package htmlize
   ;; Convert buffer text and decorations to HTML
