@@ -166,7 +166,7 @@ But don't look beyond what's visible on the screen."
 ;;; REGION
 
 (use-package expand-region
-  :bind ("C-M-SPC" . er/expand-region))
+  :bind ("C-M-S-SPC" . er/expand-region))
 
 (use-package selected
   :commands selected-minor-mode
