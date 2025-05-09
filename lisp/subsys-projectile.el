@@ -48,16 +48,14 @@
         (setq ds (append ds (--map (string-replace "~" symlink-tree it) ds))))
       (setopt safe-local-variable-directories (delete-dups ds))))
 
-  (pcase-dolist
-      (`(,key ,doc) '(("C-x p" "projectile")
-                      ("C-x p 4" "projectile-other-window")
-                      ("C-x p 5" "projectile-other-frame")
-                      ("C-x p s" "projectile-search")
-                      ("C-x p c" "projectile-command")
-                      ("C-x p x" "projectile-run")
-                      ("C-x p x 4" "projectile-run-other-window")))
-    (with-eval-after-load 'which-key
-      (which-key-add-key-based-replacements key doc))))
+  (which-key-add-key-based-replacements
+    "C-x p" "projectile"
+    "C-x p 4" "projectile-other-window"
+    "C-x p 5" "projectile-other-frame"
+    "C-x p s" "projectile-search"
+    "C-x p c" "projectile-command"
+    "C-x p x" "projectile-run"
+    "C-x p x 4" "projectile-run-other-window"))
 
 (provide 'subsys-projectile)
 ;;; subsys-projectile.el ends here

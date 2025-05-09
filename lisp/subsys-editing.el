@@ -30,8 +30,7 @@
           :map prog-mode-map
           ("C-M-;" . ok-edit-align-comments) )
   :config
-  (with-eval-after-load 'which-key
-    (which-key-add-key-based-replacements "C-c i" "ok-edit")))
+  (which-key-add-key-based-replacements "C-c i" "ok-edit"))
 
 (use-package repeat
   :hook (on-first-input . repeat-mode))

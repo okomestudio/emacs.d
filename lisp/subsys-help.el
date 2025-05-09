@@ -186,20 +186,20 @@
     (which-key-reload-key-sequence)
     (which-key--create-buffer-and-show (which-key--current-prefix)))
 
-  (pcase-dolist
-      (`(,key ,doc) '(("C-x 8 e" "emoji")
-                      ("C-x 8" "char")
-                      ("C-x C-a" "edebug")
-                      ("C-x RET" "char-coding")
-                      ("C-x X" "edebug")
-                      ("C-x a" "abbrev")
-                      ("C-x n" "narrow")
-                      ("C-x p" "project")
-                      ("C-x r" "register")
-                      ("C-x t" "tab")
-                      ("C-x w" "window")))
-    (with-eval-after-load 'which-key
-      (which-key-add-key-based-replacements key doc))))
+  (which-key-add-key-based-replacements
+    "C-x 4" "other-window"
+    "C-x 5" "other-frame"
+    "C-x 8 e" "emoji"
+    "C-x 8" "char"
+    "C-x C-a" "edebug"
+    "C-x RET" "char-coding"
+    "C-x X" "edebug"
+    "C-x a" "abbrev"
+    "C-x n" "narrow"
+    "C-x p" "project"
+    "C-x r" "register/bookmark/rect"
+    "C-x t" "tab"
+    "C-x w" "window"))
 
 ;;; TRANSIENT UTILITIES
 

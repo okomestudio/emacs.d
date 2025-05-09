@@ -44,11 +44,10 @@
                                                                'face 'org-tag)
                                                    " ${orp-timestamp:10}")))
   :init
-  (pcase-dolist (`(,key ,doc) '(("C-c n" "org-roam")
-                                ("C-c n d" "org-roam-dailies")
-                                ("C-c r" "org-ref")))
-    (with-eval-after-load 'which-key
-      (which-key-add-key-based-replacements key doc)))
+  (which-key-add-key-based-replacements
+    "C-c n" "org-roam"
+    "C-c n d" "org-roam-dailies"
+    "C-c r" "org-ref")
 
   :config
   (org-roam-ok-enhance)
