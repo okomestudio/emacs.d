@@ -1,47 +1,56 @@
-;;; early-init.el --- early-init  -*- lexical-binding: t -*-
-;;;
+;;; early-init.el --- Emacs early init configuration  -*- lexical-binding: t -*-
+;;
+;; Author: Taro Sato <okomestudio@gmail.com>
+;; URL: https://github.com/okomestudio/emacs.d
+;; Keywords: config
+;; Package-Requires: ((emacs "30.1"))
+;;
 ;;; Commentary:
 ;;
 ;; Provides early initialization for Emacs.
 ;;
 ;;; Code:
 
-;; Disable `package.el' early, as we use `straight.el'.
+;;; Init to do at the earliest
+;; Some configuration must be done at the earliest points in initialization.
+
+(startup-redirect-eln-cache (convert-standard-filename
+                             (locate-user-emacs-file "var/eln-cache/")))
+
+;;; Debug switches
+
+(setopt ok-debug nil)         ; global debug switch
+(setopt debug-on-error ok-debug)
+(setq debug-on-message nil)   ; set regexp to trigger debugger
+(setq byte-compile-warnings '(not obsolete)) ; set t for development
+
+;;; Package manager
+
 (setopt package-enable-at-startup nil)
+(load (locate-user-emacs-file "lisp/init-straight.el")) ; or `init-package.el'
 
-;; Redirect native compilation cache if possible.
-(when (fboundp 'startup-redirect-eln-cache)
-  (startup-redirect-eln-cache
-   (convert-standard-filename
-    (expand-file-name  "var/eln-cache/" user-emacs-directory))))
+;;; GC and native compilation
 
-(let ((minver "30.1"))
-  (when (version< emacs-version minver)
-    (error "The minimum Emacs version expected is %s" minver)))
-
-(setopt ok-debug nil                    ; global switch for debugging
-        debug-on-error ok-debug
-
-        confirm-kill-processes t
-        inhibit-default-init nil
-        native-comp-async-query-on-exit t
-        pgtk-wait-for-event-timeout 0)
-(setq debug-on-message nil                    ; set regexp to trigger debugger
-      byte-compile-warnings '(not obsolete))  ; set t for development
-
-;; Reduce GC usage while initialization. 800 kb is the default (2021-08-01).
-;; Note that the threshold while running is set by gcmh later in init and the
-;; following temporary setting will be overridden. Use that for adjustment.
+;; Reduce GC while initialization by increasing the threshold (800 kb
+;; is the default on circa 2021-08-01). Note that the threshold
+;; reverts to another value after initialization; see
+;; `optimizations.el'.
 (setopt gc-cons-threshold most-positive-fixnum)
 
-;; UI:
-(setopt frame-inhibit-implied-resize t
+(setq native-comp-jit-compilation t)
+
+;;; UX/UI
+
+(setopt confirm-kill-processes t
+        frame-inhibit-implied-resize t
+        inhibit-default-init nil
         inhibit-startup-screen t
         initial-buffer-choice nil
+        native-comp-async-query-on-exit t
         native-comp-async-report-warnings-errors ok-debug
+        pgtk-wait-for-event-timeout 0
         ring-bell-function 'ignore)
-(setq native-comp-jit-compilation t
-      redisplay-skip-fontification-on-input t)
+(setq redisplay-skip-fontification-on-input t)
 
 (dolist (it '((menu-bar-lines . 0)
               (tool-bar-lines . 0)
@@ -52,13 +61,16 @@
 
 (fringe-mode '(12 . 12))
 
-;; Misc. configurations
-(setenv "LSP_USE_PLISTS" "true")
-
-;; Ignore x session resources:
+;; Ignore x session resources.
 (advice-add 'x-apply-session-resources :override 'ignore)
 
-;; Disable magic file name during `init.el'
+;;; Environment variables
+
+(setenv "LSP_USE_PLISTS" "true")
+
+;;; Misc. optimizations
+
+;; Disable magic file name during `init.el'.
 (letrec ((saved-file-name-handler-alist file-name-handler-alist)
          (restore-file-name-handler-alist
           (lambda ()
@@ -92,7 +104,5 @@
             (remove-hook 'after-init-hook time-after-init-hook))))
   (add-hook 'after-init-hook time-after-init-hook 99))
 
-;; Configure package manager. (`init-straight.el' or `init-package.el')
-(load (locate-user-emacs-file "lisp/init-straight.el"))
-
+(provide 'early-init)
 ;;; early-init.el ends here

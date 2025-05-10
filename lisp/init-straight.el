@@ -43,6 +43,7 @@
 
 (setopt straight-use-package-by-default t)
 
+(defvar bootstrap-version)
 (let ((bootstrap-file (locate-user-emacs-file
                        "straight/repos/straight.el/bootstrap.el"))
       (bootstrap-version 7))  ; straight bootstrap version
@@ -57,10 +58,10 @@
   (load bootstrap-file nil 'nomessage))
 
 (setopt use-package-always-defer t               ; use :demand t to override
-        use-package-compute-statistics ok-debug  ; for use-package-report
+        use-package-compute-statistics (if (boundp 'ok-debug) ok-debug)
         use-package-enable-imenu-support t
         use-package-minimum-reported-time 0.001
-        use-package-verbose ok-debug
+        use-package-verbose (if (boundp 'ok-debug) ok-debug)
 
         message-log-max t)
 

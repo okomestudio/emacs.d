@@ -1,16 +1,20 @@
-;;; init.el --- Emacs startup configuration  -*- lexical-binding: t -*-
+;;; init.el --- Emacs init configuration  -*- lexical-binding: t -*-
+;;
+;; Author: Taro Sato <okomestudio@gmail.com>
+;; URL: https://github.com/okomestudio/emacs.d
+;; Keywords: config
+;; Package-Requires: ((emacs "30.1"))
+;;
 ;;; Commentary:
 ;;
-;; This runs after `early-init.el'.
+;; This feature runs after `early-init.el'.
 ;;
 ;;; Code:
 
-;; Disable `custom.el'
-(setopt custom-file null-device)
+(setopt custom-file null-device) ; disable `custom.el'
 
 (use-package ok
-  ;; Elisp utilities for Okome Studio. Loaded early so that they can
-  ;; be used in `init.el'
+  ;; Elisp utilities for Okome Studio (ok).
   :straight (ok :host github :repo "okomestudio/ok.el")
   :demand t)
 
@@ -36,14 +40,15 @@
   (defalias 'ok-file-expand-etc #'no-littering-expand-etc-file-name)
   (defalias 'ok-file-expand-var #'no-littering-expand-var-file-name))
 
-;;; Private initialization
+;; Load private initialization.
 (load (ok-file-expand-etc "emacs/init") t)
 
-;; Load config files under `init.d/'
+;; Load features under `init.d/'.
 (use-package init-loader
   :demand t
   :custom ((init-loader-byte-compile nil)
            (init-loader-show-log-after-init ok-debug))
   :config (init-loader-load (ok-file-expand-user-emacs-file "init.d")))
 
+(provide 'init)
 ;;; init.el ends here
