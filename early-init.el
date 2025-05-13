@@ -21,6 +21,8 @@
 
 (setopt ok-debug nil)         ; global debug switch
 (setopt debug-on-error ok-debug)
+(setopt warning-minimum-level :warning
+        warning-suppress-types nil)
 (setq debug-on-message nil)   ; set regexp to trigger debugger
 (setq byte-compile-warnings '(not obsolete)) ; set t for development
 
