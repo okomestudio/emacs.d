@@ -24,7 +24,12 @@
            (mozc-candidate-style (if (display-graphic-p) 'posframe 'echo-area))
 
            (mozc-leim-title "🇯🇵"))
-  :commands (toggle-input-method))
+  :commands (toggle-input-method)
+  :config
+  (with-eval-after-load 'simple
+    (advice-add #'execute-extended-command :before
+                (lambda (&rest r)
+                  (deactivate-input-method)))))
 
 (use-package mozc
   :if (and (eq system-type 'gnu/linux) (memq window-system '(pgtk)))
