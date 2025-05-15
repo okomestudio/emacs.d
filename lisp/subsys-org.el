@@ -208,6 +208,8 @@ of the current section."
   :straight nil
   :after ox)
 
+(use-package org-preview-html)
+
 ;;; ORG AGENDA
 
 (use-package org-agenda
