@@ -87,6 +87,9 @@
   (add-to-list 'tempel-user-elements #'tempel-ok--include-file)
 
   (defun tempel-ok--zenkaku (elt)
+    "Handler for the `zenkaku' function.
+This function detects the current input mode and renders the car of ELT
+if hankaku is active and the cdr of ELT if zenkaku is active."
     (when (eq (car-safe elt) 'zenkaku)
       (if-let ((han (cadr elt))
                (zen (caddr elt)))
