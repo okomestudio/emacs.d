@@ -58,13 +58,17 @@
            (require-final-newline nil)
 
            ;; Frame title (i.e., desktop window title)
-           (frame-title-format `((:eval
-                                  (list (cond
-                                         ((buffer-file-name)
-                                          (abbreviate-file-name
-                                           (expand-file-name buffer-file-name)))
-                                         (t (buffer-name)))))
-                                 ,(format " - Emacs (%d)" (emacs-pid)))))
+           (frame-title-format
+            '((:eval (when (project-current)
+                       (format "[%s] " (file-name-nondirectory
+                                        (directory-file-name
+                                         (project-root (project-current)))))))
+              (:eval (cond
+                      ((buffer-file-name)
+                       (abbreviate-file-name
+                        (expand-file-name buffer-file-name)))
+                      (t (buffer-name))))
+              (:eval (format " - Emacs (%d)" (emacs-pid))))))
   :hook (before-save . ok-delete-trailing-whitespace)
   :init
   (defun ok-delete-trailing-whitespace ()
