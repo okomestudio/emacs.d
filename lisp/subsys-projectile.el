@@ -6,10 +6,10 @@
 ;;; Code:
 
 (require 'dash)
+(require 'ok)
 
 (use-package projectile
-  :after project                   ; ensures the `C-x p' override
-  :bind-keymap ("C-x p" . projectile-command-map)
+  :after project              ; ensures the `C-x p' override
   :custom ((projectile-auto-discover nil)
            (projectile-enable-caching nil)
            (projectile-git-fd-args "-H -0 -E .git -tf")
@@ -26,24 +26,31 @@
            (projectile-project-search-path
             `(,(ok-file-expand-user-emacs-file "straight" "repos/")
               (,(expand-file-name "github.com/" (getenv "HOME")) . 2))))
-  :hook (on-first-file . projectile-ok-set-safe-local-variable-directories)
+  :hook ((after-init . projectile-mode)
+         (on-first-file . projectile-ok-set-safe-local-variable-directories))
   :ensure-system-package ((ag . "sudo apt install -y silversearcher-ag")
                           (fdfind . "sudo apt install -y fd-find"))
   :config
-  (projectile-mode +1)
+  ;; NOTE(2025-05-19): The following remap shadows all pre-existing
+  ;; `project-' commands originally mapped to `C-x p'. Rebind each
+  ;; individually if necessary.
+  (define-key projectile-mode-map (kbd "C-x p") 'projectile-command-map)
 
-  ;; Add directories to `safe-local-variable-directories' using
-  ;; projectile, so that we don't have to add variables separately to
-  ;; `safe-local-variable', e.g.,
-  ;;
-  ;;   (put 'my-symbol 'safe-local-variable #'integerp)
-  ;;   (ok-safe-local-variable-add my-symbol integerp)
-  ;;
   (defun projectile-ok-set-safe-local-variable-directories ()
+    "Update `safe-local-variable-directories' with projectile.
+To avoid being prompted for safeness, a symbol `sym' needs to be in
+`safe-local-variable', e.g.,
+
+  (put 'sym 'safe-local-variable #'integerp)
+  (ok-safe-local-variable-add sym integerp)
+
+This function uses `safe-local-variable-directories' introduced in Emacs
+30.1 to declare a local directory tree as safe."
     (interactive)
-    (let* ((projectile-current-project-on-switch 'keep)
-           (ds (projectile-relevant-known-projects))
-           (symlink-tree (getenv "SYMLINKTO_TREE")))
+    (projectile-mode 1)
+    (let ((projectile-current-project-on-switch 'keep)
+          (ds (projectile-relevant-known-projects))
+          (symlink-tree (getenv "SYMLINKTO_TREE")))
       (when symlink-tree
         (setq ds (append ds (--map (string-replace "~" symlink-tree it) ds))))
       (setopt safe-local-variable-directories (delete-dups ds))))
