@@ -59,6 +59,7 @@ The list of Emacs packages to potentially check out:
 - [[https://github.com/milanglacier/minuet-ai.el][minuet-ai.el]] - Code completion as-you-type from popular LLMs
 - [[https://www.gnu.org/software/emacs/manual/html_mono/nxml-mode.html][nxml-mode]] - A major mode for editing XML
 - [[https://github.com/jamescherti/outline-indent.el][outline-indent.el]] - Fold text based on indentation, c.f., origami & yafolding
+- [[https://github.com/lorniu/pdd.el][pdd.el]] - Morden HTTP library & Async Toolkit for Emacs
 - [[https://flandrew.srht.site/listful/sw-emacs-slug.html][slug]] - Create friendly slugs for your URLs and filenames
 
 ** Writing
