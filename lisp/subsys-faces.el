@@ -127,6 +127,7 @@ This is also used as the default.")
 ;; ICONS
 
 (use-package nerd-icons
+  ;; For a list of available icons, see, e.g., nerdfonts.ytyng.com.
   :if (member system-type '(gnu gnu/linux gnu/kfreebsd))
   :config
   (unless (file-exists-p "~/.local/share/fonts/NFM.ttf")
