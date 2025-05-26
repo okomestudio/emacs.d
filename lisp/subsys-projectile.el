@@ -9,7 +9,6 @@
 (require 'ok)
 
 (use-package projectile
-  :after project              ; ensures the `C-x p' override
   :custom ((projectile-auto-discover nil)
            (projectile-enable-caching nil)
            (projectile-git-fd-args "-H -0 -E .git -tf")
@@ -31,6 +30,10 @@
   :ensure-system-package ((ag . "sudo apt install -y silversearcher-ag")
                           (fdfind . "sudo apt install -y fd-find"))
   :config
+  ;; Ensure all the projectile overrides happen after `project' is
+  ;; loaded.
+  (require 'project)
+
   ;; NOTE(2025-05-19): The following remap shadows all pre-existing
   ;; `project-' commands originally mapped to `C-x p'. Rebind each
   ;; individually if necessary.
