@@ -13,6 +13,13 @@
 
 (setopt custom-file null-device) ; disable `custom.el'
 
+(use-package dash
+  ;; A modern list library
+  :hook ((emacs-lisp-mode lisp-data-mode) . dash-fontify-mode)
+  :config
+  (with-eval-after-load 'info-look
+    (dash-register-info-lookup)))
+
 (use-package ok
   ;; Elisp utilities for Okome Studio (ok).
   :straight (ok :host github :repo "okomestudio/ok.el")

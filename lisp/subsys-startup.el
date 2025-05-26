@@ -8,7 +8,6 @@
 ;;; COMMON ELISP LIBRARIES
 
 (use-package buttercup)     ; behavior-driven Lisp testing
-(use-package dash)          ; a modern list library
 (use-package reformatter)   ; code formatter
 (use-package uuid)
 
