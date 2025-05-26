@@ -100,15 +100,17 @@
          (enable-theme-functions . highlight-sexp-ok--refresh))
   :config
   (defun highlight-sexp-ok--refresh (theme)
+    (when (and (boundp 'highlight-sexp-mode) highlight-sexp-mode)
+      (highlight-sexp-mode -1))
+
     (let* ((mode (frame-parameter nil 'background-mode))
            (scale (if (string= mode "dark") 1.04 0.96))
            (bg (face-attribute 'default :background))
            (bg-hl (ok-face-color-scale bg scale)))
-      (setopt hl-sexp-background-color bg-hl)
+      (setopt hl-sexp-background-color bg-hl))
 
-      ;; When the minor mode is active, refresh:
-      (when (and (boundp 'highlight-sexp-mode) highlight-sexp-mode)
-        (highlight-sexp-mode)))))
+    (when (and (boundp 'highlight-sexp-mode))
+      (highlight-sexp-mode 1))))
 
 ;; HELP & DOCUMENTATION
 
