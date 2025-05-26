@@ -25,11 +25,19 @@
 
            (mozc-leim-title "🇯🇵"))
   :commands (toggle-input-method)
-  :config
-  (with-eval-after-load 'simple
-    (advice-add #'execute-extended-command :before
-                (lambda (&rest r)
-                  (deactivate-input-method)))))
+  ;; :config
+  ;; TODO(2025-05-26): Experiement with toggling IME.
+  ;; (cl-defun mozc-ok--im-deactivate (&rest r)
+  ;;   (deactivate-input-method))
+
+  ;; (dolist (fun '(execute-extended-command completing-read))
+  ;;   (advice-add fun :before #'mozc-ok--im-deactivate))
+
+  ;; (with-eval-after-load 'simple
+  ;;   (advice-add #'execute-extended-command :before
+  ;;               (lambda (&rest r)
+  ;;                 (deactivate-input-method))))
+  )
 
 (use-package mozc
   :if (and (eq system-type 'gnu/linux) (memq window-system '(pgtk)))
