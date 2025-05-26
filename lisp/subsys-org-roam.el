@@ -8,12 +8,11 @@
 (require 'ok)
 
 (use-package org-roam
-  :straight (org-roam
-             :host github
-             :repo "org-roam/org-roam"
-             ;; (:fork t
-             ;;  :branch "refactor-org-roam-unlinked-references-section")
-             :files (:defaults "extensions/*"))
+  :straight (org-roam :host github
+                      :repo "org-roam/org-roam"
+                      ;; (:fork t
+                      ;;  :branch "refactor-org-roam-unlinked-references-section")
+                      :files (:defaults "extensions/*"))
   :bind ( ("C-c n f" . org-roam-node-find)
           ("C-c n i" . org-roam-node-insert)
           ("C-c n l" . org-roam-buffer-toggle)
@@ -31,18 +30,12 @@
            (org-roam-db-location (ok-file-expand-var "org-roam/roam/.roam.db"))
            (org-roam-directory (ok-file-expand-var "org-roam/roam/"))
            (org-roam-extract-new-file-path "topic/${id}/${slug}.org")
-           (org-roam-mode-sections (list #'org-roam-backlinks-section
-                                         #'org-roam-reflinks-section
-                                         ;; #'org-roam-unlinked-references-section
-                                         #'org-roam-ok-ja-unlinked-references-section
-                                         ))
-           ;; NOTE: When `org-roam-gt' is in use, see
-           ;; `org-roam-gt-node-display-template' in
-           ;; `orp-ok-node-gt.el' for the function version:
-           (org-roam-node-display-template (concat "${orp-title:*} "
-                                                   (propertize "${orp-tags}"
-                                                               'face 'org-tag)
-                                                   " ${orp-timestamp:10}")))
+           (org-roam-mode-sections
+            (list #'org-roam-backlinks-section
+                  #'org-roam-reflinks-section
+                  ;; #'org-roam-unlinked-references-section
+                  #'org-roam-ok-ja-unlinked-references-section))
+           (org-roam-node-display-template "${title}"))
   :init
   (which-key-add-key-based-replacements
     "C-c n" "org-roam"
@@ -74,20 +67,11 @@
   ;; Required by `org-roam-ok'.
   :straight (ok-plural :host github :repo "okomestudio/ok-plural.el"))
 
-(use-package org-roam-gt
-  ;; See github.com/org-roam/org-roam/issues/2474
-  :straight (org-roam-gt :host github
-                         :repo "dmgerman/org-roam-gt"
-                         :fork (:host github
-                                      :repo "okomestudio/org-roam-gt"
-                                      :branch "ok")))
-
 (use-package org-roam-ok
   :straight (org-roam-ok :host github
                          :repo "okomestudio/org-roam-ok"
                          :files (:defaults "extensions/*"))
   :custom ((org-roam-ok-node-use-cache-in-memory t)
-           (org-roam-ok-node-gt-use-cache-in-memory t)
            (org-roam-ok-on-idle-delay nil))
   :init
   (load (ok-file-expand-etc "org-roam/init"))
