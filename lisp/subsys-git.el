@@ -30,7 +30,15 @@
                                 :height 100
                                 :italic t))))
 
+;;; Diff Visualization
+
+(use-package diff-hl
+  ;; Uses margin.
+  :init (global-diff-hl-mode))
+
 (use-package git-gutter
+  ;; Uses fringe.
+  :disabled
   :hook (on-first-buffer . global-git-gutter-mode)
   :config
   (dolist (face '(git-gutter:separator
