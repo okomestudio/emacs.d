@@ -10,8 +10,7 @@
 (use-package org-roam
   :straight (org-roam :host github
                       :repo "org-roam/org-roam"
-                      ;; (:fork t
-                      ;;  :branch "refactor-org-roam-unlinked-references-section")
+                      :fork (:branch "fix-types")
                       :files (:defaults "extensions/*"))
   :bind ( ("C-c n f" . org-roam-node-find)
           ("C-c n i" . org-roam-node-insert)
