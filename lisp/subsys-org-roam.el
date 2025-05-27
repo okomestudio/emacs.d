@@ -10,7 +10,7 @@
 (use-package org-roam
   :straight (org-roam :host github
                       :repo "org-roam/org-roam"
-                      :fork (:branch "fix-types")
+                      :fork (:branch "main")
                       :files (:defaults "extensions/*"))
   :bind ( ("C-c n f" . org-roam-node-find)
           ("C-c n i" . org-roam-node-insert)
