@@ -29,7 +29,7 @@
          (sql-mode . lsp-deferred) ; uses `sqls'
          (sql-interactive-mode . (lambda () (setq-local truncate-lines t))))
   :ensure-system-package
-  (sqls . "go install github.com/lighttiger2505/sqls@latest")
+  (sqls . "go install github.com/sqls-server/sqls@latest")
   :config
   (defun sql-format-code (beg end)
     (interactive (if (use-region-p)
