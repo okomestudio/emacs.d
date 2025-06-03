@@ -21,9 +21,13 @@
     (dash-register-info-lookup)))
 
 (use-package ok
-  ;; Elisp utilities for Okome Studio (ok).
+  ;; Emacs Lisp utilities for Okome Studio (ok).
   :straight (ok :host github :repo "okomestudio/ok.el")
-  :demand t)
+  :demand t
+  :config
+  (let ((hook 'hack-dir-local-get-variables-functions))
+    (remove-hook hook #'hack-dir-local--get-variables)
+    (add-hook hook #'ok-file-hack-dir-local--get-variables)))
 
 (use-package no-littering
   ;; Run this as early as possible.
