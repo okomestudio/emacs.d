@@ -47,6 +47,7 @@
 
 (use-package typo
   ;; Typographical utility (e.g., smart quotation).
+  :straight (typo :host github :repo "jorgenschaefer/typoel")
   :hook (org-mode . typo-mode)
   :config
   (define-typo-cycle
