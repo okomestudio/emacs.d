@@ -26,6 +26,7 @@
           ("C-c i s" . ok-edit-insert-section-delimiter)
           ("C-o" . ok-edit-insert-newline-below)
           ("M-q" . ok-edit-fill-or-unfill-paragraph) ; TODO: Use `prog-fill-reindent-defun'?
+          ("M-u" . ok-upcase-word)
 
           :map prog-mode-map
           ("C-M-;" . ok-edit-align-comments) )
