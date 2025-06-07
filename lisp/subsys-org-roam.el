@@ -8,10 +8,6 @@
 (require 'ok)
 
 (use-package org-roam
-  :straight (org-roam :host github
-                      :repo "org-roam/org-roam"
-                      :fork (:branch "main")
-                      :files (:defaults "extensions/*"))
   :bind ( ("C-c n f" . org-roam-node-find)
           ("C-c n i" . org-roam-node-insert)
           ("C-c n l" . org-roam-buffer-toggle)
@@ -29,11 +25,6 @@
            (org-roam-db-location (ok-file-expand-var "org-roam/roam/.roam.db"))
            (org-roam-directory (ok-file-expand-var "org-roam/roam/"))
            (org-roam-extract-new-file-path "topic/${id}/${slug}.org")
-           (org-roam-mode-sections
-            (list #'org-roam-backlinks-section
-                  #'org-roam-reflinks-section
-                  ;; #'org-roam-unlinked-references-section
-                  #'org-roam-ok-ja-unlinked-references-section))
            (org-roam-node-display-template "${title}"))
   :init
   (which-key-add-key-based-replacements
@@ -42,6 +33,7 @@
     "C-c r" "org-ref")
 
   :config
+  (require 'org-roam-cjk-ja)
   (org-roam-ok-enhance)
   (org-roam-db-sync)
   (org-roam-db-autosync-mode 1))
@@ -62,10 +54,6 @@
            (org-roam-timestamps-timestamp-parent-file nil))
   :config (org-roam-timestamps-mode))
 
-(use-package ok-plural
-  ;; Required by `org-roam-ok'.
-  :straight (ok-plural :host github :repo "okomestudio/ok-plural.el"))
-
 (use-package org-roam-ok
   :straight (org-roam-ok :host github
                          :repo "okomestudio/org-roam-ok"
@@ -75,6 +63,59 @@
   :init
   (load (ok-file-expand-etc "org-roam/init"))
   (org-roam-ok-on-idle-init-setup))
+
+(use-package adaptive-wrap)
+
+(use-package ok-plural
+  :straight (ok-plural :host github :repo "okomestudio/ok-plural.el"))
+
+(use-package org-roam-cjk
+  :straight (org-roam-cjk :host github
+                          :repo "okomestudio/org-roam-cjk"
+                          :files (:defaults "extensions/*"))
+  :custom ((org-roam-mode-sections
+            (list #'org-roam-backlinks-section
+                  #'org-roam-reflinks-section
+                  #'org-roam-cjk-unlinked-references-section)))
+  :config
+  (require 'adaptive-wrap)
+  (require 'ok-plural)
+
+  (setopt org-roam-cjk-unlinked-references-ignore-lines
+          '("PYTHONDONTWRITEBYTECODE=1 "
+            "begin_src.+"
+            "export_hugo_bundle:.+"
+            "filetags:.+"
+            "hugo_bundle:.+"
+            "hugo_tags:.+"
+            "parent:.+"
+            "property:.+"
+            "transclude:.+"))
+
+  (defun org-roam-ja--pluralize (title)
+    "Pluralize noun(s) in TITLE."
+    (let* ((tokens (string-split title " "))
+           (pluralized-tokens (mapcar (lambda (token)
+                                        (ok-plural-pluralize token))
+                                      tokens)))
+      ;; TODO: Expand the action based on permutations, not just the last token
+      (string-join (append (butlast tokens)
+                           `(,(cond
+                               ((car (last pluralized-tokens))
+                                (car (last pluralized-tokens)))
+                               (t (car (last tokens))))))
+                   " ")))
+
+  (defun org-roam-ja--pluralize-titles (fun titles)
+    "Expand TITLES with their plural forms."
+    (apply fun `(,(flatten-list
+                   (mapcar (lambda (w)
+                             (let ((p (org-roam-ja--pluralize w)))
+                               (if p `(,w ,p) `(,w))))
+                           titles)))))
+
+  (advice-add #'org-roam-ja-unlinked-references-section :around
+              #'org-roam-ja--pluralize-titles))
 
 ;;; BIBLIOGRAPHIC REFERENCE MANAGEMENT
 
