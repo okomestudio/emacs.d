@@ -8,34 +8,34 @@
 ;;; Code:
 
 (use-package consult
-  :straight (:pre-build
-             ;; build info manual, which appears missing by default:
-             (("emacs" "-Q" "-batch" "-L" "./"
-               "--visit" "README.org"
-               "--funcall" "org-texinfo-export-to-texinfo")
-              ("makeinfo" "consult.texi" "-o" "consult.info")
-              ;; ("install-info" "consult.info" "dir")
-              ))
-  :bind (([remap electric-apropos] . consult-apropos)
-         ;; ([remap apropos] . consult-apropos)
-         ([remap switch-to-buffer-other-window] . consult-buffer-other-window)
-         ([remap switch-to-buffer] . consult-buffer)
+  :straight ( :pre-build
+              ;; build info manual, which appears missing by default:
+              (("emacs" "-Q" "-batch" "-L" "./"
+                "--visit" "README.org"
+                "--funcall" "org-texinfo-export-to-texinfo")
+               ("makeinfo" "consult.texi" "-o" "consult.info")
+               ;; ("install-info" "consult.info" "dir")
+               ) )
+  :bind ( ([remap electric-apropos] . consult-apropos)
+          ;; ([remap apropos] . consult-apropos)
+          ([remap switch-to-buffer-other-window] . consult-buffer-other-window)
+          ([remap switch-to-buffer] . consult-buffer)
 
-         :prefix-map consult-prefix-map
-         :prefix "M-g"
-         ("F" . consult-locate)
-         ("G" . consult-git-grep)
-         ("I" . consult-imenu-multi)
-         ("L" . consult-line-multi)
-         ("M" . consult-global-mark)
-         ("M-g" . consult-goto-line)
-         ("b" . consult-bookmark)
-         ("f" . consult-find)
-         ("g" . consult-ripgrep)
-         ("i" . consult-imenu)
-         ("l" . consult-line)
-         ("m" . consult-mark)
-         ("o" . consult-outline))
+          :prefix-map consult-prefix-map
+          :prefix "M-g"
+          ("F" . consult-locate)
+          ("G" . consult-git-grep)
+          ("I" . consult-imenu-multi)
+          ("L" . consult-line-multi)
+          ("M" . consult-global-mark)
+          ("M-g" . consult-goto-line)
+          ("b" . consult-bookmark)
+          ("f" . consult-find)
+          ("g" . consult-ripgrep)
+          ("i" . consult-imenu)
+          ("l" . consult-line)
+          ("m" . consult-mark)
+          ("o" . consult-outline) )
   :custom ((consult-ripgrep-args (string-join '("rg"
                                                 "--null"
                                                 "--line-buffered"
@@ -76,6 +76,13 @@
 (use-package consult-flyspell
   :after (consult flyspell)
   :bind ("M-g s" . consult-flyspell))
+
+(use-package consult-org-roam
+  :bind ( ("C-c n F" . consult-org-roam-file-find) )
+  :config
+  (consult-org-roam-mode 1)
+  (consult-customize consult-org-roam-file-find
+                     :preview-key '(:debounce 0.1 any)))
 
 (use-package consult-projectile
   :after (projectile)

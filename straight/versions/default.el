@@ -27,6 +27,7 @@
  ("consult-flycheck" . "3bc2141daf8cfad7e4d2e2f78b15d45033f707a5")
  ("consult-flyspell" . "7011e6634598530ea2d874e7e7389dc1bb94e1ca")
  ("consult-lsp" . "aef321d03907ca6926b0cf20ca85f672c4744000")
+ ("consult-org-roam" . "a6dec09dcd06a3014409044399c4f8860ca45ef1")
  ("consult-projectile" . "400439c56d17bca7888f7d143d8a11f84900a406")
  ("corfu" . "bbc205c92938b2d504ab54f0766a6e89e3e8409e")
  ("csv-mode" . "34ff8107a9d8bd2afc283b5e8ca3c2d1026ef90b")

@@ -11,8 +11,8 @@
 
 (use-package vertico
   ;; VERTical Interactive COmpletion.
-  :bind (:map vertico-map
-              ("?" . minibuffer-completion-help))
+  :bind ( :map vertico-map
+          ("?" . minibuffer-completion-help) )
   :custom ((vertico-count 16)
            (vertico-cycle t))
   :hook ((on-first-input . vertico-mode)
@@ -31,13 +31,17 @@
          (org-roam-node-find
           posframe
           (vertico-count . 32)
-          (vertico-posframe-poshandler . posframe-poshandler-frame-center))))
+          (vertico-posframe-poshandler . posframe-poshandler-frame-center))
+         (consult-org-roam-file-find
+          posframe
+          (vertico-count . 16)
+          (vertico-posframe-poshandler . posframe-poshandler-frame-bottom-center))))
     (push item vertico-multiform-commands)))
 
 (use-package marginalia
   ;; Marginalia in the minibuffer.
-  :bind (:map minibuffer-local-map
-              ("M-A" . marginalia-cycle))
+  :bind ( :map minibuffer-local-map
+          ("M-A" . marginalia-cycle) )
   :hook (vertico-mode . marginalia-mode))
 
 (use-package nerd-icons-completion
