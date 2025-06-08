@@ -1,12 +1,13 @@
 #+title: Emacs init.el repositories
 
-Over the years, my Emacs init.el has been inspired by numerous sources, some of which are listed here in no particular order.
+Over the years, my Emacs =init.el= has been inspired by numerous sources, some of which are listed here, in no particular order.
 
 * Emacs config repositories
   - [[https://github.com/abougouffa/minemacs][abougouffa]] - See docs/EXTERNAL-TOOLS.md
   - [[https://gist.github.com/axyz/76871b404df376271b521212fba8a621][axyz]]
-  - [[https://github.com/lionyxml/emacs-solo][LionyxML/emacs-solo]] - A Pure Emacs IDE like configuration
+  - [[https://github.com/lionyxml/emacs-solo][emacs-solo]] - A Pure Emacs IDE like configuration
   - [[https://github.com/freetonik/emacs-dotfiles/blob/master/init.el][freetonik]]
+  - [[https://github.com/goofansu][goofansu]] - A clean, modular approach
   - [[https://github.com/jamescherti/minimal-emacs.d][jamescherti]]
   - [[https://github.com/kwpav/dotfiles/blob/master/emacs.org][kwpav]]
   - [[https://github.com/jamescherti/minimal-emacs.d][minimal-emacs.d]]
@@ -18,5 +19,5 @@ Over the years, my Emacs init.el has been inspired by numerous sources, some of 
   - [[https://takaxp.github.io/init.html][takaxp]]
   - [[https://github.com/trev-dev/emacs][trev-dev]]
   - [[https://github.com/vedang/emacs-up][vedang]]
-* Social media
+* Community forums
   - [[https://emacs-jp.slack.com][emacs-jp @ Slack]] - Join the reading-init-el channel
