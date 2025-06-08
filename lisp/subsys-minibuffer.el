@@ -25,18 +25,19 @@
            (vertico-posframe-parameters '((left-fringe . 8))))
   :hook (on-first-input . vertico-posframe-mode)
   :config
-  (dolist
-      (item
-       '((t (:not posframe))
-         (org-roam-node-find
-          posframe
-          (vertico-count . 32)
-          (vertico-posframe-poshandler . posframe-poshandler-frame-center))
-         (consult-org-roam-file-find
-          posframe
-          (vertico-count . 16)
-          (vertico-posframe-poshandler . posframe-poshandler-frame-bottom-center))))
-    (push item vertico-multiform-commands)))
+  (mapc (lambda (it) (push it vertico-multiform-commands))
+        '((t (:not posframe))
+          (org-roam-node-find
+           posframe
+           (vertico-count . 32)
+           (vertico-posframe-poshandler . posframe-poshandler-frame-center))
+
+          ;; NOTE(2025-06-07): posframe often renders vertico
+          ;; incorrectly, making it invisible. Watch out for the issue.
+          (consult-org-roam-file-find
+           posframe
+           (vertico-count . 16)
+           (vertico-posframe-poshandler . posframe-poshandler-frame-bottom-center)))))
 
 (use-package marginalia
   ;; Marginalia in the minibuffer.
