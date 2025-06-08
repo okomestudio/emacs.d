@@ -72,6 +72,12 @@
 
 ;;; Misc. optimizations
 
+(use-package benchmark-init
+  ;; A simple benchmark of calls to Emacs require and load functions.
+  :disabled
+  :demand t
+  :config (add-hook 'after-init-hook 'benchmark-init/deactivate))
+
 ;; Disable magic file name during `init.el'.
 (letrec ((saved-file-name-handler-alist file-name-handler-alist)
          (restore-file-name-handler-alist
