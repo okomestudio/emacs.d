@@ -1,13 +1,13 @@
 ;;; subsys-completion-.el --- Completion Subsystem  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;
-;; Set up the completion subsystem with Corfu.
+;; Configure the completion subsystem with Corfu.
 ;;
 ;;; Code:
 
 (require 'ok)
 
-;; CAPE
+;;; Cape
 
 (use-package cape
   :hook ((prog-mode
@@ -45,7 +45,7 @@
   (add-hook 'completion-at-point-functions #'cape-keyword 97)
   (add-hook 'completion-at-point-functions #'cape-elisp-block 98))
 
-;; TEMPLATING
+;;; Templating
 
 (use-package tempel
   :bind ( ("M-+" . tempel-complete)
@@ -97,15 +97,10 @@ if hankaku is active and the cdr of ELT if zenkaku is active."
         (message "Bad arguments: %s" elt))))
   (add-to-list 'tempel-user-elements #'tempel-ok--zenkaku))
 
-;; CORFU
+;;; COmpletion in Region FUnction (CORFU)
 
 (use-package corfu
-  :straight (corfu :host github
-                   :repo "minad/corfu"
-                   :files (:defaults "extensions/*"))
-  :hook ((conf-mode
-          prog-mode
-          text-mode) . corfu-mode)
+  :hook ((conf-mode prog-mode text-mode) . corfu-mode)
   :custom ((corfu-auto t)
            (corfu-auto-delay 0.5)
            (corfu-auto-prefix 1)
@@ -118,11 +113,11 @@ if hankaku is active and the cdr of ELT if zenkaku is active."
   (global-corfu-mode)
   (set-face-underline 'corfu-current t)
 
-  (defun corfu-enable-in-minibuffer ()
+  (defun corfu-ok--enable-in-minibuffer ()
     "Enable Corfu in the minibuffer."
     (when (local-variable-p 'completion-at-point-functions)
       ;; (setq-local corfu-auto nil)  ; Enable/disable auto completion
-      (setq-local corfu-echo-delay nil  ; Disable automatic echo and popup
+      (setq-local corfu-echo-delay nil ; disable automatic echo and popup
                   corfu-popupinfo-delay nil)
       (corfu-mode 1)))
   ;; (add-hook 'minibuffer-setup-hook #'corfu-enable-in-minibuffer)
@@ -131,18 +126,32 @@ if hankaku is active and the cdr of ELT if zenkaku is active."
     ;; Override the default, `:capf'
     (setq lsp-completion-provider :none))
 
-  ;; For debugging; see the Corfu site README.
-  (when debug-on-error
-    (defun force-debug (func &rest args)
-      (condition-case e
-          (apply func args)
-        ((debug error) (signal (car e) (cdr e)))))
-    (advice-add #'corfu--post-command :around #'force-debug)))
+  (defun corfu-ok--post-command (fun &rest args)
+    "Post command hook for Corfu.
+For tips on debugging, see the site readme."
+    (if debug-on-error
+        (condition-case e
+            (apply fun args)
+          ((debug error) (signal (car e) (cdr e))))
+      (apply fun args)))
+  (advice-add #'corfu--post-command :around #'corfu-ok--post-command))
+
+(use-package corfu-history
+  :straight nil
+  :after corfu
+  :hook (corfu-mode . corfu-history-mode))
 
 (use-package corfu-popupinfo
   :straight nil
+  :after corfu
   :hook (corfu-mode . corfu-popupinfo-mode)
   :custom (corfu-popupinfo-delay '(0.75 . 0.4)))
+
+(use-package corfu-quick
+  :straight nil
+  :after corfu
+  :bind ( :map corfu-map
+          ("'" . corfu-quick-complete) ))
 
 (use-package nerd-icons-corfu
   ;; An SVG alternative is `kind-icon'.
@@ -150,11 +159,18 @@ if hankaku is active and the cdr of ELT if zenkaku is active."
   :hook (corfu-mode . (lambda () (require 'nerd-icons-corfu)))
   :config (add-to-list 'corfu-margin-formatters #'nerd-icons-corfu-formatter))
 
+(use-package org-block-capf
+  ;; "<" trigger Org block completion at point.
+  :straight (org-block-capf :host github :repo "xenodium/org-block-capf")
+  :after corfu
+  :hook (org-mode . org-block-capf-add-to-completion-at-point-functions))
+
+;;; Orderless
+
 (use-package orderless
   :custom ((completion-styles '(orderless basic))
            (completion-category-defaults nil) ; can comment this line out for defaults
-           (completion-category-overrides
-            '((file (styles partial-completion)))))
+           (completion-category-overrides '((file (styles partial-completion)))))
   :config
   ;; orderless-fast completion style:
   ;;
@@ -174,6 +190,8 @@ if hankaku is active and the cdr of ELT if zenkaku is active."
     (add-hook 'corfu-mode-hook
               (lambda ()
                 (setq-local orderless-matching-styles '(orderless-literal))))))
+
+;;; Prescient
 
 (use-package prescient
   :autoload (prescient-persist-mode)
