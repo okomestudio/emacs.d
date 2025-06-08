@@ -48,6 +48,10 @@
   ;; their depth.
   :hook (prog-mode . rainbow-delimiters-mode))
 
+(use-package rainbow-mode
+  ;; Colorize color names in buffers.
+  :hook ((emacs-lisp-mode lisp-data-mode) . rainbow-mode))
+
 ;;; INDENTATION
 
 (use-package indent-bars
@@ -57,7 +61,7 @@
   :custom ((indent-bars-color '(highlight :face-bg t :blend 0.2))
            (indent-bars-no-descend-lists nil)
            (indent-bars-treesit-support t)
-           (indent-bars-prefer-character "|")  ; github.com/jdtsmith/indent-bars/issues/3
+           (indent-bars-prefer-character "|") ; github.com/jdtsmith/indent-bars/issues/3
            (indent-bars-width-frac 0.1)
            (indent-bars-pad-frac 0.1))
   :hook ((prog-mode . indent-bars-mode)

@@ -211,6 +211,7 @@
  ("quickrun" . "4b6df453f80ae7eab250a312056eaef95890e4c6")
  ("rainbow-csv" . "aa09e2cc79d32f890177c6d0b0376c4aa2708d3e")
  ("rainbow-delimiters" . "f40ece58df8b2f0fb6c8576b527755a552a5e763")
+ ("rainbow-mode" . "2e6b18609c2fdd1a2dc513937a64d276fd6cf24c")
  ("restclient.el" . "e2a2b13482d72634f8e49864cd9e5c907a5fe137")
  ("rg.el" . "e9ca15dd113fc9690a56bef06b67c69ead414efd")
  ("rust-mode" . "e443ccf2884028d3b6cc550ff20e7c92dadccb68")
