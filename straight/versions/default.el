@@ -15,6 +15,7 @@
  ("biblio.el" . "b700f0f2929829b2ca971511c5ebe61c67027e9f")
  ("blamer.el" . "8a79c1f370f7c5f041c980e0b727960462c192ba")
  ("bookmark-plus" . "e8e7806513349f968ee711a4e302945a3641245f")
+ ("browse-at-remote" . "76aa27dfd469fcae75ed7031bb73830831aaccbf")
  ("cape" . "f72ebcaeff4252ca0d7a9ac4636d8db0fdf54c55")
  ("casual" . "1f55785341b2c79ef7a932f59747b57b0168849d")
  ("centaur-tabs" . "63eb35cf42062ed19e9fc8cc5e971038c884f50f")

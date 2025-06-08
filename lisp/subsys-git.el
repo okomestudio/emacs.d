@@ -5,7 +5,7 @@
 ;;
 ;;; Code:
 
-(use-package magit  ; not derived from prog-mode
+(use-package magit
   ;; TODO: Bind `magit-find-file'
   :custom ((magit-diff-refine-hunk t)
            (magit-format-file-function #'magit-format-file-nerd-icons)))
@@ -49,6 +49,14 @@
     (set-face-attribute face nil
                         :height (round (* 0.8
                                           (face-attribute 'default :height))))))
+
+;;; Misc.
+
+(use-package browse-at-remote
+  ;; Browse target page on github/bitbucket from emacs buffers.
+  ;;
+  ;; TODO(2025-06-07): Force the use of an external browser?
+  :bind ( ("C-c g g" . browse-at-remote) ))
 
 (provide 'subsys-git)
 ;;; subsys-git.el ends here
