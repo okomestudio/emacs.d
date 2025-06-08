@@ -1,53 +1,34 @@
-;;; maj-ansible.el --- Ansible Major Mode  -*- lexical-binding: t -*-
+;;; maj-ansible.el --- Ansible  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;
-;; Set up the Ansible major mode.
+;; Configure the YAML major mode for use with Ansible.
 ;;
 ;;; Code:
 
-(require 'ok)
-
-(use-package ansible ;; not derived from prog-mode
-  :hook (ansible . ansible--prepare-lsp)
+(use-package ansible
+  :hook (ansible . ansible-ok--lsp-deferred)
   :config
-  (defun ansible--prepare-lsp ()
-    ;; NOTE(2024-03-07): `emacs-lsp-booster' is not compatible with
-    ;; `ansible-ls' v1.2.1 (see
-    ;; github.com/blahgeek/emacs-lsp-booster/issues/18).
-    ;;
-    ;; This is fixed by ansible/ansible-language-server/pull/604,
-    ;; which is not released yet. Until the new release, either turn
-    ;; off `emacs-lsp-booster' or patch `ansible-ls'. To patch, clone
-    ;; github.com/ansible/ansible-language-server, build the server
-    ;; locally following
-    ;; ansible.readthedocs.io/projects/language-server/development/#building-server-locally,
-    ;; and replace the "out" directory, i.e.,
-    ;; "var/lsp/server/npm/\@ansible/ansible-language-server/lib/node_modules/\@ansible/ansible-language-server/out/"
-    ;; with the local build.
-
-    ;; Uncomment the following line to disable `emacs-lsp-booster':
-    ;; (lsp-booster-mode -1)
-
-    ;; NOTE: To only run ansible-ls, uncomment the following line:
-    (setq-local lsp-disabled-clients '(yamlls))
-
+  (defun ansible-ok--lsp-deferred ()
+    "Defer LSP activation."
+    ;; Uncomment to disable `yamlls'.
+    ;; (setq-local lsp-disabled-clients '(yamlls))
     (lsp-deferred)))
 
 (use-package poly-ansible
-  ;; Combines yaml-mode and jinja2-mode for Ansible.
+  ;; Combines `yaml-mode' and `jinja2-mode' for use in Ansible.
   ;;
   ;; Add the line
   ;;
-  ;;   (auto-mode-alist . (("\\.ya?ml\\'" . poly-ansible-ts-mode)))
+  ;;   (auto-mode-alist . (("\\.ya?ml\\'" . poly-ansible-mode)))
   ;;
-  ;; to .dir-locals.el for which YAML files are written for Ansible. This
-  ;; polymode activate ansible automatically.
+  ;; to .dir-locals.el of the project in which YAML files are written
+  ;; for Ansible. This polymode activates ansible automatically.
   ;;
-  ;; jinja2-mode inherits from html-mode.
+  ;; Note that `poly-ansible-mode' activates `yaml-ts-mode' if that is
+  ;; in use and falls back to `yaml-mode' if not.
   ;;
-  :commands poly-ansible-ts-mode
-  :straight (:host github :repo "okomestudio/poly-ansible"
-                   :branch "ts-mode" :fork "okomestudio"))
+  ;; `jinja2-mode' inherits from html-mode.
+  )
 
 (provide 'maj-ansible)
 ;;; maj-ansible.el ends here
