@@ -61,5 +61,12 @@
            (init-loader-show-log-after-init ok-debug))
   :config (init-loader-load (ok-file-expand-user-emacs-file "init.d")))
 
+(use-package desktop
+  :straight nil
+  :custom (desktop-auto-save-timeout 180)
+  :init (desktop-save-mode 1)
+  :config
+  (add-to-list 'desktop-globals-to-save 'safe-local-variable-directories))
+
 (provide 'init)
 ;;; init.el ends here
