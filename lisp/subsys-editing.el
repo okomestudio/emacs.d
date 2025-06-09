@@ -5,10 +5,11 @@
 ;;
 ;;; Code:
 
-(use-package mwim
-  ;; Switch between the beginning/end of line or code line positioning.
-  :bind ( ("C-a" . mwim-beginning)
-          ("C-e" . mwim-end) ))
+(use-package crux
+  ;; A Collection of Ridiculously Useful eXtensions for Emacs.
+  :bind ( ([remap kill-whole-line] . crux-kill-whole-line)
+          ("C-S-o". crux-smart-open-line-above)
+          ("C-o". crux-smart-open-line) ))
 
 (use-package multiple-cursors
   :bind ( ("C-S-c C-S-c" . mc/edit-lines)
@@ -16,15 +17,14 @@
           ("C-<" . mc/mark-previous-symbol-like-this)
           ("C-S-c C-<" . mc/mark-all-like-this) ))
 
-(use-package htmlize
-  ;; Convert buffer text and decorations to HTML
-  )
+(use-package mwim
+  ;; Switch between the beginning/end of line or code line positioning.
+  :bind ( ("C-a" . mwim-beginning)
+          ("C-e" . mwim-end) ))
 
 (use-package ok
-  :bind ( ("C-S-o" . ok-edit-insert-newline-above)
-          ("C-c i SPC" . ok-edit-insert-zero-width-space)
+  :bind ( ("C-c i SPC" . ok-edit-insert-zero-width-space)
           ("C-c i s" . ok-edit-insert-section-delimiter)
-          ("C-o" . ok-edit-insert-newline-below)
           ("M-q" . ok-edit-fill-or-unfill-paragraph) ; TODO: Use `prog-fill-reindent-defun'?
           ("M-u" . ok-upcase-word)
 
@@ -68,7 +68,7 @@
   ;; Operate on current line if region undefined.
   )
 
-;;; UNDO/REDO
+;;; Undo & Redo
 
 (use-package point-undo
   :bind ( ("M-[" . point-undo)
@@ -82,7 +82,7 @@
           ("C-/" . undo)
           ("C-?" . undo-redo) ))
 
-;;; SPELLING
+;;; Spelling
 
 (use-package flyspell
   :straight nil
@@ -145,8 +145,8 @@ But don't look beyond what's visible on the screen."
 	            ;; the point may have moved so reset this
 	            (setq flyspell-auto-correct-previous-pos (point))))))))
 
-  (advice-add #'flyspell-auto-correct-previous-word
-              :override #'flyspell-ok-auto-correct-previous-word))
+  (advice-add #'flyspell-auto-correct-previous-word :override
+              #'flyspell-ok-auto-correct-previous-word))
 
 (use-package ispell
   :straight nil
@@ -158,14 +158,14 @@ But don't look beyond what's visible on the screen."
                ("-d" "en_GB") nil utf-8)))
            (ispell-program-name "/usr/bin/aspell")))
 
-;;; MACRO AND EXPANSIONS
+;;; Macro & Expansions
 
 (use-package hippie-exp
   ;; Expand the word before the point in various ways.
   :straight nil
   :bind ([remap dabbrev-expand] . hippie-expand))
 
-;;; REGION
+;;; Region
 
 (use-package expand-region
   :bind ("C-M-S-SPC" . er/expand-region))
@@ -174,6 +174,12 @@ But don't look beyond what's visible on the screen."
   :commands selected-minor-mode
   :bind ( :map selected-keymap
           ("q" . selected-off) ))
+
+;;; Misc.
+
+(use-package htmlize
+  ;; Convert buffer text and decorations to HTML
+  )
 
 (provide 'subsys-editing)
 ;;; subsys-editing.el ends here
