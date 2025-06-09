@@ -44,6 +44,12 @@
            (org-roam-ui-sync-theme t)
            (org-roam-ui-update-on-save t)))
 
+(use-package org-roam-node-display-cache
+  :straight (org-roam-node-display-cache
+             :host github
+             :repo "okomestudio/org-roam-node-display-cache")
+  :hook (org-roam-ok-mode . org-roam-node-display-cache-mode))
+
 ;;; OK-SPECIFIC ENHANCEMENT
 
 (use-package org-roam-timestamps
