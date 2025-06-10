@@ -6,37 +6,39 @@ The Emacs configuration directory.
 
 Clone the root of this version-controlled repository to a place where Emacs can find the =init.el= file, e.g. =~/.config/emacs=.
 
-  - =bin/= - Scripts used by Emacs; add this to the ~PATH~ environment variable
-  - =etc/= - Startup and configuration files for Emacs packages
-      - =etc/tempel/= - Used by tempel, storing templates
-  - =init.d/= - Symlinks to Elisp package sources stored under =lisp=
-  - =lisp/= - Elisp package sources
-      - =lisp/archive/= - Unused code archive kept for reference
-      - =lisp/themes/= - Theme package config files
-  - =straight/= - Used by ~straight~
-      - =straight/repos/= - Store package repositories of source code
-      - =straight/versions/= - Store version pinning info
-  - =tree-sitter/= - Tree-sitter files
-  - =var/= - Emacs package data files
-
-*** Elisp file naming convention in =lisp/=
-
-- =init-*.el= - configures a package manager.
-- =linux-gui.el= - configures GUI sub-components in Linux.
-- =maj-*.el= - configures a major mode and the related features used within it.
-- =optimizations.el= - sets up various optimizations for Emacs.
-- =subsys-*.el= - configures an Emacs subsystem not neatly implemented as a major mode.
-- =themes-*.el= - configures themes.
-
-*** =init.el= architecture
+#+begin_example
+  emacs.d/
+  ├── bin/                 - Shell scripts; add to PATH
+  ├── etc/                 - Startup & config files for packages
+  │   └── tempel/          - Used by tempel, storing templates
+  ├── init.d/              - Symlinks to package sources in lisp/
+  │   └── symlinks.sh      - Symlink manager script
+  ├── lisp/                - Emacs Lisp package source files
+  │   ├── archive/         - Unused code archive for reference
+  │   ├── themes/          - Theme package config files
+  │   │   └── themes-*.el  - Configure a theme
+  │   ├── init-*.el        - Initialize a package manager
+  │   ├── linux-gui.el     - Configure GUI sub-component in Linux
+  │   ├── maj-*.el         - Configure a major mode & its utilities
+  │   ├── optimizations.el - Perf optimization
+  │   └── subsys-*.el      - Configure a subsystem not packaged as major mode
+  ├── straight/            - Used by straight
+  │   ├── repos/           - Package source repositories
+  │   └── versions/
+  │       └── default.el   - Version freeze info
+  ├── tree-sitter/         - Tree-sitter library files
+  ├── var/                 - Package data files
+  ├── early-init.el
+  └── init.el
+#+end_example
 
 The Emacs starts by loading =early-init.el= and then =init.el=. This section describes the architecture of the =init.el= file.
 
-**** Use of ~straight-use-package~
+*** ~straight-use-package~
 
-The =init.el= makes heavy use of ~use-package~ with ~straight~, configured in =lisp/init-straight.el=.
+This repository makes heavy use of ~use-package~ with ~straight~, configured in =lisp/init-straight.el=.
 
-***** Initializing built-in package
+**** Initializing built-in package
 
 Use ~:straight nil~ to avoid pulling the source:
 
@@ -46,24 +48,22 @@ Use ~:straight nil~ to avoid pulling the source:
     …)
 #+end_src
 
-**** Use of ~init-loader~
+*** ~init-loader~
 
-The Elisp sources are in the =lisp/= directory. Those actually loaded by ~init-loader~ are symlinked in the =init.d/= directory, in (mostly) ASCII order.
-
-To set up symlinks, run =init.d/symlinks.sh=:
+Emacs Lisp source files are in =lisp/=. Those =.el= files actually loaded by ~init-loader~ are symlinked in =init.d/=, in (mostly) ASCII order. To set up symlinks, use =symlinks.sh=:
 
 #+begin_src shell
   ./init.d/symlinks.sh -r  # refresh all symlinks
 #+end_src
 
-** Key bindings
+** Miscellaneous topics
+*** Key bindings
 
 See the [[info:elisp#Key Binding Conventions][Key Binding Conventions]] section of the GNU Emacs Lisp Reference Manual.
 
-** Miscellaneous topics
 *** Improving startup time
 
-In a typical Linux system that I use, the startup time is about 1.5 - 2.0 seconds on the first launch and 1.0 - 1.5 seconds thereafter. The =init.el= is written for readability and maintainability, but a few strategies are maintained to minimize package loading time. The following resources may offer useful tips:
+In a typical Linux system that I use, the startup time is about 1.5 - 2.0 seconds on the first launch and 1.0 - 1.5 seconds thereafter. The Emacs Lisp sources are written for readability and maintainability. Some strategies are maintained to minimize package loading time, however. The following resources may offer useful tips:
 
   - [[https://emacs-jp.github.io/tips/startup-optimization][Emacs の起動時間を“詰める” | Emacs JP]] (in Japanese)
   - [[https://github.com/jamescherti/minimal-emacs.d][jamescherti/minimal-emacs.d: minimal-emacs.d - Better Vanilla Emacs Defaults and Optimized Startup]]
