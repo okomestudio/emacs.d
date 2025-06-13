@@ -48,7 +48,7 @@
                     (unless (eq (point) (end-of-line)) (forward-char))
                     (beginning-of-defun))
                 (`nil (apply fun _))))
-        (t (save-excursion (hs-show-block))
+        (_ (save-excursion (hs-show-block))
            (unless (eq (point) (end-of-line)) (forward-char))
            (beginning-of-defun)))))
 
