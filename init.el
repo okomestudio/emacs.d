@@ -66,6 +66,7 @@
   :custom (desktop-auto-save-timeout 180)
   :init (desktop-save-mode 1)
   :config
+  (require 'ok-desktop)
   (add-to-list 'desktop-globals-to-save 'safe-local-variable-directories))
 
 (provide 'init)

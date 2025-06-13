@@ -154,7 +154,7 @@
  ("nov.el" . "9b7bef950d68c2518710c480729d6bb6026e9489")
  ("ob-typescript" . "5fe1762f8d8692dd5b6f1697bedbbf4cae9ef036")
  ("ok-plural.el" . "1517fd2809d16e5a3dd45e83136aa317c55a3ac1")
- ("ok.el" . "9c9ac5b13a5328c82a210f6ec6112961f0f41214")
+ ("ok.el" . "4199e5ffa408beacec708cccc73cb67790124dab")
  ("olivetti" . "800a286862fd7aff2a91726e84606386e295106c")
  ("on.el" . "3cf623e1a4331e259ef92e49154ed0551f300436")
  ("openwith" . "1dc89670822966fab6e656f6519fdd7f01e8301a")
