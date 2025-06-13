@@ -8,6 +8,9 @@
 (require 'ok)
 
 (use-package org-roam
+  ;; :straight (org-roam :host github
+  ;;                     :repo "org-roam/org-roam"
+  ;;                     :fork (:branch "double-quotes-for-proper-escape"))
   :bind ( ("C-c n f" . org-roam-node-find)
           ("C-c n i" . org-roam-node-insert)
           ("C-c n l" . org-roam-buffer-toggle)
@@ -48,7 +51,32 @@
   :straight (org-roam-node-display-cache
              :host github
              :repo "okomestudio/org-roam-node-display-cache")
-  :hook (org-roam-ok-mode . org-roam-node-display-cache-mode))
+  :hook (org-roam-ok-mode . org-roam-node-display-cache-mode)
+  :init
+  (defun org-roam-node-display-cache--ensure-desktop ()
+    "Ensure the registration of global variable for desktop save."
+    (require 'org-roam-node-display-cache)
+    (add-to-list 'desktop-globals-to-save 'org-roam-node-display-cache--cache)
+
+    ;; Hash table cannot be serialized easily to persist in a file.
+    ;; The functions thus converts it to an alist in the de/ser layer.
+    (add-to-list 'ok-desktop-global-var-serdes-funs
+                 (list 'org-roam-node-display-cache--cache
+                       (lambda (ht)
+                         (let (alist)
+                           (maphash (lambda (k v) (push (cons k v) alist)) ht)
+                           alist))
+                       (lambda (alist)
+                         (if (hash-table-p alist)
+                             alist
+                           (let ((ht (make-hash-table :test 'equal)))
+                             (dolist (entry alist)
+                               (puthash (car entry) (cdr entry) ht))
+                             ht))))))
+  (add-hook 'desktop-save-hook
+            #'org-roam-node-display-cache--ensure-desktop)
+  (add-hook 'ok-desktop-before-read-hook
+            #'org-roam-node-display-cache--ensure-desktop))
 
 ;;; OK-SPECIFIC ENHANCEMENT
 

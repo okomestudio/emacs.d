@@ -95,6 +95,8 @@
           lisp-data-mode) . highlight-quoted-mode))
 
 (use-package highlight-sexp
+  ;; Highlight the current zone according to its context (sexp,
+  ;; comment, string, etc.).
   :hook (((emacs-lisp-mode
            lisp-data-mode) . highlight-sexp-mode)
          (enable-theme-functions . highlight-sexp-ok--refresh))
