@@ -30,8 +30,15 @@
   :bind ("M-O" . ace-window)
   :custom (aw-dispatch-always t))
 
-(use-package frame-cmds
-  :bind ("M-o" . next-window-any-frame))
+(use-package frame
+  :straight nil
+  :bind ( ("M-o" . next-window-any-frame)
+          :repeat-map next-window-any-frame-repeat-map
+          ("o" . next-window-any-frame)
+          ("O" . previous-window-any-frame) )
+  :config
+  (put 'next-window-any-frame 'repeat-hint "next window")
+  (put 'previous-window-any-frame 'repeat-hint "previous window"))
 
 (use-package winner
   ;; Undo or redo a change in window configuration.

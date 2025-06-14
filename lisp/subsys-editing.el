@@ -33,9 +33,6 @@
   :config
   (which-key-add-key-based-replacements "C-c i" "ok-edit"))
 
-(use-package repeat
-  :hook (on-first-input . repeat-mode))
-
 (use-package titlecase
   ;; Titlecase things.
   :bind ( :map text-mode-map

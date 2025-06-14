@@ -5,13 +5,13 @@
 ;;
 ;;; Code:
 
-;;; COMMON ELISP LIBRARIES
+;;; Common Emacs Lisp Libraries
 
 (use-package buttercup)     ; behavior-driven Lisp testing
 (use-package reformatter)   ; code formatter
 (use-package uuid)
 
-;;; MAIN STARTUP CONFIG
+;;; Main Startup Config
 
 (use-package emacs
   :straight nil
@@ -102,7 +102,7 @@
   :straight nil
   :custom ((tab-always-indent 'complete)))
 
-;;; SHELL
+;;; Shell
 
 (use-package add-node-modules-path
   ;; Add node_modules/.bin to exec-path.
@@ -130,11 +130,16 @@
   :straight (:host github :repo "tarsius/keychain-environment")
   :config (keychain-refresh-environment))
 
-;;; MISC.
+;;; Misc.
 
 (use-package anzu
   ;; Displays current and total matches information in the mode-line.
   :hook (on-first-input . global-anzu-mode))
+
+(use-package repeat
+  :straight nil
+  :custom (repeat-echo-function #'repeat-echo-message)
+  :hook (on-first-input . repeat-mode))
 
 (use-package tramp
   :straight nil
