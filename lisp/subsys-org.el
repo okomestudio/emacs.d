@@ -231,7 +231,10 @@ of the current section."
   ;; install here.
   :straight (org-modern-indent :host github :repo "jdtsmith/org-modern-indent"))
 
-(use-package org-hide-drawers)
+(use-package org-hide-drawers
+  :straight (org-hide-drawers :host github
+                              :repo "krisbalintona/org-hide-drawers"
+                              :branch "devel"))
 
 (use-package org-theme-ok
   :if (display-graphic-p)
