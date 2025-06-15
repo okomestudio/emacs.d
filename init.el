@@ -30,7 +30,7 @@
     (add-hook hook #'ok-file-hack-dir-local--get-variables)))
 
 (use-package no-littering
-  ;; Run this as early as possible.
+  ;; Tidy up config file locations; run this as early as possible.
   :demand t
   :custom ((no-littering-etc-directory (ok-file-expand-user-emacs-file "etc/"))
            (no-littering-var-directory (ok-file-expand-user-emacs-file "var/")))
@@ -62,9 +62,16 @@
   :config (init-loader-load (ok-file-expand-user-emacs-file "init.d")))
 
 (use-package desktop
+  ;; Save the Emacs state across sessions.
   :straight nil
   :custom (desktop-auto-save-timeout 180)
-  :init (desktop-save-mode 1)
+
+  :init
+  ;; Loading the feature will set up after-init hook to actually read
+  ;; a previously saved session. The session read will be skipped when
+  ;; Emacs is launched with `--no-desktop` option.
+  (desktop-save-mode 1)
+
   :config
   (require 'ok-desktop)
   (add-to-list 'desktop-globals-to-save 'safe-local-variable-directories))
