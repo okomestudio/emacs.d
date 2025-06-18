@@ -10,7 +10,7 @@
 ;;
 ;;; Code:
 
-;;; SEARCH AND MOVEMENT
+;;; Search & Movement
 
 (use-package ace-isearch
   ;; A seamless bridge between isearch, ace-jump-mode, avy, and swoop.
@@ -24,7 +24,7 @@
 
 (use-package avy)
 
-;;; WINDOWS AND FRAMES
+;;; Windows & Frames
 
 (use-package ace-window
   :bind ("M-O" . ace-window)
@@ -37,8 +37,8 @@
           ("o" . next-window-any-frame)
           ("O" . previous-window-any-frame) )
   :config
-  (put 'next-window-any-frame 'repeat-hint "next window")
-  (put 'previous-window-any-frame 'repeat-hint "previous window"))
+  (put 'next-window-any-frame 'repeat-hint "o: next window")
+  (put 'previous-window-any-frame 'repeat-hint "O: previous window"))
 
 (use-package winner
   ;; Undo or redo a change in window configuration.
@@ -47,7 +47,7 @@
          ("C-c <left>". winner-undo))
   :hook (on-first-buffer . winner-mode))
 
-;; Scrolling
+;;; Scrolling
 
 (use-package emacs
   :straight nil
@@ -84,7 +84,7 @@
 (use-package yascroll
   :hook (on-first-buffer . global-yascroll-bar-mode))
 
-;; Configuration
+;;; Window Configuration
 
 (use-package activities
   :disabled
@@ -103,7 +103,7 @@
   ;; Prevent `edebug' default bindings from interfering.
   (setq edebug-inhibit-emacs-lisp-mode-bindings t))
 
-;;; TABS
+;;; Tabs
 
 (use-package centaur-tabs
   :bind (("C-<prior>" . centaur-tabs-backward)
@@ -115,7 +115,7 @@
   (centaur-tabs-mode t)
   (centaur-tabs-group-by-projectile-project))
 
-;;; FILES
+;;; Files
 
 (use-package recentf
   :straight nil
@@ -133,11 +133,11 @@
   :straight nil
   :hook (after-init . save-place-mode))
 
-;;; IMENU
+;;; Imenu
 
 (use-package imenu-list)
 
-;;; BOOKMARK
+;;; Bookmarks
 
 (use-package bookmark+
   ;; Enhances vanilla Emacs bookmarks in many way.

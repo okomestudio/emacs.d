@@ -20,7 +20,7 @@ This is also used as the default.")
 (defvar ok-faces-font-family-variable-pitch-ja "Noto Serif CJK JP Medium"
   "Font for the variable pitch in Japanese.")
 
-;; UTILITY FUNCTIONS
+;;; Utility Functions
 
 (defun ok-faces--set-up-action (&rest action)
   "Set up ACTION to run on frame creation."
@@ -108,23 +108,29 @@ This is also used as the default.")
                      ("AoyagiKouzanFontT". 1.00)))
     (push element face-font-rescale-alist)))
 
-(use-package faces
+(use-package face-remap
   :straight nil
+  :hook (after-change-major-mode . ok-faces--scale-text-in-mode)
   :init
   (ok-faces--set-up-action (lambda ()
                              ;; (ok-faces--apply-font-rescale)
                              (ok-faces--setup-faces-for-frame)))
-  :hook
-  ;; Scale texts by mode; `text-scale-mode' affect the `default face.
-  (elfeed-search-mode . (lambda () (text-scale-set 1.0)))
-  (elfeed-show-mode . (lambda () (text-scale-set 0.0)))
-  (eww-mode . (lambda () (text-scale-set 0.0)))
-  (org-mode . (lambda () (text-scale-set 0.8)))
-  (prog-mode . (lambda () (text-scale-set 0.0)))
-  (text-mode . (lambda () (text-scale-set 0.0)))
-  (treemacs-mode . (lambda () (text-scale-set -0.4))))
+  :config
+  (defun ok-faces--scale-text-in-mode ()
+    "Set text scale based on major mode."
+    (interactive)
+    (when-let* ((scale (pcase major-mode
+                         ('elfeed-search-mode 1.0)
+                         ('elfeed-show-mode 0.0)
+                         ('eww-mode 1.0)
+                         ('org-mode 0.8)
+                         ('prog-mode 1.0)
+                         ('text-mode 1.0)
+                         ('treemacs-mode -0.4)
+                         (_ nil))))
+      (text-scale-set scale))))
 
-;; ICONS
+;;; Icons
 
 (use-package nerd-icons
   ;; For a list of available icons, see, e.g., nerdfonts.ytyng.com.
@@ -133,7 +139,7 @@ This is also used as the default.")
   (unless (file-exists-p "~/.local/share/fonts/NFM.ttf")
     (nerd-icons-install-fonts +1)))
 
-;; MISC.
+;;; Misc.
 
 (use-package eaw
   ;; East Asian Ambiguous Width問題と絵文字の横幅問題の修正ロケール.
