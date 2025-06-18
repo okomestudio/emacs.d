@@ -53,7 +53,8 @@
           :map tempel-map
           ("M-}" . tempel-next)
           ("M-{" . tempel-previous) )
-  :custom (tempel-path `(,(ok-file-expand-etc "tempel/templates.el")))
+  :custom ((tempel-path `(,(ok-file-expand-etc "tempel/templates.el")))
+           (tempel-trigger-prefix "/"))
   :config
   (defun tempel-ok--include (elt)
     (when (eq (car-safe elt) 'i)
