@@ -15,6 +15,7 @@ The list of Emacs packages to potentially check out:
 - [[https://codeberg.org/akib/emacs-iwindow][iwindow]] - Interactively manipulate windows
 - [[https://github.com/hkjels/mini-ontop.el][mini-ontop.el]] - Prevent windows from jumping on minibuffer activation
 - [[https://github.com/captainflasmr/selected-window-accent-mode][selected-window-accent-mode]] - Accentuate the active window
+- [[https://github.com/bluzky/slash-commands][slash-commands]] - Missing slash commands package
 - [[https://github.com/neeasade/stillness-mode.el][stillness-mode.el]] - Make your windows stay still
 - [[https://github.com/liushihao456/symbols-outline.el][symbols-outline.el]] - Display symbols (functions, variables, etc) in a side window.
 - [[https://github.com/WJCFerguson/textsize/][textsize]] - Automatically choose a font point size for the Emacs default face based on the size and pixel pitch of the display
