@@ -19,8 +19,7 @@
 
 ;;; Debug switches
 
-(setopt ok-debug nil)         ; global debug switch
-(setopt debug-on-error ok-debug)
+(setopt ok-debug nil)
 (setopt warning-minimum-level :warning
         warning-suppress-types nil)
 (setq debug-on-message nil)   ; set regexp to trigger debugger
@@ -49,7 +48,6 @@
         inhibit-startup-screen t
         initial-buffer-choice nil
         native-comp-async-query-on-exit t
-        native-comp-async-report-warnings-errors ok-debug
         pgtk-wait-for-event-timeout 0
         ring-bell-function 'ignore)
 (setq redisplay-skip-fontification-on-input t)

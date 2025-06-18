@@ -27,7 +27,17 @@
   :config
   (let ((hook 'hack-dir-local-get-variables-functions))
     (remove-hook hook #'hack-dir-local--get-variables)
-    (add-hook hook #'ok-file-hack-dir-local--get-variables)))
+    (add-hook hook #'ok-file-hack-dir-local--get-variables))
+
+  (ok-debug-register 'debug-on-error
+                     'native-comp-async-report-warnings-errors)
+  (with-eval-after-load 'init-loader
+    (ok-debug-register 'init-loader-show-log-after-init))
+  (with-eval-after-load 'use-package-core
+    (ok-debug-register 'use-package-compute-statistics
+                       'use-package-verbose))
+  (with-eval-after-load 'lsp-mode
+    (ok-debug-register 'lsp-log-io)))
 
 (use-package no-littering
   ;; Tidy up config file locations; run this as early as possible.
@@ -57,9 +67,9 @@
 ;; Load features under `init.d/'.
 (use-package init-loader
   :demand t
-  :custom ((init-loader-byte-compile nil)
-           (init-loader-show-log-after-init ok-debug))
-  :config (init-loader-load (ok-file-expand-user-emacs-file "init.d")))
+  :custom (init-loader-byte-compile nil)
+  :config
+  (init-loader-load (ok-file-expand-user-emacs-file "init.d")))
 
 (use-package desktop
   ;; Save the Emacs state across sessions.

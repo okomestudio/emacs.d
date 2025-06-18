@@ -41,7 +41,7 @@
   ;; to initialization, by far that slowest of all startup operations.
   ;; Use `dashboard-open' for easy access.
   (let ((open-on-startup nil))
-    (when (and open-on-startup (not ok-debug))
+    (when (and open-on-startup (not (boundp 'ok-debug)) (not ok-debug))
       (dashboard-setup-startup-hook)))
 
   :config

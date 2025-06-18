@@ -58,11 +58,8 @@
   (load bootstrap-file nil 'nomessage))
 
 (setopt use-package-always-defer t               ; use :demand t to override
-        use-package-compute-statistics (if (boundp 'ok-debug) ok-debug)
         use-package-enable-imenu-support t
         use-package-minimum-reported-time 0.001
-        use-package-verbose (if (boundp 'ok-debug) ok-debug)
-
         message-log-max t)
 
 (require 'use-package)
