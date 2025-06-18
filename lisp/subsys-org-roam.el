@@ -8,9 +8,9 @@
 (require 'ok)
 
 (use-package org-roam
-  ;; :straight (org-roam :host github
-  ;;                     :repo "org-roam/org-roam"
-  ;;                     :fork (:branch "double-quotes-for-proper-escape"))
+  :straight (org-roam :host github
+                      :repo "org-roam/org-roam"
+                      :fork (:branch "fix-autosync-to-vc-delete-file"))
   :bind ( ("C-c n f" . org-roam-node-find)
           ("C-c n i" . org-roam-node-insert)
           ("C-c n l" . org-roam-buffer-toggle)
