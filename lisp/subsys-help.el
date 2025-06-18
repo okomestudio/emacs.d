@@ -7,10 +7,11 @@
 
 (require 'ok)
 
-;;; INFO
+;;; Info
 
 (use-package info
   :straight nil
+  :custom (Info-hide-note-references t)
   :config (push (ok-file-expand-etc "info/") Info-directory-list))
 
 (use-package sicp
@@ -21,7 +22,7 @@
   :straight (emacs-lisp-elements :host github
                                  :repo "protesilaos/emacs-lisp-elements"))
 
-;;; HELP
+;;; Help
 
 (use-package elisp-for-python
   :straight (elisp-for-python :host github
@@ -130,7 +131,7 @@
   :bind ( :map Man-mode-map
           ("i" . man-index) ))
 
-;;; WHICH-KEY
+;;; Which-key
 
 (use-package which-key-posframe
   :hook (on-first-input . which-key-posframe-mode))
@@ -201,7 +202,7 @@
     "C-x t" "tab"
     "C-x w" "window"))
 
-;;; TRANSIENT UTILITIES
+;;; Transient Utilities
 
 (use-package casual
   ;; Provide a keyboard-driven menu UI
@@ -213,7 +214,7 @@
 
 (use-package hydra)
 
-;;; KEYSTROKES
+;;; Keystrokes
 ;;
 ;; See emacs.stackexchange.com/a/81581/599 for options:
 ;;
@@ -228,7 +229,7 @@
   :custom ((command-log-mode-auto-show t))
   :demand t)
 
-;;; DEVDOCS
+;;; Devdocs
 
 (use-package devdocs
   ;; Emacs viewer for DevDocs. See https://devdocs.io.
@@ -240,22 +241,10 @@
           :map devdocs-mode-map
           ("v" . devdocs-ok-visit) )
   :hook (((ansible
-           bash-ts-mode
-           css-ts-mode
-           dockerfile-ts-mode
-           emacs-lisp-mode
-           js-jsx-mode
-           js-ts-mode
-           json-ts-mode
-           lisp-data-mode
-           magit-mode
-           markdown-mode
-           mhtml-mode
-           python-mode
-           python-ts-mode
-           web-mode) . devdocs-ok--set-current-docs-for-mode)
-         ((sql-mode
-           hack-local-variables) . devdocs-ok--set-current-docs-for-sql-mode))
+           hack-local-variables
+           prog-mode
+           special-mode
+           text-mode) . devdocs-ok--set-current-docs))
   :config
   (defun devdocs-ok-visit ()
     "Visit the current devdocs page with a web browser."
@@ -263,38 +252,32 @@
     (devdocs-copy-url)
     (browse-url-generic (current-kill 0)))
 
-  (setq-default
-   devdocs-current-docs-for-mode
-   '((ansible . ("ansible"))
-     (bash-ts-mode . ("bash"))
-     (css-ts-mode . ("css"))
-     (dockerfile-ts-mode . ("docker"))
-     (emacs-lisp-mode . ("elisp"))
-     (js-jsx-mode . ("javascript" "axios" "react"))
-     (js-ts-mode . ("javascript"))
-     (json-ts-mode . ("jq"))
-     (lisp-data-mode . ("lisp"))
-     (magit-mode . ("git"))
-     (markdown-mode . ("markdown"))
-     (mhtml-mode . ("html"))
-     (python-mode . ("python~3.12"))
-     (python-ts-mode . ("python~3.12"))
-     (typescript-ts-mode . ("javascript" "axios" "typescript" "vite"))
-     (web-mode . ("css" "html" "javascript" "react" "typescript"))))
-
-  (defun devdocs-ok--set-current-docs-for-mode ()
+  (defun devdocs-ok--set-current-docs ()
     "Set `devdocs-current-docs' for current major mode."
-    (setq-local devdocs-current-docs
-                (cdr (assoc major-mode devdocs-current-docs-for-mode))))
-
-  (defun devdocs-ok--set-current-docs-for-sql-mode ()
-    "Set `devdocs-current-docs' for SQL modes."
-    (when (derived-mode-p 'sql-mode)
-      (setq-local devdocs-current-docs
-                  (pcase sql-product
-                    ('postgres '("postgresql~16"))
-                    ('sqlite '("sqlite"))
-                    (_ '("postgresql~16" "sqlite")))))))
+    (when-let*
+        ((docs
+          (pcase major-mode
+            ('ansible '("ansible"))
+            ('bash-ts-mode '("bash"))
+            ('css-ts-mode '("css"))
+            ('dockerfile-ts-mode '("docker"))
+            ;; ('emacs-lisp-mode '("elisp")) ; use Info
+            ('js-jsx-mode '("javascript" "axios" "react"))
+            ('js-ts-mode '("javascript"))
+            ('json-ts-mode '("jq"))
+            ('magit-mode '("git"))
+            ('markdown-mode '("markdown"))
+            ('mhtml-mode '("html"))
+            ('python-mode '("python~3.12"))
+            ('python-ts-mode '("python~3.12"))
+            ('sql-mode (pcase sql-product
+                         ('postgres '("postgresql~16"))
+                         ('sqlite '("sqlite"))
+                         (_ '("postgresql~16" "sqlite"))))
+            ('typescript-ts-mode '("javascript" "axios" "typescript" "vite"))
+            ('web-mode '("css" "html" "javascript" "react" "typescript"))
+            (_ nil))))
+      (set (make-local-variable 'devdocs-current-docs) docs))))
 
 (provide 'subsys-help)
 ;;; subsys-help.el ends here
