@@ -6,6 +6,8 @@
 ;;; Code:
 
 (use-package elfeed
+  :bind ( :map reader-app-prefix-map
+          ("e" . elfeed) )
   :custom ((elfeed-curl-max-connections 16)
            (elfeed-search-title-max-width 100)
            (elfeed-search-title-min-width 16)
