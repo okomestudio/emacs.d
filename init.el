@@ -24,6 +24,7 @@
   ;; Emacs Lisp utilities for Okome Studio (ok).
   :straight (ok :host github :repo "okomestudio/ok.el")
   :demand t
+  :bind-keymap ("C-c R" . reader-app-prefix-map)
   :config
   (let ((hook 'hack-dir-local-get-variables-functions))
     (remove-hook hook #'hack-dir-local--get-variables)
@@ -37,7 +38,10 @@
     (ok-debug-register 'use-package-compute-statistics
                        'use-package-verbose))
   (with-eval-after-load 'lsp-mode
-    (ok-debug-register 'lsp-log-io)))
+    (ok-debug-register 'lsp-log-io))
+
+  (defvar reader-app-prefix-map (make-sparse-keymap)
+    "Reader app prefix map."))
 
 (use-package no-littering
   ;; Tidy up config file locations; run this as early as possible.
