@@ -20,5 +20,7 @@
 
   (add-hook 'org-mode-hook #'hnreader-ok--apply-face-remappings 98))
 
+;; NOTE(2025-06-19): https://github.com/agzam/consult-hn might be of interest.
+
 (provide 'pkg-hnreader)
 ;;; pkg-hnreader.el ends here
