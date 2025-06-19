@@ -149,6 +149,7 @@
  ("mwim.el" . "b4f3edb4c0fb8f8b71cecbf8095c2c25a8ffbf85")
  ("nerd-icons-completion" . "8e5b995eb2439850ab21ba6062d9e6942c82ab9c")
  ("nerd-icons-corfu" . "41110180ceab9d0edaa856d19633b2b3fdf82e75")
+ ("nerd-icons-ibuffer" . "d9f41469e46bcf7b4ae0dd0b1ce1abe15c191a53")
  ("nerd-icons.el" . "546ee20caf825e65da4c5435d31f13d269ed2a81")
  ("no-littering" . "de767a4952b2375a2ce1a2f7fe17a417bfbf512e")
  ("nongnu-elpa" . "56748b48bec8af70101edaa57e35b0ac4c5b0151")

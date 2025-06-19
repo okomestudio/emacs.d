@@ -25,6 +25,7 @@ ptom["62"]="maj-c maj-css maj-docker maj-elisp maj-html maj-javascript maj-kotli
 ptom["64"]="maj-ansible subsys-drawing maj-graphviz maj-json maj-plantuml subsys-http"
 ptom["70"]="subsys-doc-viewer subsys-ocr"
 ptom["80"]="subsys-readers subsys-llm subsys-elfeed subsys-audio subsys-eww subsys-game subsys-gnus subsys-map"
+ptom["86"]="maj-ibuffer"
 ptom["88"]="maj-dashboard"
 ptom["linux-00"]="linux-gui"
 
