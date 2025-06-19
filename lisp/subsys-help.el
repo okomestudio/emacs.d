@@ -134,6 +134,10 @@
 ;;; Which-key
 
 (use-package which-key-posframe
+  :custom ((which-key-posframe-parameters '((border-width . 2)
+                                            (internal-border-width . 1)
+                                            (left-fringe . 20)
+                                            (right-fringe . 20))))
   :hook (on-first-input . which-key-posframe-mode))
 
 (use-package which-key
