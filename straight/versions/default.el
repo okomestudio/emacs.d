@@ -180,7 +180,7 @@
  ("org-roam-cjk" . "e38bb2a1006ef7a2975571b62b3448d5515305d0")
  ("org-roam-fz" . "eea6b7604007cc8de79c828b0e558d4840f1e0a3")
  ("org-roam-node-display-cache" . "b7d7f38efec3360acdc7fb30842ac95a69b2c82a")
- ("org-roam-ok" . "4f3c134676158214d7a5080c4a43dad705278162")
+ ("org-roam-ok" . "0c292c7851036772309e70e541381abab5a8a0b5")
  ("org-roam-timestamps" . "c4ff1e2f5b0905b5caa917249aab56ddc1de1ab3")
  ("org-roam-ui" . "5ac74960231db0bf7783c2ba7a19a60f582e91ab")
  ("org-theme-ok.el" . "863e5db3c4f21a9c707f66c637ac11d2320babbf")

@@ -1,7 +1,7 @@
-;;; subsys-org-roam.el --- Org Roam Subsystem  -*- lexical-binding: t -*-
+;;; subsys-org-roam.el --- Org Roam  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;
-;; Set up Org Roam subsystem.
+;; Set up the Org Roam subsystem.
 ;;
 ;;; Code:
 
@@ -78,7 +78,7 @@
   (add-hook 'ok-desktop-before-read-hook
             #'org-roam-node-display-cache--ensure-desktop))
 
-;;; OK-SPECIFIC ENHANCEMENT
+;;; OK-Specific Enhancement
 
 (use-package org-roam-timestamps
   ;; Add timestamps to `org-roam' notes.
@@ -151,7 +151,7 @@
   (advice-add #'org-roam-ja-unlinked-references-section :around
               #'org-roam-ja--pluralize-titles))
 
-;;; BIBLIOGRAPHIC REFERENCE MANAGEMENT
+;;; Bibliographic Reference Management
 
 (use-package org-roam-bibtex
   :after org-roam
@@ -164,12 +164,19 @@
   ;; For citations, cross-references, bibliographies.
   :custom (bibtex-completion-pdf-field "file"))
 
-;;; MISC.
+;;; Misc.
 
 (use-package org-roam-fz
   ;; Folgezettel utility.
   :straight (org-roam-fz :host github :repo "okomestudio/org-roam-fz")
-  :hook (org-mode . org-roam-fz-mode))
+  :custom (org-roam-ok-node-display-title #'org-roam-fz--display-title)
+  :hook (org-mode . org-roam-fz-mode)
+  :config
+  (defun org-roam-fz--display-title (node)
+    "Render NODE title for display."
+    (concat (org-roam-ok-node--title node)
+            (when-let* ((fid (org-roam-node-fid node)))
+              (concat " " fid)))))
 
 (provide 'subsys-org-roam)
 ;;; subsys-org-roam.el ends here
