@@ -244,8 +244,7 @@
           ("D" . devdocs-lookup)
           :map devdocs-mode-map
           ("v" . devdocs-ok-visit) )
-  :hook (((ansible
-           hack-local-variables
+  :hook (((hack-local-variables
            prog-mode
            special-mode
            text-mode) . devdocs-ok--set-current-docs))
@@ -261,7 +260,6 @@
     (when-let*
         ((docs
           (pcase major-mode
-            ('ansible '("ansible"))
             ('bash-ts-mode '("bash"))
             ('css-ts-mode '("css"))
             ('dockerfile-ts-mode '("docker"))
@@ -280,6 +278,8 @@
                          (_ '("postgresql~16" "sqlite"))))
             ('typescript-ts-mode '("javascript" "axios" "typescript" "vite"))
             ('web-mode '("css" "html" "javascript" "react" "typescript"))
+            ('yaml-ts-mode (when (and (featurep 'ansible) ansible-mode)
+                             '("ansible")))
             (_ nil))))
       (set (make-local-variable 'devdocs-current-docs) docs))))
 
