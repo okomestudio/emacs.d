@@ -11,6 +11,7 @@ Over the years, my Emacs =init.el= has been inspired by numerous sources, some o
   - [[https://github.com/jamescherti/minimal-emacs.d][jamescherti]]
   - [[https://github.com/kwpav/dotfiles/blob/master/emacs.org][kwpav]]
   - [[https://github.com/jamescherti/minimal-emacs.d][minimal-emacs.d]]
+  - [[https://emacs.nasy.moe/][nasy]]
   - [[https://gitlab.com/nathanfurnal/dotemacs/-/blob/master/init.el][nathanfurnal]]
   - [[https://github.com/progfolio/.emacs.d/][progfolio]]
   - [[https://protesilaos.com/emacs/dotemacs][protesilaos]]
