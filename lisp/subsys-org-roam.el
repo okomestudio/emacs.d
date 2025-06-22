@@ -167,16 +167,18 @@
 ;;; Misc.
 
 (use-package org-roam-fz
-  ;; Folgezettel utility.
+  ;; A Folgezettel ID mode for Org Roam.
   :straight (org-roam-fz :host github :repo "okomestudio/org-roam-fz")
   :custom (org-roam-ok-node-display-title #'org-roam-fz--display-title)
   :hook (org-mode . org-roam-fz-mode)
   :config
   (defun org-roam-fz--display-title (node)
-    "Render NODE title for display."
+    "Render NODE title for display.
+When the ID of NODE is an fID, append it to the title."
     (concat (org-roam-ok-node--title node)
             (when-let* ((fid (org-roam-node-fid node)))
-              (concat " " fid)))))
+              (concat " " (propertize (format "[%s]" fid)
+                                      'face 'org-roam-fz-overlay))))))
 
 (provide 'subsys-org-roam)
 ;;; subsys-org-roam.el ends here
