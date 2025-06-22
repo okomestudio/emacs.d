@@ -1,10 +1,11 @@
-;;; subsys-faces.el --- Faces Subsystem  -*- lexical-binding: t -*-
+;;; subsys-faces.el --- Font & Faces  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;
-;; Set up the font subsystem.
+;; Configure font & face subsystem.
 ;;
 ;;; Code:
 
+(require 'dash)
 (require 'ok)
 
 (defvar ok-faces-font-family-fixed-pitch "Hack"
@@ -50,11 +51,11 @@ This is also used as the default.")
                        frame)
   (ok-fontset-create "fontset-fixed pitch"
                      ok-faces-font-family-fixed-pitch
-                     :subsets `((ja ,(font-spec :family ok-faces-font-family-fixed-pitch-ja)))
+                     :subsets `((ja . ,(font-spec :family ok-faces-font-family-fixed-pitch-ja)))
                      :frame frame)
   (ok-fontset-create "fontset-variable pitch"
                      ok-faces-font-family-variable-pitch
-                     :subsets `((ja ,(font-spec :family ok-faces-font-family-variable-pitch-ja)))
+                     :subsets `((ja . ,(font-spec :family ok-faces-font-family-variable-pitch-ja)))
                      :frame frame)
 
   ;; STANDARD FACES
@@ -80,6 +81,7 @@ This is also used as the default.")
   )
 
 (use-package faces
+  ;; Install font files.
   :if (eq system-type 'gnu/linux)
   :straight nil
   :autoload (ok-faces--apply-font-rescale)
@@ -98,6 +100,15 @@ This is also used as the default.")
    . "sudo apt install -y fonts-vlgothic")
 
   :init
+  (let* ((font-family "URW Classico")
+         (font-url (file-name-concat "https://github.com/okomestudio/"
+                                     "fonts-urw-classico/raw/main/opentype/"
+                                     "URWClassico-%s.otf"))
+         (files (--map (format font-url it)
+                       '("Bold" "BoldItalic" "Italic" "Regular"))))
+    (when (--any (ok-font-install-from-url it) files)
+      (ok-font-cache-update)))
+
   (dolist (element '(("Hack" . 1.00)      ; reference
                      ("EB Garamond". 1.6) ; 1.28
                      ("BIZ UDGothic" . 1.00)
@@ -105,8 +116,9 @@ This is also used as the default.")
                      ("Noto Sans CJK JP" . 1.10)
                      ("Noto Serif CJK JP" . 1.26)
                      ;; ("VL Gothic" . 1.225)
-                     ("AoyagiKouzanFontT". 1.00)))
-    (push element face-font-rescale-alist)))
+                     ("AoyagiKouzanFontT" . 1.00)
+                     ("URW Classico". 1.4)))
+    (add-to-list 'face-font-rescale-alist element)))
 
 (use-package face-remap
   :straight nil

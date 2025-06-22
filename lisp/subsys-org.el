@@ -1,10 +1,11 @@
-;;; subsys-org.el --- Org Subsystem  -*- lexical-binding: t -*-
+;;; subsys-org.el --- Org  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;
-;; Set up the Org subsystem.
+;; Configure the Org subsystem.
 ;;
 ;;; Code:
 
+(require 'dash)
 (require 'ok)
 
 (use-package org
@@ -111,7 +112,7 @@ of the current section."
        ('(4) #'math-preview-clear-all)
        (_ #'math-preview-all)))))
 
-;;; ORG BABEL
+;;; Org Babel
 
 (use-package ob-core
   :straight nil
@@ -179,7 +180,7 @@ of the current section."
   :commands (org-babel-execute:typescript)
   :config (add-to-list 'org-babel-load-languages '(typescript . t)))
 
-;;; ORG EXPORT
+;;; Org Export
 
 (use-package ox
   :straight nil
@@ -210,7 +211,7 @@ of the current section."
 
 (use-package org-preview-html)
 
-;;; ORG AGENDA
+;;; Org Agenda
 
 (use-package org-agenda
   :straight nil
@@ -221,10 +222,12 @@ of the current section."
            (org-agenda-start-on-weekday 0)
            (org-agenda-use-tag-inheritance t))) ; set nil to speed up parsing
 
-;;; APPEARANCE & THEME
+;;; Appearance & Theme
 
 (use-package org-expose-emphasis-markers
   :hook (org-mode . org-expose-emphasis-markers-mode))
+
+(use-package org-modern)
 
 (use-package org-modern-indent
   ;; NOTE(2025-03-03): Not on any package repository, so need manual
@@ -236,12 +239,48 @@ of the current section."
                               :repo "krisbalintona/org-hide-drawers"
                               :branch "devel"))
 
-(use-package org-theme-ok
-  :if (display-graphic-p)
-  :straight (org-theme-ok :host github :repo "okomestudio/org-theme-ok.el")
-  :hook (org-mode . org-theme-ok-mode))
+(use-package ok-themes
+  :straight (ok-themes :host github :repo "okomestudio/ok-themes.el")
+  :demand t
+  :init
+  (with-eval-after-load 'org
+    (load-theme 'ok-org t))
 
-;;; CLIPBOARD
+  :config
+  (defun ok-org-theme--prepare-fonts (theme)
+    "Prepare fonts and fontsets used in the `ok-org' theme."
+    (when (eq theme 'ok-org)
+      (let* ((fontsets '(( :fontset "fontset-ok org fixed pitch"
+                           :font-family "Hack"
+                           :subsets ((ja . "BIZ UDGothic")) )
+                         ( :fontset "fontset-ok org variable pitch"
+                           :font-family "EB Garamond"
+                           :subsets ((ja . "Noto Serif CJK JP Medium")) )
+                         ( :fontset "fontset-ok org outline"
+                           :font-family "URW Classico"
+                           :subsets ((ja . "Noto Sans CJK JP"))
+                           :char-specs ((?― . "EB Garamond")) ))))
+        (dolist (fontset fontsets)
+          (ok-fontset-create (plist-get fontset :fontset)
+                             (plist-get fontset :font-family)
+                             :subsets (plist-get fontset :subsets)
+                             :char-specs (plist-get fontset :char-specs)))
+
+        ;; Customize faces
+        (set-face-attribute 'ok-org-fixed-pitch nil
+                            :family "Hack"
+                            :fontset "fontset-fixed pitch")
+        (set-face-attribute 'ok-org-variable-pitch nil
+                            :family "EB Garamond"
+                            :fontset "fontset-variable pitch")
+        ;; (set-face-attribute 'ok-org-default nil :family font-family :fontset fontset)
+        (set-face-attribute 'ok-org-outline nil
+                            :family "URW Classico"
+                            :fontset "fontset-ok org outline"))))
+
+  (add-hook 'enable-theme-functions #'ok-org-theme--prepare-fonts -98))
+
+;;; Clipboard
 
 (use-package org-cliplink
   :after org-download
@@ -272,7 +311,7 @@ clipboard content:
            (org-download-timestamp ""))
   :hook (org-mode . org-download-enable))
 
-;; MISC.
+;;; Misc.
 
 (use-package org-side-tree :disabled)
 (use-package org-web-tools :disabled)
