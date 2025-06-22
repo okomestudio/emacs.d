@@ -52,7 +52,7 @@
 (use-package emacs
   :straight nil
   :custom ((scroll-conservatively 10)
-           (scroll-margin 10)))
+           (scroll-margin 5)))
 
 (use-package mwheel
   :straight nil
