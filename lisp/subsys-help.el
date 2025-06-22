@@ -133,13 +133,6 @@
 
 ;;; Which-key
 
-(use-package which-key-posframe
-  :custom ((which-key-posframe-parameters '((border-width . 2)
-                                            (internal-border-width . 1)
-                                            (left-fringe . 20)
-                                            (right-fringe . 20))))
-  :hook (on-first-input . which-key-posframe-mode))
-
 (use-package which-key
   ;; Displays available keybindings in popup.
   :straight nil
@@ -150,7 +143,7 @@
           ("i" . where-is)
 
           :map help-map
-          ("A" . which-key-show-top-level)
+          ("C-?" . which-key-show-top-level)
 
           :map which-key-C-h-map
           ("s" . which-key-ok--change-sort-order) )
@@ -205,6 +198,13 @@
     "C-x r" "register/bookmark/rect"
     "C-x t" "tab"
     "C-x w" "window"))
+
+(use-package which-key-posframe
+  :custom ((which-key-posframe-parameters '((border-width . 2)
+                                            (internal-border-width . 1)
+                                            (left-fringe . 20)
+                                            (right-fringe . 20))))
+  :hook (on-first-input . which-key-posframe-mode))
 
 ;;; Transient Utilities
 
