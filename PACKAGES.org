@@ -71,3 +71,20 @@ The list of Emacs packages to potentially check out:
 ** Shell & terminal
 
 - [[https://github.com/eval-exec/eee.el][eee.el]] - Launch TUI commands in an external terminal asynchronously
+
+** Packages used before
+*** all-the-icons
+
+Replaced by =nerd-icons=.
+
+*** direnv
+
+Replaced by =pet=.
+
+*** highlight-indent-guides
+
+Replaced by =indent-bars=.
+
+*** mixed-pitch
+
+Similar results are achieved by fine-tuning custom faces.
