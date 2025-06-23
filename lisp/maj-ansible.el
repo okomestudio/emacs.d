@@ -30,5 +30,25 @@
   ;; `jinja2-mode' inherits from html-mode.
   )
 
+(use-package ansible-doc
+  :bind ( :map help-map
+          ("A" . ansible-doc)
+          :map ansible-doc-module-mode-map
+          ("r" . ok-ansible-doc--redraw) )
+  :hook ((yaml-ts-mode . ansible-doc-mode))
+  :config
+  ;; NOTE(2025-06-22): Ideally, this is run right after `ansible-doc'.
+  ;; Attempts have been made to add this to a hook or an advice.
+  ;; However, the coordination of redraw after
+  ;; `ansi-color-apply-on-region' seems tricky, and aside from
+  ;; repeating `ansible-doc' invocation, page refresh doesn't happen
+  ;; properly. Revisit to fix this issue.
+  (defun ok-ansible-doc--redraw ()
+    "Redraw page after processing ASCII escapes."
+    (interactive)
+    (with-silent-modifications
+      (ansi-color-apply-on-region (point-min) (point-max) t))
+    (redisplay t)))
+
 (provide 'maj-ansible)
 ;;; maj-ansible.el ends here
