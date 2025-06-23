@@ -136,6 +136,8 @@
   ;; Displays current and total matches information in the mode-line.
   :hook (on-first-input . global-anzu-mode))
 
+(use-package dirvish)
+
 (use-package repeat
   :straight nil
   :custom (repeat-echo-function #'repeat-echo-message)
