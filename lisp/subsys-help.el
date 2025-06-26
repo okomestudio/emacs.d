@@ -30,15 +30,15 @@
 
 (use-package help
   :straight nil
-  :bind ( :map help-map
-          ("d" . ok-help-shell-cmd )
-
-          :prefix "C-h V"
+  :bind ( :prefix "C-h V"
           :prefix-map help-view-other-doc
           ("p" . help-ok-view-doc-elisp-for-python)
           ("s" . help-ok-view-doc-straight)
           ("q" . help-ok-view-doc-emacsql)
-          ("t" . help-ok-view-doc-tempel) )
+          ("t" . help-ok-view-doc-tempel)
+
+          :map help-map
+          ("d" . ok-help-shell-cmd) )
   :custom (list-faces-sample-text (concat "abcdefghijklmn"
                                           "ABCDEFGHIJKLMN"
                                           "漢字 ひらがな カタカナ"))
