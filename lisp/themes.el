@@ -1,11 +1,12 @@
 ;;; themes.el --- Themes  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;
-;; Set up themes, visuals, colors, etc.
+;; Configure custom themes.
 ;;
 ;; Use the following commands to switch themes.
 ;;
-;;   - `ok-theme-prepare' to load desired theme feature
+;;   - `ok-theme-enable-preset' to load a theme preset
+;;   - `ok-theme-prepare' to load theme feature
 ;;   - `ok-theme-enable' to enable a theme
 ;;
 ;; See https://emacsthemes.com for available custom themes.
@@ -29,11 +30,11 @@
 
 (ok-theme-prepare-enable-on-startup 'light)
 
-;;; MODELINE
+;;; Modeline
 
 (load (ok-file-expand-lisp "themes-modeline.el"))
 
-;;; MINOR THEME ADJUSTMENTS
+;;; Minor Theme Adjustments
 
 (use-package solaire-mode
   ;; Distinguish "real" buffers from "unreal" buffers by element
@@ -58,7 +59,7 @@
   ;; Colorize color names in buffers.
   :hook ((emacs-lisp-mode lisp-data-mode) . rainbow-mode))
 
-;;; INDENTATION
+;;; Indentation
 
 (use-package indent-bars
   :straight (indent-bars :type git
@@ -75,16 +76,18 @@
            lisp-data-mode) . (lambda () (setq-local
                                          indent-bars-no-descend-lists t)))))
 
-;;; WINDOW DIVIDERS
+;;; Window Dividers
 
-;; Set all dividers to the same foreground colors.
-(let ((fg (face-attribute 'window-divider :foreground)))
-  (set-face-attribute 'window-divider-first-pixel nil :foreground fg)
-  (set-face-attribute 'window-divider-last-pixel nil :foreground fg))
+(use-package frame
+  :straight nil
+  :hook (enable-theme-functions . window-divider-mode)
+  :config
+  ;; For a thin border, set dividers to the same foreground color:
+  (let ((fg (face-attribute 'window-divider :foreground)))
+    (set-face-attribute 'window-divider-first-pixel nil :foreground fg)
+    (set-face-attribute 'window-divider-last-pixel nil :foreground fg)))
 
-(window-divider-mode 1)
-
-;;; MISC.
+;;; Misc.
 
 (use-package olivetti
   ;; Emacs minor mode to automatically balance window margins
