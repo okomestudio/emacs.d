@@ -177,7 +177,7 @@
  ("org-ok" . "40b0ca8067094a7bb1c35b2e6451d50eb2b04641")
  ("org-preview-html" . "785e1f5c99c0f2d76a9a6611a06b4552a343e221")
  ("org-ref" . "edbb80863ef63ef52ef04fce3239e063843f8d30")
- ("org-roam" . "467c5dc4519e150346106d19c6b209900cd94212")
+ ("org-roam" . "1ea7e3077ce9308a869821df3f6e47083d521196")
  ("org-roam-bibtex" . "b065198f2c3bc2a47ae520acd2b1e00e7b0171e6")
  ("org-roam-cjk" . "e38bb2a1006ef7a2975571b62b3448d5515305d0")
  ("org-roam-fz" . "d895b6303d5b52e2c3de8432490fd4146a22dfdd")

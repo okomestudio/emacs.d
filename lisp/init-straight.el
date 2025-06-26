@@ -69,5 +69,8 @@
   :custom ((system-packages-use-sudo t)
            (system-packages-package-manager 'apt)))
 
+(straight-override-recipe
+ '(org-roam :host github :repo "okomestudio/org-roam"))
+
 (provide 'init-straight)
 ;;; init-straight.el ends here

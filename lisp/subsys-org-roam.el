@@ -8,9 +8,7 @@
 (require 'ok)
 
 (use-package org-roam
-  :straight (org-roam :host github
-                      :repo "org-roam/org-roam"
-                      :fork (:branch "fix-autosync-to-vc-delete-file"))
+  :straight (org-roam :host github :repo "okomestudio/org-roam")
   :bind ( ("C-c n f" . org-roam-node-find)
           ("C-c n i" . org-roam-node-insert)
           ("C-c n l" . org-roam-buffer-toggle)
