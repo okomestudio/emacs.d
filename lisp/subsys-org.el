@@ -239,26 +239,25 @@ of the current section."
                               :repo "krisbalintona/org-hide-drawers"
                               :branch "devel"))
 
-(use-package ok-themes
-  :straight (ok-themes :host github :repo "okomestudio/ok-themes.el")
+(use-package ok-org-themes
+  :straight (ok-org-themes :host github :repo "okomestudio/ok-org-themes.el")
   :demand t
   :init
   (with-eval-after-load 'org
-    (load-theme 'ok-org t))
+    (load-theme 'ok-org-modern t))
 
   :config
-  (defun ok-org-theme--prepare-fonts (theme)
-    "Prepare fonts and fontsets used in the `ok-org' theme."
-    (when (eq theme 'ok-org)
+  (defun ok-org-modern-theme--prepare-fonts (theme)
+    "Prepare fonts and fontsets used in the `ok-org-modern' theme."
+    (when (eq theme 'ok-org-modern)
       (let* ((fontsets '(( :fontset "fontset-ok org fixed pitch"
-                           :font-family "Hack"
-                           :subsets ((ja . "BIZ UDGothic")) )
+                           :font-family "HackGen35 Console NF")
                          ( :fontset "fontset-ok org variable pitch"
                            :font-family "EB Garamond"
-                           :subsets ((ja . "Noto Serif CJK JP Medium")) )
+                           :subsets ((ja . "Noto Serif CJK JP Medium")))
                          ( :fontset "fontset-ok org outline"
                            :font-family "URW Classico"
-                           :subsets ((ja . "Noto Sans CJK JP"))
+                           :subsets ((ja . "UmePlus P Gothic"))
                            :char-specs ((?― . "EB Garamond")) ))))
         (dolist (fontset fontsets)
           (ok-fontset-create (plist-get fontset :fontset)
@@ -267,25 +266,24 @@ of the current section."
                              :char-specs (plist-get fontset :char-specs)))
 
         ;; Customize faces
-        (set-face-attribute 'ok-org-fixed-pitch nil
-                            :family "Hack"
+        (set-face-attribute 'ok-org-modern-fixed-pitch nil
+                            :family "HackGen35 Console NF"
                             :fontset "fontset-fixed pitch")
-        (set-face-attribute 'ok-org-variable-pitch nil
+        (set-face-attribute 'ok-org-modern-variable-pitch nil
                             :family "EB Garamond"
                             :fontset "fontset-variable pitch")
-        ;; (set-face-attribute 'ok-org-default nil :family font-family :fontset fontset)
-        (set-face-attribute 'ok-org-outline nil
+        (set-face-attribute 'ok-org-modern-outline nil
                             :family "URW Classico"
                             :fontset "fontset-ok org outline"))))
 
-  (add-hook 'enable-theme-functions #'ok-org-theme--prepare-fonts -98))
+  (add-hook 'enable-theme-functions #'ok-org-modern-theme--prepare-fonts -98))
 
 ;;; Clipboard
 
 (use-package org-cliplink
   :after org-download
   :bind ( :map org-mode-map
-          ("C-c i u" . org-ok-clipboard-smartyank))
+          ("C-c i u" . org-ok-clipboard-smartyank) )
   :custom ((org-cliplink-max-length nil))
   :config
   (defun org-ok-clipboard-smartyank ()

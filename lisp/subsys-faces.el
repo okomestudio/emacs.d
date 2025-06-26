@@ -8,11 +8,11 @@
 (require 'dash)
 (require 'ok)
 
-(defvar ok-faces-font-family-fixed-pitch "Hack"
+(defvar ok-faces-font-family-fixed-pitch "HackGen35 Console NF"
   "Font for the fixed pitch.
 This is also used as the default.")
 
-(defvar ok-faces-font-family-fixed-pitch-ja "BIZ UDGothic"  ; "Noto Sans Mono CJK JP"
+(defvar ok-faces-font-family-fixed-pitch-ja nil ; HackGen includes Japanese
   "Font for the fixed pitch in Japanese.")
 
 (defvar ok-faces-font-family-variable-pitch "EB Garamond"  ; "EB Garamond 08"
@@ -45,17 +45,19 @@ This is also used as the default.")
                     'iso-8859-3
                     (font-spec :family ok-faces-font-family-fixed-pitch)
                     frame)
-  (ok-fontset-set-font "fontset-default"
-                       'ja
-                       ok-faces-font-family-fixed-pitch-ja
-                       frame)
+  (when ok-faces-font-family-fixed-pitch-ja
+    (ok-fontset-set-font "fontset-default"
+                         'ja ok-faces-font-family-fixed-pitch-ja
+                         frame))
   (ok-fontset-create "fontset-fixed pitch"
                      ok-faces-font-family-fixed-pitch
-                     :subsets `((ja . ,(font-spec :family ok-faces-font-family-fixed-pitch-ja)))
+                     :subsets (when ok-faces-font-family-fixed-pitch-ja
+                                `((ja . ,(font-spec :family ok-faces-font-family-fixed-pitch-ja))))
                      :frame frame)
   (ok-fontset-create "fontset-variable pitch"
                      ok-faces-font-family-variable-pitch
-                     :subsets `((ja . ,(font-spec :family ok-faces-font-family-variable-pitch-ja)))
+                     :subsets (when ok-faces-font-family-variable-pitch-ja
+                                `((ja . ,(font-spec :family ok-faces-font-family-variable-pitch-ja))))
                      :frame frame)
 
   ;; STANDARD FACES
@@ -90,35 +92,50 @@ This is also used as the default.")
    . "sudo apt install -y fonts-ebgaramond")
   ("/usr/share/fonts/opentype/noto/NotoSansCJK-Regular.ttc"
    . "sudo apt install -y fonts-noto-cjk")
-  ("/usr/share/fonts/truetype/aoyagi-kouzan-t/AoyagiKouzanT.ttf"
-   . "sudo apt install -y fonts-aoyagi-kouzan-t")
-  ("/usr/share/fonts/truetype/bizud-gothic/BIZUDGothic-Regular.ttf"
-   . "sudo apt install -y fonts-morisawa-bizud-gothic")
-  ("/usr/share/fonts/truetype/hack/Hack-Regular.ttf"
-   . "sudo apt install -y fonts-hack")
-  ("/usr/share/fonts/truetype/vlgothic/VL-Gothic-Regular.ttf"
-   . "sudo apt install -y fonts-vlgothic")
+  ;; ("/usr/share/fonts/truetype/aoyagi-kouzan-t/AoyagiKouzanT.ttf"
+  ;;  . "sudo apt install -y fonts-aoyagi-kouzan-t")
+  ;; ("/usr/share/fonts/truetype/bizud-gothic/BIZUDGothic-Regular.ttf"
+  ;;  . "sudo apt install -y fonts-morisawa-bizud-gothic")
+  ("/usr/share/fonts/truetype/umeplus/umeplus-p-gothic.ttf"
+   . "sudo apt install -y fonts-umeplus")
 
   :init
-  (let* ((font-family "URW Classico")
-         (font-url (file-name-concat "https://github.com/okomestudio/"
-                                     "fonts-urw-classico/raw/main/opentype/"
-                                     "URWClassico-%s.otf"))
-         (files (--map (format font-url it)
-                       '("Bold" "BoldItalic" "Italic" "Regular"))))
-    (when (--any (ok-font-install-from-url it) files)
+  ;; Install fonts from GitHub:
+  (let ((fonts
+         `(( :family "HackGen35 Console NF"
+             :url ,(file-name-concat
+                    "https://github.com/okomestudio/fonts-hackgen"
+                    "raw/master/hackgen-nf/HackGen35ConsoleNF-%s.ttf")
+             :variants ("Bold" "Regular") )
+           ( :family "URW Classico"
+             :url ,(file-name-concat
+                    "https://github.com/okomestudio/fonts-urw-classico"
+                    "raw/master/opentype/URWClassico-%s.otf")
+             :variants ("Bold" "BoldItalic" "Italic" "Regular") )))
+        urls res)
+    (cl-loop for font in fonts
+             do
+             (setq urls (flatten-list
+                         (mapcar (lambda (font)
+                                   (--map (format (plist-get font :url) it)
+                                          (plist-get font :variants)))
+                                 fonts)))
+             (setq res (append res (--map (ok-font-install-from-url it) urls))))
+    (when (--any? it res)
       (ok-font-cache-update)))
 
-  (dolist (element '(("Hack" . 1.00)      ; reference
-                     ("EB Garamond". 1.6) ; 1.28
-                     ("BIZ UDGothic" . 1.00)
-                     ("Noto Sans Mono CJK JP" . 1.18) ; 1.18
-                     ("Noto Sans CJK JP" . 1.10)
-                     ("Noto Serif CJK JP" . 1.26)
-                     ;; ("VL Gothic" . 1.225)
-                     ("AoyagiKouzanFontT" . 1.00)
-                     ("URW Classico". 1.4)))
+  ;; Set font rescaling factors:
+  (dolist (element '(("HackGen35 Console NF" . 1.0) ; reference
+                     ;; ("AoyagiKouzanFontT" . 1.0)
+                     ;; ("BIZ UDGothic" . 1.0)
+                     ("EB Garamond". 1.45)
+                     ("Noto Sans CJK JP" . 1.2)
+                     ("Noto Sans Mono CJK JP" . 1.2)
+                     ("Noto Serif CJK JP" . 1.2)
+                     ("URW Classico". 1.3)
+                     ("UmePlus P Gothic" . 1.1)))
     (add-to-list 'face-font-rescale-alist element)))
+
 
 (use-package face-remap
   :straight nil
@@ -135,7 +152,7 @@ This is also used as the default.")
                          ('elfeed-search-mode 1.0)
                          ('elfeed-show-mode 0.0)
                          ('eww-mode 1.0)
-                         ('org-mode 0.8)
+                         ('org-mode 1.0)
                          ('prog-mode 1.0)
                          ('text-mode 1.0)
                          ('treemacs-mode -0.4)
