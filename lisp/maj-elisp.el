@@ -1,7 +1,7 @@
-;;; maj-elisp.el --- Elisp Major Mode  -*- lexical-binding: t -*-
+;;; maj-elisp.el --- Emacs Lisp Major Mode  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;
-;; Set up the Emacs Lisp major mode.
+;; Configure the Emacs Lisp major mode.
 ;;
 ;;; Code:
 
@@ -82,7 +82,7 @@
     (electric-pair-local-mode -1)
     (enable-paredit-mode)))
 
-;; SYNTAX HIGHLIGHTING
+;; Syntax Highlighting
 
 (use-package highlight-defined
   :custom (highlight-defined-face-use-itself t)
@@ -102,19 +102,20 @@
          (enable-theme-functions . highlight-sexp-ok--refresh))
   :config
   (defun highlight-sexp-ok--refresh (theme)
-    (when (and (boundp 'highlight-sexp-mode) highlight-sexp-mode)
-      (highlight-sexp-mode -1))
+    "Refresh "
+    (setopt hl-sexp-background-color
+            (ok-face-color-scale (face-attribute 'default :background)
+                                 (pcase (frame-parameter nil 'background-mode)
+                                   ('dark 1.04)
+                                   ('light 0.96)
+                                   (_ 1.00))))
+    (dolist (buffer (buffer-list))
+      (with-current-buffer buffer
+        (when (bound-and-true-p highlight-sexp-mode)
+          (highlight-sexp-mode -1)
+          (highlight-sexp-mode 1))))))
 
-    (let* ((mode (frame-parameter nil 'background-mode))
-           (scale (if (string= mode "dark") 1.04 0.96))
-           (bg (face-attribute 'default :background))
-           (bg-hl (ok-face-color-scale bg scale)))
-      (setopt hl-sexp-background-color bg-hl))
-
-    (when (and (boundp 'highlight-sexp-mode))
-      (highlight-sexp-mode 1))))
-
-;; HELP & DOCUMENTATION
+;; Help & Documentation
 
 (use-package package-lint)
 
