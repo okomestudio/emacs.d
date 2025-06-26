@@ -1,7 +1,7 @@
 ;;; subsys-help.el --- Help Subsystem  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;
-;; Set up the help and documentation subsystem.
+;; Configure the help and documentation subsystem.
 ;;
 ;;; Code:
 
@@ -30,7 +30,10 @@
 
 (use-package help
   :straight nil
-  :bind ( :prefix "C-h V"
+  :bind ( :map help-map
+          ("d" . ok-help-shell-cmd )
+
+          :prefix "C-h V"
           :prefix-map help-view-other-doc
           ("p" . help-ok-view-doc-elisp-for-python)
           ("s" . help-ok-view-doc-straight)
@@ -96,33 +99,6 @@
   :straight (help-shortdoc-example :host github
                                    :repo "buzztaiki/help-shortdoc-example.el")
   :config (help-shortdoc-example-mode 1))
-
-(use-package shell-help
-  ;; Show `<command> --help' help.
-  :straight nil
-  :commands (shell-help)
-  :init
-  (defun shell-help (cmd)
-    (interactive (list (ok-prompt-or-string-from-region "Shell command: ")))
-    (if (not (executable-find cmd))
-        (message "Command not found: %s" cmd)
-      (let ((buffer-stdout "*shell-help*")
-            (buffer-stderr "*shell-help-error*")
-            (postfilter (if (executable-find "batcat")
-                            "| batcat -f -l help -p --theme=ansi" ""))
-            status)
-        (when (catch 'success
-                (dolist (opt '("--help" "-help" "-h"))
-                  (setq status (shell-command (format "%s %s %s"
-                                                      cmd opt postfilter)
-                                              buffer-stdout
-                                              buffer-stderr))
-                  (if (= status 0)
-                      (throw 'success t)
-                    (switch-to-buffer buffer-stdout)
-                    (erase-buffer))))
-          (switch-to-buffer buffer-stdout)
-          (ansi-color-apply-on-region (point-min) (point-max)))))))
 
 (use-package man-index
   ;; Quickly navigate to keywords within a man page.
