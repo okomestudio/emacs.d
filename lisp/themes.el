@@ -19,9 +19,15 @@
           (flexoki-themes . "lisp/themes/themes-flexoki")
           (kanagawa-themes . "lisp/themes/themes-kanagawa")
           (nano-theme . "lisp/themes/themes-nano")
+          (ok-org-themes . "lisp/themes/themes-ok-org")
           (spacemacs-theme . "lisp/themes/themes-spacemacs")))
 
-(ok-theme-prepare-enable-on-startup 'spacemacs-light 'spacemacs-theme)
+(setopt ok-theme-presets '((dark . ((spacemacs-dark . spacemacs-theme)
+                                    (ok-org-modern . ok-org-themes)))
+                           (light . ((spacemacs-light . spacemacs-theme)
+                                     (ok-org-modern . ok-org-themes)))))
+
+(ok-theme-prepare-enable-on-startup 'light)
 
 ;;; MODELINE
 
