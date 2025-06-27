@@ -219,6 +219,7 @@ of the current section."
   :custom ((org-agenda-current-time-string "⭠ NOW ────────────────────")
            (org-agenda-include-diary t)
            (org-agenda-inhibit-startup t)
+           (org-agenda-skip-unavailable-files t)
            (org-agenda-start-on-weekday 0)
            (org-agenda-use-tag-inheritance t))) ; set nil to speed up parsing
 
