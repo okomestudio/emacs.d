@@ -30,8 +30,8 @@
 
 (use-package help
   :straight nil
-  :bind ( :prefix "C-h V"
-          :prefix-map help-view-other-doc
+  :bind ( :prefix-map help-view-other-doc
+          :prefix "C-h V"
           ("p" . help-ok-view-doc-elisp-for-python)
           ("s" . help-ok-view-doc-straight)
           ("q" . help-ok-view-doc-emacsql)
