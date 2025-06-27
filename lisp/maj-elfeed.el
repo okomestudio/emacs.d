@@ -1,7 +1,7 @@
-;;; subsys-elfeed.el --- Elfeed Subsystem  -*- lexical-binding: t -*-
+;;; maj-elfeed.el --- Elfeed  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;
-;; Set up the Elfeed subsystem.
+;; Configure Elfeed.
 ;;
 ;;; Code:
 
@@ -58,5 +58,5 @@
 
   (advice-add #'elfeed :before #'elfeed-org-ok--init))
 
-(provide 'subsys-elfeed)
-;;; subsys-elfeed.el ends here
+(provide 'maj-elfeed)
+;;; maj-elfeed.el ends here
