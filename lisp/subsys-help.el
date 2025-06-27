@@ -115,15 +115,17 @@
   :bind ( ("C-h C-h" . nil)   ; clear, otherwise will bind to `help-for-help'
 
           :prefix-map where-or-which-map
-          :prefix "C-h w"
+          :prefix "C-h W"
           ("i" . where-is)
 
           :map help-map
-          ("C-?" . which-key-show-top-level)
+          :prefix-map which-key-subset-map
+          :prefix "w"
+          ("M" . which-key-show-full-major-mode)
+          ("a" . which-key-show-top-level)
+          ("m" . which-key-show-full-minor-mode-keymap)
 
           :map which-key-C-h-map
-          ("M" . which-key-ok--show-major-mode)
-          ("m" . which-key-ok--show-minor-mode)
           ("s" . which-key-ok--change-sort-order) )
   :custom ((which-key-idle-delay 0.5)
            (which-key-idle-secondary-delay 0.05)
@@ -156,17 +158,8 @@
                    (which-key-toggle-docstrings . "toggle-docstrings")
                    (which-key-show-standard-help . "help")
                    (which-key-abort . "abort 1..9: digit-arg")
-                   (which-key-ok--major-mode . "major mode")
                    (which-key-ok--change-sort-order . "change sort order")))
           ", ")))
-
-  (defun which-key-ok--show-major-mode (&rest _)
-    (interactive)
-    (which-key-show-full-major-mode))
-
-  (defun which-key-ok--show-minor-mode (&rest _)
-    (interactive)
-    (which-key-show-full-minor-mode-keymap))
 
   (defun which-key-ok--change-sort-order (&rest _)
     "Toggle `which-key-sort-order'."
@@ -198,7 +191,7 @@
                                             (internal-border-width . 1)
                                             (left-fringe . 20)
                                             (right-fringe . 20))))
-  :hook (on-first-input . which-key-posframe-mode))
+  :hook (which-key-mode . which-key-posframe-mode))
 
 ;;; Transient Utilities
 
