@@ -7,7 +7,14 @@
 
 (require 'ok)
 
-(defvar ok-reader-buffers nil)
+(defvar reader-app-prefix-map (make-sparse-keymap)
+  "The prefix keymap for reader apps.")
+
+(global-set-key (kbd "C-c R") reader-app-prefix-map)
+(which-key-add-key-based-replacements "C-c R" "reader-app")
+
+(defvar ok-reader-buffers nil
+  "List of `org-mode' buffer names for reader apps.")
 
 (use-package hnreader
   ;; Browse Hacker News in `org-mode'.
