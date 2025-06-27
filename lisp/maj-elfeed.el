@@ -5,6 +5,8 @@
 ;;
 ;;; Code:
 
+(require 'subsys-readers)
+
 (use-package elfeed
   :bind ( :map reader-app-prefix-map
           ("e" . elfeed) )
@@ -13,19 +15,13 @@
            (elfeed-search-title-min-width 16)
            (elfeed-search-trailing-width 30)
            (elfeed-show-unique-buffers nil))
-  :hook ((elfeed-show-mode . elfeed-ok-show-setup)
-         (elfeed-search-update . elfeed-ok-search-setup))
+  :hook ((elfeed-show-mode . elfeed-ok--show-setup)
+         (elfeed-search-update . elfeed-ok--search-setup)
+         (enable-theme-functions . elfeed-ok--theme-hook))
   :config
-  (load (ok-file-expand-etc "elfeed/init"))
+  (setq elfeed-log-level 'info) ; 'info or 'debug
 
-  (setq elfeed-log-level 'info)  ; 'info or 'debug
-
-  (set-face-attribute 'elfeed-search-title-face nil
-                      :foreground (face-attribute 'shadow :foreground))
-  (set-face-attribute 'elfeed-search-unread-title-face nil
-                      :foreground (face-attribute 'default :foreground))
-
-  (defun elfeed-ok-show-setup ()
+  (defun elfeed-ok--show-setup ()
     ;; Remove underline from zenkaku space
     (setq-local nobreak-char-display nil)
 
@@ -36,8 +32,16 @@
                 shr-use-fonts t
                 shr-width 80))
 
-  (defun elfeed-ok-search-setup ()
-    (setq-local nobreak-char-display nil)))
+  (defun elfeed-ok--search-setup ()
+    (setq-local nobreak-char-display nil))
+
+  (defun elfeed-ok--theme-hook (theme)
+    (set-face-attribute 'elfeed-search-title-face nil
+                        :foreground (face-attribute 'shadow :foreground))
+    (set-face-attribute 'elfeed-search-unread-title-face nil
+                        :foreground (face-attribute 'default :foreground)))
+
+  (load (ok-file-expand-etc "elfeed/init")))
 
 (use-package elfeed-org
   :custom ((rmh-elfeed-org-files `(,(ok-file-expand-etc "elfeed/elfeed.org"))))
