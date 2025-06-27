@@ -10,12 +10,16 @@
 (defvar ok-reader-buffers nil)
 
 (use-package hnreader
-  ;; Browser Hacker News in `org-mode'.
+  ;; Browse Hacker News in `org-mode'.
   ;;
   ;; NOTE(2025-06-19): https://github.com/agzam/consult-hn might be of
   ;; interest.
   :bind ( :map reader-app-prefix-map
-          ("h" . hnreader-news) )
+          :prefix-map hnreader
+          :prefix "h"
+          ("b" . hnreader-best)
+          ("j" . hnreader-jobs)
+          ("n" . hnreader-news) )
   :config
   (dolist (buffer '("*HN*" "*HNComments*"))
     (add-to-list 'ok-reader-buffers buffer)))
