@@ -112,7 +112,7 @@
 (use-package which-key
   ;; Displays available keybindings in popup.
   :straight nil
-  :bind ( ("C-h C-h" . nil) ;; clear, otherwise will bind to `help-for-help'
+  :bind ( ("C-h C-h" . nil)   ; clear, otherwise will bind to `help-for-help'
 
           :prefix-map where-or-which-map
           :prefix "C-h w"
@@ -122,6 +122,8 @@
           ("C-?" . which-key-show-top-level)
 
           :map which-key-C-h-map
+          ("M" . which-key-ok--show-major-mode)
+          ("m" . which-key-ok--show-minor-mode)
           ("s" . which-key-ok--change-sort-order) )
   :custom ((which-key-idle-delay 0.5)
            (which-key-idle-secondary-delay 0.05)
@@ -143,12 +145,28 @@
            (which-key-sort-order 'which-key-description-order))
   :hook (on-first-input . which-key-mode)
   :config
-  ;; Enable changing sort order.
   (setq which-key-C-h-map-prompt
-        (concat which-key-C-h-map-prompt
-                ", \\[which-key-ok--change-sort-order]"
-                which-key-separator
-                "change sort order"))
+        (concat
+         " \\<which-key-C-h-map> "
+         (string-join
+          (--map (format "\\[%s]%s%s" (car it) which-key-separator (cdr it))
+                 '((which-key-show-next-page-cycle . "next-page")
+                   (which-key-show-previous-page-cycle . "previous-page")
+                   (which-key-undo-key . "undo-key")
+                   (which-key-toggle-docstrings . "toggle-docstrings")
+                   (which-key-show-standard-help . "help")
+                   (which-key-abort . "abort 1..9: digit-arg")
+                   (which-key-ok--major-mode . "major mode")
+                   (which-key-ok--change-sort-order . "change sort order")))
+          ", ")))
+
+  (defun which-key-ok--show-major-mode (&rest _)
+    (interactive)
+    (which-key-show-full-major-mode))
+
+  (defun which-key-ok--show-minor-mode (&rest _)
+    (interactive)
+    (which-key-show-full-minor-mode-keymap))
 
   (defun which-key-ok--change-sort-order (&rest _)
     "Toggle `which-key-sort-order'."
