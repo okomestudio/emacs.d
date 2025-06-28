@@ -133,7 +133,7 @@ This is also used as the default.")
                      ("Noto Sans Mono CJK JP" . 1.2)
                      ("Noto Serif CJK JP" . 1.2)
                      ("URW Classico". 1.3)
-                     ("UmePlus P Gothic" . 1.1)))
+                     ("UmePlus P Gothic" . 1.18)))
     (add-to-list 'face-font-rescale-alist element)))
 
 
