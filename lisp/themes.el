@@ -157,9 +157,13 @@ always point to `hl-line'. This advice temporarily disables
 
 (use-package pos-tip
   ;; Show tooltip at point.
-  :custom ((pos-tip-background-color "#dddddd")
-           (pos-tip-border-width 5)
-           (pos-tip-internal-border-width 5)))
+  :custom ((pos-tip-border-width 0)
+           (pos-tip-internal-border-width 4)
+
+           ;; Not specifying these will render pos-tip texts in the
+           ;; tooltip face colors:
+           (pos-tip-foreground-color nil)
+           (pos-tip-background-color nil)))
 
 (provide 'themes)
 ;;; themes.el ends here
