@@ -79,6 +79,8 @@ The function returns nil, if the file does not exists."
   :hook (flycheck-mode . flycheck-pos-tip-mode))
 
 (use-package flycheck-posframe
+  :custom ((flycheck-posframe-border-use-error-face t)
+           (flycheck-posframe-border-width 1))
   :hook (flycheck-mode . flycheck-posframe-mode)
   :config (flycheck-posframe-configure-pretty-defaults))
 
