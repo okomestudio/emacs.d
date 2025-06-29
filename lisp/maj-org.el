@@ -1,7 +1,7 @@
-;;; subsys-org.el --- Org  -*- lexical-binding: t -*-
+;;; maj-org.el --- Org Mode  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;
-;; Configure the Org subsystem.
+;; Configure `org-mode'.
 ;;
 ;;; Code:
 
@@ -298,5 +298,5 @@ clipboard content:
 
 (load (ok-file-expand-lisp "pkg-anki-editor.el"))
 
-(provide 'subsys-org)
-;;; subsys-org.el ends here
+(provide 'maj-org)
+;;; maj-org.el ends here
