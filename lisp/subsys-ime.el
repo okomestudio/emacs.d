@@ -98,22 +98,30 @@
   :config
   (defun mozc-posframe-ok--theme (theme)
     (require 'corfu)
-    (let* ((face-base 'corfu-default)
-           (face-current 'corfu-current)
-           (foreground (face-attribute face-base :foreground))
-           (background (face-attribute face-base :background)))
+    (let* ((scale (pcase (frame-parameter nil 'background-mode)
+                    ('dark 1.07) ('light 0.93)))
+           (face-b 'corfu-default)
+           (fg-b (face-attribute face-b :foreground))
+           (bg-b (ok-face-color-scale
+                  (or (when (stringp (face-attribute face-b :background))
+                        (face-attribute face-b :background))
+                      (face-attribute 'default :background))
+                  scale))
+           (face-c 'corfu-current)
+           (fg-c (face-attribute face-c :foreground))
+           (bg-c (ok-face-color-scale
+                  (or (when (stringp (face-attribute face-c :background))
+                        (face-attribute face-c :background))
+                      (face-attribute 'default :background))
+                  scale)))
       (dolist (face '(mozc-cand-overlay-even-face
                       mozc-cand-overlay-odd-face
                       mozc-cand-overlay-description-face
                       mozc-cand-overlay-footer-face))
         (set-face-attribute face nil
-                            :foreground foreground
-                            :background background
-                            :inherit face-base))
+                            :foreground fg-b :background bg-b :inherit face-b))
       (set-face-attribute 'mozc-cand-overlay-focused-face nil
-                          :foreground (face-attribute face-current :foreground)
-                          :background (face-attribute face-current :background)
-                          :inherit face-current))))
+                          :foreground fg-c :background bg-c :inherit face-c))))
 
 (provide 'subsys-ime)
 ;;; subsys-ime.el ends here
