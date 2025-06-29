@@ -75,7 +75,7 @@ The function returns nil, if the file does not exists."
 
 (use-package flycheck-pos-tip
   :custom (flycheck-pos-tip-timeout 60)
-  :config (flycheck-pos-tip-mode))
+  :hook (flycheck-mode . flycheck-pos-tip-mode))
 
 (provide 'subsys-flycheck)
 ;;; subsys-flycheck.el ends here
