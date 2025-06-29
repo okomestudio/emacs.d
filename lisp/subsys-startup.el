@@ -79,7 +79,6 @@
   (global-so-long-mode 1)     ; mitigate perf on files with long lines
   (show-paren-mode 1)         ; highlight matching parens
   (subword-mode 1)
-  (tooltip-mode 1)
   (setq-default indent-tabs-mode nil)
 
   ;; Multilingual environment
@@ -156,6 +155,10 @@
                                         (emacs-pid)))
            (do-this-now-title "MOVE!!"))
   :hook (after-init . do-this-now-mode))
+
+(use-package tooltipper
+  :straight (tooltipper :host github :repo "okomestudio/tooltipper.el")
+  :hook (after-init . tooltipper-mode))
 
 (provide 'subsys-startup)
 ;;; subsys-startup.el ends here
