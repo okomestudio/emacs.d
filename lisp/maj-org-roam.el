@@ -1,14 +1,14 @@
-;;; subsys-org-roam.el --- Org Roam  -*- lexical-binding: t -*-
+;;; maj-org-roam.el --- Org Roam  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;
-;; Set up the Org Roam subsystem.
+;; Configure `org-roam'.
 ;;
 ;;; Code:
 
 (require 'ok)
 
 (use-package org-roam
-  :straight (org-roam :host github :repo "okomestudio/org-roam")
+  :straight (org-roam :fork t)
   :bind ( ("C-c n f" . org-roam-node-find)
           ("C-c n i" . org-roam-node-insert)
           ("C-c n l" . org-roam-buffer-toggle)
@@ -178,5 +178,5 @@ When the ID of NODE is an fID, append it to the title."
               (concat " " (propertize (format "[%s]" fid)
                                       'face 'org-roam-fz-overlay))))))
 
-(provide 'subsys-org-roam)
-;;; subsys-org-roam.el ends here
+(provide 'maj-org-roam)
+;;; maj-org-roam.el ends here
