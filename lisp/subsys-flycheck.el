@@ -71,11 +71,16 @@ The function returns nil, if the file does not exists."
   :demand t
   :config (flycheck-add-next-checker 'org-aspell-dynamic 'textlint))
 
-;;; Misc.
+;;; Notification
 
 (use-package flycheck-pos-tip
+  :disabled
   :custom (flycheck-pos-tip-timeout 60)
   :hook (flycheck-mode . flycheck-pos-tip-mode))
+
+(use-package flycheck-posframe
+  :hook (flycheck-mode . flycheck-posframe-mode)
+  :config (flycheck-posframe-configure-pretty-defaults))
 
 (provide 'subsys-flycheck)
 ;;; subsys-flycheck.el ends here
