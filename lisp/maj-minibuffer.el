@@ -1,13 +1,18 @@
-;;; subsys-minibuffer.el --- Minibuffer Subsystem  -*- lexical-binding: t -*-
+;;; maj-minibuffer.el --- Minibuffer  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;
-;; Set up the Minibuffer subsystem.
+;; Configure minibuffer.
 ;;
 ;;; Code:
 
 (use-package minibuffer
   :straight nil
-  :custom ((completion-cycle-threshold 3)))
+  :custom ((completion-cycle-threshold 3)
+           (context-menu-mode t)
+           (read-extended-command-predicate #'command-completion-default-include-p)
+           (minibuffer-prompt-properties
+            '(read-only t cursor-intangible t face minibuffer-prompt))
+           (enable-recursive-minibuffers t)))
 
 (use-package vertico
   ;; VERTical Interactive COmpletion.
@@ -15,8 +20,8 @@
           ("?" . minibuffer-completion-help) )
   :custom ((vertico-count 16)
            (vertico-cycle t))
-  :hook ((on-first-input . vertico-mode)
-         (on-first-input . vertico-multiform-mode)))
+  :hook ((after-init . vertico-mode)
+         (vertico-mode . vertico-multiform-mode)))
 
 (use-package vertico-posframe
   :if (display-graphic-p)
@@ -58,5 +63,5 @@
             (append savehist-additional-variables
                     '(org-roam-ref-history)))))
 
-(provide 'subsys-minibuffer)
-;;; subsys-minibuffer.el ends here
+(provide 'maj-minibuffer)
+;;; maj-minibuffer.el ends here

@@ -248,7 +248,7 @@
  ("treesit-fold" . "8969ff883dbfb5bceabe2e8d4497c85aa0e59d75")
  ("typoel" . "173ebe4fc7ac38f344b16e6eaf41f79e38f20d57")
  ("urbandict.el" . "46d9082e0b082ddf9c7510c6da585fc39bcae688")
- ("vertico" . "751c9ad527f14750ef10543fa64b39cf778d6206")
+ ("vertico" . "fcab88ad878e16356c392c99a64f172e7541dd65")
  ("vertico-posframe" . "047474764c6bf9f6296f8e4f959d483de6b5baf7")
  ("vundo" . "5374125dc0aaf1769bb0965344befb90f809ccfc")
  ("web-mode" . "57856ba64b9382811b35df0d9ab0a24aede0c1f0")
