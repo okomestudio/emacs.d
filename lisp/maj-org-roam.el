@@ -34,10 +34,43 @@
     "C-c r" "org-ref")
 
   :config
+  (with-eval-after-load 'savehist
+    (setopt savehist-additional-variables
+            (append savehist-additional-variables
+                    '(org-roam-ref-history))))
+
+  (with-eval-after-load 'vertico-posframe
+    (require 'vertico-multiform)
+    (add-to-list
+     'vertico-multiform-commands
+     '(org-roam-node-find
+       posframe
+       (vertico-count . 32)
+       (vertico-posframe-poshandler . posframe-poshandler-frame-center))))
+
   (require 'org-roam-cjk-ja)
   (org-roam-ok-enhance)
   (org-roam-db-sync)
   (org-roam-db-autosync-mode 1))
+
+(use-package consult-org-roam
+  :after consult
+  :bind ( ("C-c n F" . consult-org-roam-file-find) )
+  :config
+  (consult-org-roam-mode 1)
+  (consult-customize consult-org-roam-file-find
+                     :preview-key '(:debounce 0.1 any))
+
+  (with-eval-after-load 'vertico-posframe
+    (require 'vertico-multiform)
+    ;; NOTE(2025-06-07): posframe often renders vertico incorrectly,
+    ;; making it invisible. Watch out for the issue.
+    (add-to-list
+     'vertico-multiform-commands
+     '(consult-org-roam-file-find
+       posframe
+       (vertico-count . 16)
+       (vertico-posframe-poshandler . posframe-poshandler-frame-bottom-center)))))
 
 (use-package org-roam-ui
   :after org-roam

@@ -28,21 +28,7 @@
   :custom ((vertico-posframe-border-width 3)
            (vertico-posframe-min-width 75)
            (vertico-posframe-parameters '((left-fringe . 8))))
-  :hook (on-first-input . vertico-posframe-mode)
-  :config
-  (mapc (lambda (it) (push it vertico-multiform-commands))
-        '((t (:not posframe))
-          (org-roam-node-find
-           posframe
-           (vertico-count . 32)
-           (vertico-posframe-poshandler . posframe-poshandler-frame-center))
-
-          ;; NOTE(2025-06-07): posframe often renders vertico
-          ;; incorrectly, making it invisible. Watch out for the issue.
-          (consult-org-roam-file-find
-           posframe
-           (vertico-count . 16)
-           (vertico-posframe-poshandler . posframe-poshandler-frame-bottom-center)))))
+  :hook (vertico-mode . vertico-posframe-mode))
 
 (use-package marginalia
   ;; Marginalia in the minibuffer.
@@ -56,12 +42,7 @@
 (use-package savehist
   ;; Save minibuffer history.
   :straight nil
-  :hook (after-init . savehist-mode)
-  :config
-  (with-eval-after-load 'org-roam
-    (setopt savehist-additional-variables
-            (append savehist-additional-variables
-                    '(org-roam-ref-history)))))
+  :hook (after-init . savehist-mode))
 
 (provide 'maj-minibuffer)
 ;;; maj-minibuffer.el ends here

@@ -77,13 +77,6 @@
   :after (consult flyspell)
   :bind ("M-g s" . consult-flyspell))
 
-(use-package consult-org-roam
-  :bind ( ("C-c n F" . consult-org-roam-file-find) )
-  :config
-  (consult-org-roam-mode 1)
-  (consult-customize consult-org-roam-file-find
-                     :preview-key '(:debounce 0.1 any)))
-
 (use-package consult-projectile
   :after (projectile)
   :bind ( ([remap projectile-find-dir] . consult-projectile-find-dir)
