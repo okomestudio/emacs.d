@@ -36,7 +36,7 @@
   :bind ( :map reader-app-prefix-map
           ("r" . reddigg-view-sub) )
   :config
-  (dolist (buffer '("*reddigg*" "reddigg-comments*"))
+  (dolist (buffer '("*reddigg*" "*reddigg-comments*"))
     (add-to-list 'ok-reader-buffers buffer))
 
   (load (ok-file-expand-etc "reddigg/init")))
@@ -47,7 +47,8 @@
     (let ((faces '( org-level-1 org-level-2 org-level-3 org-level-4
                     org-level-5 org-level-6 org-level-7 org-level-8 )))
       (dolist (face faces)
-        (face-remap-add-relative face :weight 'normal)))))
+        (face-remap-add-relative face :weight 'normal)))
+    (read-only-mode 1)))
 
 (add-hook 'org-mode-hook #'ok-reader-buffers--init 98)
 
