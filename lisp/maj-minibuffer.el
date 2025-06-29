@@ -27,7 +27,8 @@
   :if (display-graphic-p)
   :custom ((vertico-posframe-border-width 3)
            (vertico-posframe-min-width 75)
-           (vertico-posframe-parameters '((left-fringe . 8))))
+           (vertico-posframe-parameters '((left-fringe . 8)))
+           (vertico-multiform-commands '((t (:not posframe)))))
   :hook (vertico-mode . vertico-posframe-mode))
 
 (use-package marginalia
