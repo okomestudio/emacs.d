@@ -156,7 +156,7 @@
  ("nongnu-elpa" . "56748b48bec8af70101edaa57e35b0ac4c5b0151")
  ("nov.el" . "9b7bef950d68c2518710c480729d6bb6026e9489")
  ("ob-typescript" . "5fe1762f8d8692dd5b6f1697bedbbf4cae9ef036")
- ("ok-org-themes.el" . "e47b33d2d55a71169a313e75b7462f2849e432ae")
+ ("ok-org-themes.el" . "d3de351ca8b9d59692805e2f2733c436a4534f91")
  ("ok-plural.el" . "1517fd2809d16e5a3dd45e83136aa317c55a3ac1")
  ("ok.el" . "5d028b5e073bcef43142a899628a3eb038d3e4c5")
  ("olivetti" . "800a286862fd7aff2a91726e84606386e295106c")
