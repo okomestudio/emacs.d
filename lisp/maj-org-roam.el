@@ -13,6 +13,7 @@
           ("C-c n i" . org-roam-node-insert)
           ("C-c n l" . org-roam-buffer-toggle)
           ("C-c r c" . org-roam-ok-capture-create-from-ref)
+          ("C-c r d" . org-roam-bibtex-ok-link-auto-fill)
           ("C-c r f" . org-roam-ok-node-ref-find)
           ("C-c r i" . org-ref-insert-link)
 
@@ -188,8 +189,44 @@
   :after org-roam
   :custom ((orb-insert-link-description "${author-abbrev} ${date}")
            (orb-roam-ref-format 'org-ref-v3))
+  :commands org-roam-bibtex-ok-link-auto-fill
   :config
-  (require 'org-ref))  ; optional, if using Org-ref v2 or v3 citation links
+  (require 'org-ref) ; optional, if using Org-ref v2 or v3 citation links
+
+  (defun org-roam-bibtex-ok-link-auto-fill (&optional arg)
+    "Add a description to link at point based on cite key."
+    (interactive "P")
+    (when-let*
+        ((link (and (org-in-regexp org-link-any-re)
+                    (substring-no-properties (match-string 0))))
+         (start (match-beginning 0))
+         (end (match-end 0))
+         (key (and (string-match "^\\[\\[cite:&\\([^]]*\\)\\].*" link)
+                   (match-string 1 link)))
+         (bibentry (bibtex-completion-get-entry key))
+         (authors (or (bibtex-completion-get-value "author" bibentry)
+                      (bibtex-completion-get-value "editor" bibentry)))
+         (year (bibtex-completion-get-value "date" bibentry "N/A"))
+         (template (pcase arg ('(4) "%s (%s)") ('nil "%s %s"))))
+      (setq authors (--map (if (string-match "\\(.*\\),.*" it)
+                               (format "%s" (match-string 1 it))
+                             it)
+                           (split-string authors " and ")))
+      (setq authors (cond ((= (length authors) 1)
+                           (nth 0 authors))
+                          ((= (length authors) 2)
+                           (format "%s & %s" (nth 0 authors) (nth 1 authors)))
+                          ((>= (length authors) 3)
+                           (format "%s et al." (nth 0 authors)))
+                          (t "N/A")))
+      (setq year (if (string-match "\\([0-9]\\{4\\}\\)" year)
+                     (match-string 1 year)
+                   year))
+      (delete-region start end)
+      (goto-char start)
+      (org-insert-link nil
+                       (format "cite:&%s" key)
+                       (format template authors year)))))
 
 (use-package org-ref
   ;; For citations, cross-references, bibliographies.
