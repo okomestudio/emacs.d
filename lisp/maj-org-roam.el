@@ -240,6 +240,9 @@
   :custom (org-roam-ok-node-display-title #'org-roam-fz--display-title)
   :hook (org-mode . org-roam-fz-mode)
   :config
+  (when (bound-and-true-p desktop-save-mode)
+    (add-to-list 'desktop-minor-mode-table '(org-roam-fz-mode nil)))
+
   (defun org-roam-fz--display-title (node)
     "Render NODE title for display.
 When the ID of NODE is an fID, append it to the title."
