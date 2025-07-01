@@ -55,7 +55,6 @@
   (org-roam-db-autosync-mode 1))
 
 (use-package consult-org-roam
-  :after consult
   :bind ( ("C-c n F" . consult-org-roam-file-find) )
   :config
   (consult-org-roam-mode 1)
