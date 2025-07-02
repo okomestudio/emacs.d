@@ -240,6 +240,10 @@ of the current section."
                               :repo "krisbalintona/org-hide-drawers"
                               :branch "devel"))
 
+(use-package org-dividers
+  :straight (org-dividers :host github :repo "okomestudio/org-dividers")
+  :hook (org-mode . org-dividers-mode))
+
 ;;; Clipboard
 
 (use-package org-cliplink
