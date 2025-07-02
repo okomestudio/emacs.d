@@ -1,4 +1,4 @@
-;;; pkg-lsp-ltex.el --- lsp-ltex  -*- lexical-binding: t -*-
+;;; subsys-lsp-ltex.el --- lsp-ltex  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;
 ;; Set up LTeX Language Server client.
@@ -59,5 +59,5 @@
     (lsp-ltex--update-dictionary)
     (lsp-workspace-restart (lsp--read-workspace))))
 
-(provide 'pkg-lsp-ltex)
-;;; pkg-lsp-ltex.el ends here
+(provide 'subsys-lsp-ltex)
+;;; subsys-lsp-ltex.el ends here
