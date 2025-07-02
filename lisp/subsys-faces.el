@@ -86,7 +86,6 @@ This is also used as the default.")
   ;; Install font files.
   :if (eq system-type 'gnu/linux)
   :straight nil
-  :autoload (ok-faces--apply-font-rescale)
   :ensure-system-package
   ("/usr/share/fonts/opentype/ebgaramond/EBGaramond08-Regular.otf"
    . "sudo apt install -y fonts-ebgaramond")
@@ -136,28 +135,16 @@ This is also used as the default.")
                      ("UmePlus P Gothic" . 1.18)))
     (add-to-list 'face-font-rescale-alist element)))
 
+(setopt ok-faces-text-scale-per-mode
+        '((elfeed-search-mode . 1.0)
+          (elfeed-show-mode . 0.0)
+          (eww-mode . 1.0)
+          (org-mode . 1.0)
+          (prog-mode . 1.0)
+          (text-mode . 0.0)
+          (treemacs-mode . -0.4)))
 
-(use-package face-remap
-  :straight nil
-  :hook (after-change-major-mode . ok-faces--scale-text-in-mode)
-  :init
-  (ok-faces--set-up-action (lambda ()
-                             ;; (ok-faces--apply-font-rescale)
-                             (ok-faces--setup-faces-for-frame)))
-  :config
-  (defun ok-faces--scale-text-in-mode ()
-    "Set text scale based on major mode."
-    (interactive)
-    (when-let* ((scale (pcase major-mode
-                         ('elfeed-search-mode 1.0)
-                         ('elfeed-show-mode 0.0)
-                         ('eww-mode 1.0)
-                         ('org-mode 1.0)
-                         ('prog-mode 1.0)
-                         ('text-mode 1.0)
-                         ('treemacs-mode -0.4)
-                         (_ nil))))
-      (text-scale-set scale))))
+(ok-faces--set-up-action (lambda () (ok-faces--setup-faces-for-frame)))
 
 ;;; Icons
 
