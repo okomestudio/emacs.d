@@ -238,7 +238,44 @@ of the current section."
 (use-package org-hide-drawers
   :straight (org-hide-drawers :host github
                               :repo "krisbalintona/org-hide-drawers"
-                              :branch "devel"))
+                              :branch "devel")
+  :config
+  (defun org-hide-drawers--cycle (state)
+    (pcase state
+      ('subtree (org-hide-drawers-expand))
+      ('folded (org-hide-drawers-collapse))))
+
+  (add-hook 'org-cycle-hook #'org-hide-drawers--cycle)
+
+  (defun org-hide-drawers-collapse ()
+    (interactive)
+    (when (derived-mode-p 'org-mode)
+      (save-restriction
+        (org-narrow-to-subtree)
+        (org-hide-drawers-make-overlays))))
+
+  (defun org-hide-drawers-expand ()
+    (interactive)
+    (when (derived-mode-p 'org-mode)
+      (save-restriction
+        (org-narrow-to-subtree)
+        (org-hide-drawers-delete-overlays)
+        (save-excursion
+          (org-back-to-heading t)
+          (when (re-search-forward org-property-drawer-re
+                                   (org-entry-end-position)
+                                   t)
+            (org-flag-drawer nil))))))
+
+  (defun org-hide-drawers-toggle-heading ()
+    "Toggle the visibility of drawer at point."
+    (interactive)
+    (when (derived-mode-p 'org-mode)
+      (save-restriction
+        (org-narrow-to-subtree)
+        (if (org-hide-drawers-get-overlays)
+            (org-hide-drawers-expand)
+          (org-hide-drawers-collapse))))))
 
 (use-package org-dividers
   :straight (org-dividers :host github :repo "okomestudio/org-dividers")
