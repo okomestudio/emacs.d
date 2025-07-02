@@ -247,32 +247,43 @@ of the current section."
 
   (add-hook 'org-cycle-hook #'org-hide-drawers--cycle)
 
+  (defun org-hide-drawers--before-first-heading-p ()
+    (if-let* ((heading (org-element-lineage (org-element-at-point)
+                                            'headline
+                                            'with-self)))
+        nil
+      t))
+
   (defun org-hide-drawers-collapse ()
     (interactive)
     (when (derived-mode-p 'org-mode)
       (save-restriction
-        (org-narrow-to-subtree)
+        (if (org-hide-drawers--before-first-heading-p)
+            (narrow-to-defun)
+          (org-narrow-to-subtree))
         (org-hide-drawers-make-overlays))))
 
   (defun org-hide-drawers-expand ()
     (interactive)
     (when (derived-mode-p 'org-mode)
       (save-restriction
-        (org-narrow-to-subtree)
+        (if (org-hide-drawers--before-first-heading-p)
+            (narrow-to-defun)
+          (org-narrow-to-subtree))
         (org-hide-drawers-delete-overlays)
         (save-excursion
-          (org-back-to-heading t)
-          (when (re-search-forward org-property-drawer-re
-                                   (org-entry-end-position)
-                                   t)
+          (goto-char (point-min))
+          (when (re-search-forward org-property-drawer-re nil t)
             (org-flag-drawer nil))))))
 
-  (defun org-hide-drawers-toggle-heading ()
+  (defun org-hide-drawers-visibility-toggle ()
     "Toggle the visibility of drawer at point."
     (interactive)
     (when (derived-mode-p 'org-mode)
       (save-restriction
-        (org-narrow-to-subtree)
+        (if (org-hide-drawers--before-first-heading-p)
+            (narrow-to-defun)
+          (org-narrow-to-subtree))
         (if (org-hide-drawers-get-overlays)
             (org-hide-drawers-expand)
           (org-hide-drawers-collapse))))))
