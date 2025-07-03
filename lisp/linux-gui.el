@@ -5,17 +5,15 @@
 ;;
 ;;; Code:
 
-(use-package emacs ;; for X
+(use-package emacs            ; for X
   :if (and (eq system-type 'gnu/linux) (memq window-system '(x)))
-  :straight nil
   :custom ((save-interprogram-paste-before-kill t)
            (select-enable-clipboard t)
            (x-select-request-type '(UTF8_STRING COMPOUND_TEXT TEXT STRING))))
 
 
-(use-package emacs ;; for Wayland
+(use-package emacs            ; for Wayland
   :if (and (eq system-type 'gnu/linux) (memq window-system '(pgtk)))
-  :straight nil
   :custom ((interprogram-cut-function #'linux-gui-copy)
            (interprogram-paste-function #'linux-gui-paste)
            (save-interprogram-paste-before-kill t)

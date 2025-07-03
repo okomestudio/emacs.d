@@ -6,7 +6,7 @@
 ;;; Code:
 
 ;; (use-package text-mode
-;;   :straight nil)
+;;   :straight (:type built-in))
 
 ;;; CSV
 
@@ -21,7 +21,7 @@
 ;;; TOML
 
 (use-package toml-ts-mode
-  :straight nil
+  :straight (:type built-in)
   :custom (toml-ts-mode-indent-offset 4))
 
 (provide 'maj-text-mode)

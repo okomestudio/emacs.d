@@ -6,7 +6,7 @@
 ;;; Code:
 
 (use-package mhtml-mode
-  :straight nil
+  :straight (:type built-in)
   :hook (mhtml-mode . lsp))
 
 (use-package emmet-mode

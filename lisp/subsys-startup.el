@@ -13,8 +13,7 @@
 
 ;;; Main Startup Config
 
-(use-package emacs
-  :straight nil
+(use-package emacs            ; no-op package for customizing built-in
   :demand t
   :bind ( ("<f5>" . ok-buffer-revert-no-confirm)
           ("C-x 4 c" . clone-indirect-buffer-other-window)
@@ -92,12 +91,12 @@
   (set-default-coding-systems 'utf-8))
 
 (use-package autorevert
-  :straight nil
+  :straight (:type built-in)
   :custom ((auto-revert-avoid-polling t))
   :hook (after-init . global-auto-revert-mode))
 
 (use-package indent
-  :straight nil
+  :straight (:type built-in)
   :custom ((tab-always-indent 'complete)))
 
 ;;; Shell
@@ -137,12 +136,12 @@
 (use-package dirvish)
 
 (use-package repeat
-  :straight nil
+  :straight (:type built-in)
   :custom (repeat-echo-function #'repeat-echo-message)
   :hook (on-first-input . repeat-mode))
 
 (use-package tramp
-  :straight nil
+  :straight (:type built-in)
   :custom (tramp-default-method "ssh"))
 
 (use-package do-this-now

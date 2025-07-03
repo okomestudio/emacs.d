@@ -6,7 +6,7 @@
 ;;; Code:
 
 (use-package minibuffer
-  :straight nil
+  :straight (:type built-in)
   :custom ((completion-cycle-threshold 3)
            (context-menu-mode t)
            (read-extended-command-predicate #'command-completion-default-include-p)
@@ -42,7 +42,7 @@
 
 (use-package savehist
   ;; Save minibuffer history.
-  :straight nil
+  :straight (:type built-in)
   :hook (after-init . savehist-mode))
 
 (provide 'maj-minibuffer)

@@ -6,9 +6,9 @@
 ;;; Code:
 
 (use-package message
-  :straight nil
-  :bind (:map message-mode-map
-              ("C-c C-c" . message-send-and-exit-via-sender-email))
+  :straight (:type built-in)
+  :bind ( :map message-mode-map
+          ("C-c C-c" . message-send-and-exit-via-sender-email) )
   :hook (message-setup . message--deactivate-hydra)
   :custom ((message-auto-save-directory (ok-file-expand-var "message/"))
            (message-directory (ok-file-expand-var "message/Mail/")))
@@ -55,7 +55,7 @@ is SMTP server, `port' is port, and `usr' is SMTP login username."
     (setq-local hydra-deactivate t)))
 
 (use-package nnfolder
-  :straight nil
+  :straight (:type built-in)
   :config
   ;; NOTE: `nnfolder-directory' easily reverts to "~/Mail" if
   ;; `etc/gnus/newsrc.eld' exists. Delete that file and initialize
@@ -63,7 +63,7 @@ is SMTP server, `port' is port, and `usr' is SMTP login username."
   (setq nnfolder-directory (ok-file-expand-var "message/Mail/archive")))
 
 (use-package gnus
-  :straight nil
+  :straight (:type built-in)
   :custom ((gnus-directory (ok-file-expand-var "gnus/News/"))
            (gnus-default-directory (ok-file-expand-var "gnus/"))
            (gnus-home-directory (ok-file-expand-var "gnus/"))
@@ -72,9 +72,9 @@ is SMTP server, `port' is port, and `usr' is SMTP login username."
   (setq gnus-summary-insert-old-articles t))
 
 (use-package gnus-group
-  :straight nil
-  :bind (:map gnus-group-mode-map
-              ("." . hydra-gnus-group/body))
+  :straight (:type built-in)
+  :bind ( :map gnus-group-mode-map
+          ("." . hydra-gnus-group/body) )
   :config
   (defhydra hydra-gnus-group (gnus-group-mode-map "." :color pink :hint nil)
     "
@@ -89,9 +89,9 @@ _g_: get new messages
     ("q" gnus-group-exit "quit" :color blue)))
 
 (use-package gnus-sum
-  :straight nil
-  :bind (:map gnus-summary-mode-map
-              ("." . hydra-gnus-summary/body))
+  :straight (:type built-in)
+  :bind ( :map gnus-summary-mode-map
+          ("." . hydra-gnus-summary/body) )
   :config
   (defhydra hydra-gnus-summary (gnus-summary-mode-map "." :color pink :hint nil)
     "
@@ -115,9 +115,9 @@ _R_: reply        _M_: move
     ("q" gnus-summary-exit "quit" :color blue)))
 
 (use-package gnus-art
-  :straight nil
-  :bind (:map gnus-article-mode-map
-              ("." . hydra-gnus-article/body))
+  :straight (:type built-in)
+  :bind ( :map gnus-article-mode-map
+          ("." . hydra-gnus-article/body) )
   :config
   (defhydra hydra-gnus-article (gnus-article-mode-map "." :color pink :hint nil)
     "

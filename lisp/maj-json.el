@@ -10,11 +10,10 @@
 ;;; Code:
 
 (use-package json-ts-mode
-  :straight nil
+  :straight (:type built-in)
   :mode "\\.json\\(\\.j2\\)?\\'"
-  :bind (:map
-         json-ts-mode-map
-         ("C-c b" . json-ts-mode-format-code))
+  :bind ( :map json-ts-mode-map
+          ("C-c b" . json-ts-mode-format-code) )
   :hook (json-ts-mode . lsp-deferred)
   :custom (json-ts-mode-indent-offset 2)
   :config
@@ -24,9 +23,8 @@
 
 (use-package jq-mode
   :after json-ts-mode
-  :bind (:map
-         json-ts-mode-map
-         ("C-c C-j" . jq-interactively))
+  :bind ( :map json-ts-mode-map
+          ("C-c C-j" . jq-interactively) )
   :ensure-system-package (jq . "sudo apt install -y jq")
   :config
   (defun jq-interactively-on-json (&rest r)

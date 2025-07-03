@@ -85,7 +85,7 @@ This is also used as the default.")
 (use-package faces
   ;; Install font files.
   :if (eq system-type 'gnu/linux)
-  :straight nil
+  :straight (:type built-in)
   :ensure-system-package
   ("/usr/share/fonts/opentype/ebgaramond/EBGaramond08-Regular.otf"
    . "sudo apt install -y fonts-ebgaramond")

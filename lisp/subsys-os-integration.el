@@ -48,7 +48,7 @@
                  :extension ("cjs" "js" "jsx" "mjs" "ts" "tsx"))))
 
 (use-package browse-url
-  :straight nil
+  :straight (:type built-in)
   :custom ((browse-url-browser-function 'browse-url-ok-browser-function)
            (browse-url-generic-program "xdg-open")
            (browse-url-handlers '(("localhost" . browse-url-generic))))

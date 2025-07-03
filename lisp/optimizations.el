@@ -9,7 +9,6 @@
   "Default high cons GC threshold.")
 
 (use-package emacs
-  :straight nil
   :custom ((byte-compile-warnings '(cl-functions))
            (jit-lock-defer-time 0.05)
            (package-native-compile t)

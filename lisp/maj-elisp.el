@@ -8,7 +8,7 @@
 (require 'ok)
 
 (use-package elisp-mode
-  :straight nil
+  :straight (:type built-in)
   :bind ( :map emacs-lisp-mode-map
           ("C-c b" . elisp-mode-ok--format)
           :map lisp-data-mode-map
@@ -51,7 +51,7 @@
   ;;
   ;;   M-x elp-results
   ;;
-  :straight nil
+  :straight (:type built-in)
   :custom ((elp-sort-by-function 'elp-sort-by-average-time)))
 
 (use-package erefactor)

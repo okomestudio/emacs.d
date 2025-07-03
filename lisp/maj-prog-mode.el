@@ -6,17 +6,17 @@
 ;;; Code:
 
 (use-package prog-mode
-  :straight nil
+  :straight (:type built-in)
   :hook (after-save . executable-make-buffer-file-executable-if-script-p))
 
 ;;; EDITING
 
 (use-package elec-pair
-  :straight nil
+  :straight (:type built-in)
   :hook (prog-mode . electric-pair-local-mode))
 
 (use-package hideshow
-  :straight nil
+  :straight (:type built-in)
   :bind ( :map hs-minor-mode-map
           ("<backtab>" . hs-ok-toggle-hiding-all)
           ("C-c @ C-a" . hs-show-all)
@@ -55,13 +55,13 @@
   (advice-add #'indent-for-tab-command :around #'hs-ok-toggle-hiding--ad))
 
 (use-package lisp
-  :straight nil
+  :straight (:type built-in)
   :bind (; The following work in many prog modes, but defined in lisp.el:
          ("C-x n d" . narrow-to-defun)
          ("C-x n w" . widen)))
 
 (use-package whitespace
-  :straight nil
+  :straight (:type built-in)
   :hook (whitespace-mode . whitespace-mode-ok--hook)
   :config
   (defun whitespace-mode-ok--hook ()

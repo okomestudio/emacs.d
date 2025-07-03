@@ -18,9 +18,9 @@
     (setopt org-plantuml-jar-path plantuml-jar-path)))
 
 (use-package image-mode
-  :straight nil
-  :bind (:map image-mode-map
-              ("C-c o" . image-preview-with-external-app))
+  :straight (:type built-in)
+  :bind ( :map image-mode-map
+          ("C-c o" . image-preview-with-external-app) )
   :config
   (defun image-preview-with-external-app ()
     (interactive)

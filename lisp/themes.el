@@ -79,7 +79,7 @@
 ;;; Window Dividers
 
 (use-package frame
-  :straight nil
+  :straight (:type built-in)
   :hook (enable-theme-functions . window-divider-mode)
   :config
   ;; For a thin border, set dividers to the same foreground color:
@@ -94,7 +94,7 @@
   )
 
 (use-package ansi-color
-  :straight nil
+  :straight (:type built-in)
   :hook (compilation-filter . ansi-color-ok--apply)
   :config
   (defun ansi-color-ok--apply ()
@@ -103,7 +103,7 @@
 
 (use-package hl-line
   ;; Highlight the current line.
-  :straight nil
+  :straight (:type built-in)
   :hook ((on-first-input . global-hl-line-mode)
          (enable-theme-functions . hl-line-ok--background-init)
          (solaire-mode . hl-line-ok--background-solaire-mode))

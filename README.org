@@ -40,11 +40,11 @@ This repository makes heavy use of ~use-package~ with ~straight~, configured in 
 
 **** Initializing built-in package
 
-Use ~:straight nil~ to avoid pulling the source:
+To use the built-in version of package and avoid pulling the source from an external repo, use ~built-in~ as ~:type~:
 
 #+begin_src elisp
   (use-package builtin-package
-    :straight nil
+    :straight (:type built-in)
     …)
 #+end_src
 

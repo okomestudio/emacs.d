@@ -31,7 +31,7 @@
   :custom (aw-dispatch-always t))
 
 (use-package frame
-  :straight nil
+  :straight (:type built-in)
   :bind ( ("M-o" . next-window-any-frame)
           :repeat-map next-window-any-frame-repeat-map
           ("o" . next-window-any-frame)
@@ -42,7 +42,7 @@
 
 (use-package winner
   ;; Undo or redo a change in window configuration.
-  :straight nil
+  :straight (:type built-in)
   :bind (("C-c <right>" . winner-redo)
          ("C-c <left>". winner-undo))
   :hook (on-first-buffer . winner-mode))
@@ -50,12 +50,11 @@
 ;;; Scrolling
 
 (use-package emacs
-  :straight nil
   :custom ((scroll-conservatively 10)
            (scroll-margin 5)))
 
 (use-package mwheel
-  :straight nil
+  :straight (:type built-in)
   :custom ((mouse-wheel-progressive-speed t)
            (mouse-wheel-scroll-amount '(1 ((shift) . hscroll)
                                           ((meta))
@@ -63,7 +62,7 @@
                                           ((control) . text-scale)))))
 
 (use-package pixel-scroll
-  :straight nil
+  :straight (:type built-in)
   ;; :hook (on-first-input . pixel-scroll-precision-mode)
   :custom ((pixel-scroll-precision-interpolation-between-scroll 0.001)
            (pixel-scroll-precision-interpolation-factor 2.0)
@@ -118,7 +117,7 @@
 ;;; Files
 
 (use-package recentf
-  :straight nil
+  :straight (:type built-in)
   :bind ("C-x r F" . recentf)
   :hook (after-init . recentf-mode)
   :config
@@ -130,7 +129,7 @@
     (push pred recentf-exclude)))
 
 (use-package save-place
-  :straight nil
+  :straight (:type built-in)
   :hook (after-init . save-place-mode))
 
 ;;; Imenu

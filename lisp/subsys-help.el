@@ -10,7 +10,7 @@
 ;;; Info
 
 (use-package info
-  :straight nil
+  :straight (:type built-in)
   :custom (Info-hide-note-references t)
   :config (push (ok-file-expand-etc "info/") Info-directory-list))
 
@@ -29,7 +29,7 @@
                               :repo "kickingvegas/elisp-for-python"))
 
 (use-package help
-  :straight nil
+  :straight (:type built-in)
   :bind ( :prefix-map help-view-other-doc
           :prefix "C-h V"
           ("p" . help-ok-view-doc-elisp-for-python)
@@ -82,7 +82,7 @@
           ("x" . helpful-command) ))
 
 (use-package apropos
-  :straight nil
+  :straight (:type built-in)
   :bind ( :prefix "C-h a"
           :prefix-map apropos-prefix-map
           ("a" . apropos)
@@ -111,7 +111,7 @@
 
 (use-package which-key
   ;; Displays available keybindings in popup.
-  :straight nil
+  :straight (:type built-in)
   :bind ( ("C-h C-h" . nil)   ; clear, otherwise will bind to `help-for-help'
 
           :prefix-map where-or-which-map

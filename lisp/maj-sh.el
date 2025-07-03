@@ -6,7 +6,7 @@
 ;;; Code:
 
 (use-package sh-script
-  :straight nil
+  :straight (:type built-in)
   :custom ((sh-basic-offset 2)
            ;; Run the Explainshell service on start:
            ;;
@@ -24,15 +24,14 @@
          (sh-mode . flymake-mode)))
 
 (use-package sh-script
-  :straight nil
+  :straight (:type built-in)
   :if (eq system-type 'gnu/linux)
   :ensure-system-package (shellcheck . "sudo apt install -y shellcheck"))
 
 (use-package shfmt
   ;; Reformat shell script.
-  :bind (:map
-         bash-ts-mode-map
-         ("C-c b" . shfmt-buffer))
+  :bind ( :map bash-ts-mode-map
+          ("C-c b" . shfmt-buffer) )
   :custom ((shfmt-arguments '("-i" "2")))
   :hook ((bash-ts-mode . shfmt-on-save-mode))
   :ensure-system-package (shfmt . "go install mvdan.cc/sh/v3/cmd/shfmt@latest"))

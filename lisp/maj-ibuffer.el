@@ -7,7 +7,7 @@
 
 (use-package ibuffer
   ;; An advanced alternative to `buffer-menu'.
-  :straight nil
+  :straight (:type built-in)
   :init (global-set-key [remap list-buffers] 'ibuffer))
 
 (use-package nerd-icons-ibuffer

@@ -6,7 +6,7 @@
 ;;; Code:
 
 (use-package conf-mode
-  :straight nil)
+  :straight (:type built-in))
 
 (use-package git-modes
   ;; Major modes for .git(attributes|config|ignore)

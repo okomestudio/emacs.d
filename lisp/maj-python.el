@@ -6,7 +6,7 @@
 ;;; Code:
 
 (use-package python
-  :straight nil
+  :straight (:type built-in)
   :bind ( :map python-mode-map
           ("C-c b" . python-ok-format-buffer)
           :map python-ts-mode-map
