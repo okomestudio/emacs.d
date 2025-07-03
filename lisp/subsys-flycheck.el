@@ -5,8 +5,13 @@
 ;;
 ;;; Code:
 
+(require 'straight)
+
+(straight-override-recipe
+ '(flycheck :type git :host github :repo "flycheck/flycheck"
+            :fork ( :branch "fix-line-prefix" )))
+
 (use-package flycheck
-  :straight (flycheck :fork ( :branch "fix-line-prefix" ))
   :custom ((flycheck-python-mypy-executable (ok-file-expand-bin "mypy"))
            (flycheck-rst-executable (ok-file-expand-bin "rst2pseudoxml")))
   :hook (((emacs-lisp-mode lisp-data-mode) . flycheck-mode)
@@ -17,7 +22,6 @@
 ;;; Textlint with Flycheck
 
 (use-package flycheck
-  :straight nil               ; not the main flycheck config
   :custom ((flycheck-textlint-config "default"))
   :ensure-system-package
   (textlint . "~/.config/emacs/bin/prepare-textlint")
@@ -56,7 +60,7 @@ The function returns nil, if the file does not exists."
 
   (add-to-list 'flycheck-locate-config-file-functions
                #'flycheck-locate-config-file-textlint)
-  (add-to-list 'flycheck-textlint-plugin-alist '(org-mode . "@textlint/text")))
+  (add-to-list 'flycheck-textlint-plugin-alist '(org-mode . "org")))
 
 ;;; Aspell
 
@@ -69,7 +73,9 @@ The function returns nil, if the file does not exists."
                                  :repo "okomestudio/flycheck-aspell-org.el")
   :after (flycheck-aspell)
   :demand t
-  :config (flycheck-add-next-checker 'org-aspell-dynamic 'textlint))
+  :config
+  (add-to-list 'flycheck-checkers 'org-aspell-dynamic)
+  (flycheck-add-next-checker 'org-aspell-dynamic '(t . textlint)))
 
 ;;; Notification
 
