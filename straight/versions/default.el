@@ -168,7 +168,7 @@
  ("org-block-capf" . "080cfd2ed630a6739633b07a8ab6b896a1b5ef4a")
  ("org-cliplink" . "13e0940b65d22bec34e2de4bc8cba1412a7abfbc")
  ("org-contrib" . "8d14a600a2069ffc494edfc9a12b8e5fc8840bf1")
- ("org-dividers" . "85dc1fe0b9990255f8768dc6d051086c26098cb4")
+ ("org-dividers" . "74e1ff0d79f8dfd7b5ac0e7dc64648cc2c4e00ab")
  ("org-download" . "c8be2611786d1d8d666b7b4f73582de1093f25ac")
  ("org-excalidraw" . "7d9eee4e22102445772c7ddeeb85d91e995e14e1")
  ("org-expose-emphasis-markers" . "79479b72a683faaad01e73ca4ee16deabd11d533")
