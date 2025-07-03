@@ -240,6 +240,18 @@ of the current section."
                               :repo "krisbalintona/org-hide-drawers"
                               :branch "devel")
   :config
+  (defun org-hide-drawers--fold-toggle (fun &rest r)
+    (let (result)
+      (setq result (apply fun r))
+      (if (save-excursion
+            (org-fold-folded-p (end-of-line) 'drawer))
+          (org-hide-drawers-collapse)
+        (org-hide-drawers-expand))
+      result))
+
+  (advice-add #'org-fold-hide-drawer-toggle :around
+              #'org-hide-drawers--fold-toggle)
+
   (defun org-hide-drawers--cycle (state)
     (pcase state
       ('subtree (org-hide-drawers-expand))
