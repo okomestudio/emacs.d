@@ -69,5 +69,8 @@
   :custom ((system-packages-use-sudo t)
            (system-packages-package-manager 'apt)))
 
+;; Ensure use of builtin version for the following packages:
+(use-package project :straight (:type built-in))
+
 (provide 'init-straight)
 ;;; init-straight.el ends here

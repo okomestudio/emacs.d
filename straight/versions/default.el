@@ -209,7 +209,6 @@
  ("powerthesaurus" . "d9ebb866f6fce469102665f187266f0a041cfc4b")
  ("prescient.el" . "7dd5b53886146a507f1388e0b61990f9820f9eb1")
  ("prettier-emacs" . "e9b73e81d3e1642aec682195f127a42dfb0b5774")
- ("project" . "093f42a1b612eaae0d2bdd475663c14973fe0325")
  ("projectile" . "4dd84b02c9cd7b04616dc2d01ba7bc87f0d15be8")
  ("pydoc" . "79325ed291972fad74deb7e5e5799c50cd54cfb3")
  ("python-sql-mode.el" . "231cc7f71998a82769d51cc70092f497800b7d62")

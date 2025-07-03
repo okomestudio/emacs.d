@@ -7,6 +7,8 @@
 
 ;;; vterm - Emacs libvterm integration
 
+(require 'straight)
+
 (use-package vterm
   ;; Emacs libvterm integration.
   :if (eq system-type 'gnu/linux)
@@ -32,8 +34,15 @@
                 solaire-mode nil)
     (buffer-face-mode t)))
 
+;; NOTE(2025-07-03): `multi-vterm' explicitly depends on `project' and tries to
+;; install it by default. The following modification in the recipe tries to
+;; avoid this, ensuring the builtin version of `project' is used.
+(straight-override-recipe
+ '(some-package :type git :host github :repo "user/some-package"
+                :no-build t)) ; avoid installing `project' package
 (use-package multi-vterm
-  :after vterm)
+  :straight t
+  :ensure t)
 
 ;;; EAT - Emulate A Terminal
 
@@ -64,9 +73,8 @@
                          (:exclude ".dir-locals.el" "*-tests.el")))
   :bind ( ("C-S-t" . eat-ok-interactively)
           :map eat-semi-char-mode-map
-          ("M-o" . other-window-or-frame)) ; without explicit
-                                           ; definition, it binds to
-                                           ; another function
+          ("M-o" . other-window-or-frame) ) ; without explicit definition, it
+                                            ; binds to another function
   :hook ((eat-exec . eat-ok--rename-buffer)
          (eshell-post-command . (lambda ()
                                   (sleep-for 0.2)
