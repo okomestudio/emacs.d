@@ -343,7 +343,10 @@ clipboard content:
 (use-package org-transclusion
   :straight (org-transclusion
              :host github
-             :repo "nobiot/org-transclusion" ; "okomestudio/org-transclusion"
+             :repo "nobiot/org-transclusion"
+             :pre-build
+             (("makeinfo" "./docs/org-transclusion.texi" "-o" "./docs/org-transclusion.info")
+              ("install-info" "./docs/org-transclusion.info" "./docs/dir"))
 
              ;; NOTE: Try the feature branch for
              ;; github.com/nobiot/org-transclusion/issues/271
@@ -355,7 +358,11 @@ clipboard content:
           ("A" . org-transclusion-add-all)
           ("D" . org-transclusion-remove-all)
           ("a" . org-transclusion-add)
-          ("t" . org-transclusion-mode))
+          ("t" . org-transclusion-mode) )
+  :init
+  (add-to-list 'Info-directory-list
+               (expand-file-name "docs/"
+                                 (straight--build-dir "org-transclusion")))
   :config
   (add-to-list 'org-transclusion-extensions 'org-transclusion-indent-mode)
   (require 'org-transclusion-indent-mode))
