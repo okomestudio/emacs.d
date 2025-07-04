@@ -14,8 +14,7 @@
 (use-package flycheck
   :custom ((flycheck-python-mypy-executable (ok-file-expand-bin "mypy"))
            (flycheck-rst-executable (ok-file-expand-bin "rst2pseudoxml")))
-  :hook (((emacs-lisp-mode lisp-data-mode) . flycheck-mode)
-         (org-mode . flycheck-mode))
+  :hook (((emacs-lisp-mode lisp-data-mode) . flycheck-mode))
   :config
   (which-key-add-key-based-replacements "C-c !" "flycheck-mode-map"))
 
@@ -64,15 +63,9 @@ The function returns nil, if the file does not exists."
 
 ;;; Aspell
 
-(use-package flycheck-aspell
-  :after (flycheck)
-  :hook (org-mode . (lambda () (require 'flycheck-aspell))))
-
 (use-package flycheck-aspell-org
   :straight (flycheck-aspell-org :host github
                                  :repo "okomestudio/flycheck-aspell-org.el")
-  :after (flycheck-aspell)
-  :demand t
   :config
   (add-to-list 'flycheck-checkers 'org-aspell-dynamic)
   (flycheck-add-next-checker 'org-aspell-dynamic '(t . textlint)))
@@ -89,6 +82,34 @@ The function returns nil, if the file does not exists."
            (flycheck-posframe-border-width 1))
   :hook (flycheck-mode . flycheck-posframe-mode)
   :config (flycheck-posframe-configure-pretty-defaults))
+
+;;; Eglot
+
+(use-package flycheck-eglot
+  :after (flycheck eglot)
+  :custom (flycheck-eglot-exclusive t))
+
+;;; Misc.
+
+(defcustom subsys-flycheck-mode 'default
+  "Flychcek mode in effect, default or eglot."
+  :type 'symbol)
+
+(defun subsys-flycheck--init-org-mode ()
+  "Initialize flycheck in `org-mode'."
+  (pcase subsys-flycheck-mode
+    ('default
+     (require 'flycheck-aspell-org)
+     (add-to-list 'flycheck-checkers 'org-aspell-dynamic)
+     (flycheck-add-next-checker 'org-aspell-dynamic '(t . textlint))
+     (flycheck-mode 1))
+    ('eglot
+     (require 'flycheck-eglot)
+     (setq-local flycheck-disabled-checkers '(org-aspell-dynamic textlint))
+     (eglot-ensure)
+     (flycheck-eglot-mode 1))))
+
+(add-hook 'org-mode-hook #'subsys-flycheck--init-org-mode)
 
 (provide 'subsys-flycheck)
 ;;; subsys-flycheck.el ends here
