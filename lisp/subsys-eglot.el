@@ -8,7 +8,11 @@
 (use-package eglot
   :straight (:type built-in)
   :config
+
   ;; Harper
+  ;;
+  ;; References:
+  ;; - https://www.cyan.sh/blog/posts/goodbye-languagetool-hello-harper.html
   (dolist (mode '(org-mode))
     (add-to-list 'eglot-server-programs `(,mode . ("harper-ls" "--stdio")))))
 
