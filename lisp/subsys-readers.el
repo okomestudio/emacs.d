@@ -52,5 +52,24 @@
 
 (add-hook 'org-mode-hook #'ok-reader-buffers--init 98)
 
+;;; Render Web Sites with Elfeed
+
+(use-package elfeed
+  :bind ( :map reader-app-prefix-map
+          :prefix-map zettelkasten.de
+          :prefix "z"
+          ("b" . reader-zettelkasten-blog)
+          ("f". reader-zettelkasten-forum) )
+  :config
+  ;; NOTE(2025-07-05): The forum comments at zettelkasten.de are not made
+  ;; available via RSS feeds. Hence this entry point.
+  (defun reader-zettelkasten-blog ()
+    (interactive)
+    (eww "https://zettelkasten.de"))
+
+  (defun reader-zettelkasten-forum ()
+    (interactive)
+    (eww "https://forum.zettelkasten.de")))
+
 (provide 'subsys-readers)
 ;;; subsys-readers.el ends here
