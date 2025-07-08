@@ -111,5 +111,12 @@ The function returns nil, if the file does not exists."
 
 (add-hook 'org-mode-hook #'subsys-flycheck--init-org-mode)
 
+(use-package flyover
+  ;; A beautiful inline overlay for Flycheck
+  :straight (flyover :host github :repo "konrad1977/flyover")
+  :custom (flyover-use-theme-colors t)
+  ;; :hook (flycheck-mode . flyover-mode)
+  )
+
 (provide 'subsys-flycheck)
 ;;; subsys-flycheck.el ends here
