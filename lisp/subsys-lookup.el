@@ -34,7 +34,7 @@
              ("s" . eww-search-duckduckgo-ja)
              ("w" . eww-search-wikipedia-ja)))
 
-;; DICTIONARIES
+;;; Dictionaries
 
 (use-package define-word
   ;; Display the definition of word at point.
@@ -53,7 +53,23 @@
 (use-package urbandict.el
   :straight (:host github :repo "okomestudio/urbandict.el"))
 
-;; PRONUNCIATION
+(let ((repo (expand-file-name (straight--repos-dir "lookup"))))
+  (straight-override-recipe
+   `(lookup
+     :type git :host github :repo "okomestudio/lookup"
+     :pre-build
+     (("./configure" ,(file-name-concat "--prefix=" repo "build"))
+      ("make" "install"))
+     :files
+     (,(file-name-concat repo "build/share/emacs/site-lisp/lookup/*.el")))))
+
+(use-package lookup
+  :custom ((lookup-debug-mode t))
+  :config
+  ;; For ndeb, the path should point to a directory containing CATALOGS.
+  (setopt lookup-search-agents '((ndeb "/path/to/dic/"))))
+
+;;; Pronunciation
 
 (use-package hatsuon
   :disabled ;; use `go-translate'
@@ -65,7 +81,7 @@
             '(hatsuon-wordnik-audio-url-getter)))
   :config (require 'hatsuon-wordnik))
 
-;; TRANSLATION
+;;; Translation
 
 (use-package go-translate
   ;; Translator framework.
@@ -111,7 +127,7 @@
                                           (format " (%s)" res))
                                   :sface nil))))))
 
-;; MISC.
+;;; Misc.
 
 (use-package list-unicode-display
   ;; Search for and list unicode characters.
