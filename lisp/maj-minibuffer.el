@@ -38,7 +38,8 @@
   :hook (vertico-mode . marginalia-mode))
 
 (use-package nerd-icons-completion
-  :config (nerd-icons-completion-mode))
+  :hook ((on-first-input . nerd-icons-completion-mode)
+         (marginalia-mode . nerd-icons-completion-marginalia-setup)))
 
 (use-package savehist
   ;; Save minibuffer history.
