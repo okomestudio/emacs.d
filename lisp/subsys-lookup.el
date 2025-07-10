@@ -7,6 +7,8 @@
 ;;
 ;;; Code:
 
+(require 'ok)
+
 (with-eval-after-load 'help
   (bind-keys :prefix-map lookup-map
              :prefix-docstring "Keymap for lookup"
@@ -53,21 +55,39 @@
 (use-package urbandict.el
   :straight (:host github :repo "okomestudio/urbandict.el"))
 
+;;; EPWING
+
+(use-package eblook
+  :straight
+  `(eblook
+    :type git :host github :repo "okomestudio/eblook"
+    :pre-build
+    (("autoreconf")
+     ("./configure" ,(concat "--prefix=" (expand-file-name ".local" "~")))
+     ("make")
+     ("make" "install"))))
+
 (let ((repo (expand-file-name (straight--repos-dir "lookup"))))
   (straight-override-recipe
    `(lookup
      :type git :host github :repo "okomestudio/lookup"
      :pre-build
-     (("./configure" ,(file-name-concat "--prefix=" repo "build"))
+     (("./configure" ,(concat "--prefix=" (file-name-concat repo "build")))
       ("make" "install"))
      :files
      (,(file-name-concat repo "build/share/emacs/site-lisp/lookup/*.el")))))
 
 (use-package lookup
-  :custom ((lookup-debug-mode t))
-  :config
-  ;; For ndeb, the path should point to a directory containing CATALOGS.
-  (setopt lookup-search-agents '((ndeb "/path/to/dic/"))))
+  :custom ((lookup-max-hits 100)
+           (lookup-window-height 16)
+
+           ;; For ndeb, the path should point to a directory containing
+           ;; CATALOGS.
+           (lookup-search-agents nil))
+  :hook (;; `lookup' skips `after-change-major-mode-hook', so ensure the text
+         ;; scaling runs:
+         (lookup-content-mode . ok-faces-text-scale-per-mode))
+  :config (load (ok-file-expand-etc "lookup/init")))
 
 ;;; Pronunciation
 
