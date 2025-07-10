@@ -53,6 +53,15 @@
 (use-package urbandict.el
   :straight (:host github :repo "okomestudio/urbandict.el"))
 
+;;; EPWING
+
+(use-package eblook
+  :straight
+  (eblook :type git :host github :repo "okomestudio/eblook"
+          :pre-build (("./configure" "--prefix=~/.local")
+                      ("make")
+                      ("make" "install"))))
+
 (let ((repo (expand-file-name (straight--repos-dir "lookup"))))
   (straight-override-recipe
    `(lookup
