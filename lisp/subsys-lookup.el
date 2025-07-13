@@ -57,29 +57,12 @@
 
 ;;; EPWING
 
-(use-package eblook
-  :straight
-  `(eblook
-    :type git :host github :repo "okomestudio/eblook"
-    :pre-build
-    (("autoreconf")
-     ("./configure" ,(concat "--prefix=" (expand-file-name ".local" "~")))
-     ("make")
-     ("make" "install"))))
-
-(let ((repo (expand-file-name (straight--repos-dir "lookup"))))
-  (straight-override-recipe
-   `(lookup
-     :type git :host github :repo "okomestudio/lookup"
-     :pre-build
-     (("./configure" ,(concat "--prefix=" (file-name-concat repo "build")))
-      ("make" "install"))
-     :files
-     (,(file-name-concat repo "build/share/emacs/site-lisp/lookup/*.el")))))
+(use-package eblook)
 
 (use-package lookup
-  :custom ((lookup-max-hits 100)
+  :custom ((lookup-max-hits 1000)
            (lookup-window-height 16)
+           (lookup-use-kakasi t)
 
            ;; For ndeb, the path should point to a directory containing
            ;; CATALOGS.

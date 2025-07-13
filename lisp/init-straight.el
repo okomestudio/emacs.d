@@ -69,6 +69,32 @@
   :custom ((system-packages-use-sudo t)
            (system-packages-package-manager 'apt)))
 
+;;; Override Recipes
+;;
+;; Custom recipes that override the default are defined here, in order to avoid
+;; conflicts. This is done early in `init.el' so that we minimize the use of
+;; `:straight'.
+
+(straight-override-recipe
+ `(eblook :type git :host github :repo "okomestudio/eblook"
+          :pre-build
+          (("autoreconf")
+           ("./configure"
+            ,(concat "--prefix=" (expand-file-name ".local" "~")))
+           ("make") ("make" "install"))))
+
+(let ((repo (expand-file-name (straight--repos-dir "lookup"))))
+  (straight-override-recipe
+   `(lookup :type git :host github :repo "okomestudio/lookup"
+            :pre-build
+            (("./configure"
+              ,(concat "--prefix=" (file-name-concat repo "build"))
+              ,(concat "--infodir=" (file-name-concat repo "build" "info")))
+             ("make") ("make" "install"))
+            :files
+            (,(file-name-concat repo "build/share/emacs/site-lisp/lookup/*.el")
+             ,(file-name-concat repo "build/info/*")))))
+
 ;; Ensure use of builtin version for the following packages:
 (use-package project :straight (:type built-in))
 
