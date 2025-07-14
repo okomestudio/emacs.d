@@ -79,6 +79,8 @@
     (recipe
      `((eblook
         :type git :host github :repo "okomestudio/eblook"
+
+        ;; Need libeb16-dev and libz-dev.
         :pre-build (("autoreconf")
                     ("./configure"
                      ,(concat "--prefix=" (expand-file-name ".local" "~")))
