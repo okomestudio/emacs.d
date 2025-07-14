@@ -87,10 +87,6 @@ of the current section."
 (use-package org-contrib)
 
 (use-package org-ok
-  :straight (org-ok :host github
-                    :repo "okomestudio/org-ok"
-                    :branch "master"
-                    :files (:defaults "extensions/*"))
   :after org
   :demand t
   :bind ( :map org-mode-map
@@ -115,48 +111,40 @@ of the current section."
 ;;; Org Babel
 
 (use-package ob-core
-  :straight nil
   :after (org)
   :config (add-to-list 'org-src-lang-modes '("plantuml" . plantuml)))
 
 (use-package ob-tangle
-  :straight nil
   :after (org)
   :config (add-to-list 'org-babel-tangle-lang-exts '("js" . "js")))
 
 (use-package ob-C
-  :straight nil
   :after (org)
   :commands (org-babel-execute:C)
   :config (add-to-list 'org-babel-load-languages '(C . t)))
 
 (use-package ob-dot
-  :straight nil
   :after (org)
   :commands (org-babel-execute:dot)
   :config (add-to-list 'org-babel-load-languages '(dot . t)))
 
 (use-package ob-js
-  :straight nil
   :after (org)
   :commands (org-babel-execute:js)
   :config (add-to-list 'org-babel-load-languages '(js . t)))
 
 (use-package ob-plantuml
-  :straight nil
   :after (org)
   :commands (org-babel-execute:plantuml)
   :config (add-to-list 'org-babel-load-languages '(plantuml . t)))
 
 (use-package ob-python
-  :straight nil
   :after (org)
   :commands (org-babel-execute:python)
   :custom (org-babel-python-command "~/.pyenv/shims/python")
   :config (add-to-list 'org-babel-load-languages '(python . t)))
 
 (use-package ob-shell
-  :straight nil
   :after (org)
   :commands (org-babel-execute:bash
              org-babel-execute:shell
@@ -164,13 +152,11 @@ of the current section."
   :config (add-to-list 'org-babel-load-languages '(shell . t)))
 
 (use-package ob-sql
-  :straight nil
   :after (org)
   :commands (org-babel-execute:sql)
   :config (add-to-list 'org-babel-load-languages '(sql . t)))
 
 (use-package ob-sqlite
-  :straight nil
   :after (org)
   :commands (org-babel-execute:sqlite)
   :config (add-to-list 'org-babel-load-languages '(sqlite . t)))
@@ -183,7 +169,6 @@ of the current section."
 ;;; Org Export
 
 (use-package ox
-  :straight nil
   :after (org)
   :custom ((org-export-with-broken-links t)
            (org-export-with-section-numbers nil))
@@ -199,14 +184,12 @@ of the current section."
   :after ox)
 
 (use-package ox-latex
-  :straight nil
   :after ox
   :custom ((org-latex-pdf-process
             '("lualatex -interaction nonstopmode -shell-escape %f"
               "lualatex -interaction nonstopmode -shell-escape %f"))))
 
 (use-package ox-md ;; markdown
-  :straight nil
   :after ox)
 
 (use-package org-preview-html)
@@ -214,7 +197,6 @@ of the current section."
 ;;; Org Agenda
 
 (use-package org-agenda
-  :straight nil
   :after (org)
   :custom ((org-agenda-current-time-string "⭠ NOW ────────────────────")
            (org-agenda-include-diary t)
@@ -230,15 +212,9 @@ of the current section."
 
 (use-package org-modern)
 
-(use-package org-modern-indent
-  ;; NOTE(2025-03-03): Not on any package repository, so need manual
-  ;; install here.
-  :straight (org-modern-indent :host github :repo "jdtsmith/org-modern-indent"))
+(use-package org-modern-indent)
 
 (use-package org-hide-drawers
-  :straight (org-hide-drawers :host github
-                              :repo "krisbalintona/org-hide-drawers"
-                              :branch "devel")
   :config
   (defun org-hide-drawers--fold-toggle (fun &rest r)
     (let (result)
@@ -301,7 +277,6 @@ of the current section."
           (org-hide-drawers-collapse))))))
 
 (use-package org-dividers
-  :straight (org-dividers :host github :repo "okomestudio/org-dividers")
   :hook (org-mode . org-dividers-mode))
 
 ;;; Clipboard
@@ -341,16 +316,6 @@ clipboard content:
 (use-package org-web-tools :disabled)
 
 (use-package org-transclusion
-  :straight (org-transclusion
-             :host github
-             :repo "nobiot/org-transclusion"
-             :pre-build
-             (("makeinfo" "./docs/org-transclusion.texi" "-o" "./docs/org-transclusion.info")
-              ("install-info" "./docs/org-transclusion.info" "./docs/dir"))
-
-             ;; NOTE: Try the feature branch for
-             ;; github.com/nobiot/org-transclusion/issues/271
-             :branch "feat/transient") ; "id-and-target"
   :after (org)
   :bind ( :map org-mode-map
           :prefix "C-c C-n"

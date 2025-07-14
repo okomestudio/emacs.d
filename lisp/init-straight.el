@@ -75,28 +75,78 @@
 ;; conflicts. This is done early in `init.el' so that we minimize the use of
 ;; `:straight'.
 
-(straight-override-recipe
- `(eblook :type git :host github :repo "okomestudio/eblook"
-          :pre-build
-          (("autoreconf")
-           ("./configure"
-            ,(concat "--prefix=" (expand-file-name ".local" "~")))
-           ("make") ("make" "install"))))
+(dolist
+    (recipe
+     `((eblook
+        :type git :host github :repo "okomestudio/eblook"
+        :pre-build (("autoreconf")
+                    ("./configure"
+                     ,(concat "--prefix=" (expand-file-name ".local" "~")))
+                    ("make") ("make" "install")))
+       (org-dividers
+        :type git :host github :repo "okomestudio/org-dividers")
+       (org-hide-drawers
+        :type git :host github :repo "krisbalintona/org-hide-drawers"
+        :branch "devel")
+       (org-modern-indent
+        :type git :host github :repo "jdtsmith/org-modern-indent")
+       (org-ok
+        :type git :host github :repo "okomestudio/org-ok"
+        :files (:defaults "extensions/*"))
+       (ok-plural
+        :type git :host github :repo "okomestudio/ok-plural.el")
+       (org-roam-cjk
+        :type git :host github :repo "okomestudio/org-roam-cjk"
+        :files (:defaults "extensions/*"))
+       (org-roam-fz
+        :type git :host github :repo "okomestudio/org-roam-fz")
+       (org-roam-node-display-cache
+        :type git :host github :repo "okomestudio/org-roam-node-display-cache")
+       (org-roam-ok
+        :type git :host github :repo "okomestudio/org-roam-ok"
+        :files (:defaults "extensions/*"))
+       (org-transclusion
+        :type git :host github :repo "nobiot/org-transclusion"
+        :pre-build (("makeinfo" "./docs/org-transclusion.texi"
+                     "-o" "./docs/org-transclusion.info")
+                    ("install-info"
+                     "./docs/org-transclusion.info" "./docs/dir"))
+
+        ;; NOTE: See github.com/nobiot/org-transclusion/issues/271
+        :branch "feat/transient")
+       ))
+  (straight-override-recipe recipe))
 
 (let ((repo (expand-file-name (straight--repos-dir "lookup"))))
   (straight-override-recipe
-   `(lookup :type git :host github :repo "okomestudio/lookup"
-            :pre-build
-            (("./configure"
-              ,(concat "--prefix=" (file-name-concat repo "build"))
-              ,(concat "--infodir=" (file-name-concat repo "build" "info")))
-             ("make") ("make" "install"))
-            :files
-            (,(file-name-concat repo "build/share/emacs/site-lisp/lookup/*.el")
-             ,(file-name-concat repo "build/info/*")))))
+   `(lookup
+     :type git :host github :repo "okomestudio/lookup"
+     :pre-build
+     (("./configure"
+       ,(concat "--prefix=" (file-name-concat repo "dist"))
+       ,(concat "--infodir=" (file-name-concat repo "dist" "info")))
+      ("make") ("make" "install"))
+     :files
+     (,(file-name-concat repo "dist/share/emacs/site-lisp/lookup/*.el")
+      ,(file-name-concat repo "dist/info/*")))))
 
 ;; Ensure use of builtin version for the following packages:
-(use-package project :straight (:type built-in))
+(dolist (pkg '(ob-C
+               ob-core
+               ob-dot
+               ob-js
+               ob-plantuml
+               ob-python
+               ob-shell
+               ob-sql
+               ob-sqlite
+               ob-tangle
+               org-agenda
+               ox
+               ox-latex
+               ox-md
+               project))
+  (straight-override-recipe `(,pkg :type built-in)))
 
 (provide 'init-straight)
 ;;; init-straight.el ends here

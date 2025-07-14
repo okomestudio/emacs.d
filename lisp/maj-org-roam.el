@@ -79,9 +79,6 @@
            (org-roam-ui-update-on-save t)))
 
 (use-package org-roam-node-display-cache
-  :straight (org-roam-node-display-cache
-             :host github
-             :repo "okomestudio/org-roam-node-display-cache")
   :hook (org-roam-ok-mode . org-roam-node-display-cache-mode)
   :init
   (defun org-roam-node-display-cache--ensure-desktop ()
@@ -120,9 +117,6 @@
   :config (org-roam-timestamps-mode))
 
 (use-package org-roam-ok
-  :straight (org-roam-ok :host github
-                         :repo "okomestudio/org-roam-ok"
-                         :files (:defaults "extensions/*"))
   :custom ((org-roam-ok-node-use-cache-in-memory t)
            (org-roam-ok-on-idle-delay nil))
   :init
@@ -131,13 +125,9 @@
 
 (use-package adaptive-wrap)
 
-(use-package ok-plural
-  :straight (ok-plural :host github :repo "okomestudio/ok-plural.el"))
+(use-package ok-plural)
 
 (use-package org-roam-cjk
-  :straight (org-roam-cjk :host github
-                          :repo "okomestudio/org-roam-cjk"
-                          :files (:defaults "extensions/*"))
   :custom ((org-roam-mode-sections
             (list #'org-roam-backlinks-section
                   #'org-roam-reflinks-section
@@ -235,7 +225,6 @@
 
 (use-package org-roam-fz
   ;; A Folgezettel ID mode for Org Roam.
-  :straight (org-roam-fz :host github :repo "okomestudio/org-roam-fz")
   :custom (org-roam-ok-node-display-title #'org-roam-fz--display-title)
   :hook (org-mode . org-roam-fz-mode)
   :config

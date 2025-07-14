@@ -5,6 +5,9 @@
 
 (require 'ok)
 
+(use-package org-modern)
+(use-package org-modern-indent)
+
 (use-package ok-org-themes
   :straight (ok-org-themes :host github :repo "okomestudio/ok-org-themes.el")
   :config
