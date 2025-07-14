@@ -13,9 +13,6 @@
 ;;; Code:
 
 (use-package anki-editor
-  :straight (:host github :repo "anki-editor/anki-editor"
-                   :fork (:host github :repo "okomestudio/anki-editor"
-                                :branch "enable-file-based-note"))
   :custom ((anki-editor-latex-style 'mathjax)
            (anki-editor-org-tags-as-anki-tags t)
            (anki-editor-swap-two-fields '("Cloze"))

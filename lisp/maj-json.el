@@ -10,7 +10,6 @@
 ;;; Code:
 
 (use-package json-ts-mode
-  :straight (:type built-in)
   :mode "\\.json\\(\\.j2\\)?\\'"
   :bind ( :map json-ts-mode-map
           ("C-c b" . json-ts-mode-format-code) )

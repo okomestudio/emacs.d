@@ -64,8 +64,6 @@ The function returns nil, if the file does not exists."
 ;;; Aspell
 
 (use-package flycheck-aspell-org
-  :straight (flycheck-aspell-org :host github
-                                 :repo "okomestudio/flycheck-aspell-org.el")
   :config
   (add-to-list 'flycheck-checkers 'org-aspell-dynamic)
   (flycheck-add-next-checker 'org-aspell-dynamic '(t . textlint)))
@@ -113,7 +111,6 @@ The function returns nil, if the file does not exists."
 
 (use-package flyover
   ;; A beautiful inline overlay for Flycheck
-  :straight (flyover :host github :repo "konrad1977/flyover")
   :custom (flyover-use-theme-colors t)
   ;; :hook (flycheck-mode . flyover-mode)
   )

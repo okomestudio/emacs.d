@@ -6,7 +6,6 @@
 ;;; Code:
 
 (use-package js
-  :straight (:type built-in)
   :bind ( :map js-ts-mode-map
           ("C-c b" . prettier-js) )
   :custom (js-jsx-indent-level 2)

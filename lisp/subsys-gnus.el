@@ -6,7 +6,6 @@
 ;;; Code:
 
 (use-package message
-  :straight (:type built-in)
   :bind ( :map message-mode-map
           ("C-c C-c" . message-send-and-exit-via-sender-email) )
   :hook (message-setup . message--deactivate-hydra)
@@ -55,7 +54,6 @@ is SMTP server, `port' is port, and `usr' is SMTP login username."
     (setq-local hydra-deactivate t)))
 
 (use-package nnfolder
-  :straight (:type built-in)
   :config
   ;; NOTE: `nnfolder-directory' easily reverts to "~/Mail" if
   ;; `etc/gnus/newsrc.eld' exists. Delete that file and initialize
@@ -63,7 +61,6 @@ is SMTP server, `port' is port, and `usr' is SMTP login username."
   (setq nnfolder-directory (ok-file-expand-var "message/Mail/archive")))
 
 (use-package gnus
-  :straight (:type built-in)
   :custom ((gnus-directory (ok-file-expand-var "gnus/News/"))
            (gnus-default-directory (ok-file-expand-var "gnus/"))
            (gnus-home-directory (ok-file-expand-var "gnus/"))
@@ -72,7 +69,6 @@ is SMTP server, `port' is port, and `usr' is SMTP login username."
   (setq gnus-summary-insert-old-articles t))
 
 (use-package gnus-group
-  :straight (:type built-in)
   :bind ( :map gnus-group-mode-map
           ("." . hydra-gnus-group/body) )
   :config
@@ -89,7 +85,6 @@ _g_: get new messages
     ("q" gnus-group-exit "quit" :color blue)))
 
 (use-package gnus-sum
-  :straight (:type built-in)
   :bind ( :map gnus-summary-mode-map
           ("." . hydra-gnus-summary/body) )
   :config
@@ -115,7 +110,6 @@ _R_: reply        _M_: move
     ("q" gnus-summary-exit "quit" :color blue)))
 
 (use-package gnus-art
-  :straight (:type built-in)
   :bind ( :map gnus-article-mode-map
           ("." . hydra-gnus-article/body) )
   :config

@@ -101,15 +101,20 @@ if hankaku is active and the cdr of ELT if zenkaku is active."
 ;;; COmpletion in Region FUnction (CORFU)
 
 (use-package corfu
-  :hook ((conf-mode prog-mode text-mode) . corfu-mode)
+  :bind ( :map corfu-map
+          ("'" . corfu-quick-complete) )
   :custom ((corfu-auto t)
            (corfu-auto-delay 0.5)
            (corfu-auto-prefix 1)
            (corfu-cycle t)
            (corfu-on-exact-match nil)
+           (corfu-popupinfo-delay '(0.75 . 0.4))
            (corfu-preselect 'prompt)
            (corfu-quit-no-match 'separator)
            (corfu-scroll-margin 5))
+  :hook (((conf-mode prog-mode text-mode) . corfu-mode)
+         (corfu-mode . corfu-history-mode)
+         (corfu-mode . corfu-popupinfo-mode))
   :config
   (global-corfu-mode)
   (set-face-underline 'corfu-current t)
@@ -137,23 +142,6 @@ For tips on debugging, see the site readme."
       (apply fun args)))
   (advice-add #'corfu--post-command :around #'corfu-ok--post-command))
 
-(use-package corfu-history
-  :straight nil
-  :after corfu
-  :hook (corfu-mode . corfu-history-mode))
-
-(use-package corfu-popupinfo
-  :straight nil
-  :after corfu
-  :hook (corfu-mode . corfu-popupinfo-mode)
-  :custom (corfu-popupinfo-delay '(0.75 . 0.4)))
-
-(use-package corfu-quick
-  :straight nil
-  :after corfu
-  :bind ( :map corfu-map
-          ("'" . corfu-quick-complete) ))
-
 (use-package nerd-icons-corfu
   ;; An SVG alternative is `kind-icon'.
   :after corfu
@@ -162,7 +150,6 @@ For tips on debugging, see the site readme."
 
 (use-package org-block-capf
   ;; "<" trigger Org block completion at point.
-  :straight (org-block-capf :host github :repo "xenodium/org-block-capf")
   :after corfu
   :hook (org-mode . org-block-capf-add-to-completion-at-point-functions))
 

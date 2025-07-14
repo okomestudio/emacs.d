@@ -45,7 +45,6 @@
 
 (use-package typo
   ;; Typographical utility (e.g., smart quotation).
-  :straight (typo :host github :repo "jorgenschaefer/typoel")
   :hook (org-mode . typo-mode)
   :config
   (define-typo-cycle
@@ -82,7 +81,6 @@
 ;;; Spelling
 
 (use-package flyspell
-  :straight (:type built-in)
   :bind ( :map flyspell-mode-map
           ("C-;" . flyspell-auto-correct-previous-word) )  ; or `M-s M-s'?
   :hook ((prog-mode
@@ -146,7 +144,6 @@ But don't look beyond what's visible on the screen."
               #'flyspell-ok-auto-correct-previous-word))
 
 (use-package ispell
-  :straight (:type built-in)
   :custom ((ispell-dictionary "en_US")
            (ispell-local-dictionary-alist
             '(("en_US" "[[:alpha:]]" "[^[:alpha:]]" "['’]" t
@@ -159,7 +156,6 @@ But don't look beyond what's visible on the screen."
 
 (use-package hippie-exp
   ;; Expand the word before the point in various ways.
-  :straight (:type built-in)
   :bind ([remap dabbrev-expand] . hippie-expand))
 
 ;;; Region

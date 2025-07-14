@@ -6,13 +6,6 @@
 ;;; Code:
 
 (use-package mozc
-  :straight (mozc :host github
-                  :repo "google/mozc"
-
-                  ;; NOTE(2025-03-04): Pin to a commit to avoid
-                  ;; divergence of submodules refs to cause dirty
-                  ;; repo.
-                  :commit "14afac9728dd3f04e3d73633f4fa925d38589368")
   :bind (("C-z" . toggle-input-method) ("C-\\" . nil))
   :custom ((default-input-method "japanese-mozc")
 
@@ -43,7 +36,6 @@
   (setq pgtk-use-im-context-on-new-connection nil))
 
 (use-package mozc-isearch
-  :straight (mozc-isearch :host github :repo "iRi-E/mozc-el-extensions")
   :hook (;; NOTE(2025-03-18): This is an optimization to remove
          ;; initialization with `after-init-hook', which gets set up
          ;; when the `mozc-isearch' feature is required:
@@ -65,7 +57,6 @@
 (use-package mozc-cand-posframe
   ;; For `posframe', this package may be the simplest option.
   :disabled
-  :straight (mozc-cand-posframe :host github :repo "akirak/mozc-posframe")
   :if (display-graphic-p)
   :after mozc
   :hook ((enable-theme-functions . mozc-posframe-ok--theme))
@@ -90,8 +81,6 @@
 
 (use-package mozc-posframe
   ;; This might work, but not out of box.
-  :straight (mozc-posframe :host github :repo "derui/mozc-posframe"
-                           :fork (:branch "ok"))
   :if (display-graphic-p)
   :hook ((on-first-input . mozc-posframe-initialize)
          (enable-theme-functions . mozc-posframe-ok--theme))

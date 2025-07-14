@@ -6,7 +6,6 @@
 ;;; Code:
 
 (use-package css-mode
-  :straight (:type built-in)
   :bind ( :map css-ts-mode-map
           ("C-c b" . prettier-js) )
   :custom (css-indent-offset 2)

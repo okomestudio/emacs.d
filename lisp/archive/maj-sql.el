@@ -35,15 +35,15 @@
   :ensure-system-package ("sqlformat" . "pip install sqlparse"))
 
 (use-package sql-upcase
-  :straight nil
   :hook ((sql-mode sql-interactive-mode) . sql-upcase-mode)
-  :init
-  (let* ((dest (expand-file-name "init.d/sql-upcase.el" user-emacs-directory))
-         (src-host "https://raw.githubusercontent.com")
-         (src-path "emacsmirror/emacswiki.org/master/sql-upcase.el")
-         (src-url (file-name-concat src-host src-path)))
-    (unless (file-exists-p dest)
-      (url-copy-file src-url dest))))
+  ;; :init
+  ;; (let* ((dest (expand-file-name "init.d/sql-upcase.el" user-emacs-directory))
+  ;;        (src-host "https://raw.githubusercontent.com")
+  ;;        (src-path "emacsmirror/emacswiki.org/master/sql-upcase.el")
+  ;;        (src-url (file-name-concat src-host src-path)))
+  ;;   (unless (file-exists-p dest)
+  ;;     (url-copy-file src-url dest)))
+  )
 
 (provide 'maj-sql)
 ;;; maj-sql.el ends here

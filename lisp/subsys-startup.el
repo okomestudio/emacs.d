@@ -91,12 +91,10 @@
   (set-default-coding-systems 'utf-8))
 
 (use-package autorevert
-  :straight (:type built-in)
   :custom ((auto-revert-avoid-polling t))
   :hook (after-init . global-auto-revert-mode))
 
 (use-package indent
-  :straight (:type built-in)
   :custom ((tab-always-indent 'complete)))
 
 ;;; Shell
@@ -124,7 +122,6 @@
 
 (use-package keychain-environment
   ;; Loads keychain environment variables into emacs.
-  :straight (:host github :repo "tarsius/keychain-environment")
   :config (keychain-refresh-environment))
 
 ;;; Misc.
@@ -136,17 +133,13 @@
 (use-package dirvish)
 
 (use-package repeat
-  :straight (:type built-in)
   :custom (repeat-echo-function #'repeat-echo-message)
   :hook (on-first-input . repeat-mode))
 
 (use-package tramp
-  :straight (:type built-in)
   :custom (tramp-default-method "ssh"))
 
 (use-package do-this-now
-  :straight (do-this-now :host github
-                         :repo "okomestudio/do-this-now.el")
   :custom ((alert-default-style 'libnotify)
            (do-this-now-idle-interval 600)
            (do-this-now-interval 2400)
@@ -156,7 +149,6 @@
   :hook (after-init . do-this-now-mode))
 
 (use-package tooltipper
-  :straight (tooltipper :host github :repo "okomestudio/tooltipper.el")
   :hook (after-init . tooltipper-mode))
 
 (provide 'subsys-startup)

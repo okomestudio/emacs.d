@@ -18,30 +18,14 @@
   :ensure-system-package (black . "pip install black"))
 
 (use-package py-isort
-  :straight (py-isort
-             :host github
-             :repo "paetzke/py-isort.el"
-             ;; For https://github.com/paetzke/py-isort.el/pull/21
-             :fork ( :host github
-                     :repo "okomestudio/py-isort.el"
-                     :branch "ts/provide-default-settings-path" ))
   :ensure-system-package (isort . "pip install isort"))
 
 (use-package pyimport
-  :straight
-  (pyimport :host github
-            :repo "Wilfred/pyimport"
-            :branch "master"
-            :fork ( :host github
-                    :repo "okomestudio/pyimport"
-                    :branch "venv-support" )
-            :files ("*.el" ("bin/make-imports.py" . "bin/make-imports.py")))
   :ensure-system-package (pyflakes . "pip install pyflakes"))
 
 ;;; Virtual env management
 
 (use-package pyenv
-  :straight (:host github :repo "aiguofer/pyenv.el")
   :custom (pyenv-show-active-python-in-modeline t)
   :hook ((after-init . global-pyenv-mode)
          (projectile-after-switch-project
@@ -50,7 +34,6 @@
               (shell-command-to-string (ok-file-expand-bin "bootstrap-python-venv"))))))
 
 (use-package pyenv-mode
-  :straight (:host github :repo "pythonic-emacs/pyenv-mode")
   :hook ((python-base-mode
           python-sql-base-mode) . pyenv-mode-ok-projectile-set)
   :config
@@ -74,13 +57,6 @@
 ;;; Pymacs
 
 (use-package pymacs
-  :straight (pymacs
-             :host github
-             :repo "Pymacs2/Pymacs"
-             :post-build            ; see what install-pymacs.sh does:
-             (("pip" "install" "-U" "pyopenssl")
-              `("pip" "install" "-e" ,(ok-file-expand-user-emacs-file
-                                       "straight/repos/Pymacs/"))))
   :ensure-system-package
   ("/usr/share/doc/python3-dev" . "sudo apt install -y python3-dev")
   ("/usr/include/openssl/ssl.h" . "sudo apt install -y libssl-dev")
@@ -88,12 +64,6 @@
 
 (use-package ropemacs
   :after (pymacs)
-  :straight (ropemacs
-             :files nil
-             :post-build
-             (("pip" "install" "-U" "rope")
-              `("pip" "install" "-e" ,(ok-file-expand-user-emacs-file
-                                       "straight/repos/ropemacs/"))))
   :bind (("C-x p l" . (lambda ()
                         (interactive)
                         (require 'pymacs)

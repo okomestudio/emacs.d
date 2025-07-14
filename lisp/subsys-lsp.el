@@ -33,16 +33,13 @@ The function returns LSP servers that have been shut down."
   :ensure-system-package (semgrep . "pip install semgrep"))
 
 (use-package lsp-booster
-  ;; NOTE: The `emacs-lsp-booster' binary is installed to the Emacs
-  ;; binary directory (i.e., "which emacs"). The `make' may need to be
-  ;; re-run on a new Emacs installation.
+  ;; NOTE: The `emacs-lsp-booster' binary is installed to the Emacs binary
+  ;; directory (i.e., "which emacs"). The `make' may need to be re-run on a new
+  ;; Emacs installation.
   ;;
-  ;; To see if the mode is working, look at the error log of the
-  ;; language server. When properly activated, the messages will
-  ;; include entries tagged as "emacs_lsp_booster::app".
-  :straight (lsp-booster :host github
-                         :repo "okomestudio/lsp-booster.el"
-                         :post-build (("make")))
+  ;; To see if the mode is working, look at the error log of the language
+  ;; server. When properly activated, the messages will include entries tagged
+  ;; as "emacs_lsp_booster::app".
   :commands (lsp-booster-mode)
   :hook (after-init . lsp-booster-mode))
 

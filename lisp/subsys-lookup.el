@@ -44,7 +44,7 @@
 
 (use-package powerthesaurus
   ;; Pull from doomelpa to avoid aggressive `transient' load issue (#41)
-  :straight (:host github :repo "doomelpa/powerthesaurus"))
+  )
 
 (use-package synosaurus
   ;; An extensible thesaurus mode.
@@ -52,8 +52,7 @@
   :custom (synosaurus-choose-method 'default)
   :ensure-system-package (wn . "sudo apt install -y wordnet"))
 
-(use-package urbandict.el
-  :straight (:host github :repo "okomestudio/urbandict.el"))
+(use-package urbandict.el)
 
 ;;; EPWING
 
@@ -76,9 +75,6 @@
 
 (use-package hatsuon
   :disabled ;; use `go-translate'
-  :straight (hatsuon :host github
-                     :repo "okomestudio/hatsuon.el"
-                     :files (:defaults "extensions/*"))
   :custom ((hatsuon-audio-cache-dir (ok-file-expand-var "hatsuon/cache/"))
            (hatsuon-audio-url-getters
             '(hatsuon-wordnik-audio-url-getter)))
@@ -139,7 +135,6 @@
   )
 
 (use-package greppu
-  :straight (:host github :repo "okomestudio/greppu.el")
   :commands (greppu-scan))
 
 (provide 'subsys-lookup)

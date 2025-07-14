@@ -8,7 +8,6 @@
 (require 'ok)
 
 (use-package org-roam
-  :straight (org-roam :fork t)
   :bind ( ("C-c n f" . org-roam-node-find)
           ("C-c n i" . org-roam-node-insert)
           ("C-c n l" . org-roam-buffer-toggle)

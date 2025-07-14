@@ -6,7 +6,6 @@
 ;;; Code:
 
 (use-package auth-source
-  :straight (:type built-in)
   :custom ((auth-sources `(,(ok-file-expand-etc "auth-source/.authinfo.gpg")))
            (authinfo-hidden (format "\\(%s\\)"
                                     (mapconcat 'identity

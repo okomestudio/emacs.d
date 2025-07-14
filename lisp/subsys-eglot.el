@@ -6,7 +6,6 @@
 ;;; Code:
 
 (use-package eglot
-  :straight (:type built-in)
   :config
 
   ;; Harper

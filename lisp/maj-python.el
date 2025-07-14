@@ -6,7 +6,6 @@
 ;;; Code:
 
 (use-package python
-  :straight (:type built-in)
   :bind ( :map python-mode-map
           ("C-c b" . python-ok-format-buffer)
           :map python-ts-mode-map
@@ -40,7 +39,6 @@
     (ruff-format-buffer)))
 
 (use-package python-sql-mode
-  :straight (python-sql-mode :host github :repo "okomestudio/python-sql-mode.el")
   :commands (python-sql-mode python-sql-ts-mode))
 
 ;;; VIRTUAL ENVS
@@ -180,10 +178,6 @@
 ;; HELP & DOCS
 
 (use-package pydoc
-  :straight (pydoc :host github :repo "statmobile/pydoc"
-                   :fork (:branch "symbol-resolution")
-                   ;; :files (:defaults "extensions/*")
-                   )
   :bind ( :map python-mode-map
           ("C-h ." . pydoc-at-point-no-jedi)
           :map python-ts-mode-map

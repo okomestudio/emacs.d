@@ -6,17 +6,14 @@
 ;;; Code:
 
 (use-package prog-mode
-  :straight (:type built-in)
   :hook (after-save . executable-make-buffer-file-executable-if-script-p))
 
-;;; EDITING
+;;; Editing
 
 (use-package elec-pair
-  :straight (:type built-in)
   :hook (prog-mode . electric-pair-local-mode))
 
 (use-package hideshow
-  :straight (:type built-in)
   :bind ( :map hs-minor-mode-map
           ("<backtab>" . hs-ok-toggle-hiding-all)
           ("C-c @ C-a" . hs-show-all)
@@ -55,13 +52,11 @@
   (advice-add #'indent-for-tab-command :around #'hs-ok-toggle-hiding--ad))
 
 (use-package lisp
-  :straight (:type built-in)
   :bind (; The following work in many prog modes, but defined in lisp.el:
          ("C-x n d" . narrow-to-defun)
          ("C-x n w" . widen)))
 
 (use-package whitespace
-  :straight (:type built-in)
   :hook (whitespace-mode . whitespace-mode-ok--hook)
   :config
   (defun whitespace-mode-ok--hook ()
@@ -69,13 +64,13 @@
       (aggressive-indent-mode -1))
     (indent-tabs-mode 1)))
 
-;;; FORMATTING
+;;; Formatting
 
 (use-package prettier-js
   :commands (prettier-js)
   :ensure-system-package (prettier . "npm install -g prettier"))
 
-;;; MISC.
+;;; Misc.
 
 (use-package quickrun
   ;; Run command quickly.

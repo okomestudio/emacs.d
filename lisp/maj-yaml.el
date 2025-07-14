@@ -8,7 +8,6 @@
 (use-package yaml-mode)
 
 (use-package yaml-ts-mode
-  :straight (:type built-in)
   :mode "\\.ya?ml\\'"
   :hook ((yaml-ts-mode . yaml-ts-mode-ok--patch)
          (yaml-ts-mode . lsp-deferred))

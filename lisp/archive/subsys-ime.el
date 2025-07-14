@@ -7,9 +7,6 @@
 
 (use-package mozc-popup
   :disabled
-  :straight (mozc-popup :host github
-                        :repo "d5884/mozc-popup"
-                        :fork (:branch "reduce-refresh"))
   :after mozc
   :hook ((on-first-input . (lambda () (require 'mozc-popup)))
          (enable-theme-functions . mozc-popup-ok--theme))

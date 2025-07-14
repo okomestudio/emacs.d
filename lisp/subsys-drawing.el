@@ -38,7 +38,6 @@
   ;; used. The use of manual export is thus currently recommended
   ;; approach.
   ;;
-  :straight (org-excalidraw :host github :repo "4honor/org-excalidraw")
   :commands (org-excalidraw-create-drawing)
   :hook (org-mode . (lambda () (require 'org-excalidraw)))
   :config

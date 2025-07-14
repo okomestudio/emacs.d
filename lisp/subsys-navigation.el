@@ -31,7 +31,6 @@
   :custom (aw-dispatch-always t))
 
 (use-package frame
-  :straight (:type built-in)
   :bind ( ("M-o" . next-window-any-frame)
           :repeat-map next-window-any-frame-repeat-map
           ("o" . next-window-any-frame)
@@ -42,7 +41,6 @@
 
 (use-package winner
   ;; Undo or redo a change in window configuration.
-  :straight (:type built-in)
   :bind (("C-c <right>" . winner-redo)
          ("C-c <left>". winner-undo))
   :hook (on-first-buffer . winner-mode))
@@ -54,7 +52,6 @@
            (scroll-margin 5)))
 
 (use-package mwheel
-  :straight (:type built-in)
   :custom ((mouse-wheel-progressive-speed t)
            (mouse-wheel-scroll-amount '(1 ((shift) . hscroll)
                                           ((meta))
@@ -62,7 +59,6 @@
                                           ((control) . text-scale)))))
 
 (use-package pixel-scroll
-  :straight (:type built-in)
   ;; :hook (on-first-input . pixel-scroll-precision-mode)
   :custom ((pixel-scroll-precision-interpolation-between-scroll 0.001)
            (pixel-scroll-precision-interpolation-factor 2.0)
@@ -75,7 +71,6 @@
 
 (use-package ultra-scroll
   :disabled
-  :straight (ultra-scroll :host github :repo "jdtsmith/ultra-scroll")
   :custom ((scroll-conservatively 101)
            (scroll-margin 0))
   :hook (on-first-input . ultra-scroll-mode))
@@ -117,7 +112,6 @@
 ;;; Files
 
 (use-package recentf
-  :straight (:type built-in)
   :bind ("C-x r F" . recentf)
   :hook (after-init . recentf-mode)
   :config
@@ -129,7 +123,6 @@
     (push pred recentf-exclude)))
 
 (use-package save-place
-  :straight (:type built-in)
   :hook (after-init . save-place-mode))
 
 ;;; Imenu

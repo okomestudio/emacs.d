@@ -8,14 +8,6 @@
 ;;; Code:
 
 (use-package consult
-  :straight ( :pre-build
-              ;; build info manual, which appears missing by default:
-              (("emacs" "-Q" "-batch" "-L" "./"
-                "--visit" "README.org"
-                "--funcall" "org-texinfo-export-to-texinfo")
-               ("makeinfo" "consult.texi" "-o" "consult.info")
-               ;; ("install-info" "consult.info" "dir")
-               ) )
   :bind ( ([remap electric-apropos] . consult-apropos)
           ;; ([remap apropos] . consult-apropos)
           ([remap switch-to-buffer-other-window] . consult-buffer-other-window)
@@ -57,7 +49,6 @@
 
 (use-package consult
   :if (eq system-type 'gnu/linux)
-  :straight nil
   :ensure-system-package
   (locate . "sudo apt install -y locate")
   (rg . "sudo apt install -y ripgrep"))

@@ -6,7 +6,6 @@
 ;;; Code:
 
 (use-package cc-mode
-  :straight (:type built-in)
   :config
   (setopt c-basic-offset 2))
 

@@ -40,7 +40,6 @@
      :image-converter ("dvisvgm %f -n -b min -c %S -o %O"))))
 
 (use-package ox-latex
-  :straight nil
   :after ox
   :custom ((org-latex-pdf-process
             '("lualatex -interaction nonstopmode -shell-escape %f"

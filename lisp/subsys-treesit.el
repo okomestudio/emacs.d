@@ -6,7 +6,6 @@
 ;;; Code:
 
 (use-package treesit
-  :straight (:type built-in)
   :custom (treesit-font-lock-level 4) ; usually 3 is enough
   :demand t)
 
@@ -17,10 +16,7 @@
   (treesit-auto-add-to-auto-mode-alist 'all)
   (global-treesit-auto-mode))
 
-(use-package treesit-fold
-  :straight (treesit-fold :type git
-                          :host github
-                          :repo "emacs-tree-sitter/treesit-fold"))
+(use-package treesit-fold)
 
 (provide 'subsys-treesit)
 ;;; subsys-treesit.el ends here

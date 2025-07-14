@@ -85,7 +85,6 @@ This is also used as the default.")
 (use-package faces
   ;; Install font files.
   :if (eq system-type 'gnu/linux)
-  :straight (:type built-in)
   :ensure-system-package
   ("/usr/share/fonts/opentype/ebgaramond/EBGaramond08-Regular.otf"
    . "sudo apt install -y fonts-ebgaramond")
@@ -160,7 +159,6 @@ This is also used as the default.")
 
 (use-package eaw
   ;; East Asian Ambiguous Width問題と絵文字の横幅問題の修正ロケール.
-  :straight (:host github :repo "hamano/locale-eaw")
   :config (eaw-fullwidth))
 
 (use-package show-font

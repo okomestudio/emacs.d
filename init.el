@@ -22,7 +22,6 @@
 
 (use-package ok
   ;; Emacs Lisp utilities for Okome Studio (ok).
-  :straight (ok :host github :repo "okomestudio/ok.el")
   :demand t
   :config
   (let ((hook 'hack-dir-local-get-variables-functions))
@@ -73,7 +72,6 @@
 
 (use-package desktop
   ;; Save the Emacs state across sessions.
-  :straight nil
   :custom (desktop-auto-save-timeout 180)
 
   :init

@@ -6,9 +6,9 @@
 ;;; Code:
 
 (use-package nano-theme
-  :straight (nano-theme :host github
-                        :repo "rougier/nano-theme"
-                        :commit "ffe414c8af9c673caf8b8b05ba89a229cb9ad48b")
+  :straight (nano-theme
+             :type git :host github :repo "rougier/nano-theme"
+             :commit "ffe414c8af9c673caf8b8b05ba89a229cb9ad48b")
   :custom (nano-window-divider-show t)
   :config
   (load-theme 'nano-dark t t)

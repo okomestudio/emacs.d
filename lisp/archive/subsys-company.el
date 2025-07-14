@@ -50,13 +50,10 @@
 
 ;; COMPANY BACKENDS
 
-(use-package company-graphviz-dot
+(use-package graphviz-dot-mode
   :disabled
-  :straight nil
   :after (graphviz-dot-mode)
-  :init
-  (ok-file-ensure-from-github
-   "ppareit/graphviz-dot-mode/master/company-graphviz-dot.el"))
+  :hook (graphviz-dot-mode . company-mode))
 
 (use-package company-restclient
   :disabled
@@ -72,7 +69,6 @@
 
 (use-package company-tern
   :disabled
-  :straight nil
   :after (company dash dash-functional tern)
   :init
   (ok-file-ensure-from-url

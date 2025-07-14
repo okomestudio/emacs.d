@@ -10,7 +10,6 @@
 ;;; Info
 
 (use-package info
-  :straight (:type built-in)
   :custom (Info-hide-note-references t)
   :config (push (ok-file-expand-etc "info/") Info-directory-list))
 
@@ -18,18 +17,13 @@
   ;; "Structure and Interpretation of Computer Programs" as info.
   )
 
-(use-package emacs-lisp-elements
-  :straight (emacs-lisp-elements :host github
-                                 :repo "protesilaos/emacs-lisp-elements"))
+(use-package emacs-lisp-elements)
 
 ;;; Help
 
-(use-package elisp-for-python
-  :straight (elisp-for-python :host github
-                              :repo "kickingvegas/elisp-for-python"))
+(use-package elisp-for-python)
 
 (use-package help
-  :straight (:type built-in)
   :bind ( :prefix-map help-view-other-doc
           :prefix "C-h V"
           ("p" . help-ok-view-doc-elisp-for-python)
@@ -82,7 +76,6 @@
           ("x" . helpful-command) ))
 
 (use-package apropos
-  :straight (:type built-in)
   :bind ( :prefix "C-h a"
           :prefix-map apropos-prefix-map
           ("a" . apropos)
@@ -96,13 +89,10 @@
 
 (use-package help-shortdoc-example
   ;; Display shortdoc examples to *Help* buffer.
-  :straight (help-shortdoc-example :host github
-                                   :repo "buzztaiki/help-shortdoc-example.el")
   :config (help-shortdoc-example-mode 1))
 
 (use-package man-index
   ;; Quickly navigate to keywords within a man page.
-  :straight (man-index :type git :host codeberg :repo "imarko/man-index")
   :after man
   :bind ( :map Man-mode-map
           ("i" . man-index) ))
@@ -111,7 +101,6 @@
 
 (use-package which-key
   ;; Displays available keybindings in popup.
-  :straight (:type built-in)
   :bind ( ("C-h C-h" . nil)   ; clear, otherwise will bind to `help-for-help'
 
           :prefix-map where-or-which-map

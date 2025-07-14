@@ -11,7 +11,6 @@
   :group 'tessearact)
 
 (use-package tesseract
-  :straight (tesseract :host github :repo "SebastianMeisel/tesseract.el")
   :bind ("C-x C-y" . tesseract-ok-ocr-clipboard-image)
   :custom ((doc-view-scale-internally nil)
            (tessearct/default-language "eng"))
@@ -43,14 +42,12 @@ With a prefix argument, the function prompts for the language."
                (format "%s | tesseract -l %s stdin stdout" cmd lang))))))
 
 (use-package tesseract        ; for Wayland
-  :straight nil
   :if (and (eq system-type 'gnu/linux)
            (or (eq window-system 'pgtk)
                (getenv "WAYLAND_DISPLAY")))
   :custom (tesseract-ok-paste-cmd "wl-paste -t %s"))
 
 (use-package tesseract        ; for X
-  :straight nil
   :if (and (eq system-type 'gnu/linux)
            (and (eq window-system 'x)
                 (not (getenv "WAYLAND_DISPLAY"))))

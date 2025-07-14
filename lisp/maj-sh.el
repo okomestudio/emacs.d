@@ -6,7 +6,6 @@
 ;;; Code:
 
 (use-package sh-script
-  :straight (:type built-in)
   :custom ((sh-basic-offset 2)
            ;; Run the Explainshell service on start:
            ;;
@@ -24,7 +23,6 @@
          (sh-mode . flymake-mode)))
 
 (use-package sh-script
-  :straight (:type built-in)
   :if (eq system-type 'gnu/linux)
   :ensure-system-package (shellcheck . "sudo apt install -y shellcheck"))
 

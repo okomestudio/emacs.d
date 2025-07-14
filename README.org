@@ -38,15 +38,7 @@ The Emacs starts by loading =early-init.el= and then =init.el=. This section des
 
 This repository makes heavy use of ~use-package~ with ~straight~, configured in =lisp/init-straight.el=.
 
-**** Initializing built-in package
-
-To use the built-in version of package and avoid pulling the source from an external repo, use ~built-in~ as ~:type~:
-
-#+begin_src elisp
-  (use-package builtin-package
-    :straight (:type built-in)
-    …)
-#+end_src
+In order to avoid excessive dependence on the =:straight= property, modified recipes are defined in =lisp/init-straight.el=. This also helps avoid recipe inconsistency when ~use-package~ is run multiple times for a package.
 
 *** ~init-loader~
 

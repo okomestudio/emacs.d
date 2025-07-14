@@ -9,7 +9,8 @@
 (use-package org-modern-indent)
 
 (use-package ok-org-themes
-  :straight (ok-org-themes :host github :repo "okomestudio/ok-org-themes.el")
+  :straight (ok-org-themes
+             :type git :host github :repo "okomestudio/ok-org-themes.el")
   :config
   (defun ok-org-modern-theme--prepare-fonts (theme)
     "Prepare fonts and fontsets used in the `ok-org-modern' theme."
