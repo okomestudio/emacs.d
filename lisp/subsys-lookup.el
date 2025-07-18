@@ -1,7 +1,7 @@
-;;; subsys-lookup.el --- Lookup Subsystem  -*- lexical-binding: t -*-
+;;; subsys-lookup.el --- Lookup  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;
-;; Set up the lookup subsystem.
+;; Configure the subsystem for looking up information.
 ;;
 ;; The collection of lookup utility exposed via a common key prefix.
 ;;
@@ -34,7 +34,12 @@
              ("a" . eww-search-amazon-ja)
              ("d" . eww-search-weblio)
              ("s" . eww-search-duckduckgo-ja)
-             ("w" . eww-search-wikipedia-ja)))
+             ("w" . eww-search-wikipedia-ja)
+
+             :prefix-map lookup-lookup-map
+             :prefix-docstring "Keymap for lookup mode"
+             :prefix "C-h C-l l"
+             ("a" . lookup-pattern)))
 
 ;;; Dictionaries
 
@@ -59,6 +64,8 @@
 (use-package eblook)
 
 (use-package lookup
+  :bind ( :map lookup-map
+          ("p" . lookup-pattern) )
   :custom ((lookup-max-hits 1000)
            (lookup-window-height 16)
            (lookup-use-kakasi t)
@@ -69,7 +76,11 @@
   :hook (;; `lookup' skips `after-change-major-mode-hook', so ensure the text
          ;; scaling runs:
          (lookup-content-mode . ok-faces-text-scale-per-mode))
-  :config (load (ok-file-expand-etc "lookup/init")))
+  :config
+  (load (ok-file-expand-etc "lookup/init"))
+
+  (with-eval-after-load 'ok-face
+    (add-to-list 'ok-faces-text-scale-per-mode '(lookup-content-mode . 2.0))))
 
 ;;; Pronunciation
 
