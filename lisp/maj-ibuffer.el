@@ -1,7 +1,7 @@
-;;; maj-ibuffer.el --- maj-ibuffer  -*- lexical-binding: t -*-
+;;; maj-ibuffer.el --- Ibuffer  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;
-;; Set up Ibuffer.
+;; Set up Ibuffer, an advanced replacement for the `buffer-menu'.
 ;;
 ;;; Code:
 
