@@ -11,11 +11,5 @@
   :custom (flycheck-elsa-backend 'eask)
   :hook (emacs-lisp-mode . flycheck-elsa-setup))
 
-(use-package nameless
-  ;; See `read-symbol-shorthands' for built-in approach.
-  :hook (emacs-lisp-mode . nameless-mode)
-  :custom ((nameless-global-aliases '())
-           (nameless-private-prefix t)))
-
 (provide 'maj-elisp)
 ;;; maj-elisp.el ends here

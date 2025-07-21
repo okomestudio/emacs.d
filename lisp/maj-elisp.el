@@ -79,6 +79,71 @@
   ;; Interactive macro-expander.
   )
 
+(use-package nameless
+  ;; Hide package namespace in Emacs Lisp code.
+  ;;
+  ;; See `read-symbol-shorthands' for a built-in approach.
+  :custom ((nameless-affect-indentation-and-filling nil)
+           (nameless-global-aliases '())
+           (nameless-private-prefix t))
+  :hook ((emacs-lisp-mode . nameless-mode)
+         (nameless-mode . nameless-mode--setup-or-teardown))
+  :config
+  ;; Hot-fix indentation before saving.
+  ;;
+  ;; `nameless-mode' does not fix indentation back from the visible length
+  ;; before saving. The following fix temporarily deactivates `nameless-mode',
+  ;; fixes indentation, saves the buffer, and then recover `nameless-mode'.
+  ;;
+  ;; See https://github.com/Malabarba/Nameless/issues/18.
+  (defun nameless--before-save ()
+    "Remove keywords and reindent buffer before saving."
+    (when (and (derived-mode-p 'emacs-lisp-mode)
+               (bound-and-true-p nameless-mode))
+      (let ((font-lock-enabled (if font-lock-mode t nil))
+            (aggressive-indent-enabled (if aggressive-indent-mode t nil)))
+        (unwind-protect
+            (progn
+              (when aggressive-indent-enabled (aggressive-indent-mode -1))
+              (when font-lock-enabled (font-lock-mode -1))
+              (nameless--remove-keywords)
+              (save-restriction
+                (widen)
+                (indent-region (point-min) (point-max))))
+          (when font-lock-enabled (font-lock-mode 1))
+          (when aggressive-indent-enabled (aggressive-indent-mode 1))))))
+
+  (defun nameless--after-save ()
+    "Replace `nameless-mode' keywords after saving to restore abbreviations."
+    (when (and (derived-mode-p 'emacs-lisp-mode)
+               (bound-and-true-p nameless-mode))
+      ;; TODO(2025-07-21): This does not fully revert the change made by
+      ;; `nameless--before-save'.
+      (let ((font-lock-enabled (if font-lock-mode t nil))
+            (aggressive-indent-enabled (if aggressive-indent-mode t nil)))
+        (unwind-protect
+            (progn
+              (when (not aggressive-indent-enabled) (aggressive-indent-mode 1))
+              (when (not font-lock-enabled) (font-lock-mode 1))
+              (nameless--after-hack-local-variables)
+              (when font-lock-enabled (font-lock-mode -1))
+              (save-restriction
+                (widen)
+                (indent-region (point-min) (point-max))))
+          (when font-lock-enabled (font-lock-mode 1))
+          (when aggressive-indent-enabled (aggressive-indent-mode 1))
+          (set-buffer-modified-p nil)))))
+
+  (defun nameless-mode--setup-or-teardown ()
+    "Set up or tear down `nameless-mode' with `nameless-mode-hook'."
+    (pcase nameless-mode
+      ('t
+       (add-hook 'before-save-hook #'nameless--before-save 98 'local)
+       (add-hook 'after-save-hook #'nameless--after-save -98 'local))
+      (_
+       (remove-hook 'after-save-hook #'nameless--after-save 'local)
+       (remove-hook 'before-save-hook #'nameless--before-save 'local)))))
+
 (use-package paredit
   ;; Parentheses editing.
   :hook ((emacs-lisp-mode lisp-data-mode) . paredit-ok--enable-paredit)
