@@ -65,7 +65,8 @@
 
 (use-package lookup
   :bind ( :map lookup-map
-          ("p" . lookup-pattern) )
+          ("p" . lookup-pattern)
+          ("r" . lookup-region) )
   :custom ((lookup-max-hits 1000)
            (lookup-window-height 16)
            (lookup-use-kakasi t)
