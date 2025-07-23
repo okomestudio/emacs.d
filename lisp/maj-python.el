@@ -187,7 +187,8 @@
   ;; :custom (pydoc-object-path-getters '(pydoc-all-names-scan))
   ;; :config
   ;; (require 'pydoc-all-names)
-  )
+  :config
+  (require 'pydoc-treesit))
 
 (provide 'maj-python)
 ;;; maj-python.el ends here

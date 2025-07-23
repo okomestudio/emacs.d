@@ -233,7 +233,8 @@
                 :branch "ts/provide-default-settings-path" ))
        (pydoc
         :type git :host github :repo "statmobile/pydoc"
-        :fork (:branch "symbol-resolution"))
+        :files (:defaults "extensions/*")
+        :fork (:branch "treesit")) ; symbol-resolution
        (pyenv
         :type git :host github :repo "aiguofer/pyenv.el")
        (pyenv-mode
