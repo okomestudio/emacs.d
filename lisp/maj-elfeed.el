@@ -5,6 +5,7 @@
 ;;
 ;;; Code:
 
+(require 'ok)
 (require 'subsys-readers)
 
 (use-package elfeed
@@ -19,7 +20,7 @@
          (elfeed-search-update . elfeed-ok--search-setup)
          (enable-theme-functions . elfeed-ok--theme-hook))
   :config
-  (setq elfeed-log-level 'info) ; 'info or 'debug
+  (ok-debug-register '(elfeed-log-level . (debug . info)))
 
   (defun elfeed-ok--show-setup ()
     ;; Remove underline from zenkaku space
