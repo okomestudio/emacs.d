@@ -62,5 +62,19 @@
 
   (advice-add #'elfeed :before #'elfeed-org-ok--init))
 
+(use-package elfeed-tube
+  ;; NOTE(2025-07-23): `elfeed-tube-add-feeds' doesn't seem to work. One problem
+  ;; is `aio' bug, which is apparently fixed in a fork (see the straight recipe
+  ;; for emacs-aio). Troubleshoot this step before going further.
+  :disabled
+
+  :bind ( :map elfeed-show-mode-map
+          ("Y" . elfeed-tube-fetch)
+          ([remap save-buffer] . elfeed-tube-save)
+          :map elfeed-search-mode-map
+          ("Y" . elfeed-tube-fetch)
+          ([remap save-buffer] . elfeed-tube-save) )
+  :config (elfeed-tube-setup))
+
 (provide 'maj-elfeed)
 ;;; maj-elfeed.el ends here
