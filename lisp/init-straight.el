@@ -77,7 +77,11 @@
 
 (dolist
     (recipe
-     `((anki-editor
+     `((aio
+        :type git :host github :repo "skeeto/emacs-aio"
+        ;; See https://github.com/skeeto/emacs-aio/issues/31.
+        :fork (:host github :repo "kiennq/emacs-aio"))
+       (anki-editor
         :type git :host github :repo "anki-editor/anki-editor"
         :fork ( :host github :repo "okomestudio/anki-editor"
                 :branch "enable-file-based-note") )

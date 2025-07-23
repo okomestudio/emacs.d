@@ -48,7 +48,6 @@
  ("elfeed-org" . "d62d23e25c5e3be3d70b7fbe1eaeb6e43f93a061")
  ("elisp-for-python" . "35b09f67c7979b815eea2740d36e5d829c05e8b5")
  ("elisp-refs" . "541a064c3ce27867872cf708354a65d83baf2a6d")
- ("emacs-aio" . "da93523e235529fa97d6f251319d9e1d6fc24a41")
  ("emacs-ansible" . "eebb2fb49d3c0a0586d1e4ead9ba618c7d003cae")
  ("emacs-async" . "b99658e831bc7e7d20ed4bb0a85bdb5c7dd74142")
  ("emacs-buttercup" . "bf01a33f8bc2d3664121d3b20f7496e67ce55e6a")
