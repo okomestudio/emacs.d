@@ -232,9 +232,10 @@
                 :repo "okomestudio/py-isort.el"
                 :branch "ts/provide-default-settings-path" ))
        (pydoc
-        :type git :host github :repo "statmobile/pydoc"
-        :files (:defaults "extensions/*")
-        :fork (:branch "treesit")) ; symbol-resolution
+        :type git :host github :repo "statmobile/pydoc")
+       (pydoc-treesit
+        :type git :host github :repo "okomestudio/pydoc-treesit"
+        :files (:defaults "extensions/*"))
        (pyenv
         :type git :host github :repo "aiguofer/pyenv.el")
        (pyenv-mode

@@ -1,7 +1,7 @@
 ;;; maj-python.el --- Python Major Mode  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;
-;; Set up the Python major mode.
+;; Configure the major mode for the Python programming language.
 ;;
 ;;; Code:
 
@@ -41,7 +41,7 @@
 (use-package python-sql-mode
   :commands (python-sql-mode python-sql-ts-mode))
 
-;;; VIRTUAL ENVS
+;;; Virtual Environments
 
 (use-package pet
   :ensure-system-package
@@ -159,13 +159,13 @@
       (shell-command (format "%s -m pip install pyright"
                              lsp-pyright-python-executable-cmd)))))
 
-;;; LINTING, FORMATTING, etc.
+;;; Linting, Formatting, etc.
 ;; TODO(2024-12-15): Try for docstring formatting:
 ;;
 ;;   - github.com/DanielNoord/pydocstringformatter
 ;;   - github.com/PyCQA/docformatter
 
-;; TESTING
+;;; Testing
 
 (use-package python-pytest
   :bind ( :map python-mode-map
@@ -175,20 +175,16 @@
   :hook ((python-mode
           python-ts-mode) . (lambda () (require 'python-pytest))))
 
-;; HELP & DOCS
+;;; Help & Docs
 
-(use-package pydoc
-  :bind ( :map python-mode-map
-          ("C-h ." . pydoc-at-point-no-jedi)
-          :map python-ts-mode-map
-          ("C-h ." . pydoc-at-point-no-jedi) )
-  :hook ((python-mode
-          python-ts-mode) . (lambda () (require 'pydoc)))
-  ;; :custom (pydoc-object-path-getters '(pydoc-all-names-scan))
-  ;; :config
-  ;; (require 'pydoc-all-names)
-  :config
-  (require 'pydoc-treesit))
+(use-package pydoc-treesit
+  :bind ( :map python-ts-mode-map
+          ("C-h ." . pydoc-treesit-at-point) )
+  :hook (python-ts-mode . pydoc-treesit--init)
+  :init
+  (defun pydoc-treesit--init ()
+    (require 'pydoc-treesit)
+    (require 'pydoc-names)))
 
 (provide 'maj-python)
 ;;; maj-python.el ends here
