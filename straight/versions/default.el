@@ -216,7 +216,7 @@
  ("prettier-emacs" . "e9b73e81d3e1642aec682195f127a42dfb0b5774")
  ("projectile" . "4dd84b02c9cd7b04616dc2d01ba7bc87f0d15be8")
  ("pydoc" . "c9d8b5249c1b3814da062ed9976e4137d6e8d869")
- ("pydoc-treesit" . "691d36d00880c0d9333f279a82025f49eb4b38a5")
+ ("pydoc-treesit" . "74e1b25d26c7b62d8204da9d0bc7cc8cbb18772f")
  ("python-sql-mode.el" . "231cc7f71998a82769d51cc70092f497800b7d62")
  ("queue" . "8df1334d54d4735d2f821790422a850dfaaa08ef")
  ("quickrun" . "4b6df453f80ae7eab250a312056eaef95890e4c6")

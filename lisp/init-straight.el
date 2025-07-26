@@ -1,30 +1,34 @@
 ;;; init-straight.el --- Straight Initialization  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;
-;; Initialize `straight' for use with `use-package'.
+;; Run this module to use `straight' and `use-package' for package
+;; configuration.
 ;;
-;; To upgrade a package and its dependencies:
-;;
-;;   M-x straight-pull-package-and-deps <package>
-;;   M-x straight-freeze-version
-;;
-;; The frozen versions will be saved to the
-;; straight/versions/default.el file. Put this file under version
-;; control.
-;;
-;; When Straight complains that a package is missing, run
+;; To update package repositories, run
 ;;
 ;;   M-x straight-pull-recipe-repositories
 ;;
-;; to update recipe repositories.
+;; To upgrade an individual package and its dependencies, run
+;;
+;;   M-x straight-pull-package-and-deps <package>
+;;
+;; In order to allow deterministic recovery of packages, create a version lock
+;; file by running
+;;
+;;   M-x straight-freeze-version
+;;
+;; The version lock file will at 'straight/versions/default.el'. (Optionally put
+;; this file under version control.) To recover packages using this file, run
+;;
+;;   M-x straight-thaw-versions
 ;;
 ;; The following utility functions may be useful:
 ;;
 ;;   - `straight-visit-package' to browse the package source code
 ;;   - `straight-visit-package-website' to visit the package website
 ;;
-;; Depending on the `straight-check-for-modifications' setting, the
-;; explicit execution of
+;; Depending on the `straight-check-for-modifications' setting, the explicit
+;; execution of
 ;;
 ;;   - M-x straight-rebuild-package
 ;;
@@ -32,13 +36,12 @@
 ;;
 ;;; Code:
 
-;; The modification check by `straight' is minimized by
+;; `straight' check for modifications. This check is minimized by
 ;;
 ;;   - removing the `find-at-startup' option
 ;;   - using the `watch-files' option
 ;;
-;; For the latter, github.com/watchexec/watchexec is required.
-;;
+;; For the latter option, github.com/watchexec/watchexec is required.
 (setopt straight-check-for-modifications '(watch-files))
 
 (setopt straight-use-package-by-default t)
