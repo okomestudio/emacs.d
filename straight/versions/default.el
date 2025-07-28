@@ -163,7 +163,7 @@
  ("ob-typescript" . "5fe1762f8d8692dd5b6f1697bedbbf4cae9ef036")
  ("ok-org-themes.el" . "339282d65d5d41de888fca188b5e6754ed6c5fa5")
  ("ok-plural.el" . "1517fd2809d16e5a3dd45e83136aa317c55a3ac1")
- ("ok.el" . "dcab1a54295c1897d054fa53206b68fcebbcde82")
+ ("ok.el" . "a584ee07352ebc81c34f7ec5365d3e13e208b0b6")
  ("olivetti" . "800a286862fd7aff2a91726e84606386e295106c")
  ("on.el" . "3cf623e1a4331e259ef92e49154ed0551f300436")
  ("openwith" . "1dc89670822966fab6e656f6519fdd7f01e8301a")
