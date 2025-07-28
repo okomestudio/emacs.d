@@ -86,7 +86,7 @@
 ;;; Pronunciation
 
 (use-package hatsuon
-  :disabled ;; use `go-translate'
+  :disabled                   ; use `gt.el'
   :custom ((hatsuon-audio-cache-dir (ok-file-expand-var "hatsuon/cache/"))
            (hatsuon-audio-url-getters
             '(hatsuon-wordnik-audio-url-getter)))
@@ -94,7 +94,7 @@
 
 ;;; Translation
 
-(use-package go-translate
+(use-package gt
   ;; Translator framework.
   ;;
   ;; For audio pronunciation, use "y" shortcut (`gt-do-speak') within
