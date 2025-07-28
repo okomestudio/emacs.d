@@ -44,21 +44,37 @@
      )))
 
 (use-package typo
-  ;; Typographical utility (e.g., smart quotation).
+  ;; Typographical editing utility and smart quotation.
+  ;;
+  ;; The following characters trigger the activation:
+  ;;
+  ;;   "  `typo-insert-quotation-mark'
+  ;;   '  `typo-cycle-right-single-quotation-mark'
+  ;;   -  `typo-cycle-dashes'
+  ;;   .  `typo-cycle-ellipsis'
+  ;;   <  `typo-cycle-left-angle-brackets'
+  ;;   >  `typo-cycle-right-angle-brackets'
+  ;;   `  `typo-cycle-left-single-quotation-mark'
+  ;;
   :hook (org-mode . typo-mode)
   :config
-  (define-typo-cycle
-      typo-cycle-dashes
+  (define-typo-cycle typo-cycle-dashes
     "Cycle through various dashes."
-    ("-"        ; HYPHEN-MINUS
-     "⸺"        ; TWO-EM DASH (added)
-     "―"        ; HORIZONTAL BAR (added)
-     "–"        ; EN DASH
-     "—"        ; EM DASH
-     "−"        ; MINUS SIGN
-     "‐"        ; HYPHEN
-     "‑"        ; NON-BREAKING HYPHEN
-     )))
+    ("-"                      ; HYPHEN-MINUS
+     "⸺"                      ; TWO-EM DASH (added)
+     "―"                      ; HORIZONTAL BAR (added)
+     "–"                      ; EN DASH
+     "—"                      ; EM DASH
+     "−"                      ; MINUS SIGN
+     "‐"                      ; HYPHEN
+     "‑"                      ; NON-BREAKING HYPHEN
+     ))
+  (define-typo-cycle typo-cycle-left-angle-brackets
+    "Cycle through the less-than sign and guillemet quotation marks."
+    ("<" "«" "‹" "<<"))
+  (define-typo-cycle typo-cycle-right-angle-brackets
+    "Cycle through the greater-than sign and guillemet quotation marks."
+    (">" "»" "›" ">>")))
 
 (use-package whole-line-or-region
   ;; Operate on current line if region undefined.
