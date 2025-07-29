@@ -15,9 +15,11 @@
              :prefix "C-h C-l"
              ("c" . ask-chatgpt)
              ("g" . eww-search-goodreads)
+             ("p" . lookup-pattern)
+             ("r" . lookup-region)
              ("t" . gt-do-translate)
 
-             :prefix-map reference-english-map
+             :prefix-map reference-en-map
              :prefix-docstring "Keymap for English reference"
              :prefix "C-h C-l e"
              ("a" . eww-search-amazon-en)
@@ -28,18 +30,14 @@
              ("s" . eww-search-duckduckgo-en)
              ("w" . eww-search-wikipedia-en)
 
-             :prefix-map reference-japanese-map
+             :prefix-map reference-ja-map
              :prefix-docstring "Keymap for Japanese reference"
              :prefix "C-h C-l j"
              ("a" . eww-search-amazon-ja)
              ("d" . eww-search-weblio)
+             ("k" . kakijun)
              ("s" . eww-search-duckduckgo-ja)
-             ("w" . eww-search-wikipedia-ja)
-
-             :prefix-map reference-lookup-map
-             :prefix-docstring "Keymap for lookup mode"
-             :prefix "C-h C-l l"
-             ("a" . lookup-pattern)))
+             ("w" . eww-search-wikipedia-ja)))
 
 ;;; Dictionaries
 
@@ -59,14 +57,29 @@
 
 (use-package urbandict.el)
 
+;;; Kakijun
+
+(defun kakijun (s)
+  "Visit the kakijun.com page for each kanji character in string S."
+  (interactive "sInput kanji characters: ")
+  (letrec ((url nil) (urls nil)
+           (eww-make-readable
+            (lambda ()
+              (eww-readable)
+              (setq urls (delete (eww-current-url) urls))
+              (unless urls
+                (remove-hook 'eww-after-render-hook eww-make-readable)))))
+    (add-hook 'eww-after-render-hook eww-make-readable)
+    (dolist (c (string-to-list s))
+      (setq url (format "https://kakijun.com/c/%x.html" c))
+      (push url urls)
+      (eww url t))))
+
 ;;; EPWING
 
 (use-package eblook)
 
 (use-package lookup
-  :bind ( :map lookup-map
-          ("p" . lookup-pattern)
-          ("r" . lookup-region) )
   :custom ((lookup-max-hits 1000)
            (lookup-window-height 16)
            (lookup-use-kakasi t)
