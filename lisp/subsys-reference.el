@@ -17,7 +17,7 @@
              ("g" . eww-search-goodreads)
              ("p" . lookup-pattern)
              ("r" . lookup-region)
-             ("t" . gt-do-translate)
+             ("t" . gt-translate)
 
              :prefix-map reference-en-map
              :prefix-docstring "Keymap for English reference"
