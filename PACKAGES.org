@@ -3,9 +3,18 @@
 The list of Emacs packages to potentially check out:
 
 - [[https://github.com/KeyWeeUsr/emacs-syncthing][emacs-syncthing]] - Emacs client for Syncthing
-- [[https://github.com/ahyatt/llm][llm]] - A package abstracting LLM capabilities
 - [[https://github.com/emacsmirror/password-store][password-store]] - Allows ~pass~ integration for managing credentials
 - [[https://github.com/m00natic/vlfi][vlf]] - View large files
+
+** AI & LLMs
+
+- [[https://github.com/manzaltu/claude-code-ide.el][claude-code-ide.el]] - Claude Code IDE integration
+- [[https://github.com/steveyegge/efrit][efrit]] - A native elisp coding agent running in Emacs
+- [[https://github.com/ahyatt/llm][llm]] - A package abstracting LLM capabilities
+
+** Configuration
+
+- [[https://github.com/DevelopmentCool2449/use-package-x][use-package-x]] - Additional keywords for use-package
 
 ** UX/UI
 
@@ -67,7 +76,7 @@ The list of Emacs packages to potentially check out:
 ** Writing
 
 - [[https://github.com/jamescherti/quick-sdcv.el][quick-sdcv.el]] - Offline dictionary using the sdcv
-
+- [[https://github.com/joostkremers/writeroom-mode][writeroom-mode]] - Distraction-free writing
 
 ** Shell & terminal
 
