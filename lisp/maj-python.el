@@ -177,14 +177,9 @@
 
 ;;; Help & Docs
 
-(use-package pydoc-treesit
+(use-package pydoc
   :bind ( :map python-ts-mode-map
-          ("C-h ." . pydoc-treesit-at-point) )
-  :hook (python-ts-mode . pydoc-treesit--init)
-  :init
-  (defun pydoc-treesit--init ()
-    (require 'pydoc-treesit)
-    (require 'pydoc-names)))
+          ("C-h ." . pydoc-at-point) ))
 
 (provide 'maj-python)
 ;;; maj-python.el ends here

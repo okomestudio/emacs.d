@@ -235,7 +235,8 @@
                 :repo "okomestudio/py-isort.el"
                 :branch "ts/provide-default-settings-path" ))
        (pydoc
-        :type git :host github :repo "statmobile/pydoc")
+        :type git :host github :repo "statmobile/pydoc"
+        :fork ( :branch "treesit" ))
        (pydoc-treesit
         :type git :host github :repo "okomestudio/pydoc-treesit"
         :files (:defaults "extensions/*"))
