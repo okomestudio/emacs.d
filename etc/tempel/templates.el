@@ -38,6 +38,9 @@ gfm-mode
 
 lisp-data-mode
 
+(template-elisp-style-classic
+ (include-file "dir-locals-elisp-style-classic.el"))
+
 (projectile-cmds
  "(" n
  " (nil" n
