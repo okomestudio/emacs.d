@@ -87,14 +87,23 @@
            ;; For ndeb, the path should point to a directory containing
            ;; CATALOGS.
            (lookup-search-agents nil))
-  :hook (;; `lookup' skips `after-change-major-mode-hook', so ensure the text
+  :hook ((lookup-content-mode . lookup-ok--set-window-size)
+
+         ;; `lookup' skips `after-change-major-mode-hook', so ensure the text
          ;; scaling runs:
          (lookup-content-mode . ok-faces-text-scale-per-mode))
   :config
   (load (ok-file-expand-etc "lookup/init"))
 
+  (defun lookup-ok--set-window-size ()
+    (toggle-truncate-lines 1)
+    (let ((target-width (round (* 0.6 (frame-width)))))
+      (window-resize (selected-window)
+                     (- target-width (window-width))
+                     t)))
+
   (with-eval-after-load 'ok-face
-    (add-to-list 'ok-faces-text-scale-per-mode '(lookup-content-mode . 2.0))))
+    (add-to-list 'ok-faces-text-scale-per-mode '(lookup-content-mode . 1.5))))
 
 ;;; Pronunciation
 
