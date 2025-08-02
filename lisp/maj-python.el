@@ -181,5 +181,11 @@
   :bind ( :map python-ts-mode-map
           ("C-h ." . pydoc-at-point) ))
 
+(use-package pydoc-plugins
+  :hook ((python-mode python-ts-mode) . pydoc-plugins-ok--init)
+  :config
+  (defun pydoc-plugins-ok--init ()
+    (require 'pydoc-names)))
+
 (provide 'maj-python)
 ;;; maj-python.el ends here
