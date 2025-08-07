@@ -116,7 +116,7 @@
   :config (org-roam-timestamps-mode))
 
 (use-package org-roam-ok
-  :custom ((org-roam-ok-node-use-cache-in-memory t)
+  :custom ((org-roam-ok-node-use-cache-in-memory nil)
            (org-roam-ok-on-idle-delay nil))
   :init
   (load (ok-file-expand-etc "org-roam/init"))
