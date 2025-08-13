@@ -67,6 +67,7 @@ The list of Emacs packages to potentially check out:
 - [[https://github.com/jamescherti/flymake-bashate.el][flymake-bashate.el]] - A Flymake backend for real-time style checking for Bash shell scripts
 - [[https://github.com/Wilfred/emacs-refactor][emr]] (Emacs Refactor) - A framework for providing language-specific refactoring
 - [[https://github.com/ragnard/gptel-magit][gptel-magit]] - Generate commit messages in magit using gptel
+- [[https://github.com/SebastianMeisel/journalctl-mode][journalctl-mode]] - Major mode to view journalctl's output
 - [[https://github.com/milanglacier/minuet-ai.el][minuet-ai.el]] - Code completion as-you-type from popular LLMs
 - [[https://www.gnu.org/software/emacs/manual/html_mono/nxml-mode.html][nxml-mode]] - A major mode for editing XML
 - [[https://github.com/jamescherti/outline-indent.el][outline-indent.el]] - Fold text based on indentation, c.f., origami & yafolding
