@@ -21,7 +21,8 @@
           (kanagawa-themes . "lisp/themes/themes-kanagawa")
           (nano-theme . "lisp/themes/themes-nano")
           (ok-org-themes . "lisp/themes/themes-ok-org")
-          (spacemacs-theme . "lisp/themes/themes-spacemacs")))
+          (spacemacs-theme . "lisp/themes/themes-spacemacs")
+          (year-1984-theme . "lisp/themes/themes-year-1984")))
 
 (setopt ok-theme-presets '((dark . ((spacemacs-dark . spacemacs-theme)
                                     (ok-org-modern . ok-org-themes)))
