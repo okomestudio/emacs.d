@@ -41,7 +41,9 @@
 ;;   - removing the `find-at-startup' option
 ;;   - using the `watch-files' option
 ;;
-;; For the latter option, github.com/watchexec/watchexec is required.
+;; For the latter option, github.com/watchexec/watchexec is required. For Debian
+;; Trixie, watchexec-2.3.2-x86_64-unknown-linux-gnu.deb was installed
+;; (2025-08-17).
 (setopt straight-check-for-modifications '(watch-files))
 
 (setopt straight-use-package-by-default t)
