@@ -14,8 +14,9 @@
 ;;; Init to do at the earliest
 ;; Some configuration must be done at the earliest points in initialization.
 
-(startup-redirect-eln-cache (convert-standard-filename
-                             (locate-user-emacs-file "var/eln-cache/")))
+(when (native-comp-available-p)
+  (startup-redirect-eln-cache (convert-standard-filename
+                             (locate-user-emacs-file "var/eln-cache/"))))
 
 ;;; Debug switches
 
