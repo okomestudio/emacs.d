@@ -7,7 +7,8 @@
 
 (use-package treesit
   :custom (treesit-font-lock-level 4) ; usually 3 is enough
-  :demand t)
+  :demand t
+  :ensure-system-package (tree-sitter . "npm install -g tree-sitter-cli"))
 
 (use-package treesit-auto
   :demand t
