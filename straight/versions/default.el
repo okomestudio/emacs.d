@@ -17,7 +17,7 @@
  ("blamer.el" . "8a79c1f370f7c5f041c980e0b727960462c192ba")
  ("bookmark-plus" . "e8e7806513349f968ee711a4e302945a3641245f")
  ("browse-at-remote" . "76aa27dfd469fcae75ed7031bb73830831aaccbf")
- ("cape" . "f72ebcaeff4252ca0d7a9ac4636d8db0fdf54c55")
+ ("cape" . "97641dcd1ebca1007badd26b2fb9269b86934c22")
  ("casual" . "1f55785341b2c79ef7a932f59747b57b0168849d")
  ("centaur-tabs" . "63eb35cf42062ed19e9fc8cc5e971038c884f50f")
  ("cfrs" . "f3a21f237b2a54e6b9f8a420a9da42b4f0a63121")

@@ -10,33 +10,32 @@
 ;;; Cape
 
 (use-package cape
-  :hook ((prog-mode
-          text-mode
-          conf-mode
-          lsp-completion-mode) . cape-ok--capf-set)
-  :custom (cape-dabbrev-check-other-buffers nil)
+  ;; Completion At Point Extensions
+  :bind ("C-c p" . cape-prefix-map)
+  ;; :custom (cape-dabbrev-check-other-buffers nil)
+  :hook ((conf-mode
+          lsp-completion-mode
+          prog-mode
+          text-mode) . cape-ok--capf-init)
   :config
-  (require 'tempel)
-
-  ;; `cape-capf-super' combines multiple capfs into one function to
-  ;; speed up candidate lookup.
-  (setq cape-ok--capf (cape-capf-noninterruptible
-                       (cape-capf-buster
-                        (cape-capf-properties
-                         (cape-capf-super
-                          ;; (car completion-at-point-functions)
-                          #'cape-file
-                          #'tempel-complete
-                          ;; #'tabnine-completion-at-point
-                          #'cape-dabbrev)
-                         :sort t
-                         :exclusive 'no))))
-  (defun cape-ok--capf (&rest _) (apply cape-ok--capf _))
-  (defun cape-ok--capf-set ()
-    "Set CAPFs for the standard text/prog modes."
+  (defun cape-ok--capf-init ()
+    "Initialize the buffer-local CAPFs for the standard text/prog modes."
+    (require 'tempel)
+    (defun cape-ok--capf (&rest _)
+      (apply (cape-capf-noninterruptible
+              (cape-capf-buster
+               (cape-capf-properties
+                (cape-capf-super #'cape-file
+                                 #'tempel-complete
+                                 #'cape-dabbrev)
+                :sort t
+                :exclusive 'no)))
+             _))
     (add-hook 'completion-at-point-functions #'cape-ok--capf -99 t))
 
-  ;; Add the basic capfs with lower priorities here:
+  ;; Global CAPFs: Add the basic capfs with lower priorities. When the
+  ;; buffer-local version of CAPFs includes `t', cape will fall back to the
+  ;; global version here.
   (add-hook 'completion-at-point-functions #'cape-file 92)
   (add-hook 'completion-at-point-functions #'tempel-complete 93)
   ;; (add-hook 'completion-at-point-functions #'tabnine-completion-at-point)
