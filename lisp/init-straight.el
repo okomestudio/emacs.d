@@ -153,6 +153,8 @@
         :type git :host github :repo "buzztaiki/help-shortdoc-example.el")
        (indent-bars
         :type git :host github :repo "jdtsmith/indent-bars")
+       (kaomel
+        :type git :host github :repo "gicrisf/kaomel" :files ("*.el"))
        (keychain-environment
         :type git :host github :repo "tarsius/keychain-environment")
        (lsp-booster

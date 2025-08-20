@@ -184,6 +184,10 @@ But don't look beyond what's visible on the screen."
   :bind ( :map selected-keymap
           ("q" . selected-off) ))
 
+;;; Kaomoji
+
+(use-package kaomel)
+
 ;;; Misc.
 
 (use-package htmlize

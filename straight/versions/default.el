@@ -121,6 +121,7 @@
  ("jeison" . "19a51770f24eaa7b538c7be6a8a5c25d154b641f")
  ("jinja2-mode" . "03e5430a7efe1d163a16beaf3c82c5fd2c2caee1")
  ("jq-mode" . "1f4bf0955fc9f7f03d8b26dc1acf6b68067a57cc")
+ ("kaomel" . "d0da684c32b89ded37a56d9c12f8f50c884a97f7")
  ("keycast" . "df329db48c22a3905d540c4240ac65c7b45f51dd")
  ("keychain-environment" . "d3643196de6dc79ea77f9f4805028350fd76100b")
  ("kotlin-mode" . "fddd747e5b4736e8b27a147960f369b86179ddff")
