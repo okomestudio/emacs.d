@@ -1,11 +1,11 @@
-;;; linux-gui.el --- Linux GUI  -*- lexical-binding: t -*-
+;;; linux-gui.el --- GUI in Linux  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;
-;; Linux GUI configuration.
+;; Configure GUI in Linux.
 ;;
 ;;; Code:
 
-(use-package emacs            ; for X
+(use-package emacs            ; for X (including athena build)
   :if (and (eq system-type 'gnu/linux) (memq window-system '(x)))
   :custom ((save-interprogram-paste-before-kill t)
            (select-enable-clipboard t)

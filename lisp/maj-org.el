@@ -284,23 +284,54 @@ of the current section."
 (use-package org-cliplink
   :after org-download
   :bind ( :map org-mode-map
-          ("C-c i u" . org-ok-clipboard-smartyank) )
+          ("C-c c w" . org-ok-clipboard-copy-image)
+          ("C-c c y" . org-ok-clipboard-smartyank) )
   :custom ((org-cliplink-max-length nil))
   :config
+  (defun org-ok-clipboard--link-is-image (link)
+    "Return non-nil if LINK points to an image."
+    (string-match-p ".*\\.\\(gif\\|jpe?g\\|png\\|webp\\)$" link))
+
   (defun org-ok-clipboard-smartyank ()
     "Yank a link with page title or an image from the URL in clipboard.
-This dispatches yanking to the following functions based on the
-clipboard content:
+This dispatches yanking to the following functions based on the clipboard
+content:
 - `org-cliplink' if it is a URL pointing to a web page
 - `org-download-yank' if it is a URL pointing to an image
 - `org-download-clipboard' if it is an image binary"
     (interactive)
-    (let ((to-be-yanked (org-cliplink-clipboard-content)))
-      (if (string-match-p "^https?:.*" to-be-yanked)
-          (if (string-match-p ".*\\.\\(gif\\|jpe?g\\|png\\|webp\\)$" to-be-yanked)
-              (org-download-yank)
-            (org-cliplink))
-        (org-download-clipboard (format-time-string "fig-%Y%m%dT%H%M%S.png"))))))
+    (if-let* ((content (org-cliplink-clipboard-content))
+              (is-url (string-match-p "^https?:.*" content)))
+        (if (org-ok-clipboard--link-is-image content)
+            (org-download-yank)
+          (org-cliplink))
+      (org-download-clipboard (format-time-string "fig-%Y%m%dT%H%M%S.png"))))
+
+  (defun org-ok-clipboard-copy-image (path)
+    "Copy the image content to clipboard if path points to an image."
+    (interactive
+     (list (if (thing-at-point 'url)
+               (let ((url (thing-at-point 'url)))
+                 (if (string-match-p "^file:" url)
+                     (expand-file-name (substring url 5))
+                   url))
+             (read-file-name "Image: " nil nil t nil
+                             #'org-ok-clipboard--link-is-image))))
+    (if (not (org-ok-clipboard--link-is-image path))
+        (error "Path doesn't point to an image"))
+    (if-let*
+        ((cmd (if (eq system-type 'gnu/linux)
+                  (if (executable-find "wl-copy")
+                      (format "wl-copy < %s &" path)
+                    (if (executable-find "xclip")
+                        (let ((ftype "image/png"))
+                          ;; TODO(2025-08-19): Inspect image type.
+                          (format "xclip -selection clipboard -t %s -i %s &"
+                                  ftype path)))))))
+        (unwind-protect
+            (shell-command cmd)
+          nil)
+      (warn "Cannot find clipboard tool"))))
 
 (use-package org-download
   ;; Drag and drop images to Emacs org-mode.
