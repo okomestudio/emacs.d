@@ -148,6 +148,14 @@
            (do-this-now-title "MOVE!!"))
   :hook (after-init . do-this-now-mode))
 
+(use-package pomo-cat
+  ;; Pomodoro timer
+  :custom ((pomo-cat-break-duration-seconds 300)
+           (pomo-cat-cycles-before-long-break 4)
+           (pomo-cat-display-method 'posframe)
+           (pomo-cat-long-break-duration-seconds 1200)
+           (pomo-cat-work-duration-seconds 1500)))
+
 (use-package tooltipper
   :hook (after-init . tooltipper-mode))
 
