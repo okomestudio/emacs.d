@@ -48,7 +48,10 @@
                     org-level-5 org-level-6 org-level-7 org-level-8 )))
       (dolist (face faces)
         (face-remap-add-relative face :weight 'normal)))
-    (read-only-mode 1)))
+    ;; NOTE(2025-08-21): Disable read-only mode as it causes issues on page
+    ;; refreshing.
+    ;; (read-only-mode 1)
+    ))
 
 (add-hook 'org-mode-hook #'ok-reader-buffers--init 98)
 
