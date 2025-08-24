@@ -140,6 +140,9 @@
         :type git :host github :repo "kickingvegas/elisp-for-python")
        (emacs-lisp-elements
         :type git :host github :repo "protesilaos/emacs-lisp-elements")
+       (flycheck
+        :type git :host github :repo "flycheck/flycheck"
+        :fork ( :branch "fix-line-prefix" ))
        (flycheck-aspell-org
         :type git :host github :repo "okomestudio/flycheck-aspell-org.el")
        (flyover

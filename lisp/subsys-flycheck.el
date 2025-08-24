@@ -7,10 +7,6 @@
 
 (require 'straight)
 
-(straight-override-recipe
- '(flycheck :type git :host github :repo "flycheck/flycheck"
-            :fork ( :branch "fix-line-prefix" )))
-
 (use-package flycheck
   :custom ((flycheck-python-mypy-executable (ok-file-expand-bin "mypy"))
            (flycheck-rst-executable (ok-file-expand-bin "rst2pseudoxml")))
