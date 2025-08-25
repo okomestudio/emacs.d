@@ -124,22 +124,10 @@
   ;; Loads keychain environment variables into emacs.
   :config (keychain-refresh-environment))
 
-;;; Misc.
-
-(use-package anzu
-  ;; Displays current and total matches information in the mode-line.
-  :hook (on-first-input . global-anzu-mode))
-
-(use-package dirvish)
-
-(use-package repeat
-  :custom (repeat-echo-function #'repeat-echo-message)
-  :hook (on-first-input . repeat-mode))
-
-(use-package tramp
-  :custom (tramp-default-method "ssh"))
+;;; Timers & Alerts
 
 (use-package do-this-now
+  :disabled                   ; NOTE(2025-08-25): try pomo-cat
   :custom ((alert-default-style 'libnotify)
            (do-this-now-idle-interval 600)
            (do-this-now-interval 2400)
@@ -156,6 +144,21 @@
            (pomo-cat-display-method 'posframe)
            (pomo-cat-long-break-duration-seconds 1200)
            (pomo-cat-work-duration-seconds 1500)))
+
+;;; Misc.
+
+(use-package anzu
+  ;; Displays current and total matches information in the mode-line.
+  :hook (on-first-input . global-anzu-mode))
+
+(use-package dirvish)
+
+(use-package repeat
+  :custom (repeat-echo-function #'repeat-echo-message)
+  :hook (on-first-input . repeat-mode))
+
+(use-package tramp
+  :custom (tramp-default-method "ssh"))
 
 (use-package tooltipper
   :hook (after-init . tooltipper-mode))
