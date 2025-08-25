@@ -150,6 +150,7 @@
 
 (use-package pomo-cat
   ;; Pomodoro timer
+  :hook (on-first-input-hook . pomo-cat-start)
   :custom ((pomo-cat-break-duration-seconds 300)
            (pomo-cat-cycles-before-long-break 4)
            (pomo-cat-display-method 'posframe)
