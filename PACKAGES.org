@@ -32,6 +32,8 @@ The list of Emacs packages to potentially check out:
 *** Themes
 
 - [[https://protesilaos.com/emacs/ef-themes-pictures][Ef themes]] - Colorful and legible themes
+- [[https://github.com/mastro35/year-1984-theme][year-1984-theme]] - A vintage theme
+- [[https://github.com/easimonenko/book-like-themes/][book-like-themes]] - Book like grayscale light and dark themes
 
 ** Editing
 
