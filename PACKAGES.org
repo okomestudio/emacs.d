@@ -29,6 +29,10 @@ The list of Emacs packages to potentially check out:
 - [[https://github.com/liushihao456/symbols-outline.el][symbols-outline.el]] - Display symbols (functions, variables, etc) in a side window.
 - [[https://github.com/WJCFerguson/textsize/][textsize]] - Automatically choose a font point size for the Emacs default face based on the size and pixel pitch of the display
 
+*** Themes
+
+- [[https://protesilaos.com/emacs/ef-themes-pictures][Ef themes]] - Colorful and legible themes
+
 ** Editing
 
 - [[https://github.com/victorhge/iedit][iedit]] - Modify multiple occurrences simultaneously
