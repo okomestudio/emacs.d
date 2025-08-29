@@ -85,21 +85,16 @@
     (require 'org-roam-node-display-cache)
     (add-to-list 'desktop-globals-to-save 'org-roam-node-display-cache--cache)
 
-    ;; Hash table cannot be serialized easily to persist in a file.
-    ;; The functions thus converts it to an alist in the de/ser layer.
+    ;; The hash table is serialized to persist in a file.
     (add-to-list 'ok-desktop-global-var-serdes-funs
                  (list 'org-roam-node-display-cache--cache
                        (lambda (ht)
-                         (let (alist)
-                           (maphash (lambda (k v) (push (cons k v) alist)) ht)
-                           alist))
-                       (lambda (alist)
-                         (if (hash-table-p alist)
-                             alist
-                           (let ((ht (make-hash-table :test 'equal)))
-                             (dolist (entry alist)
-                               (puthash (car entry) (cdr entry) ht))
-                             ht))))))
+                         (prin1-to-string ht))
+                       (lambda (s)
+                         (if-let* ((desered (and (stringp s) (read s)))
+                                   (_ (hash-table-p desered)))
+                             desered
+                           (make-hash-table :test 'equal))))))
   (add-hook 'desktop-save-hook
             #'org-roam-node-display-cache--ensure-desktop)
   (add-hook 'ok-desktop-before-read-hook
