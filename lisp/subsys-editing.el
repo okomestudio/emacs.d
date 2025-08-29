@@ -36,6 +36,8 @@
 (use-package titlecase
   ;; Titlecase things.
   :bind ( :map text-mode-map
+          ("M-c" . titlecase-dwim)
+          :map prog-mode-map
           ("M-c" . titlecase-dwim) )
   :custom
   (titlecase-skip-words-regexps
