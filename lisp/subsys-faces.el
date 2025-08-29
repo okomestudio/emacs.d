@@ -42,7 +42,7 @@ This is also used as the default.")
   ;; `fontset-standard', and `fontset-default', the last of which is
   ;; the ultimate fallback.
   (set-fontset-font "fontset-default"
-                    'iso-8859-3
+                    'iso-8859-1
                     (font-spec :family ok-faces-font-family-fixed-pitch)
                     frame)
   (when ok-faces-font-family-fixed-pitch-ja
