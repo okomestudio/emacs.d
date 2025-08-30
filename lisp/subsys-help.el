@@ -259,5 +259,16 @@
             (_ nil))))
       (set (make-local-variable 'devdocs-current-docs) docs))))
 
+;;; Democratize
+
+(use-package democratize
+  ;; Populate your help buffers with usage examples.
+  ;;
+  ;; URL: https://flandrew.srht.site/listful/sw-emacs-democratize.html
+  :after xht
+  :config
+  (democratize-enable-examples-in-helpful)
+  (democratize-enable-examples-in-help))
+
 (provide 'subsys-help)
 ;;; subsys-help.el ends here

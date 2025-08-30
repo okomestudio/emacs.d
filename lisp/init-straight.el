@@ -110,6 +110,8 @@
          ("makeinfo" "consult.texi" "-o" "consult.info")
          ;; ("install-info" "consult.info" "dir")
          ) )
+       (democratize
+        :type git :host sourcehut :repo "flandrew/democratize")
        (do-this-now
         :type git :host github :repo "okomestudio/do-this-now.el")
        (eaf
@@ -295,7 +297,9 @@
         :type git :host github :repo "akirakyle/emacs-webkit"
         :branch "main"
         :files (:defaults "*.js" "*.css" "*.so")
-        :pre-build ("make"))))
+        :pre-build ("make"))
+       (xht
+        :type git :host sourcehut :repo "flandrew/xht")))
   (straight-override-recipe recipe))
 
 (let ((repo (expand-file-name (straight--repos-dir "lookup"))))
