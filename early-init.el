@@ -16,7 +16,7 @@
 
 (when (native-comp-available-p)
   (startup-redirect-eln-cache (convert-standard-filename
-                             (locate-user-emacs-file "var/eln-cache/"))))
+                               (locate-user-emacs-file "var/eln-cache/"))))
 
 ;;; Debug switches
 
