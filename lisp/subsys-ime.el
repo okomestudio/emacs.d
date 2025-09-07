@@ -1,9 +1,37 @@
-;;; subsys-ime.el --- Input Method Subsystem  -*- lexical-binding: t -*-
+;;; subsys-ime.el --- Input Method  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;
-;; Set up the input method subsystem.
+;; Configure the input method subsystem.
 ;;
 ;;; Code:
+
+(use-package emacs
+  ;; Make blinking cursor sensitive to input method status.
+  :config
+  (setopt blink-cursor-interval 0.25
+          blink-cursor-delay 0.25
+          blink-cursor-blinks -1
+          blink-cursor-alist '((box . hollow))
+          cursor-type 'box)
+
+  (defvar ok-cursor--base-color (face-attribute 'cursor :background))
+
+  (defun ok-cursor--when-active ()
+    (when-let* ((color (face-attribute 'warning :foreground)))
+      (set-cursor-color color)))
+
+  (defun ok-cursor--when-inactive ()
+    (when-let* ((color ok-cursor--base-color))
+      (set-cursor-color color)))
+
+  (defun ok-cursor--on-buffer-switch ()
+    (if current-input-method
+        (ok-cursor--when-active)
+      (ok-cursor--when-inactive)))
+
+  (add-hook 'buffer-list-update-hook #'ok-cursor--on-buffer-switch)
+  (add-hook 'input-method-activate-hook #'ok-cursor--when-active)
+  (add-hook 'input-method-deactivate-hook #'ok-cursor--when-inactive))
 
 (use-package mozc
   :bind (("C-z" . toggle-input-method) ("C-\\" . nil))
