@@ -274,7 +274,20 @@ of the current section."
           (org-narrow-to-subtree))
         (if (org-hide-drawers-get-overlays)
             (org-hide-drawers-expand)
-          (org-hide-drawers-collapse))))))
+          (org-hide-drawers-collapse)))))
+
+  (defun org-hide-drawers--temporarily-deactivate (fun &rest _rest)
+    "Deactivate `org-hide-drawers-mode' temporarily when FUN executes."
+    (if (member #'org-hide-drawers-mode org-mode-hook)
+        (progn
+          (remove-hook 'org-mode-hook #'org-hide-drawers-mode)
+          (unwind-protect
+              (apply fun _rest)
+            (add-hook 'org-mode-hook #'org-hide-drawers-mode)))
+      (apply fun _rest)))
+
+  (advice-add #'org-roam-extract-subtree :around
+              #'org-hide-drawers--temporarily-deactivate))
 
 (use-package org-dividers
   :hook (org-mode . org-dividers-mode))
