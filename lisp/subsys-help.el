@@ -22,13 +22,15 @@
 ;;; Help
 
 (use-package elisp-for-python)
+(use-package worg)
 
 (use-package help
   :bind ( :prefix-map help-view-other-doc
           :prefix "C-h V"
+          ("o" . help-ok-view-doc-worg)
           ("p" . help-ok-view-doc-elisp-for-python)
-          ("s" . help-ok-view-doc-straight)
           ("q" . help-ok-view-doc-emacsql)
+          ("s" . help-ok-view-doc-straight)
           ("t" . help-ok-view-doc-tempel)
 
           :map help-map
@@ -46,14 +48,16 @@
 
   ;; Dynamically generate document accessor functions
   (let ((docs
-         `((emacsql
-            . ,(ok-file-expand-straight-repos "emacsql" "README.md"))
-           (elisp-for-python
+         `((elisp-for-python
             . ,(ok-file-expand-straight-repos "elisp-for-python" "README.org"))
+           (emacsql
+            . ,(ok-file-expand-straight-repos "emacsql" "README.md"))
            (straight
             . ,(ok-file-expand-straight-repos "straight.el" "README.md"))
            (tempel
-            . ,(ok-file-expand-straight-repos "tempel" "README.org")))))
+            . ,(ok-file-expand-straight-repos "tempel" "README.org"))
+           (worg
+            . ,(ok-file-expand-straight-repos "worg" "index.org")))))
     (dolist (doc docs)
       (let ((sym (symbol-name (car doc)))
             (file (cdr doc)))

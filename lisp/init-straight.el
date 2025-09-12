@@ -298,6 +298,7 @@
         :branch "main"
         :files (:defaults "*.js" "*.css" "*.so")
         :pre-build ("make"))
+       (worg :type git :host sourcehut :repo "bzg/worg")
        (xht
         :type git :host sourcehut :repo "flandrew/xht")))
   (straight-override-recipe recipe))
