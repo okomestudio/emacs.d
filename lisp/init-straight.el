@@ -82,226 +82,163 @@
 
 (dolist
     (recipe
-     `((aio
-        :type git :host github :repo "skeeto/emacs-aio"
-        ;; See https://github.com/skeeto/emacs-aio/issues/31.
-        :fork (:host github :repo "kiennq/emacs-aio"))
-       (anki-editor
-        :type git :host github :repo "anki-editor/anki-editor"
-        :fork ( :host github :repo "okomestudio/anki-editor"
-                :branch "enable-file-based-note") )
-       (atomic-chrome
-        :type git :host github :repo "KarimAziev/atomic-chrome"
-        :flavor nil)
-       (blamer
-        :type git :host github :repo "artawower/blamer.el")
-       (company-tern
-        :type file :fetcher url
-        :url ,(file-name-concat
-               "https://gist.githubusercontent.com"
-               "okomestudio/de8c59960ce8f195ee0224de5db5a168"
-               "raw/1193992ffeeca8193ebf459b377c27f628ac3246/company-tern.el"))
-       (consult
-        :pre-build
-        ;; build info manual, which appears missing by default:
-        (("emacs" "-Q" "-batch" "-L" "./"
-          "--visit" "README.org"
-          "--funcall" "org-texinfo-export-to-texinfo")
-         ("makeinfo" "consult.texi" "-o" "consult.info")
-         ;; ("install-info" "consult.info" "dir")
-         ) )
-       (democratize
-        :type git :host sourcehut :repo "flandrew/democratize")
-       (do-this-now
-        :type git :host github :repo "okomestudio/do-this-now.el")
-       (eaf
-        :type git :host github :repo "emacs-eaf/emacs-application-framework"
-        :files ("*.el" "*.py" "core" "app" "*.json")
-        :includes (eaf-browser eaf-pdf-viewer)
-        :pre-build
-        (("python" "install-eaf.py"
-          "--install" "browser" "pdf-viewer" "--ignore-sys-deps")))
-       (eat
-        :type git :host codeberg :repo "akib/emacs-eat"
-        :files ("*.el" ("term" "term/*.el") "*.texi"
-                "*.ti" ("terminfo/e" "terminfo/e/*")
-                ("terminfo/65" "terminfo/65/*")
-                ("integration" "integration/*")
-                (:exclude ".dir-locals.el" "*-tests.el")))
-       (eaw
-        :type git :host github :repo "hamano/locale-eaw")
-       (eblook
-        :type git :host github :repo "okomestudio/eblook"
-
-        ;; Need libeb16-dev and libz-dev.
-        :pre-build (("autoreconf")
-                    ("./configure"
-                     ,(concat "--prefix=" (expand-file-name ".local" "~")))
-                    ("make") ("make" "install")))
-       (elisp-for-python
-        :type git :host github :repo "kickingvegas/elisp-for-python")
-       (emacs-lisp-elements
-        :type git :host github :repo "protesilaos/emacs-lisp-elements")
-       (flycheck
-        :type git :host github :repo "flycheck/flycheck"
-        :fork ( :branch "fix-line-prefix" ))
-       (flycheck-aspell-org
-        :type git :host github :repo "okomestudio/flycheck-aspell-org.el")
-       (flyover
-        :type git :host github :repo "konrad1977/flyover")
-       (greppu
-        :type git :host github :repo "okomestudio/greppu.el")
-       (hatsuon
-        :type git :host github :repo "okomestudio/hatsuon.el"
-        :files (:defaults "extensions/*"))
-       (help-shortdoc-example
-        :type git :host github :repo "buzztaiki/help-shortdoc-example.el")
-       (indent-bars
-        :type git :host github :repo "jdtsmith/indent-bars")
-       (kaomel
-        :type git :host github :repo "gicrisf/kaomel" :files ("*.el"))
-       (keychain-environment
-        :type git :host github :repo "tarsius/keychain-environment")
-       (lsp-booster
-        :type git :host github :repo "okomestudio/lsp-booster.el"
-        :post-build (("make")))
-       (lsp-bridge
-        :type git :host github :repo "manateelazycat/lsp-bridge"
-        :files (:defaults "*.el"
-                          "*.py"
-                          "acm"
-                          "core"
-                          "langserver"
-                          "multiserver"
-                          "resources")
-        :build (:not compile))
-       (man-index
-        :type git :host codeberg :repo "imarko/man-index")
-       (mozc
-        :type git :host github :repo "google/mozc"
-
-        ;; NOTE(2025-03-04): Pin to a commit to avoid
-        ;; divergence of submodules refs to cause dirty
-        ;; repo.
-        :commit "14afac9728dd3f04e3d73633f4fa925d38589368")
-       (mozc-isearch
-        :type git :host github :repo "iRi-E/mozc-el-extensions")
-       (mozc-cand-posframe
-        :type git :host github :repo "akirak/mozc-posframe")
-       (mozc-popup
-        :type git :host github :repo "d5884/mozc-popup"
-        :fork (:branch "reduce-refresh"))
-       (mozc-posframe
-        :type git :host github :repo "derui/mozc-posframe"
-        :fork (:branch "ok"))
-       (ok
-        :type git :host github :repo "okomestudio/ok.el")
-       (ok-plural
-        :type git :host github :repo "okomestudio/ok-plural.el")
-       (org-block-capf
-        :type git :host github :repo "xenodium/org-block-capf")
-       (org-dividers
-        :type git :host github :repo "okomestudio/org-dividers")
-       (org-excalidraw
-        :type git :host github :repo "4honor/org-excalidraw")
-       (org-hide-drawers
-        :type git :host github :repo "krisbalintona/org-hide-drawers"
-        :branch "devel")
-       (org-modern-indent
-        :type git :host github :repo "jdtsmith/org-modern-indent")
-       (org-ok
-        :type git :host github :repo "okomestudio/org-ok"
-        :files (:defaults "extensions/*"))
-       (org-roam
-        :type git :host github :repo "org-roam/org-roam"
-        :files (:defaults "extensions/*" "org-roam-pkg.el")
-        :fork t)
-       (org-roam-cjk
-        :type git :host github :repo "okomestudio/org-roam-cjk"
-        :files (:defaults "extensions/*"))
-       (org-roam-fz
-        :type git :host github :repo "okomestudio/org-roam-fz")
-       (org-roam-node-display-cache
-        :type git :host github :repo "okomestudio/org-roam-node-display-cache")
-       (org-roam-ok
-        :type git :host github :repo "okomestudio/org-roam-ok"
-        :files (:defaults "extensions/*"))
-       (org-transclusion
-        :type git :host github :repo "nobiot/org-transclusion"
-        :pre-build (("makeinfo" "./docs/org-transclusion.texi"
-                     "-o" "./docs/org-transclusion.info")
-                    ("install-info"
-                     "./docs/org-transclusion.info" "./docs/dir"))
-
-        ;; NOTE: See github.com/nobiot/org-transclusion/issues/271
-        :branch "feat/transient")
-       (powerthesaurus
-        :type git :host github :repo "doomelpa/powerthesaurus")
-       (py-isort
-        :type git :host github :repo "paetzke/py-isort.el"
-        ;; For https://github.com/paetzke/py-isort.el/pull/21
-        :fork ( :host github
-                :repo "okomestudio/py-isort.el"
-                :branch "ts/provide-default-settings-path" ))
-       (pydoc
-        :type git :host github :repo "statmobile/pydoc")
-       (pydoc-plugins
-        :type git :host github :repo "okomestudio/emacs-pydoc-plugins"
-        :files (:defaults "extensions/*"))
-       (pyenv
-        :type git :host github :repo "aiguofer/pyenv.el")
-       (pyenv-mode
-        :type git :host github :repo "pythonic-emacs/pyenv-mode")
-       (pyimport
-        :type git :host github :repo "Wilfred/pyimport"
-        :branch "master"
-        :fork ( :host github
-                :repo "okomestudio/pyimport"
-                :branch "venv-support" )
-        :files ("*.el" ("bin/make-imports.py" . "bin/make-imports.py")))
-       (pymacs
-        :type git :host github :repo "Pymacs2/Pymacs"
-        :post-build            ; see what install-pymacs.sh does:
-        (("pip" "install" "-U" "pyopenssl")
-         ("pip" "install" "-e"
-          ,(expand-file-name (straight--repos-dir "Pymacs")))))
-       (python-sql-mode
-        :type git :host github :repo "okomestudio/python-sql-mode.el")
-       (rainbow-csv
-        :type git :host github :repo "emacs-vs/rainbow-csv")
-       (ropemacs
-        :type git :host github :repo "python-rope/ropemacs"
-        :files nil
-        :post-build
-        (("pip" "install" "-U" "rope")
-         ("pip" "install" "-e"
-          ,(expand-file-name (straight--repos-dir "ropemacs")))))
-       (sql-upcase
-        :type file :fetcher url
-        :url ,(file-name-concat
-               "https://raw.githubusercontent.com"
-               "emacsmirror/emacswiki.org/master/sql-upcase.el"))
-       (tesseract
-        :type git :host github :repo "SebastianMeisel/tesseract.el")
-       (tooltipper
-        :type git :host github :repo "okomestudio/tooltipper.el")
-       (treesit-fold
-        :type git :host github :repo "emacs-tree-sitter/treesit-fold")
-       (typo
-        :type git :host github :repo "jorgenschaefer/typoel")
-       (ultra-scroll
-        :type git :host github :repo "jdtsmith/ultra-scroll")
-       (urbandict.el
-        :type git :host github :repo "okomestudio/urbandict.el")
-       (webkit
-        :type git :host github :repo "akirakyle/emacs-webkit"
-        :branch "main"
-        :files (:defaults "*.js" "*.css" "*.so")
-        :pre-build ("make"))
-       (worg :type git :host sourcehut :repo "bzg/worg")
-       (xht
-        :type git :host sourcehut :repo "flandrew/xht")))
-  (straight-override-recipe recipe))
+     `(( aio git github "skeeto/emacs-aio"
+         ;; See https://github.com/skeeto/emacs-aio/issues/31.
+         :fork (:host github :repo "kiennq/emacs-aio") )
+       ( anki-editor git github "anki-editor/anki-editor"
+         :fork ( :host github :repo "okomestudio/anki-editor"
+                 :branch "enable-file-based-note") )
+       ( atomic-chrome git github "KarimAziev/atomic-chrome" :flavor nil )
+       ( blamer git github "artawower/blamer.el" )
+       ( company-tern file nil nil :fetcher url
+         :url ,(file-name-concat
+                "https://gist.githubusercontent.com"
+                "okomestudio/de8c59960ce8f195ee0224de5db5a168/raw"
+                "1193992ffeeca8193ebf459b377c27f628ac3246/company-tern.el") )
+       ( consult git github "minad/consult"
+         :pre-build
+         ;; Build info manual, which is missing by default:
+         (("emacs" "-Q" "-batch" "-L" "./"
+           "--visit" "README.org"
+           "--funcall" "org-texinfo-export-to-texinfo")
+          ("makeinfo" "consult.texi" "-o" "consult.info")
+          ;; ("install-info" "consult.info" "dir")
+          ) )
+       ( democratize git sourcehut "flandrew/democratize" )
+       ( do-this-now git github "okomestudio/do-this-now.el" )
+       ( eaf git github "emacs-eaf/emacs-application-framework"
+         :files ("*.el" "*.py" "core" "app" "*.json")
+         :includes (eaf-browser eaf-pdf-viewer)
+         :pre-build
+         (("python" "install-eaf.py"
+           "--install" "browser" "pdf-viewer" "--ignore-sys-deps")) )
+       ( eat git codeberg "akib/emacs-eat"
+         :files ("*.el" ("term" "term/*.el") "*.texi"
+                 "*.ti" ("terminfo/e" "terminfo/e/*")
+                 ("terminfo/65" "terminfo/65/*")
+                 ("integration" "integration/*")
+                 (:exclude ".dir-locals.el" "*-tests.el")) )
+       ( eaw git github "hamano/locale-eaw" )
+       ( eblook git github "okomestudio/eblook"
+         ;; Need libeb16-dev and libz-dev.
+         :pre-build (("autoreconf")
+                     ("./configure"
+                      ,(concat "--prefix=" (expand-file-name ".local" "~")))
+                     ("make") ("make" "install")) )
+       ( elisp-for-python git github "kickingvegas/elisp-for-python" )
+       ( emacs-lisp-elements git github "protesilaos/emacs-lisp-elements" )
+       ( flycheck git github "flycheck/flycheck"
+         :fork ( :branch "fix-line-prefix" ) )
+       ( flycheck-aspell-org git github "okomestudio/flycheck-aspell-org.el" )
+       ( flyover git github "konrad1977/flyover" )
+       ( greppu git github "okomestudio/greppu.el" )
+       ( hatsuon git github "okomestudio/hatsuon.el"
+         :files (:defaults "extensions/*") )
+       ( help-shortdoc-example git github "buzztaiki/help-shortdoc-example.el" )
+       ( indent-bars git github "jdtsmith/indent-bars" )
+       ( kaomel git github "gicrisf/kaomel" :files ("*.el"))
+       ( keychain-environment git github "tarsius/keychain-environment" )
+       ( lsp-booster git github "okomestudio/lsp-booster.el"
+         :post-build (("make")) )
+       ( lsp-bridge git github "manateelazycat/lsp-bridge"
+         :files (:defaults "*.el"
+                           "*.py"
+                           "acm"
+                           "core"
+                           "langserver"
+                           "multiserver"
+                           "resources")
+         :build (:not compile) )
+       ( man-index git codeberg "imarko/man-index" )
+       ( mozc git github "google/mozc"
+         ;; NOTE(2025-03-04): Pin to a commit to avoid divergence of submodules
+         ;; refs to cause dirty repo.
+         :commit "14afac9728dd3f04e3d73633f4fa925d38589368" )
+       ( mozc-isearch git github "iRi-E/mozc-el-extensions" )
+       ( mozc-cand-posframe git github "akirak/mozc-posframe" )
+       ( mozc-popup git github "d5884/mozc-popup"
+         :fork (:branch "reduce-refresh") )
+       ( mozc-posframe git github "derui/mozc-posframe"
+         :fork (:branch "ok") )
+       ( ok git github "okomestudio/ok.el" )
+       ( ok-plural git github "okomestudio/ok-plural.el" )
+       ( org-block-capf git github "xenodium/org-block-capf" )
+       ( org-dividers git github "okomestudio/org-dividers" )
+       ( org-excalidraw git github "4honor/org-excalidraw" )
+       ( org-hide-drawers git github "krisbalintona/org-hide-drawers"
+         :branch "devel" )
+       ( org-modern-indent git github "jdtsmith/org-modern-indent" )
+       ( org-ok git github "okomestudio/org-ok"
+         :files (:defaults "extensions/*") )
+       ( org-roam git github "org-roam/org-roam"
+         :files (:defaults "extensions/*" "org-roam-pkg.el")
+         :fork t )
+       ( org-roam-cjk git github "okomestudio/org-roam-cjk"
+         :files (:defaults "extensions/*") )
+       ( org-roam-fz git github "okomestudio/org-roam-fz" )
+       ( org-roam-node-display-cache
+         git github "okomestudio/org-roam-node-display-cache" )
+       ( org-roam-ok git github "okomestudio/org-roam-ok"
+         :files (:defaults "extensions/*") )
+       ( org-transclusion git github "nobiot/org-transclusion"
+         :pre-build (("makeinfo" "./docs/org-transclusion.texi"
+                      "-o" "./docs/org-transclusion.info")
+                     ("install-info"
+                      "./docs/org-transclusion.info" "./docs/dir"))
+         ;; NOTE: See github.com/nobiot/org-transclusion/issues/271
+         :branch "feat/transient" )
+       ( powerthesaurus git github "doomelpa/powerthesaurus" )
+       ( py-isort git github "paetzke/py-isort.el"
+         ;; For https://github.com/paetzke/py-isort.el/pull/21
+         :fork ( :host github
+                 :repo "okomestudio/py-isort.el"
+                 :branch "ts/provide-default-settings-path" ) )
+       ( pydoc git github "statmobile/pydoc" )
+       ( pydoc-plugins git github "okomestudio/emacs-pydoc-plugins"
+         :files (:defaults "extensions/*") )
+       ( pyenv git github "aiguofer/pyenv.el" )
+       ( pyenv-mode git github "pythonic-emacs/pyenv-mode")
+       ( pyimport git github "Wilfred/pyimport"
+         :branch "master"
+         :fork ( :host github
+                 :repo "okomestudio/pyimport"
+                 :branch "venv-support" )
+         :files ("*.el" ("bin/make-imports.py" . "bin/make-imports.py")) )
+       ( pymacs git github "Pymacs2/Pymacs"
+         :post-build            ; see what install-pymacs.sh does
+         (("pip" "install" "-U" "pyopenssl")
+          ("pip" "install" "-e"
+           ,(expand-file-name (straight--repos-dir "Pymacs")))) )
+       ( python-sql-mode git github "okomestudio/python-sql-mode.el" )
+       ( rainbow-csv git github "emacs-vs/rainbow-csv" )
+       ( ropemacs git github "python-rope/ropemacs"
+         :files nil
+         :post-build
+         (("pip" "install" "-U" "rope")
+          ("pip" "install" "-e"
+           ,(expand-file-name (straight--repos-dir "ropemacs")))) )
+       ( sql-upcase file nil nil :fetcher url
+         :url ,(file-name-concat
+                "https://raw.githubusercontent.com"
+                "emacsmirror/emacswiki.org/master/sql-upcase.el") )
+       ( tesseract git github "SebastianMeisel/tesseract.el" )
+       ( tooltipper git github "okomestudio/tooltipper.el" )
+       ( treesit-fold git github "emacs-tree-sitter/treesit-fold" )
+       ( typo git github "jorgenschaefer/typoel" )
+       ( ultra-scroll git github "jdtsmith/ultra-scroll" )
+       ( urbandict.el git github "okomestudio/urbandict.el" )
+       ( webkit git github "akirakyle/emacs-webkit"
+         :branch "main"
+         :files (:defaults "*.js" "*.css" "*.so")
+         :pre-build ("make") )
+       ( worg git sourcehut "bzg/worg" )
+       ( xht git sourcehut "flandrew/xht" )))
+  (let ((feature (nth 0 recipe))
+        (type (nth 1 recipe))
+        (host (nth 2 recipe))
+        (repo (nth 3 recipe)))
+    (straight-override-recipe
+     `(,feature :type ,type :host ,host :repo ,repo ,@(seq-subseq recipe 4)))))
 
 (let ((repo (expand-file-name (straight--repos-dir "lookup"))))
   (straight-override-recipe
