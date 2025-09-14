@@ -168,29 +168,25 @@ of the current section."
 
 ;;; Org Export
 
-(use-package ox
-  :after (org)
-  :custom ((org-export-with-broken-links t)
-           (org-export-with-section-numbers nil))
-  :config
-  (require 'ox-gfm)
-  (require 'ox-hugo)
-  (require 'ox-md))
-
-(use-package ox-gfm ;; GitHub-flavored markdown
-  :after ox)
-
-(use-package ox-hugo
-  :after ox)
-
+(use-package ox-epub :after ox)
+(use-package ox-gfm :after ox) ; markdown (GitHub-flavored)
+(use-package ox-hugo :after ox)
+(use-package ox-md :after ox) ; markdown
 (use-package ox-latex
   :after ox
   :custom ((org-latex-pdf-process
             '("lualatex -interaction nonstopmode -shell-escape %f"
               "lualatex -interaction nonstopmode -shell-escape %f"))))
 
-(use-package ox-md ;; markdown
-  :after ox)
+(use-package ox
+  :after org
+  :custom ((org-export-with-broken-links t)
+           (org-export-with-section-numbers nil))
+  :config
+  (require 'ox-epub)
+  (require 'ox-gfm)
+  (require 'ox-hugo)
+  (require 'ox-md))
 
 (use-package org-preview-html)
 
