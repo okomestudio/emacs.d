@@ -1,4 +1,4 @@
-;;; subsys-help.el --- Help Subsystem  -*- lexical-binding: t -*-
+;;; subsys-help.el --- Help & Documentation  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;
 ;; Configure the help and documentation subsystem.
@@ -273,6 +273,23 @@
   :config
   (democratize-enable-examples-in-helpful)
   (democratize-enable-examples-in-help))
+
+;;; Date & Times
+
+(use-package cal-japan
+  ;; Emacs Japanese Calendar.
+  ;;
+  ;; - To go from 和暦 to Gregorean year, use `calendar-japanese-query-year'.
+  ;;
+  ;; Within the `calendar' program:
+  ;;
+  ;; - Gregorean to 和暦: `gd' (pick a date), and `pJ' (print in 和暦)
+  ;; - 和暦 to Gregorean: `gJ' (pick a date in 和暦) and see the marked date
+  ;;
+  :bind ( :map calendar-mode-map
+          ("pJ" . calendar-japanese-print-date)
+          ("gJ" . calendar-japanese-goto-date) )
+  :hook (calendar-mode . (lambda () (require 'cal-japan))))
 
 (provide 'subsys-help)
 ;;; subsys-help.el ends here

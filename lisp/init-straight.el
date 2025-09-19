@@ -90,6 +90,7 @@
                  :branch "enable-file-based-note") )
        ( atomic-chrome git github "KarimAziev/atomic-chrome" :flavor nil )
        ( blamer git github "artawower/blamer.el" )
+       ( cal-japan git github "kawabata/cal-japan" )
        ( company-tern file nil nil :fetcher url
          :url ,(file-name-concat
                 "https://gist.githubusercontent.com"
