@@ -289,7 +289,30 @@
   :bind ( :map calendar-mode-map
           ("pJ" . calendar-japanese-print-date)
           ("gJ" . calendar-japanese-goto-date) )
-  :hook (calendar-mode . (lambda () (require 'cal-japan))))
+  :hook (calendar-mode . (lambda () (require 'cal-japan)))
+  :config
+  (defun calendar-japanese-convert (date)
+    "Convert YYYY-MM-DD to 和暦."
+    (interactive
+     (list
+      (let ((pattern "\\<[0-9]\\{4\\}-[0-9]\\{2\\}-[0-9]\\{2\\}\\>")
+            (here (point))
+            result)
+        (save-excursion
+          (condition-case err
+              (beginning-of-thing 'sexp)
+            (error nil))
+          (while (and (not result) (re-search-forward pattern nil t))
+            (let ((beg (match-beginning 0))
+                  (end (match-end 0)))
+              (when (and (>= here beg) (<= here end))
+                (setq result (match-string 0)))))
+          (if result result (read-string "Date (YYYY-MM-DD): "))))))
+    (message (calendar-japanese-date-string
+              (calendar-japanese-from-absolute
+               (let ((dt (parse-time-string date)))
+                 (calendar-absolute-from-gregorian
+                  `(,(nth 4 dt) ,(nth 3 dt) ,(nth 5 dt)))))))))
 
 (provide 'subsys-help)
 ;;; subsys-help.el ends here
