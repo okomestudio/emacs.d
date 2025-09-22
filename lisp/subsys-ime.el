@@ -14,15 +14,17 @@
           blink-cursor-alist '((box . hollow))
           cursor-type 'box)
 
+  ;; FIX(2025-09-20): This doesn't work with `vertico-posframe'. Look for a way
+  ;; to change the cursor color in the child frame.
   (defvar ok-cursor--base-color (face-attribute 'cursor :background))
 
   (defun ok-cursor--when-active ()
     (when-let* ((color (face-attribute 'warning :foreground)))
-      (set-cursor-color color)))
+      (set-frame-parameter (selected-frame) 'cursor-color color)))
 
   (defun ok-cursor--when-inactive ()
     (when-let* ((color ok-cursor--base-color))
-      (set-cursor-color color)))
+      (set-frame-parameter (selected-frame) 'cursor-color color)))
 
   (defun ok-cursor--on-buffer-switch ()
     (if current-input-method
