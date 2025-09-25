@@ -161,6 +161,7 @@
          :fork (:branch "reduce-refresh") )
        ( mozc-posframe git github "derui/mozc-posframe"
          :fork (:branch "ok") )
+       ( mulex git github "okomestudio/mulex" )
        ( ok git github "okomestudio/ok.el" )
        ( ok-plural git github "okomestudio/ok-plural.el" )
        ( org-block-capf git github "xenodium/org-block-capf" )

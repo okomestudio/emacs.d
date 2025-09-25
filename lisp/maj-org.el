@@ -87,10 +87,11 @@ of the current section."
 (use-package org-contrib)
 
 (use-package org-ok
-  :after org
+  :after (org mulex)
   :demand t
   :bind ( :map org-mode-map
           ("C-c C-M-c" . org-ok-babel-run-pytest))
+  :init (use-package mulex)
   :config
   (with-eval-after-load 'ox
     (require 'ox-substack)))
