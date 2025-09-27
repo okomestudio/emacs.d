@@ -17,6 +17,10 @@
            (doom-modeline-checker-simple-format t))
   :hook (enable-theme-functions . doom-modeline-ok--enable)
   :config
+  (cl-defun doom-modeline-ok--enable (&rest _)
+    (which-function-mode -1) ; enable to show function/section name in modeline
+    (doom-modeline-mode 1))
+
   (defsubst doom-modeline--buffer-mode-icon-or-text ()
     "Show buffer-mode-icon or major-mode segment."
     (let ((help-echo (string-join `(,(format "Major mode: %s" mode-name)
@@ -70,20 +74,17 @@
 
   (doom-modeline-def-modeline 'lsp-full
     '( bar workspace-name window-number modals matches follow
-       buffer-major-mode buffer-state
-       text-scale remote-host buffer-position word-count
+       buffer-major-mode buffer-state text-scale
+       remote-host buffer-position word-count
        parrot selection-info )
     '( compilation objed-state persp-name battery grip
-       irc mu4e gnus github debug
-       repl input-method misc-info minor-modes indent-info buffer-encoding
-       vcs env lsp time ))
+       irc mu4e gnus github debug repl
+       input-method minor-modes
+       indent-info buffer-encoding
+       env vcs lsp misc-info time ))
 
-  (dolist (mode '(prog-mode text-mode))
-    (add-to-list 'doom-modeline-mode-alist `(,mode . lsp-full)))
-
-  (cl-defun doom-modeline-ok--enable (&rest _)
-    (which-function-mode -1)   ; Enable to show function/section name in modeline.
-    (doom-modeline-mode 1)))
+  (add-to-list 'doom-modeline-mode-alist '(prog-mode . lsp-full))
+  (add-to-list 'doom-modeline-mode-alist '(text-mode . lsp-full)))
 
 (use-package minions
   ;; A minor-mode menu for the mode line.
