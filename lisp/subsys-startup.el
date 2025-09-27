@@ -30,6 +30,9 @@
            (compilation-scroll-output t)
            (confirm-kill-processes nil)
            (cursor-type 'box)
+           (eol-mnemonic-dos "(CRLF)")
+           (eol-mnemonic-mac "(CR)")
+           (eol-mnemonic-unix "(LF)")
            (initial-major-mode #'lisp-interaction-mode) ; `*scratch*' buffer
            (load-prefer-newer t)
            (next-error-message-highlight t)
