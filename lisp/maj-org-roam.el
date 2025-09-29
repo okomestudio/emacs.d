@@ -166,6 +166,8 @@
               #'org-roam-ja--pluralize-titles))
 
 ;;; Bibliographic Reference Management
+;;
+;; The primal use of `org-ref' over `org-cite' is assumed.
 
 (use-package org-roam-bibtex
   :after org-roam
@@ -173,7 +175,7 @@
            (orb-roam-ref-format 'org-ref-v3))
   :commands org-roam-bibtex-ok-link-auto-fill
   :config
-  (require 'org-ref) ; optional, if using Org-ref v2 or v3 citation links
+  (require 'org-ref)        ; optional, if using Org-ref v2 or v3 citation links
   )
 
 (use-package org-ref

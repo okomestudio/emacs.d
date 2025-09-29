@@ -30,6 +30,7 @@
           ("o" . help-ok-view-doc-worg)
           ("p" . help-ok-view-doc-elisp-for-python)
           ("q" . help-ok-view-doc-emacsql)
+          ("r" . help-ok-view-doc-org-ref)
           ("s" . help-ok-view-doc-straight)
           ("t" . help-ok-view-doc-tempel)
 
@@ -52,6 +53,8 @@
             . ,(ok-file-expand-straight-repos "elisp-for-python" "README.org"))
            (emacsql
             . ,(ok-file-expand-straight-repos "emacsql" "README.md"))
+           (org-ref
+            . ,(ok-file-expand-straight-repos "org-ref" "org-ref.org"))
            (straight
             . ,(ok-file-expand-straight-repos "straight.el" "README.md"))
            (tempel
