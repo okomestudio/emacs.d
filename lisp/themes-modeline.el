@@ -72,6 +72,8 @@
      (doom-modeline--buffer-state-icon)
      (doom-modeline--buffer-name)))
 
+  ;; See the `doom-modeline-def-segment' forms in `doom-modeline-segments' for
+  ;; available modeline segments and how to customize them.
   (doom-modeline-def-modeline 'lsp-full
     '( bar workspace-name window-number modals matches follow
        buffer-major-mode buffer-state text-scale
