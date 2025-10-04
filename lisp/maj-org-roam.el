@@ -13,7 +13,7 @@
           ("C-c n l" . org-roam-buffer-toggle)
           ("C-c r c" . org-roam-ok-capture-create-from-ref)
           ("C-c r f" . org-roam-ok-node-ref-find)
-          ("C-c r i" . org-ok-ref-link-insert)
+          ("C-c r i" . bibtex-completion-ok-insert-org-ref-link)
 
           :map org-mode-map
           ("C-M-i" . completion-at-point)
@@ -181,6 +181,8 @@
 (use-package org-ref
   ;; For citations, cross-references, bibliographies.
   :custom (bibtex-completion-pdf-field "file"))
+
+(use-package bibtex-completion-ok)
 
 ;;; Misc.
 
