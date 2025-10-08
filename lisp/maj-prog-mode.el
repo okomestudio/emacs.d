@@ -1,7 +1,8 @@
-;;; maj-prog-mode.el --- Prog Major Mode  -*- lexical-binding: t -*-
+;;; maj-prog-mode.el --- The `prog-mode'  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;
-;; Set up the `prog-mode' and related utilities.
+;; Configure the `prog-mode', a major mode for editing programming language
+;; source code.
 ;;
 ;;; Code:
 
@@ -14,8 +15,10 @@
   :hook (prog-mode . electric-pair-local-mode))
 
 (use-package hideshow
+  ;; The builtin package `hideshow' adds a minor mode to (un)hide portion of
+  ;; code/comment blocks.
   :bind ( :map hs-minor-mode-map
-          ("<backtab>" . hs-ok-toggle-hiding-all)
+          ("<backtab>" . hs-ok-toggle-hiding-all) ; shift + tab
           ("C-c @ C-a" . hs-show-all)
           ("C-c @ C-t" . hs-hide-all) )
   :hook (prog-mode . hs-minor-mode)
