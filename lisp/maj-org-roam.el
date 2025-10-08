@@ -121,6 +121,7 @@
 (use-package ok-plural)
 
 (use-package org-roam-cjk
+  :bind ("C-c n s" . org-roam-cjk-keyword-search-buffer)
   :custom ((org-roam-mode-sections
             (list #'org-roam-backlinks-section
                   #'org-roam-reflinks-section
