@@ -74,6 +74,11 @@
      (doom-modeline--buffer-state-icon)
      (doom-modeline--buffer-name)))
 
+  (doom-modeline-def-segment vcs-simple
+    "VCS info."
+    (if-let* ((it (doom-modeline-update-vcs)))
+        (list (car it) '(text . ""))))
+
   ;; See the `doom-modeline-def-segment' forms in `doom-modeline-segments' for
   ;; available modeline segments and how to customize them.
   (doom-modeline-def-modeline 'lsp-full
@@ -85,13 +90,13 @@
        irc mu4e gnus github debug repl
        input-method minor-modes
        indent-info buffer-encoding
-       env vcs lsp misc-info time ))
+       env vcs-simple lsp misc-info time ))
 
   (add-to-list 'doom-modeline-mode-alist '(prog-mode . lsp-full))
   (add-to-list 'doom-modeline-mode-alist '(text-mode . lsp-full)))
 
 (use-package minions
-  ;; A minor-mode menu for the mode line.
+  ;; Consolidate minor mode info into an icon.
   :custom (minions-direct '(projectile-mode))
   :hook (enable-theme-functions . minions-ok--enable)
   :config
