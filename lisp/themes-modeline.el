@@ -5,6 +5,8 @@
 ;;
 ;;; Code:
 
+(require 's)
+
 (use-package doom-modeline
   ;; A fancy and fast mode-line inspired by minimalism design.
   :custom ((doom-modeline-buffer-encoding nil)
@@ -18,7 +20,7 @@
   :hook (enable-theme-functions . doom-modeline-ok--enable)
   :config
   (cl-defun doom-modeline-ok--enable (&rest _)
-    (which-function-mode -1) ; enable to show function/section name in modeline
+    (which-function-mode -1)  ; enable to show function/section name in modeline
     (doom-modeline-mode 1))
 
   (defsubst doom-modeline--buffer-mode-icon-or-text ()
@@ -48,15 +50,15 @@
 
   (doom-modeline-def-segment text-scale
     "Text scale."
-    (let ((face (doom-modeline-face 'doom-modeline-buffer-major-mode)))
-      (concat
-       (and (boundp 'text-scale-mode-amount)
-            (/= text-scale-mode-amount 0)
-            (propertize
-             (format
-              (if (> text-scale-mode-amount 0) " (%+d)" " (%-d)")
-              text-scale-mode-amount)
-             'face face)))))
+    (if-let* ((amount (and (boundp 'text-scale-mode-amount)
+                           text-scale-mode-amount)))
+        (concat
+         " "
+         (propertize
+          (s-repeat (abs (pcase amount (0 1) (_ amount)))
+                    (cond ((> amount 0) "+") ((< amount 0) "-") (t ".")))
+          'face (doom-modeline-face 'doom-modeline-buffer-major-mode)))
+      ""))
 
   (doom-modeline-def-segment buffer-major-mode
     "Buffer major mode."

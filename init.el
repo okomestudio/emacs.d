@@ -13,12 +13,18 @@
 
 (setopt custom-file null-device) ; disable `custom.el'
 
+;;; External Dependencies
+;;
+;; Install packages used throughout the init files here.
+
 (use-package dash
-  ;; A modern list library
+  ;; A modern list library.
   :hook ((emacs-lisp-mode lisp-data-mode) . dash-fontify-mode)
   :config
   (with-eval-after-load 'info-look
     (dash-register-info-lookup)))
+
+(use-package s)               ; string manipulation library
 
 (use-package ok
   ;; Emacs Lisp utilities for Okome Studio (ok).
@@ -39,7 +45,7 @@
     (ok-debug-register 'lsp-log-io)))
 
 (use-package no-littering
-  ;; Tidy up config file locations; run this as early as possible.
+  ;; Redirect package config files to etc/ or var/.
   :demand t
   :custom ((no-littering-etc-directory (ok-file-expand-user-emacs-file "etc/"))
            (no-littering-var-directory (ok-file-expand-user-emacs-file "var/")))
@@ -60,15 +66,19 @@
   (defalias 'ok-file-expand-etc #'no-littering-expand-etc-file-name)
   (defalias 'ok-file-expand-var #'no-littering-expand-var-file-name))
 
-;; Load private initialization.
+;;; Private Initialization
+
 (load (ok-file-expand-etc "emacs/init") t)
 
-;; Load features under `init.d/'.
+;;; Package Loading from `init.d/'.
+
 (use-package init-loader
   :demand t
   :custom (init-loader-byte-compile nil)
   :config
   (init-loader-load (ok-file-expand-user-emacs-file "init.d")))
+
+;;; Session Persistence
 
 (use-package desktop
   ;; Save the Emacs state across sessions.
