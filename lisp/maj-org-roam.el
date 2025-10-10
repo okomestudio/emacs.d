@@ -3,6 +3,10 @@
 ;;
 ;; Configure `org-roam'.
 ;;
+;; Potential tasks:
+;;
+;; - (2025-10-10) Use github.com/meedstrom/org-roam-async for async DB sync?
+;;
 ;;; Code:
 
 (require 'ok)
