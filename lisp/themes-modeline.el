@@ -76,8 +76,15 @@
 
   (doom-modeline-def-segment vcs-simple
     "VCS info."
-    (if-let* ((it (doom-modeline-update-vcs)))
-        (list (car it) '(text . ""))))
+    (let-alist doom-modeline--vcs
+      (let ((sep (doom-modeline-spc))
+            (vsep (doom-modeline-vspc)))
+        (concat sep
+                (propertize
+                 (doom-modeline-display-icon .icon)
+                 'help-echo (get-text-property 1 'help-echo vc-mode)
+                 'mouse-face 'doom-modeline-highlight
+                 'local-map (get-text-property 1 'local-map vc-mode))))))
 
   ;; See the `doom-modeline-def-segment' forms in `doom-modeline-segments' for
   ;; available modeline segments and how to customize them.
