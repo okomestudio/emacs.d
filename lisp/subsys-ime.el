@@ -145,5 +145,17 @@
       (set-face-attribute 'mozc-cand-overlay-focused-face nil
                           :foreground fg-c :background bg-c :inherit face-c))))
 
+(use-package migemo
+  :disabled
+  :custom ((migemo-command "cmigemo")
+           (migemo-options '("-q" "--emacs"))
+           (migemo-dictionary "/usr/share/cmigemo/utf-8/migemo-dict")
+           (migemo-user-dictionary nil)
+           (migemo-regex-dictionary nil)
+           (migemo-coding-system 'utf-8-unix))
+  :ensure-system-package (cmigemo . "sudo apt install cmigemo")
+  :init (require 'migemo)
+  :config (migemo-init))
+
 (provide 'subsys-ime)
 ;;; subsys-ime.el ends here
