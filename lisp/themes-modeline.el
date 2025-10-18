@@ -79,12 +79,12 @@
     (let-alist doom-modeline--vcs
       (let ((sep (doom-modeline-spc))
             (vsep (doom-modeline-vspc)))
-        (concat sep
-                (propertize
+        (concat (propertize
                  (doom-modeline-display-icon .icon)
                  'help-echo (get-text-property 1 'help-echo vc-mode)
                  'mouse-face 'doom-modeline-highlight
-                 'local-map (get-text-property 1 'local-map vc-mode))))))
+                 'local-map (get-text-property 1 'local-map vc-mode))
+                sep))))
 
   ;; See the `doom-modeline-def-segment' forms in `doom-modeline-segments' for
   ;; available modeline segments and how to customize them.
