@@ -82,8 +82,8 @@
 
 (use-package desktop
   ;; Save the Emacs state across sessions.
-  :custom (desktop-auto-save-timeout 180)
-
+  :custom ((desktop-auto-save-timeout 180)
+           (desktop-modes-not-to-save '(eww-mode tags-table-mode)))
   :init
   ;; Loading the feature will set up after-init hook to actually read
   ;; a previously saved session. The session read will be skipped when
