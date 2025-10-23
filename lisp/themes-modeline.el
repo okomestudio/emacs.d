@@ -52,12 +52,14 @@
     "Text scale."
     (if-let* ((amount (and (boundp 'text-scale-mode-amount)
                            text-scale-mode-amount)))
-        (concat
-         " "
-         (propertize
-          (s-repeat (abs (pcase amount (0 1) (_ amount)))
-                    (cond ((> amount 0) "+") ((< amount 0) "-") (t ".")))
-          'face (doom-modeline-face 'doom-modeline-buffer-major-mode)))
+        (if (= amount 0)
+            ""
+          (concat
+           " "
+           (propertize
+            (s-repeat (abs (pcase amount (0 1) (_ amount)))
+                      (cond ((> amount 0) "+") ((< amount 0) "-") (t ".")))
+            'face (doom-modeline-face 'doom-modeline-buffer-major-mode))))
       ""))
 
   (doom-modeline-def-segment buffer-major-mode
