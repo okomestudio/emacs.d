@@ -317,5 +317,19 @@
                  (calendar-absolute-from-gregorian
                   `(,(nth 4 dt) ,(nth 3 dt) ,(nth 5 dt)))))))))
 
+(use-package time-zones
+  ;; A major mode to view the time at any city across the world.
+  ;;
+  ;; The major mode offers an update to `world-clock'.
+  ;;
+  ;; Usage:
+  ;;
+  ;;   - `M-x time-zones RET' to open the time-zones buffer
+  :config
+  (let ((time-zones-file (ok-file-expand-var "time-zones/time-zones.el")))
+    (ok-file-ensure-directory-exists
+     (directory-file-name (file-name-directory time-zones-file)))
+    (setq time-zones--city-list-file time-zones-file)))
+
 (provide 'subsys-help)
 ;;; subsys-help.el ends here
