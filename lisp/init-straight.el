@@ -225,6 +225,7 @@
                 "https://raw.githubusercontent.com"
                 "emacsmirror/emacswiki.org/master/sql-upcase.el") )
        ( tesseract git github "SebastianMeisel/tesseract.el" )
+       ( time-zones git github "xenodium/time-zones")
        ( tooltipper git github "okomestudio/tooltipper.el" )
        ( treesit-fold git github "emacs-tree-sitter/treesit-fold" )
        ( typo git github "jorgenschaefer/typoel" )

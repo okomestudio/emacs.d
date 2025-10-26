@@ -3,12 +3,22 @@
 ;;
 ;; Configure Elfeed.
 ;;
+;; See also:
+;;
+;;   - `helm-elfeed': A Helm interface for Elfeed
+;;
 ;;; Code:
 
 (require 'ok)
 (require 'subsys-readers)
 
 (use-package elfeed
+  ;; A web feeds client.
+  ;;
+  ;; Usage:
+  ;;
+  ;;   - `M-x elfeed RET'
+  ;;
   :bind ( :map reader-app-prefix-map
           ("e" . elfeed) )
   :custom ((elfeed-curl-max-connections 16)
