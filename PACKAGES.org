@@ -22,6 +22,7 @@ The list of Emacs packages to potentially check out:
 - [[https://github.com/FrostyX/current-window-only][current-window-only]] - Open things only in the current window. No other windows, no splits
 - [[https://github.com/Wilfred/deadgrep][deadgrep]] - Fast, friendly searching with ripgrep and Emacs; see ALTERNATIVES.md for a good summary of alternative tools
 - [[https://github.com/dgutov/diff-hl][diff-hl]] - Highlighting uncommitted changes
+- [[https://github.com/DiogoDoreto/emacs-tts][emacs-tts]] - Text-to-Speech
 - [[https://codeberg.org/akib/emacs-iwindow][iwindow]] - Interactively manipulate windows
 - [[https://github.com/hkjels/mini-ontop.el][mini-ontop.el]] - Prevent windows from jumping on minibuffer activation
 - [[https://github.com/captainflasmr/selected-window-accent-mode][selected-window-accent-mode]] - Accentuate the active window
