@@ -68,6 +68,7 @@ The list of Emacs packages to potentially check out:
 ** Programming
 
 - [[https://github.com/jamescherti/flymake-bashate.el][flymake-bashate.el]] - A Flymake backend for real-time style checking for Bash shell scripts
+- [[https://github.com/smihica/emmet-mode][emmet-mode]] - Emmet’s support for Zen Coding by producing HTML from CSS-like selectors
 - [[https://github.com/Wilfred/emacs-refactor][emr]] (Emacs Refactor) - A framework for providing language-specific refactoring
 - [[https://github.com/ragnard/gptel-magit][gptel-magit]] - Generate commit messages in magit using gptel
 - [[https://github.com/SebastianMeisel/journalctl-mode][journalctl-mode]] - Major mode to view journalctl's output
