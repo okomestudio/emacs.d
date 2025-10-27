@@ -178,7 +178,6 @@
     "C-x a" "abbrev"
     "C-x n" "narrow"
     "C-x p" "project"
-    "C-x r" "register/bookmark/rect"
     "C-x t" "tab"
     "C-x w" "window"))
 

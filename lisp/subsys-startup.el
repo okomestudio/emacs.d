@@ -153,6 +153,16 @@
            (pomo-cat-long-break-duration-seconds 1200)
            (pomo-cat-work-duration-seconds 1500)))
 
+;;; Registration
+
+(use-package register
+  ;; Save various states for later use.
+  :bind ( ("C-x r j" . jump-to-register)
+          ("C-x r w" . window-configuration-to-register) )
+  :config
+  (which-key-add-key-based-replacements
+    "C-x r" "register/bookmark/rect"))
+
 ;;; Misc.
 
 (use-package anzu
