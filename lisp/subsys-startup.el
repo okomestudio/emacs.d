@@ -163,6 +163,21 @@
   (which-key-add-key-based-replacements
     "C-x r" "register/bookmark/rect"))
 
+;;; Weather
+
+(use-package boem-weather
+  ;; A weather forecast client for the Open Metro API.
+  ;;
+  ;; Type `M-x boam-weather RET' to open the child frame.
+  ;;
+  ;; TODO(2025-10-27): Display temperature in Fahrenheit.
+  ;;
+  :custom (;; San Francisco, CA
+           (boem-weather-latitude 37.779379)
+           (boem-weather-longitude 122.418433)
+           (boem-weather-time-zone "America/Los_Angeles") )
+  :commands boem-weather)
+
 ;;; Misc.
 
 (use-package anzu
