@@ -6,6 +6,12 @@
 ;;; Code:
 
 (use-package eww
+  ;; Emacs Web Wowser is a web browser without CSS or JavaScript.
+
+  ;; TODO(2025-11-01): Make `eww-retrieve-command' switchable, at least to nil
+  ;; so that it falls back to `url-retrieve'.
+  :custom (eww-retrieve-command '("readable"))
+  :ensure-system-package (readable . "npm install -g readability-cli")
   :config
   (defun eww-reddit-redirect(url)
     "Redirect reddit.com to old.reddit.com automatically.
