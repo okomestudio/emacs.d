@@ -1,7 +1,7 @@
-;;; subsys-eww.el --- EWW Subsystem  -*- lexical-binding: t -*-
+;;; maj-eww.el --- EWW  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;
-;; Set up the EWW subsystem.
+;; Configure the EWW major mode.
 ;;
 ;;; Code:
 
@@ -80,5 +80,5 @@ See http://emacs.rubikitch.com/eww-weblio/ for reference."
 (use-package shr
   :custom (shr-use-xwidgets-for-media nil))
 
-(provide 'subsys-eww)
-;;; subsys-eww.el ends here
+(provide 'maj-eww)
+;;; maj-eww.el ends here
