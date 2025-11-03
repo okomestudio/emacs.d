@@ -42,46 +42,42 @@ See http://emacs.rubikitch.com/eww-weblio/ for reference."
 
   (add-hook 'eww-after-render-hook 'ok-eww--render-after)
 
-  ;; Wrap eww to enable quicker look up in some sites.
-  (defun ok-eww--make-query (site-url str)
-    "Look up term STR at SITE-URL in eww."
-    (eww-browse-url (format site-url (url-hexify-string str))))
+  ;; Consolidated Web Search UX
 
-  (defun eww-search-amazon-en (str)
-    (interactive (list (ok-prompt-or-string-from-region "Amazon (US): ")))
-    (ok-eww--make-query "https://amazon.com/s?k=%s" str))
+  (defcustom eww-search-web-sites
+    '(("Amazon (JP)" . "https://amazon.co.jp/s?k=%s")
+      ("Amazon (US)" .  "https://amazon.com/s?k=%s")
+      ("DuckDuckGo (en)" . "https://html.duckduckgo.com/html/?q=%s&kp=-2&kl=wt-wt&ks=s")
+      ("DuckDuckGo (ja)" . "https://html.duckduckgo.com/html/?q=%s&kp=-2&kl=jp-jp&ks=s")
+      ("Goodreads" . "https://goodreads.com/search?q=%s")
+      ("Justapedia (en)" . "https://justapedia.org/wiki/%s")
+      ("Weblio" . "https://www.weblio.jp/content/%s")
+      ("Wikipedia (en)" . "https://en.wikipedia.org/wiki/%s")
+      ("Wikipedia (ja)" . "https://ja.wikipedia.org/wiki/%s"))
+    "Alist of web search engines.")
 
-  (defun eww-search-amazon-ja (str)
-    (interactive (list (ok-prompt-or-string-from-region "Amazon (JP): ")))
-    (ok-eww--make-query "https://amazon.co.jp/s?k=%s" str))
-
-  (defun eww-search-duckduckgo-en (str)
-    (interactive (list (ok-prompt-or-string-from-region "DuckDuckGo (en): ")))
-    (ok-eww--make-query "https://html.duckduckgo.com/html/?q=%s&kp=-2&kl=wt-wt&ks=s" str))
-
-  (defun eww-search-duckduckgo-ja (str)
-    (interactive (list (ok-prompt-or-string-from-region "DuckDuckGo (ja): ")))
-    (ok-eww--make-query "https://html.duckduckgo.com/html/?q=%s&kp=-2&kl=jp-jp&ks=s" str))
-
-  (defun eww-search-goodreads (str)
-    (interactive (list (ok-prompt-or-string-from-region "Goodreads: ")))
-    (ok-eww--make-query "https://goodreads.com/search?q=%s" str))
-
-  (defun eww-search-weblio (str)
-    (interactive (list (ok-prompt-or-string-from-region "Weblio: ")))
-    (ok-eww--make-query "https://www.weblio.jp/content/%s" (upcase str)))
-
-  (defun eww-search-wikipedia-en (str)
-    (interactive (list (ok-prompt-or-string-from-region "Wikipedia (en): ")))
-    (ok-eww--make-query "https://en.m.wikipedia.org/wiki/%s" str))
-
-  (defun eww-search-wikipedia-ja (str)
-    (interactive (list (ok-prompt-or-string-from-region "Wikipedia (ja): ")))
-    (ok-eww--make-query "https://ja.m.wikipedia.org/wiki/%s" str))
-
-  (defun eww-search-justapedia-en (str)
-    (interactive (list (ok-prompt-or-string-from-region "Justapedia (en): ")))
-    (ok-eww--make-query "https://justapedia.org/wiki/%s" str)))
+  (defun eww-search-web (term &optional engine)
+    "Perfom web search for TERM using a search ENGINE.
+ENGINE is a key in the alist `eww-search-web-sites'."
+    (interactive
+     (list
+      (if-let*
+          ((w (or (and (region-active-p)
+                       (prog1
+                           (buffer-substring-no-properties
+                            (region-beginning) (region-end))
+                         (deactivate-mark)))
+                  (thing-at-point 'word 'no-properties))))
+          w
+        (read-string "Search term: "))
+      nil))
+    (let* ((key (or engine
+                    (completing-read "Search engine: "
+                                     (--map (car it) eww-search-web-sites)
+                                     nil t)))
+           (url-tmpl (alist-get key eww-search-web-sites nil nil #'equal))
+           (url (format url-tmpl (url-hexify-string term))))
+      (eww-browse-url url))))
 
 (use-package shr
   :custom (shr-use-xwidgets-for-media nil))

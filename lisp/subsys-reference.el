@@ -14,30 +14,22 @@
              :prefix-docstring "Keymap for reference"
              :prefix "C-h C-l"
              ("c" . ask-chatgpt)
-             ("g" . eww-search-goodreads)
              ("p" . lookup-pattern)
              ("r" . lookup-region)
              ("t" . gt-translate)
+             ("w" . eww-search-web)
 
              :prefix-map reference-en-map
              :prefix-docstring "Keymap for English reference"
              :prefix "C-h C-l e"
-             ("a" . eww-search-amazon-en)
              ("d" . define-word-at-point)
              ("h" . hatsuon-play-audio)
-             ("j" . eww-search-justapedia-en)
              ("p" . powerthesaurus-lookup-dwim)
-             ("s" . eww-search-duckduckgo-en)
-             ("w" . eww-search-wikipedia-en)
 
              :prefix-map reference-ja-map
              :prefix-docstring "Keymap for Japanese reference"
              :prefix "C-h C-l j"
-             ("a" . eww-search-amazon-ja)
-             ("d" . eww-search-weblio)
-             ("k" . kakijun)
-             ("s" . eww-search-duckduckgo-ja)
-             ("w" . eww-search-wikipedia-ja)))
+             ("k" . kakijun)))
 
 ;;; Dictionaries
 
