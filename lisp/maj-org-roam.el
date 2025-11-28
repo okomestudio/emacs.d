@@ -16,7 +16,7 @@
           ("C-c n i" . org-roam-node-insert)
           ("C-c n l" . org-roam-buffer-toggle)
           ("C-c r c" . org-roam-ok-capture-create-from-ref)
-          ("C-c r f" . org-roam-ok-node-ref-find)
+          ("C-c r f" . org-roam-ref-find)
           ("C-c r i" . bibtex-completion-ok-insert-org-ref-link)
           ("C-c r s" . org-roam-ok-ref-search-buffer)
 
