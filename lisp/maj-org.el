@@ -14,8 +14,11 @@
           ("C-c C-l" . org-insert-link)
           ("C-c C-q" . org-set-tags-command)
           ("C-c C-x l" . math-preview-ok-toggle)
+
+          ;; NOTE(2025-12-01): See takaxp.github.io/init.html#orgc99664d5
           ("C-c i h" . org-insert-heading) ; or use M-RET
-          ("C-c i l" . ok-org-insert-item)
+          ("C-c i l" . org-insert-item)
+
           ("C-c i u" . org-cliplink)
           ("C-c l" . org-store-link)
           ("M-g i" . consult-org-heading)
@@ -64,22 +67,6 @@ of the current section."
                                  (org-previous-visible-heading 1)
                                  (org-return))))
                           (_ #'ok-edit-insert-newline-above))))
-
-  (defun ok-org-insert-item (begin end)
-    "See Section 14.44 at https://takaxp.github.io/init.html."
-    (interactive "r")
-    (unless mark-active
-      (setq begin (line-beginning-position))
-      (setq end (line-end-position)))
-    (let* ((bullet "  - ")
-           (len (string-width bullet)))
-      (goto-char begin)
-      (while (and (re-search-forward (concat "\\(^[ \t]*\\)") end t)
-                  (not (looking-at "[-\\+\\*][ \t]\\|[a-z0-9A-Z]*[\\.)][ \t]"))
-                  (not (equal (point) end)))
-        (replace-match (concat "\\1" bullet) nil nil)
-        (setq end (+ end len)))
-      (goto-char begin)))
 
   (require 'math-preview)
   (org-ok-mode 1))
