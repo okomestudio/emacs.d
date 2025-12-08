@@ -53,7 +53,7 @@
        (vertico-posframe-poshandler . posframe-poshandler-frame-center))))
 
   (require 'org-roam-cjk-ja)
-  (org-roam-ok-enhance)
+  (org-roam-ok-mode 1)
   (org-roam-db-sync)
   (org-roam-db-autosync-mode 1))
 
@@ -112,7 +112,15 @@
   :custom ((org-roam-timestamps-minimum-gap 86400)
            (org-roam-timestamps-remember-timestamps t)
            (org-roam-timestamps-timestamp-parent-file nil))
-  :config (org-roam-timestamps-mode))
+  :config
+  (with-eval-after-load 'org-roam-fz
+    (defun org-roam-fz--save-modified-buffers-ad (fun &rest _rest)
+      "Disable org-roam-timestamps-mode temporarily."
+      (org-roam-timestamps-mode -1)
+      (apply fun _rest)
+      (org-roam-timestamps-mode +1))
+    (advice-add #'org-roam-fz--save-modified-buffers :around
+                #'org-roam-fz--save-modified-buffers-ad)))
 
 (use-package org-roam-ok
   :custom ((org-roam-ok-node-use-cache-in-memory nil)
