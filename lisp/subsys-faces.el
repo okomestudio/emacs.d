@@ -134,11 +134,10 @@ This is also used as the default.")
                      ("UmePlus P Gothic" . 1.18)))
     (add-to-list 'face-font-rescale-alist element)))
 
-(setopt ok-faces-text-scale-per-mode
+(setopt ok-face-text-scale-per-mode
         '((elfeed-search-mode . 1.0)
           (elfeed-show-mode . 0.0)
           (eww-mode . 1.0)
-          (org-mode . 1.0)
           (prog-mode . 1.0)
           (text-mode . 0.0)
           (treemacs-mode . -0.4)))

@@ -55,7 +55,13 @@
   (require 'org-roam-cjk-ja)
   (org-roam-ok-mode 1)
   (org-roam-db-sync)
-  (org-roam-db-autosync-mode 1))
+  (org-roam-db-autosync-mode 1)
+
+  (with-eval-after-load 'ok-face
+    (add-to-list 'ok-face-text-scale-per-mode
+                 '(org-mode
+                   . (lambda ()
+                       (if (member "index" org-file-tags) 0.4 1.0))))))
 
 (use-package consult-org-roam
   :bind ( ("C-c n F" . consult-org-roam-file-find) )

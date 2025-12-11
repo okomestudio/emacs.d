@@ -83,7 +83,7 @@
 
          ;; `lookup' skips `after-change-major-mode-hook', so ensure the text
          ;; scaling runs:
-         (lookup-content-mode . ok-faces-text-scale-per-mode))
+         (lookup-content-mode . ok-face-text-scale-per-mode))
   :config
   (load (ok-file-expand-etc "lookup/init"))
 
@@ -95,7 +95,7 @@
                      t)))
 
   (with-eval-after-load 'ok-face
-    (add-to-list 'ok-faces-text-scale-per-mode '(lookup-content-mode . 1.5))))
+    (add-to-list 'ok-face-text-scale-per-mode '(lookup-content-mode . 1.5))))
 
 ;;; Pronunciation
 
