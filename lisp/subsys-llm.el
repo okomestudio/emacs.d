@@ -3,38 +3,25 @@
 ;;
 ;; Set up LLM subsystem.
 ;;
+;; Related Packages:
+;;
+;;   - `chatgpt-shell'
+;;
 ;;; Code:
-
-(require 'ok)
-
-(use-package chatgpt-shell
-  :custom ((chatgpt-shell-openai-key (lambda ()
-                                       (auth-source-pick-first-password
-                                        :host "api.openai.com"))))
-  :autoload (chatgpt-shell-send-to-buffer)
-  :commands (ask-chatgpt)
-  :config
-  (defun ask-chatgpt (str)
-    (interactive (list (ok-prompt-or-string-from-region "Ask ChatGPT: ")))
-    (chatgpt-shell-send-to-buffer str))
-
-  (setopt chatgpt-shell-root-path
-          (ok-file-expand-var "chatgpt-shell")))
 
 (use-package gptel
   :config
-  (gptel-make-anthropic "Claude"
-    :stream t
-    :key (lambda ()
-           (auth-source-pick-first-password :host "console.anthropic.com")))
-
-  (gptel-make-openai "DeepSeek"
-    :host "api.deepseek.com"
-    :endpoint "/chat/completions"
-    :stream t
-    :key (lambda ()
-           (auth-source-pick-first-password :host "api.deepseek.com"))
-    :models '(deepseek-chat deepseek-coder)))
+  ;; The :key property does not have to be set explicitly here, when a 'machine'
+  ;; entry for the API endpoint DNS name exists in authinfo file.
+  (gptel-make-anthropic "Claude" :stream t)
+  (gptel-make-deepseek "DeepSeek" :stream t)
+  (gptel-make-xai "xAI" :stream t)
+  (setopt gptel-model 'gemini-flash-latest
+          gptel-backend (gptel-make-gemini "Gemini"
+                          :key (lambda ()
+                                 (auth-source-pick-first-password
+                                  :host "generativelanguage.googleapis.com"))
+                          :stream t)))
 
 (use-package org-ai
   :bind ( :map org-ai-mode-map

@@ -13,7 +13,7 @@
   (bind-keys :prefix-map reference-map
              :prefix-docstring "Keymap for reference"
              :prefix "C-h C-l"
-             ("c" . ask-chatgpt)
+             ("a" . gptel-send)
              ("p" . lookup-pattern)
              ("r" . lookup-region)
              ("t" . gt-translate)
