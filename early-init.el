@@ -22,6 +22,7 @@
 
 (setopt ok-debug nil)
 (setopt warning-minimum-level :warning
+        warning-suppress-log-types nil
         warning-suppress-types nil)
 (setq debug-on-message nil)   ; set regexp to trigger debugger
 (setq byte-compile-warnings '(not obsolete)) ; set t for development
@@ -47,10 +48,13 @@
         frame-inhibit-implied-resize t
         inhibit-default-init nil
         inhibit-startup-screen t
+        inhibit-startup-echo-area-message (user-login-name)
         initial-buffer-choice nil
         native-comp-async-query-on-exit t
+        native-comp-async-report-warnings-errors t
         pgtk-wait-for-event-timeout 0
-        ring-bell-function 'ignore)
+        ring-bell-function 'ignore
+        visible-bell t)
 (setq redisplay-skip-fontification-on-input t)
 
 (dolist (it '((menu-bar-lines . 0)
