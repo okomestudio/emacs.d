@@ -11,6 +11,12 @@
 ;;
 ;; See https://emacsthemes.com for available custom themes.
 ;;
+;; Packages to Checkout
+;; ====================
+;;
+;; - kurecolor (github.com/emacsfodder/kurecolor)
+;;   - Tools collection for working with colors
+;;
 ;;; Code:
 
 (require 'ok)
