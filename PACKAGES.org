@@ -91,6 +91,10 @@ The list of Emacs packages to potentially check out:
 
 - [[https://github.com/eval-exec/eee.el][eee.el]] - Launch TUI commands in an external terminal asynchronously
 
+** Document readers
+
+- [[https://codeberg.org/divyaranjan/emacs-reader][emacs-reader]] - An all-in-one document reader for all formats, backed by MuPDF
+
 ** Packages used before
 *** all-the-icons
 
