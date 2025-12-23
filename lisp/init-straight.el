@@ -221,6 +221,9 @@
          (("pip" "install" "-U" "rope")
           ("pip" "install" "-e"
            ,(expand-file-name (straight--repos-dir "ropemacs")))) )
+       ( scrollpanel git nil
+         "https://seed.pipapo.org/z2hyKqTqB77vt7UqsTgrqHkC83j8h.git"
+         :local-repo "scrollpanel" )
        ( sql-upcase file nil nil :fetcher url
          :url ,(file-name-concat
                 "https://raw.githubusercontent.com"

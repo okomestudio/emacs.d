@@ -78,6 +78,16 @@
 (use-package yascroll
   :hook (on-first-buffer . global-yascroll-bar-mode))
 
+(use-package scrollpanel
+  ;; Modern minimap-like scrolling panel.
+  ;;
+  ;; URL: https://seed.pipapo.org/nodes/seed.pipapo.org/rad:z2hyKqTqB77vt7UqsTgrqHkC83j8h
+  ;;
+  ;; Use `scrollpanel-mode' to toggle in the current buffer.
+  ;;
+  ;; See if this is more useful in place of `yascroll'.
+  )
+
 ;;; Window Configuration
 
 (use-package activities
