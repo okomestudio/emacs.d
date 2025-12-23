@@ -1,11 +1,27 @@
-;;; maj-text-mode.el --- Text Major Mode  -*- lexical-binding: t -*-
+;;; maj-text-mode.el --- Text  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;
-;; Set up the Text major mode.
+;; Configure `text-mode' and related utilities.
 ;;
 ;;; Code:
 
-;; (use-package text-mode)
+;;; Folding
+
+(use-package kirigami
+  ;; A unified method to fold and unfold text.
+  ;;
+  ;; Commands exposed:
+  ;;
+  ;; - `kirigami-open-fold'
+  ;; - `kirigami-open-fold-rec'
+  ;; - `kirigami-close-fold'
+  ;; - `kirigami-open-folds'
+  ;; - `kirigami-close-folds'
+  ;; - `kirigami-toggle-fold'
+  ;;
+  ;; NOTE(2025-12-22): See if these commands are useful for consolidating any
+  ;; aspect of text folding. If not, remove.
+  )
 
 ;;; CSV
 
