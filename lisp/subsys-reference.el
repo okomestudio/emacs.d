@@ -163,5 +163,9 @@
 (use-package greppu
   :commands (greppu-scan))
 
+(use-package wiktionary-bro
+  ;; Etymology lookup/Wiktionary browser.
+  :commands (wiktionary-bro))
+
 (provide 'subsys-reference)
 ;;; subsys-reference.el ends here
