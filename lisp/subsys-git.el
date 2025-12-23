@@ -5,10 +5,14 @@
 ;;
 ;;; Code:
 
+;;; Magit
+
 (use-package magit
   ;; TODO: Bind `magit-find-file'
   :custom ((magit-diff-refine-hunk t)
-           (magit-format-file-function #'magit-format-file-nerd-icons)))
+           (magit-format-file-function #'magit-format-file-nerd-icons))
+  :config
+  (add-hook 'magit-status-sections-hook #'magit-insert-worktrees 99))
 
 (use-package magit-prime
   ;; Speedup magit by priming caches before refresh.
@@ -22,6 +26,8 @@
                 "TODO [#A]" "TODO [#B]" "TODO [#C]"
                 "WIP [#A]" "WIP [#B]" "WIP [#C]"))
     (add-to-list 'magit-todos-keywords-list kw)))
+
+;;; Blame
 
 (use-package blamer
   ;; Git blame plugin.
