@@ -69,6 +69,7 @@
 ;;; Indentation
 
 (use-package indent-bars
+  ;; Fast, configurable indentation guide-bars.
   :custom ((indent-bars-color '(highlight :face-bg t :blend 0.2))
            (indent-bars-no-descend-lists nil)
            (indent-bars-treesit-support t)
@@ -79,6 +80,9 @@
          ((emacs-lisp-mode
            lisp-data-mode) . (lambda () (setq-local
                                          indent-bars-no-descend-lists t)))))
+
+;; - hs-indent-fold (github.com/kn66/hs-indent-fold.el): Click-to-fold
+;;   functionality via indent region detection.
 
 ;;; Window Dividers
 
