@@ -206,6 +206,8 @@
 
 ;;; Misc.
 
+(use-package org-roam-fztl)
+
 (use-package org-roam-fz
   ;; A Folgezettel ID mode for Org Roam.
   :custom (org-roam-ok-node-display-title #'org-roam-fz--display-title)

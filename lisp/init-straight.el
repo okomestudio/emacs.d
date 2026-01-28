@@ -180,6 +180,7 @@
        ( org-roam-cjk git github "okomestudio/org-roam-cjk"
          :files (:defaults "extensions/*") )
        ( org-roam-fz git github "okomestudio/org-roam-fz" )
+       ( org-roam-fztl git github "okomestudio/org-roam-fztl" )
        ( org-roam-node-display-cache
          git github "okomestudio/org-roam-node-display-cache" )
        ( org-roam-ok git github "okomestudio/org-roam-ok"
