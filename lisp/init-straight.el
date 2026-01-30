@@ -171,6 +171,7 @@
        ( org-excalidraw git github "4honor/org-excalidraw" )
        ( org-hide-drawers git github "krisbalintona/org-hide-drawers"
          :branch "devel" )
+       ( org-id-ext git github "okomestudio/org-id-ext" )
        ( org-modern-indent git github "jdtsmith/org-modern-indent" )
        ( org-ok git github "okomestudio/org-ok"
          :files (:defaults "extensions/*") )
