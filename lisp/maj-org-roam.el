@@ -206,10 +206,16 @@
 
 ;;; Misc.
 
-(use-package org-roam-fztl)
+(use-package org-roam-fztl
+  ;; Org Roam plugin for folgezettel IDs.
+  :hook (org-mode . org-roam-fztl-mode)
+  :config
+  (when (bound-and-true-p desktop-save-mode)
+    (add-to-list 'desktop-minor-mode-table '(org-roam-fztl-mode nil))))
 
 (use-package org-roam-fz
   ;; A Folgezettel ID mode for Org Roam.
+  :disabled
   :custom (org-roam-ok-node-display-title #'org-roam-fz--display-title)
   :hook (org-mode . org-roam-fz-mode)
   :config
