@@ -1,7 +1,7 @@
-;;; subsys-reference.el --- Reference  -*- lexical-binding: t -*-
+;;; subsys-reference.el --- Reference & Lookup  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;
-;; Configure the reference subsystem.
+;; Configure the reference and lookup subsystem.
 ;;
 ;; The collection of reference utility exposed via a common key prefix.
 ;;
@@ -17,7 +17,12 @@
              ("p" . lookup-pattern)
              ("r" . lookup-region)
              ("t" . gt-translate)
-             ("w" . ok-eww-search-web)
+
+             :prefix-map reference-web-map
+             :prefix-docstring "Keymap for web reference"
+             :prefix "C-h C-l w"
+             ("p" . ok-eww-stanford-encyclopedia-of-philosophy)
+             ("s" . ok-eww-search-web)
 
              :prefix-map reference-en-map
              :prefix-docstring "Keymap for English reference"

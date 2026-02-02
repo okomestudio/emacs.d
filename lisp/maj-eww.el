@@ -27,6 +27,7 @@ See reddit.com/r/emacs/comments/1bcf8v3."
       ("amazon.com" . "^RESULTS")
       ("b.hatena.ne.jp" . "^記事へのコメント")
       ("goodreads.com" . "^Page ")
+      ("plato.stanford.edu/contents.html" . "^Table of Contents")
       ("en.m.wikipedia.org" . "^ *Search")
       ("ja.m.wikipedia.org" . "^ *検索")
       ("www.weblio.jp" . "^ *Weblio 辞書"))
@@ -88,7 +89,12 @@ ENGINE is a key in the alist `ok-eww-search-web-sites'."
     (if-let* ((tmpl (alist-get engine ok-eww-search-web-sites nil nil #'equal))
               (url (format tmpl (url-hexify-string term))))
         (eww-browse-url url)
-      (warn "Error constructing search query URL"))))
+      (warn "Error constructing search query URL")))
+
+  (defun ok-eww-stanford-encyclopedia-of-philosophy ()
+    "Visit TOC of Stanford Encyclopedia of Philosophy."
+    (interactive)
+    (eww "https://plato.stanford.edu/contents.html")))
 
 (use-package shr
   :custom (shr-use-xwidgets-for-media nil))
