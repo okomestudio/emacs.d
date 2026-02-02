@@ -17,7 +17,7 @@
              ("p" . lookup-pattern)
              ("r" . lookup-region)
              ("t" . gt-translate)
-             ("w" . eww-search-web)
+             ("w" . ok-eww-search-web)
 
              :prefix-map reference-en-map
              :prefix-docstring "Keymap for English reference"
