@@ -120,14 +120,15 @@
            (org-roam-timestamps-remember-timestamps t)
            (org-roam-timestamps-timestamp-parent-file nil))
   :config
-  (with-eval-after-load 'org-roam-fz
-    (defun org-roam-fz--save-modified-buffers-ad (fun &rest _rest)
-      "Disable org-roam-timestamps-mode temporarily."
-      (org-roam-timestamps-mode -1)
-      (apply fun _rest)
-      (org-roam-timestamps-mode +1))
-    (advice-add #'org-roam-fz--save-modified-buffers :around
-                #'org-roam-fz--save-modified-buffers-ad)))
+  (defun org-roam-timestamps-ok--disable (fun &rest _rest)
+    "Disable org-roam-timestamps-mode temporarily."
+    (org-roam-timestamps-mode -1)
+    (apply fun _rest)
+    (org-roam-timestamps-mode +1))
+
+  (with-eval-after-load 'org-roam-ok-node
+    (advice-add #'org-roam-ok-node-file-save :around
+                #'org-roam-timestamps-ok--disable)))
 
 (use-package org-roam-ok
   :custom ((org-roam-ok-node-use-cache-in-memory nil)
@@ -224,27 +225,18 @@
 
 (use-package org-roam-fztl
   ;; Org Roam plugin for folgezettel IDs.
+  :custom (org-roam-ok-node-display-title #'org-roam-fztl--display-title)
   :hook (org-mode . org-roam-fztl-mode)
   :config
   (when (bound-and-true-p desktop-save-mode)
-    (add-to-list 'desktop-minor-mode-table '(org-roam-fztl-mode nil))))
+    (add-to-list 'desktop-minor-mode-table '(org-roam-fztl-mode nil)))
 
-(use-package org-roam-fz
-  ;; A Folgezettel ID mode for Org Roam.
-  :disabled
-  :custom (org-roam-ok-node-display-title #'org-roam-fz--display-title)
-  :hook (org-mode . org-roam-fz-mode)
-  :config
-  (when (bound-and-true-p desktop-save-mode)
-    (add-to-list 'desktop-minor-mode-table '(org-roam-fz-mode nil)))
-
-  (defun org-roam-fz--display-title (node)
-    "Render NODE title for display.
-When the ID of NODE is an fID, append it to the title."
-    (concat (org-roam-ok-node--title node)
-            (when-let* ((fid (org-roam-node-fid node)))
-              (concat " " (propertize (format "[%s]" fid)
-                                      'face 'org-roam-fz-overlay))))))
+  (defun org-roam-fztl--display-title (node)
+    "Render NODE title with folgezettel for display."
+    (concat
+     (org-roam-ok-node--title node)
+     (when-let* ((r (org-roam-fztl-overlay--format (org-roam-node-id node))))
+       (concat " " (propertize r 'face 'org-roam-fztl-overlay))))))
 
 (provide 'maj-org-roam)
 ;;; maj-org-roam.el ends here
