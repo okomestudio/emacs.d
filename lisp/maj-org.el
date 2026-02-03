@@ -340,7 +340,6 @@ content:
 
 ;;; Misc.
 
-(use-package org-id-ext)
 (use-package org-side-tree :disabled)
 (use-package org-web-tools :disabled)
 

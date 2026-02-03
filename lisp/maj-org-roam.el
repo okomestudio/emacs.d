@@ -52,6 +52,7 @@
        (vertico-count . 32)
        (vertico-posframe-poshandler . posframe-poshandler-frame-center))))
 
+  (require 'org-id-ext)
   (require 'org-roam-cjk-ja)
   (org-roam-ok-mode 1)
   (org-roam-db-sync)
@@ -205,6 +206,21 @@
 (use-package bibtex-completion-ok)
 
 ;;; Misc.
+
+(use-package org-id-ext
+  :config
+  (defun org-id-ext-new-from-ctime ()
+    "Generate new ts-b62 ID from CTIME added by org-roam-timestamps."
+    (interactive)
+    (let* ((time (org-roam-timestamps-encode (org-entry-get nil "CTIME" t)))
+           (jitter-us (* (random 1000) 1000)) ; millisec jitter in microsec
+           (time (time-add time (list 0 0 jitter-us 0)))
+           (ts-ms (floor (* 1000 (float-time time))))
+           (unique (org-id-ext-int-to-base62 ts-ms))
+           (prefix (when org-id-prefix (format "%s:" org-id-prefix)))
+           (id (concat prefix unique)))
+      (kill-new id)
+      id)))
 
 (use-package org-roam-fztl
   ;; Org Roam plugin for folgezettel IDs.
