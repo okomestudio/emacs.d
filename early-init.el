@@ -20,7 +20,7 @@
 
 ;;; Debug switches
 
-(setopt ok-debug nil)
+(setopt ok-debug t)
 (setopt warning-minimum-level :warning
         warning-suppress-log-types nil
         warning-suppress-types nil)
