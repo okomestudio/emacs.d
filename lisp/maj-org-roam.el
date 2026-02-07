@@ -56,13 +56,7 @@
   (require 'org-roam-cjk-ja)
   (org-roam-ok-mode 1)
   (org-roam-db-sync)
-  (org-roam-db-autosync-mode 1)
-
-  (with-eval-after-load 'ok-face
-    (add-to-list 'ok-face-text-scale-per-mode
-                 '(org-mode
-                   . (lambda ()
-                       (if (member "index" org-file-tags) 0.4 1.0))))))
+  (org-roam-db-autosync-mode 1))
 
 (use-package consult-org-roam
   :bind ( ("C-c n F" . consult-org-roam-file-find) )
@@ -213,7 +207,7 @@
 (use-package org-roam-fztl
   ;; Org Roam plugin for folgezettel IDs.
   :custom (org-roam-ok-node-display-title #'org-roam-fztl--display-title)
-  :hook (org-mode . org-roam-fztl-mode)
+  :hook (org-mode-hook . org-roam-fztl-mode)
   :config
   (when (bound-and-true-p desktop-save-mode)
     (add-to-list 'desktop-minor-mode-table '(org-roam-fztl-mode nil)))
