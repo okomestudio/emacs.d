@@ -87,6 +87,7 @@
 ;;; Window Dividers
 
 (use-package frame
+  :custom ((window-divider-default-places t))
   :hook (enable-theme-functions . window-divider-mode)
   :config
   ;; For a thin border, set dividers to the same foreground color:
