@@ -31,7 +31,8 @@
   :custom (aw-dispatch-always t))
 
 (use-package frame
-  :bind ( ("M-o" . next-window-any-frame)
+  :bind ( ("C-M-o" . next-window-any-frame)
+          ("M-o" . other-window)
           :repeat-map next-window-any-frame-repeat-map
           ("o" . next-window-any-frame)
           ("O" . previous-window-any-frame) )
