@@ -17,7 +17,7 @@
 
           ;; NOTE(2025-12-01): See takaxp.github.io/init.html#orgc99664d5
           ("C-c i h" . org-insert-heading) ; or use M-RET
-          ("C-c i l" . org-insert-item)
+          ("C-c i l" . org-ok-insert-list-item)
 
           ("C-c i u" . org-cliplink)
           ("C-c l" . org-store-link)
@@ -67,6 +67,28 @@ of the current section."
                                  (org-previous-visible-heading 1)
                                  (org-return))))
                           (_ #'ok-edit-insert-newline-above))))
+
+  (defun org-ok-insert-list-item (beg end &optional text)
+    "Insert list item.
+This command delegates work to `org-insert-item' except when called at the
+beginning of line, in which case it will create a new list."
+    (interactive "r")
+    (let ((text (string-trim
+                 (if (use-region-p)
+                     (prog1 (buffer-substring-no-properties beg end)
+                       (delete-region beg end)
+                       (deactivate-mark))
+                   (or text "")))))
+      (if (org-in-item-p)
+          (progn
+            (org-insert-item)
+            (when text
+              (insert text)))
+        (when (or (= (point) (line-beginning-position))
+                  (and (use-region-p)
+                       (= beg (line-beginning-position))))
+          (insert (make-string org-list-indent-offset ?\s) "- " text "\n")
+          (org-delete-backward-char 1)))))
 
   (require 'math-preview)
   (org-ok-mode 1))
