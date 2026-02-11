@@ -197,7 +197,7 @@
  ("org-roam-ok" . "475434627920b4a75e709634994d10bca6f84da1")
  ("org-roam-timestamps" . "c4ff1e2f5b0905b5caa917249aab56ddc1de1ab3")
  ("org-roam-ui" . "5ac74960231db0bf7783c2ba7a19a60f582e91ab")
- ("org-transclusion" . "9213406fd9676d978e2d4328ad61615c42f2c78e")
+ ("org-transclusion" . "6bc151d8d7afe889ce512637771e1329ac67b51d")
  ("osm" . "17dfc017cdb0cf21325a9e636fd23e912aea84b3")
  ("ox-epub" . "0d341b8320d11d8ea93417f4e93055dc49fed007")
  ("ox-gfm" . "4f774f13d34b3db9ea4ddb0b1edc070b1526ccbb")

@@ -190,9 +190,7 @@
          :pre-build (("makeinfo" "./docs/org-transclusion.texi"
                       "-o" "./docs/org-transclusion.info")
                      ("install-info"
-                      "./docs/org-transclusion.info" "./docs/dir"))
-         ;; NOTE: See github.com/nobiot/org-transclusion/issues/271
-         :branch "feat/transient" )
+                      "./docs/org-transclusion.info" "./docs/dir")))
        ( powerthesaurus git github "doomelpa/powerthesaurus" )
        ( py-isort git github "paetzke/py-isort.el"
          ;; For https://github.com/paetzke/py-isort.el/pull/21

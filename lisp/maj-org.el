@@ -380,35 +380,7 @@ content:
                                  (straight--build-dir "org-transclusion")))
   :config
   (add-to-list 'org-transclusion-extensions 'org-transclusion-indent-mode)
-  (require 'org-transclusion-indent-mode)
-
-  ;; TODO(2025-08-02): Patch `org-transclusion-add-org-id' to fix a bug reported
-  ;; in the following comment:
-  ;;
-  ;;   - https://github.com/nobiot/org-transclusion/pull/273#issuecomment-3146612720
-  ;;
-  ;; The patch allows dedicated target/search option to be honored when it is
-  ;; located before the first heading in the transcluded Org document.
-  (defun org-transclusion-add-org-id--patch (link plist)
-    "Return a list for Org-ID LINK object and PLIST.
-Return nil if not found."
-    (and-let*
-        ((_ (string= "id" (org-element-property :type link)))
-         (mkr (ignore-errors (org-transclusion-add-target-marker link)))
-         (buf (marker-buffer mkr))
-         (_ (buffer-live-p (marker-buffer mkr))))
-      (with-current-buffer buf
-        (org-with-wide-buffer
-         (goto-char mkr)
-         (append '(:tc-type "org-id")
-                 (if (and (org-before-first-heading-p)
-												  (not (looking-at-p "\\(#\\+name:\\|<<\\)")))
-                     (org-transclusion-content-org-filtered
-                      nil plist)
-                   (org-transclusion-content-org-filtered
-                    'only-element plist)))))))
-  (advice-add #'org-transclusion-add-org-id :override
-              #'org-transclusion-add-org-id--patch))
+  (require 'org-transclusion-indent-mode))
 
 (load (ok-file-expand-lisp "pkg-anki-editor.el"))
 
