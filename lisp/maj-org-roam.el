@@ -208,7 +208,12 @@
   ;; Org Roam plugin for folgezettel IDs.
   :bind (([f9] . org-roam-fztl-outline-window-toggle))
   ;; :custom (org-roam-ok-node-display-title #'org-roam-fztl--display-title)
-  :hook (org-mode-hook . org-roam-fztl-mode)
+  :hook ((org-mode . org-roam-fztl-mode)
+         (org-roam-fztl-outline-mode
+          . (lambda ()
+              (interactive)
+              (setq-local repeat-mode nil) ; this mode is sluggish
+              (setq-local truncate-lines t))))
   :config
   (when (bound-and-true-p desktop-save-mode)
     (add-to-list 'desktop-minor-mode-table '(org-roam-fztl-mode nil)))
