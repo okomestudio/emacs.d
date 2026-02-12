@@ -206,7 +206,8 @@
 
 (use-package org-roam-fztl
   ;; Org Roam plugin for folgezettel IDs.
-  :custom (org-roam-ok-node-display-title #'org-roam-fztl--display-title)
+  :bind (([f9] . org-roam-fztl-outline-window-toggle))
+  ;; :custom (org-roam-ok-node-display-title #'org-roam-fztl--display-title)
   :hook (org-mode-hook . org-roam-fztl-mode)
   :config
   (when (bound-and-true-p desktop-save-mode)
