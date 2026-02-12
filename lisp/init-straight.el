@@ -187,7 +187,8 @@
        ( org-roam-ok git github "okomestudio/org-roam-ok"
          :files (:defaults "extensions/*") )
        ( org-transclusion git github "nobiot/org-transclusion"
-         :pre-build (("makeinfo" "./docs/org-transclusion.texi"
+         :pre-build (("sh" "-c" "cd ./docs && make org-transclusion.texi")
+                     ("makeinfo" "./docs/org-transclusion.texi"
                       "-o" "./docs/org-transclusion.info")
                      ("install-info"
                       "./docs/org-transclusion.info" "./docs/dir")))
