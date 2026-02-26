@@ -190,5 +190,9 @@ For tips on debugging, see the site readme."
   :hook (corfu-mode . corfu-prescient-mode)
   :custom (corfu-prescient-enable-filtering nil))
 
+(use-package vertico-prescient
+  :custom (vertico-prescient-enable-sorting t)
+  :hook (vertico-mode . vertico-prescient-mode))
+
 (provide 'subsys-completion)
 ;;; subsys-completion.el ends here
