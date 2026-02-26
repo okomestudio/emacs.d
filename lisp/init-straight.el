@@ -130,8 +130,7 @@
                      ("make") ("make" "install")) )
        ( elisp-for-python git github "kickingvegas/elisp-for-python" )
        ( emacs-lisp-elements git github "protesilaos/emacs-lisp-elements" )
-       ( flycheck git github "flycheck/flycheck"
-         :fork ( :branch "fix-line-prefix" ) )
+       ( flycheck git github "flycheck/flycheck" )
        ( flycheck-aspell-org git github "okomestudio/flycheck-aspell-org.el" )
        ( flyover git github "konrad1977/flyover" )
        ( greppu git github "okomestudio/greppu.el" )
