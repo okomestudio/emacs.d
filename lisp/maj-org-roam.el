@@ -61,7 +61,7 @@
 (use-package consult-org-roam
   :bind ( ("C-c n F" . consult-org-roam-file-find) )
   :config
-  (consult-org-roam-mode 1)
+  ;; (consult-org-roam-mode 1)
   (consult-customize consult-org-roam-file-find
                      :preview-key '(:debounce 0.1 any))
 
@@ -206,14 +206,21 @@
 
 (use-package org-roam-fztl
   ;; Org Roam plugin for folgezettel IDs.
-  :bind (([f9] . org-roam-fztl-outline-window-toggle))
+  :bind ( ([f9] . org-roam-fztl-outline-window-toggle)
+          ("C-c f o" . org-roam-fztl-outline-window-focus)
+          :map org-roam-fztl-outline-mode-map
+          ("i" . consult-org-heading) )
   ;; :custom (org-roam-ok-node-display-title #'org-roam-fztl--display-title)
+  :custom ((org-roam-fztl-outline-window-layout '(right . 0.167))
+           (org-roam-fztl-outline-show-title nil))
   :hook ((org-mode . org-roam-fztl-mode)
          (org-roam-fztl-outline-mode
           . (lambda ()
               (interactive)
               (setq-local repeat-mode nil) ; this mode is sluggish
-              (setq-local truncate-lines t))))
+              (setq-local truncate-lines t)
+              (setq-local org-use-speed-commands nil)
+              (text-scale-set -0.4))))
   :config
   (when (bound-and-true-p desktop-save-mode)
     (add-to-list 'desktop-minor-mode-table '(org-roam-fztl-mode nil)))
