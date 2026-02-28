@@ -192,7 +192,6 @@
  ("org-roam" . "7cd906b6f8b18a21766228f074aff24586770934")
  ("org-roam-bibtex" . "b065198f2c3bc2a47ae520acd2b1e00e7b0171e6")
  ("org-roam-cjk" . "ec201d7d83fa3c52a8546b3d196a5011185f02cd")
- ("org-roam-fztl" . "ec7a3e2718654c3cfde87cf8b5e37598b8b4a9f4")
  ("org-roam-node-display-cache" . "720cbcf093a33f315c2b06b1460ae1010198c307")
  ("org-roam-ok" . "331351ee2c5cff982617a777100886f0126d9ffc")
  ("org-roam-timestamps" . "c4ff1e2f5b0905b5caa917249aab56ddc1de1ab3")

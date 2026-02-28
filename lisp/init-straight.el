@@ -165,6 +165,7 @@
        ( mulex git github "okomestudio/mulex" )
        ( ok git github "okomestudio/ok.el" )
        ( ok-plural git github "okomestudio/ok-plural.el" )
+       ( or-struktur git github "okomestudio/or-struktur" )
        ( org-block-capf git github "xenodium/org-block-capf" )
        ( org-dividers git github "okomestudio/org-dividers" )
        ( org-excalidraw git github "4honor/org-excalidraw" )
@@ -180,7 +181,6 @@
        ( org-roam-cjk git github "okomestudio/org-roam-cjk"
          :files (:defaults "extensions/*") )
        ( org-roam-fz git github "okomestudio/org-roam-fz" )
-       ( org-roam-fztl git github "okomestudio/org-roam-fztl" )
        ( org-roam-node-display-cache
          git github "okomestudio/org-roam-node-display-cache" )
        ( org-roam-ok git github "okomestudio/org-roam-ok"

@@ -204,17 +204,17 @@
 
 (use-package org-id-ext)
 
-(use-package org-roam-fztl
+(use-package or-struktur
   ;; Org Roam plugin for folgezettel IDs.
-  :bind ( ([f9] . org-roam-fztl-outline-window-toggle)
-          ("C-c f o" . org-roam-fztl-outline-window-focus)
-          :map org-roam-fztl-outline-mode-map
+  :bind ( ([f9] . or-struktur-outline-window-toggle)
+          ("C-c f o" . or-struktur-outline-window-focus)
+          :map or-struktur-outline-mode-map
           ("i" . consult-org-heading) )
-  ;; :custom (org-roam-ok-node-display-title #'org-roam-fztl--display-title)
-  :custom ((org-roam-fztl-outline-window-layout '(right . 0.167))
-           (org-roam-fztl-outline-show-title nil))
-  :hook ((org-mode . org-roam-fztl-mode)
-         (org-roam-fztl-outline-mode
+  ;; :custom (org-roam-ok-node-display-title #'or-struktur--display-title)
+  :custom ((or-struktur-outline-window-layout '(right . 0.167))
+           (or-struktur-outline-show-title nil))
+  :hook ((org-mode . or-struktur-mode)
+         (or-struktur-outline-mode
           . (lambda ()
               (interactive)
               (setq-local repeat-mode nil) ; this mode is sluggish
@@ -223,14 +223,14 @@
               (text-scale-set -0.4))))
   :config
   (when (bound-and-true-p desktop-save-mode)
-    (add-to-list 'desktop-minor-mode-table '(org-roam-fztl-mode nil)))
+    (add-to-list 'desktop-minor-mode-table '(or-struktur-mode nil)))
 
-  (defun org-roam-fztl--display-title (node)
+  (defun or-struktur--display-title (node)
     "Render NODE title with folgezettel for display."
     (concat
      (org-roam-ok-node--title node)
-     (when-let* ((r (org-roam-fztl-overlay--format (org-roam-node-id node))))
-       (concat " " (propertize r 'face 'org-roam-fztl-overlay))))))
+     (when-let* ((r (or-struktur-overlay--format (org-roam-node-id node))))
+       (concat " " (propertize r 'face 'or-struktur-overlay))))))
 
 (provide 'maj-org-roam)
 ;;; maj-org-roam.el ends here
