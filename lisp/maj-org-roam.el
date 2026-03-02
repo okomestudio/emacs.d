@@ -206,15 +206,15 @@
 
 (use-package or-struktur
   ;; Org Roam plugin for folgezettel IDs.
-  :bind ( ([f9] . or-struktur-outline-window-toggle)
-          ("C-c f o" . or-struktur-outline-window-focus)
-          :map or-struktur-outline-mode-map
+  :bind ( ([f9] . or-struktur-view-toggle)
+          ("C-c f o" . or-struktur-view-focus)
+          :map or-struktur-view-mode-map
           ("i" . consult-org-heading) )
   ;; :custom (org-roam-ok-node-display-title #'or-struktur--display-title)
-  :custom ((or-struktur-outline-window-layout '(right . 0.167))
-           (or-struktur-outline-show-title nil))
+  :custom ((or-struktur-view-layout '(right . 0.167))
+           (or-struktur-view-show-title nil))
   :hook ((org-mode . or-struktur-mode)
-         (or-struktur-outline-mode
+         (or-struktur-view-mode
           . (lambda ()
               (interactive)
               (setq-local repeat-mode nil) ; this mode is sluggish
