@@ -27,10 +27,19 @@
   :bind-keymap ("C-c n d" . org-roam-dailies-map)
   :custom ((org-roam-completion-everywhere nil)
            (org-roam-database-connector 'sqlite-builtin)
+
+           ;; Removed `transclude' to include them in backlinks. (Also, see
+           ;; `org-roam-db-extra-links-elements'.)
+           (org-roam-db-extra-links-exclude-keys '((node-property "ROAM_REFS")))
+
            (org-roam-db-location (ok-file-expand-var "org-roam/roam/.roam.db"))
            (org-roam-directory (ok-file-expand-var "org-roam/roam/"))
            (org-roam-extract-new-file-path "topic/${id}/${slug}.org")
-           (org-roam-node-display-template "${title}"))
+           (org-roam-node-display-template "${title}")
+           (org-roam-mode-sections
+            (list #'org-roam-backlinks-section
+                  #'org-roam-reflinks-section
+                  #'org-roam-cjk-unlinked-references-section)))
   :init
   (which-key-add-key-based-replacements
     "C-c n" "org-roam"
@@ -137,10 +146,6 @@
 
 (use-package org-roam-cjk
   :bind ("C-c n s" . org-roam-cjk-keyword-search-buffer)
-  :custom ((org-roam-mode-sections
-            (list #'org-roam-backlinks-section
-                  #'org-roam-reflinks-section
-                  #'org-roam-cjk-unlinked-references-section)))
   :config
   (require 'adaptive-wrap)
   (require 'ok-plural)
