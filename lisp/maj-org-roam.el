@@ -212,7 +212,7 @@
 (use-package or-struktur
   ;; Org Roam plugin for folgezettel IDs.
   :bind ( ([f9] . or-struktur-view-toggle)
-          ("C-c f o" . or-struktur-view-focus)
+          ("C-c s o" . or-struktur-view-focus)
           :map or-struktur-view-mode-map
           ("i" . consult-org-heading) )
   ;; :custom (org-roam-ok-node-display-title #'or-struktur--display-title)
