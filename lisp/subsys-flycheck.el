@@ -5,8 +5,6 @@
 ;;
 ;;; Code:
 
-(require 'straight)
-
 (use-package flycheck
   :custom ((flycheck-python-mypy-executable (ok-file-expand-bin "mypy"))
            (flycheck-rst-executable (ok-file-expand-bin "rst2pseudoxml")))
@@ -57,13 +55,6 @@ The function returns nil, if the file does not exists."
                #'flycheck-locate-config-file-textlint)
   (add-to-list 'flycheck-textlint-plugin-alist '(org-mode . "org")))
 
-;;; Aspell
-
-(use-package flycheck-aspell-org
-  :config
-  (add-to-list 'flycheck-checkers 'org-aspell-dynamic)
-  (flycheck-add-next-checker 'org-aspell-dynamic '(t . textlint)))
-
 ;;; Notification
 
 (use-package flycheck-pos-tip
@@ -84,26 +75,6 @@ The function returns nil, if the file does not exists."
   :custom (flycheck-eglot-exclusive t))
 
 ;;; Misc.
-
-(defcustom subsys-flycheck-mode 'default
-  "Flychcek mode in effect, default or eglot."
-  :type 'symbol)
-
-(defun subsys-flycheck--init-org-mode ()
-  "Initialize flycheck in `org-mode'."
-  (pcase subsys-flycheck-mode
-    ('default
-     (require 'flycheck-aspell-org)
-     (add-to-list 'flycheck-checkers 'org-aspell-dynamic)
-     (flycheck-add-next-checker 'org-aspell-dynamic '(t . textlint))
-     (flycheck-mode 1))
-    ('eglot
-     (require 'flycheck-eglot)
-     (setq-local flycheck-disabled-checkers '(org-aspell-dynamic textlint))
-     (eglot-ensure)
-     (flycheck-eglot-mode 1))))
-
-(add-hook 'org-mode-hook #'subsys-flycheck--init-org-mode)
 
 (use-package flyover
   ;; A beautiful inline overlay for Flycheck
