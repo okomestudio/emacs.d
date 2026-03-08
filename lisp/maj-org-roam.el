@@ -216,7 +216,7 @@
           :map or-struktur-view-mode-map
           ("i" . consult-org-heading) )
   ;; :custom (org-roam-ok-node-display-title #'or-struktur--display-title)
-  :custom ((or-struktur-view-layout '(right . 0.167))
+  :custom ((or-struktur-view-layout 'right)
            (or-struktur-view-show-title nil))
   :hook ((org-mode . or-struktur-mode)
          (or-struktur-view-mode
