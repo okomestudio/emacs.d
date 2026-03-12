@@ -20,6 +20,9 @@
 
 (use-package magit-todos
   :after magit
+  :bind ( :map magit-todos-section-map
+          ("R" . magit-todos-update) )
+  :custom ((magit-todos-update nil))
   :hook (magit-mode . magit-todos-mode)
   :config
   (dolist (kw '("WIP"
