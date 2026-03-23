@@ -95,7 +95,37 @@ if hankaku is active and the cdr of ELT if zenkaku is active."
                (zen (caddr elt)))
           (if (member current-input-method '("japanese-mozc")) zen han)
         (message "Bad arguments: %s" elt))))
-  (add-to-list 'tempel-user-elements #'tempel-ok--zenkaku))
+  (add-to-list 'tempel-user-elements #'tempel-ok--zenkaku)
+
+  (defun tempel-ok--locvar (elmt)
+    "Handle `locvar'.
+This function element is used to add or create a local variable entry."
+    (when (eq (car-safe elmt) 'locvar)
+      (let ((line (apply #'concat (cdr elmt)))
+            (case-fold-search t)
+            within-block-p)
+        (save-excursion
+          (beginning-of-line)
+          (when-let* ((pos (point))
+                      (low (search-backward "Local Variables:" nil t)))
+            (let* ((prefix (buffer-substring-no-properties
+                            (line-beginning-position)
+                            (match-beginning 0)))
+                   (suffix (concat (regexp-quote
+                                    (buffer-substring-no-properties
+                                     (point)
+                                     (line-end-position)))
+                                   "$")))
+              (when-let* ((high (re-search-forward
+                                 (concat (regexp-quote prefix)
+                                         "[ \t]*End:[ \t]*")
+                                 nil t))
+                          (_ (> high pos)))
+                (setq within-block-p t))))
+          (if within-block-p
+              (format "%s\n" line)
+            (format "# Local Variables:\n%s\n# End:\n" line))))))
+  (add-to-list 'tempel-user-elements #'tempel-ok--locvar))
 
 ;;; COmpletion in Region FUnction (CORFU)
 

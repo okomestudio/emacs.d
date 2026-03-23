@@ -1,4 +1,8 @@
 text-mode
+(file-locvar (locvar "# foo: \"bar\""))
+(file-locvar-en-gb (locvar "# jinx-language: \"en_GB\""))
+(file-locvar-en-us (locvar "# jinx-language: \"en_US\""))
+(file-locvar-ja (locvar "# jinx-language: \"ja\"\n# lsp-ltex-language: \"ja-JP\""))
 (page (p "Page: " page t)
       (zenkaku "(p. " "（") (s page) (zenkaku ")" "頁）")
       :ann "Page number"
@@ -88,15 +92,7 @@ org-mode
               "      def test(self):" n
               "          pass" n
               "#+end_src" n>)
-(file-local-variables "* Local variables :noexport:" n
-                      "# Local Variables:" n
-                      "# foo: bar" n
-                      "# End:" n)
-(file-local-variables-ja "* Local variables :noexport:" n
-                         "# Local Variables:" n
-                         "# lsp-ltex-language: \"ja-JP\"" n
-                         "# foo: bar" n
-                         "# End:" n)
+(file-locvar-org-sec "* Local variables :noexport:" n)
 (latex-equation "\\begin{equation}" r> n> "\\end{equation}")
 (latex-equation-star "\\begin{equation*}" r> n> "\\end{equation*}")
 (list-item "  - " p n>)
