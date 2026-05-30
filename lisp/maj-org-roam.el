@@ -146,6 +146,7 @@
 
 (use-package org-roam-cjk
   :bind ("C-c n s" . org-roam-cjk-keyword-search-buffer)
+  :custom ((org-roam-cjk-rg-section-file-truncate-col 25))
   :config
   (require 'adaptive-wrap)
   (require 'ok-plural)
