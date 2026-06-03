@@ -36,5 +36,25 @@
 (use-package toml-ts-mode
   :custom (toml-ts-mode-indent-offset 4))
 
+;;; XML
+
+(use-package nxml-mode
+  :straight nil
+  :hook (nxml-mode . hs-minor-mode)
+  :config
+  (add-to-list 'hs-special-modes-alist
+               '(nxml-mode
+                 ;; "<[^/>][^>]*>"
+                 ;; "</[^/>]+>"
+                 "<!--\\|<[^/>?][^>]*>"     ; Start of block: comment or opening tag
+                 "-->\\|</[^/>]+>"         ; End of block: comment end or closing tag
+                 ;; "<!--"                    ; Comment start
+                 nil
+                 ;; #'nxml-forward-element    ; Function to move over the element
+                 ;; (lambda (arg) (nxml-forward-element))
+                 sgml-skip-tag-forward
+                 nil)
+               ))
+
 (provide 'maj-text-mode)
 ;;; maj-text-mode.el ends here
