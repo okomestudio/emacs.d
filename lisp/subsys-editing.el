@@ -40,10 +40,41 @@
           :map prog-mode-map
           ("M-c" . titlecase-dwim) )
   :custom
-  (titlecase-skip-words-regexps
-   '("\\b[[:upper:]]+\\b"
-     "\\b\\(\\(www\\.\\|\\(s?https?\\|ftp\\|file\\|gopher\\|nntp\\|news\\|telnet\\|wais\\|mailto\\|info\\):\\)\\(//[-a-z0-9_.]+:[0-9]*\\)?\\(?:[-a-z0-9_=#$@~%&*+\\/[:word:]!?:;.,]+([-a-z0-9_=#$@~%&*+\\/[:word:]!?:;.,]+[-a-z0-9_=#$@~%&*+\\/[:word:]]*)\\(?:[-a-z0-9_=#$@~%&*+\\/[:word:]!?:;.,]+[-a-z0-9_=#$@~%&*+\\/[:word:]]\\)?\\|[-a-z0-9_=#$@~%&*+\\/[:word:]!?:;.,]+[-a-z0-9_=#$@~%&*+\\/[:word:]]\\)\\)"
-     )))
+  ((titlecase-style 'chicago)
+   (titlecase-skip-words-regexps
+    '("\\b[[:upper:]]+\\b"
+      "\\b\\(\\(www\\.\\|\\(s?https?\\|ftp\\|file\\|gopher\\|nntp\\|news\\|telnet\\|wais\\|mailto\\|info\\):\\)\\(//[-a-z0-9_.]+:[0-9]*\\)?\\(?:[-a-z0-9_=#$@~%&*+\\/[:word:]!?:;.,]+([-a-z0-9_=#$@~%&*+\\/[:word:]!?:;.,]+[-a-z0-9_=#$@~%&*+\\/[:word:]]*)\\(?:[-a-z0-9_=#$@~%&*+\\/[:word:]!?:;.,]+[-a-z0-9_=#$@~%&*+\\/[:word:]]\\)?\\|[-a-z0-9_=#$@~%&*+\\/[:word:]!?:;.,]+[-a-z0-9_=#$@~%&*+\\/[:word:]]\\)\\)"
+      )))
+  :config
+  (require 'cl-lib)
+
+  (defun titlecase-ok-headlines (beg end)
+    "Iterate over headlines in the region or buffer, prompting to titlecase them.
+Matches Org-mode (e.g., '* Headline') and Markdown (e.g., '# Headline') formats."
+    (interactive (if (use-region-p)
+                     (list (region-beginning) (region-end))
+                   (list (point-min) (point-max))))
+    (let ((end-marker (copy-marker end))
+          (changes-made 0))
+      (save-excursion
+        (goto-char beg)
+        (while (re-search-forward "^\\(\\*+\\|#+\\)[ \t]+" end-marker t)
+          (let* ((text-start (point))
+                 (text-end (line-end-position))
+                 (orig-text
+                  (buffer-substring-no-properties text-start text-end))
+                 (titlecased-text (titlecase--string orig-text titlecase-style)))
+            (when (not (string= orig-text titlecased-text))
+              (let ((ov (make-overlay text-start text-end)))
+                (overlay-put ov 'face 'highlight)
+                (unwind-protect
+                    (when (y-or-n-p (format "Change: '%s' -> '%s'? "
+                                            orig-text titlecased-text))
+                      (delete-region text-start text-end)
+                      (insert titlecased-text)
+                      (cl-incf changes-made))
+                  (delete-overlay ov)))))))
+      (set-marker end-marker nil))))
 
 (use-package typo
   ;; Typographical editing utility and smart quotation.
