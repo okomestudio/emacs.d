@@ -30,27 +30,35 @@
      (save-excursion
        ;; Move to a structure where `hs-already-hidden-p' can be used
        ;; to inspect the current toggle status.
-       (forward-thing (cond ((derived-mode-p '(emacs-lisp-mode)) 'sexp)
-                            (t 'defun)))
+       (cond
+        ((derived-mode-p '(emacs-lisp-mode)) (forward-thing 'sexp))
+        ((derived-mode-p '(nxml-mode)) (goto-char (point-min)))
+        (t (forward-thing 'defun)))
        (if (hs-already-hidden-p) (hs-show-all) (hs-hide-all)))))
+
+  (defun hs-ok-beginning-of-block ()
+    "Move point to beginning of current block."
+    (unless (eq (point) (end-of-line))
+      (forward-char))
+    (cond
+     ((derived-mode-p '(nxml-mode)) (nxml-backward-up-element))
+     (t (beginning-of-defun))))
 
   (defun hs-ok-toggle-hiding--ad (fun &rest _)
     "Advise `indent-for-tab-command' to add hiding toggle behavior."
-    (if (and (boundp 'hs-minor-mode) (null hs-minor-mode))
+    (if (not (bound-and-true-p hs-minor-mode))
         (apply fun _)
-      (pcase (hs-already-hidden-p)
-        (`nil (pcase (eq (point)
-                         (save-excursion
-                           (unless (eq (point) (end-of-line)) (forward-char))
-                           (beginning-of-defun)
-                           (point)))
-                (`t (hs-hide-block)
-                    (unless (eq (point) (end-of-line)) (forward-char))
-                    (beginning-of-defun))
-                (`nil (apply fun _))))
-        (_ (save-excursion (hs-show-block))
-           (unless (eq (point) (end-of-line)) (forward-char))
-           (beginning-of-defun)))))
+      (if (hs-already-hidden-p)
+          (progn
+            (save-excursion (hs-show-block))
+            (hs-ok-beginning-of-block))
+        (pcase (eq (point)
+                   (save-excursion
+                     (hs-ok-beginning-of-block)
+                     (point)))
+          ('t (hs-hide-block)
+              (hs-ok-beginning-of-block))
+          ('nil (apply fun _))))))
 
   (advice-add #'indent-for-tab-command :around #'hs-ok-toggle-hiding--ad))
 
