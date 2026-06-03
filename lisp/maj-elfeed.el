@@ -26,31 +26,31 @@
            (elfeed-search-title-min-width 16)
            (elfeed-search-trailing-width 30)
            (elfeed-show-unique-buffers nil))
-  :hook ((elfeed-show-mode . elfeed-ok--show-setup)
-         (elfeed-search-update . elfeed-ok--search-setup)
-         (enable-theme-functions . elfeed-ok--theme-hook))
+  ;; :hook ((elfeed-show-mode . elfeed-ok--show-setup)
+  ;;        (elfeed-search-update . elfeed-ok--search-setup)
+  ;;        (enable-theme-functions . elfeed-ok--theme-hook))
   :config
   (ok-debug-register '(elfeed-log-level . (debug . info)))
 
-  (defun elfeed-ok--show-setup ()
-    ;; Remove underline from zenkaku space
-    (setq-local nobreak-char-display nil)
+  ;; (defun elfeed-ok--show-setup ()
+  ;;   ;; Remove underline from zenkaku space
+  ;;   (setq-local nobreak-char-display nil)
 
-    ;; Adjust entry style via shr:
-    (setq-local shr-folding-mode nil
-                shr-indentation 4
-                shr-max-image-proportion 0.8
-                shr-use-fonts t
-                shr-width 80))
+  ;;   ;; Adjust entry style via shr:
+  ;;   (setq-local shr-folding-mode nil
+  ;;               shr-indentation 4
+  ;;               shr-max-image-proportion 0.8
+  ;;               shr-use-fonts t
+  ;;               shr-width 80))
 
-  (defun elfeed-ok--search-setup ()
-    (setq-local nobreak-char-display nil))
+  ;; (defun elfeed-ok--search-setup ()
+  ;;   (setq-local nobreak-char-display nil))
 
-  (defun elfeed-ok--theme-hook (theme)
-    (set-face-attribute 'elfeed-search-title-face nil
-                        :foreground (face-attribute 'shadow :foreground))
-    (set-face-attribute 'elfeed-search-unread-title-face nil
-                        :foreground (face-attribute 'default :foreground)))
+  ;; (defun elfeed-ok--theme-hook (theme)
+  ;;   (set-face-attribute 'elfeed-search-title-face nil
+  ;;                       :foreground (face-attribute 'shadow :foreground))
+  ;;   (set-face-attribute 'elfeed-search-unread-title-face nil
+  ;;                       :foreground (face-attribute 'default :foreground)))
 
   (load (ok-file-expand-etc "elfeed/init")))
 

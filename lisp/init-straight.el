@@ -128,6 +128,8 @@
                      ("./configure"
                       ,(concat "--prefix=" (expand-file-name ".local" "~")))
                      ("make") ("make" "install")) )
+       ( elfeed git github "emacs-elfeed/elfeed"
+         :fork t )
        ( elisp-for-python git github "kickingvegas/elisp-for-python" )
        ( emacs-lisp-elements git github "protesilaos/emacs-lisp-elements" )
        ( flycheck git github "flycheck/flycheck" )

@@ -25,7 +25,7 @@
  ("cfrs" . "f3a21f237b2a54e6b9f8a420a9da42b4f0a63121")
  ("citeproc-el" . "54184baaff555b5c7993d566d75dd04ed485b5c0")
  ("command-log-mode" . "af600e6b4129c8115f464af576505ea8e789db27")
- ("compat" . "a0444eab265888bcc33c1ddaae8592e56e96e348")
+ ("compat" . "67688415683b74e2504b59bda4532891a46e3822")
  ("consult" . "ce38dd037769ccba93e7b854ab9b0cc0eced84ee")
  ("consult-flycheck" . "3bc2141daf8cfad7e4d2e2f78b15d45033f707a5")
  ("consult-flyspell" . "7011e6634598530ea2d874e7e7389dc1bb94e1ca")

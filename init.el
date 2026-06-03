@@ -17,14 +17,15 @@
 ;;
 ;; Install packages used throughout the init files here.
 
+(use-package compat)
+(use-package s)               ; string manipulation library
+
 (use-package dash
   ;; A modern list library.
   :hook ((emacs-lisp-mode lisp-data-mode) . dash-fontify-mode)
   :config
   (with-eval-after-load 'info-look
     (dash-register-info-lookup)))
-
-(use-package s)               ; string manipulation library
 
 (use-package ok
   ;; Emacs Lisp utilities for Okome Studio (ok).
