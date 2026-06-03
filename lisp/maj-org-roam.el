@@ -204,6 +204,48 @@
   ;; For citations, cross-references, bibliographies.
   :custom (bibtex-completion-pdf-field "file"))
 
+(use-package org-ref-ok
+  :after org-ref
+  :custom (org-ref-vis-style-getter
+           (lambda (command lang)
+             (let* ((dir "/usr/share/citation-style-language/styles")
+                    (chicago-en
+                     (file-name-concat
+                      dir
+                      ;; "chicago-fullnote-bibliography-short-title-subsequent.csl"
+                      "chicago-note-bibliography.csl"))
+                    (chicago-ja
+                     (file-name-concat
+                      ;; "~/github.com/okomestudio"
+                      ;; "chicago-fullnote-bibliography-short-title-subsequent-ja-csl"
+                      ;; "chicago-fullnote-bibliography-short-title-subsequent-ja.csl"
+                      "~/github.com/okomestudio/csl-chicago-ja"
+                      "chicago-notes-bibliography-ja.csl")))
+               (pcase lang
+                 ("ja-JP" chicago-ja)
+                 (_ chicago-en)))))
+  :hook (org-mode . org-ref-vis-mode)
+  :init
+  (defun my/org-strip-all-link-descriptions-in-region (beg end)
+    "Loop through the region and strip descriptions from every Org link found."
+    (interactive "r")
+    (save-excursion
+      (goto-char end)
+      ;; Map backward so string mutations don't shift upcoming match positions
+      (while (re-search-backward org-link-any-re beg t)
+        (let ((context (org-element-context)))
+          (when (and (eq (org-element-type context) 'link)
+                     (org-element-property :contents-begin context)) ; Has description
+            (let* ((l-start (org-element-property :begin context))
+                   (l-end (org-element-property :end context))
+                   (path (org-element-property :path context))
+                   (type (org-element-property :type context))
+                   (post-blank (org-element-property :post-blank context))
+                   (padding (if post-blank (make-string post-blank ?\s) ""))
+                   (new-link (format "[[%s:%s]]" type path)))
+              (delete-region l-start l-end)
+              (insert new-link padding))))))))
+
 (use-package bibtex-completion-ok)
 
 ;;; Misc.

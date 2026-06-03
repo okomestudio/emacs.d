@@ -175,6 +175,7 @@
        ( org-modern-indent git github "jdtsmith/org-modern-indent" )
        ( org-ok git github "okomestudio/org-ok"
          :files (:defaults "extensions/*") )
+       ( org-ref-ok git github "okomestudio/org-ref-ok" )
        ( org-roam git github "org-roam/org-roam"
          :files (:defaults "extensions/*" "org-roam-pkg.el")
          :fork t )
