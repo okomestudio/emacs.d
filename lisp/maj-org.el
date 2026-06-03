@@ -193,9 +193,13 @@ beginning of line, in which case it will create a new list."
 (use-package ox-md :after ox) ; markdown
 (use-package ox-latex
   :after ox
+  ;; Install: texlive-full (for Biblatex) and latexmk (specify lualatex with
+  ;; latex_compiler) and biber.
   :custom ((org-latex-pdf-process
-            '("lualatex -interaction nonstopmode -shell-escape %f"
-              "lualatex -interaction nonstopmode -shell-escape %f"))))
+            '("latexmk -f -pdflua -interaction=nonstopmode -output-directory=%o %f")
+            ;; '("lualatex -interaction nonstopmode -shell-escape %f"
+            ;;   "lualatex -interaction nonstopmode -shell-escape %f")
+            )))
 
 (use-package ox
   :after org
