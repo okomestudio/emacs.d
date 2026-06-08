@@ -17,7 +17,7 @@
 ;;
 ;; Install packages used throughout the init files here.
 
-(use-package compat)
+(use-package compat)          ; Emacs Lisp compatibility layer
 (use-package s)               ; string manipulation library
 
 (use-package dash

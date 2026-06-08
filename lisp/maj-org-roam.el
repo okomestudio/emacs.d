@@ -205,46 +205,71 @@
   :custom (bibtex-completion-pdf-field "file"))
 
 (use-package org-ref-ok
-  :after org-ref
+  :after org-ref)
+
+(use-package org-ref-vis
+  :straight nil
   :custom (org-ref-vis-style-getter
            (lambda (command lang)
-             (let* ((dir "/usr/share/citation-style-language/styles")
-                    (chicago-en
+             (let* ((chicago-en
                      (file-name-concat
-                      dir
+                      org-ref-vis-csl-dir "styles"
                       ;; "chicago-fullnote-bibliography-short-title-subsequent.csl"
                       "chicago-note-bibliography.csl"))
+                    ;; (chicago-ja
+                    ;;  (file-name-concat
+                    ;;   "~/github.com/okomestudio"
+                    ;;   "chicago-fullnote-bibliography-short-title-subsequent-ja-csl"
+                    ;;   "chicago-fullnote-bibliography-short-title-subsequent-ja.csl"))
                     (chicago-ja
                      (file-name-concat
-                      ;; "~/github.com/okomestudio"
-                      ;; "chicago-fullnote-bibliography-short-title-subsequent-ja-csl"
-                      ;; "chicago-fullnote-bibliography-short-title-subsequent-ja.csl"
                       "~/github.com/okomestudio/csl-chicago-ja"
                       "chicago-notes-bibliography-ja.csl")))
                (pcase lang
                  ("ja-JP" chicago-ja)
                  (_ chicago-en)))))
   :hook (org-mode . org-ref-vis-mode)
-  :init
-  (defun my/org-strip-all-link-descriptions-in-region (beg end)
-    "Loop through the region and strip descriptions from every Org link found."
-    (interactive "r")
-    (save-excursion
-      (goto-char end)
-      ;; Map backward so string mutations don't shift upcoming match positions
-      (while (re-search-backward org-link-any-re beg t)
-        (let ((context (org-element-context)))
-          (when (and (eq (org-element-type context) 'link)
-                     (org-element-property :contents-begin context)) ; Has description
-            (let* ((l-start (org-element-property :begin context))
-                   (l-end (org-element-property :end context))
-                   (path (org-element-property :path context))
-                   (type (org-element-property :type context))
-                   (post-blank (org-element-property :post-blank context))
-                   (padding (if post-blank (make-string post-blank ?\s) ""))
-                   (new-link (format "[[%s:%s]]" type path)))
-              (delete-region l-start l-end)
-              (insert new-link padding))))))))
+  :config
+  (setopt org-ref-vis-command-alist
+          (append
+           '((("bibfullcite") . ((bib-entry) "${bib-entry}"))
+             (("citepub") . ((title-only year-only)
+                             "${title-only} (${publisher}, ${year-only})")))
+           org-ref-vis-command-alist))
+
+  (defun org-ref-vis-bibfullcite-export (path desc format _comm-channel)
+    "Handle compilation export targets for the `bibfullcite' link.
+PATH is the citekey string."
+    (cond ((eq format 'latex)
+           (format "\\bibfullcite{%s}"
+                   (replace-regexp-in-string "^&" "" path)))
+          ((eq format 'html)
+           (format "<span class=\"citation\">[Full Cite: %s]</span>" path))
+          (t (if desc desc (format "[Full Cite: %s]" path)))))
+
+  (org-link-set-parameters
+   "bibfullcite"
+   :complete (lambda () (org-ref-cite-link-complete "bibfullcite"))
+   :export #'org-ref-vis-bibfullcite-export
+   :follow #'org-ref-click-hyperlink
+   :help-echo #'org-ref-cite-tooltip)
+
+  (defun org-ref-vis-citepub-export (path desc format _comm-channel)
+    "Handle compilation export targets for the `citepub' link.
+PATH is the citekey string."
+    (cond ((eq format 'latex)
+           (format "\\citepub{%s}"
+                   (replace-regexp-in-string "^&" "" path)))
+          ((eq format 'html)
+           (format "<span class=\"citation\">[Cite Pub: %s]</span>" path))
+          (t (if desc desc (format "[Cite Pub: %s]" path)))))
+
+  (org-link-set-parameters
+   "citepub"
+   :complete (lambda () (org-ref-cite-link-complete "citepub"))
+   :export #'org-ref-vis-citepub-export
+   :follow #'org-ref-click-hyperlink
+   :help-echo #'org-ref-cite-tooltip))
 
 (use-package bibtex-completion-ok)
 
