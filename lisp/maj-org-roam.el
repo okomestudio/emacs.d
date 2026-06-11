@@ -253,6 +253,7 @@ PATH is the citekey string."
    :export #'org-ref-vis-bibfullcite-export
    :follow #'org-ref-click-hyperlink
    :help-echo #'org-ref-cite-tooltip)
+  (add-to-list 'org-ref-cite-types '("bibfullcite" "Bibliography full list"))
 
   (defun org-ref-vis-citepub-export (path desc format _comm-channel)
     "Handle compilation export targets for the `citepub' link.
@@ -269,7 +270,8 @@ PATH is the citekey string."
    :complete (lambda () (org-ref-cite-link-complete "citepub"))
    :export #'org-ref-vis-citepub-export
    :follow #'org-ref-click-hyperlink
-   :help-echo #'org-ref-cite-tooltip))
+   :help-echo #'org-ref-cite-tooltip)
+  (add-to-list 'org-ref-cite-types '("citepub" "Cite publication")))
 
 (use-package bibtex-completion-ok)
 
