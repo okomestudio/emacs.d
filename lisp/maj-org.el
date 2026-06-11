@@ -52,9 +52,9 @@
              ;; TODO(2026-03-06): `org-lint' of the current `org-mode' produces
              ;; numerous lint errors. This seems to be a known bug in upstream,
              ;; soon to be patched. Disable `org-lint' meanwhile.
-             (setq-local flycheck-disabled-checkers
-                         (cons 'org-lint
-                               flycheck-disabled-checkers))
+             ;; (setq-local flycheck-disabled-checkers
+             ;;             (cons 'org-lint
+             ;;                   flycheck-disabled-checkers))
              (flycheck-mode 1)))
   :config
   ;; Unset the keybindings to disable org-agenda shortcuts and

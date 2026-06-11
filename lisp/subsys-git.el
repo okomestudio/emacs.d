@@ -12,6 +12,11 @@
   :custom ((magit-diff-refine-hunk t)
            (magit-format-file-function #'magit-format-file-nerd-icons))
   :config
+  ;; TODO(2026-06-11): Somehow this git-commit-mode registration is missing, so
+  ;; manually adding until further investigation.
+  (require 'git-commit)
+  (add-to-list 'auto-mode-alist '("\\(^\\|/\\)COMMIT_EDITMSG\\'" . git-commit-mode))
+
   (add-hook 'magit-status-sections-hook #'magit-insert-worktrees 99))
 
 (use-package magit-prime

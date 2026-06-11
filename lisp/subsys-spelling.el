@@ -19,9 +19,10 @@
   ;; Katakana + other CJK scripts.
   (add-to-list 'jinx-exclude-regexps '(t "\\cc"))
 
-  (let ((ul (face-attribute 'flycheck-error :underline)))
-    (set-face-attribute 'jinx-misspelled nil
-                        :underline (append ul '(:style wave)))))
+  (with-eval-after-load 'flycheck
+    (let ((ul (face-attribute 'flycheck-error :underline)))
+      (set-face-attribute 'jinx-misspelled nil
+                          :underline (append ul '(:style wave))))))
 
 (provide 'subsys-spelling)
 ;;; subsys-spelling.el ends here

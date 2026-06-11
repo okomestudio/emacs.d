@@ -68,13 +68,15 @@ This function uses `safe-local-variable-directories' introduced in Emacs
       ;; for each known project directory.
       (when symlink-tree
         (setq ds (append ds (--map (string-replace "~" symlink-tree it) ds))))
+      (setq ds (--map (file-name-as-directory (expand-file-name it)) ds))
       (setopt safe-local-variable-directories (delete-dups ds))))
 
   (cl-defun projectile-ok--add-to-safe-local-variable-directories ()
     "Add the current project root to `safe-local-variable-directories'."
     (when (projectile-project-root)
       (add-to-list 'safe-local-variable-directories
-                   (abbreviate-file-name (projectile-project-root)))))
+                   (file-name-as-directory
+                    (expand-file-name (projectile-project-root))))))
 
   (add-hook 'hack-local-variables-hook
             #'projectile-ok--add-to-safe-local-variable-directories))
