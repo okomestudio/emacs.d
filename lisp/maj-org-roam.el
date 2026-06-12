@@ -46,6 +46,10 @@
     "C-c n d" "org-roam-dailies"
     "C-c r" "org-ref")
 
+  (defun org-roam--load-init-lazy ()
+    (load (ok-file-expand-etc "org-roam/init")))
+  (add-hook 'after-init-hook #'org-roam--load-init-lazy 99)
+
   :config
   (with-eval-after-load 'savehist
     (setopt savehist-additional-variables
@@ -135,10 +139,7 @@
 
 (use-package org-roam-ok
   :custom ((org-roam-ok-node-use-cache-in-memory nil)
-           (org-roam-ok-on-idle-delay nil))
-  :init
-  (load (ok-file-expand-etc "org-roam/init"))
-  (org-roam-ok-on-idle-init-setup))
+           (org-roam-ok-on-idle-delay nil)))
 
 (use-package adaptive-wrap)
 

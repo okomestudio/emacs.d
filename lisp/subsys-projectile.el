@@ -25,7 +25,7 @@
            (projectile-project-search-path
             `(,(ok-file-expand-user-emacs-file "straight" "repos/")
               (,(expand-file-name "github.com/" (getenv "HOME")) . 2))))
-  :hook ((after-init . projectile-mode)
+  :hook ((on-first-file . projectile-mode)
          (projectile-mode . projectile-ok-set-safe-local-variable-directories))
   :ensure-system-package ((ag . "sudo apt install -y silversearcher-ag")
                           (fdfind . "sudo apt install -y fd-find"))
@@ -58,8 +58,8 @@ To avoid being prompted for safeness, a symbol `sym' needs to be in
   (put 'sym 'safe-local-variable #'integerp)
   (ok-safe-local-variable-add sym integerp)
 
-This function uses `safe-local-variable-directories' introduced in Emacs
-30.1 to declare a local directory tree as safe."
+This function uses `safe-local-variable-directories' introduced in Emacs 30.1 to
+declare a local directory tree as safe."
     (interactive)
     (let* ((projectile-current-project-on-switch 'keep)
            (ds (projectile-relevant-known-projects))

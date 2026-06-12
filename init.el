@@ -92,8 +92,11 @@
   (desktop-save-mode 1)
 
   :config
-  (require 'ok-desktop)
-  (add-to-list 'desktop-globals-to-save 'safe-local-variable-directories))
+  (require 'ok-desktop)       ; ensures application of enhancements
+
+  ;; Use if any globals should be saved.
+  ;; (add-to-list 'desktop-globals-to-save 'safe-local-variable-directories)
+  )
 
 (provide 'init)
 ;;; init.el ends here
