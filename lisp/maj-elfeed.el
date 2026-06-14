@@ -19,47 +19,53 @@
   ;;
   ;;   - `M-x elfeed RET'
   ;;
-  :bind ( :map reader-app-prefix-map
+  :bind ( :map elfeed-search-mode-map
+          ("V" . elfeed-tree)
+          :map elfeed-tree-mode-map
+          ("V" . elfeed-search)
+          :map reader-app-prefix-map
           ("e" . elfeed) )
   :custom ((elfeed-curl-max-connections 16)
            (elfeed-search-title-max-width 100)
            (elfeed-search-title-min-width 16)
            (elfeed-search-trailing-width 30)
-           (elfeed-show-unique-buffers nil))
-  ;; :hook ((elfeed-show-mode . elfeed-ok--show-setup)
-  ;;        (elfeed-search-update . elfeed-ok--search-setup)
-  ;;        (enable-theme-functions . elfeed-ok--theme-hook))
+           (elfeed-show-unique-buffers nil)
+           (elfeed-use-curl t)
+           (url-queue-timeout 15))
+  :hook ((elfeed-show-mode . elfeed-ok--show-setup)
+         (elfeed-search-update . elfeed-ok--search-setup)
+         (enable-theme-functions . elfeed-ok--theme-hook))
   :config
   (ok-debug-register '(elfeed-log-level . (debug . info)))
 
-  ;; (defun elfeed-ok--show-setup ()
-  ;;   ;; Remove underline from zenkaku space
-  ;;   (setq-local nobreak-char-display nil)
+  (defun elfeed-ok--show-setup ()
+    ;; Remove underline from zenkaku space
+    (setq-local nobreak-char-display nil)
 
-  ;;   ;; Adjust entry style via shr:
-  ;;   (setq-local shr-folding-mode nil
-  ;;               shr-indentation 4
-  ;;               shr-max-image-proportion 0.8
-  ;;               shr-use-fonts t
-  ;;               shr-width 80))
+    ;; Adjust entry style via shr:
+    (setq-local shr-folding-mode nil
+                shr-indentation 4
+                shr-max-image-proportion 0.8
+                shr-use-fonts t
+                shr-width 80))
 
-  ;; (defun elfeed-ok--search-setup ()
-  ;;   (setq-local nobreak-char-display nil))
+  (defun elfeed-ok--search-setup ()
+    (setq-local nobreak-char-display nil))
 
-  ;; (defun elfeed-ok--theme-hook (theme)
-  ;;   (set-face-attribute 'elfeed-search-title-face nil
-  ;;                       :foreground (face-attribute 'shadow :foreground))
-  ;;   (set-face-attribute 'elfeed-search-unread-title-face nil
-  ;;                       :foreground (face-attribute 'default :foreground)))
+  (defun elfeed-ok--theme-hook (theme)
+    (set-face-attribute 'elfeed-search-title-face nil
+                        :foreground (face-attribute 'shadow :foreground))
+    (set-face-attribute 'elfeed-search-unread-title-face nil
+                        :foreground (face-attribute 'default :foreground)))
 
   (load (ok-file-expand-etc "elfeed/init")))
 
 (use-package elfeed-org
   :custom ((rmh-elfeed-org-files `(,(ok-file-expand-etc "elfeed/elfeed.org"))))
   :init
-  ;; `elfeed-org' seems very expensive, so we want to lazy load. See
-  ;; the `elfeed-org' function source to ensure that we take care of
-  ;; the nested advice.
+  ;; `elfeed-org' seems very expensive, so we want to lazy load. See the
+  ;; `elfeed-org' function source to ensure that we take care of the nested
+  ;; advice.
   (defvar elfeed-org-ok--initialized nil)
 
   (defun elfeed-org-ok--init (&rest _)
