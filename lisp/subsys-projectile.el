@@ -9,6 +9,7 @@
 (require 'ok)
 
 (use-package projectile
+  :demand t
   :custom ((projectile-auto-discover nil)
            (projectile-enable-caching nil)
            (projectile-git-fd-args "-H -0 -E .git -tf")
@@ -25,10 +26,10 @@
            (projectile-project-search-path
             `(,(ok-file-expand-user-emacs-file "straight" "repos/")
               (,(expand-file-name "github.com/" (getenv "HOME")) . 2))))
-  :hook ((on-first-file . projectile-mode)
-         (projectile-mode . projectile-ok-set-safe-local-variable-directories))
+  :hook (projectile-mode . projectile-ok-set-safe-local-variable-directories)
   :ensure-system-package ((ag . "sudo apt install -y silversearcher-ag")
                           (fdfind . "sudo apt install -y fd-find"))
+  :init (projectile-mode 1)
   :config
   ;; Ensure all the projectile overrides happen after `project' is
   ;; loaded.

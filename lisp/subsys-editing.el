@@ -5,6 +5,8 @@
 ;;
 ;;; Code:
 
+(require 'cl-lib)
+
 (use-package crux
   ;; A Collection of Ridiculously Useful eXtensions for Emacs.
   :bind ( ([remap kill-whole-line] . crux-kill-whole-line)
@@ -35,6 +37,7 @@
 
 (use-package titlecase
   ;; Titlecase things.
+  :commands titlecase-ok-headlines
   :bind ( :map text-mode-map
           ("M-c" . titlecase-dwim)
           :map prog-mode-map
@@ -46,8 +49,6 @@
       "\\b\\(\\(www\\.\\|\\(s?https?\\|ftp\\|file\\|gopher\\|nntp\\|news\\|telnet\\|wais\\|mailto\\|info\\):\\)\\(//[-a-z0-9_.]+:[0-9]*\\)?\\(?:[-a-z0-9_=#$@~%&*+\\/[:word:]!?:;.,]+([-a-z0-9_=#$@~%&*+\\/[:word:]!?:;.,]+[-a-z0-9_=#$@~%&*+\\/[:word:]]*)\\(?:[-a-z0-9_=#$@~%&*+\\/[:word:]!?:;.,]+[-a-z0-9_=#$@~%&*+\\/[:word:]]\\)?\\|[-a-z0-9_=#$@~%&*+\\/[:word:]!?:;.,]+[-a-z0-9_=#$@~%&*+\\/[:word:]]\\)\\)"
       )))
   :config
-  (require 'cl-lib)
-
   (defun titlecase-ok-headlines (beg end)
     "Iterate over headlines in the region or buffer, prompting to titlecase them.
 Matches Org-mode (e.g., '* Headline') and Markdown (e.g., '# Headline') formats."
