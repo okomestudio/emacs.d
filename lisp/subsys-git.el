@@ -12,12 +12,15 @@
   :custom ((magit-diff-refine-hunk t)
            (magit-format-file-function #'magit-format-file-nerd-icons))
   :config
-  ;; TODO(2026-06-11): Somehow this git-commit-mode registration is missing, so
-  ;; manually adding until further investigation.
-  (require 'git-commit)
-  (add-to-list 'auto-mode-alist '("\\(^\\|/\\)COMMIT_EDITMSG\\'" . git-commit-mode))
-
   (add-hook 'magit-status-sections-hook #'magit-insert-worktrees 99))
+
+(use-package magit-difftastic
+  ;; NOTE(2026-06-14): The mode activation somehow fails. Revisit installation
+  ;; and configuration.
+  :disabled
+  :after magit
+  :ensure-system-package (difft . "sudo snap install difftastic") ; see hostconf role
+  :config (magit-difftastic-mode +1))
 
 (use-package magit-prime
   ;; Speedup magit by priming caches before refresh.

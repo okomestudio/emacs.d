@@ -153,6 +153,7 @@
                            "multiserver"
                            "resources")
          :build (:not compile) )
+       ( magit-difftastic git github "rschmukler/magit-difftastic" )
        ( man-index git codeberg "imarko/man-index" )
        ( mozc git github "google/mozc"
          ;; NOTE(2025-03-04): Pin to a commit to avoid divergence of submodules
