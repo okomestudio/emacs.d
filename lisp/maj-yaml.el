@@ -9,8 +9,16 @@
 
 (use-package yaml-ts-mode
   :mode "\\.ya?ml\\'"
-  :hook ((yaml-ts-mode . yaml-ts-mode-ok--patch)
-         (yaml-ts-mode . lsp-deferred))
+  :hook (;; (yaml-ts-mode . lsp-deferred)
+         ;;
+         ;; Instead of above, selectively activate LSP in per-project
+         ;; .dir-locals.el by having the following line:
+         ;;
+         ;;   ((yaml-mode . ((mode . lsp))))
+         ;;
+         ;; as `yamlls' is very slow.
+
+         (yaml-ts-mode . yaml-ts-mode-ok--patch))
   :config
   (defun yaml-ts-mode-ok--patch ()
     "Patch `yaml-ts-mode'.

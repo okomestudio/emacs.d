@@ -6,13 +6,33 @@
 ;;; Code:
 
 (use-package ansible
-  :hook (ansible . ansible-ok--lsp-deferred)
+  ;; LSP servers are very slow for YAML/Ansible, so won't activate globally.
+  ;; :hook (ansible . ansible-ok--lsp-deferred)
+  :hook (ansible . flycheck-mode)
   :config
   (defun ansible-ok--lsp-deferred ()
     "Defer LSP activation."
-    ;; Uncomment to disable `yamlls'.
-    ;; (setq-local lsp-disabled-clients '(yamlls))
+    (setq-local lsp-disabled-clients '(ansible-ls eslint helm-ls yamlls))
     (lsp-deferred)))
+
+(use-package lsp-mode
+  ;; Settings to use if activating both yamlls and ansible-ls:
+  :custom ((lsp-ansible-validation-enabled nil)
+           (lsp-ansible-validation-lint-enabled nil)
+           (lsp-yaml-validate nil)))
+
+(use-package flycheck
+  :config
+  (flycheck-define-checker yaml-ansible-lint
+    "Ansible lint checker."
+    :command ("ansible-lint" "-f" "pep8" source)
+    :error-patterns
+    ((error
+      line-start (file-name) ":" line ": " (message) line-end)
+     (warning
+      line-start (file-name) ":" line ": [Warning] " (message) line-end))
+    :modes (yaml-mode yaml-ts-mode))
+  (add-to-list 'flycheck-checkers 'yaml-ansible-lint))
 
 (use-package poly-ansible
   ;; Combines `yaml-mode' and `jinja2-mode' for use in Ansible.
