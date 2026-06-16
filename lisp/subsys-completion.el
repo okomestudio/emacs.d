@@ -31,7 +31,7 @@
                 :sort t
                 :exclusive 'no)))
              _))
-    (add-hook 'completion-at-point-functions #'cape-ok--capf -99 t))
+    (add-hook 'completion-at-point-functions #'cape-ok--capf -97 t))
 
   ;; Global CAPFs: Add the basic capfs with lower priorities. When the
   ;; buffer-local version of CAPFs includes `t', cape will fall back to the
@@ -132,7 +132,7 @@ This function element is used to add or create a local variable entry."
 (use-package corfu
   :bind ( :map corfu-map
           ("'" . corfu-quick-complete) )
-  :custom ((corfu-auto t)
+  :custom ((corfu-auto nil)   ; use TAB for completion
            (corfu-auto-delay 0.5)
            (corfu-auto-prefix 1)
            (corfu-cycle t)

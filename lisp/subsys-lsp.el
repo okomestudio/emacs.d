@@ -11,6 +11,7 @@
            (lsp-enable-snippet nil)
            (lsp-keymap-prefix "C-c l")
            (lsp-lens-place-position 'above-line)
+           (lsp-log-io nil)
            (lsp-response-timeout 30)
            (lsp-use-plists t))
   :commands (lsp lsp-deferred)

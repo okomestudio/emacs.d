@@ -7,6 +7,7 @@
 
 (use-package sh-script
   :custom ((sh-basic-offset 2)
+
            ;; Run the Explainshell service on start:
            ;;
            ;;   docker container run --name explainshell --restart always \
@@ -19,8 +20,8 @@
   :mode (("\\.?bash_.*\\'" . bash-ts-mode)
          ("\\.?bashrc\\'" . bash-ts-mode)
          (".*\\.sh\\'" . sh-mode))
-  :hook ((bash-ts-mode . lsp-deferred)
-         (sh-mode . flymake-mode)))
+  :hook (;; (bash-ts-mode . lsp-deferred) ; very slow...
+         ((bash-ts-mode sh-mode) . flycheck-mode)))
 
 (use-package sh-script
   :if (eq system-type 'gnu/linux)
@@ -33,6 +34,20 @@
   :custom ((shfmt-arguments '("-i" "2")))
   :hook ((bash-ts-mode . shfmt-on-save-mode))
   :ensure-system-package (shfmt . "go install mvdan.cc/sh/v3/cmd/shfmt@latest"))
+
+(use-package bash-completion
+  ;; Programmable Bash completion for shell mode.
+  :after (corfu cape)
+  :config
+  (defun bash-completion--capf-setup ()
+    ;; TODO(2026-06-16): This doesn't consistently activate bash completion for
+    ;; unknown reasons. Revisit.
+    (add-hook 'completion-at-point-functions
+              #'bash-completion-capf-nonexclusive
+              -94 t))
+  :hook (bash-ts-mode . bash-completion--capf-setup))
+
+;;; BATS
 
 (use-package bats-mode
   :interpreter "bats")
