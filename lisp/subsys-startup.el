@@ -145,13 +145,30 @@
   :hook (after-init . do-this-now-mode))
 
 (use-package pomo-cat
-  ;; Pomodoro timer
+  ;; Pomodoro timer for work-rest management.
   :hook (on-first-input-hook . pomo-cat-start)
   :custom ((pomo-cat-break-duration-seconds 300)
            (pomo-cat-cycles-before-long-break 4)
-           (pomo-cat-display-method 'posframe)
-           (pomo-cat-long-break-duration-seconds 1200)
-           (pomo-cat-work-duration-seconds 1500)))
+           (pomo-cat-long-break-duration-seconds 900) ; 1200
+           (pomo-cat-work-duration-seconds 1500))
+  :config
+  (with-eval-after-load 'desktop
+    (add-to-list 'desktop-globals-to-save 'pomo-cat--state)))
+
+(cond
+ ((display-graphic-p)
+  (use-package posframe)
+  (use-package pomo-cat
+    :after posframe
+    :custom ((pomo-cat-dedicated-frame-position 'bottom-right)
+             (pomo-cat-get-focus nil)
+             (pomo-cat-use-dedicated-frame t)
+             (pomo-cat-use-dedicated-frame 'topmost))))
+ (t
+  (use-package popon)
+  (use-package pomo-cat
+    :after popon
+    :custom ((pomo-cat-use-dedicated-frame nil)))))
 
 ;;; Registration
 
