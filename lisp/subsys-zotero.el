@@ -17,30 +17,29 @@
   ;; See https://github.com/egh/zotxt-emacs/issues/50.
   :bind ( ("C-c r o" . zotxt-citekey-select-item-at-point) )
   :custom (zotxt-default-bibliography-style "chicago-shortened-notes-bibliography")
-  :hook ((org-mode . org-zotxt-mode)
-         (org-mode . zotxt-citekey-mode))
   :config
-  (defun zotxt-citekey-at-point-match--ad (fun &rest _)
-    "Advise `zotxt-citekey-at-point-match' to match Org elements.
-
-The citekey is of form \"&citekey\".
-
-With this advice, a citekey can be extracted from an Org link or a flat text
-starting from \"&\"."
+  (defun zotxt-citekey-at-point-match--ad (fun &rest _r)
+    "Advise `zotxt-citekey-at-point-match' to match wider range of citekeys.
+The purpose is to match org-ref version 2 style citekeys, as well as to match
+citekeys in Org links more consistently."
     (if (derived-mode-p 'org-mode)
-        (cond
-         ((org-in-regexp org-link-any-re)
-          (save-excursion
-            (goto-char (match-beginning 0))
-            (let ((zotxt-citekey-regex (concat "\\(?:\\[\\[\\)?"
-                                               "cite:&\\([[:alnum:].]+\\)"
-                                               "\\(?:\\]\\[[^]]+\\]\\]\\)?")))
-              (apply fun _))))
-         (t (apply fun _)))
-      (apply fun _)))
+        (let ((zotxt-citekey-regex "[@{&]\\([[:alnum:].-]+\\)"))
+          (if-let* ((m (org-in-regexp org-link-any-re))
+                    (zotxt-citekey-regex
+                     (concat "\\(?:\\[\\(?:\\[\\)?\\)?"
+                             (regexp-opt (org-link-types) nil) ":"
+                             zotxt-citekey-regex)))
+              (let ((beg (car m)))
+                (goto-char beg)
+                (apply fun _r))
+            (apply fun _r)))
+      (apply fun _r)))
 
   (advice-add #'zotxt-citekey-at-point-match :around
-              #'zotxt-citekey-at-point-match--ad))
+              #'zotxt-citekey-at-point-match--ad)
+
+  :hook ((org-mode . org-zotxt-mode)
+         (org-mode . zotxt-citekey-mode)))
 
 (use-package zotero
   ;; Interface to the Zotero Web API v3.

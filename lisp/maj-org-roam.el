@@ -272,7 +272,10 @@ PATH is the citekey string."
    :export #'org-ref-vis-citepub-export
    :follow #'org-ref-click-hyperlink
    :help-echo #'org-ref-cite-tooltip)
-  (add-to-list 'org-ref-cite-types '("citepub" "Cite publication")))
+  (add-to-list 'org-ref-cite-types '("citepub" "Cite publication"))
+
+  ;; Ensure relevant regexps are updated after `org-link-set-parameters':
+  (org-link-make-regexps))
 
 (use-package bibtex-completion-ok)
 
