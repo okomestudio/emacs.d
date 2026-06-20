@@ -195,6 +195,9 @@
                       "-o" "./docs/org-transclusion.info")
                      ("install-info"
                       "./docs/org-transclusion.info" "./docs/dir")))
+       ( pomo-cat git github "kn66/pomo-cat.el"
+         :files (:defaults "cat.png")
+         :fork t :branch "remove-init" )
        ( powerthesaurus git github "doomelpa/powerthesaurus" )
        ( py-isort git github "paetzke/py-isort.el"
          ;; For https://github.com/paetzke/py-isort.el/pull/21

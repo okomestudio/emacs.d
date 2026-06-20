@@ -146,14 +146,36 @@
 
 (use-package pomo-cat
   ;; Pomodoro timer for work-rest management.
-  :hook (on-first-input-hook . pomo-cat-start)
   :custom ((pomo-cat-break-duration-seconds 300)
            (pomo-cat-cycles-before-long-break 4)
            (pomo-cat-long-break-duration-seconds 900) ; 1200
            (pomo-cat-work-duration-seconds 1500))
-  :config
+  :init
   (with-eval-after-load 'desktop
-    (add-to-list 'desktop-globals-to-save 'pomo-cat--state)))
+    (add-to-list 'desktop-globals-to-save 'pomo-cat--state))
+
+  :config
+  (setq pomo-cat-cat-image-path
+        (expand-file-name "cat.png"
+                          (file-name-directory (locate-library "pomo-cat"))))
+
+  (defun pomo-cat-resume-or-start ()
+    "Resume or start Pomodoro work session."
+    (if-let* ((cnt (or (pomo-cat--state-get :cycle-count) 1))
+              (timer (pomo-cat--state-get :timer))
+              (dur (round (min pomo-cat-work-duration-seconds
+                               (- (float-time (timer--time timer))
+                                  (float-time))))))
+        (if (<= dur 0)
+            (pomo-cat-start)
+          (pomo-cat--state-set :cycle-count cnt)
+          (pomo-cat--state-set :in-break nil)
+          (pomo-cat--state-set :phase-end-time nil)
+          (message "Pomodoro work #%d resumed (%d sec remaining)!" cnt dur)
+          (pomo-cat--schedule-timer dur #'pomo-cat--start-break))
+      (pomo-cat-start)))
+
+  :hook (on-first-input-hook . pomo-cat-resume-or-start))
 
 (cond
  ((display-graphic-p)
@@ -162,8 +184,8 @@
     :after posframe
     :custom ((pomo-cat-dedicated-frame-position 'bottom-right)
              (pomo-cat-get-focus nil)
-             (pomo-cat-use-dedicated-frame t)
-             (pomo-cat-use-dedicated-frame 'topmost))))
+             (pomo-cat-use-dedicated-frame t) ; or 'topmost to keep frame on top
+             )))
  (t
   (use-package popon)
   (use-package pomo-cat
