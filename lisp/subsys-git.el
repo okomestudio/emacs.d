@@ -30,13 +30,14 @@
   :after magit
   :bind ( :map magit-todos-section-map
           ("R" . magit-todos-update) )
-  :custom ((magit-todos-update nil))
-  :hook (magit-mode . magit-todos-mode)
+  :custom ((magit-todos-submodule-list t)
+           (magit-todos-update nil))
   :config
-  (dolist (kw '("WIP"
-                "TODO [#A]" "TODO [#B]" "TODO [#C]"
-                "WIP [#A]" "WIP [#B]" "WIP [#C]"))
-    (add-to-list 'magit-todos-keywords-list kw)))
+  (dolist (kw '("TODO" "TODO [#A]" "TODO [#B]" "TODO [#C]"
+                "WIP" "WIP [#A]" "WIP [#B]" "WIP [#C]"))
+    (add-to-list 'magit-todos-keywords-list kw))
+
+  :hook (magit-mode . magit-todos-mode))
 
 ;;; Blame
 

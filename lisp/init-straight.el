@@ -154,6 +154,8 @@
                            "resources")
          :build (:not compile) )
        ( magit-difftastic git github "rschmukler/magit-difftastic" )
+       ( magit-todos git github "alphapapa/magit-todos"
+         :fork (:branch "use-nongreedy"))
        ( man-index git codeberg "imarko/man-index" )
        ( mozc git github "google/mozc"
          ;; NOTE(2025-03-04): Pin to a commit to avoid divergence of submodules
@@ -197,7 +199,7 @@
                       "./docs/org-transclusion.info" "./docs/dir")))
        ( pomo-cat git github "kn66/pomo-cat.el"
          :files (:defaults "cat.png")
-         :fork t :branch "remove-init" )
+         :fork (:branch "ok") )
        ( powerthesaurus git github "doomelpa/powerthesaurus" )
        ( py-isort git github "paetzke/py-isort.el"
          ;; For https://github.com/paetzke/py-isort.el/pull/21
