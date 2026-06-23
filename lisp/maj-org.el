@@ -55,8 +55,11 @@
              ;; (setq-local flycheck-disabled-checkers
              ;;             (cons 'org-lint
              ;;                   flycheck-disabled-checkers))
+             (add-to-list 'flycheck-disabled-checkers 'org-lint)
              (flycheck-mode 1)))
   :config
+  (require 'cal-move)         ; prevent `calendar-cursor-to-visible-date' to fail
+
   ;; Unset the keybindings to disable org-agenda shortcuts and
   ;; fallback to popper:
   (keymap-unset org-mode-map "C-'" t)
