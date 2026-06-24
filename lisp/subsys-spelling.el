@@ -11,9 +11,11 @@
   ;; NOTE(2025-12-22): Use this in place of ispell/aspell (2025-12-22).
   :bind (("C-;" . jinx-correct))
   :custom (jinx-languages "en_US")
-  :hook (org-mode . jinx-mode)
   :ensure-system-package
   (enchant-2 . "sudo apt install -y libenchant-2-dev pkgconf")
+  :init
+  (put 'jinx-language 'safe-local-variable #'stringp)
+
   :config
   ;; \\cc is Chinese category character, which includes Han + Hiragana +
   ;; Katakana + other CJK scripts.
@@ -22,7 +24,9 @@
   (with-eval-after-load 'flycheck
     (let ((ul (face-attribute 'flycheck-error :underline)))
       (set-face-attribute 'jinx-misspelled nil
-                          :underline (append ul '(:style wave))))))
+                          :underline (append ul '(:style wave)))))
+
+  :hook (org-mode . jinx-mode))
 
 (provide 'subsys-spelling)
 ;;; subsys-spelling.el ends here
