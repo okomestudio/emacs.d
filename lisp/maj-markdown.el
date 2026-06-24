@@ -8,22 +8,25 @@
 ;;; Code:
 
 (use-package markdown-mode
-  :commands (markdown-mode gfm-mode)
+  :bind ( :map markdown-mode-map
+          ("C-c C-c v" . markdown-export-and-preview) )
+  :custom ((markdown-fontify-code-block-natively t)
+           (markdown-header-scaling t)
+           (markdown-indent-on-enter t))
   :mode (("README\\.md\\'" . gfm-mode)
          ("\\.md\\'" . gfm-mode)
          ("\\.markdown\\'" . gfm-mode)
          ("\\.lr\\'" . gfm-mode))
-  :bind (:map markdown-mode-map
-              ("C-c C-c v" . markdown-export-and-preview))
-  :custom ((markdown-fontify-code-block-natively t)
-           (markdown-header-scaling t)
-           (markdown-indent-on-enter t))
-  :hook (markdown-mode . markdown-mode-ok--init)
+  :commands (markdown-mode gfm-mode)
   :config
   (defun markdown-mode-ok--init ()
     (setq-local fill-column 90)
     (turn-on-visual-line-mode)
-    (lsp)))
+    ;; Uncomment to enable `lsp-mode':
+    ;; (lsp)
+    )
+
+  :hook (markdown-mode . markdown-mode-ok--init))
 
 (provide 'maj-markdown)
 ;;; maj-markdown.el ends here

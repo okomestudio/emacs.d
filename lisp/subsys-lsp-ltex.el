@@ -19,12 +19,10 @@
            (lsp-ltex-log-level "finest")
            (lsp-ltex-trace-server "verbose")
            (lsp-ltex-version "16.0.0"))
-  :hook ((gfm-mode
-          markdown-mode
-          ;; let's not use ltex by default; can load manually with `lsp'
-          ;; org-mode
-          rst-mode) . lsp-ltex-start)
   :commands (lsp-ltex-start lsp-ltex-restart)
+  :init
+  (put 'lsp-ltex-language 'safe-local-variable #'stringp)
+
   :config
   (defvar lsp-ltex-aspell-dict "~/.aspell.en.pws")
 
@@ -57,7 +55,10 @@
     "Restart LTEX language server after dictionary update."
     (interactive)
     (lsp-ltex--update-dictionary)
-    (lsp-workspace-restart (lsp--read-workspace))))
+    (lsp-workspace-restart (lsp--read-workspace)))
+
+  :hook ((;; gfm-mode markdown-mode org-mode
+          rst-mode) . lsp-ltex-start))
 
 (provide 'subsys-lsp-ltex)
 ;;; subsys-lsp-ltex.el ends here
