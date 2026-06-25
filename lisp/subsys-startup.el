@@ -155,9 +155,10 @@
     (add-to-list 'desktop-globals-to-save 'pomo-cat--state))
 
   :config
-  (setq pomo-cat-cat-image-path
-        (expand-file-name "cat.png"
-                          (file-name-directory (locate-library "pomo-cat"))))
+  ;; Uncomment below to use cat image:
+  ;; (setq pomo-cat-cat-image-path
+  ;;       (expand-file-name "cat.png"
+  ;;                         (file-name-directory (locate-library "pomo-cat"))))
 
   (defun pomo-cat-resume-or-start ()
     "Resume or start Pomodoro work session."
@@ -183,9 +184,11 @@
   (use-package pomo-cat
     :after posframe
     :custom ((pomo-cat-dedicated-frame-position 'bottom-right)
-             (pomo-cat-get-focus nil)
-             (pomo-cat-use-dedicated-frame t) ; or 'topmost to keep frame on top
-             )))
+             (pomo-cat-get-focus t)
+             (pomo-cat-overlay-position 'bottom-right)
+             ;; Don't use dedicated frame till Wayland window management issue
+             ;; gets sorted out.
+             (pomo-cat-use-dedicated-frame nil)))) ; or 'topmost to keep frame on top
  (t
   (use-package popon)
   (use-package pomo-cat
