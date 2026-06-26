@@ -14,35 +14,61 @@
           blink-cursor-alist '((box . hollow))
           cursor-type 'box)
 
-  ;; FIX(2025-09-20): This doesn't work with `vertico-posframe'. Look for a way
-  ;; to change the cursor color in the child frame.
-  (defvar ok-cursor-color-default (face-attribute 'cursor :background))
-  (defvar ok-cursor-color-im-active (face-attribute 'warning :foreground))
+  (defvar mozc-cursor-color-off (face-attribute 'cursor :background))
+  (defvar mozc-cursor-color-on (face-attribute 'warning :foreground))
+  (defvar mozc-cursor-current-input-mode nil
+    "Symbol indicating the current input mode.
+For 'japanese-mozc', it is one of direct, hiragana, katakana, half_ascii,
+full_ascii, and half_katakana.
 
-  (defun ok-cursor--when-active ()
-    (set-cursor-color ok-cursor-color-im-active))
+This is set to nil when input method is not active.")
+  (make-variable-buffer-local 'mozc-cursor-current-input-mode)
 
-  (defun ok-cursor--when-inactive ()
-    (set-cursor-color ok-cursor-color-default))
+  (defun mozc-cursor--pick-color ()
+    (if mozc-cursor-current-input-mode
+        mozc-cursor-color-on
+      mozc-cursor-color-off))
 
-  (defun ok-cursor--update ()
-    (with-current-buffer (current-buffer)
-      (if current-input-method
-          (ok-cursor--when-active)
-        (ok-cursor--when-inactive))))
+  (defun mozc-cursor--session-execute-ad (retval)
+    (prog1
+        retval
+      (setq-local mozc-cursor-current-input-mode
+                  (when retval
+                    (mozc-protobuf-get retval 'mode)))))
 
-  (defun ok-cursor--update-posframe (fun &rest args)
-    ;; TODO(2026-06-25): `args' contain :cursor key-value pair, which actually
-    ;; only controls cursor-type. The `posframe' module needs to be patched to
-    ;; support cursor-color. Do that first. Then, it can be passed as a frame
-    ;; parameter and reflected on `postframe-show'.
-    (apply fun args))
+  (advice-add #'mozc-session-execute-command :filter-return
+              #'mozc-cursor--session-execute-ad)
 
-  ;; (advice-add 'posframe-show :around #'ok-cursor--update-posframe)
+  (defun mozc-cursor--update-posframe (fun &rest args)
+    (prog1
+        (apply fun args)
+      (when-let* ((buf vertico-posframe--buffer))
+        (with-current-buffer buf
+          (let ((color (mozc-cursor--pick-color)))
+            (set-face-attribute 'cursor nil :background color))))))
 
-  (add-hook 'buffer-list-update-hook #'ok-cursor--update)
-  (add-hook 'input-method-activate-hook #'ok-cursor--when-active)
-  (add-hook 'input-method-deactivate-hook #'ok-cursor--when-inactive))
+  (advice-add 'vertico-posframe--show :around
+              #'mozc-cursor--update-posframe)
+
+  (defun mozc-cursor--update ()
+    (let ((color (mozc-cursor--pick-color)))
+      (condition-case err
+          (catch 'exit
+            (set-cursor-color color))
+        (error (warn "Error setting cursor color")))))
+
+  (defun mozc-cursor--on-activate ()
+    (when current-input-method
+      (setq-local mozc-cursor-current-input-mode 'just-activated))
+    (mozc-cursor--update))
+
+  (defun mozc-cursor--on-deactivate ()
+    (setq-local mozc-cursor-current-input-mode nil)
+    (mozc-cursor--update))
+
+  (add-hook 'input-method-activate-hook #'mozc-cursor--on-activate)
+  (add-hook 'input-method-deactivate-hook #'mozc-cursor--on-deactivate)
+  (add-hook 'post-command-hook #'mozc-cursor--update))
 
 (use-package mozc
   :bind (("C-z" . toggle-input-method) ("C-\\" . nil))
