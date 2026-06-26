@@ -16,22 +16,31 @@
 
   ;; FIX(2025-09-20): This doesn't work with `vertico-posframe'. Look for a way
   ;; to change the cursor color in the child frame.
-  (defvar ok-cursor--base-color (face-attribute 'cursor :background))
+  (defvar ok-cursor-color-default (face-attribute 'cursor :background))
+  (defvar ok-cursor-color-im-active (face-attribute 'warning :foreground))
 
   (defun ok-cursor--when-active ()
-    (when-let* ((color (face-attribute 'warning :foreground)))
-      (set-frame-parameter (selected-frame) 'cursor-color color)))
+    (set-cursor-color ok-cursor-color-im-active))
 
   (defun ok-cursor--when-inactive ()
-    (when-let* ((color ok-cursor--base-color))
-      (set-frame-parameter (selected-frame) 'cursor-color color)))
+    (set-cursor-color ok-cursor-color-default))
 
-  (defun ok-cursor--on-buffer-switch ()
-    (if current-input-method
-        (ok-cursor--when-active)
-      (ok-cursor--when-inactive)))
+  (defun ok-cursor--update ()
+    (with-current-buffer (current-buffer)
+      (if current-input-method
+          (ok-cursor--when-active)
+        (ok-cursor--when-inactive))))
 
-  (add-hook 'buffer-list-update-hook #'ok-cursor--on-buffer-switch)
+  (defun ok-cursor--update-posframe (fun &rest args)
+    ;; TODO(2026-06-25): `args' contain :cursor key-value pair, which actually
+    ;; only controls cursor-type. The `posframe' module needs to be patched to
+    ;; support cursor-color. Do that first. Then, it can be passed as a frame
+    ;; parameter and reflected on `postframe-show'.
+    (apply fun args))
+
+  ;; (advice-add 'posframe-show :around #'ok-cursor--update-posframe)
+
+  (add-hook 'buffer-list-update-hook #'ok-cursor--update)
   (add-hook 'input-method-activate-hook #'ok-cursor--when-active)
   (add-hook 'input-method-deactivate-hook #'ok-cursor--when-inactive))
 
@@ -39,12 +48,11 @@
   :bind (("C-z" . toggle-input-method) ("C-\\" . nil))
   :custom ((default-input-method "japanese-mozc")
 
-           ;; NOTE(2025-03-12): `posframe' would be best, but it
-           ;; frequently crashed with Cairo in a hard-to-debug way.
-           ;; `overlay' runs sluggish. `echo-area' is sufficient and
-           ;; stable, but far from the point of input. `popup' seems
-           ;; to be the best compromise.
-           (mozc-candidate-style (if (display-graphic-p) 'posframe 'echo-area))
+           ;; NOTE(2025-03-12): `posframe' would be best, but it frequently
+           ;; crashed with Cairo in a hard-to-debug way. `overlay' is sluggish.
+           ;; `echo-area' is sufficient and stable, but far from the point of
+           ;; input. `popup' seems to be the best compromise?
+           (mozc-candidate-style 'echo-area)
 
            (mozc-leim-title "🇯🇵"))
   :commands (toggle-input-method)
@@ -68,23 +76,6 @@
   ;; Setting this to non-nil uses the IME on OS:
   (setq pgtk-use-im-context-on-new-connection nil))
 
-(use-package mozc-isearch
-  :hook (;; NOTE(2025-03-18): This is an optimization to remove
-         ;; initialization with `after-init-hook', which gets set up
-         ;; when the `mozc-isearch' feature is required:
-         (on-first-input . (lambda ()
-                             (require 'mozc-isearch)
-                             (mozc-isearch-workaround-setup)))
-
-         (isearch-mode . mozc-isearch-ok--fix-ace-isearch))
-  :config
-  (defun mozc-isearch-ok--fix-ace-isearch (&rest _)
-    "Disable `ace-isearch-mode' when `mozc' is active."
-    ;; NOTE(2025-03-02): Mozc doesn't play nice with ace-isearch.
-    (if (and (boundp 'mozc-mode) mozc-mode)
-        (ace-isearch-mode -1)
-      (ace-isearch-mode 1))))
-
 ;;; Posframe
 
 (use-package mozc-cand-posframe
@@ -92,7 +83,6 @@
   :disabled
   :if (display-graphic-p)
   :after mozc
-  :hook ((enable-theme-functions . mozc-posframe-ok--theme))
   :init (require 'mozc-cand-posframe)
   :config
   (defun mozc-posframe-ok--theme (theme)
@@ -110,13 +100,14 @@
       (set-face-attribute 'mozc-cand-posframe-focused-face nil
                           :foreground (face-attribute face-current :foreground)
                           :background (face-attribute face-current :background)
-                          :inherit face-current))))
+                          :inherit face-current)))
+
+  :hook ((enable-theme-functions . mozc-posframe-ok--theme)))
 
 (use-package mozc-posframe
   ;; This might work, but not out of box.
   :if (display-graphic-p)
-  :hook ((on-first-input . mozc-posframe-initialize)
-         (enable-theme-functions . mozc-posframe-ok--theme))
+  :custom (mozc-candidate-style 'posframe)
   :config
   (defun mozc-posframe-ok--theme (theme)
     (require 'corfu)
@@ -143,7 +134,10 @@
         (set-face-attribute face nil
                             :foreground fg-b :background bg-b :inherit face-b))
       (set-face-attribute 'mozc-cand-overlay-focused-face nil
-                          :foreground fg-c :background bg-c :inherit face-c))))
+                          :foreground fg-c :background bg-c :inherit face-c)))
+
+  :hook ((on-first-input . mozc-posframe-initialize)
+         (enable-theme-functions . mozc-posframe-ok--theme)))
 
 (use-package migemo
   :disabled
