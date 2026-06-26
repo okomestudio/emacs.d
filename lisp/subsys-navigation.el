@@ -1,7 +1,7 @@
 ;;; subsys-navigation.el --- Navigation Subsystem  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;
-;; Set up the navigation subsystem.
+;; Configure the navigation subsystem.
 ;;
 ;; NOTE:
 ;;
@@ -12,17 +12,44 @@
 
 ;;; Search & Movement
 
+(use-package isearch-mb
+  ;; Alternative isearch UI based on the minibuffer.
+  ;;
+  ;; This effectively replaces isearch for improved handling of multibyte
+  ;; incremental search, e.g., via mozc-japanese.
+  :custom ((isearch-lazy-count t))
+  :hook (on-first-buffer . isearch-mb-mode))
+
 (use-package ace-isearch
   ;; A seamless bridge between isearch, ace-jump-mode, avy, and swoop.
+  ;;
+  ;; TODO(2026-06-25): This module doesn't work well `isearch-mb'. Either work
+  ;; on a fix or combine `avy' and `consult-line' with `isearch-mb' piece by
+  ;; piece.
+  :disabled
   :bind ( :map isearch-mode-map
           ("C-'" . ace-isearch-jump-during-isearch) )
-  :custom ((ace-isearch-input-length 6)
-           (ace-isearch-jump-delay 0.7)
-           (ace-isearch-function #'avy-goto-char)
-           (ace-isearch-function-from-isearch #'ace-isearch-consult-line-from-isearch))
+  :custom ((ace-isearch-function #'avy-goto-char)
+           (ace-isearch-function-from-isearch #'ace-isearch-consult-line-from-isearch)
+           (ace-isearch-input-length 7)
+           (ace-isearch-jump-delay 1.0)
+           (ace-isearch-jump-based-on-one-char t)
+           (ace-isearch-use-jump t)) ; 'printing-char doesn't work with isearch-mb...
   :hook (on-first-input . global-ace-isearch-mode))
 
-(use-package avy)
+(use-package avy
+  :bind ( "C-:" . avy-goto-str )
+  :config
+  ;; TODO(2026-06-25): Trigger this on the first character when isearch-mb is
+  ;; active?
+  (defun avy-goto-str (str &optional arg)
+    "Jump to the currently visible STR.
+The window scope is determined by `avy-all-windows' (ARG negates it)."
+    (interactive (list (read-string "str: ") current-prefix-arg))
+    (avy-with avy-goto-str
+      (avy-jump
+       (regexp-quote str)
+       :window-flip arg))))
 
 ;;; Windows & Frames
 
