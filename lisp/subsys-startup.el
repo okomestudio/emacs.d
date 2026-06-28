@@ -105,6 +105,14 @@
 (use-package indent
   :custom ((tab-always-indent 'complete)))
 
+;;; Posframe
+
+(use-package posframe
+  :custom (posframe-text-scale-factor-function
+           (lambda (&rest _)
+             ;; Disable text-scale-mode sensitivity in all buffers:
+             0.0)))
+
 ;;; Shell
 
 (use-package add-node-modules-path
