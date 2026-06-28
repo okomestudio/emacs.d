@@ -13,6 +13,10 @@
 
 (setopt custom-file null-device) ; disable `custom.el'
 
+;; Make the compilation buffer comint by default:
+(advice-add #'compile :filter-args
+            (lambda (command &optional _comint) `(,command t)))
+
 ;;; External Dependencies
 ;;
 ;; Install packages used throughout the init files here.
