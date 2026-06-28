@@ -194,9 +194,7 @@
     :custom ((pomo-cat-dedicated-frame-position 'bottom-right)
              (pomo-cat-get-focus t)
              (pomo-cat-overlay-position 'bottom-right)
-             ;; Don't use dedicated frame till Wayland window management issue
-             ;; gets sorted out.
-             (pomo-cat-use-dedicated-frame nil)))) ; or 'topmost to keep frame on top
+             (pomo-cat-use-dedicated-frame 'topmost)))) ; or 'topmost to keep frame on top
  (t
   (use-package popon)
   (use-package pomo-cat
