@@ -182,10 +182,12 @@
     "C-x w" "window"))
 
 (use-package which-key-posframe
-  :custom ((which-key-posframe-parameters '((border-width . 2)
-                                            (internal-border-width . 1)
-                                            (left-fringe . 20)
-                                            (right-fringe . 20))))
+  :custom ((which-key-posframe-parameters
+            '(;; (border-width . 2)
+              ;; (internal-border-width . 1)
+              (child-frame-border-width . 3)
+              (left-fringe . 4)
+              (right-fringe . 4))))
   :hook (which-key-mode . which-key-posframe-mode))
 
 ;;; Transient Utilities

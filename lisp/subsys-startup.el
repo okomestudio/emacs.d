@@ -108,6 +108,7 @@
 ;;; Posframe
 
 (use-package posframe
+  :demand t
   :custom (posframe-text-scale-factor-function
            (lambda (&rest _)
              ;; Disable text-scale-mode sensitivity in all buffers:
