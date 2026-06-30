@@ -86,8 +86,7 @@
          ;; See https://github.com/skeeto/emacs-aio/issues/31.
          :fork (:host github :repo "kiennq/emacs-aio") )
        ( anki-editor git github "anki-editor/anki-editor"
-         :fork ( :host github :repo "okomestudio/anki-editor"
-                 :branch "enable-file-based-note") )
+         :fork ( :branch "close-render-mode") )  ; or "enable-file-based-note"
        ( atomic-chrome git github "KarimAziev/atomic-chrome" :flavor nil )
        ( bibtex-completion-ok git github "okomestudio/bibtex-completion-ok" )
        ( blamer git github "artawower/blamer.el" )
