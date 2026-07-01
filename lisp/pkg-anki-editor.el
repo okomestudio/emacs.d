@@ -29,8 +29,8 @@
            )
   :commands (anki-editor-push-note-at-point)
   :ensure-system-package (curl . "sudo apt install -y curl")
-  :config (require 'anki-editor-cloze-render-mode)
-  :hook (org-mode . anki-editor-cloze-render-mode))
+  :config (require 'anki-editor-cloze-mode)
+  :hook (org-mode . anki-editor-cloze-mode))
 
 (provide 'pkg-anki-editor)
 ;;; pkg-anki-editor.el ends here
