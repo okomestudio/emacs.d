@@ -1,7 +1,7 @@
-;;; subsys-startup.el --- Startup Subsystem  -*- lexical-binding: t -*-
+;;; subsys-startup.el --- Startup Configurations  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;
-;; Set up Emacs startup subsystem.
+;; Configure the Emacs subsystems at startup.
 ;;
 ;;; Code:
 
@@ -104,6 +104,13 @@
 
 (use-package indent
   :custom ((tab-always-indent 'complete)))
+
+;;; Font Locking
+
+(use-package jit-lock
+  :init
+  ;; Turn this mode on while debugging JIT font locking issues:
+  (jit-lock-debug-mode -1))
 
 ;;; Posframe
 
