@@ -398,7 +398,7 @@ content:
   (add-to-list 'org-transclusion-extensions 'org-transclusion-indent-mode)
   (require 'org-transclusion-indent-mode))
 
-(load (ok-file-expand-lisp "pkg-anki-editor.el"))
+(load (ok-file-expand-lisp "subsys-anki.el"))
 
 (provide 'maj-org)
 ;;; maj-org.el ends here
