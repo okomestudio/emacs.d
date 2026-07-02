@@ -280,7 +280,7 @@
         gnus gnus-art gnus-group gnus-sum
         help hideshow hippie-exp hl-line
         ibuffer image-mode indent info ispell
-        js json-ts-mode
+        jit-lock js json-ts-mode
         lisp
         message mhtml-mode minibuffer mwheel
         nnfolder
