@@ -88,7 +88,6 @@
        ( anki-editor git github "anki-editor/anki-editor"
          :fork ( :branch "close-render-mode") )  ; or "enable-file-based-note"
        ( atomic-chrome git github "KarimAziev/atomic-chrome" :flavor nil )
-       ( bibtex-completion-ok git github "okomestudio/bibtex-completion-ok" )
        ( blamer git github "artawower/blamer.el" )
        ( boem-weather git gitlab "boskoivanisevic/boem-weather" )
        ( cal-japan git github "kawabata/cal-japan" )

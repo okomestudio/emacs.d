@@ -17,7 +17,6 @@
           ("C-c n l" . org-roam-buffer-toggle)
           ("C-c r c" . org-roam-ok-capture-create-from-ref)
           ("C-c r f" . org-roam-ref-find)
-          ("C-c r i" . bibtex-completion-ok-insert-org-ref-link)
           ("C-c r s" . org-roam-ok-ref-search-buffer)
 
           :map org-mode-map
@@ -276,8 +275,6 @@ PATH is the citekey string."
 
   ;; Ensure relevant regexps are updated after `org-link-set-parameters':
   (org-link-make-regexps))
-
-(use-package bibtex-completion-ok)
 
 ;;; Misc.
 
