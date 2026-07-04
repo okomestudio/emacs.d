@@ -192,6 +192,7 @@
 ;; The primal use of `org-ref' over `org-cite' is assumed.
 
 (use-package org-roam-bibtex
+  :disabled
   :after org-roam
   :custom ((orb-insert-link-description "${author-abbrev} ${date}")
            (orb-roam-ref-format 'org-ref-v3))
@@ -200,9 +201,58 @@
   (require 'org-ref)        ; optional, if using Org-ref v2 or v3 citation links
   )
 
+(use-package citar
+  :config
+  (with-eval-after-load 'nerd-icons
+    (defvar citar-indicator-notes-icons
+      (citar-indicator-create
+       :symbol (nerd-icons-mdicon
+                "nf-md-notebook"
+                :face 'nerd-icons-blue
+                :v-adjust -0.3)
+       :function #'citar-has-notes
+       :padding "  "
+       :tag "has:notes"))
+
+    (defvar citar-indicator-links-icons
+      (citar-indicator-create
+       :symbol (nerd-icons-octicon
+                "nf-oct-link"
+                :face 'nerd-icons-orange
+                :v-adjust -0.1)
+       :function #'citar-has-links
+       :padding "  "
+       :tag "has:links"))
+
+    (defvar citar-indicator-files-icons
+      (citar-indicator-create
+       :symbol (nerd-icons-faicon
+                "nf-fa-file"
+                :face 'nerd-icons-green
+                :v-adjust -0.1)
+       :function #'citar-has-files
+       :padding "  "
+       :tag "has:files"))
+
+    (setq citar-indicators
+          (list citar-indicator-files-icons
+                citar-indicator-notes-icons
+                citar-indicator-links-icons))))
+
 (use-package org-ref
   ;; For citations, cross-references, bibliographies.
-  :custom (bibtex-completion-pdf-field "file"))
+  :custom (bibtex-completion-pdf-field "file")
+  :config
+  ;; Override `org-ref-read-key' with the Citar counterpart just to get the
+  ;; benefit of modern UI:
+  (require 'citar)
+
+  (defun org-ref-read-key--ad-citar ()
+    (when-let* ((key (nth 0 (citar-select-refs))))
+      key))
+
+  (advice-add #'org-ref-read-key :override
+              #'org-ref-read-key--ad-citar))
 
 (use-package org-ref-ok
   :after org-ref)
