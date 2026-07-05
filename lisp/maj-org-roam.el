@@ -243,6 +243,8 @@
   ;; For citations, cross-references, bibliographies.
   :custom (bibtex-completion-pdf-field "file")
   :config
+  ;; Replace `bibtex-completion' with Citar.
+
   ;; Override `org-ref-read-key' with the Citar counterpart just to get the
   ;; benefit of modern UI:
   (require 'citar)
@@ -252,7 +254,22 @@
       key))
 
   (advice-add #'org-ref-read-key :override
-              #'org-ref-read-key--ad-citar))
+              #'org-ref-read-key--ad-citar)
+
+  ;; Override `org-ref-valid-keys' with the Citar counterpart; this seems
+  ;; faster, due to the underlying hash table implementation:
+  (defun org-ref-valid-keys--ad-citar ()
+    (hash-table-keys (citar-get-entries)))
+
+  (advice-add #'org-ref-valid-keys :override
+              #'org-ref-valid-keys--ad-citar)
+
+  ;; Disable tooltips displaying rendered bibliography item, since it uses
+  ;; `bibtex-completion'. This can be achieved via advising
+  ;; `org-ref-cite-tooltip' to `ignore', or avoiding `org-ref-cite-tooltip' to
+  ;; be set to `:help-echo' of each Org link:
+  (dolist (link-type (mapcar (lambda (e) (car e)) org-ref-cite-types))
+    (org-link-set-parameters link-type :help-echo nil)))
 
 (use-package org-ref-ok
   :after org-ref)
@@ -302,7 +319,8 @@ PATH is the citekey string."
    :complete (lambda () (org-ref-cite-link-complete "bibfullcite"))
    :export #'org-ref-vis-bibfullcite-export
    :follow #'org-ref-click-hyperlink
-   :help-echo #'org-ref-cite-tooltip)
+   ;; :help-echo #'org-ref-cite-tooltip
+   )
   (add-to-list 'org-ref-cite-types '("bibfullcite" "Bibliography full list"))
 
   (defun org-ref-vis-citepub-export (path desc format _comm-channel)
@@ -320,7 +338,8 @@ PATH is the citekey string."
    :complete (lambda () (org-ref-cite-link-complete "citepub"))
    :export #'org-ref-vis-citepub-export
    :follow #'org-ref-click-hyperlink
-   :help-echo #'org-ref-cite-tooltip)
+   ;; :help-echo #'org-ref-cite-tooltip
+   )
   (add-to-list 'org-ref-cite-types '("citepub" "Cite publication"))
 
   ;; Ensure relevant regexps are updated after `org-link-set-parameters':

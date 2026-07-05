@@ -11,7 +11,6 @@
  ("avy" . "933d1f36cca0f71e4acb5fac707e9ae26c536264")
  ("bats-mode" . "fa88930b1baba101ae6474f289a239a236a7d19f")
  ("biblio.el" . "bb9d6b4b962fb2a4e965d27888268b66d868766b")
- ("bibtex-completion-ok" . "4d715270c86be6aca9119693c59ec96d65dc583f")
  ("blamer.el" . "aa9b22d4e847d15a5c4659c0407aa8bf4242cc94")
  ("boem-weather" . "81e2f956109592313391ae82b05246f03dbcfcc7")
  ("bookmark-plus" . "892cc0a314ef353e800b6ff9da03b0bfd55e4763")
