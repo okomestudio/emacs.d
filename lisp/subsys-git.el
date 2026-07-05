@@ -12,6 +12,12 @@
   :custom ((magit-diff-refine-hunk t)
            (magit-format-file-function #'magit-format-file-nerd-icons))
   :config
+  ;; NOTE(2026-07-05): The explicit invocation of `global-git-commit-mode'
+  ;; shouldn't be necessary but fixes the issue of commit message editing buffer
+  ;; not activating `git-commit-mode':
+  (require 'git-commit)
+  (global-git-commit-mode 1)
+
   (add-hook 'magit-status-sections-hook #'magit-insert-worktrees 99))
 
 (use-package magit-difftastic
