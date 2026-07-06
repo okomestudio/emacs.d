@@ -170,6 +170,7 @@
        ( ok-plural git github "okomestudio/ok-plural.el" )
        ( or-struktur git github "okomestudio/or-struktur" )
        ( org-block-capf git github "xenodium/org-block-capf" )
+       ( org-citeseeing git github "okomestudio/org-citeseeing" )
        ( org-dividers git github "okomestudio/org-dividers" )
        ( org-excalidraw git github "4honor/org-excalidraw" )
        ( org-hide-drawers git github "krisbalintona/org-hide-drawers"
@@ -178,7 +179,6 @@
        ( org-modern-indent git github "jdtsmith/org-modern-indent" )
        ( org-ok git github "okomestudio/org-ok"
          :files (:defaults "extensions/*") )
-       ( org-ref-ok git github "okomestudio/org-ref-ok" )
        ( org-roam git github "org-roam/org-roam"
          :files (:defaults "extensions/*" "org-roam-pkg.el")
          :fork t )

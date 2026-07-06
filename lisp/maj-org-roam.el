@@ -271,40 +271,47 @@
   (dolist (link-type (mapcar (lambda (e) (car e)) org-ref-cite-types))
     (org-link-set-parameters link-type :help-echo nil)))
 
-(use-package org-ref-ok
-  :after org-ref)
-
-(use-package org-ref-vis
-  :straight nil
-  :custom (org-ref-vis-style-getter
-           (lambda (command lang)
-             (let* ((chicago-en
-                     (file-name-concat
-                      org-ref-vis-csl-dir "styles"
-                      ;; "chicago-fullnote-bibliography-short-title-subsequent.csl"
-                      "chicago-note-bibliography.csl"))
-                    ;; (chicago-ja
-                    ;;  (file-name-concat
-                    ;;   "~/github.com/okomestudio"
-                    ;;   "chicago-fullnote-bibliography-short-title-subsequent-ja-csl"
-                    ;;   "chicago-fullnote-bibliography-short-title-subsequent-ja.csl"))
-                    (chicago-ja
-                     (file-name-concat
-                      "~/github.com/okomestudio/csl-chicago-ja"
-                      "chicago-notes-bibliography-ja.csl")))
-               (pcase lang
-                 ("ja-JP" chicago-ja)
-                 (_ chicago-en)))))
-  :hook (org-mode . org-ref-vis-mode)
+(use-package org-citeseeing
+  :after org-ref
+  :custom ((org-citeseeing-csl-style
+            (lambda (command lang)
+              (let* ((chicago-en
+                      (file-name-concat
+                       org-citeseeing-csl-dir "styles"
+                       ;; "chicago-fullnote-bibliography-short-title-subsequent.csl"
+                       "chicago-note-bibliography.csl"))
+                     ;; (chicago-ja
+                     ;;  (file-name-concat
+                     ;;   "~/github.com/okomestudio"
+                     ;;   "chicago-fullnote-bibliography-short-title-subsequent-ja-csl"
+                     ;;   "chicago-fullnote-bibliography-short-title-subsequent-ja.csl"))
+                     (chicago-ja
+                      (file-name-concat
+                       "~/github.com/okomestudio/csl-chicago-ja"
+                       "chicago-notes-bibliography-ja.csl")))
+                (pcase lang
+                  ("ja" chicago-ja)
+                  ("ja-JP" chicago-ja)
+                  (_ chicago-en))))))
+  :hook (org-mode . org-citeseeing-mode)
   :config
-  (setopt org-ref-vis-command-alist
+  (set-face-attribute 'org-citeseeing-cite-face nil
+                      :inherit 'org-ref-cite-face)
+  (set-face-attribute 'org-citeseeing-cite-error-face nil
+                      :inherit 'org-ref-bad-cite-key-face)
+
+  (setopt org-citeseeing-bibliography 'citar-bibliography)
+  ;; or for `org-ref':
+  ;; (setopt org-citeseeing-bibliography #'org-ref-find-bibliography)
+
+  (setopt org-citeseeing-command-alist
           (append
            '((("bibfullcite") . ((bib-entry) "${bib-entry}"))
              (("citepub") . ((title-only year-only)
                              "${title-only} (${publisher}, ${year-only})")))
-           org-ref-vis-command-alist))
+           org-citeseeing-command-alist))
 
-  (defun org-ref-vis-bibfullcite-export (path desc format _comm-channel)
+  (defun org-citeseeing-bibfullcite-export (path desc format _comm-channel)
     "Handle compilation export targets for the `bibfullcite' link.
 PATH is the citekey string."
     (cond ((eq format 'latex)
@@ -317,13 +324,13 @@ PATH is the citekey string."
   (org-link-set-parameters
    "bibfullcite"
    :complete (lambda () (org-ref-cite-link-complete "bibfullcite"))
-   :export #'org-ref-vis-bibfullcite-export
+   :export #'org-citeseeing-bibfullcite-export
    :follow #'org-ref-click-hyperlink
    ;; :help-echo #'org-ref-cite-tooltip
    )
   (add-to-list 'org-ref-cite-types '("bibfullcite" "Bibliography full list"))
 
-  (defun org-ref-vis-citepub-export (path desc format _comm-channel)
+  (defun org-citeseeing-citepub-export (path desc format _comm-channel)
     "Handle compilation export targets for the `citepub' link.
 PATH is the citekey string."
     (cond ((eq format 'latex)
@@ -336,7 +343,7 @@ PATH is the citekey string."
   (org-link-set-parameters
    "citepub"
    :complete (lambda () (org-ref-cite-link-complete "citepub"))
-   :export #'org-ref-vis-citepub-export
+   :export #'org-citeseeing-citepub-export
    :follow #'org-ref-click-hyperlink
    ;; :help-echo #'org-ref-cite-tooltip
    )
