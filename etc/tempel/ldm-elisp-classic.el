@@ -2,5 +2,6 @@
   .
   ((aggressive-indent-mode . nil)
    (indent-tabs-mode . t)
-   (nameless-mode . nil))
+   (nameless-mode . nil)
+   (tab-width . 8))
   ))

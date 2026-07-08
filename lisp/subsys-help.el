@@ -80,7 +80,12 @@
           ("k" . helpful-key)
           ("l" . view-lossage)
           ("v" . helpful-variable)
-          ("x" . helpful-command) ))
+          ("x" . helpful-command) )
+  :config
+  (defun helpful-mode--prep ()
+    (setq-local tab-width 8)) ; to make code with tab indent happy
+
+  :hook (helpful-mode . helpful-mode--prep))
 
 (use-package apropos
   :bind ( :prefix "C-h a"
