@@ -77,6 +77,7 @@
            (indent-bars-width-frac 0.1)
            (indent-bars-pad-frac 0.1))
   :hook ((prog-mode . indent-bars-mode)
+         (nxml-mode . indent-bars-mode)
          ((emacs-lisp-mode
            lisp-data-mode) . (lambda () (setq-local
                                          indent-bars-no-descend-lists t)))))
