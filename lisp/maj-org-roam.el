@@ -272,85 +272,70 @@
     (org-link-set-parameters link-type :help-echo nil)))
 
 (use-package org-citeseeing
-  :after org-ref
-  :custom ((org-citeseeing-csl-style
-            (lambda (command lang)
-              (let* ((chicago-en
-                      (file-name-concat
-                       org-citeseeing-csl-dir "styles"
-                       ;; "chicago-fullnote-bibliography-short-title-subsequent.csl"
-                       "chicago-note-bibliography.csl"))
-                     ;; (chicago-ja
-                     ;;  (file-name-concat
-                     ;;   "~/github.com/okomestudio"
-                     ;;   "chicago-fullnote-bibliography-short-title-subsequent-ja-csl"
-                     ;;   "chicago-fullnote-bibliography-short-title-subsequent-ja.csl"))
-                     (chicago-ja
-                      (file-name-concat
-                       "~/github.com/okomestudio/csl-chicago-ja"
-                       "chicago-notes-bibliography-ja.csl")))
-                (pcase lang
-                  ("ja" chicago-ja)
-                  ("ja-JP" chicago-ja)
-                  (_ chicago-en))))))
-  :hook (org-mode . org-citeseeing-mode)
+  ;; Style citations in Org documents.
+  ;;
+  ;; Clone the following repositories locally:
+  ;;
+  ;;   - git@github.com:citation-style-language/styles.git
+  ;;   - git@github.com:citation-style-language/locales.git
+  ;;
+  :after (citar org-ref)
+  :custom ((org-citeseeing-debug t)
+           (org-citeseeing-bibliography 'citar-bibliography) ; or #'org-ref-find-bibliography
+           (org-citeseeing-bib-item-value-getter #'citar-get-value)
+           (org-citeseeing-bib-item-locale
+            (lambda (citekey)
+              (if-let* ((langid (citar-get-value "langid" citekey))
+                        (locale (org-citeseeing-langid-to-locale langid)))
+                  locale
+                "en-US")))
+           (org-citeseeing-csl-dir
+            (file-name-concat "~" "github.com" "citation-style-language/"))
+           (org-citeseeing-csl-style #'org-citeseeing-csl-style-en-ja))
+  :custom-face
+  (org-citeseeing-cite-face ((t (:inherit 'org-ref-cite-face))))
+  (org-citeseeing-cite-error-face ((t (:inherit 'org-ref-bad-cite-key-face))))
   :config
-  (set-face-attribute 'org-citeseeing-cite-face nil
-                      :inherit 'org-ref-cite-face)
-  (set-face-attribute 'org-citeseeing-cite-error-face nil
-                      :inherit 'org-ref-bad-cite-key-face)
-
-  (setopt org-citeseeing-bibliography 'citar-bibliography)
-  ;; or for `org-ref':
-  ;; (setopt org-citeseeing-bibliography #'org-ref-find-bibliography)
+  (defun org-citeseeing-csl-style-en-ja (command locale)
+    (pcase locale
+      ("ja-JP"
+       (file-name-concat "~" "github.com" "okomestudio" "csl-chicago-ja"
+                         "chicago-notes-bibliography-ja.csl"))
+      (_
+       (cond
+        ((member command '("citep" "citep*" "citet" "citet*"))
+         "chicago-shortened-notes-bibliography.csl")
+        (t "chicago-notes-bibliography.csl")))))
 
   (setopt org-citeseeing-command-alist
           (append
-           '((("bibfullcite") . ((bib-entry) "${bib-entry}"))
-             (("citepub") . ((title-only year-only)
-                             "${title-only} (${publisher}, ${year-only})")))
+           '(("pubcite" . (:cite-format "${cp:suppress-author}")))
            org-citeseeing-command-alist))
 
-  (defun org-citeseeing-bibfullcite-export (path desc format _comm-channel)
-    "Handle compilation export targets for the `bibfullcite' link.
+  (defun org-citeseeing-pubcite-export (path desc format _comm-channel)
+    "Handle compilation export targets for the `pubcite' link.
 PATH is the citekey string."
     (cond ((eq format 'latex)
-           (format "\\bibfullcite{%s}"
-                   (replace-regexp-in-string "^&" "" path)))
-          ((eq format 'html)
-           (format "<span class=\"citation\">[Full Cite: %s]</span>" path))
-          (t (if desc desc (format "[Full Cite: %s]" path)))))
-
-  (org-link-set-parameters
-   "bibfullcite"
-   :complete (lambda () (org-ref-cite-link-complete "bibfullcite"))
-   :export #'org-citeseeing-bibfullcite-export
-   :follow #'org-ref-click-hyperlink
-   ;; :help-echo #'org-ref-cite-tooltip
-   )
-  (add-to-list 'org-ref-cite-types '("bibfullcite" "Bibliography full list"))
-
-  (defun org-citeseeing-citepub-export (path desc format _comm-channel)
-    "Handle compilation export targets for the `citepub' link.
-PATH is the citekey string."
-    (cond ((eq format 'latex)
-           (format "\\citepub{%s}"
+           (format "\\pubcite{%s}"
                    (replace-regexp-in-string "^&" "" path)))
           ((eq format 'html)
            (format "<span class=\"citation\">[Cite Pub: %s]</span>" path))
           (t (if desc desc (format "[Cite Pub: %s]" path)))))
 
   (org-link-set-parameters
-   "citepub"
-   :complete (lambda () (org-ref-cite-link-complete "citepub"))
-   :export #'org-citeseeing-citepub-export
-   :follow #'org-ref-click-hyperlink
+   "pubcite"
+   :complete (lambda () (org-ref-cite-link-complete "pubcite"))
+   :export #'org-citeseeing-pubcite-export
+   :follow #'org-ref-cite-follow
    ;; :help-echo #'org-ref-cite-tooltip
+   ;; :activate-func #'org-ref-cite-activate
    )
-  (add-to-list 'org-ref-cite-types '("citepub" "Cite publication"))
+  (add-to-list 'org-ref-cite-types '("pubcite" "Cite publication"))
 
   ;; Ensure relevant regexps are updated after `org-link-set-parameters':
-  (org-link-make-regexps))
+  (org-link-make-regexps)
+
+  :hook (org-mode . org-citeseeing-mode))
 
 ;;; Misc.
 

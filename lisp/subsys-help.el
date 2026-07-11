@@ -36,9 +36,10 @@
 
           :map help-map
           ("d" . ok-help-shell-cmd) )
-  :custom (list-faces-sample-text (concat "abcdefghijklmn"
-                                          "ABCDEFGHIJKLMN"
-                                          "漢字 ひらがな カタカナ"))
+  :custom ((list-faces-sample-text (concat "abcdefghijklmn"
+                                           "ABCDEFGHIJKLMN"
+                                           "漢字 ひらがな カタカナ"))
+           (view-lossage-auto-refresh t))
   :hook (help-mode . help-ok--disable-font-lock-mode-in-some-buffers)
   :config
   (defun help-ok--disable-font-lock-mode-in-some-buffers ()
