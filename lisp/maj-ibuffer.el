@@ -19,7 +19,7 @@
 
   ;; In `ibuffer-mode-map', `M-o' binds to `ibuffer-visit-buffer-1-window' by
   ;; default. To avoid the conflict with the default global key binding, unset:
-  (define-key ibuffer-mode-map (kbd "M-o") nil))
+  (keymap-set ibuffer-mode-map "M-o" nil))
 
 (use-package nerd-icons-ibuffer
   :custom ((nerd-icons-ibuffer-icon t)

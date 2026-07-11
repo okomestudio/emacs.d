@@ -38,7 +38,7 @@
   ;; NOTE(2025-05-19): The following remap shadows all pre-existing
   ;; `project-' commands originally mapped to `C-x p'. Rebind each
   ;; individually if necessary.
-  (define-key projectile-mode-map (kbd "C-x p") 'projectile-command-map)
+  (keymap-set projectile-mode-map "C-x p" 'projectile-command-map)
 
   (which-key-add-key-based-replacements
     "C-x p" "projectile"

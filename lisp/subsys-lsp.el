@@ -88,7 +88,7 @@ The function returns LSP servers that have been shut down."
   ;; o o'.
   (defvar lsp-ui-mode-repeat-map (make-sparse-keymap))
   (put #'lsp-ui-ok-doc-show 'repeat-map 'lsp-ui-mode-repeat-map)
-  (define-key lsp-ui-mode-repeat-map "o" #'lsp-ui-ok-doc-show)
+  (keymap-set lsp-ui-mode-repeat-map "o" #'lsp-ui-ok-doc-show)
 
   (defun lsp-ui-ok--theme (theme)
     (setopt lsp-ui-doc-border (face-attribute 'border :foreground nil 'default))
