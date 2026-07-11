@@ -222,6 +222,11 @@
   :custom ((command-log-mode-auto-show t))
   :demand t)
 
+;;; Eldoc
+
+(use-package eldoc
+  :custom (eldoc-help-at-pt t))
+
 ;;; Devdocs
 
 (use-package devdocs
