@@ -262,7 +262,7 @@
             ('js-ts-mode '("javascript"))
             ('json-ts-mode '("jq"))
             ('magit-mode '("git"))
-            ('markdown-mode '("markdown"))
+            ('markdown-ts-mode '("markdown"))
             ('mhtml-mode '("html"))
             ('python-mode '("python~3.12"))
             ('python-ts-mode '("python~3.12"))

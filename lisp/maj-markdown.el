@@ -1,32 +1,36 @@
 ;;; maj-markdown.el --- Markdown Major Mode  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;
-;; Set up the markdown major mode.
-;;
-;; NOTE: tree-sitter support exists, but not as mature.
+;; Configure the major mode for markdown document buffers.
 ;;
 ;;; Code:
 
-(use-package markdown-mode
-  :bind ( :map markdown-mode-map
-          ("C-c C-c v" . markdown-export-and-preview) )
-  :custom ((markdown-fontify-code-block-natively t)
-           (markdown-header-scaling t)
-           (markdown-indent-on-enter t))
-  :mode (("README\\.md\\'" . gfm-mode)
-         ("\\.md\\'" . gfm-mode)
-         ("\\.markdown\\'" . gfm-mode)
-         ("\\.lr\\'" . gfm-mode))
-  :commands (markdown-mode gfm-mode)
+(use-package markdown-ts-mode
+  :bind ( :map markdown-ts-mode-map
+          ("C-c C-x v" . markdown-ts-toggle-view-mode)
+          :map markdown-ts-view-mode-map
+          ("C-c C-x v" . markdown-ts-toggle-view-mode) )
+  :mode (("README\\.md\\'" . markdown-ts-mode)
+         ("\\.md\\'" . markdown-ts-mode)
+         ("\\.markdown\\'" . markdown-ts-mode)
+         ("\\.lr\\'" . markdown-ts-mode))
   :config
-  (defun markdown-mode-ok--init ()
+  (defun markdown-ts-mode--prep ()
     (setq-local fill-column 90)
-    (turn-on-visual-line-mode)
-    ;; Uncomment to enable `lsp-mode':
-    ;; (lsp)
-    )
+    (turn-on-visual-line-mode))
 
-  :hook (markdown-mode . markdown-mode-ok--init))
+  (defun markdown-ts-mode--prep-lsp ()
+    "Add this to `markdown-ts-mode-hook' to enable LSP."
+    (lsp))
+
+  (defun markdown-ts-toggle-view-mode ()
+    "Toggle between `markdown-ts-mode' and `markdown-ts-view-mode'."
+    (interactive)
+    (if (derived-mode-p 'markdown-ts-view-mode)
+        (markdown-ts-mode)
+      (markdown-ts-view-mode)))
+
+  :hook (markdown-ts-mode . markdown-ts-mode--prep))
 
 (provide 'maj-markdown)
 ;;; maj-markdown.el ends here

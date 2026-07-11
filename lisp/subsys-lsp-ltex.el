@@ -12,7 +12,7 @@
                                     context-mode
                                     gfm-mode
                                     latex-mode
-                                    markdown-mode
+                                    markdown-ts-mode
                                     org-mode
                                     rst-mode
                                     text-mode))
