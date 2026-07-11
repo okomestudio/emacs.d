@@ -1,4 +1,4 @@
-;;; early-init.el --- Emacs early init configuration  -*- lexical-binding: t -*-
+;;; early-init.el --- Emacs early init  -*- lexical-binding: t -*-
 ;;
 ;; Author: Taro Sato <okomestudio@gmail.com>
 ;; URL: https://github.com/okomestudio/emacs.d
@@ -6,19 +6,18 @@
 ;; Package-Requires: ((emacs "30.1"))
 ;;
 ;;; Commentary:
-;;
-;; Provides early initialization for Emacs.
-;;
 ;;; Code:
 
-;;; Init to do at the earliest
+;;; Earliest Init
 ;; Some configuration must be done at the earliest points in initialization.
 
 (when (native-comp-available-p)
   (startup-redirect-eln-cache (convert-standard-filename
                                (locate-user-emacs-file "var/eln-cache/"))))
 
-;;; Debug switches
+(setopt package-enable-at-startup nil) ; for `straight' over `package'
+
+;;; Debug Switches
 
 (setopt ok-debug t)
 (setopt warning-minimum-level :warning
@@ -26,13 +25,14 @@
         warning-suppress-types nil)
 (setq debug-on-message nil)   ; set regexp to trigger debugger
 (setq byte-compile-warnings '(not obsolete)) ; set t for development
+(setq message-log-max t)      ; don't truncate messages
 
-;;; Package manager
+;;; Package Manager
 
-(setopt package-enable-at-startup nil)
 (load (locate-user-emacs-file "lisp/init-straight.el")) ; or `init-package.el'
+(load (locate-user-emacs-file "lisp/init-use-package.el"))
 
-;;; GC and native compilation
+;;; GC and Native Compilation
 
 ;; Reduce GC while initialization by increasing the threshold (800 kb
 ;; is the default on circa 2021-08-01). Note that the threshold
@@ -69,11 +69,11 @@
 ;; Ignore x session resources.
 (advice-add 'x-apply-session-resources :override 'ignore)
 
-;;; Environment variables
+;;; Environment Variables
 
 (setenv "LSP_USE_PLISTS" "true")
 
-;;; Misc. optimizations
+;;; Misc. Optimizations
 
 (use-package benchmark-init
   ;; A simple benchmark of calls to Emacs require and load functions.

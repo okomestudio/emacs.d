@@ -1,61 +1,59 @@
 #+title: emacs.d
 
-The Emacs configuration directory.
+An Emacs configuration directory.
 
-** Repository structure
+* Introduction
 
-Clone the root of this version-controlled repository to a place where Emacs can find the =init.el= file, e.g. =~/.config/emacs=.
+This version-controlled repository acts as the main configuration for a local installation of Emacs.
+
+** Repository Structure
 
 #+begin_example
   emacs.d/
-  ├── bin/                 - Shell scripts; add to PATH
-  ├── etc/                 - Startup & config files for packages
-  │   └── tempel/          - Used by tempel, storing templates
-  ├── init.d/              - Symlinks to package sources in lisp/
-  │   └── symlinks.sh      - Symlink manager script
-  ├── lisp/                - Emacs Lisp package source files
-  │   ├── archive/         - Unused code archive for reference
-  │   ├── themes/          - Theme package config files
-  │   │   └── themes-*.el  - Configure a theme
-  │   ├── init-*.el        - Initialize a package manager
-  │   ├── linux-gui.el     - Configure GUI sub-component in Linux
-  │   ├── maj-*.el         - Configure a major mode & its utilities
-  │   ├── optimizations.el - Perf optimization
-  │   └── subsys-*.el      - Configure a subsystem not packaged as major mode
-  ├── straight/            - Used by straight
-  │   ├── repos/           - Package source repositories
-  │   └── versions/
-  │       └── default.el   - Version freeze info
-  ├── tree-sitter/         - Tree-sitter library files
-  ├── var/                 - Package data files
-  ├── early-init.el
-  └── init.el
+  ├─ bin/                - Shell scripts (add to PATH)
+  ├─ etc/                - Package startup configs
+  │  └─ tempel/          - `tempel' templates
+  ├─ init.d/             - Symlinks to sources used during init
+  │  └─ symlinks.sh      - The init.d admin script
+  ├─ lisp/               - Emacs Lisp package source files
+  │  ├─ archive/         - Unused code archive
+  │  ├─ themes/          - Theme package config files
+  │  │  └─ themes-*.el   - Configure a theme
+  │  ├─ init-*.el        - Configure a package during init
+  │  ├─ linux-gui.el     - Configure Linux GUI sub-component
+  │  ├─ maj-*.el         - Configure a major mode & its utilities
+  │  ├─ optimizations.el - Optimizations configured during init
+  │  └─ subsys-*.el      - Configure a non-major-mode subsystem
+  ├─ straight/           - Used by `straight'
+  │  ├─ repos/           - Package sources
+  │  └─ versions/
+  │     └─ default.el    - Version freeze info
+  ├─ tree-sitter/        - Tree-sitter libraries
+  ├─ var/                - Package data
+  ├─ early-init.el
+  └─ init.el
 #+end_example
 
-The Emacs starts by loading =early-init.el= and then =init.el=. This section describes the architecture of the =init.el= file.
+The Emacs starts by loading =early-init.el= and then =init.el=, within which ~init-loader~ reads sources from =init.d=. The config units are organized with ~use-package~ with ~straight~.
 
-*** ~straight-use-package~
+*** ~use-package~ and ~straight~
 
-This repository makes heavy use of ~use-package~ with ~straight~, configured in =lisp/init-straight.el=.
-
-In order to avoid excessive dependence on the =:straight= property, modified recipes are defined in =lisp/init-straight.el=. This also helps avoid recipe inconsistency when ~use-package~ is run multiple times for a package.
+The configuration =lisp/init-straight.el= set up ~use-package~ to pull packages using ~straight~. All straight recipes are set up in this file to remove the need for using the ~:straight~ keyword in each ~use-package~ form. In the same configuration file, explicitly list packages to ensure the use of built-in version over externally available one to avoid conflict.
 
 *** ~init-loader~
 
-Emacs Lisp source files are in =lisp/=. Those =.el= files actually loaded by ~init-loader~ are symlinked in =init.d/=, in (mostly) ASCII order. To set up symlinks, use =symlinks.sh=:
+The ~init-loader~ runs toward the end of ~init.el~. The Emacs Lisp sources in the directory =init.d/= are loaded and executed in order of priority based on file name (roughly ASCII).
+
+The Emacs Lisp files in =init.d/= are symlinked from the directory =lisp/= to allow selective loading of Emacs Lisp packages for modular configurations. Symlinking managed by the =init.d/symlinks.sh= shell script:
 
 #+begin_src shell
   ./init.d/symlinks.sh -r  # refresh all symlinks
 #+end_src
 
-** Miscellaneous topics
-*** Key bindings
+** Miscellaneous Topics
 
-See the [[info:elisp#Key Binding Conventions][Key Binding Conventions]] section of the GNU Emacs Lisp Reference Manual.
+See the [[https://github.com/okomestudio/emacs.d/wiki][repository wiki]] for miscellaneous or faster changing topics.
 
-*** Improving startup time
+* Installation
 
-In a typical Linux system that I use, the startup time is about 1.5 - 2.0 seconds on the first launch and 1.0 - 1.5 seconds thereafter. The Emacs Lisp sources are written for readability and maintainability. Some strategies are maintained to minimize package loading time, however. The following resources may offer useful tips:
-
-  - [[https://emacs-jp.github.io/tips/startup-optimization][Emacs の起動時間を“詰める” | Emacs JP]] (in Japanese)
-  - [[https://github.com/jamescherti/minimal-emacs.d][jamescherti/minimal-emacs.d: minimal-emacs.d - Better Vanilla Emacs Defaults and Optimized Startup]]
+Clone the repository root to a path within the filesystem where Emacs can find the =init.el= file, e.g. =~/.config/emacs=.

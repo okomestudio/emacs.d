@@ -2,48 +2,16 @@
 
 set -e
 
-# Maps priority to the modules found in the lisp directory
-declare -A ptom
-ptom["00"]="optimizations"
-ptom["01"]="subsys-startup"
-ptom["02"]="maj-minibuffer subsys-treesit"
-ptom["03"]="subsys-flycheck subsys-text-match"
-ptom["04"]="subsys-help subsys-buffer subsys-navigation subsys-projectile"
-ptom["05"]="subsys-os-integration"
-ptom["06"]="subsys-faces themes"
-ptom["08"]="subsys-consult"
-ptom["10"]="maj-org"
-ptom["11"]="maj-org-roam"
-ptom["20"]="subsys-ime"
-ptom["22"]="subsys-writing-en"
-ptom["30"]="subsys-auth subsys-term subsys-embark"
-ptom["32"]="subsys-lsp subsys-eglot"
-ptom["40"]="subsys-completion subsys-editing subsys-spelling subsys-git subsys-reference"
-ptom["50"]="maj-text-mode"
-ptom["52"]="maj-markdown maj-rst maj-yaml"
-ptom["54"]="maj-conf-mode"
-ptom["60"]="maj-prog-mode"
-ptom["61"]="maj-polymode"
-ptom["62"]="maj-c maj-css maj-docker maj-elisp maj-html maj-javascript maj-kotlin maj-python maj-rust maj-scala maj-sh maj-sql maj-web-mode"
-ptom["64"]="maj-ansible subsys-drawing maj-graphviz maj-json maj-plantuml subsys-http"
-ptom["70"]="subsys-doc-viewer subsys-ocr"
-ptom["80"]="subsys-llm subsys-audio maj-eww subsys-game subsys-gnus subsys-map"
-ptom["82"]="subsys-zotero"
-ptom["86"]="maj-ibuffer"
-ptom["90"]="subsys-readers subsys-treemacs subsys-weather"
-ptom["91"]="maj-elfeed"
-ptom["98"]="maj-dashboard"
-ptom["linux-00"]="linux-gui"
-
-# DO NOT MODIFY BELOW
-
 readonly scriptname="${0##*/}"
+
+# Map priorities to Emacs Lisp files in the `lisp' directory
+declare -A ptom
 
 function usage() {
   cat <<USAGE >&2
-Usage: $scriptname [-dh]
+Usage: $scriptname [-dh] [unit]
 
-Create or remove symlinks under init.d/.
+Create or remove symlinks under init.d/<unit>.
 
   -d  Remove symlinks
   -h  Show help
@@ -60,16 +28,19 @@ function error() {
 }
 
 function create_symlinks() {
+  local unit="${1:-default}"
+  source "./init.d/unit-${unit}.sh"
   for priority in "${!ptom[@]}"; do
     for module in ${ptom[$priority]}; do
-      src="../lisp/${module}.el"
+      src="../../lisp/${module}.el"
       if [[ $priority = linux-* ]] && [[ $module = linux-* ]]; then
-        target=$priority-${module#linux-}.el
+        target="./init.d/$unit/$priority-${module#linux-}.el"
       else
-        target=$priority-$module.el
+        target="./init.d/$unit/$priority-$module.el"
       fi
-      if [ ! -h "init.d/$target" ]; then
-        cmd="ln -s $src init.d/$target"
+      if [ ! -h "$target" ]; then
+        mkdir -p "$(dirname "$target")"
+        cmd="ln -s $src $target"
         $cmd
       fi
     done
@@ -77,19 +48,23 @@ function create_symlinks() {
 }
 
 function delete_symlinks() {
-  find "init.d/" -type l -exec rm {} \;
+  local unit="${1:-default}"
+  if [ -d "./init.d/$unit" ]; then
+    find "./init.d/$unit" -type l -exec rm {} \;
+  fi
 }
 
 delete_mode=0
 
 function main() {
+  local unit="${1:-default}"
   if [ "$delete_mode" = 1 ]; then
-    delete_symlinks
+    delete_symlinks "$unit"
   elif [ "$refresh_mode" = 1 ]; then
-    delete_symlinks
-    create_symlinks
+    delete_symlinks "$unit"
+    create_symlinks "$unit"
   else
-    create_symlinks
+    create_symlinks "$unit"
   fi
 }
 

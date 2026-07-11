@@ -52,8 +52,8 @@
 (use-package no-littering
   ;; Redirect package config files to etc/ or var/.
   :demand t
-  :custom ((no-littering-etc-directory (ok-file-expand-user-emacs-file "etc/"))
-           (no-littering-var-directory (ok-file-expand-user-emacs-file "var/")))
+  :custom ((no-littering-etc-directory (locate-user-emacs-file "etc/"))
+           (no-littering-var-directory (locate-user-emacs-file "var/")))
   :config
   (defun ok-file-expand-bin (&rest components)
     "Expand the path to FILE in Emacs's bin/ directory."
@@ -67,7 +67,15 @@
     "Expand the path to FILE in Emacs's straight/repos directory."
     (apply #'ok-file-expand-user-emacs-file `("straight" "repos" ,@components)))
 
-  ;; Define aliases for shorter names.
+  ;; Define aliases for shorter names:
+  (defalias 'f-expand-emacs #'locate-user-emacs-file)
+  (defalias 'f-expand-etc #'no-littering-expand-etc-file-name)
+  (defalias 'f-expand-var #'no-littering-expand-var-file-name)
+  (defalias 'f-expand-bin #'ok-file-expand-bin)
+  (defalias 'f-expand-lisp #'ok-file-expand-lisp)
+  (defalias 'f-expand-straight-repo #'ok-file-expand-straight-repos)
+
+  ;; Deprecate from now on:
   (defalias 'ok-file-expand-etc #'no-littering-expand-etc-file-name)
   (defalias 'ok-file-expand-var #'no-littering-expand-var-file-name))
 
@@ -79,9 +87,9 @@
 
 (use-package init-loader
   :demand t
-  :custom (init-loader-byte-compile nil)
-  :config
-  (init-loader-load (ok-file-expand-user-emacs-file "init.d")))
+  :custom ((init-loader-byte-compile nil)
+           (init-loader-directory (f-expand-emacs "init.d/default")))
+  :config (init-loader-load))
 
 ;;; Session Persistence
 

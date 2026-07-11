@@ -1,8 +1,7 @@
 ;;; init-straight.el --- Straight Initialization  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;
-;; Run this module to use `straight' and `use-package' for package
-;; configuration.
+;; Use `straight' and `use-package' for package configuration.
 ;;
 ;; To update package repositories, run
 ;;
@@ -12,17 +11,16 @@
 ;;
 ;;   M-x straight-pull-package-and-deps <package>
 ;;
-;; In order to allow deterministic recovery of packages, create a version lock
-;; file by running
+;; To allow deterministic recovery of packages, freeze the current state:
 ;;
 ;;   M-x straight-freeze-version
 ;;
-;; The version lock file will at 'straight/versions/default.el'. (Optionally put
-;; this file under version control.) To recover packages using this file, run
+;; The version lock file will be at 'straight/versions/default.el'. To recover
+;; packages using this file, run
 ;;
 ;;   M-x straight-thaw-versions
 ;;
-;; The following utility functions may be useful:
+;; The following utility commands are useful:
 ;;
 ;;   - `straight-visit-package' to browse the package source code
 ;;   - `straight-visit-package-website' to visit the package website
@@ -36,21 +34,13 @@
 ;;
 ;;; Code:
 
-;; `straight' check for modifications. This check is minimized by
-;;
-;;   - removing the `find-at-startup' option
-;;   - using the `watch-files' option
-;;
-;; For the latter option, github.com/watchexec/watchexec is required. For Debian
-;; Trixie, watchexec-2.3.2-x86_64-unknown-linux-gnu.deb was installed
-;; (2025-08-17).
-(setopt straight-check-for-modifications '(watch-files))
-
-(setopt straight-use-package-by-default t)
+;; Some custom variables should be set before bootstrap:
+(setopt straight-base-dir user-emacs-directory)
 
 (defvar bootstrap-version)
-(let ((bootstrap-file (locate-user-emacs-file
-                       "straight/repos/straight.el/bootstrap.el"))
+(let ((bootstrap-file
+       (expand-file-name "straight/repos/straight.el/bootstrap.el"
+                         straight-base-dir))
       (bootstrap-version 7))  ; straight bootstrap version
   (unless (file-exists-p bootstrap-file)
     (with-current-buffer
@@ -62,31 +52,32 @@
       (eval-print-last-sexp)))
   (load bootstrap-file nil 'nomessage))
 
-(setopt use-package-always-defer t               ; use :demand t to override
-        use-package-enable-imenu-support t
-        use-package-minimum-reported-time 0.001
-        message-log-max t)
+(setopt straight-use-package-by-default t)
 
-(require 'use-package)
-(require 'use-package-ensure-system-package)
-
-(use-package system-packages
-  :custom ((system-packages-use-sudo t)
-           (system-packages-package-manager 'apt)))
+;; `straight-check-for-modifications': `straight' check for modifications, which
+;; can occur at an inopportune timing and expensive. To minimize this check, we
+;;
+;;   - remove the `find-at-startup' and `find-when-checking' options
+;;   - use the `watch-files' option
+;;
+;; For the latter option, github.com/watchexec/watchexec is required. For Debian
+;; Trixie, watchexec-2.3.2-x86_64-unknown-linux-gnu.deb was installed
+;; (2025-08-17).
+(when (executable-find "watchexec")
+  (setopt straight-check-for-modifications '(watch-files)))
 
 ;;; Override Recipes
 ;;
-;; Custom recipes that override the default are defined here, in order to avoid
-;; conflicts. This is done early in `init.el' so that we minimize the use of
-;; `:straight'.
+;; Provide custom recipes that should override defaults here to eliminate the
+;; the need for the `:straight' keyword in `use-package'.
 
-(dolist
-    (recipe
+(pcase-dolist
+    (`(,feature ,type ,host ,repo . ,others)
      `(( aio git github "skeeto/emacs-aio"
          ;; See https://github.com/skeeto/emacs-aio/issues/31.
          :fork (:host github :repo "kiennq/emacs-aio") )
        ( anki-editor git github "anki-editor/anki-editor"
-         :fork ( :branch "close-render-mode") )  ; or "enable-file-based-note"
+         :fork ( :branch "close-render-mode") ) ; or "enable-file-based-note"
        ( atomic-chrome git github "KarimAziev/atomic-chrome" :flavor nil )
        ( blamer git github "artawower/blamer.el" )
        ( boem-weather git gitlab "boskoivanisevic/boem-weather" )
@@ -140,6 +131,16 @@
        ( indent-bars git github "jdtsmith/indent-bars" )
        ( kaomel git github "gicrisf/kaomel" :files ("*.el"))
        ( keychain-environment git github "tarsius/keychain-environment" )
+       ( lookup git github "okomestudio/lookup"
+         :pre-build
+         ,(let ((dir (straight--repos-dir "lookup")))
+            `(("./configure"
+               ,(concat "--prefix=" (expand-file-name "dist" dir))
+               ,(concat "--infodir=" (expand-file-name "dist/info" dir)))
+              ("make")
+              ("make" "install")))
+         :files ("./dist/share/emacs/site-lisp/lookup/*.el"
+                 "./dist/info/*") )
        ( lsp-booster git github "okomestudio/lsp-booster.el"
          :post-build (("make")) )
        ( lsp-bridge git github "manateelazycat/lsp-bridge"
@@ -215,7 +216,7 @@
                  :branch "venv-support" )
          :files ("*.el" ("bin/make-imports.py" . "bin/make-imports.py")) )
        ( pymacs git github "Pymacs2/Pymacs"
-         :post-build            ; see what install-pymacs.sh does
+         :post-build          ; see what install-pymacs.sh does
          (("pip" "install" "-U" "pyopenssl")
           ("pip" "install" "-e"
            ,(expand-file-name (straight--repos-dir "Pymacs")))) )
@@ -247,27 +248,12 @@
          :pre-build ("make") )
        ( worg git sourcehut "bzg/worg" )
        ( xht git sourcehut "flandrew/xht" )))
-  (let ((feature (nth 0 recipe))
-        (type (nth 1 recipe))
-        (host (nth 2 recipe))
-        (repo (nth 3 recipe)))
-    (straight-override-recipe
-     `(,feature :type ,type :host ,host :repo ,repo ,@(seq-subseq recipe 4)))))
-
-(let ((repo (expand-file-name (straight--repos-dir "lookup"))))
   (straight-override-recipe
-   `(lookup
-     :type git :host github :repo "okomestudio/lookup"
-     :pre-build
-     (("./configure"
-       ,(concat "--prefix=" (file-name-concat repo "dist"))
-       ,(concat "--infodir=" (file-name-concat repo "dist" "info")))
-      ("make") ("make" "install"))
-     :files
-     (,(file-name-concat repo "dist/share/emacs/site-lisp/lookup/*.el")
-      ,(file-name-concat repo "dist/info/*")))))
+   `(,feature :type ,type :host ,host :repo ,repo ,@others)))
 
-;; Ensure use of builtin version for the following packages:
+;;; Built-in Packages
+;; To ensure the use of built-in version of a package, register it by name here.
+
 (dolist
     (pkg
      '( ansi-color apropos auth-source autorevert
@@ -281,7 +267,7 @@
         ibuffer image-mode indent info ispell
         jit-lock js json-ts-mode
         lisp
-        message mhtml-mode minibuffer mwheel
+        markdown-ts-mode message mhtml-mode minibuffer mwheel
         nnfolder
         ob-C ob-core ob-dot ob-js ob-plantuml ob-python ob-shell ob-sql
         ob-sqlite ob-tangle
