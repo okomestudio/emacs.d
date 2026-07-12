@@ -52,7 +52,7 @@
           :map tempel-map
           ("M-}" . tempel-next)
           ("M-{" . tempel-previous) )
-  :custom ((tempel-path `(,(ok-file-expand-etc "tempel/templates.el")))
+  :custom ((tempel-path `(,(fs-emacs-etc "tempel/templates.el")))
            (tempel-trigger-prefix "/"))
   :config
   (defun tempel-ok--include (elt)
@@ -70,7 +70,7 @@
                 (with-current-buffer
                     (find-file-noselect
                      (expand-file-name
-                      filename (ok-file-expand-etc "tempel")))
+                      filename (fs-emacs-etc "tempel")))
                   (save-restriction
                     (widen)
                     (buffer-substring-no-properties

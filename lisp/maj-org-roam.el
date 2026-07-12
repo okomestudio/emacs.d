@@ -31,8 +31,8 @@
            ;; `org-roam-db-extra-links-elements'.)
            (org-roam-db-extra-links-exclude-keys '((node-property "ROAM_REFS")))
 
-           (org-roam-db-location (ok-file-expand-var "org-roam/roam/.roam.db"))
-           (org-roam-directory (ok-file-expand-var "org-roam/roam/"))
+           (org-roam-db-location (fs-emacs-var "org-roam/roam/.roam.db"))
+           (org-roam-directory (fs-emacs-var "org-roam/roam/"))
            (org-roam-extract-new-file-path "topic/${id}/${slug}.org")
            (org-roam-node-display-template "${title}")
            (org-roam-mode-sections
@@ -46,7 +46,7 @@
     "C-c r" "org-ref")
 
   (defun org-roam--load-init-lazy ()
-    (load (ok-file-expand-etc "org-roam/init")))
+    (load (fs-emacs-etc "org-roam/init")))
   (add-hook 'after-init-hook #'org-roam--load-init-lazy 99)
 
   :config

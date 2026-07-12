@@ -6,8 +6,8 @@
 ;;; Code:
 
 (use-package flycheck
-  :custom ((flycheck-python-mypy-executable (ok-file-expand-bin "mypy"))
-           (flycheck-rst-executable (ok-file-expand-bin "rst2pseudoxml")))
+  :custom ((flycheck-python-mypy-executable (fs-emacs-bin "mypy"))
+           (flycheck-rst-executable (fs-emacs-bin "rst2pseudoxml")))
   :hook (((emacs-lisp-mode lisp-data-mode) . flycheck-mode))
   :config
   (which-key-add-key-based-replacements "C-c !" "flycheck-mode-map"))

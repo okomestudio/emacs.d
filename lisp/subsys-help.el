@@ -11,7 +11,7 @@
 
 (use-package info
   :custom (Info-hide-note-references t)
-  :config (push (ok-file-expand-etc "info/") Info-directory-list))
+  :config (push (fs-emacs-etc "info/") Info-directory-list))
 
 (use-package sicp
   ;; "Structure and Interpretation of Computer Programs" as info.
@@ -50,18 +50,12 @@
 
   ;; Dynamically generate document accessor functions
   (let ((docs
-         `((elisp-for-python
-            . ,(ok-file-expand-straight-repos "elisp-for-python" "README.org"))
-           (emacsql
-            . ,(ok-file-expand-straight-repos "emacsql" "README.md"))
-           (org-ref
-            . ,(ok-file-expand-straight-repos "org-ref" "org-ref.org"))
-           (straight
-            . ,(ok-file-expand-straight-repos "straight.el" "README.md"))
-           (tempel
-            . ,(ok-file-expand-straight-repos "tempel" "README.org"))
-           (worg
-            . ,(ok-file-expand-straight-repos "worg" "index.org")))))
+         `((elisp-for-python . ,(fs-straight-repo "elisp-for-python" "README.org"))
+           (emacsql . ,(fs-straight-repo "emacsql" "README.md"))
+           (org-ref . ,(fs-straight-repo "org-ref" "org-ref.org"))
+           (straight . ,(fs-straight-repo "straight.el" "README.md"))
+           (tempel . ,(fs-straight-repo "tempel" "README.org"))
+           (worg . ,(fs-straight-repo "worg" "index.org")))))
     (dolist (doc docs)
       (let ((sym (symbol-name (car doc)))
             (file (cdr doc)))
@@ -338,7 +332,7 @@
   ;;
   ;;   - `M-x time-zones RET' to open the time-zones buffer
   :config
-  (let ((time-zones-file (ok-file-expand-var "time-zones/time-zones.el")))
+  (let ((time-zones-file (fs-emacs-var "time-zones/time-zones.el")))
     (ok-file-ensure-directory-exists
      (directory-file-name (file-name-directory time-zones-file)))
     (setq time-zones--city-list-file time-zones-file)))

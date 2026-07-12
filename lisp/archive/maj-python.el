@@ -31,7 +31,7 @@
          (projectile-after-switch-project
           . (lambda (&rest args)
               (pyenv-use-corresponding)
-              (shell-command-to-string (ok-file-expand-bin "bootstrap-python-venv"))))))
+              (shell-command-to-string (fs-emacs-bin "bootstrap-python-venv"))))))
 
 (use-package pyenv-mode
   :hook ((python-base-mode

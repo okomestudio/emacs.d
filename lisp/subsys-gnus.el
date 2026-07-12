@@ -9,8 +9,8 @@
   :bind ( :map message-mode-map
           ("C-c C-c" . message-send-and-exit-via-sender-email) )
   :hook (message-setup . message--deactivate-hydra)
-  :custom ((message-auto-save-directory (ok-file-expand-var "message/"))
-           (message-directory (ok-file-expand-var "message/Mail/")))
+  :custom ((message-auto-save-directory (fs-emacs-var "message/"))
+           (message-directory (fs-emacs-var "message/Mail/")))
   :config
   (defcustom message-smtp-accounts nil
     "`alist' mapping from sender email address to SMTP server.
@@ -58,12 +58,12 @@ is SMTP server, `port' is port, and `usr' is SMTP login username."
   ;; NOTE: `nnfolder-directory' easily reverts to "~/Mail" if
   ;; `etc/gnus/newsrc.eld' exists. Delete that file and initialize
   ;; Gnus config once that happens.
-  (setq nnfolder-directory (ok-file-expand-var "message/Mail/archive")))
+  (setq nnfolder-directory (fs-emacs-var "message/Mail/archive")))
 
 (use-package gnus
-  :custom ((gnus-directory (ok-file-expand-var "gnus/News/"))
-           (gnus-default-directory (ok-file-expand-var "gnus/"))
-           (gnus-home-directory (ok-file-expand-var "gnus/"))
+  :custom ((gnus-directory (fs-emacs-var "gnus/News/"))
+           (gnus-default-directory (fs-emacs-var "gnus/"))
+           (gnus-home-directory (fs-emacs-var "gnus/"))
            (gnus-summary-line-format "%U%R%z%I%(%[%o: %-23,23f%]%) %s\\n"))
   :config
   (setq gnus-summary-insert-old-articles t))
@@ -126,7 +126,7 @@ _f_: forward
     ("f" gnus-summary-mail-forward)
     ("." nil "cancel")))
 
-(load (ok-file-expand-etc "gnus/init"))
+(load (fs-emacs-etc "gnus/init"))
 
 (provide 'subsys-gnus)
 ;;; subsys-gnus.el ends here

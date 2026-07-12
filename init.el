@@ -1,4 +1,4 @@
-;;; init.el --- Emacs init configuration  -*- lexical-binding: t -*-
+;;; init.el --- Emacs init  -*- lexical-binding: t -*-
 ;;
 ;; Author: Taro Sato <okomestudio@gmail.com>
 ;; URL: https://github.com/okomestudio/emacs.d
@@ -7,7 +7,7 @@
 ;;
 ;;; Commentary:
 ;;
-;; This feature runs after `early-init.el'.
+;; This runs after `early-init.el'.
 ;;
 ;;; Code:
 
@@ -55,40 +55,35 @@
   :custom ((no-littering-etc-directory (locate-user-emacs-file "etc/"))
            (no-littering-var-directory (locate-user-emacs-file "var/")))
   :config
-  (defun ok-file-expand-bin (&rest components)
-    "Expand the path to FILE in Emacs's bin/ directory."
-    (apply #'ok-file-expand-user-emacs-file `("bin" ,@components)))
+  ;; Define aliases for filesystem access with shorter names:
+  (defalias 'fs-emacs-etc #'no-littering-expand-etc-file-name)
+  (defalias 'fs-emacs-var #'no-littering-expand-var-file-name)
 
-  (defun ok-file-expand-lisp (&rest components)
-    "Expand the path to FILE in Emacs's lisp/ directory."
-    (apply #'ok-file-expand-user-emacs-file `("lisp" ,@components)))
+  (defun fs-emacs (&rest parts)
+    (locate-user-emacs-file (apply #'file-name-concat parts)))
 
-  (defun ok-file-expand-straight-repos (&rest components)
-    "Expand the path to FILE in Emacs's straight/repos directory."
-    (apply #'ok-file-expand-user-emacs-file `("straight" "repos" ,@components)))
+  (defun fs-emacs-bin (path)
+    "Expand the path to FILE in Emacs's 'bin/' directory."
+    (fs-emacs (file-name-concat "bin" path)))
 
-  ;; Define aliases for shorter names:
-  (defalias 'f-expand-emacs #'locate-user-emacs-file)
-  (defalias 'f-expand-etc #'no-littering-expand-etc-file-name)
-  (defalias 'f-expand-var #'no-littering-expand-var-file-name)
-  (defalias 'f-expand-bin #'ok-file-expand-bin)
-  (defalias 'f-expand-lisp #'ok-file-expand-lisp)
-  (defalias 'f-expand-straight-repo #'ok-file-expand-straight-repos)
+  (defun fs-emacs-lisp (path)
+    "Expand the path to FILE in Emacs's 'lisp/' directory."
+    (fs-emacs (file-name-concat "lisp" path)))
 
-  ;; Deprecate from now on:
-  (defalias 'ok-file-expand-etc #'no-littering-expand-etc-file-name)
-  (defalias 'ok-file-expand-var #'no-littering-expand-var-file-name))
+  (defun fs-straight-repo (&rest parts)
+    "Expand the path to FILE in Emacs's 'straight/repos/' directory."
+    (fs-emacs (apply #'file-name-concat `("straight" "repos" ,@parts)))))
 
 ;;; Private Initialization
 
-(load (ok-file-expand-etc "emacs/init") t)
+(load (fs-emacs-etc "emacs/init") t)
 
 ;;; Package Loading from `init.d/'.
 
 (use-package init-loader
   :demand t
   :custom ((init-loader-byte-compile nil)
-           (init-loader-directory (f-expand-emacs "init.d/default")))
+           (init-loader-directory (fs-emacs "init.d/default")))
   :config (init-loader-load))
 
 ;;; Session Persistence

@@ -39,7 +39,7 @@
   (dolist (buffer '("*reddigg*" "*reddigg-comments*"))
     (add-to-list 'ok-reader-buffers buffer))
 
-  (load (ok-file-expand-etc "reddigg/init")))
+  (load (fs-emacs-etc "reddigg/init")))
 
 (defun ok-reader-buffers--init ()
   "Apply buffer-local face remappings for `hnreader'."

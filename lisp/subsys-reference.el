@@ -90,7 +90,7 @@
          ;; scaling runs:
          (lookup-content-mode . ok-face-text-scale-per-mode))
   :config
-  (load (ok-file-expand-etc "lookup/init"))
+  (load (fs-emacs-etc "lookup/init"))
 
   (defun lookup-ok--set-window-size ()
     (toggle-truncate-lines 1)
@@ -106,7 +106,7 @@
 
 (use-package hatsuon
   :disabled                   ; use `gt.el'
-  :custom ((hatsuon-audio-cache-dir (ok-file-expand-var "hatsuon/cache/"))
+  :custom ((hatsuon-audio-cache-dir (fs-emacs-var "hatsuon/cache/"))
            (hatsuon-audio-url-getters
             '(hatsuon-wordnik-audio-url-getter)))
   :config (require 'hatsuon-wordnik))

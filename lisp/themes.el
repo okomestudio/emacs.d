@@ -39,7 +39,7 @@
 
 ;;; Modeline
 
-(load (ok-file-expand-lisp "themes-modeline.el"))
+(load (fs-emacs-lisp "themes-modeline.el"))
 
 ;;; Minor Theme Adjustments
 

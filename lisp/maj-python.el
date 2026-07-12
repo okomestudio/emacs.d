@@ -12,7 +12,7 @@
           ("C-c b" . python-ok-format-buffer) )
   :custom ((python-indent-guess-indent-offset-verbose nil)
            (python-indent-offset 4)
-           (python-shell-interpreter (ok-file-expand-bin "python-shell-interpreter")))
+           (python-shell-interpreter (fs-emacs-bin "python-shell-interpreter")))
   :ensure-system-package (ipython . "pip install ipython")
   :config
   ;; Code formatting with Ruff.

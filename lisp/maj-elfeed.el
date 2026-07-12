@@ -58,10 +58,10 @@
     (set-face-attribute 'elfeed-search-unread-title-face nil
                         :foreground (face-attribute 'default :foreground)))
 
-  (load (ok-file-expand-etc "elfeed/init")))
+  (load (fs-emacs-etc "elfeed/init")))
 
 (use-package elfeed-org
-  :custom ((rmh-elfeed-org-files `(,(ok-file-expand-etc "elfeed/elfeed.org"))))
+  :custom ((rmh-elfeed-org-files `(,(fs-emacs-etc "elfeed/elfeed.org"))))
   :init
   ;; `elfeed-org' seems very expensive, so we want to lazy load. See the
   ;; `elfeed-org' function source to ensure that we take care of the nested

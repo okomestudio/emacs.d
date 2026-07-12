@@ -6,7 +6,7 @@
 ;;; Code:
 
 (use-package auth-source
-  :custom ((auth-sources `(,(ok-file-expand-etc "auth-source/.authinfo.gpg")))
+  :custom ((auth-sources `(,(fs-emacs-etc "auth-source/.authinfo.gpg")))
            (authinfo-hidden (format "\\(%s\\)"
                                     (mapconcat 'identity
                                                '("api_key"

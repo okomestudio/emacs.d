@@ -41,7 +41,7 @@ section)."
   :config
   (defun jq-interactively-on-yaml (&rest r)
     (when (derived-mode-p 'yaml-ts-mode)
-      (setq-local jq-interactive-command (ok-file-expand-bin "yq")
+      (setq-local jq-interactive-command (fs-emacs-bin "yq")
                   jq-interactive-font-lock-mode #'yaml-ts-mode
                   jq-interactive-default-options "--yaml-roundtrip")))
   (advice-add #'jq-interactively :before #'jq-interactively-on-yaml))
