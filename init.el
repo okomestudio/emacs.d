@@ -11,6 +11,19 @@
 ;;
 ;;; Code:
 
+;;; Emacs User Profile
+
+(defvar emacs-user-profile "default"
+  "Emacs user profile.
+Used to customize the `init-loader' and `desktop' save location.")
+
+(when-let* ((profile (getenv "EMACS_USER_PROFILE"))
+            (profile (when (< 0 (length profile))
+                       profile)))
+  (setq-default emacs-user-profile profile))
+
+;;; Early Customization
+
 (setopt custom-file null-device) ; disable `custom.el'
 
 ;; Make the compilation buffer comint by default:
@@ -20,9 +33,6 @@
 ;;; External Dependencies
 ;;
 ;; Install packages used throughout the init files here.
-
-(use-package compat)          ; Emacs Lisp compatibility layer
-(use-package s)               ; string manipulation library
 
 (use-package ok
   ;; Emacs Lisp utilities for Okome Studio (ok).
@@ -48,20 +58,23 @@
   :custom ((no-littering-etc-directory (locate-user-emacs-file "etc/"))
            (no-littering-var-directory (locate-user-emacs-file "var/")))
   :config
-  ;; Define aliases for filesystem access with shorter names:
-  (defalias 'fs-emacs-etc #'no-littering-expand-etc-file-name)
-  (defalias 'fs-emacs-var #'no-littering-expand-var-file-name)
+  ;; For filesystem access with shorter function names:
+  (defun fs-emacs-etc (&rest parts)
+    (no-littering-expand-etc-file-name (apply #'file-name-concat parts)))
+
+  (defun fs-emacs-var (&rest parts)
+    (no-littering-expand-var-file-name (apply #'file-name-concat parts)))
 
   (defun fs-emacs (&rest parts)
     (locate-user-emacs-file (apply #'file-name-concat parts)))
 
-  (defun fs-emacs-bin (path)
+  (defun fs-emacs-bin (&rest parts)
     "Expand the path to FILE in Emacs's 'bin/' directory."
-    (fs-emacs (file-name-concat "bin" path)))
+    (fs-emacs (apply #'file-name-concat `("bin" ,@parts))))
 
-  (defun fs-emacs-lisp (path)
+  (defun fs-emacs-lisp (&rest parts)
     "Expand the path to FILE in Emacs's 'lisp/' directory."
-    (fs-emacs (file-name-concat "lisp" path)))
+    (fs-emacs (apply #'file-name-concat `("lisp" ,@parts))))
 
   (defun fs-straight-repo (&rest parts)
     "Expand the path to FILE in Emacs's 'straight/repos/' directory."
@@ -76,8 +89,11 @@
 (use-package init-loader
   :demand t
   :custom ((init-loader-byte-compile nil)
-           (init-loader-directory (fs-emacs "init.d/default")))
-  :config (init-loader-load))
+           (init-loader-directory (fs-emacs "init.d" emacs-user-profile)))
+  :config
+  (unless (file-directory-p init-loader-directory)
+    (error "No init-loader directory exists (%s)" init-loader-directory))
+  (init-loader-load))
 
 ;;; Session Persistence
 
@@ -86,6 +102,11 @@
   :custom ((desktop-auto-save-timeout 180)
            (desktop-modes-not-to-save '(eww-mode tags-table-mode)))
   :init
+  (let ((dir (directory-file-name (fs-emacs-var "desktop" emacs-user-profile))))
+    (make-directory desktop-dirname t)
+    (setq-default desktop-dirname dir)
+    (setopt desktop-path (list desktop-dirname)))
+
   ;; Loading the feature will set up after-init hook to actually read
   ;; a previously saved session. The session read will be skipped when
   ;; Emacs is launched with `--no-desktop` option.
