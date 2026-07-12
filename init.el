@@ -24,13 +24,6 @@
 (use-package compat)          ; Emacs Lisp compatibility layer
 (use-package s)               ; string manipulation library
 
-(use-package dash
-  ;; A modern list library.
-  :hook ((emacs-lisp-mode lisp-data-mode) . dash-fontify-mode)
-  :config
-  (with-eval-after-load 'info-look
-    (dash-register-info-lookup)))
-
 (use-package ok
   ;; Emacs Lisp utilities for Okome Studio (ok).
   :demand t

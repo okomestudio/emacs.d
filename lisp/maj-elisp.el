@@ -12,8 +12,6 @@
           ("C-c b" . elisp-mode-ok--format)
           :map lisp-data-mode-map
           ("C-c b" . elisp-mode-ok--format) )
-  :hook (((emacs-lisp-mode lisp-data-mode) . elisp-mode-ok--style)
-         ((emacs-lisp-mode lisp-data-mode) . elisp-mode-ok--capf-set))
   :config
   (defun elisp-mode-ok--format ()
     "Format the current Emacs Lisp buffer."
@@ -34,7 +32,15 @@
   (defun elisp-mode-ok--capf-set ()
     "Set CAPFs for the Emacs Lisp mode."
     ;; See github.com/jwiegley/use-package/issues/1077#issuecomment-2266642373
-    (add-hook 'completion-at-point-functions #'elisp-mode-ok--capf -99 t)))
+    (add-hook 'completion-at-point-functions #'elisp-mode-ok--capf -99 t))
+
+  ;; Fontify `dash' symbols when the package is loaded.
+  (with-eval-after-load 'dash
+    (add-hook 'emacs-lisp-mode-hook #'dash-fontify-mode)
+    (add-hook 'lisp-data-mode-hook #'dash-fontify-mode))
+
+  :hook (((emacs-lisp-mode lisp-data-mode) . elisp-mode-ok--style)
+         ((emacs-lisp-mode lisp-data-mode) . elisp-mode-ok--capf-set)))
 
 (use-package aggressive-indent
   :hook ((emacs-lisp-mode lisp-data-mode) . aggressive-indent-mode))

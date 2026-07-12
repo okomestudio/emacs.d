@@ -11,7 +11,12 @@
 
 (use-package info
   :custom (Info-hide-note-references t)
-  :config (push (fs-emacs-etc "info/") Info-directory-list))
+  :config
+  (push (fs-emacs-etc "info/") Info-directory-list)
+
+  ;; Make the dash info available if loaded.
+  (with-eval-after-load 'dash
+    (dash-register-info-lookup)))
 
 (use-package sicp
   ;; "Structure and Interpretation of Computer Programs" as info.
