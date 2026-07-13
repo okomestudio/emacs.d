@@ -288,7 +288,7 @@
               (if-let* ((langid (citar-get-value "langid" citekey))
                         (locale (org-citeseeing-langid-to-locale langid)))
                   locale
-                "en-US")))
+                'en-US)))
            (org-citeseeing-csl-dir
             (file-name-concat "~" "github.com" "citation-style-language/"))
            (org-citeseeing-csl-style #'org-citeseeing-csl-style-en-ja))
@@ -298,7 +298,7 @@
   :config
   (defun org-citeseeing-csl-style-en-ja (command locale)
     (pcase locale
-      ("ja-JP"
+      ('ja-JP
        (file-name-concat "~" "github.com" "okomestudio" "csl-chicago-ja"
                          "chicago-notes-bibliography-ja.csl"))
       (_
