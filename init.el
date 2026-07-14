@@ -103,7 +103,7 @@ Used to customize the `init-loader' and `desktop' save location.")
            (desktop-modes-not-to-save '(eww-mode tags-table-mode)))
   :init
   (let ((dir (directory-file-name (fs-emacs-var "desktop" emacs-user-profile))))
-    (make-directory desktop-dirname t)
+    (make-directory dir t)
     (setq-default desktop-dirname dir)
     (setopt desktop-path (list desktop-dirname)))
 
