@@ -165,6 +165,9 @@ The window scope is determined by `avy-all-windows' (ARG negates it)."
 
 ;;; Imenu
 
+(use-package imenu
+  :custom (imenu-max-item-length nil)) ; or 60 (default)
+
 (use-package imenu-list)
 
 ;;; Bookmarks
