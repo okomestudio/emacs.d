@@ -27,7 +27,9 @@
     "Toggle between `markdown-ts-mode' and `markdown-ts-view-mode'."
     (interactive)
     (if (derived-mode-p 'markdown-ts-view-mode)
-        (markdown-ts-mode)
+        (progn
+          (markdown-ts-mode)
+          (read-only-mode -1))
       (markdown-ts-view-mode)))
 
   :hook (markdown-ts-mode . markdown-ts-mode--prep))
