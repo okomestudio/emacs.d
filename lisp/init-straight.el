@@ -96,6 +96,7 @@
           ("makeinfo" "consult.texi" "-o" "consult.info")
           ;; ("install-info" "consult.info" "dir")
           ) )
+       ( csl-mode git github "okomestudio/emacs-csl-mode" )
        ( democratize git sourcehut "flandrew/democratize" )
        ( do-this-now git github "okomestudio/do-this-now.el" )
        ( eaf git github "emacs-eaf/emacs-application-framework"
@@ -268,7 +269,7 @@
         jit-lock js json-ts-mode
         lisp
         markdown-ts-mode message mhtml-mode minibuffer mwheel
-        nnfolder
+        nnfolder nxml-mode
         ob-C ob-core ob-dot ob-js ob-plantuml ob-python ob-shell ob-sql
         ob-sqlite ob-tangle
         org-agenda
