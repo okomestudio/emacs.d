@@ -80,6 +80,15 @@ Used to customize the `init-loader' and `desktop' save location.")
     "Expand the path to FILE in Emacs's 'straight/repos/' directory."
     (fs-emacs (apply #'file-name-concat `("straight" "repos" ,@parts)))))
 
+(defun load-private-init (module &optional no-warn)
+  "Load module init code at './etc/MODULE/init.el' if exists.
+When NO-WARN is non-nil, do not `warn' when the init file does not exist."
+  (let ((path (fs-emacs-etc module "init")))
+    (if (file-exists-p (concat path ".el"))
+        (load path t)
+      (funcall (if no-warn #'message #'warn)
+               "Init module '%s' does not exist; skipped" path))))
+
 ;;; Private Initialization
 
 (load (fs-emacs-etc "emacs/init") t)

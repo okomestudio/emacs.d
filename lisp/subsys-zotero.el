@@ -43,22 +43,13 @@ citekeys in Org links more consistently."
 
 (use-package zotero
   ;; Interface to the Zotero Web API v3.
-  :disabled
-  :commands (zotero-browser)
-  :init (require 'zotero-browser)
   :config
-  (let ((auth (car (auth-source-search :host "api.zotero.org"))))
-    (setq zotero-auth-token
-          (zotero-auth-token-create :token (plist-get auth :key)
-                                    :token-secret (plist-get auth :key)
-                                    :userid (plist-get auth :userid)
-                                    :username (plist-get auth :username))))
+  (load-private-init "zotero" t)
 
-  (defun zotero-ok-item-search (query)
+  (defun zotero-search-item-beta (query)
     "Make a QUERY for an item in Zotero."
-    (interactive)
+    (interactive "sQuery: ")
     (let* ((resp (zotero-search-items query))
-           (items (zotero-response-data resp))
            (cands (seq-map
                    (lambda (item)
                      (let* ((data (plist-get item :data))
@@ -77,11 +68,9 @@ citekeys in Org links more consistently."
                                     title
                                     (plist-get item :key))
                            ,item))))
-                   items))
-           (chosen (completing-read "Choose: "
-                                    (seq-map (lambda (cand) (car cand))
-                                             cands))))
-      (cadr (assoc chosen cands)))))
+                   (zotero-response-data resp)))
+           (chosen (completing-read "Choose: " (seq-map #'car cands))))
+      (pp (cadr (assoc chosen cands))))))
 
 (provide 'subsys-zotero)
 ;;; subsys-zotero.el ends here
