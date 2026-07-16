@@ -1,14 +1,15 @@
 ;;; subsys-projectile.el --- Projectile Subsystem  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;
-;; Set up the projectile subsystem.
+;; Configure the `projectile' subsystem.
 ;;
 ;;; Code:
 
-(require 'dash)
-(require 'ok)
+(use-package dash
+  :demand t)
 
 (use-package projectile
+  :after transient            ; ensure `transient' dependence (optional by default)
   :demand t
   :custom ((projectile-auto-discover nil)
            (projectile-enable-caching nil)
@@ -24,9 +25,8 @@
               projectile-root-top-down
               projectile-root-top-down-recurring))
            (projectile-project-search-path
-            `(,(ok-file-expand-user-emacs-file "straight" "repos/")
-              (,(expand-file-name "github.com/" (getenv "HOME")) . 2))))
-  :hook (projectile-mode . projectile-ok-set-safe-local-variable-directories)
+            (list (fs-straight-repo)
+                  (cons (expand-file-name "github.com/" "~") 2))))
   :ensure-system-package ((ag . "sudo apt install -y silversearcher-ag")
                           (fdfind . "sudo apt install -y fd-find"))
   :init (projectile-mode 1)
@@ -51,15 +51,14 @@
 
   ;; Dynamical update of `safe-local-variable-directories'
 
-  (cl-defun projectile-ok-set-safe-local-variable-directories ()
+  (cl-defun projectile--set-safe-local-variable-directories ()
     "Update `safe-local-variable-directories' with projectile.
 To avoid being prompted for safeness, a symbol `sym' needs to be in
 `safe-local-variable', e.g.,
 
   (put 'sym 'safe-local-variable #'integerp)
-  (ok-safe-local-variable-add sym integerp)
 
-This function uses `safe-local-variable-directories' introduced in Emacs 30.1 to
+This function uses `safe-local-variable-directories' (new in Emacs 30.1) to
 declare a local directory tree as safe."
     (interactive)
     (let* ((projectile-current-project-on-switch 'keep)
@@ -72,7 +71,7 @@ declare a local directory tree as safe."
       (setq ds (--map (file-name-as-directory (expand-file-name it)) ds))
       (setopt safe-local-variable-directories (delete-dups ds))))
 
-  (cl-defun projectile-ok--add-to-safe-local-variable-directories ()
+  (cl-defun projectile--add-to-safe-local-variable-directories ()
     "Add the current project root to `safe-local-variable-directories'."
     (when (projectile-project-root)
       (add-to-list 'safe-local-variable-directories
@@ -80,7 +79,9 @@ declare a local directory tree as safe."
                     (expand-file-name (projectile-project-root))))))
 
   (add-hook 'hack-local-variables-hook
-            #'projectile-ok--add-to-safe-local-variable-directories))
+            #'projectile--add-to-safe-local-variable-directories)
+
+  :hook (projectile-mode . projectile--set-safe-local-variable-directories))
 
 (provide 'subsys-projectile)
 ;;; subsys-projectile.el ends here
