@@ -9,38 +9,44 @@
 
 (use-package elisp-mode
   :bind ( :map emacs-lisp-mode-map
-          ("C-c b" . elisp-mode-ok--format)
+          ("C-c b" . elisp-mode--format)
           :map lisp-data-mode-map
-          ("C-c b" . elisp-mode-ok--format) )
+          ("C-c b" . elisp-mode--format) )
+  :custom (emacs-lisp-docstring-fill-column 72)
   :config
-  (defun elisp-mode-ok--format ()
+  (defun elisp-mode--format ()
     "Format the current Emacs Lisp buffer."
     (interactive)
     (save-excursion
       (indent-region (point-min) (point-max))))
 
-  (defun elisp-mode-ok--style ()
+  (defun elisp-mode--init ()
     "Enforce the coding style in the Emacs Lisp buffer."
-    (setq-local emacs-lisp-docstring-fill-column 80
-                fill-column 80
-                indent-tabs-mode nil
-                tab-width 2))
+    (setq-local fill-column 72
+                comment-fill-column 72
+                tab-width 8)
+    (indent-tabs-mode -1)
 
-  (defun elisp-mode-ok--capf (&rest args)
+    (setq-local display-fill-column-indicator-column 80)
+    (set-face-attribute 'fill-column-indicator nil
+                        :foreground (face-attribute 'hl-line :background))
+    (display-fill-column-indicator-mode 1))
+
+  (defun elisp-mode--capf (&rest args)
     (apply (cape-capf-inside-code #'cape-elisp-symbol) args))
 
-  (defun elisp-mode-ok--capf-set ()
+  (defun elisp-mode--capf-set ()
     "Set CAPFs for the Emacs Lisp mode."
     ;; See github.com/jwiegley/use-package/issues/1077#issuecomment-2266642373
-    (add-hook 'completion-at-point-functions #'elisp-mode-ok--capf -99 t))
+    (add-hook 'completion-at-point-functions #'elisp-mode--capf -99 t))
 
   ;; Fontify `dash' symbols when the package is loaded.
   (with-eval-after-load 'dash
     (add-hook 'emacs-lisp-mode-hook #'dash-fontify-mode)
     (add-hook 'lisp-data-mode-hook #'dash-fontify-mode))
 
-  :hook (((emacs-lisp-mode lisp-data-mode) . elisp-mode-ok--style)
-         ((emacs-lisp-mode lisp-data-mode) . elisp-mode-ok--capf-set)))
+  :hook (((emacs-lisp-mode lisp-data-mode) . elisp-mode--init)
+         ((emacs-lisp-mode lisp-data-mode) . elisp-mode--capf-set)))
 
 (use-package aggressive-indent
   :hook ((emacs-lisp-mode lisp-data-mode) . aggressive-indent-mode))
@@ -90,10 +96,8 @@
   ;;
   ;; See `read-symbol-shorthands' for a built-in approach.
   :custom ((nameless-affect-indentation-and-filling nil)
-           (nameless-global-aliases '())
+           (nameless-global-aliases nil)
            (nameless-private-prefix t))
-  :hook ((emacs-lisp-mode . nameless-mode)
-         (nameless-mode . nameless-mode--setup-or-teardown))
   :config
   ;; Hot-fix indentation before saving.
   ;;
@@ -106,8 +110,8 @@
     "Remove keywords and reindent buffer before saving."
     (when (and (derived-mode-p 'emacs-lisp-mode)
                (bound-and-true-p nameless-mode))
-      (let ((font-lock-enabled (if font-lock-mode t nil))
-            (aggressive-indent-enabled (if aggressive-indent-mode t nil)))
+      (let ((font-lock-enabled font-lock-mode)
+            (aggressive-indent-enabled aggressive-indent-mode))
         (unwind-protect
             (progn
               (when aggressive-indent-enabled (aggressive-indent-mode -1))
@@ -125,12 +129,12 @@
                (bound-and-true-p nameless-mode))
       ;; TODO(2025-07-21): This does not fully revert the change made by
       ;; `nameless--before-save'.
-      (let ((font-lock-enabled (if font-lock-mode t nil))
-            (aggressive-indent-enabled (if aggressive-indent-mode t nil)))
+      (let ((font-lock-enabled font-lock-mode)
+            (aggressive-indent-enabled aggressive-indent-mode))
         (unwind-protect
             (progn
-              (when (not aggressive-indent-enabled) (aggressive-indent-mode 1))
-              (when (not font-lock-enabled) (font-lock-mode 1))
+              (unless aggressive-indent-enabled (aggressive-indent-mode 1))
+              (unless font-lock-enabled (font-lock-mode 1))
               (nameless--after-hack-local-variables)
               (when font-lock-enabled (font-lock-mode -1))
               (save-restriction
@@ -141,29 +145,33 @@
           (set-buffer-modified-p nil)))))
 
   (defun nameless-mode--setup-or-teardown ()
-    "Set up or tear down `nameless-mode' with `nameless-mode-hook'."
+    "Set up or tear down `nameless-mode'."
     (pcase nameless-mode
       ('t
-       (add-hook 'before-save-hook #'nameless--before-save 98 'local)
-       (add-hook 'after-save-hook #'nameless--after-save -98 'local))
+       (add-hook 'before-save-hook #'nameless--before-save 98 t)
+       (add-hook 'after-save-hook #'nameless--after-save -98 t))
       (_
-       (remove-hook 'after-save-hook #'nameless--after-save 'local)
-       (remove-hook 'before-save-hook #'nameless--before-save 'local)))))
+       (remove-hook 'after-save-hook #'nameless--after-save t)
+       (remove-hook 'before-save-hook #'nameless--before-save t))))
+
+  :hook ((emacs-lisp-mode . nameless-mode)
+         (nameless-mode . nameless-mode--setup-or-teardown)))
 
 (use-package paredit
   ;; Parentheses editing.
-  :hook ((emacs-lisp-mode lisp-data-mode) . paredit-ok--enable-paredit)
   :config
   (setq paredit-comment-prefix-margin "; ")
 
-  (defun paredit-ok--enable-paredit ()
+  (defun paredit--init ()
     (setq-local comment-column 30)
 
-    ;; Turn off `electric-pair-mode' to avoid conflict with `paredit-mode':
+    ;; Turn off `electric-pair-mode' to avoid conflict:
     (electric-pair-local-mode -1)
-    (enable-paredit-mode)))
+    (enable-paredit-mode))
 
-;; Syntax Highlighting
+  :hook ((emacs-lisp-mode lisp-data-mode) . paredit--init))
+
+;;; Syntax Highlighting
 
 (use-package highlight-defined
   :custom (highlight-defined-face-use-itself t)
@@ -176,24 +184,26 @@
 (use-package highlight-sexp
   ;; Highlight the current zone according to its context (sexp, comment, string,
   ;; etc.).
-  :hook (((emacs-lisp-mode lisp-data-mode) . highlight-sexp-mode)
-         (enable-theme-functions . highlight-sexp-ok--refresh))
   :config
-  (defun highlight-sexp-ok--refresh (theme)
-    "Refresh "
+  (defun highlight-sexp--on-enable-theme (theme)
+    "Refresh `highlight-sexp-mode'."
     (setopt hl-sexp-background-color
-            (ok-face-color-scale (face-attribute 'default :background)
-                                 (pcase (frame-parameter nil 'background-mode)
-                                   ('dark 1.04)
-                                   ('light 0.96)
-                                   (_ 1.00))))
+            (ok-face-color-scale
+	     (face-attribute 'default :background)
+             (pcase (frame-parameter nil 'background-mode)
+               ('dark 1.04)
+               ('light 0.96)
+               (_ 1.00))))
     (dolist (buffer (buffer-list))
       (with-current-buffer buffer
         (when (bound-and-true-p highlight-sexp-mode)
           (highlight-sexp-mode -1)
-          (highlight-sexp-mode 1))))))
+          (highlight-sexp-mode 1)))))
 
-;; Help & Documentation
+  :hook (((emacs-lisp-mode lisp-data-mode) . highlight-sexp-mode)
+         (enable-theme-functions . highlight-sexp--on-enable-theme)))
+
+;;; Help & Documentation
 
 (use-package package-lint)
 
