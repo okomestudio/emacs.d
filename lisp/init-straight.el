@@ -44,10 +44,10 @@
       (bootstrap-version 7))  ; straight bootstrap version
   (unless (file-exists-p bootstrap-file)
     (with-current-buffer
-	      (url-retrieve-synchronously
+	(url-retrieve-synchronously
          (concat "https://raw.githubusercontent.com/"
                  "radian-software/straight.el/develop/install.el")
-	       'silent 'inhibit-cookies)
+	 'silent 'inhibit-cookies)
       (goto-char (point-max))
       (eval-print-last-sexp)))
   (load bootstrap-file nil 'nomessage))
@@ -168,6 +168,8 @@
        ( mozc-posframe git github "derui/mozc-posframe"
          :fork (:branch "ok") )
        ( mulex git github "okomestudio/mulex" )
+       ( ndl-search git github "okomestudio/ndl-search.el"
+         :files (:defaults "*.el") )
        ( ok git github "okomestudio/ok.el" )
        ( ok-plural git github "okomestudio/ok-plural.el" )
        ( or-struktur git github "okomestudio/or-struktur" )
@@ -248,7 +250,10 @@
          :files (:defaults "*.js" "*.css" "*.so")
          :pre-build ("make") )
        ( worg git sourcehut "bzg/worg" )
-       ( xht git sourcehut "flandrew/xht" )))
+       ( xht git sourcehut "flandrew/xht" )
+       ( zotero git gitlab "fvdbeek/emacs-zotero"
+         :fork ( :host gitlab :repo "okomestudio/emacs-zotero"
+                 :branch "multibyte-support" ))))
   (straight-override-recipe
    `(,feature :type ,type :host ,host :repo ,repo ,@others)))
 

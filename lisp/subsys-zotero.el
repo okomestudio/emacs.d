@@ -44,33 +44,11 @@ citekeys in Org links more consistently."
 (use-package zotero
   ;; Interface to the Zotero Web API v3.
   :config
-  (load-private-init "zotero" t)
+  (load-private-init "zotero" t))
 
-  (defun zotero-search-item-beta (query)
-    "Make a QUERY for an item in Zotero."
-    (interactive "sQuery: ")
-    (let* ((resp (zotero-search-items query))
-           (cands (seq-map
-                   (lambda (item)
-                     (let* ((data (plist-get item :data))
-                            (item-type (plist-get data :itemType))
-                            (title (plist-get data :title))
-                            (creators (plist-get data :creators))
-                            (names (seq-map
-                                    (lambda (c)
-                                      (or (plist-get c :name)
-                                          (plist-get c :lastName)))
-                                    creators)))
-                       (unless (eq item-type "attachment")
-                         `(,(format "%16s %32s   %s (%s)"
-                                    (concat "[" item-type "]")
-                                    (string-join names ", ")
-                                    title
-                                    (plist-get item :key))
-                           ,item))))
-                   (zotero-response-data resp)))
-           (chosen (completing-read "Choose: " (seq-map #'car cands))))
-      (pp (cadr (assoc chosen cands))))))
+(use-package ndl-search
+  :after zotero
+  :commands ndl-search-zotero-create-item)
 
 (provide 'subsys-zotero)
 ;;; subsys-zotero.el ends here
