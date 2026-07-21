@@ -28,8 +28,11 @@
     (indent-tabs-mode -1)
 
     (setq-local display-fill-column-indicator-column 80)
-    (set-face-attribute 'fill-column-indicator nil
-                        :foreground (face-attribute 'hl-line :background))
+    (set-face-attribute
+     'fill-column-indicator nil
+     :foreground (face-attribute (or (and (facep 'hl-line) 'hl-line)
+                                     'highlight)
+                                 :background))
     (display-fill-column-indicator-mode 1))
 
   (defun elisp-mode--capf (&rest args)
