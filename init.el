@@ -111,7 +111,10 @@ When NO-WARN is non-nil, do not `warn' when the init file does not exist."
   :custom ((desktop-auto-save-timeout 180)
            (desktop-modes-not-to-save '(eww-mode tags-table-mode)))
   :init
-  (let ((dir (directory-file-name (fs-emacs-var "desktop" emacs-user-profile))))
+  (let ((dir (directory-file-name
+              (fs-emacs-var "desktop"
+                            emacs-version ; or `comp-native-version-dir'?
+                            emacs-user-profile))))
     (make-directory dir t)
     (setq-default desktop-dirname dir)
     (setopt desktop-path (list desktop-dirname)))

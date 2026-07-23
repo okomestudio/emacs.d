@@ -1,7 +1,25 @@
 #!/usr/bin/env bash
+# emacs -- Emacs Command
+#
+# This is the main entry point when Emacs is invoked in the shell. Add
+# "~/.config/emacs/bin" to the environment variable PATH.
+
+emacs=${EMACS:-~/.local/emacs/bin/emacs}
+
+if [[ ! -x "$emacs" ]]; then
+  echo "Error: '$emacs' does not exist or is not executable." >&2
+  exit 1
+fi
+
+toolkit=$($emacs --batch --eval '(message "%s" system-configuration-features)' 2>&1 | grep -oE 'PGTK|GTK3|GTK2|LUCID|XAW3D|XAW|MOTIF|NS|HAIKU|NTGUI')
 
 # Prevent fcitx5 from stealing input method with the lucid X toolkit.
 # This is not necessary for pgtk.
-unset XMODIFIERS
+case "$toolkit" in
+"LUCID" | "MOTIF")
+  unset XMODIFIERS
+  ;;
+*) ;;
+esac
 
-exec ~/.local/emacs/bin/emacs "$@"
+exec "$emacs" "$@"
