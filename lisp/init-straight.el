@@ -87,6 +87,8 @@
                 "https://gist.githubusercontent.com"
                 "okomestudio/de8c59960ce8f195ee0224de5db5a168/raw"
                 "1193992ffeeca8193ebf459b377c27f628ac3246/company-tern.el") )
+       ( compat git github "emacs-compat/compat"
+         :fork ( :host github :repo "okomestudio/compat" :branch "dom-inner-text" ) )
        ( consult git github "minad/consult"
          :pre-build
          ;; Build info manual, which is missing by default:
