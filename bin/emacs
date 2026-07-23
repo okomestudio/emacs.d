@@ -4,7 +4,7 @@
 # This is the main entry point when Emacs is invoked in the shell. Add
 # "~/.config/emacs/bin" to the environment variable PATH.
 
-emacs=${EMACS:-~/.local/emacs/bin/emacs}
+emacs=${EMACS_CMD:-~/.local/emacs/bin/emacs}
 
 if [[ ! -x "$emacs" ]]; then
   echo "Error: '$emacs' does not exist or is not executable." >&2

@@ -1,4 +1,4 @@
 #!/usr/bin/env bash
 
-EMACS=~/.local/emacs-30.2-athena/bin/emacs \
+EMACS_CMD=~/.local/emacs-30.2-athena/bin/emacs \
   exec emacs "$@"
