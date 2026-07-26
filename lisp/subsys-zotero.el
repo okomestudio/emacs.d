@@ -46,9 +46,9 @@ citekeys in Org links more consistently."
   :config
   (load-private-init "zotero" t))
 
-(use-package ndl-search
+(use-package ndlj
   :after zotero
-  :commands ndl-search-zotero-create-item)
+  :commands ndlj-zotero-create-item)
 
 (provide 'subsys-zotero)
 ;;; subsys-zotero.el ends here

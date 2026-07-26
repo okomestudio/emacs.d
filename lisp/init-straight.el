@@ -170,7 +170,7 @@
        ( mozc-posframe git github "derui/mozc-posframe"
          :fork (:branch "ok") )
        ( mulex git github "okomestudio/mulex" )
-       ( ndl-search git github "okomestudio/ndl-search.el"
+       ( ndlj git github "okomestudio/ndlj.el"
          :files (:defaults "*.el") )
        ( ok git github "okomestudio/ok.el" )
        ( ok-plural git github "okomestudio/ok-plural.el" )
