@@ -161,7 +161,7 @@
  ("multi-vterm" . "36746d85870dac5aaee6b9af4aa1c3c0ef21a905")
  ("multiple-cursors.el" . "94b8b07a4bab87f803123723b68227565429dfa1")
  ("mwim.el" . "b41885b3e14653d17eabb2db0bd336ac972d5315")
- ("ndl-search.el" . "9d3af8a2a69c87f301762e61d7413006b4275999")
+ ("ndlj.el" . "1ae40423acd96dc7b7a2a7bca9b54e54e7c083d0")
  ("nerd-icons-completion" . "45b585d972192a3eaeb239e15e55de7f46f8920a")
  ("nerd-icons-corfu" . "f821e953b1a3dc9b381bc53486aabf366bf11cb1")
  ("nerd-icons-ibuffer" . "13007b941ebfa471122f0658a2315040b8eb4aa4")

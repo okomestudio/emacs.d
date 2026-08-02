@@ -47,8 +47,10 @@ citekeys in Org links more consistently."
   (load-private-init "zotero" t))
 
 (use-package ndlj
-  :after zotero
-  :commands ndlj-zotero-create-item)
+  :custom ((ndlj-debug t)
+           (ndlj-dpid '("iss-ndl-opac" "iss-yunika" "zassaku")))
+  :config
+  (setq-default ndlj-item-getter #'ndlj-oaipmh-bib-item-get))
 
 (provide 'subsys-zotero)
 ;;; subsys-zotero.el ends here
