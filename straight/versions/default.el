@@ -8,6 +8,7 @@
  ("anki-editor" . "7568e2bc9a9d4393b7c6fbf68c686ddceb66789d")
  ("ansible-doc" . "86083a7bb2ed0468ca64e52076b06441a2f8e9e0")
  ("anzu" . "21cb5ab2295614372cb9f1a21429381e49a6255f")
+ ("apheleia" . "14a0bb4454fb2cc3b5b377619288b742ce117da5")
  ("atomic-chrome" . "df246cfed7825a50904fd9ac18ba9d67e5be8198")
  ("avy" . "933d1f36cca0f71e4acb5fac707e9ae26c536264")
  ("bats-mode" . "fa88930b1baba101ae6474f289a239a236a7d19f")

@@ -7,8 +7,9 @@
 
 ;;; Common Emacs Lisp Libraries
 
-(use-package buttercup)     ; behavior-driven Lisp testing
-(use-package reformatter)   ; code formatter
+(use-package buttercup)       ; behavior-driven Lisp testing
+(use-package reformatter)     ; code formatter
+(use-package apheleia) ; another formatter (consider replacing reformatter?)
 (use-package uuid)
 
 ;;; Main Startup Config
