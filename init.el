@@ -11,7 +11,7 @@
 ;;
 ;;; Code:
 
-;;; Emacs User Profile
+;;; User Profiles
 
 (defvar emacs-user-profile "default"
   "Emacs user profile.
@@ -93,15 +93,20 @@ When NO-WARN is non-nil, do not `warn' when the init file does not exist."
 
 (load (fs-emacs-etc "emacs/init") t)
 
-;;; Package Loading from `init.d/'.
+;;; Package Loading via `init-loader'
 
 (use-package init-loader
   :demand t
   :custom ((init-loader-byte-compile nil)
-           (init-loader-directory (fs-emacs "init.d" emacs-user-profile)))
+           (init-loader-directory
+            (fs-emacs "init.d"
+                      (if-let* ((profile (getenv "EMACS_INIT_LOADER_PROFILE"))
+                                (_ (not (string-empty-p profile))))
+                          profile
+                        "default"))))
   :config
   (unless (file-directory-p init-loader-directory)
-    (error "No init-loader directory exists (%s)" init-loader-directory))
+    (error "Init loader directory does not exist: %s" init-loader-directory))
   (init-loader-load))
 
 ;;; Session Persistence

@@ -13,8 +13,10 @@ This version-controlled repository acts as the main configuration for a local in
   ├─ bin/                - Shell scripts (add to PATH)
   ├─ etc/                - Package startup configs
   │  └─ tempel/          - `tempel' templates
-  ├─ init.d/             - Symlinks to sources used during init
-  │  └─ symlinks.sh      - The init.d admin script
+  ├─ init.d/             - Symlinks to sources loaded by `init-loader'
+  │  ├─ <unit>/          - `init-loader' unit
+  │  ├─ unit-<unit>.sh   - `init-loader' unit definition
+  │  └─ symlinks.sh      - `init-loader' admin script
   ├─ lisp/               - Emacs Lisp package source files
   │  ├─ archive/         - Unused code archive
   │  ├─ themes/          - Theme package config files
@@ -42,12 +44,20 @@ The configuration =lisp/init-straight.el= set up ~use-package~ to pull packages 
 
 *** ~init-loader~
 
-The ~init-loader~ runs toward the end of ~init.el~. The Emacs Lisp sources in the directory =init.d/= are loaded and executed in order of priority based on file name (roughly ASCII).
+The ~init-loader~ runs toward the end of =init.el=. The Emacs Lisp sources symlinked from =lisp/= to a directory named =init.d/<unit>/= are loaded and executed in order of priority based on file name, mostly ASCII.
 
-The Emacs Lisp files in =init.d/= are symlinked from the directory =lisp/= to allow selective loading of Emacs Lisp packages for modular configurations. Symlinking managed by the =init.d/symlinks.sh= shell script:
+Symlinking is managed by the =init.d/symlinks.sh= shell script:
 
 #+begin_src shell
-  ./init.d/symlinks.sh -r  # refresh all symlinks
+  ./init.d/symlinks.sh -r [unit]  # refresh symlinks in init.d/<unit>/
+#+end_src
+
+where the existence of =./init.d/unit-<unit>.sh= is prerequisite (if omitted, ~[unit]~ defaults to ~default~.) The unit-based modular design allows the user to configure Emacs differently on each invocation,based on the script =./init.d/unit-<unit>.sh=.
+
+To use a specific unit, pass the unit name using the environment variable ~EMACS_INIT_LOADER_PROFILE~, e.g.,
+
+#+begin_src shell
+  EMACS_INIT_LOADER_PREOFILE=<unit> emacs
 #+end_src
 
 ** Miscellaneous Topics
