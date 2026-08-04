@@ -11,17 +11,6 @@
 ;;
 ;;; Code:
 
-;;; User Profiles
-
-(defvar emacs-user-profile "default"
-  "Emacs user profile.
-Used to customize the `init-loader' and `desktop' save location.")
-
-(when-let* ((profile (getenv "EMACS_USER_PROFILE"))
-            (profile (when (< 0 (length profile))
-                       profile)))
-  (setq-default emacs-user-profile profile))
-
 ;;; Early Customization
 
 (setopt custom-file null-device) ; disable `custom.el'
@@ -108,32 +97,6 @@ When NO-WARN is non-nil, do not `warn' when the init file does not exist."
   (unless (file-directory-p init-loader-directory)
     (error "Init loader directory does not exist: %s" init-loader-directory))
   (init-loader-load))
-
-;;; Session Persistence
-
-(use-package desktop
-  ;; Save the Emacs state across sessions.
-  :custom ((desktop-auto-save-timeout 180)
-           (desktop-modes-not-to-save '(eww-mode tags-table-mode)))
-  :init
-  (let ((dir (directory-file-name
-              (fs-emacs-var "desktop"
-                            emacs-version ; or `comp-native-version-dir'?
-                            emacs-user-profile))))
-    (make-directory dir t)
-    (setq-default desktop-dirname dir)
-    (setopt desktop-path (list desktop-dirname)))
-
-  ;; Loading the feature will set up after-init hook to actually read
-  ;; a previously saved session. The session read will be skipped when
-  ;; Emacs is launched with `--no-desktop` option.
-  (desktop-save-mode 1)
-
-  :config
-  (require 'ok-desktop)       ; ensures application of enhancements
-
-  ;; Use if any globals should be saved.
-  (add-to-list 'desktop-globals-to-save 'safe-local-variable-directories))
 
 (provide 'init)
 ;;; init.el ends here

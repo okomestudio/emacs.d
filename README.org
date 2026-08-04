@@ -57,8 +57,18 @@ where the existence of =./init.d/unit-<unit>.sh= is prerequisite (if omitted, ~[
 To use a specific unit, pass the unit name using the environment variable ~EMACS_INIT_LOADER_PROFILE~, e.g.,
 
 #+begin_src shell
-  EMACS_INIT_LOADER_PREOFILE=<unit> emacs
+  EMACS_INIT_LOADER_PROFILE=<unit> emacs
 #+end_src
+
+*** ~desktop~ (Session Persistence)
+
+Session persistence is available when =subsys-desktop= is loaded. Multiple sessions can be saved by providing a profile name using the environment variable ~EMACS_DESKTOP_PROFILE~ when invoking Emacs:
+
+#+begin_src shell
+  EMACS_DESKTOP_PROFILE=<profile> emacs
+#+end_src
+
+(This defaults to ~default~ when not explicitly provided.)
 
 ** Miscellaneous Topics
 
