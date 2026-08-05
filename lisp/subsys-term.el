@@ -1,13 +1,11 @@
-;;; subsys-term.el --- Terminal Subsystem  -*- lexical-binding: t -*-
+;;; subsys-term.el --- Terminal  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;
-;; Set up terminal subsystem.
+;; Configure the terminal subsystem.
 ;;
 ;;; Code:
 
-;;; vterm - Emacs libvterm integration
-
-(require 'straight)
+;;; vterm - Emacs libvterm Integration
 
 (use-package vterm
   ;; Emacs libvterm integration.
@@ -26,16 +24,16 @@
   ("/usr/include/vterm.h" . "sudo apt install -y libvterm-dev")
   ("/usr/bin/cmake" . "sudo apt install -y cmake")
   ("/usr/bin/libtool" . "sudo apt install -y libtool-bin")
-  :hook (vterm-mode . vterm-ok-buffer-configure)
   :config
   (defun vterm-ok-buffer-configure ()
     (set (make-local-variable 'buffer-face-mode-face) 'fixed-pitch)
     (setq-local global-hl-line-mode nil
                 solaire-mode nil)
-    (buffer-face-mode t)))
+    (buffer-face-mode t))
+
+  :hook (vterm-mode . vterm-ok-buffer-configure))
 
 (use-package multi-vterm
-  ;; :straight t
   :ensure t)
 
 ;;; EAT - Emulate A Terminal
@@ -61,10 +59,6 @@
           :map eat-semi-char-mode-map
           ("M-o" . other-window-or-frame) ) ; without explicit definition, it
                               ; binds to another function
-  :hook ((eat-exec . eat-ok--rename-buffer)
-         (eshell-post-command . (lambda ()
-                                  (sleep-for 0.2)
-                                  (end-of-buffer))))
   :config
   (defun eat-ok--rename-buffer (&rest _)
     "Rename EAT buffer based on the parent directory name."
@@ -77,7 +71,16 @@
     (interactive "P")
     (pcase arg
       ('(4) (eat-project))
-      (_ (eat)))))
+      (_ (eat))))
+
+  :hook ((eat-exec . eat-ok--rename-buffer)
+         (eshell-post-command . (lambda ()
+                                  (sleep-for 0.2)
+                                  (end-of-buffer)))))
+
+;;; Ghostel (Ghostty)
+
+(use-package ghostel)
 
 (provide 'subsys-term)
 ;;; subsys-term.el ends here
