@@ -1,7 +1,7 @@
-;;; subsys-editing.el --- Editing Subsystem  -*- lexical-binding: t -*-
+;;; subsys-editing.el --- Editing  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;
-;; Set up the editing subsystem.
+;; Configure the editing subsystem.
 ;;
 ;;; Code:
 
@@ -37,18 +37,27 @@
 
 (use-package titlecase
   ;; Titlecase things.
-  :commands titlecase-ok-headlines
   :bind ( :map text-mode-map
-          ("M-c" . titlecase-dwim)
+          ("M-c" . titlecase-ok-dwim)
           :map prog-mode-map
-          ("M-c" . titlecase-dwim) )
-  :custom
-  ((titlecase-style 'chicago)
-   (titlecase-skip-words-regexps
-    '("\\b[[:upper:]]+\\b"
-      "\\b\\(\\(www\\.\\|\\(s?https?\\|ftp\\|file\\|gopher\\|nntp\\|news\\|telnet\\|wais\\|mailto\\|info\\):\\)\\(//[-a-z0-9_.]+:[0-9]*\\)?\\(?:[-a-z0-9_=#$@~%&*+\\/[:word:]!?:;.,]+([-a-z0-9_=#$@~%&*+\\/[:word:]!?:;.,]+[-a-z0-9_=#$@~%&*+\\/[:word:]]*)\\(?:[-a-z0-9_=#$@~%&*+\\/[:word:]!?:;.,]+[-a-z0-9_=#$@~%&*+\\/[:word:]]\\)?\\|[-a-z0-9_=#$@~%&*+\\/[:word:]!?:;.,]+[-a-z0-9_=#$@~%&*+\\/[:word:]]\\)\\)"
-      )))
+          ("M-c" . titlecase-ok-dwim) )
+  :custom ((titlecase-style 'chicago)
+           (titlecase-skip-words-regexps
+            '("\\b[[:upper:]]+\\b"
+              "\\b\\(\\(www\\.\\|\\(s?https?\\|ftp\\|file\\|gopher\\|nntp\\|news\\|telnet\\|wais\\|mailto\\|info\\):\\)\\(//[-a-z0-9_.]+:[0-9]*\\)?\\(?:[-a-z0-9_=#$@~%&*+\\/[:word:]!?:;.,]+([-a-z0-9_=#$@~%&*+\\/[:word:]!?:;.,]+[-a-z0-9_=#$@~%&*+\\/[:word:]]*)\\(?:[-a-z0-9_=#$@~%&*+\\/[:word:]!?:;.,]+[-a-z0-9_=#$@~%&*+\\/[:word:]]\\)?\\|[-a-z0-9_=#$@~%&*+\\/[:word:]!?:;.,]+[-a-z0-9_=#$@~%&*+\\/[:word:]]\\)\\)")))
+  :commands titlecase-ok-headlines
   :config
+  (defun titlecase-ok-dwim (&optional style interactivep)
+    (interactive "i\nP")
+    ;; Keeping the point where it should be, as `titlecase-dwim doesn't
+    ;; take care of it:
+    (let* ((use-reg (use-region-p))
+           (beg (if use-reg (region-beginning) (line-beginning-position)))
+           (offset (- (point) beg)))
+      (titlecase-dwim style interactivep)
+      (goto-char (min (+ beg offset)
+                      (if use-reg (region-end) (line-end-position))))))
+
   (defun titlecase-ok-headlines (beg end)
     "Iterate over headlines in the region or buffer, prompting to titlecase them.
 Matches Org-mode (e.g., '* Headline') and Markdown (e.g., '# Headline') formats."
