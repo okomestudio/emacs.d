@@ -48,7 +48,7 @@
  ("eblook" . "8a37feda49ede9b545fb0d45e57490d3a64cf5fd")
  ("el-get" . "447b7efc9fca29a087f4ec29c5d8ccb580cd1c78")
  ("eldoc" . "69030e0802f47b5fd32b559f2c92b7a8bf0ad2e3")
- ("elfeed" . "df6cd5805df20cbc0211ac3b764b870a6b26d703")
+ ("elfeed" . "2970e5d1aa2a6f5c4cb607e0b835b91a6bffec4f")
  ("elfeed-org" . "d62d23e25c5e3be3d70b7fbe1eaeb6e43f93a061")
  ("elisp-for-python" . "35b09f67c7979b815eea2740d36e5d829c05e8b5")
  ("elisp-refs" . "541a064c3ce27867872cf708354a65d83baf2a6d")
