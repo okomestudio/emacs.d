@@ -1,0 +1,29 @@
+#!/usr/bin/env bash
+#
+# The explainshell runner.
+#
+
+set -euo pipefail
+
+CONTAINER_NAME="explainshell"
+
+USER_ID=$(id -u)
+GROUP_ID=$(id -g)
+
+if [[ "$(docker inspect -f '{{.State.Running}}' "$CONTAINER_NAME" 2>/dev/null)" == "true" ]]; then
+  echo "Container '$CONTAINER_NAME' is already running. Quitting."
+  exit 0
+fi
+
+if docker container inspect "$CONTAINER_NAME" >/dev/null 2>&1; then
+  echo "Container '$CONTAINER_NAME' is stopped. Removing old container instance..."
+  docker rm "$CONTAINER_NAME" >/dev/null
+fi
+
+echo "Starting '$CONTAINER_NAME' with UID:GID ($USER_ID:$GROUP_ID) in $PWD..."
+
+docker run -d \
+  --name "$CONTAINER_NAME" \
+  --restart unless-stopped \
+  --publish 5023:5000 \
+  spaceinvaderone/explainshell:latest

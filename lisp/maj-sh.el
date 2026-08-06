@@ -1,18 +1,14 @@
 ;;; maj-sh.el --- Shell Major Mode  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;
-;; Set up the shell major mode.
+;; Configure the shell major mode.
 ;;
 ;;; Code:
 
 (use-package sh-script
   :custom ((sh-basic-offset 2)
-
-           ;; Run the Explainshell service on start:
-           ;;
-           ;;   docker container run --name explainshell --restart always \
-           ;;          -p 5023:5000 -d spaceinvaderone/explainshell
-           ;;
+           ;; Run the explainshell service locally using
+           ;; bin/docker-explainshell:
            (lsp-bash-explainshell-endpoint "http://localhost:5023")
            (lsp-bash-highlight-parsing-errors t))
   :interpreter (("bash" . bash-ts-mode)
