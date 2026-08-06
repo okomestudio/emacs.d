@@ -80,7 +80,8 @@
 
 ;;; Ghostel (Ghostty)
 
-(use-package ghostel)
+(use-package ghostel
+  :custom ((ghostel-initial-input-mode 'line)))
 
 (provide 'subsys-term)
 ;;; subsys-term.el ends here
