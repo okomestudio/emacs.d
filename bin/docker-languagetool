@@ -1,0 +1,43 @@
+#!/usr/bin/env bash
+#
+# LanguageTool runner.
+#
+set -euo pipefail
+
+CONTAINER_NAME="languagetool"
+TARGET_DIR="$HOME/.local/var/languagetool"
+
+if [[ ! -d "$TARGET_DIR" ]]; then
+  mkdir -p "$TARGET_DIR"
+fi
+
+cd "$TARGET_DIR"
+
+USER_ID=$(id -u)
+GROUP_ID=$(id -g)
+
+if [[ "$(docker inspect -f '{{.State.Running}}' "$CONTAINER_NAME" 2>/dev/null)" == "true" ]]; then
+  echo "Container '$CONTAINER_NAME' is already running. Quitting."
+  exit 0
+fi
+
+if docker container inspect "$CONTAINER_NAME" >/dev/null 2>&1; then
+  echo "Container '$CONTAINER_NAME' is stopped. Removing old container instance..."
+  docker rm "$CONTAINER_NAME" >/dev/null
+fi
+
+echo "Starting '$CONTAINER_NAME' with UID:GID ($USER_ID:$GROUP_ID) in $PWD..."
+
+docker run -d \
+  --name "$CONTAINER_NAME" \
+  --restart unless-stopped \
+  --cap-drop ALL \
+  --security-opt no-new-privileges \
+  --publish 8081:8081 \
+  --env download_ngrams_for_langs=en \
+  --user "$USER_ID:$GROUP_ID" \
+  --read-only \
+  --tmpfs /tmp:exec \
+  --volume "$PWD/ngrams:/ngrams" \
+  --volume "$PWD/fasttext:/fasttext" \
+  meyay/languagetool:latest
