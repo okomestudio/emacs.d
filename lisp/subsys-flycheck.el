@@ -12,9 +12,44 @@
   (which-key-add-key-based-replacements "C-c !" "flycheck-mode-map")
   :hook (((emacs-lisp-mode lisp-data-mode) . flycheck-mode)))
 
-;;; Textlint Integration
+;;; UI
+
+(use-package flycheck-pos-tip
+  :disabled
+  :custom (flycheck-pos-tip-timeout 60)
+  :hook (flycheck-mode . flycheck-pos-tip-mode))
+
+(use-package flycheck-posframe
+  :custom ((flycheck-posframe-border-use-error-face t)
+           (flycheck-posframe-border-width 1))
+  :config (flycheck-posframe-configure-pretty-defaults)
+  :hook (flycheck-mode . flycheck-posframe-mode))
+
+(use-package flycheck-eglot
+  :after (flycheck eglot)
+  :custom (flycheck-eglot-exclusive t))
+
+(use-package flyover
+  ;; A beautiful inline overlay for Flycheck
+  :custom (flyover-use-theme-colors t)
+  ;; :hook (flycheck-mode . flyover-mode)
+  )
+
+;;; Writing Aide Integrations
+
+(defun flycheck-buffer-lang-ja-p (&optional sample-size)
+  "Return non-nil if the buffer contains Japanese characters.
+Scans up to SAMPLE-SIZE characters (default 5000)."
+  (save-excursion
+    (goto-char (point-min))
+    (re-search-forward "[ぁ-んァ-ン一-龯]"
+                       (min (point-max) (or sample-size 5000))
+                       t)))
+
+;; Textlint
 
 (use-package flycheck
+  :disabled
   :custom ((flycheck-textlint-config "default"))
   :ensure-system-package
   (textlint . "~/.config/emacs/bin/prepare-textlint")
@@ -42,10 +77,7 @@ The function returns nil, if the file does not exists."
        ((file-exists-p (expand-file-name filename flycheck-textlint-config-dir))
         (expand-file-name filename flycheck-textlint-config-dir))
        (t
-        (let* ((lang (if (save-excursion
-                           (goto-char (point-min))
-                           (re-search-forward "[ぁ-んァ-ン一-龯]" nil t))
-                         "ja" "en"))
+        (let* ((lang (if (flycheck-buffer-lang-ja-p) "ja" "en"))
                (filename (expand-file-name (format "%s.%s.json" lang filename)
                                            flycheck-textlint-config-dir)))
           (when (file-exists-p filename)
@@ -54,7 +86,7 @@ The function returns nil, if the file does not exists."
   (add-to-list 'flycheck-locate-config-file-functions #'flycheck-locate-config-file-textlint)
   (add-to-list 'flycheck-textlint-plugin-alist '(org-mode . "org")))
 
-;;; LanguageTool
+;; LanguageTool
 
 (use-package flycheck-languagetool
   :custom (flycheck-languagetool-language "en-US")
@@ -78,9 +110,31 @@ The function returns nil, if the file does not exists."
                                       'ansi-color-process-output t))))
            (async-shell-command (fs-emacs-bin "docker-languagetool")
                                 buf-name))))))
-  :hook (text-mode . flycheck-languagetool--on-init))
+  :config
+  ;; TODO(2026-08-13): The original function does not compute the column
+  ;; properly when CJK characters are in use.
+  ;;
+  ;; https://github.com/emacs-languagetool/flycheck-languagetool/pull/43
 
-;;; write good
+  (defun flycheck-languagetool--column-at-pos-ad (&optional pt)
+    "Return 0-based character column at PT."
+    (setq pt (or pt (point)))
+    (save-excursion
+      (goto-char pt)
+      (- (point) (line-beginning-position))))
+
+  (advice-add #'flycheck-languagetool--column-at-pos
+              :override #'flycheck-languagetool--column-at-pos-ad)
+
+  (defun flycheck-languagetool--switch-lang ()
+    (unless (assq 'flycheck-languagetool-language file-local-variables-alist)
+      (let ((lang (if (flycheck-buffer-lang-ja-p) "ja-JP" "en-US")))
+        (setq-local flycheck-languagetool-language lang))))
+
+  :hook ((text-mode . flycheck-languagetool--switch-lang)
+         (text-mode . flycheck-languagetool--on-init)))
+
+;; write good
 
 (use-package flycheck
   ;; write good - Naive linter for English prose
@@ -97,33 +151,6 @@ The function returns nil, if the file does not exists."
                       line-end))
     :modes (gfm-mode markdown-mode org-mode text-mode))
   (add-to-list 'flycheck-checkers 'write-good))
-
-;;; Notification
-
-(use-package flycheck-pos-tip
-  :disabled
-  :custom (flycheck-pos-tip-timeout 60)
-  :hook (flycheck-mode . flycheck-pos-tip-mode))
-
-(use-package flycheck-posframe
-  :custom ((flycheck-posframe-border-use-error-face t)
-           (flycheck-posframe-border-width 1))
-  :config (flycheck-posframe-configure-pretty-defaults)
-  :hook (flycheck-mode . flycheck-posframe-mode))
-
-;;; Eglot
-
-(use-package flycheck-eglot
-  :after (flycheck eglot)
-  :custom (flycheck-eglot-exclusive t))
-
-;;; Misc.
-
-(use-package flyover
-  ;; A beautiful inline overlay for Flycheck
-  :custom (flyover-use-theme-colors t)
-  ;; :hook (flycheck-mode . flyover-mode)
-  )
 
 (provide 'subsys-flycheck)
 ;;; subsys-flycheck.el ends here
