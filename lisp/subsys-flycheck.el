@@ -110,22 +110,8 @@ The function returns nil, if the file does not exists."
                                       'ansi-color-process-output t))))
            (async-shell-command (fs-emacs-bin "docker-languagetool")
                                 buf-name))))))
+
   :config
-  ;; TODO(2026-08-13): The original function does not compute the column
-  ;; properly when CJK characters are in use.
-  ;;
-  ;; https://github.com/emacs-languagetool/flycheck-languagetool/pull/43
-
-  (defun flycheck-languagetool--column-at-pos-ad (&optional pt)
-    "Return 0-based character column at PT."
-    (setq pt (or pt (point)))
-    (save-excursion
-      (goto-char pt)
-      (- (point) (line-beginning-position))))
-
-  (advice-add #'flycheck-languagetool--column-at-pos
-              :override #'flycheck-languagetool--column-at-pos-ad)
-
   (defun flycheck-languagetool--switch-lang ()
     (unless (assq 'flycheck-languagetool-language file-local-variables-alist)
       (let ((lang (if (flycheck-buffer-lang-ja-p) "ja-JP" "en-US")))

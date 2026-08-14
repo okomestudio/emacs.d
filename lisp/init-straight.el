@@ -125,8 +125,6 @@
        ( emacs-lisp-elements git github "protesilaos/emacs-lisp-elements" )
        ( flycheck git github "flycheck/flycheck" )
        ( flycheck-aspell-org git github "okomestudio/flycheck-aspell-org.el" )
-       ( flycheck-languagetool git github "emacs-languagetool/flycheck-languagetool"
-         :fork (:branch "master"))
        ( flyover git github "konrad1977/flyover" )
        ( greppu git github "okomestudio/greppu.el" )
        ( hatsuon git github "okomestudio/hatsuon.el"
