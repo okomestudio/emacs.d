@@ -1,31 +1,32 @@
-;;; subsys-llm.el --- LLM Subsystem  -*- lexical-binding: t -*-
+;;; subsys-llm.el --- LLMs  -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;
-;; Set up LLM subsystem.
-;;
-;; Related Packages:
-;;
-;;   - `chatgpt-shell'
+;; Configure the LLM subsystem.
 ;;
 ;;; Code:
 
 (use-package gptel
+  :custom ((gptel-default-mode 'org-mode)
+           (gptel-log-level 'debug))
   :config
-  ;; The :key property does not have to be set explicitly here, when a 'machine'
-  ;; entry for the API endpoint DNS name exists in authinfo file.
+  ;; Set expected host names in auth-source file to omit explicit :key
+  ;; property setting:
   (gptel-make-anthropic "Claude" :stream t)
   (gptel-make-deepseek "DeepSeek" :stream t)
   (gptel-make-xai "xAI" :stream t)
+
+  ;; Use the following model by default:
   (setopt gptel-model 'gemini-flash-latest
           gptel-backend (gptel-make-gemini "Gemini"
-                          :key (lambda ()
-                                 (auth-source-pick-first-password
-                                  :host "generativelanguage.googleapis.com"))
+                          :key (gptel-api-key-from-auth-source
+                                "generativelanguage.googleapis.com")
                           :stream t)))
+
+(use-package gptel-quick)
 
 (use-package org-ai
   :bind ( :map org-ai-mode-map
-          ("C-c r" . nil) )   ; prevent hijacking the key used for `org-ref'
+          ("C-c r" . nil) ) ; prevent hijacking the key used for `org-ref'
   :custom ((org-ai-default-chat-model "gpt-3.5-turbo")
            (org-ai-image-directory "~/tmp/org-ai/")
            (org-ai-sd-directory "~/tmp/org-ai/"))

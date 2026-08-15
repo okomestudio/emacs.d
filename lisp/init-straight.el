@@ -126,6 +126,7 @@
        ( flycheck git github "flycheck/flycheck" )
        ( flycheck-aspell-org git github "okomestudio/flycheck-aspell-org.el" )
        ( flyover git github "konrad1977/flyover" )
+       ( gptel-quick git github "karthink/gptel-quick" )
        ( greppu git github "okomestudio/greppu.el" )
        ( hatsuon git github "okomestudio/hatsuon.el"
          :files (:defaults "extensions/*") )
