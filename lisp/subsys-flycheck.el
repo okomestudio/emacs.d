@@ -49,6 +49,11 @@ Scans up to SAMPLE-SIZE characters (default 5000)."
 ;; Textlint
 
 (use-package flycheck
+  ;; NOTE(2026-08-15): See
+  ;;
+  ;;   - https://zenn.dev/ril/articles/fix-textlint-plugin-org-01
+  ;;
+  ;; for an update strategy for textlint-plugin-org.
   :disabled
   :custom ((flycheck-textlint-config "default"))
   :ensure-system-package

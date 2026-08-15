@@ -94,7 +94,7 @@
  ("f.el" . "931b6d0667fe03e7bf1c6c282d6d8d7006143c52")
  ("flycheck" . "bed4c3b735d7a6285e3ed6ee1012007ae590c663")
  ("flycheck-eglot" . "cd1dd78cec0ae1f566c765d98bbff322cc7b67ef")
- ("flycheck-languagetool" . "2391724c1a477af8fa426e86fe986de95511610f")
+ ("flycheck-languagetool" . "722071e6c49331cc2c9ee14ed9f228dd6ac489d9")
  ("flycheck-package" . "a52e4e95f3151898b36739dfdb4a98b368626fc0")
  ("flycheck-posframe" . "aeccb14e90ba25f45e1919b776777fc6ec95e251")
  ("flymake" . "672e657179adb5da1fd2302cdbe14b07e05518eb")
