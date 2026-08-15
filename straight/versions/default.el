@@ -4,7 +4,6 @@
  ("ace-window" . "77115afc1b0b9f633084cf7479c767988106c196")
  ("adaptive-wrap" . "6b9ffc18cdb1d3d18e2b9c3568bfb651f0ad517f")
  ("add-node-modules-path" . "841e93dfed50448da66c89a977c9182bb18796a1")
- ("aggressive-indent-mode" . "a437a45868f94b77362c6b913c5ee8e67b273c42")
  ("anki-editor" . "7568e2bc9a9d4393b7c6fbf68c686ddceb66789d")
  ("ansible-doc" . "86083a7bb2ed0468ca64e52076b06441a2f8e9e0")
  ("anzu" . "21cb5ab2295614372cb9f1a21429381e49a6255f")

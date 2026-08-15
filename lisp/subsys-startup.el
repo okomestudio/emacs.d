@@ -9,7 +9,9 @@
 
 (use-package buttercup)       ; behavior-driven Lisp testing
 (use-package reformatter)     ; code formatter
-(use-package apheleia) ; another formatter (consider replacing reformatter?)
+(use-package apheleia ; another formatter (consider replacing reformatter?)
+  :init (apheleia-global-mode 1))
+
 (use-package uuid)
 
 ;;; Main Startup Config

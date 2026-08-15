@@ -52,7 +52,9 @@
          ((emacs-lisp-mode lisp-data-mode) . elisp-mode--capf-set)))
 
 (use-package aggressive-indent
-  :hook ((emacs-lisp-mode lisp-data-mode) . aggressive-indent-mode))
+  :disabled
+  :hook ((emacs-lisp-mode lisp-data-mode)
+         . aggressive-indent-mode))
 
 (use-package elp
   ;; Emacs Lisp Profiler.
@@ -114,7 +116,7 @@
     (when (and (derived-mode-p 'emacs-lisp-mode)
                (bound-and-true-p nameless-mode))
       (let ((font-lock-enabled font-lock-mode)
-            (aggressive-indent-enabled aggressive-indent-mode))
+            (aggressive-indent-enabled (bound-and-true-p aggressive-indent-mode)))
         (unwind-protect
             (progn
               (when aggressive-indent-enabled (aggressive-indent-mode -1))
@@ -133,10 +135,12 @@
       ;; TODO(2025-07-21): This does not fully revert the change made by
       ;; `nameless--before-save'.
       (let ((font-lock-enabled font-lock-mode)
-            (aggressive-indent-enabled aggressive-indent-mode))
+            (aggressive-indent-enabled (bound-and-true-p aggressive-indent-mode)))
         (unwind-protect
             (progn
-              (unless aggressive-indent-enabled (aggressive-indent-mode 1))
+              (unless aggressive-indent-enabled
+                (when (featurep 'aggressive-indent)
+                  (aggressive-indent-mode 1)))
               (unless font-lock-enabled (font-lock-mode 1))
               (nameless--after-hack-local-variables)
               (when font-lock-enabled (font-lock-mode -1))
