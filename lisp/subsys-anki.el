@@ -35,7 +35,7 @@
   :custom ((anki-editor-latex-style 'mathjax)
            (anki-editor-org-tags-as-anki-tags t)
            (anki-editor-swap-two-fields '("Cloze"))
-           ;; (request-log-level 'debug)  ; for debugging
+           (request-log-level 'debug)  ; for debugging
            )
   :commands (anki-editor-push-note-at-point)
   :ensure-system-package (curl . "sudo apt install -y curl"))
