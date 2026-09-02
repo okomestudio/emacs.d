@@ -9,6 +9,8 @@ TARGET_DIR="$HOME/.local/var/languagetool"
 
 if [[ ! -d "$TARGET_DIR" ]]; then
   mkdir -p "$TARGET_DIR"
+  mkdir -p "$TARGET_DIR/ngrams"
+  mkdir -p "$TARGET_DIR/fasttext"
 fi
 
 cd "$TARGET_DIR"
