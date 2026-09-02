@@ -20,7 +20,19 @@
           gptel-backend (gptel-make-gemini "Gemini"
                           :key (gptel-api-key-from-auth-source
                                 "generativelanguage.googleapis.com")
-                          :stream t)))
+                          :stream t))
+
+  (defun gptel-select-model-from-backend ()
+    "Prompt to select a model from the active `gptel-backend`'s model list."
+    (interactive)
+    (let* ((models (gptel-backend-models gptel-backend))
+           (candidates (mapcar (lambda (m) (if (symbolp m) (symbol-name m) m)) models))
+           (choice (completing-read
+                    (format "Select model [%s]: " gptel-model)
+                    candidates nil t)))
+      (when (and choice (not (string-empty-p choice)))
+        (setq-local gptel-model (intern choice))
+        (message "Switched gptel model to: %s" choice)))))
 
 (use-package gptel-quick)
 
