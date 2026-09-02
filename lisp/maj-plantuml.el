@@ -15,7 +15,8 @@
 
   :init
   (with-eval-after-load 'ob-plantuml
-    (setopt org-plantuml-jar-path plantuml-jar-path)))
+    (when (boundp 'plantuml-jar-path)
+      (setopt org-plantuml-jar-path plantuml-jar-path))))
 
 (use-package image-mode
   :bind ( :map image-mode-map

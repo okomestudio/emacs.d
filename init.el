@@ -55,7 +55,7 @@
     (no-littering-expand-var-file-name (apply #'file-name-concat parts)))
 
   (defun fs-emacs (&rest parts)
-    (locate-user-emacs-file (apply #'file-name-concat parts)))
+    (expand-file-name (locate-user-emacs-file (apply #'file-name-concat parts))))
 
   (defun fs-emacs-bin (&rest parts)
     "Expand the path to FILE in Emacs's 'bin/' directory."

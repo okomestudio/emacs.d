@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+#
+# Mermaid for use in Emacs
+#
+
+puppeteer_cache=~/.cache/puppeteer
+chrome_exec=$(find "$puppeteer_cache" -name "chrome-headless-shell" -type f)
+
+if [[ -z "$chrome_exec" ]]; then
+  npx @puppeteer/browsers install chrome-headless-shell --path "$puppeteer_cache"
+  chrome_exec=$(find $puppeteer_cache -name "chrome-headless-shell" -type f)
+fi
+
+if [[ -z "$chrome_exec" ]]; then
+  >&2 echo "ERROR: chrome-headless-shell not installed"
+  exit 1
+fi
+
+if ! command -v mmdc &>/dev/null; then
+  npm install -g @mermaid-js/mermaid-cli
+fi
+
+PUPPETEER_EXECUTABLE_PATH="$chrome_exec" \
+  exec mmdc "$@"

@@ -103,7 +103,35 @@ beginning of line, in which case it will create a new list."
           (org-delete-backward-char 1)))))
 
   (require 'math-preview)
-  (org-ok-mode 1))
+  (org-ok-mode 1)
+
+  ;;; Org Babel
+
+  ;; NOTE(2026-09-01): Both the packages define
+  ;; `org-babel-execute:mermaid'. Here, we ensure the `ob-mermaid'
+  ;; version to override. See
+  ;; https://github.com/abrochard/mermaid-mode/issues/17.
+  (when (not (featurep 'mermaid-mode))
+    (require 'mermaid-mode))
+  (require 'ob-mermaid)
+
+  ;; Per language customization:
+  (setopt org-babel-python-command "~/.pyenv/shims/python")
+
+  (add-to-list 'org-src-lang-modes '("plantuml" . plantuml))
+  (add-to-list 'org-babel-tangle-lang-exts '("js" . "js"))
+  (org-babel-do-load-languages
+   'org-babel-load-languages
+   '((C . t)
+     (dot . t)
+     (js . t)
+     (mermaid . t)
+     (plantuml . t)
+     (python . t)
+     (shell . t)
+     (sql . t)
+     (sqlite . t)
+     (typescript . t))))
 
 (use-package org-contrib)
 
@@ -132,61 +160,11 @@ beginning of line, in which case it will create a new list."
 
 ;;; Org Babel
 
-(use-package ob-core
-  :after (org)
-  :config (add-to-list 'org-src-lang-modes '("plantuml" . plantuml)))
+(use-package ob-mermaid
+  :after mermaid-mode         ; to override `org-babel-execute:mermaid'
+  :custom (ob-mermaid-cli-path (fs-emacs-bin "mmdc")))
 
-(use-package ob-tangle
-  :after (org)
-  :config (add-to-list 'org-babel-tangle-lang-exts '("js" . "js")))
-
-(use-package ob-C
-  :after (org)
-  :commands (org-babel-execute:C)
-  :config (add-to-list 'org-babel-load-languages '(C . t)))
-
-(use-package ob-dot
-  :after (org)
-  :commands (org-babel-execute:dot)
-  :config (add-to-list 'org-babel-load-languages '(dot . t)))
-
-(use-package ob-js
-  :after (org)
-  :commands (org-babel-execute:js)
-  :config (add-to-list 'org-babel-load-languages '(js . t)))
-
-(use-package ob-plantuml
-  :after (org)
-  :commands (org-babel-execute:plantuml)
-  :config (add-to-list 'org-babel-load-languages '(plantuml . t)))
-
-(use-package ob-python
-  :after (org)
-  :commands (org-babel-execute:python)
-  :custom (org-babel-python-command "~/.pyenv/shims/python")
-  :config (add-to-list 'org-babel-load-languages '(python . t)))
-
-(use-package ob-shell
-  :after (org)
-  :commands (org-babel-execute:bash
-             org-babel-execute:shell
-             org-babel-expand-body:generic)
-  :config (add-to-list 'org-babel-load-languages '(shell . t)))
-
-(use-package ob-sql
-  :after (org)
-  :commands (org-babel-execute:sql)
-  :config (add-to-list 'org-babel-load-languages '(sql . t)))
-
-(use-package ob-sqlite
-  :after (org)
-  :commands (org-babel-execute:sqlite)
-  :config (add-to-list 'org-babel-load-languages '(sqlite . t)))
-
-(use-package ob-typescript
-  :after (org)
-  :commands (org-babel-execute:typescript)
-  :config (add-to-list 'org-babel-load-languages '(typescript . t)))
+(use-package ob-typescript)
 
 ;;; Org Export
 
