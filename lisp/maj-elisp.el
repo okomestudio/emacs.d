@@ -12,7 +12,8 @@
           ("C-c b" . elisp-mode--format)
           :map lisp-data-mode-map
           ("C-c b" . elisp-mode--format) )
-  :custom (emacs-lisp-docstring-fill-column 72)
+  :custom ((elisp-fontify-semantically nil)
+           (emacs-lisp-docstring-fill-column 72))
   :config
   (defun elisp-mode--format ()
     "Format the current Emacs Lisp buffer."
