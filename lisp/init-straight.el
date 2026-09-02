@@ -125,6 +125,8 @@
        ( emacs-lisp-elements git github "protesilaos/emacs-lisp-elements" )
        ( flycheck git github "flycheck/flycheck" )
        ( flycheck-aspell-org git github "okomestudio/flycheck-aspell-org.el" )
+       ( flycheck-languagetool git github "emacs-languagetool/flycheck-languagetool"
+         :fork (:branch "json-payload") )
        ( flyover git github "konrad1977/flyover" )
        ( gptel-quick git github "karthink/gptel-quick" )
        ( greppu git github "okomestudio/greppu.el" )
@@ -201,6 +203,7 @@
                       "-o" "./docs/org-transclusion.info")
                      ("install-info"
                       "./docs/org-transclusion.info" "./docs/dir")))
+       ( paredit git github "emacsmirror/paredit" ) ; TODO(2026-08-28): remove when the paredit.org is up
        ( pomo-cat git github "kn66/pomo-cat.el"
          :files (:defaults "cat.png") )
        ( powerthesaurus git github "doomelpa/powerthesaurus" )
