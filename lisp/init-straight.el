@@ -79,6 +79,7 @@
        ( anki-editor git github "anki-editor/anki-editor"
          :fork ( :branch "anki-editor-cloze-mode") ) ; or "enable-file-based-note"
        ( atomic-chrome git github "KarimAziev/atomic-chrome" :flavor nil )
+       ( bazel-mode git github "bazel-contrib/bazel.el" )
        ( blamer git github "artawower/blamer.el" )
        ( boem-weather git gitlab "boskoivanisevic/boem-weather" )
        ( cal-japan git github "kawabata/cal-japan" )
