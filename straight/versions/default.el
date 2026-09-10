@@ -189,7 +189,7 @@
  ("org-citeseeing" . "4ccea3988568ddb5b622ec2187586df7e2a694b8")
  ("org-cliplink" . "13e0940b65d22bec34e2de4bc8cba1412a7abfbc")
  ("org-contrib" . "82f94c5612c20286d234613f0ce0d92eac2c0845")
- ("org-dividers" . "273d099e62d88ad2eea6f97c95ed4962deee5bb0")
+ ("org-dividers" . "580b269cefd48d7992bd89c231636ad88989c28b")
  ("org-download" . "c8be2611786d1d8d666b7b4f73582de1093f25ac")
  ("org-excalidraw" . "7d9eee4e22102445772c7ddeeb85d91e995e14e1")
  ("org-expose-emphasis-markers" . "5ca3994f2e13b342e0b9d353b66b892e34c7b784")

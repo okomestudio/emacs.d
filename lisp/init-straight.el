@@ -180,7 +180,8 @@
        ( or-struktur git github "okomestudio/or-struktur" )
        ( org-block-capf git github "xenodium/org-block-capf" )
        ( org-citeseeing git github "okomestudio/org-citeseeing" )
-       ( org-dividers git github "okomestudio/org-dividers" )
+       ( org-dividers git github "okomestudio/org-dividers"
+         :files (:defaults "images/*.svg") )
        ( org-excalidraw git github "4honor/org-excalidraw" )
        ( org-hide-drawers git github "krisbalintona/org-hide-drawers"
          :branch "devel" )

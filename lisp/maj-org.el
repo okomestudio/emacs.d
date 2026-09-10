@@ -289,8 +289,7 @@ beginning of line, in which case it will create a new list."
   (advice-add #'org-roam-extract-subtree :around
               #'org-hide-drawers--temporarily-deactivate))
 
-(use-package org-dividers
-  :hook (org-mode . org-dividers-mode))
+(use-package org-dividers)
 
 ;;; Clipboard
 
