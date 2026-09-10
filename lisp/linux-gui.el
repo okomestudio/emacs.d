@@ -18,6 +18,7 @@
            (interprogram-paste-function #'linux-gui-paste)
            (save-interprogram-paste-before-kill t)
            (select-enable-clipboard t)
+           (select-enable-primary t)
            (x-select-request-type nil))
 
   :ensure-system-package

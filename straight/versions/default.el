@@ -246,7 +246,7 @@
  ("rg.el" . "e9ca15dd113fc9690a56bef06b67c69ead414efd")
  ("rust-mode" . "e443ccf2884028d3b6cc550ff20e7c92dadccb68")
  ("s.el" . "d7c04b84d03481a1ed62ee13dbe595224ccbe57c")
- ("scrollpanel" . "74cad33688e511babe5a6338e0ea3e98619b7c03")
+ ("scrollpanel" . "8de0a180c5121a4213936e5d34085885721e90b8")
  ("selected.el" . "1ca6e12f456caa1dc97c3d68597598662eb5de9a")
  ("seq" . "da86da9bf111f68fb81efd466d76d53af5aebc00")
  ("show-font" . "16016e12356f17f85cfce456dd6a7d2e3213a9bf")
@@ -287,6 +287,6 @@
  ("yaml-mode" . "96ef0201101a7cd591febd5886633154dae8834c")
  ("yaml-pro" . "9b9509188e5b88bb933e98ab36ab992519b9554b")
  ("yaml.el" . "5546f36bde24a9a8c1934e0f6ce205cd41d72537")
- ("yascroll" . "95e24b79ee6b9e1d069670902cd526ba1d8e4ac2")
+ ("yascroll" . "b6d7c792a01411401a34ca61c82ebfb4d9fc1d04")
  ("zotxt-emacs" . "4057a310d0fc6034f3825ee584f8ea6f81dd6251"))
 :gamma

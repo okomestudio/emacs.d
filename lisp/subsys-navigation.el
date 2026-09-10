@@ -87,23 +87,27 @@ The window scope is determined by `avy-all-windows' (ARG negates it)."
                                           ((control) . text-scale)))))
 
 (use-package pixel-scroll
-  ;; :hook (on-first-input . pixel-scroll-precision-mode)
-  :custom ((pixel-scroll-precision-interpolation-between-scroll 0.001)
+  :custom ((pixel-scroll-precision-interpolate-mice t)
+           (pixel-scroll-precision-interpolate-page t)
+           (pixel-scroll-precision-interpolation-between-scroll 0.001)
            (pixel-scroll-precision-interpolation-factor 2.0)
            (pixel-scroll-precision-interpolation-total-time 0.1)
            (pixel-scroll-precision-large-scroll-height 15) ; 1.0
            (pixel-scroll-precision-momentum-min-velocity 10.0)
            (pixel-scroll-precision-momentum-seconds 1.75)
            (pixel-scroll-precision-momentum-tick 0.01)
-           (pixel-scroll-precision-use-momentum t)))
+           (pixel-scroll-precision-use-momentum t))
+  :hook (on-first-input . pixel-scroll-precision-mode))
 
 (use-package ultra-scroll
+  ;; To be removed; pixel-scroll seems to cover most use cases by now.
   :disabled
   :custom ((scroll-conservatively 101)
            (scroll-margin 0))
   :hook (on-first-input . ultra-scroll-mode))
 
 (use-package yascroll
+  ;; :unless (and (bound-and-true-p x-toolkit-scroll-bars) scroll-bar-mode)
   :hook (on-first-buffer . global-yascroll-bar-mode))
 
 (use-package scrollpanel
