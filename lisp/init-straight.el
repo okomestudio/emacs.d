@@ -101,6 +101,7 @@
           ) )
        ( csl-mode git github "okomestudio/emacs-csl-mode" )
        ( democratize git sourcehut "flandrew/democratize" )
+       ( desktop-serde git github "okomestudio/desktop-serde.el" )
        ( do-this-now git github "okomestudio/do-this-now.el" )
        ( eaf git github "emacs-eaf/emacs-application-framework"
          :files ("*.el" "*.py" "core" "app" "*.json")

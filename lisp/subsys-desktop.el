@@ -5,7 +5,7 @@
 ;;
 ;;; Code:
 
-(require 'ok)
+(use-package desktop-serde)
 
 (use-package desktop
   ;; Save the Emacs state across sessions.
@@ -29,7 +29,7 @@
   (desktop-save-mode 1)
 
   :config
-  (require 'ok-desktop)       ; ensures application of enhancements
+  (require 'desktop-serde)       ; ensures application of enhancements
 
   ;; Use if any globals should be saved.
   (add-to-list 'desktop-globals-to-save 'safe-local-variable-directories))

@@ -95,27 +95,20 @@
            (org-roam-ui-update-on-save t)))
 
 (use-package org-roam-node-display-cache
-  :hook (org-roam-ok-mode . org-roam-node-display-cache-mode)
+  :custom (org-roam-node-default-sort nil)
   :init
-  (defun org-roam-node-display-cache--ensure-desktop ()
-    "Ensure the registration of global variable for desktop save."
+  (with-eval-after-load 'desktop
     (require 'org-roam-node-display-cache)
-    (add-to-list 'desktop-globals-to-save 'org-roam-node-display-cache--cache)
+    (add-to-list 'desktop-globals-to-save 'org-roam-node-display-cache--cache))
 
-    ;; The hash table is serialized to persist in a file.
-    (add-to-list 'ok-desktop-global-var-serdes-funs
-                 (list 'org-roam-node-display-cache--cache
-                       (lambda (ht)
-                         (prin1-to-string ht))
-                       (lambda (s)
-                         (if-let* ((desered (and (stringp s) (read s)))
-                                   (_ (hash-table-p desered)))
-                             desered
-                           (make-hash-table :test 'equal))))))
-  (add-hook 'desktop-save-hook
-            #'org-roam-node-display-cache--ensure-desktop)
-  (add-hook 'ok-desktop-before-read-hook
-            #'org-roam-node-display-cache--ensure-desktop))
+  (with-eval-after-load 'desktop-serde
+    (require 'org-roam-node-display-cache)
+    (add-to-list 'desktop-serde-global-var-funs
+                 (cons 'org-roam-node-display-cache--cache
+                       #'desktop-serde-hash-table)))
+
+  (with-eval-after-load 'org
+    (org-roam-node-display-cache-mode 1)))
 
 ;;; OK-Specific Enhancement
 
