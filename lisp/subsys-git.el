@@ -51,9 +51,10 @@
   ;; Git blame plugin.
   :bind (("s-b" . blamer-show-posframe-commit-info))
   :custom ((blamer-idle-time 0.3)
-           (blamer-min-offset 70))
+           (blamer-min-offset 70)
+           (blamer-smart-background-p nil)) ; see GitHub Issue 13
   :custom-face (blamer-face ((t :foreground "#7a88cf"
-                                :background unspecified
+                                :background nil
                                 :height 100
                                 :italic t))))
 
