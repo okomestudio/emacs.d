@@ -16,7 +16,7 @@
   (gptel-make-xai "xAI" :stream t)
 
   ;; Use the following model by default:
-  (setopt gptel-model 'gemini-flash-latest
+  (setopt gptel-model 'gemini-3.6-flash
           gptel-backend (gptel-make-gemini "Gemini"
                           :key (gptel-api-key-from-auth-source
                                 "generativelanguage.googleapis.com")
