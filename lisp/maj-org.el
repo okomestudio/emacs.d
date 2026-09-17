@@ -80,24 +80,27 @@ of the current section."
                                  (org-return))))
                           (_ #'ok-edit-insert-newline-above))))
 
-  (defun org-ok-insert-list-item (beg end &optional text)
+  (defun org-ok-insert-list-item (&optional beg end text)
     "Insert list item.
 This command delegates work to `org-insert-item' except when called at the
 beginning of line, in which case it will create a new list."
-    (interactive "r")
-    (let ((text (string-trim
-                 (if (use-region-p)
-                     (prog1 (buffer-substring-no-properties beg end)
-                       (delete-region beg end)
-                       (deactivate-mark))
-                   (or text "")))))
+    (interactive (if (use-region-p)
+                     (list (region-beginning) (region-end))
+                   (list nil nil)))
+    (let* ((active-region (and beg end (use-region-p)))
+           (text (string-trim
+                  (if active-region
+                      (prog1 (buffer-substring-no-properties beg end)
+                        (delete-region beg end)
+                        (deactivate-mark))
+                    (or text "")))))
       (if (org-in-item-p)
           (progn
             (org-insert-item)
-            (when text
+            (unless (string-empty-p text)
               (insert text)))
         (when (or (= (point) (line-beginning-position))
-                  (and (use-region-p)
+                  (and active-region
                        (= beg (line-beginning-position))))
           (insert (make-string org-list-indent-offset ?\s) "- " text "\n")
           (org-delete-backward-char 1)))))
