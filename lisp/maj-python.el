@@ -74,7 +74,7 @@
       (setq-local python-pytest-executable (pet-executable-find "pytest"))
 
       ;; Ruff
-      (when-let ((ruff-executable (pet-executable-find "ruff")))
+      (when-let* ((ruff-executable (pet-executable-find "ruff")))
         (setq-local ruff-format-command ruff-executable)
         (ruff-isort-format-on-save-mode)
         (ruff-format-on-save-mode))

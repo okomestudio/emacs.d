@@ -54,7 +54,7 @@
            (blamer-min-offset 70)
            (blamer-smart-background-p nil)) ; see GitHub Issue 13
   :custom-face (blamer-face ((t :foreground "#7a88cf"
-                                :background nil
+                                :background unspecified
                                 :height 100
                                 :italic t))))
 
