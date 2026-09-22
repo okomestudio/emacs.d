@@ -209,6 +209,8 @@
        ( paredit git github "emacsmirror/paredit" ) ; TODO(2026-08-28): remove when the paredit.org is up
        ( pomo-cat git github "kn66/pomo-cat.el"
          :files (:defaults "cat.png") )
+       ( popup git github "auto-complete/popup-el"
+         :fork ( :branch "master" ))
        ( powerthesaurus git github "doomelpa/powerthesaurus" )
        ( py-isort git github "paetzke/py-isort.el"
          ;; For https://github.com/paetzke/py-isort.el/pull/21

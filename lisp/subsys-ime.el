@@ -117,7 +117,7 @@ This is set to nil when input method is not active.")
 
 (use-package mozc-popup
   :disabled
-  :after mozc
+  :custom (mozc-candidate-style 'popup)
   :hook ((on-first-input . (lambda () (require 'mozc-popup)))))
 
 (use-package mozc-cand-posframe
