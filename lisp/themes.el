@@ -27,12 +27,15 @@
           (kanagawa-themes . "lisp/themes/themes-kanagawa")
           (nano-theme . "lisp/themes/themes-nano")
           (ok-org-themes . "lisp/themes/themes-ok-org")
+          (org-zen-theme . "lisp/themes/themes-org-zen")
           (spacemacs-theme . "lisp/themes/themes-spacemacs")
           (year-1984-theme . "lisp/themes/themes-year-1984")))
 
 (setopt ok-theme-presets '((dark . ((spacemacs-dark . spacemacs-theme)
+                                    (org-zen-dark . org-zen-theme)
                                     (ok-org-modern . ok-org-themes)))
                            (light . ((spacemacs-light . spacemacs-theme)
+                                     (org-zen-light . org-zen-theme)
                                      (ok-org-modern . ok-org-themes)))))
 
 (ok-theme-prepare-enable-on-startup 'light)
