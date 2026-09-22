@@ -36,6 +36,7 @@
            (org-hide-emphasis-markers t)
            (org-image-actual-width nil)
            (org-imenu-depth 6)
+           (org-link-search-must-match-exact-headline nil)
            (org-list-allow-alphabetical t)
            (org-list-indent-offset 2)
            (org-M-RET-may-split-line '((headline . nil)
@@ -58,6 +59,92 @@
              (add-to-list 'flycheck-disabled-checkers 'org-lint)
              (flycheck-mode 1)))
   :config
+  ;; NOTE(2026-09-21): `org-entry-put' frequently fail by inserting
+  ;; properly in an incorrect place. It looks like the following patch
+  ;; fixes the glitch, but it's not clear why this started happening
+  ;; with the code that hasn't changed in the upstream. Revert to the
+  ;; original (or send in as a patch) once the cause is understood.
+  (defun org-entry-put--ok-fix (epom property value)
+    "Set PROPERTY to VALUE for entry at EPOM.
+
+EPOM is an element, marker, or buffer position.
+
+If the value is nil, it is converted to the empty string.  If it
+is not a string, an error is raised.  Also raise an error on
+invalid property names.
+
+PROPERTY can be any regular property (see
+`org-special-properties').  It can also be \"TODO\",
+\"PRIORITY\", \"SCHEDULED\" and \"DEADLINE\".
+
+For the last two properties, VALUE may have any of the special
+values \"earlier\" and \"later\".  The function then increases or
+decreases scheduled or deadline date by one day."
+    (cond ((null value) (setq value ""))
+	  ((not (stringp value)) (error "Properties values should be strings"))
+	  ((not (org--valid-property-p property))
+	   (user-error "Invalid property name: \"%s\"" property)))
+    (org-no-read-only
+     (org-with-point-at epom
+       (if (or (not (featurep 'org-inlinetask)) (org-inlinetask-in-task-p))
+	   (org-back-to-heading-or-point-min t)
+         (org-with-limited-levels (org-back-to-heading-or-point-min t)))
+       (let ((beg (point)))
+         (cond
+          ((equal property "TODO")
+	   (cond ((not (org-string-nw-p value)) (setq value 'none))
+	         ((not (member value org-todo-keywords-1))
+	          (user-error "\"%s\" is not a valid TODO state" value)))
+	   (org-todo value)
+	   (when org-auto-align-tags (org-align-tags)))
+          ((equal property "PRIORITY")
+	   (org-priority (if (org-string-nw-p value) (org-priority-to-value value) 'remove))
+	   (when org-auto-align-tags (org-align-tags)))
+          ((equal property "SCHEDULED")
+	   (forward-line)
+	   (if (and (looking-at-p org-planning-line-re)
+		    (re-search-forward
+		     org-scheduled-time-regexp (line-end-position) t))
+	       (cond ((string= value "earlier") (org-timestamp-change -1 'day))
+		     ((string= value "later") (org-timestamp-change 1 'day))
+		     ((string= value "") (org-schedule '(4)))
+		     (t (org-schedule nil value)))
+	     (if (member value '("earlier" "later" ""))
+	         (call-interactively #'org-schedule)
+	       (org-schedule nil value))))
+          ((equal property "DEADLINE")
+	   (forward-line)
+	   (if (and (looking-at-p org-planning-line-re)
+		    (re-search-forward
+		     org-deadline-time-regexp (line-end-position) t))
+	       (cond ((string= value "earlier") (org-timestamp-change -1 'day))
+		     ((string= value "later") (org-timestamp-change 1 'day))
+		     ((string= value "") (org-deadline '(4)))
+		     (t (org-deadline nil value)))
+	     (if (member value '("earlier" "later" ""))
+	         (call-interactively #'org-deadline)
+	       (org-deadline nil value))))
+          ((member property org-special-properties)
+	   (error "The %s property cannot be set with `org-entry-put'" property))
+          (t
+           (org-fold-core-ignore-modifications
+	     (let* ((range (org-get-property-block beg 'force))
+	            (end (cdr range))
+	            (case-fold-search t))
+	       (goto-char (car range))
+	       (if (re-search-forward (org-re-property property nil t) end t)
+	           (let ((m-beg (match-beginning 0)))
+                     (delete-region m-beg (match-end 0))
+		     (goto-char m-beg))
+	         (goto-char end)
+	         (insert-and-inherit "\n")
+	         (backward-char))
+	       (insert-and-inherit ":" property ":")
+	       (when value (insert-and-inherit " " value))
+	       (org-indent-line))))))
+       (run-hook-with-args 'org-property-changed-functions property value))))
+  (advice-add #'org-entry-put :override #'org-entry-put--ok-fix)
+
   (require 'cal-move)         ; prevent `calendar-cursor-to-visible-date' to fail
 
   ;; Unset the keybindings to disable org-agenda shortcuts and
