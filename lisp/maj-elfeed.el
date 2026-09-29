@@ -14,11 +14,6 @@
 
 (use-package elfeed
   ;; A web feeds client.
-  ;;
-  ;; Usage:
-  ;;
-  ;;   - `M-x elfeed RET'
-  ;;
   :bind ( :map elfeed-search-mode-map
           ("V" . elfeed-tree)
           :map elfeed-tree-mode-map
@@ -32,9 +27,6 @@
            (elfeed-show-unique-buffers nil)
            (elfeed-use-curl t)
            (url-queue-timeout 15))
-  :hook ((elfeed-show-mode . elfeed-ok--show-setup)
-         (elfeed-search-update . elfeed-ok--search-setup)
-         (enable-theme-functions . elfeed-ok--theme-hook))
   :config
   (ok-debug-register '(elfeed-log-level . (debug . info)))
 
@@ -58,7 +50,11 @@
     (set-face-attribute 'elfeed-search-unread-title-face nil
                         :foreground (face-attribute 'default :foreground)))
 
-  (load (fs-emacs-etc "elfeed/init")))
+  (load (fs-emacs-etc "elfeed/init"))
+
+  :hook ((elfeed-show-mode . elfeed-ok--show-setup)
+         (elfeed-search-update . elfeed-ok--search-setup)
+         (enable-theme-functions . elfeed-ok--theme-hook)))
 
 (use-package elfeed-org
   :custom ((rmh-elfeed-org-files `(,(fs-emacs-etc "elfeed/elfeed.org"))))

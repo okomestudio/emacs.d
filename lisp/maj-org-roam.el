@@ -343,14 +343,6 @@ PATH is the citekey string."
   ;; :custom (org-roam-ok-node-display-title #'or-struktur--display-title)
   :custom ((or-struktur-view-layout 'right)
            (or-struktur-view-show-title nil))
-  :hook ((org-mode . or-struktur-mode)
-         (or-struktur-view-mode
-          . (lambda ()
-              (interactive)
-              (setq-local repeat-mode nil) ; this mode is sluggish
-              (setq-local truncate-lines t)
-              (setq-local org-use-speed-commands nil)
-              (text-scale-set -0.4))))
   :config
   (when (bound-and-true-p desktop-save-mode)
     (add-to-list 'desktop-minor-mode-table '(or-struktur-mode nil)))
@@ -360,7 +352,9 @@ PATH is the citekey string."
     (concat
      (org-roam-ok-node--title node)
      (when-let* ((r (or-struktur-overlay--format (org-roam-node-id node))))
-       (concat " " (propertize r 'face 'or-struktur-overlay))))))
+       (concat " " (propertize r 'face 'or-struktur-overlay)))))
+
+  :hook ((org-mode . or-struktur-mode)))
 
 (provide 'maj-org-roam)
 ;;; maj-org-roam.el ends here
