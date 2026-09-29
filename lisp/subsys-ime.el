@@ -112,11 +112,11 @@ This is set to nil when input method is not active.")
 ;; seems to be the best compromise?
 
 (use-package mozc
+  :disabled
   :if (and (eq system-type 'gnu/linux) (memq window-system '(pgtk)))
   :custom (mozc-candidate-style 'overlay))
 
 (use-package mozc-popup
-  :disabled
   :custom (mozc-candidate-style 'popup)
   :hook ((on-first-input . (lambda () (require 'mozc-popup)))))
 
