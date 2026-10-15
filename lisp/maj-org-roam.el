@@ -334,6 +334,9 @@ PATH is the citekey string."
 
 (use-package org-id-ext)
 
+(use-package or-zettel
+  :hook (org-mode . or-zettel-mode))
+
 (use-package or-struktur
   ;; Org Roam plugin for folgezettel IDs.
   :bind ( ([f9] . or-struktur-view-toggle)

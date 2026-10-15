@@ -33,6 +33,7 @@
            (compilation-scroll-output t)
            (confirm-kill-processes nil)
            (cursor-type 'box)
+           (mouse-prefer-closest-glyph t)
 
            ;; These are not used when `doom-modeline' is active and
            ;; `buffer-encoding' segment is in use.

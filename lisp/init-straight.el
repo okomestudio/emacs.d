@@ -179,6 +179,7 @@
        ( ok git github "okomestudio/ok.el" )
        ( ok-plural git github "okomestudio/ok-plural.el" )
        ( or-struktur git github "okomestudio/or-struktur" )
+       ( or-zettel git github "okomestudio/or-zettel" )
        ( org-block-capf git github "xenodium/org-block-capf" )
        ( org-citeseeing git github "okomestudio/org-citeseeing" )
        ( org-dividers git github "okomestudio/org-dividers"
@@ -192,7 +193,7 @@
          :files (:defaults "extensions/*") )
        ( org-roam git github "org-roam/org-roam"
          :files (:defaults "extensions/*" "org-roam-pkg.el")
-         :fork t )
+         :fork (:branch "copy-entire-domoted-buffer") )
        ( org-roam-cjk git github "okomestudio/org-roam-cjk"
          :files (:defaults "extensions/*") )
        ( org-roam-fz git github "okomestudio/org-roam-fz" )
